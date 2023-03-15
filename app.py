@@ -7,6 +7,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+st.set_option('server.port', 8080)
+
 #title
 st.title("Agam Arora")
 
