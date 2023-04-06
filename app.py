@@ -124,7 +124,7 @@ Role: As a Platform Product Manager, I oversaw the management of technical requi
 Achievements:
 - Streamlined and spearheaded the ad-hoc process of triaging requests, leading to more efficient prioritization and management of customer needs.
 - Fostered a bug-free culture of development, resulting in a more stable and reliable product offering.
-Established tracking and metrics to measure development speed, story points, and bug counts, providing greater visibility into team performance and areas for improvement.
+- Established tracking and metrics to measure development speed, story points, and bug counts, providing greater visibility into team performance and areas for improvement.
 - Implemented best practices for documenting and sharing information regarding bugs, enhancements, and platform requests, enhancing collaboration and knowledge sharing across the organization.
 
 Skills: Technical Leadership · Cross-functional Team Leadership · Data Analysis · Product Management · Team Leadership
