@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pillow = "==9.2.0"
-streamlit = "==1.12.0"
+pillow = "*"
+streamlit = "*"
 
 [dev-packages]
 

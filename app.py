@@ -12,11 +12,11 @@ profile_pic = current_dir / "assets" / "pfp1.png"
 
 
 # --- GENERAL SETTINGS ---
-PAGE_TITLE = "Digital CV | Agam Arora"
+PAGE_TITLE = "Product Data Science | Agam Arora"
 PAGE_ICON = ":wave:"
 NAME = "Agam Arora"
 DESCRIPTION = """
-Principal Product Manager with advanced data analytics skills.
+A full stack product data scientist. I make numbers talk and tell stories.
 """
 EMAIL = "agam.arora11@gmail.com"
 SOCIAL_MEDIA = {
@@ -57,13 +57,16 @@ with col2:
         mime="application/octet-stream",
     )
     st.write("📫", EMAIL)
+    for name, link in SOCIAL_MEDIA.items():
+        st.markdown(f"🌐 [{name}]({link})")
+        
+
+
+    
 
 
 # --- SOCIAL LINKS ---
-st.write('\n')
-cols = st.columns(len(SOCIAL_MEDIA))
-for index, (platform, link) in enumerate(SOCIAL_MEDIA.items()):
-    cols[index].write(f"[{platform}]({link})")
+
 
 
 # --- EXPERIENCE & QUALIFICATIONS ---
