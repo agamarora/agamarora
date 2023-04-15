@@ -16,18 +16,12 @@ PAGE_TITLE = "Product Data Science | Agam Arora"
 PAGE_ICON = ":wave:"
 NAME = "Agam Arora"
 DESCRIPTION = """
-A full stack product data scientist. I make numbers talk and tell stories.
+A full stack product data scientist. I make great products from numbers.
 """
 EMAIL = "agam.arora11@gmail.com"
 SOCIAL_MEDIA = {
     "LinkedIn": "https://www.linkedin.com/in/agamarora/"
 
-}
-PROJECTS = {
-    "🏆 Weighting Model for Primary Research data problems": "",
-    "🏆 Geocoding model using repeat addresses for a last mile delivery companies ": "",
-    "🏆 Smart Hub locator and load balancing algorithm for dynamic driver assignment using geospatial data": "",
-    "🏆 Predicting future route codes or delivery clusters based on historical delivery data": "",
 }
 
 
@@ -71,13 +65,16 @@ with col2:
 
 # --- EXPERIENCE & QUALIFICATIONS ---
 st.write('\n')
-st.subheader("Experience & Qualifications")
+st.subheader("About me")
 st.write(
     """
-- ✔️ Over a decade of experience leveraging data-driven insights to drive business growth and efficiency
-- ✔️ Proficient in Python and Excel, with a proven track record in applying these skills across various industries
-- ✔️ Solid grasp of statistical concepts and their practical application in real-world scenarios
-- ✔️ Highly collaborative team member, demonstrating exceptional initiative and proactive problem-solving abilities
+- ✔️ I specialize in end-to-end data products with over 12 years of experience
+- ✔️ I believe in clean and simple data experiences with actionable and targetable insights
+- ✔️ I am a data-first, ENTJ personality with high execution capability
+- ✔️ I have worked with complex UX problems in data management
+- ✔️ I have led teams to create big data transformation and ETL pipelines
+- ✔️ I have designed and deployed BI dashboards for scale
+- ✔️ I work well with remote teams from different cultures
 """
 )
 
@@ -95,9 +92,22 @@ st.write(
 )
 
 
-# --- Projects & Accomplishments ---
-st.write('\n')
+
+
+def project_card(title, description):
+    st.markdown(f"### {title}")
+    st.markdown(description)
+    st.markdown("---")
+
+projects = [
+    ("🏆 Successfully crunched over 1 million excel sheets", "Not kidding, I would have done more had I been counting. But I started my career doing this and it soon became therapeutic. Now I have been coding Python scripts for meditation."),
+    ("🏆 Weighting Model for Primary Research data problems (co-authored at first job)", "The project aims to generalize and weight the primary research data to ensure that the sample represents the global census. This project goes deep into the problems of primary data collection and how we can deal with them to ensure an unskewed and actionable result can be achieved."),
+    ("🏆 Geocoding model using repeat addresses for last-mile delivery companies", "In one of my companies, we wanted to solve for the last mile. The biggest cost saver identified so far in the industry is fuel and time savings through correct addresses and accurate locational data. The goal of this project is to learn from previous deliveries and make the next one even more accurate. I led the complete end-to-end solution and deployment of the project."),
+    ("🏆 Smart Hub locator and load balancing algorithm for dynamic driver assignment using geospatial data", "This is a research project that a couple of my colleagues started for one of our clients. Although it was parked at research, it managed to win us that client."),
+    ("🏆 Predicting future route codes or delivery clusters based on historical delivery data", "This is one of the cooler things that we worked on. It is not a finished product yet but something of research that we might soon continue."),
+]
+
 st.subheader("Projects & Accomplishments")
-st.write("---")
-for project, link in PROJECTS.items():
-    st.write(f"[{project}]({link})")
+for title, description in projects:
+    with st.expander(title, expanded=False):
+        project_card(title, description)
