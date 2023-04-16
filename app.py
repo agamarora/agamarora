@@ -38,7 +38,7 @@ tracking_code = f"""
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
 
-  gtag('config', '{GA_MEASUREMENT_ID}', {'debug_mode': true});
+  gtag('config', '{GA_MEASUREMENT_ID}');
 </script>
 """
 
