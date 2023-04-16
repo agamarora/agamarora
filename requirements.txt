@@ -1,2 +1,4 @@
 Pillow
 streamlit
+plotly
+numpy

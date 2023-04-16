@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pillow = "*"
 streamlit = "*"
+plotly = "*"
+numpy = "*"
 
 [dev-packages]
 
