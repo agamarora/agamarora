@@ -4,14 +4,16 @@ import numpy as np
 import streamlit as st
 from PIL import Image
 import random
-
 import base64
+from streamlit_lottie import st_lottie
+import json
+import requests
+import streamlit.components.v1 as components
 
 # --- PATH SETTINGS ---
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 css_file = current_dir / "styles" / "main.css"
 resume_file = current_dir / "assets" / "Resume_AgamArora.pdf"
-profile_pic = current_dir / "assets" / "pfp1.png"
 
 # --- GENERAL SETTINGS ---
 PAGE_TITLE = "Product Data Science | Agam Arora"
@@ -30,13 +32,33 @@ with open(css_file) as f:
     st.markdown("<style>{}</style>".format(f.read()), unsafe_allow_html=True)
 with open(resume_file, "rb") as pdf_file:
     PDFbyte = pdf_file.read()
-profile_pic = Image.open(profile_pic)
+
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+
 
 # --- HERO SECTION ---
+lottie_url = "https://assets4.lottiefiles.com/packages/lf20_49rdyysj.json"
+lottie_json = load_lottieurl(lottie_url)
+
+
+
 st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-st.image(profile_pic, width=230)
-st.title(NAME)
-st.write(DESCRIPTION)
+
+
+col_a1, col_a2 = st.columns(2)
+
+with col_a1:
+    st_lottie(lottie_json, speed=1, height=300, key="initial")
+
+with col_a2:
+
+    st.title(NAME)
+    st.write(DESCRIPTION)
 
 button_col1, button_col2, button_col3 = st.columns(3)
 
@@ -72,7 +94,6 @@ with button_col3:
     st.markdown(f"<a href='mailto:{EMAIL}' style='{button_style}'>📫 Email</a>", unsafe_allow_html=True)
 
 st.markdown("</div>", unsafe_allow_html=True)
-
 
         
 

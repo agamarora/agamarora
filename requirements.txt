@@ -2,3 +2,7 @@ Pillow
 streamlit
 plotly
 numpy
+requests
+json
+pathlib
+streamlit-lottie

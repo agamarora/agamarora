@@ -8,6 +8,10 @@ pillow = "*"
 streamlit = "*"
 plotly = "*"
 numpy = "*"
+requests = "*"
+json = "*"
+pathlib = "*"
+streamlit-lottie = "*"
 
 [dev-packages]
 
