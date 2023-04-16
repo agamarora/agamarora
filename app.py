@@ -10,6 +10,8 @@ import json
 import requests
 import streamlit.components.v1 as components
 
+
+
 # --- PATH SETTINGS ---
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 css_file = current_dir / "styles" / "main.css"
@@ -24,8 +26,30 @@ A full stack product data scientist. I train numbers to become great products. Y
 """
 EMAIL = "agam.arora11@gmail.com"
 LINKEDIN = "https://www.linkedin.com/in/agamarora/"
-
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON)
+
+GA_MEASUREMENT_ID = 'G-TBW0NCJLYZ'
+
+tracking_code = f"""
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TBW0NCJLYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+
+  gtag('config', '{GA_MEASUREMENT_ID}');
+</script>
+"""
+
+components.html(tracking_code, height=0)
+
+
+
+
+
+
+
 
 # --- LOAD CSS, PDF & PROFILE PIC ---
 with open(css_file) as f:
@@ -111,8 +135,8 @@ st.subheader("About me")
 st.write(
     """
 - ✔️ I specialize in end-to-end data products with over 12 years of experience
-- ✔️ I believe in clean and simple data experiences with actionable and targetable insights
-- ✔️ I am a data-first, ENTJ personality with high execution capability
+- ✔️ I believe in clean and simple data experiences that lead to actionable insights
+- ✔️ I am a data-first product developer with high affinity to great user experiences
 - ✔️ I have worked with complex UX problems in data management
 - ✔️ I have led teams to create big data transformation and ETL pipelines
 - ✔️ I have designed and deployed BI dashboards for scale
