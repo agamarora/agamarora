@@ -38,7 +38,7 @@ tracking_code = f"""
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
 
-  gtag('config', '{GA_MEASUREMENT_ID}', {{'anonymize_ip': true}}, {{'transport_type': 'beacon'}},  {{'page_title': 'Agam Arora'}}, {{'page_location': 'https://agamarora.com'}}, {{'debug_mode': true}});
+  gtag('config', '{GA_MEASUREMENT_ID}',  {{'page_title': 'Agam Arora'}}, {{'debug_mode': true}});
 </script>
 """
 
