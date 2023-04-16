@@ -12,6 +12,7 @@ import streamlit.components.v1 as components
 
 
 
+
 # --- PATH SETTINGS ---
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 css_file = current_dir / "styles" / "main.css"
@@ -38,7 +39,7 @@ tracking_code = f"""
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
 
-  gtag('config', '{GA_MEASUREMENT_ID}',  {{'page_title': 'Agam Arora', 'debug_mode': true}});
+  gtag('config', '{GA_MEASUREMENT_ID}',  {{'page_title': 'Agam Arora', 'debug_mode': true, 'send_page_view': true}});
 </script>
 """
 
@@ -161,8 +162,6 @@ def project_card(title, description, plot_func=None):
         plot_func()
 
     st.markdown("---")
-
-
 
 
 
