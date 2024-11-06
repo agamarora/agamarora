@@ -80,7 +80,7 @@ With over 10 years of experience spanning AI, data analytics, and product manage
 
 ## 🎯 Values and Approach
 
-I believe in the power of collaboration and inclusivity. Driven by curiosity and a relentless pursuit of innovation, I aim to contribute to solutions that are not only technologically advanced but also accessible and meaningful to end-users. My approach aligns with GitLab's values—striving for results, fostering diversity, and valuing iteration.
+I believe in the power of collaboration and inclusivity. Driven by curiosity and a relentless pursuit of innovation, I aim to contribute to solutions that are not only technologically advanced but also accessible and meaningful to end-users. 
 
 ---
 
