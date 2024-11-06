@@ -93,7 +93,7 @@ I believe in the power of collaboration and inclusivity. Driven by curiosity and
 
 ## 📫 Let's Connect
 
-- **Email**: [agam.arora11@gmail.com](mailto:agam.arora11@gmail.com)
+- **Email**: [reachme.agam@gmail.com](mailto:agam.arora11@gmail.com)
 - **LinkedIn**: [linkedin.com/in/agamarora](https://www.linkedin.com/in/agamarora)
 
 Feel free to reach out if you're interested in discussing product management, AI, cybersecurity, or just exchanging ideas on how technology can shape our future.
