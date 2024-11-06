@@ -103,7 +103,3 @@ Feel free to reach out if you're interested in discussing product management, AI
 *Thank you for visiting my profile. I’m always open to connecting, learning, and collaborating on projects that aim to make an impact.*
 
 ---
-
-<!--
-**Agam Arora** is a Product Manager specializing in AI-driven solutions. This README was generated to provide an overview of his professional journey and interests.
--->
