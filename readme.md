@@ -8,11 +8,6 @@
 
 Hands-on Product leader with 11 years of experience in product management, entrepreneurship, ML/AI, data and SaaS products. Proven ability to independently develop proof-of-concepts, driving innovation and delivery disruptive, technology-first products.
 
----
-
-## 🛠 Professional Journey
-
-With over 10 years of experience spanning AI, data analytics, and product management, I've led end-to-end product lifecycles—from ideation to launch—in dynamic environments. My career has been marked by a deep commitment to understanding user needs, improving customer experiences, and achieving measurable impact.
 
 ### **AI Product Manager at AIonOS India Pvt. Ltd.** *(May 2024 – Present)*
 
