@@ -49,12 +49,6 @@ Hands-on Product leader with 11 years of experience in product management, entre
 
 ---
 
-## 🎯 Values and Approach
-
-I believe in the power of collaboration and inclusivity. Driven by curiosity and a relentless pursuit of innovation, I aim to contribute to solutions that are not only technologically advanced but also accessible and meaningful to end-users. 
-
----
-
 ## 🎓 Education
 
 - **PGDM - Marketing**, FORE School of Management, Class of 2014
