@@ -24,7 +24,7 @@ Hands-on Product leader with 11 years of experience in product management, entre
 
 - Worked with Startups and VC clients in Canada for System Design, Data Analytics, Technical Writing and Product Marketing resulting in over **$500K of funds raised**.
 
-### **Manager - Business Development & Expansion at Blossom Kochhar (Aroma Magic)** *(July 2018 – December 2019)*
+### **Manager - New Businesss Development & Expansion at Blossom Kochhar (Aroma Magic)** *(July 2018 – December 2019)*
 
 - Revamped franchise product converting 70% of existing partners and added 4 new franchise partners, **increasing contract value per account by INR 250K**.
 - Achieved over **15% reduction in operational costs** through process digitization.
