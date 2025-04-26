@@ -10,9 +10,9 @@
 Hands-on Product leader with 11 years of experience in product management, entrepreneurship, ML/AI, data and SaaS products. Proven ability to independently develop proof-of-concepts, driving innovation and delivery disruptive, technology-first products.
 
 
-### **AI Product Manager at AIonOS India Pvt. Ltd.** *(May 2024 – Present)*
+### **Lead AI Product Manager at AIonOS India Pvt. Ltd.** *(May 2024 – Present)*
 
-- Spearheading the AI product unit and innovation lab, focusing on technology first products that are disruptive. Product portfolio include **RAG, Agentic AI, Multi-Agent-Systems and fine-tuning domain language models**.
+- Leading a team of highly skilled researchers and developers to build enterprise AI products. Product portfolio include **RAG, Agentic AI, Multi-Agent-Systems, Voice AI and AI Copilots.**.
 
 ### **Lead Product Manager at FarEye Technologies Pvt. Ltd.** *(December 2020 – May 2024)*
 
