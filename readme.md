@@ -1,7 +1,7 @@
 # 👋 Hi there, I'm [Agam Arora](https://agamarora.com) | [![Netlify Status](https://api.netlify.com/api/v1/badges/ba314c8a-98a5-4e91-ae2e-4df7754b15bf/deploy-status)](https://app.netlify.com/sites/agamarora/deploys)
 
 
-## **Product Manager | AI Enthusiast | Lifelong Learner**
+## **I am an AI Product Manager**
 
 ![LinkedIn Banner](/assets/agamarora_banner.png)
 
