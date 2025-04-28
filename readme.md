@@ -3,6 +3,9 @@
 
 **Product Manager | AI Enthusiast | Lifelong Learner**
 
+![LinkedIn Banner](/assets/agamarora_banner.png)
+
+
 ---
 
 ## 🚀 About Me
