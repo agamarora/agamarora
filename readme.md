@@ -13,7 +13,7 @@
 Hands-on Product leader with 11 years of experience in product management, entrepreneurship, ML/AI, data and SaaS products. Proven ability to independently develop proof-of-concepts, driving innovation and delivery disruptive, technology-first products.
 
 
-### **Lead AI Product Manager at AIonOS India Pvt. Ltd.** *(May 2024 – Present)*
+### **Assistant Vice President - AI Products at AIonOS India Pvt. Ltd.** *(May 2024 – Present)*
 
 - Leading a team of highly skilled researchers and developers to build enterprise AI products. Product portfolio include **RAG, Agentic AI, Multi-Agent-Systems, Voice AI and AI Copilots.**.
 
