@@ -4,7 +4,13 @@ All notable changes to agamarora.com will be documented in this file.
 
 ## [Unreleased]
 
-- Added DESIGN.md with approved v2.0 design: "The Cinematic Scroll" (scroll-driven career animation + portfolio)
+### v2.0 Design — "The Convergence Engine"
+- Added DESIGN.md with v2.0 spec: "The Convergence Engine" — scroll-driven visual convergence of 5 career threads
+- Added DESIGN-BRIEF.md with CEO review output — mobile-first design direction, current input for design consultation
+- Added BUILD-LOG.md documenting the full design exploration journey (7 entries: Cinematic Scroll → Sprite research → Playable Portfolio prototype → Self-Constructing Portfolio → Convergence Engine)
+- Added experiment prototypes in `experiments/` (pixel art mockup room, Phaser.js playable portfolio — both explored and rejected)
+
+### Project Documentation
 - Added CLAUDE.md with full project documentation
 - Added TODO.md with 22 tech debt items across 6 categories
 - Added CHANGELOG.md and VERSION (1.0.0) for release tracking

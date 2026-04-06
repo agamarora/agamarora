@@ -31,3 +31,10 @@
 
 ## Performance
 - [ ] Font Awesome 6.5.0 full CSS loaded for ~10 icons — consider subset or self-hosting
+
+## Next Session — v1 Optimization
+- [ ] Run full site optimization pass on existing v1 (performance, dead files, inconsistencies, dead code)
+- [ ] Fix all items in Dead Files, Inconsistencies, Dead Code, and SEO/Meta sections above
+- [ ] Performance audit — lighthouse scores, bundle sizes, loading times
+- [ ] Mobile QA — test all 3 pages on phone-sized viewports
+- [ ] v2 concept search continues in parallel — premises from BUILD-LOG Entry 012 carry forward

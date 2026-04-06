@@ -1,6 +1,10 @@
-# CLAUDE.md — agamarora.com
+# CLAUDE.md
 
-Personal website for Agam Arora. Live at **https://agamarora.com**. Deployed on Netlify. Source repo: `agamarora/aipm` (private).
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What This Is
+
+Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo: `agamarora/aipm` (private).
 
 ## Stack
 
@@ -8,209 +12,91 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Deployed on 
 - **Hosting**: Netlify (static site + serverless functions)
 - **Fonts**: Roboto via Google Fonts
 - **Icons**: Font Awesome 6.5.0 (CDN)
-- **Backend**: Single Netlify serverless function (`groqHandler.js`) using Groq SDK (llama-3.1-8b-instant)
-- **Domain**: agamarora.com (managed via Netlify DNS)
+- **Backend**: Single Netlify serverless function (`netlify/functions/groqHandler.js`) using Groq SDK (llama-3.1-8b-instant) — wired but **not called from any UI** currently
+- **Domain**: agamarora.com (Netlify DNS, auto-deploys from `main` branch)
 
-## File Structure
+## Development Commands
 
-```
-aipm/
-├── index.html                    # Landing page (/)
-├── explore/
-│   └── index.html                # Portfolio page (/explore)
-├── lab/
-│   └── index.html                # Projects/playground page (/lab)
-├── scripts/
-│   ├── main.js                   # Landing + global init (theme, animations)
-│   ├── explore.js                # Scroll navigation for /explore
-│   ├── lab.js                    # Project card animations for /lab
-│   └── utils.js                  # Shared: theme toggle, typewriter, scramble effects, Groq API, scroll utility
-├── styles/
-│   ├── main.css                  # Primary stylesheet (all pages)
-│   ├── lab.css                   # Lab-specific overrides
-│   ├── backup.css                # Old backup (not referenced)
-│   ├── main.css.old              # Old backup (not referenced)
-│   └── refactored.css            # Old backup (not referenced)
-├── assets/
-│   ├── preview.png               # OG/social share image
-│   ├── avatar-front.png          # Avatar (front-facing, PNG)
-│   ├── avatar-leftup-optimised.webp   # Avatar (left-up angle, WebP)
-│   ├── avatar-tilted-optimised.webp   # Avatar (tilted, WebP) — used on /explore hero
-│   ├── favicon.ico, favicon.png       # Favicons
-│   ├── favicon-16x16.png, favicon-32x32.png
-│   ├── favicon-dark.svg, favicon-light.svg
-│   ├── apple-touch-icon.png
-│   ├── icons/
-│   │   ├── icon-192.png          # PWA icon
-│   │   └── icon-512.png          # PWA icon
-│   ├── images/
-│   │   ├── agam-working.webp     # Bento grid avatar
-│   │   ├── agam-family-pic.webp  # "My Cozy Space" family photo
-│   │   ├── poc-light.svg, poc-dark.svg       # Bento card illustration
-│   │   ├── teams-light.svg, teams-dark.svg   # Bento card illustration
-│   │   └── world-light.svg, world-dark.svg   # Bento card world map
-│   ├── logos/                    # Company logos (light + dark variants, WebP)
-│   │   ├── fareye-{light,dark}.webp
-│   │   ├── aionos-{light,dark}.webp
-│   │   ├── absolutdata-{light,dark}.webp
-│   │   ├── aroma-magic-{light,dark}.webp
-│   │   └── v2g-{light,dark}.webp
-│   └── lab/
-│       ├── lab-hero.webp         # Lab page hero background
-│       ├── vapi-thumbnail.png    # Shararat thumbnail (PNG)
-│       └── vapi-thumbnail.webp   # Shararat thumbnail (WebP)
-├── netlify/
-│   └── functions/
-│       └── groqHandler.js        # Serverless function: Groq LLM proxy
-├── package.json                  # Dependencies: groq-sdk, dotenv
-├── site.webmanifest              # PWA manifest
-├── .env                          # GROQ_API_KEY (not committed)
-├── .gitignore                    # Ignores .env, node_modules, .netlify
-├── DESIGN.md                     # Approved v2.0 design doc — "The Cinematic Scroll"
-├── CHANGELOG.md                  # Release history
-├── TODO.md                       # Tech debt inventory (22 items)
-├── VERSION                       # Current version (1.0.0)
-├── css-refactoring-guide.md      # Internal notes (not deployed, listed for deletion in TODO)
-├── how-to-use-css.md             # Internal notes (not deployed, listed for deletion in TODO)
-└── README.md                     # Repo readme
+```bash
+# Install dependencies (only needed for the Groq serverless function)
+npm install
+
+# Local dev with static server (no serverless function)
+npx serve .
+
+# Local dev with Netlify functions (requires .env with GROQ_API_KEY)
+netlify dev
 ```
 
-## Pages
+There is no build step, linter, formatter, or test suite. HTML/CSS/JS files are served as-is.
 
-### 1. Landing (`/` — index.html)
+## Deployment
 
-**Purpose**: First impression. Establish identity.
+Pushes to `main` auto-deploy via Netlify. No CI pipeline beyond Netlify's build. The Groq API key (`GROQ_API_KEY`) is set in the Netlify dashboard, not in the repo.
 
-**Sections**:
-- **Header** (fixed): GitHub, LinkedIn, YouTube icons (left) + lightbulb theme toggle (right)
-- **Hero**:
-  - Animated greeting cycling through languages: Hello, Hola, Bonjour, नमस्ते, こんにちは, 안녕하세요, Shalom
-  - "I'm Agam Arora."
-  - "I'm an AI Product Manager. I help enterprises unlock value through [scrambling word] data & AI products."
-  - Scramble words: modular → scalable → valuable → efficient → locks to **impactful**
-  - Bouncing dot loader animation
-  - "Explore" CTA button → /explore
-- **Logo strip**: FarEye, AIonOS, AbsolutData, Aroma Magic, V2 Games (theme-aware light/dark)
-- **Footer**: Copyright line
+## Architecture
 
-**Scripts**: main.js (theme init, greeting typewriter, hero scramble)
+### Pages
 
-### 2. Explore (`/explore` — explore/index.html)
+| Route | File | Purpose |
+|-------|------|---------|
+| `/` | `index.html` | Landing — animated greeting, identity, company logos |
+| `/explore` | `explore/index.html` | Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
+| `/lab` | `lab/index.html` | Projects — featured project showcase (currently only Shararat Voice AI) |
 
-**Purpose**: Portfolio and personal brand. Full-viewport scroll-snap sections.
+### JavaScript Module Structure
 
-**Sections**:
-1. **Hero** (100dvh):
-   - Left: proof badges (12+ years, 1x entrepreneur, 50+ clients), headline "Building products for the age of intelligence", subheadline, "Explore Work" CTA → /lab, "Learn more about me" → LinkedIn
-   - Right: avatar image (desktop only, hidden on mobile with background fallback)
-   - Scroll hint chevron at bottom
-2. **Trusted By** (100dvh): Logo row (same 5 companies), scroll hint
-3. **Bento Grid** ("What I Build"): 4-column CSS grid with cards:
-   - Dark cards: "AI Product Strategist", "Execution > Ideas"
-   - Light cards with icons: "Enterprise Growth Leader", "B2B Champion" (desktop only)
-   - Split cards (text + SVG): "Built GenAI that Shipped", "Zero to One. Nailed."
-   - Full card: "Led Global Tech Teams"
-   - World map SVG, working avatar image
-   - Scroll hint
-4. **My Cozy Space** (personal/about): 2-column grid with family photo + personal text about family, toddler, wife, dog Luna. Scroll-up chevron.
+All pages load `scripts/main.js` as their entry point. Shared logic lives in `scripts/utils.js`.
 
-**Scripts**: main.js + explore.js (scroll button navigation with easeInOutCubic)
+| File | Role |
+|------|------|
+| `scripts/main.js` | Global init: theme setup, greeting typewriter, hero scramble. Runs on all pages. |
+| `scripts/utils.js` | Shared utilities: `setupThemeToggle()`, `swapLogosForTheme()`, `typeLetter()`, `typeAndDeleteLoop()`, `scrambleToWords()`, `scrambleToWordsLockFinal()`, `scrollToElement()`, `callGroq()` |
+| `scripts/explore.js` | Explore-only: wires scroll-down chevron buttons to next section |
+| `scripts/lab.js` | Lab-only: project card fade-in animation |
 
-### 3. Lab (`/lab` — lab/index.html)
+### Theme System (critical pattern)
 
-**Purpose**: Project showcase / playground.
+Dark/light theme is a core architectural concern touching HTML, CSS, and JS:
 
-**Sections**:
-- **Hero** (90dvh): Dark overlay on lab-hero.webp background. "The Lab" headline.
-- **Bridge**: Scrambling text (imagine → design → dream → tinker → break → create → innovate → fail → locks to **build**). "Whatever you do, do not stop."
-- **Featured Project — Shararat Voice AI**:
-  - Badge: "VAPI Build Challenge"
-  - YouTube embed (teaser video)
-  - Tags: Voice AI, Conversational UX, Natural Language
-  - Description of the multi-agent voice experience
-  - Action buttons: Try it (shararat.agamarora.com), Watch (YouTube), Code (GitHub)
-- **Footer**: "Interested in collaboration?" + mailto CTA
-
-**Scripts**: main.js + lab.js (project card fade-in animation)
-
-## Design System
-
-### Themes
+1. **CSS**: `:root` defines light tokens; `.dark-theme` class overrides them. Key tokens: `--text-color`, `--background-color`, `--accent-color`, `--prof-color`, `--prof-color-light`.
+2. **JS**: `setupThemeToggle()` in utils.js toggles `.dark-theme` on `<body>`, persists to `localStorage("theme")`, falls back to `prefers-color-scheme`.
+3. **Images**: All logos and some illustrations have light/dark variants. `<img>` tags use `data-light` and `data-dark` attributes; `swapLogosForTheme()` swaps `src` on theme change. **Any new image that differs by theme must follow this pattern.**
 
 | Token | Light | Dark |
 |-------|-------|------|
 | `--text-color` | #333333 | #EEEEEE |
 | `--background-color` | #FFFFFF | #111111 |
 | `--accent-color` | #ACACAC | #FFA726 |
-| `--prof-color` | #005A9C (blue) | #FFA726 (orange) |
-| `--prof-color-light` | #FFC107 (gold) | #FFCC80 (light orange) |
+| `--prof-color` | #005A9C | #FFA726 |
+| `--prof-color-light` | #FFC107 | #FFCC80 |
 
-Theme stored in `localStorage("theme")`. Falls back to `prefers-color-scheme`. Toggled via lightbulb SVG icon. All logos have light/dark variants swapped by JS.
+### Layout Constants
 
-### Typography
+- `--max-content-width: 1200px`, `--header-height: 64px`, `--border-radius: 8px`
+- Spacing base: 8px (`--spacing-xxs` through `--spacing-lg`)
+- Breakpoints: Desktop 1024px+, Tablet 768–1024px, Mobile <768px, Small mobile <500px
 
-- **Font**: Roboto, Helvetica, Arial, sans-serif
-- **Base size**: 16px, line-height 1.5
-- **Headings**: clamp(2.5rem, 6vw, 4rem) for h1, line-height 1.2
-- **Body**: clamp(1rem, 2.5vw, 1.25rem)
+### Serverless Function
 
-### Spacing (8px base)
+`netlify/functions/groqHandler.js` — CommonJS, accepts POST with `{ prompt, systemPrompt }`, returns `{ result }`. Model: llama-3.1-8b-instant, max_tokens=100, temperature=0.9.
 
-`--spacing-xxs: 0.25rem` | `--spacing-xs: 0.5rem` | `--spacing-sm: 0.75rem` | `--spacing-md: 1.5rem` | `--spacing-lg: 2rem`
+## v2.0 — "The Convergence Engine"
 
-### Layout
+A redesign is in progress on the `v2-experience` branch. The concept: scroll-driven visual convergence — 5 career threads (analytics, gaming, beauty, logistics, AI) physically converge as you scroll, representing skills compounding toward AI product leadership. Mobile-first design. One coherent visual metaphor across all viewports.
 
-- `--max-content-width: 1200px`
-- `--header-height: 64px`
-- `--border-radius: 8px`
+- **Tech stack**: Astro + GSAP ScrollTrigger + SVG + Vite. Netlify deployment.
+- **Current status**: CEO review complete. Next step: `/design-consultation` using `DESIGN-BRIEF.md`.
+- **Key files**: `DESIGN.md` (full spec, some assumptions revised), `DESIGN-BRIEF.md` (current design input), `BUILD-LOG.md` (decision history).
+- Prior approaches explored and rejected: Cinematic Scroll, Playable Portfolio (Phaser.js prototype in `experiments/`), Self-Constructing Portfolio.
+- The current site (v1.0) remains live on `main` until v2.0 ships.
 
-### Breakpoints
+## Known Issues
 
-- Desktop: 1024px+
-- Tablet: 768px–1024px
-- Mobile: <768px
-- Small mobile: <500px
+Tracked in `TODO.md` (22 items). Key ones:
 
-## JavaScript Features
-
-| Feature | File | Description |
-|---------|------|-------------|
-| Theme toggle | utils.js `setupThemeToggle()` | Toggles dark-theme class, persists to localStorage, swaps logo images |
-| Logo swap | utils.js `swapLogosForTheme()` | Reads data-light/data-dark attributes, swaps img src |
-| Typewriter | utils.js `typeLetter()` | Single-run character-by-character typing |
-| Type-delete loop | utils.js `typeAndDeleteLoop()` | Cycles through words with type/delete animation |
-| Scramble | utils.js `scrambleToWords()` | Random character scramble transitioning between words |
-| Scramble + lock | utils.js `scrambleToWordsLockFinal()` | Scramble through words, lock on final word |
-| Scroll nav | utils.js `scrollToElement()` | Smooth scroll with easeInOutCubic inside explore-wrapper |
-| Groq API | utils.js `callGroq()` | Calls /.netlify/functions/groqHandler (not used in current UI) |
-| Explore scroll | explore.js | Wires scroll-down buttons to next section |
-| Lab animation | lab.js | Fade-in for project card after 300ms |
-
-## Serverless Backend
-
-**Endpoint**: `/.netlify/functions/groqHandler`
-**Model**: llama-3.1-8b-instant (Groq)
-**Config**: max_tokens=100, temperature=0.9
-**Auth**: GROQ_API_KEY env var (set in Netlify dashboard, not in repo)
-**Status**: Wired up in utils.js but **not called from any UI element** currently. Ready for future use.
-
-## SEO & Social
-
-- Open Graph and Twitter Card meta tags on all pages
-- Schema.org JSON-LD (Person) on landing and explore pages
-- site.webmanifest for PWA support
-- Separate OG images: /assets/preview.png (main), /assets/lab-preview.png (lab)
-- robots meta: index, follow (lab page)
-
-## Known Issues / Debt
-
-- `styles/backup.css`, `styles/main.css.old`, `styles/refactored.css` are dead files (not referenced anywhere)
-- `css-refactoring-guide.md` and `how-to-use-css.md` are internal notes sitting in repo root
-- `.env` file exists locally with GROQ_API_KEY (gitignored, but noted)
-- Groq integration is fully wired but unused in the UI
-- Lab page has only 1 project (Shararat Voice AI)
-- Footer copyright says 2025
-- LinkedIn URL inconsistent: `/in/agamarora` on landing, `/in/agam-arora/` in schema.org
-- Schema.org says "AI Product Leader" on landing, "AI Product Manager" on explore
-- Empty `<nav>` tags with comment placeholders on all pages
-- `lab.js` has dead code for a `<video>` element that was replaced with a YouTube iframe
+- **Dead files**: `styles/backup.css`, `styles/main.css.old`, `styles/refactored.css`, `css-refactoring-guide.md`, `how-to-use-css.md` — none referenced anywhere
+- **Dead code**: `lab.js` has a video click handler for a `<video>` element that was replaced with a YouTube iframe
+- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org; job title mismatch between landing and explore schema.org
+- **Missing**: `og:image` on lab page references non-existent `/assets/lab-preview.png`
+- **Unused**: `callGroq()` in utils.js is wired but no UI element calls it

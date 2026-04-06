@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>agamarora.com — Prototype</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+  }
+  #game-container {
+    border: 1px solid #222;
+    border-radius: 4px;
+    box-shadow: 0 0 40px rgba(255,167,38,0.05);
+  }
+  .hint {
+    color: #444;
+    font-size: 11px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+  }
+  .title {
+    color: #FFA726;
+    font-size: 13px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  /* Dialogue overlay */
+  #dialogue {
+    display: none;
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(17,17,17,0.95);
+    border: 2px solid #FFA726;
+    border-radius: 6px;
+    padding: 16px 24px;
+    max-width: 500px;
+    min-width: 350px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  #dialogue .name {
+    color: #FFA726;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  #dialogue .text {
+    color: #ccc;
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+  }
+  #dialogue .close-hint {
+    color: #555;
+    font-size: 10px;
+    font-family: 'Courier New', monospace;
+    text-align: right;
+    margin-top: 10px;
+  }
+
+  /* Interaction prompt */
+  #interact-prompt {
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFA726;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    background: rgba(17,17,17,0.8);
+    padding: 6px 14px;
+    border: 1px solid #FFA726;
+    border-radius: 4px;
+    z-index: 99;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+</style>
+</head>
+<body>
+
+<div class="title">agamarora.com</div>
+<div id="game-container"></div>
+<div class="hint">Arrow keys to move &middot; Enter to interact</div>
+
+<div id="dialogue">
+  <div class="name" id="dialogue-name"></div>
+  <div class="text" id="dialogue-text"></div>
+  <div class="close-hint">Press Enter to close</div>
+</div>
+
+<div id="interact-prompt">Press Enter to interact</div>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+<script>
+// === INTERACTIVE ZONES ===
+// Tile positions (in tile coords) where interaction triggers
+const INTERACTIONS = {
+  // Fireplace area (roughly col 4-5, row 2-3 based on the map)
+  'fireplace': {
+    tiles: [[4,2],[5,2],[4,3],[5,3]],
+    name: 'Fireplace',
+    text: 'A cozy fireplace. Reminds me of late nights shipping products at FarEye. The best ideas came after midnight.'
+  },
+  'bookshelf': {
+    tiles: [[12,2],[13,2],[12,3],[13,3],[12,4],[13,4]],
+    name: 'Bookshelf',
+    text: 'Product thinking, system design, AI research... 12 years of learning compressed into one shelf. "Inspired" by Anthropic\'s research papers lately.'
+  },
+  'painting': {
+    tiles: [[3,0],[4,0],[3,1],[4,1]],
+    name: 'World Map',
+    text: 'Shipped products across 3 continents. Led teams in India, Southeast Asia, and worked with clients globally. The map keeps growing.'
+  },
+  'plant': {
+    tiles: [[1,2],[1,3],[2,3]],
+    name: 'The Plant',
+    text: 'Every office needs one thing that grows without a sprint plan. This is mine.'
+  },
+  'sofa': {
+    tiles: [[3,4],[4,4],[3,5],[4,5],[3,6],[4,6]],
+    name: 'Thinking Couch',
+    text: 'Where the real product decisions happen. Not in meetings. Not in Jira. Here, staring at the ceiling, asking "but why does the user actually need this?"'
+  },
+  'globe': {
+    tiles: [[9,3],[10,3]],
+    name: 'Globe',
+    text: '50+ enterprise clients across the globe. Each one taught me something different about how organizations actually adopt AI.'
+  },
+  'tv': {
+    tiles: [[8,1],[9,1],[8,2],[9,2]],
+    name: 'Screen',
+    text: 'Always watching how products ship. Anthropic\'s Claude, Stripe\'s dashboard, Linear\'s craft... studying what "great" looks like.'
+  }
+};
+
+class GameScene extends Phaser.Scene {
+  constructor() {
+    super({ key: 'GameScene' });
+    this.dialogueOpen = false;
+    this.nearInteraction = null;
+  }
+
+  preload() {
+    this.load.tilemapTiledJSON('map', 'assets/map.json');
+    this.load.image('roombuilder', 'assets/roombuilder.png');
+    this.load.image('interiors', 'assets/interiors.png');
+    this.load.spritesheet('adam_idle', 'assets/adam_idle.png', {
+      frameWidth: 16,
+      frameHeight: 32
+    });
+    this.load.spritesheet('adam_run', 'assets/adam_run.png', {
+      frameWidth: 16,
+      frameHeight: 32
+    });
+  }
+
+  create() {
+    // Create tilemap
+    const map = this.make.tilemap({ key: 'map' });
+    const roombuilderTileset = map.addTilesetImage('roombuilder', 'roombuilder');
+    const interiorsTileset = map.addTilesetImage('interiors', 'interiors');
+
+    const allTilesets = [roombuilderTileset, interiorsTileset];
+
+    // Create layers
+    const roomLayer = map.createLayer('room', allTilesets, 0, 0);
+    const furnitureLayer = map.createLayer('furniture', allTilesets, 0, 0);
+
+    // Set collision on furniture layer (all non-empty tiles)
+    if (furnitureLayer) {
+      furnitureLayer.setCollisionByExclusion([-1, 0]);
+    }
+
+    // Also set collision on wall tiles (top 3 rows of room layer)
+    if (roomLayer) {
+      // Collide with wall tiles (the ones in top rows)
+      roomLayer.setCollision([49, 50, 51, 66, 67, 68]); // wall tile IDs from the map
+    }
+
+    // Create character animations
+    // Idle: 24 frames total, 6 per direction (down, up, left, right? or similar)
+    // Frame layout for LimeZu 16x16: 6 frames per direction
+    // Row in sprite sheet = direction, but it's a single row sprite sheet
+    // For 16x16 chars: frames 0-5 = idle down, 6-11 = idle up, 12-17 = idle left, 18-23 = idle right
+    this.anims.create({
+      key: 'idle_down',
+      frames: this.anims.generateFrameNumbers('adam_idle', { start: 0, end: 5 }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'idle_up',
+      frames: this.anims.generateFrameNumbers('adam_idle', { start: 6, end: 11 }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'idle_left',
+      frames: this.anims.generateFrameNumbers('adam_idle', { start: 12, end: 17 }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'idle_right',
+      frames: this.anims.generateFrameNumbers('adam_idle', { start: 18, end: 23 }),
+      frameRate: 7,
+      repeat: -1
+    });
+
+    // Run animations
+    this.anims.create({
+      key: 'run_down',
+      frames: this.anims.generateFrameNumbers('adam_run', { start: 0, end: 5 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'run_up',
+      frames: this.anims.generateFrameNumbers('adam_run', { start: 6, end: 11 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'run_left',
+      frames: this.anims.generateFrameNumbers('adam_run', { start: 12, end: 17 }),
+      frameRate: 10,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'run_right',
+      frames: this.anims.generateFrameNumbers('adam_run', { start: 18, end: 23 }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    // Create player sprite
+    // Position in middle of the floor area (tile 7, 6 -> pixel 336, 288)
+    this.player = this.physics.add.sprite(7 * 48 + 24, 6 * 48 + 16, 'adam_idle');
+    this.player.setScale(3); // Scale up 3x (16px -> 48px)
+    this.player.setSize(12, 14); // Smaller hitbox for better collision feel
+    this.player.setOffset(2, 18); // Offset hitbox to feet
+    this.player.setDepth(10);
+    this.player.play('idle_down');
+
+    // Collide player with furniture
+    if (furnitureLayer) {
+      this.physics.add.collider(this.player, furnitureLayer);
+    }
+
+    // Set world bounds
+    this.physics.world.setBounds(0, 3 * 48, map.widthInPixels, map.heightInPixels - 3 * 48);
+    this.player.setCollideWorldBounds(true);
+
+    // Camera
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setBackgroundColor('#111111');
+
+    // Input
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.enterKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
+    // Track last direction for idle
+    this.lastDir = 'down';
+
+    // Enter key for interaction
+    this.enterKey.on('down', () => {
+      if (this.dialogueOpen) {
+        this.closeDialogue();
+      } else if (this.nearInteraction) {
+        this.openDialogue(this.nearInteraction);
+      }
+    });
+  }
+
+  update() {
+    if (this.dialogueOpen) {
+      this.player.setVelocity(0);
+      return;
+    }
+
+    const speed = 150;
+    let vx = 0, vy = 0;
+
+    if (this.cursors.left.isDown) { vx = -speed; this.lastDir = 'left'; }
+    else if (this.cursors.right.isDown) { vx = speed; this.lastDir = 'right'; }
+
+    if (this.cursors.up.isDown) { vy = -speed; this.lastDir = 'up'; }
+    else if (this.cursors.down.isDown) { vy = speed; this.lastDir = 'down'; }
+
+    this.player.setVelocity(vx, vy);
+
+    // Normalize diagonal movement
+    if (vx !== 0 && vy !== 0) {
+      this.player.setVelocity(vx * 0.707, vy * 0.707);
+    }
+
+    // Animation
+    if (vx !== 0 || vy !== 0) {
+      this.player.play('run_' + this.lastDir, true);
+    } else {
+      this.player.play('idle_' + this.lastDir, true);
+    }
+
+    // Check proximity to interactive objects
+    const playerTileX = Math.floor(this.player.x / 48);
+    const playerTileY = Math.floor(this.player.y / 48);
+
+    let found = null;
+    for (const [key, zone] of Object.entries(INTERACTIONS)) {
+      for (const [tx, ty] of zone.tiles) {
+        const dist = Math.abs(playerTileX - tx) + Math.abs(playerTileY - ty);
+        if (dist <= 1) {
+          found = zone;
+          break;
+        }
+      }
+      if (found) break;
+    }
+
+    const prompt = document.getElementById('interact-prompt');
+    if (found && !this.dialogueOpen) {
+      this.nearInteraction = found;
+      prompt.style.display = 'block';
+    } else {
+      this.nearInteraction = null;
+      prompt.style.display = 'none';
+    }
+  }
+
+  openDialogue(zone) {
+    this.dialogueOpen = true;
+    const el = document.getElementById('dialogue');
+    document.getElementById('dialogue-name').textContent = zone.name;
+    document.getElementById('dialogue-text').textContent = zone.text;
+    el.style.display = 'block';
+    document.getElementById('interact-prompt').style.display = 'none';
+  }
+
+  closeDialogue() {
+    this.dialogueOpen = false;
+    document.getElementById('dialogue').style.display = 'none';
+  }
+}
+
+const config = {
+  type: Phaser.AUTO,
+  width: 672,  // 14 tiles * 48
+  height: 432, // 9 tiles * 48
+  parent: 'game-container',
+  pixelArt: true, // This enables nearest-neighbor scaling globally
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 },
+      debug: false
+    }
+  },
+  scene: [GameScene],
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
+  }
+};
+
+const game = new Phaser.Game(config);
+</script>
+</body>
+</html>
