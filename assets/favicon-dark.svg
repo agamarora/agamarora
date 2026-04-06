@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <filter id="shadow">
+    <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="black" flood-opacity="0.5"/>
+  </filter>
+  <text x="18" y="68"
+        font-size="64"
+        font-weight="700"
+        font-family="Courier, 'Courier New', monospace"
+        fill="#FFD700"
+        filter="url(#shadow)">
+    &gt;_
+  </text>
+</svg>
