@@ -4,7 +4,7 @@ A documentary of every decision, research finding, dead end, and breakthrough on
 
 **Started**: 2026-03-28
 **Branch**: `v2-experience`
-**Status**: Experience architecture locked (3 modes). Next: define the connected experience.
+**Status**: Phase 1 in progress. Personality-first home page. Moodboard live at /moodboard.
 
 ---
 
@@ -738,3 +738,76 @@ The 12-iteration search for "what is the centerpiece animation" may have been th
 
 ### Design doc:
 Full session output at `~/.gstack/projects/agamarora-agamarora/Agam-v2-experience-design-20260407-105617.md`
+
+---
+
+## Entry 015 — 2026-04-07: Phase 1 Begins — Personality, Not Portfolio
+
+### The shift
+
+Came into this session ready to build. Started `/design-consultation` to lock the design system and tech stack. But the conversation went somewhere better.
+
+The first design preview (editorial, clean, Linear-style) was rejected. "It's not giving me any vibes other than clean editorial vibes." That was the right call. Clean editorial could be anyone's site.
+
+### Who I am (the foundation for everything)
+
+Rather than designing for what a hiring manager expects, we're designing from who Agam actually is:
+
+- **Tinkerer, builder.** Gets hands dirty. Codes with engineers, talks with CXOs.
+- **Gaming roots.** Systems thinker. Feedback loops. Mastery of hard things.
+- **AI-native, top 1%.** Not a claim. A pattern people notice in conversation.
+- **Founder-first.** Built a company. Shipped product. Learned everything hard.
+- **Doesn't seek permission.** Runs multiple agents. Solves problems and unblocks.
+- **Has ego but it's self-esteem.** Confident but kind. Expert energy without arrogance.
+
+### The take that converts
+
+"AI is not an assistant. It's a multiplier."
+"Clicking buttons and typing prompts are things of the past."
+"I don't seek permission. I build."
+
+These are the words that go on the site. Not project descriptions. Not resume bullets. Opinions.
+
+### Why no portfolio section in Phase 1
+
+Only 2 open-source projects on GitHub (Shararat voice AI, Claude Code usage monitor). Not enough to anchor a portfolio section. Phase 2-3 will add a lab/explore section when there's more substance. Phase 1 is personality + takes + craft.
+
+### What we built
+
+1. **Moodboard at `/moodboard`** — Live HTML page with:
+   - 8 variations of the "aa" logo mark (serif, italic, mono, animated SVG, glow)
+   - Voice/takes section with actual quotes from this session
+   - 4 typography pairings to choose from
+   - 4 color mood explorations
+   - Personality signals (numbers + trait tags)
+   - 3 page structure wireframes
+   - IS/IS NOT decisions documented
+
+2. **Tech stack locked:**
+   - Astro + Tailwind CSS v4 + custom components + Netlify
+   - Instrument Sans (body), display font TBD from moodboard
+   - JetBrains Mono (code/labels)
+   - GSAP only if needed for aa animation
+
+3. **gstack headed browser fixed for Windows:**
+   - Bug #870: parent process watchdog killed headed Chrome after 15s. Fixed by skipping watchdog in headed mode (patched `server.ts`)
+   - Bug #763: `BROWSE_HEADED=1` env var workaround for Windows
+   - Sidebar agent: patched `cli.ts` to use Node's `detached:true` spawn on Windows instead of `Bun.spawn` which doesn't truly detach
+
+### What's open for next iteration
+
+- Which "aa" mark variant? (from the 8 on the moodboard)
+- Which typography pairing? (A: Instrument Serif, B: Syne, C: Space Grotesk, D: DM Serif)
+- Which color mood? (warm dark, cool midnight, earth digital, monochrome)
+- Which page structure? (statement first, name first, conversation)
+- The actual content: refining the takes, the proof points, the personality copy
+
+### Killed premises from this session
+
+- "Editorial magazine" aesthetic (too impersonal, could be anyone)
+- Portfolio-first site (not enough projects, and that's fine)
+- Resume-on-a-website (the resume isn't working, so why copy it)
+- Designing for what a hiring manager expects (design from who you ARE instead)
+
+### Design doc:
+Moodboard live at `moodboard/index.html`. Design preview (rejected) at `~/.gstack/projects/agamarora-agamarora/designs/design-system-20260407/preview.html`.
