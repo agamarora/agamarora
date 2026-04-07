@@ -4,7 +4,7 @@ A documentary of every decision, research finding, dead end, and breakthrough on
 
 **Started**: 2026-03-28
 **Branch**: `v2-experience`
-**Status**: CEO review complete — "The Convergence Engine". Next: design consultation.
+**Status**: Experience architecture locked (3 modes). Next: define the connected experience.
 
 ---
 
@@ -620,3 +620,121 @@ Concept still missing. Premises are sharper than ever. Research is gold. Next se
 
 ### Design doc:
 Full session output at `~/.gstack/projects/agamarora-aipm/Agam-v2-experience-design-20260404-151420.md`
+
+---
+
+## Entry 013 — 2026-04-06: Office Hours — Architecture Locked, Centerpiece Still Open
+
+### What happened:
+Ran a builder-mode `/office-hours` session focused on the site's architecture. Locked two pages (Landing + Explore), aesthetic direction (dark-first, mobile-first, Linear/Stripe editorial quality), and creative direction (animated centerpiece where the craft IS the message). Centerpiece itself still undefined.
+
+### Decisions locked:
+- Two pages: Landing (/) + Explore (/explore)
+- Landing = the 60-second experience. All energy goes here.
+- Explore = project showcase + about + contact. Designed after landing locks.
+- Dark-first. Light mode supported.
+- Roboto is dead. Instrument Serif + Instrument Sans frontrunner.
+- Mobile-first. 6-inch screen is the primary canvas.
+- Direction C: animated/interactive centerpiece. Identity lives around it.
+- Everything from old explore page dies: bento grid, "Trusted by" logos, proof badges, personal section.
+
+### What's still open:
+- What the animated centerpiece IS (the big creative question)
+- Exact typography
+- Copy beyond name and title
+- Scroll vs. single viewport
+- Tech stack
+
+### Design doc:
+Full session output at `~/.gstack/projects/agamarora-agamarora/Agam-v2-experience-design-20260406-140721.md`
+
+---
+
+## Entry 014 — 2026-04-07: The Premise Flip — Desktop-First, Three Modes, Experience Architecture
+
+### What happened:
+Started by questioning the mobile-first premise locked in Entry 013. Ended up flipping the entire device strategy. This is the biggest architectural shift since dropping the convergence narrative in Entry 012.
+
+### The chain of thought:
+
+**1. Mobile-first is broken for what we're building.**
+
+Research into Awwwards portfolios and real mobile experiences revealed two schools:
+- **Message-first:** Clean, editorial, typography-driven. These convert but they're not novel. (edwinle.com)
+- **Creative-first:** Animated, interactive, technically impressive. These win awards but are often buggy on mobile and feel like novelty. (shader.se)
+
+Scroll-jacking doesn't work well on mobile. Complex animations drain batteries and often break. The 12 rejected concepts failed partly because they were trying to be technically impressive on a 6-inch screen.
+
+**2. The false binary: mobile-first vs. desktop-first.**
+
+The initial instinct was "two experiences" — immediately seeing that desktop and mobile are different jobs. But the question became: are they solving the same problem with different aesthetics, or solving different problems entirely?
+
+Answer: **Different problems.**
+
+**3. Understanding the actual user.**
+
+Key insight that changed everything: the hiring manager reviewing candidate portfolios is NOT on the subway. They are:
+- At their desk, laptop open, phone beside them
+- Doing work (reviewing candidates IS work, it happens on desktop)
+- 80-90% of the time, they have BOTH devices within reach during the same 6-7 hour window
+- Mobile is their companion for messages, emails, social — not their primary evaluation tool
+
+The subway scenario was a false constraint inherited from generic mobile-first thinking. Our audience (senior PMs/hiring managers at Anthropic, Stripe, Linear, Figma) works primarily on desktop. They pick up their phones for quick tasks and personal scrolling, but real evaluation happens on a big screen.
+
+**4. Three modes, not two.**
+
+This led to the core experience architecture:
+
+| Mode | Entry point | Purpose | Experience quality |
+|------|-------------|---------|-------------------|
+| **Mobile standalone** | Link tapped on phone (LinkedIn notification, forwarded link) | Hook. Identity + conviction in 30 seconds. "Who is this person?" | Clean, high-conversion, proven editorial patterns. Not novel. |
+| **Desktop standalone** | Link opened on laptop (direct, bookmarked, Slacked) | Full experience. Proof of taste and craft. "Does this person have it?" | Impressive. Complete. Works without mobile. Not 20% of the total. |
+| **Connected (Desktop + Mobile)** | Desktop experience invites you to pick up your phone and scan something | **The magic.** Both devices working together. The thing nobody has done for a portfolio. | THIS is the centerpiece. THIS is the mold-breaking moment. |
+
+Critical constraints on the three modes:
+- Each standalone mode is a COMPLETE experience. Not partial. Not degraded.
+- Mobile standalone is not trying to be novel. Clean, editorial, proven. It converts.
+- Desktop standalone is where we take creative risks. Where the spectacle lives.
+- The connected experience is an UPGRADE, not a requirement. It's the bonus level for people who have both devices (which is 80-90% of our audience at the moment they're evaluating candidates).
+
+**5. The centerpiece reframed.**
+
+The 12-iteration search for "what is the centerpiece animation" may have been the wrong question. The centerpiece might not be a desktop animation or a mobile interaction. It might be **the moment the two devices connect.** The act of picking up your phone, scanning something on the desktop screen, and watching the two screens come alive together — THAT is the craft statement. THAT is "this would not have been possible without AI." THAT is what gets screenshotted and Slacked to a team.
+
+### What we killed:
+- **Mobile-first premise** (Entry 013). Desktop is the primary canvas. Mobile is clean and converts, but the creative energy goes to desktop and the connected experience.
+- **The subway scenario.** Our audience evaluates candidates at their desk, not on public transit.
+- **One-experience-fits-all responsive design.** We're not adapting one layout. We're building three purposeful experiences.
+
+### What's locked (updated from Entry 013):
+- **Three experience modes:** mobile standalone, desktop standalone, connected
+- **Desktop-first for creative energy.** The spectacle and the connected experience are desktop-native.
+- **Mobile is clean and proven.** Editorial, high-conversion. Not experimental.
+- **Connected experience is the centerpiece.** The moment two devices sync is the "wow."
+- **Each mode stands alone.** No mode is partial or degraded.
+- Dark-first, Instrument Serif + Instrument Sans frontrunner, Linear/Stripe quality bar (carried from Entry 013).
+
+### What's still open (the EXPERIENCE questions, not tech):
+1. **What does the connected experience FEEL like?** What does the person DO on their phone while looking at the desktop? What changes on the desktop when the phone connects? What is the story of that moment?
+2. **What is the desktop standalone spectacle?** It needs to be impressive on its own, AND it needs to have a natural moment where it invites you to pick up your phone.
+3. **What is the AI PM take?** The content that converts on mobile. The opinion that makes a hiring manager think "this person gets it."
+4. **What is the transition moment?** How does the desktop experience ask you to connect your phone? A QR code? Something else? How does it feel — jarring or natural?
+5. **What happens to the "other things"?** Projects, about section, contact info — where do they live across the three modes?
+
+### What we explicitly decided NOT to do yet:
+- Pick technology. Experience first. Tech serves the experience, not the other way around.
+- Define implementation approaches. The "how" comes after the "what."
+- Rush to ship. The previous session said "spike prototypes." This session says "define the experience first."
+
+### The question for next session:
+**What does the connected experience FEEL like?** Close your eyes. You're a Head of Product at Anthropic. You're on your laptop. You see agamarora.com. Something happens. You pick up your phone. You scan something. Now what? What do you see? What do you do? What makes you say "whoa"?
+
+### Inspiration (carry forward):
+- edwinle.com — clean editorial, message-first (reference for mobile standalone)
+- shader.se — desktop spectacle, technically impressive (reference for desktop ambition)
+- Museum companion apps — phone as guide while you look at the big exhibit
+- Nintendo Wii U concept (poorly executed, but the multi-screen idea)
+- Figma mobile app — not Figma-on-a-phone, a purpose-built companion
+
+### Design doc:
+Full session output at `~/.gstack/projects/agamarora-agamarora/Agam-v2-experience-design-20260407-105617.md`
