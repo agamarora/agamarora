@@ -37,4 +37,13 @@
 - [ ] Fix all items in Dead Files, Inconsistencies, Dead Code, and SEO/Meta sections above
 - [ ] Performance audit — lighthouse scores, bundle sizes, loading times
 - [ ] Mobile QA — test all 3 pages on phone-sized viewports
-- [ ] v2 concept search continues in parallel — premises from BUILD-LOG Entry 012 carry forward
+
+## v2 — /aa Mark Exploration (continue from moodboard/aa-mark.html)
+- [ ] More font exploration — try beyond Patrick Hand, Kalam, Satisfy (current finalists)
+- [ ] Explore `aa.` variations (with period) — different energy than `/aa`
+- [ ] Refine slash treatment — mono slash vs dimmed vs smaller vs alternative symbols (`_`, `>`, `~`, `.`)
+- [ ] Test more stroke weights systematically per font
+- [ ] Color decision — white vs gold vs mixed (dim slash + bright aa)
+- [ ] Multi-size test — hero animation, nav corner, favicon (16px). Which marks survive small?
+- [ ] Decide: does `/` stay or does an alternative prefix win?
+- [ ] Once mark is locked: build the actual hero animation component for the site

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/aa — stroke draw refined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Satisfy&family=Patrick+Hand&family=Architects+Daughter&family=Permanent+Marker&family=Shadows+Into+Light&family=Homemade+Apple&family=Rock+Salt&family=Marck+Script&family=Great+Vibes&family=Alex+Brush&family=Allura&family=Yellowtail&family=Amatic+SC:wght@400;700&family=Indie+Flower&family=Reenie+Beanie&family=JetBrains+Mono:wght@200;300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --border: #1E1E1E;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    padding: 48px clamp(24px, 6vw, 80px);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    font-family: var(--mono); font-size: 13px; font-weight: 400;
+    color: var(--accent); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  header p { font-size: 15px; color: var(--text-dim); max-width: 700px; line-height: 1.6; }
+
+  .section-header {
+    padding: 40px clamp(24px, 6vw, 80px) 16px;
+    border-top: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: var(--mono); font-size: 11px; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .section-header p { font-size: 13px; color: var(--text-dim); margin-top: 6px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2px; padding: 0 2px 2px;
+  }
+  .cell {
+    background: var(--surface);
+    min-height: 240px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    cursor: pointer; transition: background 0.3s ease;
+    padding: 40px 28px;
+  }
+  .cell:hover { background: #161616; }
+  .cell .label {
+    position: absolute; bottom: 12px; left: 16px;
+    font-family: var(--mono); font-size: 9px; color: var(--text-dim);
+  }
+  .cell .variant-num {
+    position: absolute; top: 12px; left: 16px;
+    font-family: var(--mono); font-size: 9px; color: var(--accent); letter-spacing: 0.1em;
+  }
+  .replay-hint {
+    position: absolute; top: 12px; right: 16px;
+    font-family: var(--mono); font-size: 9px; color: var(--text-dim);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .cell:hover .replay-hint { opacity: 1; }
+
+  .controls {
+    padding: 20px clamp(24px, 6vw, 80px);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .controls label { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .controls button {
+    font-family: var(--mono); font-size: 11px; padding: 6px 14px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 4px; cursor: pointer; transition: all 0.2s;
+  }
+  .controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .controls button.active { border-color: var(--accent); color: var(--accent); background: rgba(229,165,75,0.08); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>// /aa — stroke draw, refined</h1>
+  <p>
+    Back to the stroke-draw that looked elegant. Now with staggered timing:
+    slash draws first, "aa" follows. The fill materializes after.
+    17 fonts across /aa, aa., and pure aa. Click to replay.
+  </p>
+</header>
+
+<div class="controls">
+  <label>Speed:</label>
+  <button class="speed-btn" data-speed="0.8">Fast</button>
+  <button class="speed-btn active" data-speed="2">Natural</button>
+  <button class="speed-btn" data-speed="4">Slow</button>
+  <button class="speed-btn" data-speed="7">Cinematic</button>
+</div>
+
+<!-- /aa — mono slash + script -->
+<div class="section-header">
+  <h2>/aa — mono slash + handwritten aa</h2>
+  <p>Slash draws quick (mono, thin). Then "aa" traces in the script font. Staggered, not simultaneous.</p>
+</div>
+<div class="grid" id="grid-slash"></div>
+
+<!-- aa. -->
+<div class="section-header">
+  <h2>aa. — statement</h2>
+</div>
+<div class="grid" id="grid-dot"></div>
+
+<!-- pure aa -->
+<div class="section-header">
+  <h2>aa — pure</h2>
+</div>
+<div class="grid" id="grid-pure"></div>
+
+<script>
+const FONTS = [
+  { family: 'Patrick Hand',       weight: 400, label: 'Patrick Hand' },
+  { family: 'Kalam',              weight: 700, label: 'Kalam Bold' },
+  { family: 'Satisfy',            weight: 400, label: 'Satisfy' },
+  { family: 'Architects Daughter', weight: 400, label: 'Architects Daughter' },
+  { family: 'Permanent Marker',   weight: 400, label: 'Permanent Marker' },
+  { family: 'Shadows Into Light', weight: 400, label: 'Shadows Into Light' },
+  { family: 'Homemade Apple',     weight: 400, label: 'Homemade Apple' },
+  { family: 'Rock Salt',          weight: 400, label: 'Rock Salt' },
+  { family: 'Marck Script',       weight: 400, label: 'Marck Script' },
+  { family: 'Great Vibes',        weight: 400, label: 'Great Vibes' },
+  { family: 'Alex Brush',         weight: 400, label: 'Alex Brush' },
+  { family: 'Allura',             weight: 400, label: 'Allura' },
+  { family: 'Yellowtail',         weight: 400, label: 'Yellowtail' },
+  { family: 'Amatic SC',          weight: 700, label: 'Amatic SC Bold' },
+  { family: 'Indie Flower',       weight: 400, label: 'Indie Flower' },
+  { family: 'Reenie Beanie',      weight: 400, label: 'Reenie Beanie' },
+  { family: 'Caveat',             weight: 700, label: 'Caveat Bold' },
+];
+
+let globalSpeed = 2;
+let counter = 0;
+
+// ============================================================
+// BUILD: /aa with mono slash + script aa (separate SVG text elements)
+// ============================================================
+function buildSlash() {
+  const grid = document.getElementById('grid-slash');
+  FONTS.forEach(font => {
+    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
+      counter++;
+      const cell = makeCell(counter, `${font.label} — ${color.name}`);
+      const svg = makeSVG(360, 120);
+
+      // Slash: mono, thin, draws first
+      const slash = makeText('/', 22, 94, 'JetBrains Mono', 300, 70, color.c, 1.2);
+      slash.dataset.role = 'slash';
+      svg.appendChild(slash);
+
+      // aa: script font, draws after slash
+      const aa = makeText('aa', 58, 96, font.family, font.weight, 82, color.c, 1.6);
+      aa.dataset.role = 'aa';
+      svg.appendChild(aa);
+
+      // Fill layers
+      const slashFill = makeText('/', 22, 94, 'JetBrains Mono', 300, 70, color.c, 0, true);
+      svg.appendChild(slashFill);
+      const aaFill = makeText('aa', 58, 96, font.family, font.weight, 82, color.c, 0, true);
+      svg.appendChild(aaFill);
+
+      cell.insertBefore(svg, cell.querySelector('.label'));
+      cell.addEventListener('click', () => animateStaggered(cell));
+      grid.appendChild(cell);
+    });
+  });
+}
+
+// ============================================================
+// BUILD: aa. (single text, stroke draw)
+// ============================================================
+function buildDot() {
+  const grid = document.getElementById('grid-dot');
+  FONTS.forEach(font => {
+    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
+      counter++;
+      const cell = makeCell(counter, `${font.label} — aa. — ${color.name}`);
+      const svg = makeSVG(320, 120);
+
+      const stroke = makeText('aa.', 40, 96, font.family, font.weight, 82, color.c, 1.6);
+      stroke.dataset.role = 'single';
+      svg.appendChild(stroke);
+
+      const fill = makeText('aa.', 40, 96, font.family, font.weight, 82, color.c, 0, true);
+      svg.appendChild(fill);
+
+      cell.insertBefore(svg, cell.querySelector('.label'));
+      cell.addEventListener('click', () => animateStaggered(cell));
+      grid.appendChild(cell);
+    });
+  });
+}
+
+// ============================================================
+// BUILD: pure aa
+// ============================================================
+function buildPure() {
+  const grid = document.getElementById('grid-pure');
+  FONTS.forEach(font => {
+    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
+      counter++;
+      const cell = makeCell(counter, `${font.label} — ${color.name}`);
+      const svg = makeSVG(280, 120);
+
+      const stroke = makeText('aa', 40, 96, font.family, font.weight, 88, color.c, 1.6);
+      stroke.dataset.role = 'single';
+      svg.appendChild(stroke);
+
+      const fill = makeText('aa', 40, 96, font.family, font.weight, 88, color.c, 0, true);
+      svg.appendChild(fill);
+
+      cell.insertBefore(svg, cell.querySelector('.label'));
+      cell.addEventListener('click', () => animateStaggered(cell));
+      grid.appendChild(cell);
+    });
+  });
+}
+
+// ============================================================
+// ANIMATION: staggered stroke-draw with organic timing
+// ============================================================
+function animateStaggered(cell) {
+  const svg = cell.querySelector('svg');
+  if (!svg) return;
+
+  const strokes = svg.querySelectorAll('text[data-role]');
+  const fills = svg.querySelectorAll('text:not([data-role])');
+
+  // Reset fills
+  fills.forEach(t => { t.style.transition = 'none'; t.style.opacity = '0'; });
+
+  // Animate each stroke element with staggered timing
+  let totalDuration = 0;
+
+  strokes.forEach((text, idx) => {
+    const baseLen = text.getComputedTextLength();
+    const strokeLen = Math.max(baseLen * 6, 2000);
+
+    text.style.strokeDasharray = strokeLen;
+    text.style.strokeDashoffset = strokeLen;
+    text.style.transition = 'none';
+    text.style.opacity = '1';
+    text.getBoundingClientRect();
+
+    const role = text.dataset.role;
+    let duration, delay, easing;
+
+    if (role === 'slash') {
+      duration = globalSpeed * 0.35;
+      delay = 0;
+      easing = 'cubic-bezier(0.33, 1, 0.68, 1)';
+    } else if (role === 'aa') {
+      duration = globalSpeed * 0.85;
+      delay = globalSpeed * 0.3;
+      easing = 'cubic-bezier(0.45, 0, 0.55, 1)';
+    } else {
+      duration = globalSpeed * 0.9;
+      delay = 0;
+      easing = 'cubic-bezier(0.45, 0, 0.55, 1)';
+    }
+
+    text.style.transition = `stroke-dashoffset ${duration}s ${easing} ${delay}s`;
+    text.style.strokeDashoffset = '0';
+
+    totalDuration = Math.max(totalDuration, delay + duration);
+  });
+
+  // After all strokes complete: fade in fill, dim stroke
+  const fillDelay = totalDuration * 1000 + 150;
+  setTimeout(() => {
+    fills.forEach(t => {
+      t.style.transition = 'opacity 0.5s ease';
+      t.style.opacity = '1';
+    });
+    strokes.forEach(t => {
+      t.style.transition = 'opacity 0.4s ease 0.15s';
+      t.style.opacity = '0.2';
+    });
+  }, fillDelay);
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function makeCell(num, labelText) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.innerHTML = `
+    <span class="variant-num">${String(num).padStart(2, '0')}</span>
+    <span class="label">${labelText}</span>
+    <span class="replay-hint">replay</span>
+  `;
+  return cell;
+}
+
+function makeSVG(w, h) {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  svg.style.overflow = 'visible';
+  return svg;
+}
+
+function makeText(content, x, y, family, weight, size, color, strokeW, isFill) {
+  const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  t.setAttribute('x', x);
+  t.setAttribute('y', y);
+  t.setAttribute('font-family', `'${family}', cursive, monospace`);
+  t.setAttribute('font-weight', weight);
+  t.setAttribute('font-size', size);
+  t.setAttribute('stroke-linecap', 'round');
+  t.setAttribute('stroke-linejoin', 'round');
+  if (isFill) {
+    t.setAttribute('fill', color);
+    t.setAttribute('opacity', '0');
+  } else {
+    t.setAttribute('fill', 'none');
+    t.setAttribute('stroke', color);
+    t.setAttribute('stroke-width', strokeW);
+  }
+  t.textContent = content;
+  return t;
+}
+
+// ============================================================
+// SPEED + INIT
+// ============================================================
+document.querySelectorAll('.speed-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    globalSpeed = parseFloat(btn.dataset.speed);
+    document.querySelectorAll('.cell').forEach((c, i) => {
+      setTimeout(() => animateStaggered(c), i * 40);
+    });
+  });
+});
+
+document.fonts.ready.then(() => {
+  buildSlash();
+  buildDot();
+  buildPure();
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.cell').forEach((cell, i) => {
+      setTimeout(() => animateStaggered(cell), i * 70);
+    });
+  });
+});
+</script>
+
+</body>
+</html>
