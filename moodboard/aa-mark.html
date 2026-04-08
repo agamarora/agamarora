@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>/aa — stroke draw refined</title>
+<title>aa. — the mark</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Satisfy&family=Patrick+Hand&family=Architects+Daughter&family=Permanent+Marker&family=Shadows+Into+Light&family=Homemade+Apple&family=Rock+Salt&family=Marck+Script&family=Great+Vibes&family=Alex+Brush&family=Allura&family=Yellowtail&family=Amatic+SC:wght@400;700&family=Indie+Flower&family=Reenie+Beanie&family=JetBrains+Mono:wght@200;300;400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=JetBrains+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0A0A0A;
@@ -93,210 +93,343 @@
 <body>
 
 <header>
-  <h1>// /aa — stroke draw, refined</h1>
+  <h1>// aa. — the mark</h1>
   <p>
-    Back to the stroke-draw that looked elegant. Now with staggered timing:
-    slash draws first, "aa" follows. The fill materializes after.
-    17 fonts across /aa, aa., and pure aa. Click to replay.
+    Patrick Hand. "aa" adapts to background. The dot is always gold.
+    Stroke draws, fill snaps in. Drag the slider to tune speed.
   </p>
 </header>
 
 <div class="controls">
   <label>Speed:</label>
-  <button class="speed-btn" data-speed="0.8">Fast</button>
-  <button class="speed-btn active" data-speed="2">Natural</button>
-  <button class="speed-btn" data-speed="4">Slow</button>
-  <button class="speed-btn" data-speed="7">Cinematic</button>
+  <input type="range" id="speed-slider" min="0.5" max="10" step="0.1" value="1.5" />
+  <span id="speed-value" style="font-family: var(--mono); font-size: 13px; color: var(--accent); min-width: 40px;">1.5s</span>
+  <button id="replay-all" style="margin-left: 24px; font-family: var(--mono); font-size: 11px; padding: 6px 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 4px; cursor: pointer;">Replay All</button>
 </div>
 
-<!-- /aa — mono slash + script -->
+<!-- Dark background -->
 <div class="section-header">
-  <h2>/aa — mono slash + handwritten aa</h2>
-  <p>Slash draws quick (mono, thin). Then "aa" traces in the script font. Staggered, not simultaneous.</p>
+  <h2>on dark</h2>
+  <p>aa in white, dot in gold. The site's primary context.</p>
 </div>
-<div class="grid" id="grid-slash"></div>
+<div class="grid" id="grid-dark"></div>
 
-<!-- aa. -->
-<div class="section-header">
-  <h2>aa. — statement</h2>
+<!-- Light background -->
+<div class="section-header" style="background: #F5F3EF;">
+  <h2 style="color: #333;">on light</h2>
+  <p style="color: #666;">aa in dark, dot in gold. For light mode / print / social cards.</p>
 </div>
-<div class="grid" id="grid-dot"></div>
+<div class="grid" id="grid-light" style="background: #F5F3EF;"></div>
 
-<!-- pure aa -->
+<!-- /aa variant -->
 <div class="section-header">
-  <h2>aa — pure</h2>
+  <h2>/aa — with slash</h2>
+  <p>Mono slash (JetBrains Mono, light weight) + Patrick Hand aa. Tight spacing. Slash draws first.</p>
 </div>
-<div class="grid" id="grid-pure"></div>
+<div class="grid" id="grid-slash-dark"></div>
+
+<div class="section-header" style="background: #F5F3EF;">
+  <h2 style="color: #333;">/aa — on light</h2>
+</div>
+<div class="grid" id="grid-slash-light" style="background: #F5F3EF;"></div>
+
+<!-- Sizes -->
+<div class="section-header">
+  <h2>sizes — aa.</h2>
+  <p>Hero (120px), Nav (48px), Small (32px), Favicon (16px).</p>
+</div>
+<div class="grid" id="grid-sizes"></div>
 
 <script>
-const FONTS = [
-  { family: 'Patrick Hand',       weight: 400, label: 'Patrick Hand' },
-  { family: 'Kalam',              weight: 700, label: 'Kalam Bold' },
-  { family: 'Satisfy',            weight: 400, label: 'Satisfy' },
-  { family: 'Architects Daughter', weight: 400, label: 'Architects Daughter' },
-  { family: 'Permanent Marker',   weight: 400, label: 'Permanent Marker' },
-  { family: 'Shadows Into Light', weight: 400, label: 'Shadows Into Light' },
-  { family: 'Homemade Apple',     weight: 400, label: 'Homemade Apple' },
-  { family: 'Rock Salt',          weight: 400, label: 'Rock Salt' },
-  { family: 'Marck Script',       weight: 400, label: 'Marck Script' },
-  { family: 'Great Vibes',        weight: 400, label: 'Great Vibes' },
-  { family: 'Alex Brush',         weight: 400, label: 'Alex Brush' },
-  { family: 'Allura',             weight: 400, label: 'Allura' },
-  { family: 'Yellowtail',         weight: 400, label: 'Yellowtail' },
-  { family: 'Amatic SC',          weight: 700, label: 'Amatic SC Bold' },
-  { family: 'Indie Flower',       weight: 400, label: 'Indie Flower' },
-  { family: 'Reenie Beanie',      weight: 400, label: 'Reenie Beanie' },
-  { family: 'Caveat',             weight: 700, label: 'Caveat Bold' },
-];
+const FONT = { family: 'Patrick Hand', weight: 400 };
+const GOLD = '#E5A54B';
+const LIGHT_AA = '#E8E4DF';
+const DARK_AA = '#2A2A2A';
+const DARK_BG = '#111111';
+const LIGHT_BG = '#F5F3EF';
 
-let globalSpeed = 2;
+let globalSpeed = 1.5; // default speed
 let counter = 0;
 
 // ============================================================
-// BUILD: /aa with mono slash + script aa (separate SVG text elements)
+// BUILD: aa. with split colors (aa + dot as separate SVG texts)
 // ============================================================
-function buildSlash() {
-  const grid = document.getElementById('grid-slash');
-  FONTS.forEach(font => {
-    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
-      counter++;
-      const cell = makeCell(counter, `${font.label} — ${color.name}`);
-      const svg = makeSVG(360, 120);
+function buildMark(gridId, aaColor, bgColor) {
+  const grid = document.getElementById(gridId);
 
-      // Slash: mono, thin, draws first
-      const slash = makeText('/', 22, 94, 'JetBrains Mono', 300, 70, color.c, 1.2);
-      slash.dataset.role = 'slash';
-      svg.appendChild(slash);
+  // Three stroke weight variations
+  [
+    { sw: 1.0, label: 'thin stroke' },
+    { sw: 1.6, label: 'medium stroke' },
+    { sw: 2.4, label: 'heavy stroke' },
+  ].forEach(variant => {
+    counter++;
+    const cell = makeCell(counter, `Patrick Hand — ${variant.label}`);
+    if (bgColor === LIGHT_BG) {
+      cell.style.background = LIGHT_BG;
+    }
+    const svg = makeSVG(280, 120);
 
-      // aa: script font, draws after slash
-      const aa = makeText('aa', 58, 96, font.family, font.weight, 82, color.c, 1.6);
-      aa.dataset.role = 'aa';
-      svg.appendChild(aa);
+    // "aa" stroke — position dot dynamically after measuring
+    const aaX = 30;
+    const aaStroke = makeText('aa', aaX, 96, FONT.family, FONT.weight, 82, aaColor, variant.sw);
+    aaStroke.dataset.role = 'aa';
+    svg.appendChild(aaStroke);
 
-      // Fill layers
-      const slashFill = makeText('/', 22, 94, 'JetBrains Mono', 300, 70, color.c, 0, true);
-      svg.appendChild(slashFill);
-      const aaFill = makeText('aa', 58, 96, font.family, font.weight, 82, color.c, 0, true);
-      svg.appendChild(aaFill);
+    // Placeholder dot — will reposition after measure
+    const dotStroke = makeText('.', 0, 96, FONT.family, FONT.weight, 82, GOLD, variant.sw);
+    dotStroke.dataset.role = 'dot';
+    svg.appendChild(dotStroke);
 
-      cell.insertBefore(svg, cell.querySelector('.label'));
-      cell.addEventListener('click', () => animateStaggered(cell));
-      grid.appendChild(cell);
+    const aaFill = makeText('aa', aaX, 96, FONT.family, FONT.weight, 82, aaColor, 0, true);
+    aaFill.dataset.fillFor = 'aa';
+    svg.appendChild(aaFill);
+
+    const dotFill = makeText('.', 0, 96, FONT.family, FONT.weight, 82, GOLD, 0, true);
+    dotFill.dataset.fillFor = 'dot';
+    svg.appendChild(dotFill);
+
+    cell.insertBefore(svg, cell.querySelector('.label'));
+    cell.addEventListener('click', () => animateMark(cell));
+    grid.appendChild(cell);
+
+    // Measure aa width after DOM insertion, position dot snug
+    requestAnimationFrame(() => {
+      const aaWidth = aaStroke.getComputedTextLength();
+      const dotX = aaX + aaWidth - 4; // snug, slight overlap
+      dotStroke.setAttribute('x', dotX);
+      dotFill.setAttribute('x', dotX);
     });
   });
 }
 
 // ============================================================
-// BUILD: aa. (single text, stroke draw)
+// BUILD: /aa with mono slash + script aa (tight spacing)
 // ============================================================
-function buildDot() {
-  const grid = document.getElementById('grid-dot');
-  FONTS.forEach(font => {
-    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
-      counter++;
-      const cell = makeCell(counter, `${font.label} — aa. — ${color.name}`);
-      const svg = makeSVG(320, 120);
+function buildSlashMark(gridId, aaColor, bgColor) {
+  const grid = document.getElementById(gridId);
 
-      const stroke = makeText('aa.', 40, 96, font.family, font.weight, 82, color.c, 1.6);
-      stroke.dataset.role = 'single';
-      svg.appendChild(stroke);
+  [
+    { sw: 1.0, label: '/aa — thin stroke' },
+    { sw: 1.6, label: '/aa — medium stroke' },
+    { sw: 2.4, label: '/aa — heavy stroke' },
+  ].forEach(variant => {
+    counter++;
+    const cell = makeCell(counter, variant.label);
+    cell.dataset.animStyle = 'slash';
+    if (bgColor === LIGHT_BG) {
+      cell.style.background = LIGHT_BG;
+    }
+    const svg = makeSVG(320, 120);
 
-      const fill = makeText('aa.', 40, 96, font.family, font.weight, 82, color.c, 0, true);
-      svg.appendChild(fill);
+    // Slash: JetBrains Mono, light weight, GOLD (operator color)
+    const slashStroke = makeText('/', 18, 94, 'JetBrains Mono', 300, 70, GOLD, variant.sw * 0.8);
+    slashStroke.dataset.role = 'slash';
+    svg.appendChild(slashStroke);
 
-      cell.insertBefore(svg, cell.querySelector('.label'));
-      cell.addEventListener('click', () => animateStaggered(cell));
-      grid.appendChild(cell);
-    });
+    // aa: Patrick Hand, tight after slash
+    const aaStroke = makeText('aa', 46, 96, FONT.family, FONT.weight, 82, aaColor, variant.sw);
+    aaStroke.dataset.role = 'aa';
+    svg.appendChild(aaStroke);
+
+    // Fill layers
+    const slashFill = makeText('/', 18, 94, 'JetBrains Mono', 300, 70, GOLD, 0, true);
+    slashFill.dataset.fillFor = 'slash';
+    svg.appendChild(slashFill);
+
+    const aaFill = makeText('aa', 46, 96, FONT.family, FONT.weight, 82, aaColor, 0, true);
+    aaFill.dataset.fillFor = 'aa';
+    svg.appendChild(aaFill);
+
+    cell.insertBefore(svg, cell.querySelector('.label'));
+    cell.addEventListener('click', () => animateSlashMark(cell));
+    grid.appendChild(cell);
   });
 }
 
 // ============================================================
-// BUILD: pure aa
+// ANIMATION: /aa — slash draws first, then aa follows
 // ============================================================
-function buildPure() {
-  const grid = document.getElementById('grid-pure');
-  FONTS.forEach(font => {
-    [{ c: '#E8E4DF', name: 'white' }, { c: '#E5A54B', name: 'gold' }].forEach(color => {
-      counter++;
-      const cell = makeCell(counter, `${font.label} — ${color.name}`);
-      const svg = makeSVG(280, 120);
-
-      const stroke = makeText('aa', 40, 96, font.family, font.weight, 88, color.c, 1.6);
-      stroke.dataset.role = 'single';
-      svg.appendChild(stroke);
-
-      const fill = makeText('aa', 40, 96, font.family, font.weight, 88, color.c, 0, true);
-      svg.appendChild(fill);
-
-      cell.insertBefore(svg, cell.querySelector('.label'));
-      cell.addEventListener('click', () => animateStaggered(cell));
-      grid.appendChild(cell);
-    });
-  });
-}
-
-// ============================================================
-// ANIMATION: staggered stroke-draw with organic timing
-// ============================================================
-function animateStaggered(cell) {
+function animateSlashMark(cell) {
   const svg = cell.querySelector('svg');
   if (!svg) return;
 
-  const strokes = svg.querySelectorAll('text[data-role]');
-  const fills = svg.querySelectorAll('text:not([data-role])');
+  const slashStroke = svg.querySelector('[data-role="slash"]');
+  const aaStroke = svg.querySelector('[data-role="aa"]');
+  const slashFill = svg.querySelector('[data-fill-for="slash"]');
+  const aaFill = svg.querySelector('[data-fill-for="aa"]');
 
-  // Reset fills
-  fills.forEach(t => { t.style.transition = 'none'; t.style.opacity = '0'; });
-
-  // Animate each stroke element with staggered timing
-  let totalDuration = 0;
-
-  strokes.forEach((text, idx) => {
-    const baseLen = text.getComputedTextLength();
-    const strokeLen = Math.max(baseLen * 6, 2000);
-
-    text.style.strokeDasharray = strokeLen;
-    text.style.strokeDashoffset = strokeLen;
-    text.style.transition = 'none';
-    text.style.opacity = '1';
-    text.getBoundingClientRect();
-
-    const role = text.dataset.role;
-    let duration, delay, easing;
-
-    if (role === 'slash') {
-      duration = globalSpeed * 0.35;
-      delay = 0;
-      easing = 'cubic-bezier(0.33, 1, 0.68, 1)';
-    } else if (role === 'aa') {
-      duration = globalSpeed * 0.85;
-      delay = globalSpeed * 0.3;
-      easing = 'cubic-bezier(0.45, 0, 0.55, 1)';
-    } else {
-      duration = globalSpeed * 0.9;
-      delay = 0;
-      easing = 'cubic-bezier(0.45, 0, 0.55, 1)';
-    }
-
-    text.style.transition = `stroke-dashoffset ${duration}s ${easing} ${delay}s`;
-    text.style.strokeDashoffset = '0';
-
-    totalDuration = Math.max(totalDuration, delay + duration);
+  // Reset everything hidden
+  [slashFill, aaFill].filter(Boolean).forEach(t => {
+    t.style.transition = 'none'; t.style.opacity = '0';
+  });
+  [slashStroke, aaStroke].filter(Boolean).forEach(t => {
+    t.style.transition = 'none'; t.style.opacity = '0';
+    const len = t.getComputedTextLength() * 2;
+    t.style.strokeDasharray = len;
+    t.style.strokeDashoffset = len;
+    t.getBoundingClientRect();
   });
 
-  // After all strokes complete: fade in fill, dim stroke
-  const fillDelay = totalDuration * 1000 + 150;
-  setTimeout(() => {
-    fills.forEach(t => {
-      t.style.transition = 'opacity 0.5s ease';
-      t.style.opacity = '1';
+  // Beat 1: Slash blinks like a cursor (2 slow blinks)
+  const blinkDur = 300; // ms per blink phase — slower, deliberate
+  const blinks = 2;
+  let blinkCount = 0;
+
+  if (slashFill) {
+    slashFill.style.transition = 'none';
+    slashFill.style.opacity = '0';
+
+    const blinkInterval = setInterval(() => {
+      blinkCount++;
+      if (blinkCount > blinks * 2) {
+        clearInterval(blinkInterval);
+        // Hold solid after blinks
+        slashFill.style.transition = 'none';
+        slashFill.style.opacity = '1';
+        startAaDraw();
+        return;
+      }
+      // Toggle: odd = on, even = off
+      slashFill.style.transition = 'none';
+      slashFill.style.opacity = blinkCount % 2 === 1 ? '1' : '0';
+    }, blinkDur);
+  } else {
+    startAaDraw();
+  }
+
+  function startAaDraw() {
+    // Beat 2: aa stroke draws
+    if (aaStroke) {
+      aaStroke.style.opacity = '1';
+      aaStroke.getBoundingClientRect();
+
+      const aaDur = globalSpeed * 0.85;
+      aaStroke.style.transition = `stroke-dashoffset ${aaDur}s cubic-bezier(0.25, 0.1, 0.25, 1) 0s`;
+      aaStroke.style.strokeDashoffset = '0';
+
+      // Beat 3: fill arrives the INSTANT stroke finishes
+      function onDone(e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+        aaStroke.removeEventListener('transitionend', onDone);
+        if (aaFill) {
+          aaFill.style.transition = 'opacity 0.2s ease';
+          aaFill.style.opacity = '1';
+        }
+        aaStroke.style.transition = 'opacity 0.25s ease 0.05s';
+        aaStroke.style.opacity = '0';
+      }
+      aaStroke.addEventListener('transitionend', onDone);
+    }
+  }
+}
+
+// ============================================================
+// BUILD: multiple sizes
+// ============================================================
+function buildSizes() {
+  const grid = document.getElementById('grid-sizes');
+
+  [
+    { size: 120, label: 'Hero — 120px', w: 380, h: 150 },
+    { size: 48,  label: 'Nav — 48px',   w: 200, h: 70 },
+    { size: 32,  label: 'Small — 32px', w: 140, h: 50 },
+    { size: 16,  label: 'Favicon — 16px', w: 80, h: 30 },
+  ].forEach(s => {
+    counter++;
+    const cell = makeCell(counter, s.label);
+    const svg = makeSVG(s.w, s.h);
+
+    const aaX = 10;
+    const yPos = s.h * 0.82;
+    const sw = Math.max(s.size * 0.018, 0.5);
+
+    const aaStroke = makeText('aa', aaX, yPos, FONT.family, FONT.weight, s.size, LIGHT_AA, sw);
+    aaStroke.dataset.role = 'aa';
+    svg.appendChild(aaStroke);
+
+    const dotStroke = makeText('.', 0, yPos, FONT.family, FONT.weight, s.size, GOLD, sw);
+    dotStroke.dataset.role = 'dot';
+    svg.appendChild(dotStroke);
+
+    const aaFill = makeText('aa', aaX, yPos, FONT.family, FONT.weight, s.size, LIGHT_AA, 0, true);
+    aaFill.dataset.fillFor = 'aa';
+    svg.appendChild(aaFill);
+
+    const dotFill = makeText('.', 0, yPos, FONT.family, FONT.weight, s.size, GOLD, 0, true);
+    dotFill.dataset.fillFor = 'dot';
+    svg.appendChild(dotFill);
+
+    cell.insertBefore(svg, cell.querySelector('.label'));
+    cell.addEventListener('click', () => animateMark(cell));
+    grid.appendChild(cell);
+
+    // Dynamic dot positioning
+    requestAnimationFrame(() => {
+      const aaWidth = aaStroke.getComputedTextLength();
+      const dotX = aaX + aaWidth - (s.size * 0.05); // proportional snug
+      dotStroke.setAttribute('x', dotX);
+      dotFill.setAttribute('x', dotX);
     });
-    strokes.forEach(t => {
-      t.style.transition = 'opacity 0.4s ease 0.15s';
-      t.style.opacity = '0.2';
-    });
-  }, fillDelay);
+  });
+}
+
+// ============================================================
+// ANIMATION: stroke draw aa, then dot, fill snaps in fast
+// ============================================================
+function animateMark(cell) {
+  const svg = cell.querySelector('svg');
+  if (!svg) return;
+
+  const aaStroke = svg.querySelector('[data-role="aa"]');
+  const dotStroke = svg.querySelector('[data-role="dot"]');
+  const aaFill = svg.querySelector('[data-fill-for="aa"]');
+  const dotFill = svg.querySelector('[data-fill-for="dot"]');
+
+  // Reset — hide everything
+  [aaFill, dotFill].filter(Boolean).forEach(t => {
+    t.style.transition = 'none'; t.style.opacity = '0';
+  });
+  // Hide dot stroke entirely — dot never draws, it only appears as fill
+  if (dotStroke) {
+    dotStroke.style.transition = 'none'; dotStroke.style.opacity = '0';
+  }
+  // Reset aa stroke
+  if (aaStroke) {
+    const len = aaStroke.getComputedTextLength() * 2;
+    aaStroke.style.strokeDasharray = len;
+    aaStroke.style.strokeDashoffset = len;
+    aaStroke.style.transition = 'none';
+    aaStroke.style.opacity = '1';
+    aaStroke.getBoundingClientRect();
+  }
+
+  // Beat 1: aa stroke draws
+  const aaDur = globalSpeed * 0.85;
+  if (aaStroke) {
+    aaStroke.style.transition = `stroke-dashoffset ${aaDur}s cubic-bezier(0.25, 0.1, 0.25, 1) 0s`;
+    aaStroke.style.strokeDashoffset = '0';
+
+    // Beat 2: fill + dot arrive the INSTANT stroke finishes — zero gap
+    function onStrokeDone(e) {
+      if (e.propertyName !== 'stroke-dashoffset') return;
+      aaStroke.removeEventListener('transitionend', onStrokeDone);
+      // aa fill appears
+      if (aaFill) {
+        aaFill.style.transition = 'opacity 0.2s ease';
+        aaFill.style.opacity = '1';
+      }
+      // gold dot materializes
+      if (dotFill) {
+        dotFill.style.transition = 'opacity 0.2s ease';
+        dotFill.style.opacity = '1';
+      }
+      // aa stroke fades out
+      aaStroke.style.transition = 'opacity 0.25s ease 0.05s';
+      aaStroke.style.opacity = '0';
+    }
+    aaStroke.addEventListener('transitionend', onStrokeDone);
+  }
 }
 
 // ============================================================
@@ -326,7 +459,7 @@ function makeText(content, x, y, family, weight, size, color, strokeW, isFill) {
   const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
   t.setAttribute('x', x);
   t.setAttribute('y', y);
-  t.setAttribute('font-family', `'${family}', cursive, monospace`);
+  t.setAttribute('font-family', `'${family}', cursive`);
   t.setAttribute('font-weight', weight);
   t.setAttribute('font-size', size);
   t.setAttribute('stroke-linecap', 'round');
@@ -344,27 +477,34 @@ function makeText(content, x, y, family, weight, size, color, strokeW, isFill) {
 }
 
 // ============================================================
-// SPEED + INIT
+// SPEED SLIDER + INIT
 // ============================================================
-document.querySelectorAll('.speed-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    globalSpeed = parseFloat(btn.dataset.speed);
-    document.querySelectorAll('.cell').forEach((c, i) => {
-      setTimeout(() => animateStaggered(c), i * 40);
-    });
+const slider = document.getElementById('speed-slider');
+const speedLabel = document.getElementById('speed-value');
+
+slider.addEventListener('input', () => {
+  globalSpeed = parseFloat(slider.value);
+  speedLabel.textContent = globalSpeed.toFixed(1) + 's';
+});
+
+document.getElementById('replay-all').addEventListener('click', () => {
+  document.querySelectorAll('.cell').forEach((c, i) => {
+    const fn = c.dataset.animStyle === 'slash' ? animateSlashMark : animateMark;
+    setTimeout(() => fn(c), i * 120);
   });
 });
 
 document.fonts.ready.then(() => {
-  buildSlash();
-  buildDot();
-  buildPure();
+  buildMark('grid-dark', LIGHT_AA, DARK_BG);
+  buildMark('grid-light', DARK_AA, LIGHT_BG);
+  buildSlashMark('grid-slash-dark', LIGHT_AA, DARK_BG);
+  buildSlashMark('grid-slash-light', DARK_AA, LIGHT_BG);
+  buildSizes();
 
   requestAnimationFrame(() => {
     document.querySelectorAll('.cell').forEach((cell, i) => {
-      setTimeout(() => animateStaggered(cell), i * 70);
+      const fn = cell.dataset.animStyle === 'slash' ? animateSlashMark : animateMark;
+      setTimeout(() => fn(cell), i * 200);
     });
   });
 });
