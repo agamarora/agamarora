@@ -827,6 +827,291 @@
   </div>
 </section>
 
+<!-- ===== 04 — SPACING ===== -->
+<section class="section">
+  <div class="section-label">04 — Spacing</div>
+  <p class="notes">4px base unit. 11-token scale from 2px to 128px. Spacious density for editorial portfolio. Semantic aliases for common patterns. Informed by Ant Design, Vercel/Geist, Radix, and Material Design 3.</p>
+
+  <!-- SCALE VISUALIZATION -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Token scale — visual</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <!-- Each bar shows the token value -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-1</div>
+          <div style="width: 2px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">2px <span style="color: #6B6359;">· 0.125rem · hairline, optical tweaks</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-2</div>
+          <div style="width: 4px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">4px <span style="color: #6B6359;">· 0.25rem · icon-to-label, caption gaps</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-3</div>
+          <div style="width: 8px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">8px <span style="color: #6B6359;">· 0.5rem · related elements within a group</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-4</div>
+          <div style="width: 12px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">12px <span style="color: #6B6359;">· 0.75rem · compact grouping, list items</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-5</div>
+          <div style="width: 16px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">16px <span style="color: #6B6359;">· 1rem · default, paragraph gaps, form spacing</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-6</div>
+          <div style="width: 24px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">24px <span style="color: #6B6359;">· 1.5rem · generous grouping, group-to-group</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-7</div>
+          <div style="width: 32px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">32px <span style="color: #6B6359;">· 2rem · section inner padding, card padding</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-8</div>
+          <div style="width: 48px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">48px <span style="color: #6B6359;">· 3rem · major content breaks</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-9</div>
+          <div style="width: 64px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">64px <span style="color: #6B6359;">· 4rem · section-to-section, landmark breaks</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-10</div>
+          <div style="width: 96px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">96px <span style="color: #6B6359;">· 6rem · page-level breathing, hero padding</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 80px; text-align: right; flex-shrink: 0;">--space-11</div>
+          <div style="width: 128px; height: 16px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">128px <span style="color: #6B6359;">· 8rem · expansive, full-section vertical padding</span></div>
+        </div>
+      </div>
+      <p style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 24px;">Base: 4px. Scale: 2, 4, 8, 12, 16, 24, 32, 48, 64, 96, 128. Jumps accelerate as values grow (matches human spatial perception). Informed by Ant Design (4px base), Vercel/Geist (4-128px range), Radix (4px base, 9 steps).</p>
+    </div>
+  </div>
+
+  <!-- SEMANTIC ALIASES -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Semantic aliases — named shortcuts</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+      <table style="width: 100%; font-family: var(--mono); font-size: 11px; border-collapse: collapse;">
+        <thead>
+          <tr style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;">
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Alias</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Resolves to</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Value</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Usage</th>
+          </tr>
+        </thead>
+        <tbody style="color: var(--text-dim);">
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--gap-tight</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-3</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">8px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Icon + label, inline elements</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--gap-default</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-5</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">16px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Stacked siblings, form fields</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--gap-loose</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-6</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">24px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Group-to-group within section</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--padding-element</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-4</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">12px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Buttons, tags, small components</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--padding-card</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-7</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">32px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Cards, panels, content containers</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--padding-section</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-8</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">48px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Page sections, vertical rhythm</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--padding-page</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">--space-10</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">96px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Hero, viewport sections, top-level</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">--margin-page-x</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);"><span style="font-size: 10px;">responsive</span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);"><span style="font-size: 10px;">24/48/96px</span></td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">Horizontal page margins (mobile/tablet/desktop)</td></tr>
+        </tbody>
+      </table>
+      <p style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 16px; font-style: italic;">Agents use aliases, not raw tokens. --padding-card is intent, --space-7 is implementation. The alias layer means we can adjust density globally without touching every component.</p>
+    </div>
+  </div>
+
+  <!-- COMPONENT SPACING DEMO -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Component demo — spacing in action</div>
+    <div style="display: flex; gap: 32px; flex-wrap: wrap; max-width: 900px;">
+      <!-- Card demo -->
+      <div style="flex: 1; min-width: 300px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 8px;">CARD — --padding-card (32px)</div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; position: relative;">
+          <!-- Padding indicator overlay -->
+          <div style="position: absolute; top: 0; left: 0; width: 32px; height: 100%; border-right: 1px dashed rgba(229, 165, 75, 0.25);"></div>
+          <div style="position: absolute; top: 0; left: 0; height: 32px; width: 100%; border-bottom: 1px dashed rgba(229, 165, 75, 0.25);"></div>
+          <div style="font-family: var(--sans); font-weight: 600; font-size: 18px; color: var(--text); margin-bottom: 12px;">FarEye Platform</div>
+          <div style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px;">Led the 10x scale transformation of a logistics platform serving enterprise customers across India.</div>
+          <div style="display: flex; gap: 8px;">
+            <span style="font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--accent-dim); padding: 4px 12px; border-radius: 4px;">B2B SaaS</span>
+            <span style="font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--accent-dim); padding: 4px 12px; border-radius: 4px;">Logistics</span>
+          </div>
+          <!-- Annotations -->
+          <div style="position: absolute; top: 14px; right: 12px; font-family: var(--mono); font-size: 9px; color: rgba(229, 165, 75, 0.5);">32px</div>
+        </div>
+      </div>
+
+      <!-- Stack spacing demo -->
+      <div style="flex: 1; min-width: 260px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 8px;">STACK — --gap-default (16px)</div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; position: relative;">
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text);">Analytics at Absolutdata</div>
+            <div style="font-family: var(--sans); font-size: 12px; color: var(--text-dim);">ML/data foundation</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+            <div style="width: 1px; height: 16px; background: rgba(229, 165, 75, 0.3);"></div>
+            <div style="font-family: var(--mono); font-size: 9px; color: rgba(229, 165, 75, 0.5);">16px</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text);">Gaming at V2 Games</div>
+            <div style="font-family: var(--sans); font-size: 12px; color: var(--text-dim);">ARM framework, engagement</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; justify-content: center;">
+            <div style="width: 1px; height: 16px; background: rgba(229, 165, 75, 0.3);"></div>
+            <div style="font-family: var(--mono); font-size: 9px; color: rgba(229, 165, 75, 0.5);">16px</div>
+          </div>
+          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px;">
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text);">AI at AIonOS</div>
+            <div style="font-family: var(--sans); font-size: 12px; color: var(--text-dim);">RAG, Voice AI, Copilots</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION SPACING DEMO -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Section spacing — how the page breathes</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; max-width: 600px; position: relative;">
+      <!-- Simulated page sections -->
+      <div style="background: #0B0A09; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 4px;">
+        <div style="font-family: var(--sans); font-size: 20px; font-weight: 700; color: #E8E4DF; letter-spacing: -0.02em;">Hero Section</div>
+        <div style="font-family: var(--mono); font-size: 10px; color: rgba(229, 165, 75, 0.5); margin-top: 8px;">padding: --padding-page (96px) vertical</div>
+      </div>
+      <!-- Spacing indicator -->
+      <div style="display: flex; align-items: center; justify-content: center; padding: 4px 0;">
+        <div style="font-family: var(--mono); font-size: 9px; color: var(--accent); background: var(--accent-dim); padding: 2px 8px; border-radius: 3px;">--space-9 · 64px</div>
+      </div>
+      <div style="background: #0B0A09; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 4px;">
+        <div style="font-family: var(--sans); font-size: 16px; font-weight: 600; color: #C8C0B8;">Chapter: Analytics</div>
+        <div style="font-family: var(--mono); font-size: 10px; color: rgba(229, 165, 75, 0.5); margin-top: 4px;">padding: --padding-section (48px)</div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; padding: 4px 0;">
+        <div style="font-family: var(--mono); font-size: 9px; color: var(--accent); background: var(--accent-dim); padding: 2px 8px; border-radius: 3px;">--space-9 · 64px</div>
+      </div>
+      <div style="background: #0B0A09; border-radius: 8px; padding: 16px; text-align: center; margin-bottom: 4px;">
+        <div style="font-family: var(--sans); font-size: 16px; font-weight: 600; color: #C8C0B8;">Chapter: Gaming</div>
+        <div style="font-family: var(--mono); font-size: 10px; color: rgba(229, 165, 75, 0.5); margin-top: 4px;">padding: --padding-section (48px)</div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; padding: 4px 0;">
+        <div style="font-family: var(--mono); font-size: 9px; color: var(--accent); background: var(--accent-dim); padding: 2px 8px; border-radius: 3px;">--space-9 · 64px</div>
+      </div>
+      <div style="background: #0B0A09; border-radius: 8px; padding: 24px; text-align: center;">
+        <div style="font-family: var(--sans); font-size: 20px; font-weight: 700; color: #E8E4DF; letter-spacing: -0.02em;">The Convergence</div>
+        <div style="font-family: var(--mono); font-size: 10px; color: rgba(229, 165, 75, 0.5); margin-top: 8px;">padding: --padding-page (96px) vertical</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESPONSIVE COMPRESSION -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Responsive compression</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+      <table style="width: 100%; font-family: var(--mono); font-size: 11px; border-collapse: collapse;">
+        <thead>
+          <tr style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;">
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Token</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Desktop (1024px+)</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Tablet (768px)</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Mobile (&lt;768px)</th>
+          </tr>
+        </thead>
+        <tbody style="color: var(--text-dim);">
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">1-6</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">2-24px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">same</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">same (fixed)</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">7</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">32px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">28px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">24px</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">8</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">48px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">40px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">32px</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">9</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">64px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">48px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">40px</td></tr>
+          <tr><td style="padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--text);">10</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">96px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">72px</td><td style="padding: 6px 10px; border-bottom: 1px solid var(--border);">48px</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">11</td><td style="padding: 6px 10px;">128px</td><td style="padding: 6px 10px;">96px</td><td style="padding: 6px 10px;">64px</td></tr>
+        </tbody>
+      </table>
+      <p style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 16px; font-style: italic;">Tokens 1-6 are fixed (already at perceptual minimums). Tokens 7-11 compress by ~25% per breakpoint step. Same Gestalt relationships, less absolute space. Like the type scale's clamp().</p>
+    </div>
+  </div>
+
+  <!-- DENSITY COMPARISON -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Density comparison — why spacious</div>
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; max-width: 900px;">
+      <!-- Compact -->
+      <div style="flex: 1; min-width: 250px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 8px;">COMPACT (dashboard density)</div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px;">
+          <div style="font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px;">Card Title</div>
+          <div style="font-family: var(--sans); font-size: 13px; color: var(--text-dim); line-height: 1.4; margin-bottom: 6px;">Dense body text with tight spacing between elements.</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: var(--accent);">Tag</div>
+        </div>
+      </div>
+      <!-- Spacious (ours) -->
+      <div style="flex: 1; min-width: 250px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: var(--accent); margin-bottom: 8px;">SPACIOUS (our density) &#x2713;</div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px;">
+          <div style="font-family: var(--sans); font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 12px;">Card Title</div>
+          <div style="font-family: var(--sans); font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px;">Same text, generous breathing room. Content floats. Reads editorial, not utilitarian.</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: var(--accent);">Tag</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 16px; max-width: 600px;">Compact = SaaS dashboard. Spacious = editorial portfolio. Same content, completely different signal. Generous spacing reads as confidence and taste. That's the Stripe/Linear quality bar.</p>
+  </div>
+
+  <!-- USAGE RULES -->
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Spacing usage rules (for agents)</div>
+
+    <div style="display: grid; gap: 24px;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 1: NO RAW VALUES</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Every margin, padding, and gap uses a named token or semantic alias. Never <code style="font-family: var(--mono); font-size: 12px;">padding: 20px</code>. Always <code style="font-family: var(--mono); font-size: 12px;">padding: var(--space-6)</code> or <code style="font-family: var(--mono); font-size: 12px;">padding: var(--padding-card)</code>.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 2: GESTALT PROXIMITY</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Elements that belong together get smaller gaps (space-3 to space-5). Unrelated groups get larger gaps (space-7+). The gap size IS the relationship signal. This is the same principle from the typography section applied to all layout.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 3: USE ALIASES, NOT TOKENS</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Prefer semantic aliases (--padding-card, --gap-default) over raw tokens (--space-7, --space-5). Aliases express intent. If density changes later, only the alias resolution changes, not every component.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 4: SECTION MINIMUMS</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Section padding is --padding-section (48px) minimum on desktop, compressed to 32px on mobile. The convergence scroll sections use --padding-page (96px) to center content in viewport-height frames.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 5: PAGE MARGINS ARE RESPONSIVE</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Horizontal page margins: --space-6 (24px) mobile, --space-8 (48px) tablet, --space-10 (96px) desktop. Content floats in a centered column. Never edge-to-edge.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 6: SPACE-1 IS OPTICAL ONLY</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">--space-1 (2px) is for optical adjustments: nudging alignment, border-adjacent corrections. Never use it for layout spacing. Minimum layout gap is --space-2 (4px).</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 7: TYPOGRAPHY SPACING IS ALREADY DEFINED</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Vertical spacing between text elements (heading margins, paragraph gaps) follows the typography section's rhythm table. This spacing system covers everything else: component padding, layout gaps, section breaks.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 8: WHEN IN DOUBT, GO BIGGER</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Spacious density means: if you're choosing between two adjacent tokens, pick the larger one. Too much space reads as editorial confidence. Too little reads as cramped. The Stripe/Linear pages all err on the side of generous.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 9: CREATING NEW ALIASES</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">The starter aliases above are not exhaustive. When building a new component that will be reused, create a semantic alias for its spacing. <strong>Naming convention:</strong> <code style="font-family: var(--mono); font-size: 12px;">--{padding|gap|margin}-{component}</code>. Examples: <code style="font-family: var(--mono); font-size: 12px;">--padding-nav</code>, <code style="font-family: var(--mono); font-size: 12px;">--gap-grid</code>, <code style="font-family: var(--mono); font-size: 12px;">--margin-footer</code>. Always resolve to an existing <code style="font-family: var(--mono); font-size: 12px;">--space-N</code> token. Never alias to a raw pixel value. Register new aliases in the CSS <code style="font-family: var(--mono); font-size: 12px;">:root</code> block alongside the originals so they're discoverable.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 10: ALIAS MAINTENANCE</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">If a component is removed, remove its alias too. Dead aliases are clutter. If you need to change the density of a component, change the alias resolution (e.g., <code style="font-family: var(--mono); font-size: 12px;">--padding-card: var(--space-6)</code> instead of <code style="font-family: var(--mono); font-size: 12px;">var(--space-7)</code>), never override inline. The <code style="font-family: var(--mono); font-size: 12px;">:root</code> block is the single source of truth for all alias-to-token mappings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== REMAINING — CHECKLIST ===== -->
 <section class="section">
   <div class="section-label">What's left</div>
@@ -835,7 +1120,7 @@
       <li style="color: var(--accent);">&#x2713; <strong>01 — Mark</strong> <span style="color: var(--text-dim); font-size: 13px;">aa. Patrick Hand, gold operators, stroke-draw animation</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>02 — Color</strong> <span style="color: var(--text-dim); font-size: 13px;">warm neutrals + gold accent, locked</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>03 — Typography</strong> <span style="color: var(--text-dim); font-size: 13px;">Satoshi + JetBrains Mono, Perfect Fourth, locked</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>04 — Spacing</strong> <span style="font-size: 13px;">base unit, scale, density</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>04 — Spacing</strong> <span style="color: var(--text-dim); font-size: 13px;">4px base, 11-token scale, spacious density, semantic aliases</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>05 — Layout</strong> <span style="font-size: 13px;">max widths, grid, breakpoints</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>06 — Border radius</strong> <span style="font-size: 13px;">shape language</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>07 — Motion</strong> <span style="font-size: 13px;">easing, duration, what animates</span></li>
