@@ -6,7 +6,24 @@
 <title>agamarora.com — Moodboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Patrick+Hand&display=swap" rel="stylesheet">
+<!-- Locked fonts: Satoshi (self-hosted), JetBrains Mono, Patrick Hand -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('../fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('../fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900;
+    font-display: swap;
+    font-style: italic;
+  }
+</style>
 <style>
   :root {
     --bg: #0A0A0A;
@@ -17,15 +34,17 @@
     --accent: #E5A54B;
     --accent-dim: rgba(229, 165, 75, 0.12);
     --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Instrument Sans', system-ui, sans-serif;
+    font-family: var(--sans);
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'kern' 1;
   }
 
   /* ===== MOODBOARD HEADER ===== */
@@ -593,14 +612,229 @@
   </div>
 </section>
 
+<!-- ===== 03 TYPOGRAPHY — LOCKED ===== -->
+<section class="section" id="typography">
+  <div class="section-label">03 — Typography (locked: Satoshi + JetBrains Mono, Perfect Fourth scale)</div>
+
+  <!-- Font stack summary -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px;">
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+      <div style="font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Primary — Satoshi</div>
+      <div style="font-family: var(--sans); font-size: 28px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; margin-bottom: 8px;">Aa</div>
+      <div style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Variable, self-hosted, 42KB. Geometric with warmth. Indian Type Foundry. Weights 400–700.</div>
+      <div style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 8px;">Fallback: system-ui, -apple-system, 'Segoe UI', sans-serif</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+      <div style="font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Mono — JetBrains Mono</div>
+      <div style="font-family: var(--mono); font-size: 28px; font-weight: 500; color: var(--text); margin-bottom: 8px;">Aa</div>
+      <div style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Google Fonts. Labels, code, timestamps, technical metadata. Weights 400 + 500.</div>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+      <div style="font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px;">Mark only — Patrick Hand</div>
+      <div style="font-family: 'Patrick Hand', cursive; font-size: 28px; color: var(--text); margin-bottom: 8px;">aa.</div>
+      <div style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Google Fonts. Used exclusively for the aa. and /aa marks. Never for headings or body.</div>
+    </div>
+  </div>
+
+  <!-- TYPE HIERARCHY — dark mode -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Type hierarchy on dark (#0B0A09)</div>
+    <div style="background: #0B0A09; border-radius: 12px; padding: 40px; border: 1px solid #201D18;">
+      <!-- Display -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">DISPLAY · 4.209rem (67px) · w700 · ls: -0.025em · lh: 1.05 · n-900</div>
+        <div style="font-family: var(--sans); font-size: clamp(2.25rem, 5vw + 1rem, 4.209rem); font-weight: 700; color: #E8E4DF; letter-spacing: -0.025em; line-height: 1.05;">Building what matters</div>
+      </div>
+      <!-- H1 -->
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">H1 · 3.157rem (50px) · w700 · ls: -0.02em · lh: 1.1 · n-900</div>
+        <div style="font-family: var(--sans); font-size: clamp(1.875rem, 4vw + 0.75rem, 3.157rem); font-weight: 700; color: #E8E4DF; letter-spacing: -0.02em; line-height: 1.1;">Twelve years of shipping products</div>
+      </div>
+      <!-- H2 -->
+      <div style="margin-bottom: 24px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">H2 · 2.369rem (38px) · w600 · ls: -0.015em · lh: 1.15 · n-800</div>
+        <div style="font-family: var(--sans); font-size: clamp(1.5rem, 3vw + 0.5rem, 2.369rem); font-weight: 600; color: #C8C0B8; letter-spacing: -0.015em; line-height: 1.15;">From analytics to AI leadership</div>
+      </div>
+      <!-- H3 -->
+      <div style="margin-bottom: 24px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">H3 · 1.777rem (28px) · w600 · ls: -0.01em · lh: 1.2 · n-700</div>
+        <div style="font-family: var(--sans); font-size: clamp(1.25rem, 2vw + 0.5rem, 1.777rem); font-weight: 600; color: #A59D95; letter-spacing: -0.01em; line-height: 1.2;">The convergence of craft and scale</div>
+      </div>
+      <!-- Body lg -->
+      <div style="margin-bottom: 20px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">BODY LG · 1.333rem (21px) · w400 · ls: 0 · lh: 1.55 · n-800</div>
+        <div style="font-family: var(--sans); font-size: clamp(1.125rem, 1vw + 0.875rem, 1.333rem); font-weight: 400; color: #C8C0B8; letter-spacing: 0; line-height: 1.55; max-width: 65ch;">I believe the best products come from people who understand both the technical depth and the human need. Every product I've shipped started with a real problem.</div>
+      </div>
+      <!-- Body -->
+      <div style="margin-bottom: 20px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">BODY · 1rem (16px) · w400 · ls: 0 · lh: 1.6 · n-700</div>
+        <div style="font-family: var(--sans); font-size: 1rem; font-weight: 400; color: #A59D95; letter-spacing: 0; line-height: 1.6; max-width: 65ch;">At AIonOS, I led the product strategy for an enterprise AI platform serving logistics companies across India. The challenge wasn't the AI — it was making AI <span style="font-weight: 600;">useful</span> for people who'd never heard of a <span style="color: #E5A54B;">transformer</span>.</div>
+      </div>
+      <!-- Small -->
+      <div style="margin-bottom: 16px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">SMALL · 0.75rem (12px) · w500 · ls: +0.01em · lh: 1.5 · n-600</div>
+        <div style="font-family: var(--sans); font-size: 0.75rem; font-weight: 500; color: #8A817A; letter-spacing: 0.01em; line-height: 1.5;">Previously: V2 Games (founded), FarEye (logistics), Nykaa (beauty/retail)</div>
+      </div>
+      <!-- Caption -->
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-bottom: 6px;">CAPTION · 0.6875rem (11px) · w500 · ls: +0.08em · lh: 1.45 · n-500 · uppercase</div>
+        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 500; color: #6B6359; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase;">Last updated Apr 2026 · Design system v2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPE HIERARCHY — light mode -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Type hierarchy on light (#F5F3EF)</div>
+    <div style="background: #F5F3EF; border-radius: 12px; padding: 40px; border: 1px solid #C8C0B8;">
+      <div style="margin-bottom: 24px;">
+        <div style="font-family: var(--sans); font-size: clamp(2.25rem, 5vw + 1rem, 4.209rem); font-weight: 700; color: #0B0A09; letter-spacing: -0.025em; line-height: 1.05;">Building what matters</div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-family: var(--sans); font-size: clamp(1.5rem, 3vw + 0.5rem, 2.369rem); font-weight: 600; color: #201D18; letter-spacing: -0.015em; line-height: 1.15;">From analytics to AI leadership</div>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <div style="font-family: var(--sans); font-size: 1rem; font-weight: 400; color: #403A33; letter-spacing: 0; line-height: 1.6; max-width: 65ch;">At AIonOS, I led the product strategy for an enterprise AI platform. The challenge wasn't the AI — it was making AI <span style="font-weight: 600;">useful</span> for people who'd never heard of a <span style="color: #7A5C12; font-weight: 600;">transformer</span>.</div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <div style="font-family: var(--sans); font-size: 0.75rem; font-weight: 500; color: #6B6359; letter-spacing: 0.01em; line-height: 1.5;">Previously: V2 Games (founded), FarEye (logistics), Nykaa (beauty/retail)</div>
+      </div>
+      <div>
+        <div style="font-family: var(--sans); font-size: 0.6875rem; font-weight: 500; color: #6B6359; letter-spacing: 0.08em; line-height: 1.45; text-transform: uppercase;">Last updated Apr 2026 · Design system v2</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEIGHT × COLOR DEMO -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Weight × Color = Variety (all Satoshi 1rem/16px)</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">700 + n-900 (primary heading)</span><span style="font-family: var(--sans); font-weight: 700; color: #E8E4DF;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">600 + n-900 (secondary heading)</span><span style="font-family: var(--sans); font-weight: 600; color: #E8E4DF;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">600 + n-800 (subheading)</span><span style="font-family: var(--sans); font-weight: 600; color: #C8C0B8;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">500 + n-700 (emphasis)</span><span style="font-family: var(--sans); font-weight: 500; color: #A59D95;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">400 + n-700 (body)</span><span style="font-family: var(--sans); font-weight: 400; color: #A59D95;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">400 + n-600 (muted)</span><span style="font-family: var(--sans); font-weight: 400; color: #8A817A;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">500 + n-500 (caption)</span><span style="font-family: var(--sans); font-weight: 500; color: #6B6359;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px; margin-bottom: 12px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">700 + gold (accent heading)</span><span style="font-family: var(--sans); font-weight: 700; color: #E5A54B;">The convergence of craft and scale</span></div>
+      <div style="display: flex; align-items: baseline; gap: 20px;"><span style="font-family: var(--mono); font-size: 10px; color: var(--text-dim); min-width: 220px;">500 + gold (accent label)</span><span style="font-family: var(--sans); font-weight: 500; color: #E5A54B;">The convergence of craft and scale</span></div>
+    </div>
+  </div>
+
+  <!-- VERTICAL SPACING -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Vertical spacing rhythm</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+      <table style="width: 100%; font-family: var(--sans); font-size: 14px; border-collapse: collapse;">
+        <thead>
+          <tr style="font-family: var(--mono); font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;">
+            <th style="text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);">Element</th>
+            <th style="text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);">Space after</th>
+            <th style="text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);">Space before (from body)</th>
+            <th style="text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);">Logic</th>
+          </tr>
+        </thead>
+        <tbody style="color: var(--text-dim);">
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">Display</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">1.5rem (24px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">Hero, first element</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">H1</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">1.25rem (20px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">Page title, near top</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">H2</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">1rem (16px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">3rem (48px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">New section break</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">H3</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">0.75rem (12px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">2rem (32px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">Minor break</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">Body / Body lg</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">1rem (16px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">Paragraph spacing</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text);">Small</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">0.5rem (8px)</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">—</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">Compact</td></tr>
+          <tr><td style="padding: 8px 12px; color: var(--text);">Caption</td><td style="padding: 8px 12px;">0.25rem (4px)</td><td style="padding: 8px 12px;">—</td><td style="padding: 8px 12px;">Minimal</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: #6B6359; margin-top: 16px; font-style: italic;">Principle: space before headings > space after. Headings belong to the content below them, not above (Gestalt proximity).</p>
+    </div>
+  </div>
+
+  <!-- COMPLETE TOKEN REFERENCE -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Complete token reference</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; overflow-x: auto;">
+      <table style="width: 100%; font-family: var(--mono); font-size: 11px; border-collapse: collapse; white-space: nowrap;">
+        <thead>
+          <tr style="color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;">
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Token</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">rem</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">px</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">clamp()</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Weight</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Tracking</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">LH</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Dark color</th>
+            <th style="text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border);">Light color</th>
+          </tr>
+        </thead>
+        <tbody style="color: var(--text-dim);">
+          <tr><td style="padding: 6px 10px; color: var(--text);">display</td><td style="padding: 6px 10px;">4.209</td><td style="padding: 6px 10px;">67</td><td style="padding: 6px 10px; font-size: 9px;">clamp(2.25rem, 5vw+1rem, 4.209rem)</td><td style="padding: 6px 10px;">700</td><td style="padding: 6px 10px;">-0.025em</td><td style="padding: 6px 10px;">1.05</td><td style="padding: 6px 10px;">n-900 #E8E4DF</td><td style="padding: 6px 10px;">n-50 #0B0A09</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">h1</td><td style="padding: 6px 10px;">3.157</td><td style="padding: 6px 10px;">50</td><td style="padding: 6px 10px; font-size: 9px;">clamp(1.875rem, 4vw+0.75rem, 3.157rem)</td><td style="padding: 6px 10px;">700</td><td style="padding: 6px 10px;">-0.02em</td><td style="padding: 6px 10px;">1.1</td><td style="padding: 6px 10px;">n-900 #E8E4DF</td><td style="padding: 6px 10px;">n-50 #0B0A09</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">h2</td><td style="padding: 6px 10px;">2.369</td><td style="padding: 6px 10px;">38</td><td style="padding: 6px 10px; font-size: 9px;">clamp(1.5rem, 3vw+0.5rem, 2.369rem)</td><td style="padding: 6px 10px;">600</td><td style="padding: 6px 10px;">-0.015em</td><td style="padding: 6px 10px;">1.15</td><td style="padding: 6px 10px;">n-800 #C8C0B8</td><td style="padding: 6px 10px;">n-200 #201D18</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">h3</td><td style="padding: 6px 10px;">1.777</td><td style="padding: 6px 10px;">28</td><td style="padding: 6px 10px; font-size: 9px;">clamp(1.25rem, 2vw+0.5rem, 1.777rem)</td><td style="padding: 6px 10px;">600</td><td style="padding: 6px 10px;">-0.01em</td><td style="padding: 6px 10px;">1.2</td><td style="padding: 6px 10px;">n-700 #A59D95</td><td style="padding: 6px 10px;">n-300 #2D2924</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">body-lg</td><td style="padding: 6px 10px;">1.333</td><td style="padding: 6px 10px;">21</td><td style="padding: 6px 10px; font-size: 9px;">clamp(1.125rem, 1vw+0.875rem, 1.333rem)</td><td style="padding: 6px 10px;">400</td><td style="padding: 6px 10px;">0</td><td style="padding: 6px 10px;">1.55</td><td style="padding: 6px 10px;">n-800 #C8C0B8</td><td style="padding: 6px 10px;">n-300 #2D2924</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">body</td><td style="padding: 6px 10px;">1.0</td><td style="padding: 6px 10px;">16</td><td style="padding: 6px 10px;">1rem (fixed)</td><td style="padding: 6px 10px;">400</td><td style="padding: 6px 10px;">0</td><td style="padding: 6px 10px;">1.6</td><td style="padding: 6px 10px;">n-700 #A59D95</td><td style="padding: 6px 10px;">n-400 #403A33</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">small</td><td style="padding: 6px 10px;">0.75</td><td style="padding: 6px 10px;">12</td><td style="padding: 6px 10px;">0.75rem (fixed)</td><td style="padding: 6px 10px;">500</td><td style="padding: 6px 10px;">+0.01em</td><td style="padding: 6px 10px;">1.5</td><td style="padding: 6px 10px;">n-600 #8A817A</td><td style="padding: 6px 10px;">n-500 #6B6359</td></tr>
+          <tr><td style="padding: 6px 10px; color: var(--text);">caption</td><td style="padding: 6px 10px;">0.6875</td><td style="padding: 6px 10px;">11</td><td style="padding: 6px 10px;">0.6875rem (fixed)</td><td style="padding: 6px 10px;">500</td><td style="padding: 6px 10px;">+0.08em</td><td style="padding: 6px 10px;">1.45</td><td style="padding: 6px 10px;">n-500 #6B6359</td><td style="padding: 6px 10px;">n-500 #6B6359</td></tr>
+        </tbody>
+      </table>
+      <p style="font-family: var(--sans); font-size: 12px; color: #6B6359; margin-top: 12px;">Scale ratio: Perfect Fourth (1.333). Base: 16px (1rem). Floor: 11px. Max body width: 65ch.</p>
+    </div>
+  </div>
+
+  <!-- USAGE RULES -->
+  <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 740px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Typography usage rules (for agents)</div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 1: ONE FONT, MANY VOICES</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Satoshi for everything. Weight + color token + size creates hierarchy. Never add another sans-serif font. The fallback stack is: <code style="font-family: var(--mono); font-size: 12px; color: var(--text-dim);">system-ui, -apple-system, 'Segoe UI', sans-serif</code></p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 2: PATRICK HAND IS THE MARK ONLY</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Never use Patrick Hand for headings, body, or UI text. It appears exclusively in the aa. and /aa marks. Mixing it with body text kills both the mark's specialness and text readability.</p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 3: JETBRAINS MONO FOR SYSTEM VOICE</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Labels, timestamps, code, technical metadata, section headers in the moodboard. Weights 400 (default) and 500 (emphasis). Always pair with loose tracking (+0.05em to +0.12em) when in uppercase.</p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 4: TRACK TIGHTER AS YOU GO BIGGER</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Display: -0.025em. H1: -0.02em. Body: 0. Small: +0.01em. Caps: +0.08em. This is optical compensation from Bringhurst, not style preference. No exceptions.</p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 5: LEAD LOOSER AS YOU GO SMALLER</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Display: 1.05. H1: 1.1. Body: 1.6. At large sizes the eye tracks easily. At small sizes lines blur together without extra leading.</p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 6: 65CH MAX FOR BODY TEXT</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Paragraphs and body-lg never wider than 65 characters (<code style="font-family: var(--mono); font-size: 12px;">max-width: 65ch</code>). Headings can go wider. Too wide and the eye loses its place on the return sweep (Bringhurst recommends 45-75ch).</p>
+    </div>
+
+    <div style="margin-bottom: 28px;">
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 7: WEIGHT MEANS HIERARCHY</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">700 = headings (display, h1). 600 = subheadings (h2, h3) and inline emphasis in body. 500 = labels and small text emphasis. 400 = body text. Don't use 700 for body. Use 600 (not 700) for bold words within paragraphs.</p>
+    </div>
+
+    <div>
+      <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 8: HEADINGS SCALE, BODY DOESN'T</div>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Display/H1/H2/H3/Body-lg use <code style="font-family: var(--mono); font-size: 12px;">clamp()</code> for responsive scaling. Body/small/caption are fixed rem values because they're already at readable minimums. Use the clamp values from the token reference, don't invent new ones.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== REMAINING — CHECKLIST ===== -->
 <section class="section">
   <div class="section-label">What's left</div>
   <div class="notes" style="max-width: 100%;">
     <ul style="font-size: 16px; line-height: 2.2;">
       <li style="color: var(--accent);">&#x2713; <strong>01 — Mark</strong> <span style="color: var(--text-dim); font-size: 13px;">aa. Patrick Hand, gold operators, stroke-draw animation</span></li>
-      <li style="color: var(--accent);">&#x25CB; <strong>02 — Color</strong> <span style="color: var(--text-dim); font-size: 13px;">above — reviewing palette</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>03 — Typography</strong> <span style="font-size: 13px;">fonts, scale, weights, line heights</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>02 — Color</strong> <span style="color: var(--text-dim); font-size: 13px;">warm neutrals + gold accent, locked</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>03 — Typography</strong> <span style="color: var(--text-dim); font-size: 13px;">Satoshi + JetBrains Mono, Perfect Fourth, locked</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>04 — Spacing</strong> <span style="font-size: 13px;">base unit, scale, density</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>05 — Layout</strong> <span style="font-size: 13px;">max widths, grid, breakpoints</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>06 — Border radius</strong> <span style="font-size: 13px;">shape language</span></li>
@@ -793,8 +1027,10 @@ document.fonts.ready.then(() => {
   document.getElementById('mark-slash').addEventListener('click', () => animateSlash(document.getElementById('mark-slash')));
   document.getElementById('mark-light').addEventListener('click', () => animateAaDot(document.getElementById('mark-light')));
   document.getElementById('mark-small').addEventListener('click', () => animateAaDot(document.getElementById('mark-small')));
+
 });
 </script>
+
 
 </body>
 </html>
