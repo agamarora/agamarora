@@ -6,7 +6,7 @@
 <title>agamarora.com — Moodboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0A0A0A;
@@ -90,88 +90,8 @@
     letter-spacing: 0.05em;
   }
 
-  /* AA logo variants */
-  .aa-serif {
-    font-family: 'Instrument Serif', serif;
-    font-size: 72px;
-    color: var(--text);
-    letter-spacing: -0.04em;
-  }
-  .aa-serif-italic {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 64px;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-  .aa-mono {
-    font-family: var(--mono);
-    font-size: 48px;
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-  }
-  .aa-syne {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 64px;
-    color: var(--text);
-    letter-spacing: -0.06em;
-  }
-  .aa-space {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 56px;
-    color: var(--text);
-    letter-spacing: -0.04em;
-  }
-  .aa-dm {
-    font-family: 'DM Serif Display', serif;
-    font-size: 72px;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-
-  /* Animated AA */
-  .aa-animated {
-    position: relative;
-  }
-  .aa-animated svg {
-    width: 100px;
-    height: 80px;
-  }
-  .aa-animated svg path {
-    fill: none;
-    stroke: var(--text);
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: draw 2s ease forwards;
-  }
-  .aa-animated svg path.second {
-    animation-delay: 0.8s;
-  }
-  @keyframes draw {
-    to { stroke-dashoffset: 0; }
-  }
-
-  /* Glowing AA */
-  .aa-glow {
-    font-family: 'Instrument Serif', serif;
-    font-size: 72px;
-    color: var(--accent);
-    text-shadow:
-      0 0 20px rgba(229, 165, 75, 0.4),
-      0 0 40px rgba(229, 165, 75, 0.2),
-      0 0 80px rgba(229, 165, 75, 0.1);
-    animation: pulse-glow 3s ease-in-out infinite alternate;
-  }
-  @keyframes pulse-glow {
-    from { text-shadow: 0 0 20px rgba(229, 165, 75, 0.4), 0 0 40px rgba(229, 165, 75, 0.2); }
-    to { text-shadow: 0 0 30px rgba(229, 165, 75, 0.6), 0 0 60px rgba(229, 165, 75, 0.3), 0 0 100px rgba(229, 165, 75, 0.15); }
-  }
+  /* Mark cells */
+  .logo-cell svg { overflow: visible; }
 
   /* ===== VOICE / TAKES ===== */
   .takes-grid {
@@ -377,296 +297,317 @@
 
 <!-- HEADER -->
 <header class="moodboard-header">
-  <h1>// moodboard</h1>
-  <p>Design exploration for agamarora.com v2. Not the site. The vibe before the site. Built in public.</p>
+  <h1>// design system</h1>
+  <p>agamarora.com v2. One element at a time. Research, reason, lock, move on.</p>
 </header>
 
-<!-- ===== 1. THE AA MARK ===== -->
+<!-- ===== 1. THE MARK — LOCKED ===== -->
 <section class="section">
-  <div class="section-label">01 — The Mark (aa)</div>
+  <div class="section-label">01 — The Mark (locked)</div>
   <div class="logo-grid">
-    <div class="logo-cell">
-      <span class="aa-serif">aa</span>
-      <span class="label">Instrument Serif</span>
+    <div class="logo-cell" id="mark-primary">
+      <span class="label">aa. — primary (click to replay)</span>
     </div>
-    <div class="logo-cell">
-      <span class="aa-serif-italic">aa</span>
-      <span class="label">Playfair italic</span>
+    <div class="logo-cell" id="mark-slash">
+      <span class="label">/aa — secondary (click to replay)</span>
     </div>
-    <div class="logo-cell">
-      <span class="aa-mono">aa</span>
-      <span class="label">JetBrains Mono / accent</span>
+    <div class="logo-cell" id="mark-light" style="background: #F5F3EF; border-color: #DDD;">
+      <span class="label" style="color: #999;">aa. — on light</span>
     </div>
-    <div class="logo-cell">
-      <span class="aa-syne">aa</span>
-      <span class="label">Syne / bold</span>
-    </div>
-    <div class="logo-cell">
-      <span class="aa-space">aa</span>
-      <span class="label">Space Grotesk</span>
-    </div>
-    <div class="logo-cell">
-      <span class="aa-dm">aa</span>
-      <span class="label">DM Serif Display</span>
-    </div>
-    <div class="logo-cell">
-      <div class="aa-animated">
-        <svg viewBox="0 0 100 80">
-          <!-- First 'a' - cursive -->
-          <path d="M 15 55 C 15 35, 35 30, 35 45 C 35 55, 20 60, 15 55 M 35 35 L 35 60" class="first"/>
-          <!-- Second 'a' - cursive, connected -->
-          <path d="M 50 55 C 50 35, 70 30, 70 45 C 70 55, 55 60, 50 55 M 70 35 L 70 60" class="second"/>
-        </svg>
-      </div>
-      <span class="label">SVG cursive / animated</span>
-    </div>
-    <div class="logo-cell">
-      <span class="aa-glow">aa</span>
-      <span class="label">Glow / loading state</span>
+    <div class="logo-cell" id="mark-small">
+      <span class="label">aa. — nav size</span>
     </div>
   </div>
   <div class="notes">
-    <h3>Notes on the mark</h3>
+    <h3>Mark decisions</h3>
     <ul>
-      <li><strong>Lowercase aa.</strong> Not AA. Not Aa. Lowercase is personal, not corporate.</li>
-      <li><strong>Cursive/handwritten</strong> for loading animation. Feels like a signature being drawn.</li>
-      <li><strong>Glow variant</strong> for loading states. Pulsing gold on dark. The site breathing.</li>
-      <li><strong>Static variant</strong> for favicon, nav corner. Needs to work at 16px.</li>
+      <li><strong>aa.</strong> Patrick Hand. The period is the statement.</li>
+      <li><strong>/aa</strong> for invocation contexts. Slash blinks like a cursor, then aa draws.</li>
+      <li><strong>Letters adapt</strong> to background. White on dark, dark on light.</li>
+      <li><strong>Operators always gold.</strong> The dot in aa., the slash in /aa. Gold = #E5A54B.</li>
+      <li><strong>Animation:</strong> stroke-draw, fill + dot materialize on transitionend. Default 1.5s.</li>
     </ul>
   </div>
 </section>
 
-<!-- ===== 2. VOICE / TAKES ===== -->
-<section class="section">
-  <div class="section-label">02 — Voice (the words that convert)</div>
-  <div class="takes-grid">
-    <div class="take">
-      <blockquote>AI is not an assistant. It's a multiplier.</blockquote>
-      <div class="context">The thesis. First thing you read.</div>
-    </div>
-    <div class="take">
-      <blockquote>Clicking buttons and typing prompts are things of the past. AI is headed into the outcome world.</blockquote>
-      <div class="context">The opinion that makes people stop scrolling.</div>
-    </div>
-    <div class="take">
-      <blockquote>I don't seek permission. I build.</blockquote>
-      <div class="context">The personality. Short. Punchy. Undeniable.</div>
-    </div>
-    <div class="take">
-      <blockquote>Every team I join ships 10x faster. Not because I work more hours. Because I solve problems and unblock.</blockquote>
-      <div class="context">The proof. Specific enough to be credible.</div>
-    </div>
-    <div class="take">
-      <blockquote>I run multiple agents at my disposal to get stuff done.</blockquote>
-      <div class="context">The differentiator. Most PMs don't even know what this means.</div>
-    </div>
-  </div>
-</section>
+<!-- ===== 2. COLOR PALETTE ===== -->
+<!-- (section 04 moved here, renumbered) -->
 
-<!-- ===== 3. TYPOGRAPHY PAIRING ===== -->
-<section class="section">
-  <div class="section-label">03 — Typography</div>
+<!-- ===== 4. COLOR PALETTE ===== -->
+<section class="section" id="color-section">
+  <div class="section-label">02 — Color Palette (locked: warm neutrals + gold)</div>
 
-  <div class="type-pair">
-    <div class="type-pair-label">Option A: Instrument Serif + Instrument Sans</div>
-    <div class="type-display" style="font-family:'Instrument Serif',serif; font-size:clamp(32px,5vw,56px);">
-      The age of intelligence is here.
-    </div>
-    <div class="type-body" style="font-family:'Instrument Sans',sans-serif; font-size:17px;">
-      Every team I join ships 10x faster. Not because I work more hours. Because I solve problems and unblock teams. I run multiple agents at my disposal. I don't seek permission. I build.
-    </div>
-  </div>
+  <!-- DARK MODE — complete palette -->
+  <div style="margin-bottom: 48px;">
+    <h3 style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Dark mode</h3>
+    <div style="background: #0B0A09; border-radius: 12px; padding: 40px; border: 1px solid #201D18;">
 
-  <div class="type-pair">
-    <div class="type-pair-label">Option B: Syne + Instrument Sans</div>
-    <div class="type-display" style="font-family:'Syne',sans-serif; font-weight:700; font-size:clamp(32px,5vw,56px);">
-      The age of intelligence is here.
-    </div>
-    <div class="type-body" style="font-family:'Instrument Sans',sans-serif; font-size:17px;">
-      Every team I join ships 10x faster. Not because I work more hours. Because I solve problems and unblock teams. I run multiple agents at my disposal. I don't seek permission. I build.
-    </div>
-  </div>
-
-  <div class="type-pair">
-    <div class="type-pair-label">Option C: Space Grotesk + Instrument Sans</div>
-    <div class="type-display" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(32px,5vw,56px);">
-      The age of intelligence is here.
-    </div>
-    <div class="type-body" style="font-family:'Instrument Sans',sans-serif; font-size:17px;">
-      Every team I join ships 10x faster. Not because I work more hours. Because I solve problems and unblock teams. I run multiple agents at my disposal. I don't seek permission. I build.
-    </div>
-  </div>
-
-  <div class="type-pair">
-    <div class="type-pair-label">Option D: DM Serif Display + Instrument Sans</div>
-    <div class="type-display" style="font-family:'DM Serif Display',serif; font-size:clamp(32px,5vw,56px);">
-      The age of intelligence is here.
-    </div>
-    <div class="type-body" style="font-family:'Instrument Sans',sans-serif; font-size:17px;">
-      Every team I join ships 10x faster. Not because I work more hours. Because I solve problems and unblock teams. I run multiple agents at my disposal. I don't seek permission. I build.
-    </div>
-  </div>
-</section>
-
-<!-- ===== 4. COLOR MOODS ===== -->
-<section class="section">
-  <div class="section-label">04 — Color Moods</div>
-  <div class="color-mood">
-    <div class="color-card" style="background: linear-gradient(135deg, #0A0A0A, #1A1A1A); border: 1px solid #222; color: #E8E4DF;">
-      <h3 style="color: #E5A54B;">Warm Dark</h3>
-      <p>Gold accent on near-black. Premium without being flashy. The current direction.</p>
-    </div>
-    <div class="color-card" style="background: linear-gradient(135deg, #0A0A0F, #12121F); border: 1px solid #1E1E2E; color: #D4D4E8;">
-      <h3 style="color: #7C8AFF;">Cool Midnight</h3>
-      <p>Blue-tinted dark. More tech, more terminal. Less warm, more precise.</p>
-    </div>
-    <div class="color-card" style="background: linear-gradient(135deg, #0D0D0A, #1A1A14); border: 1px solid #2A2A1E; color: #D4D0C4;">
-      <h3 style="color: #B8C46A;">Earth Digital</h3>
-      <p>Olive/sage on warm dark. Organic + tech. Unexpected for AI.</p>
-    </div>
-    <div class="color-card" style="background: linear-gradient(135deg, #0A0A0A, #0A0A0A); border: 1px solid #1A1A1A; color: #FFFFFF;">
-      <h3 style="color: #FFFFFF;">Pure Monochrome</h3>
-      <p>Black and white only. Zero decoration. The words do everything.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ===== 5. PERSONALITY SIGNALS ===== -->
-<section class="section">
-  <div class="section-label">05 — Proof Points (no project section needed)</div>
-  <div class="signals">
-    <div class="signal">
-      <div class="number">12</div>
-      <div class="desc">Years building products</div>
-    </div>
-    <div class="signal">
-      <div class="number">5</div>
-      <div class="desc">Industries deep</div>
-    </div>
-    <div class="signal">
-      <div class="number">1</div>
-      <div class="desc">Company founded</div>
-    </div>
-    <div class="signal">
-      <div class="number">10x</div>
-      <div class="desc">Team multiplier</div>
-    </div>
-  </div>
-
-  <div class="trait-cloud">
-    <span class="trait-tag warm">Tinkerer</span>
-    <span class="trait-tag warm">Founder-first</span>
-    <span class="trait-tag cool">AI-native</span>
-    <span class="trait-tag green">Gaming roots</span>
-    <span class="trait-tag warm">Deep empathy</span>
-    <span class="trait-tag cool">Gets hands dirty</span>
-    <span class="trait-tag green">Fast adopter</span>
-    <span class="trait-tag warm">Trail blazer</span>
-    <span class="trait-tag cool">Codes with engineers</span>
-    <span class="trait-tag warm">Talks with CXOs</span>
-    <span class="trait-tag green">Doesn't seek permission</span>
-  </div>
-</section>
-
-<!-- ===== 6. PAGE STRUCTURE IDEAS ===== -->
-<section class="section">
-  <div class="section-label">06 — Page Structure (Phase 1)</div>
-  <div class="wireframe">
-    <div class="wire-card">
-      <h3>Option A: Statement First</h3>
-      <div class="sketch">
-aa (loading animation)
-        |
-"AI is not an assistant.
- It's a multiplier."
-        |
-   Agam Arora
-        |
-  The take (2-3 lines)
-        |
-  Proof points (numbers)
-        |
-  Traits (tags)
-        |
-  Links out
+      <!-- Neutral scale -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">WARM NEUTRAL SCALE</div>
+        <div style="display: flex; gap: 3px; height: 48px; border-radius: 6px; overflow: hidden;">
+          <div style="flex:1; background:#0B0A09; border:1px solid #201D18;" title="n-50 bg"></div>
+          <div style="flex:1; background:#12110F;" title="n-100 surface"></div>
+          <div style="flex:1; background:#191714;" title="n-150 elevated"></div>
+          <div style="flex:1; background:#201D18;" title="n-200 border"></div>
+          <div style="flex:1; background:#2D2924;" title="n-300 heavy border"></div>
+          <div style="flex:1; background:#403A33;" title="n-400 subtle"></div>
+          <div style="flex:1; background:#6B6359;" title="n-500 decorative"></div>
+          <div style="flex:1; background:#8A817A;" title="n-600 muted text AA"></div>
+          <div style="flex:1; background:#A59D95;" title="n-700 secondary text"></div>
+          <div style="flex:1; background:#C8C0B8;" title="n-800 strong secondary"></div>
+          <div style="flex:1; background:#E8E4DF;" title="n-900 primary text"></div>
+          <div style="flex:1; background:#F5F3EF;" title="n-950 bright"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 3px; margin-top: 4px; font-family: var(--mono); font-size: 7px; color: #403A33; text-align: center;">
+          <div>50</div><div>100</div><div>150</div><div>200</div><div>300</div><div>400</div>
+          <div style="color:#6B6359;">500</div><div style="color:#8A817A;">600</div><div style="color:#8A817A;">700</div><div style="color:#8A817A;">800</div><div style="color:#8A817A;">900</div><div style="color:#8A817A;">950</div>
+        </div>
       </div>
-    </div>
-    <div class="wire-card">
-      <h3>Option B: Name First</h3>
-      <div class="sketch">
-   Agam Arora
-  "I build for the age
-   of intelligence"
-        |
-  The take (your AI opinion)
-        |
-  Who I am (traits + numbers)
-        |
-  Links out
-        |
-      aa (mark in footer)
+
+      <!-- Text hierarchy -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">TEXT HIERARCHY on #0B0A09</div>
+        <p style="color: #E8E4DF; font-size: 18px; margin-bottom: 6px;">n-900 #E8E4DF — Primary (15.6:1 AAA)</p>
+        <p style="color: #C8C0B8; font-size: 16px; margin-bottom: 6px;">n-800 #C8C0B8 — Secondary (11.0:1 AAA)</p>
+        <p style="color: #A59D95; font-size: 15px; margin-bottom: 6px;">n-700 #A59D95 — Tertiary (7.4:1 AAA)</p>
+        <p style="color: #8A817A; font-size: 14px; margin-bottom: 6px;">n-600 #8A817A — Muted (5.2:1 AA)</p>
+        <p style="color: #6B6359; font-size: 13px; margin-bottom: 6px;">n-500 #6B6359 — Decorative only (3.4:1 AA-lg)</p>
+        <p style="color: #403A33; font-size: 12px;">n-400 #403A33 — Disabled / invisible (1.8:1)</p>
       </div>
-    </div>
-    <div class="wire-card">
-      <h3>Option C: Conversation</h3>
-      <div class="sketch">
-aa
-        |
-  "Who is Agam Arora?"
-        |
-  Answer 1: The opinion
-        |
-  Answer 2: The proof
-        |
-  Answer 3: The personality
-        |
-  "Want to talk?"
-  → Links out
+
+      <!-- Surface roles -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">SURFACE ROLES</div>
+        <div style="display: flex; gap: 8px;">
+          <div style="flex:1; height: 64px; background: #0B0A09; border: 1px solid #201D18; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: #6B6359;">bg n-50</div>
+          <div style="flex:1; height: 64px; background: #12110F; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: #6B6359;">surface n-100</div>
+          <div style="flex:1; height: 64px; background: #191714; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: #6B6359;">elevated n-150</div>
+          <div style="flex:1; height: 64px; background: #201D18; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 9px; color: #6B6359;">border n-200</div>
+        </div>
+      </div>
+
+      <!-- Gold accent system -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">GOLD ACCENT — #E5A54B (9.3:1)</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+          <div style="padding: 12px 24px; background: #E5A54B; color: #0B0A09; border-radius: 6px; font-size: 14px; font-weight: 500;">Button</div>
+          <div style="padding: 12px 24px; border: 1px solid #E5A54B; color: #E5A54B; border-radius: 6px; font-size: 14px;">Outline</div>
+          <div style="padding: 12px 24px; background: #251D11; color: #E5A54B; border-radius: 6px; font-size: 14px;">Ghost (gold/12%)</div>
+          <a href="#" style="color: #E5A54B; text-decoration: underline; text-underline-offset: 4px; font-size: 16px;">Link</a>
+        </div>
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 8px;">GOLD OPACITY SCALE (blended over #0B0A09)</div>
+        <div style="display: flex; gap: 3px; height: 32px; border-radius: 4px; overflow: hidden;">
+          <div style="flex:1; background:#16120C;" title="gold/5%"></div>
+          <div style="flex:1; background:#1C160E;" title="gold/8%"></div>
+          <div style="flex:1; background:#251D11;" title="gold/12%"></div>
+          <div style="flex:1; background:#372916;" title="gold/20%"></div>
+          <div style="flex:1; background:#624823;" title="gold/40%"></div>
+          <div style="flex:1; background:#E5A54B;" title="gold/100%"></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; margin-top: 4px; font-family: var(--mono); font-size: 7px; color: #403A33; text-align: center;">
+          <div>5%</div><div>8%</div><div>12%</div><div>20%</div><div>40%</div><div>100%</div>
+        </div>
+      </div>
+
+      <!-- Semantic -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">SEMANTIC on dark</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <div style="padding: 8px 16px; background: rgba(61,168,107,0.12); color: #3DA86B; border-radius: 6px; font-family: var(--mono); font-size: 12px;">success 6.6:1</div>
+          <div style="padding: 8px 16px; background: rgba(212,86,78,0.12); color: #D4564E; border-radius: 6px; font-family: var(--mono); font-size: 12px;">error 4.9:1</div>
+          <div style="padding: 8px 16px; background: rgba(229,165,75,0.12); color: #E5A54B; border-radius: 6px; font-family: var(--mono); font-size: 12px;">warning 9.3:1</div>
+          <div style="padding: 8px 16px; background: rgba(91,143,199,0.12); color: #5B8FC7; border-radius: 6px; font-family: var(--mono); font-size: 12px;">info 5.8:1</div>
+        </div>
+      </div>
+
+      <!-- Interactive states -->
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">INTERACTIVE STATES</div>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+          <div style="width: 120px; text-align: center;">
+            <div style="padding: 8px 16px; background: #251D11; color: #E5A54B; border-radius: 6px; font-size: 13px; margin-bottom: 4px;">Hover bg</div>
+            <div style="font-family: var(--mono); font-size: 8px; color: #403A33;">gold/12%</div>
+          </div>
+          <div style="width: 120px; text-align: center;">
+            <div style="padding: 8px 16px; background: #372916; color: #E5A54B; border-radius: 6px; font-size: 13px; margin-bottom: 4px;">Active bg</div>
+            <div style="font-family: var(--mono); font-size: 8px; color: #403A33;">gold/20%</div>
+          </div>
+          <div style="width: 120px; text-align: center;">
+            <div style="padding: 8px 16px; outline: 2px solid #E5A54B; outline-offset: 2px; color: #E8E4DF; border-radius: 6px; font-size: 13px; margin-bottom: 4px;">Focus ring</div>
+            <div style="font-family: var(--mono); font-size: 8px; color: #403A33;">gold outline 2px</div>
+          </div>
+          <div style="width: 140px; text-align: center;">
+            <div style="padding: 8px 16px; background: #372916; color: #E8E4DF; border-radius: 6px; font-size: 13px; margin-bottom: 4px;"><span style="background: rgba(229,165,75,0.25); padding: 0 2px;">selected text</span></div>
+            <div style="font-family: var(--mono); font-size: 8px; color: #403A33;">::selection gold/25%</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- LIGHT MODE — complete palette -->
+  <div style="margin-bottom: 48px;">
+    <h3 style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Light mode</h3>
+    <div style="background: #F5F3EF; border-radius: 12px; padding: 40px; border: 1px solid #D6D0C8;">
+
+      <!-- Text hierarchy on light -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">TEXT HIERARCHY on #F5F3EF</div>
+        <p style="color: #0B0A09; font-size: 18px; margin-bottom: 6px;">n-50 #0B0A09 — Primary (17.9:1 AAA)</p>
+        <p style="color: #201D18; font-size: 16px; margin-bottom: 6px;">n-200 #201D18 — Secondary (15.2:1 AAA)</p>
+        <p style="color: #403A33; font-size: 15px; margin-bottom: 6px;">n-400 #403A33 — Tertiary (10.1:1 AAA)</p>
+        <p style="color: #6B6359; font-size: 14px; margin-bottom: 6px;">n-500 #6B6359 — Muted (5.3:1 AA)</p>
+        <p style="color: #8A817A; font-size: 13px; margin-bottom: 6px;">n-600 #8A817A — Decorative (3.4:1 AA-lg)</p>
+        <p style="color: #A59D95; font-size: 12px;">n-700 #A59D95 — Disabled (2.4:1)</p>
+      </div>
+
+      <!-- Gold on light -->
+      <div style="margin-bottom: 32px;">
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">GOLD ON LIGHT</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <div style="padding: 12px 24px; background: #E5A54B; color: #0B0A09; border-radius: 6px; font-size: 14px; font-weight: 500;">Button (9.3:1)</div>
+          <div style="padding: 12px 24px; border: 1px solid #7A5C12; color: #7A5C12; border-radius: 6px; font-size: 14px;">Outline</div>
+          <a href="#" style="color: #7A5C12; text-decoration: underline; text-underline-offset: 4px; font-size: 16px;">Link #7A5C12 (5.6:1 AA)</a>
+        </div>
+        <div style="font-family: var(--mono); font-size: 9px; color: #8A817A; margin-top: 8px;">Gold #E5A54B is 1.9:1 on light — ONLY for large decorative marks, never body text. Use #7A5C12 for readable gold text.</div>
+      </div>
+
+      <!-- Semantic on light -->
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; color: #8A817A; margin-bottom: 10px;">SEMANTIC on light</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <div style="padding: 8px 16px; background: rgba(45,122,78,0.08); color: #2D7A4E; border: 1px solid rgba(45,122,78,0.2); border-radius: 6px; font-family: var(--mono); font-size: 12px;">success 4.7:1</div>
+          <div style="padding: 8px 16px; background: rgba(163,63,57,0.08); color: #A33F39; border: 1px solid rgba(163,63,57,0.2); border-radius: 6px; font-family: var(--mono); font-size: 12px;">error 5.7:1</div>
+          <div style="padding: 8px 16px; background: rgba(122,92,18,0.08); color: #7A5C12; border: 1px solid rgba(122,92,18,0.2); border-radius: 6px; font-family: var(--mono); font-size: 12px;">warning 5.6:1</div>
+          <div style="padding: 8px 16px; background: rgba(61,106,148,0.08); color: #3D6A94; border: 1px solid rgba(61,106,148,0.2); border-radius: 6px; font-family: var(--mono); font-size: 12px;">info 5.1:1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETE TOKEN TABLE -->
+  <div style="margin-bottom: 48px;">
+    <h3 style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Complete token reference</h3>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 11px;">
+        <thead>
+          <tr style="border-bottom: 1px solid #201D18;">
+            <th style="text-align: left; padding: 8px; color: #8A817A;">Token</th>
+            <th style="text-align: left; padding: 8px; color: #8A817A;">Hex</th>
+            <th style="text-align: left; padding: 8px; color: #8A817A;">Dark role</th>
+            <th style="text-align: left; padding: 8px; color: #8A817A;">Light role</th>
+            <th style="text-align: right; padding: 8px; color: #8A817A;">vs Dark</th>
+            <th style="text-align: right; padding: 8px; color: #8A817A;">vs Light</th>
+          </tr>
+        </thead>
+        <tbody style="color: #C8C0B8;">
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-50</td><td><span style="display:inline-block;width:12px;height:12px;background:#0B0A09;border:1px solid #201D18;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#0B0A09</td><td>Background</td><td>Primary text</td><td style="text-align:right;">1.0:1</td><td style="text-align:right;">17.9:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-100</td><td><span style="display:inline-block;width:12px;height:12px;background:#12110F;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#12110F</td><td>Surface</td><td>—</td><td style="text-align:right;">1.1:1</td><td style="text-align:right;">17.0:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-150</td><td><span style="display:inline-block;width:12px;height:12px;background:#191714;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#191714</td><td>Elevated</td><td>—</td><td style="text-align:right;">1.1:1</td><td style="text-align:right;">16.1:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-200</td><td><span style="display:inline-block;width:12px;height:12px;background:#201D18;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#201D18</td><td>Border</td><td>Secondary text</td><td style="text-align:right;">1.2:1</td><td style="text-align:right;">15.2:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-300</td><td><span style="display:inline-block;width:12px;height:12px;background:#2D2924;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#2D2924</td><td>Heavy border</td><td>—</td><td style="text-align:right;">1.4:1</td><td style="text-align:right;">13.0:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-400</td><td><span style="display:inline-block;width:12px;height:12px;background:#403A33;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#403A33</td><td>Subtle divider</td><td>Tertiary text</td><td style="text-align:right;">1.8:1</td><td style="text-align:right;">10.1:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-500</td><td><span style="display:inline-block;width:12px;height:12px;background:#6B6359;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#6B6359</td><td style="color:#E5A54B;">Decorative (3.4 AA-lg)</td><td>Muted text</td><td style="text-align:right;">3.4:1</td><td style="text-align:right;">5.3:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-600</td><td><span style="display:inline-block;width:12px;height:12px;background:#8A817A;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#8A817A</td><td>Muted text (AA)</td><td style="color:#E5A54B;">Decorative (3.4 AA-lg)</td><td style="text-align:right;">5.2:1</td><td style="text-align:right;">3.4:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-700</td><td><span style="display:inline-block;width:12px;height:12px;background:#A59D95;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#A59D95</td><td>Secondary text</td><td>—</td><td style="text-align:right;">7.4:1</td><td style="text-align:right;">2.4:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-800</td><td><span style="display:inline-block;width:12px;height:12px;background:#C8C0B8;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#C8C0B8</td><td>Strong secondary</td><td>—</td><td style="text-align:right;">11.0:1</td><td style="text-align:right;">1.6:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-900</td><td><span style="display:inline-block;width:12px;height:12px;background:#E8E4DF;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#E8E4DF</td><td>Primary text</td><td>Surface</td><td style="text-align:right;">15.6:1</td><td style="text-align:right;">1.1:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">n-950</td><td><span style="display:inline-block;width:12px;height:12px;background:#F5F3EF;border:1px solid #D6D0C8;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#F5F3EF</td><td>—</td><td>Background</td><td style="text-align:right;">17.9:1</td><td style="text-align:right;">1.0:1</td></tr>
+          <tr style="border-bottom: 1px solid #201D18;"><td colspan="6" style="padding:12px 8px 4px; color:#E5A54B; font-size: 10px;">ACCENT</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">gold</td><td><span style="display:inline-block;width:12px;height:12px;background:#E5A54B;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#E5A54B</td><td>Accent, links, mark</td><td>Buttons, large marks</td><td style="text-align:right;">9.3:1</td><td style="text-align:right; color:#D4564E;">1.9:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">gold-text</td><td><span style="display:inline-block;width:12px;height:12px;background:#7A5C12;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#7A5C12</td><td>—</td><td>Links, gold text</td><td style="text-align:right;">—</td><td style="text-align:right;">5.6:1</td></tr>
+          <tr style="border-bottom: 1px solid #201D18;"><td colspan="6" style="padding:12px 8px 4px; color:#8A817A; font-size: 10px;">SEMANTIC</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">success</td><td><span style="display:inline-block;width:12px;height:12px;background:#3DA86B;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#3DA86B</td><td>6.6:1 AA</td><td style="color:#8A817A;">#2D7A4E 4.7:1</td><td style="text-align:right;">6.6:1</td><td style="text-align:right;">4.7:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">error</td><td><span style="display:inline-block;width:12px;height:12px;background:#D4564E;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#D4564E</td><td>4.9:1 AA</td><td style="color:#8A817A;">#A33F39 5.7:1</td><td style="text-align:right;">4.9:1</td><td style="text-align:right;">5.7:1</td></tr>
+          <tr style="border-bottom: 1px solid #12110F;"><td style="padding:6px 8px;">info</td><td><span style="display:inline-block;width:12px;height:12px;background:#5B8FC7;border-radius:2px;vertical-align:middle;margin-right:6px;"></span>#5B8FC7</td><td>5.8:1 AA</td><td style="color:#8A817A;">#3D6A94 5.1:1</td><td style="text-align:right;">5.8:1</td><td style="text-align:right;">5.1:1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- USAGE GUIDE -->
+  <div style="margin-bottom: 48px;">
+    <h3 style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">How to use this palette</h3>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px; font-size: 14px; color: #C8C0B8; line-height: 1.8;">
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 1: DARK MODE IS DEFAULT</div>
+        <p>Build dark first. Background is <code style="background:#191714; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #E5A54B;">n-50 #0B0A09</code>. Light mode inverts the scale (n-950 becomes bg, n-50 becomes text). Same tokens, reversed.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 2: TEXT — PICK FROM 4 LEVELS</div>
+        <p style="margin-bottom: 8px;">On dark:</p>
+        <ul style="list-style: none; padding: 0; font-family: var(--mono); font-size: 12px; line-height: 2.2;">
+          <li><span style="color: #E8E4DF;">n-900</span> — headings, primary body, anything the user MUST read</li>
+          <li><span style="color: #A59D95;">n-700</span> — descriptions, secondary info, supporting copy</li>
+          <li><span style="color: #8A817A;">n-600</span> — captions, timestamps, metadata, labels</li>
+          <li><span style="color: #6B6359;">n-500</span> — decorative text only (counters, watermarks). Not for reading.</li>
+        </ul>
+        <p style="margin-top: 8px;">On light: use n-50, n-200, n-400, n-500 for the same hierarchy (reversed).</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 3: GOLD MEANS SOMETHING</div>
+        <p>Gold <code style="background:#191714; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #E5A54B;">#E5A54B</code> is for interactive or identity elements only: the aa. mark, links, buttons, active states. If gold appears on something the user can't click or that doesn't represent the brand, it's wrong.</p>
+        <p style="margin-top: 6px;">On light backgrounds: use <code style="background:#E8E4DF; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #7A5C12;">#7A5C12</code> for gold text (passes AA). Use <code style="background:#E8E4DF; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #E5A54B;">#E5A54B</code> only on buttons or elements larger than 24px.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 4: SURFACES — 3 LEVELS MAX</div>
+        <p>Don't use more than 3 surface levels on one screen.</p>
+        <ul style="list-style: none; padding: 0; font-family: var(--mono); font-size: 12px; line-height: 2.2;">
+          <li><span style="display:inline-block; width:14px; height:14px; background:#0B0A09; border:1px solid #201D18; border-radius:2px; vertical-align:middle; margin-right:6px;"></span>n-50 — page background</li>
+          <li><span style="display:inline-block; width:14px; height:14px; background:#12110F; border-radius:2px; vertical-align:middle; margin-right:6px;"></span>n-100 — cards, panels, grouped content</li>
+          <li><span style="display:inline-block; width:14px; height:14px; background:#191714; border-radius:2px; vertical-align:middle; margin-right:6px;"></span>n-150 — popover, dropdown, elevated above a card</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 5: BORDERS AND DIVIDERS</div>
+        <p><code style="background:#191714; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #8A817A;">n-200 #201D18</code> for standard borders. <code style="background:#191714; padding: 2px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; color: #8A817A;">n-300 #2D2924</code> for emphasized dividers. Never use a border heavier than n-400.</p>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 6: HOVER / ACTIVE / FOCUS</div>
+        <ul style="list-style: none; padding: 0; font-family: var(--mono); font-size: 12px; line-height: 2.2;">
+          <li>Hover background: <span style="background:#251D11; padding: 2px 8px; border-radius: 3px; color: #E5A54B;">gold/12%</span></li>
+          <li>Active/pressed: <span style="background:#372916; padding: 2px 8px; border-radius: 3px; color: #E5A54B;">gold/20%</span></li>
+          <li>Focus ring: <span style="outline: 2px solid #E5A54B; outline-offset: 1px; padding: 2px 8px; border-radius: 3px; color: #E8E4DF;">2px solid gold, 2px offset</span></li>
+          <li>Text selection: <span style="background: rgba(229,165,75,0.25); padding: 2px 8px; border-radius: 3px; color: #E8E4DF;">gold/25% background</span></li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 7: SEMANTIC — USE SPARINGLY</div>
+        <p>Success/error/warning/info colors are for status communication only: form validation, notifications, badges. Never use them decoratively. On dark mode use the bright variants. On light mode use the darkened variants (see token table).</p>
+      </div>
+
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 8: WHEN IN DOUBT</div>
+        <p>If you're unsure which shade to use, start with the highest contrast option that isn't primary text. <span style="color: #A59D95;">n-700</span> is the safest "I need readable text but it's not the main thing" choice on dark. <span style="color: #E8E4DF;">n-900</span> is always safe for anything the user needs to read.</p>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ===== 7. WHAT THIS IS NOT ===== -->
+<!-- ===== REMAINING — CHECKLIST ===== -->
 <section class="section">
-  <div class="section-label">07 — Decisions</div>
-  <div class="notes">
-    <h3>What this site IS</h3>
-    <ul>
-      <li><strong>Personality-first.</strong> Not a portfolio. Not a resume. You, your takes, your energy.</li>
-      <li><strong>Opinion-forward.</strong> Your AI takes are the content that converts.</li>
-      <li><strong>Proof through craft.</strong> The site itself proves you have taste and can build.</li>
-      <li><strong>Extensible.</strong> Phase 1 is the home page. Lab/Explore come later.</li>
-      <li><strong>Dark.</strong> This is your native environment.</li>
-    </ul>
-  </div>
-  <br>
-  <div class="notes">
-    <h3>What this site IS NOT</h3>
-    <ul>
-      <li>A portfolio (not enough projects yet, and that's fine)</li>
-      <li>A resume (the resume isn't working, so why copy it)</li>
-      <li>An editorial magazine (too impersonal)</li>
-      <li>A SaaS landing page (you're not a product)</li>
-      <li>Someone else's design (not Edwin, not Linear, not anyone)</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ===== 8. TECH STACK ===== -->
-<section class="section">
-  <div class="section-label">08 — Stack (locked for Phase 1)</div>
-  <div class="notes">
-    <h3>Building with</h3>
-    <ul>
-      <li><strong>Astro</strong> — static-first, zero JS by default, Netlify-native</li>
-      <li><strong>Tailwind CSS v4</strong> — utility-first, CSS variables for theming</li>
-      <li><strong>Custom components</strong> — 8-10 Astro components, no library needed</li>
-      <li><strong>GSAP</strong> — only if scroll/animation needs it (aa logo, transitions)</li>
-      <li><strong>Instrument Sans</strong> — body text (locked)</li>
-      <li><strong>Display font</strong> — TBD from this moodboard</li>
-      <li><strong>JetBrains Mono</strong> — code/labels</li>
-      <li><strong>Netlify</strong> — auto-deploy from main</li>
+  <div class="section-label">What's left</div>
+  <div class="notes" style="max-width: 100%;">
+    <ul style="font-size: 16px; line-height: 2.2;">
+      <li style="color: var(--accent);">&#x2713; <strong>01 — Mark</strong> <span style="color: var(--text-dim); font-size: 13px;">aa. Patrick Hand, gold operators, stroke-draw animation</span></li>
+      <li style="color: var(--accent);">&#x25CB; <strong>02 — Color</strong> <span style="color: var(--text-dim); font-size: 13px;">above — reviewing palette</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>03 — Typography</strong> <span style="font-size: 13px;">fonts, scale, weights, line heights</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>04 — Spacing</strong> <span style="font-size: 13px;">base unit, scale, density</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>05 — Layout</strong> <span style="font-size: 13px;">max widths, grid, breakpoints</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>06 — Border radius</strong> <span style="font-size: 13px;">shape language</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>07 — Motion</strong> <span style="font-size: 13px;">easing, duration, what animates</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>08 — Imagery / Decoration</strong> <span style="font-size: 13px;">visual elements beyond text</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>09 — Components</strong> <span style="font-size: 13px;">buttons, links, dividers, building blocks</span></li>
+      <li style="color: var(--text-dim);">&#x25CB; <strong>10 — Voice</strong> <span style="font-size: 13px;">copy tone, length rules</span></li>
     </ul>
   </div>
 </section>
@@ -677,6 +618,183 @@ aa
     agamarora.com/moodboard — built in public, 2026
   </p>
 </footer>
+
+<script>
+// ===== aa. MARK RENDERING =====
+const MARK_FONT = 'Patrick Hand';
+const MARK_GOLD = '#E5A54B';
+const MARK_LIGHT = '#E8E4DF';
+const MARK_DARK = '#2A2A2A';
+const MARK_SPEED = 1.5;
+
+function makeSvg(w, h) {
+  const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  s.setAttribute('width', w); s.setAttribute('height', h);
+  s.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  return s;
+}
+
+function makeTxt(content, x, y, family, weight, size, color, sw, isFill) {
+  const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  t.setAttribute('x', x); t.setAttribute('y', y);
+  t.setAttribute('font-family', `'${family}', cursive`);
+  t.setAttribute('font-weight', weight); t.setAttribute('font-size', size);
+  t.setAttribute('stroke-linecap', 'round'); t.setAttribute('stroke-linejoin', 'round');
+  if (isFill) { t.setAttribute('fill', color); t.setAttribute('opacity', '0'); }
+  else { t.setAttribute('fill', 'none'); t.setAttribute('stroke', color); t.setAttribute('stroke-width', sw); }
+  t.textContent = content;
+  return t;
+}
+
+function buildAaDot(container, aaColor, size, sw) {
+  const svg = makeSvg(size * 2.2, size * 1.4);
+  const aaX = size * 0.15;
+  const yPos = size * 1.1;
+
+  const aaStroke = makeTxt('aa', aaX, yPos, MARK_FONT, 400, size, aaColor, sw);
+  aaStroke.dataset.role = 'aa';
+  svg.appendChild(aaStroke);
+
+  const dotStroke = makeTxt('.', 0, yPos, MARK_FONT, 400, size, MARK_GOLD, sw);
+  dotStroke.dataset.role = 'dot'; dotStroke.style.opacity = '0';
+  svg.appendChild(dotStroke);
+
+  const aaFill = makeTxt('aa', aaX, yPos, MARK_FONT, 400, size, aaColor, 0, true);
+  aaFill.dataset.fillFor = 'aa';
+  svg.appendChild(aaFill);
+
+  const dotFill = makeTxt('.', 0, yPos, MARK_FONT, 400, size, MARK_GOLD, 0, true);
+  dotFill.dataset.fillFor = 'dot';
+  svg.appendChild(dotFill);
+
+  container.insertBefore(svg, container.querySelector('.label'));
+
+  requestAnimationFrame(() => {
+    const aaW = aaStroke.getComputedTextLength();
+    const dotX = aaX + aaW - (size * 0.05);
+    dotStroke.setAttribute('x', dotX); dotFill.setAttribute('x', dotX);
+  });
+
+  return { aaStroke, dotStroke, aaFill, dotFill };
+}
+
+function buildSlash(container, aaColor, size, sw) {
+  const svg = makeSvg(size * 2.8, size * 1.4);
+  const yPos = size * 1.1;
+
+  const slashStroke = makeTxt('/', 4, yPos, 'JetBrains Mono', 300, size * 0.85, MARK_GOLD, sw * 0.8);
+  slashStroke.dataset.role = 'slash';
+  svg.appendChild(slashStroke);
+
+  const aaStroke = makeTxt('aa', size * 0.55, yPos, MARK_FONT, 400, size, aaColor, sw);
+  aaStroke.dataset.role = 'aa';
+  svg.appendChild(aaStroke);
+
+  const slashFill = makeTxt('/', 4, yPos, 'JetBrains Mono', 300, size * 0.85, MARK_GOLD, 0, true);
+  slashFill.dataset.fillFor = 'slash';
+  svg.appendChild(slashFill);
+
+  const aaFill = makeTxt('aa', size * 0.55, yPos, MARK_FONT, 400, size, aaColor, 0, true);
+  aaFill.dataset.fillFor = 'aa';
+  svg.appendChild(aaFill);
+
+  container.insertBefore(svg, container.querySelector('.label'));
+  return { slashStroke, slashFill, aaStroke, aaFill };
+}
+
+function animateAaDot(container) {
+  const svg = container.querySelector('svg');
+  const aaStroke = svg.querySelector('[data-role="aa"]');
+  const dotStroke = svg.querySelector('[data-role="dot"]');
+  const aaFill = svg.querySelector('[data-fill-for="aa"]');
+  const dotFill = svg.querySelector('[data-fill-for="dot"]');
+
+  [aaFill, dotFill].forEach(t => { if (t) { t.style.transition = 'none'; t.style.opacity = '0'; }});
+  if (dotStroke) { dotStroke.style.transition = 'none'; dotStroke.style.opacity = '0'; }
+  if (aaStroke) {
+    const len = aaStroke.getComputedTextLength() * 2;
+    aaStroke.style.strokeDasharray = len;
+    aaStroke.style.strokeDashoffset = len;
+    aaStroke.style.transition = 'none'; aaStroke.style.opacity = '1';
+    aaStroke.getBoundingClientRect();
+
+    const dur = MARK_SPEED * 0.85;
+    aaStroke.style.transition = `stroke-dashoffset ${dur}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
+    aaStroke.style.strokeDashoffset = '0';
+
+    function onDone(e) {
+      if (e.propertyName !== 'stroke-dashoffset') return;
+      aaStroke.removeEventListener('transitionend', onDone);
+      if (aaFill) { aaFill.style.transition = 'opacity 0.2s ease'; aaFill.style.opacity = '1'; }
+      if (dotFill) { dotFill.style.transition = 'opacity 0.2s ease'; dotFill.style.opacity = '1'; }
+      aaStroke.style.transition = 'opacity 0.25s ease 0.05s'; aaStroke.style.opacity = '0';
+    }
+    aaStroke.addEventListener('transitionend', onDone);
+  }
+}
+
+function animateSlash(container) {
+  const svg = container.querySelector('svg');
+  const slashFill = svg.querySelector('[data-fill-for="slash"]');
+  const aaStroke = svg.querySelector('[data-role="aa"]');
+  const aaFill = svg.querySelector('[data-fill-for="aa"]');
+
+  [slashFill, aaFill].forEach(t => { if (t) { t.style.transition = 'none'; t.style.opacity = '0'; }});
+  [svg.querySelector('[data-role="slash"]'), aaStroke].forEach(t => {
+    if (!t) return;
+    t.style.transition = 'none'; t.style.opacity = '0';
+    const len = t.getComputedTextLength() * 2;
+    t.style.strokeDasharray = len; t.style.strokeDashoffset = len;
+    t.getBoundingClientRect();
+  });
+
+  // Blink slash
+  let count = 0;
+  const iv = setInterval(() => {
+    count++;
+    if (count > 4) {
+      clearInterval(iv);
+      slashFill.style.transition = 'none'; slashFill.style.opacity = '1';
+      // Draw aa
+      if (aaStroke) {
+        aaStroke.style.opacity = '1'; aaStroke.getBoundingClientRect();
+        const dur = MARK_SPEED * 0.85;
+        aaStroke.style.transition = `stroke-dashoffset ${dur}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
+        aaStroke.style.strokeDashoffset = '0';
+        function onDone(e) {
+          if (e.propertyName !== 'stroke-dashoffset') return;
+          aaStroke.removeEventListener('transitionend', onDone);
+          if (aaFill) { aaFill.style.transition = 'opacity 0.2s ease'; aaFill.style.opacity = '1'; }
+          aaStroke.style.transition = 'opacity 0.25s ease 0.05s'; aaStroke.style.opacity = '0';
+        }
+        aaStroke.addEventListener('transitionend', onDone);
+      }
+      return;
+    }
+    slashFill.style.transition = 'none';
+    slashFill.style.opacity = count % 2 === 1 ? '1' : '0';
+  }, 300);
+}
+
+document.fonts.ready.then(() => {
+  buildAaDot(document.getElementById('mark-primary'), MARK_LIGHT, 72, 1.6);
+  buildSlash(document.getElementById('mark-slash'), MARK_LIGHT, 72, 1.6);
+  buildAaDot(document.getElementById('mark-light'), MARK_DARK, 72, 1.6);
+  buildAaDot(document.getElementById('mark-small'), MARK_LIGHT, 36, 1.0);
+
+  // Animate on load
+  setTimeout(() => animateAaDot(document.getElementById('mark-primary')), 200);
+  setTimeout(() => animateSlash(document.getElementById('mark-slash')), 600);
+  setTimeout(() => animateAaDot(document.getElementById('mark-light')), 1000);
+  setTimeout(() => animateAaDot(document.getElementById('mark-small')), 1400);
+
+  // Click to replay
+  document.getElementById('mark-primary').addEventListener('click', () => animateAaDot(document.getElementById('mark-primary')));
+  document.getElementById('mark-slash').addEventListener('click', () => animateSlash(document.getElementById('mark-slash')));
+  document.getElementById('mark-light').addEventListener('click', () => animateAaDot(document.getElementById('mark-light')));
+  document.getElementById('mark-small').addEventListener('click', () => animateAaDot(document.getElementById('mark-small')));
+});
+</script>
 
 </body>
 </html>
