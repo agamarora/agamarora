@@ -1338,9 +1338,273 @@
   </div>
 </section>
 
-<!-- ===== REMAINING — CHECKLIST ===== -->
+<!-- ===== 06 — BORDER RADIUS (starting point) ===== -->
 <section class="section">
-  <div class="section-label">What's left</div>
+  <div class="section-label">06 — Border Radius (starting point: 4px-aligned scale)</div>
+  <p class="notes">4-step scale aligned to spacing base. Cognitive research (Bar & Neta, 2006): humans prefer curved contours, sharp corners activate threat detection. Small radii = refined/intentional. Large radii = friendly/casual. For warm editorial: enough softness to match Satoshi's humanist character without drifting into consumer-app territory.</p>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Radius scale — visual</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px;">
+        <!-- radius-sm -->
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: rgba(229, 165, 75, 0.12); border: 1px solid var(--accent); border-radius: 4px; margin-bottom: 12px;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent);">--radius-sm</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">4px</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-top: 4px;">inputs, tags, chips</div>
+        </div>
+        <!-- radius-md -->
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: rgba(229, 165, 75, 0.12); border: 1px solid var(--accent); border-radius: 8px; margin-bottom: 12px;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent);">--radius-md</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">8px</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-top: 4px;">cards, containers</div>
+        </div>
+        <!-- radius-lg -->
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 80px; background: rgba(229, 165, 75, 0.12); border: 1px solid var(--accent); border-radius: 12px; margin-bottom: 12px;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent);">--radius-lg</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">12px</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-top: 4px;">hero cards, featured</div>
+        </div>
+        <!-- radius-full -->
+        <div style="text-align: center;">
+          <div style="width: 80px; height: 40px; background: rgba(229, 165, 75, 0.12); border: 1px solid var(--accent); border-radius: 9999px; margin-bottom: 12px; margin-top: 20px;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent);">--radius-full</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">9999px</div>
+          <div style="font-family: var(--mono); font-size: 10px; color: #6B6359; margin-top: 4px;">pills, badges (sparingly)</div>
+        </div>
+      </div>
+      <p style="font-family: var(--mono); font-size: 11px; color: #6B6359;">8px is the primary default. Aligns with Stripe/Linear/Vercel's "premium default." Reads as intentionally soft, not accidentally sharp. 4px base matches spacing grid.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 — MOTION (starting point) ===== -->
+<section class="section">
+  <div class="section-label">07 — Motion (starting point: perception-anchored durations + expressive decelerate)</div>
+  <p class="notes">Easing and duration conventions rooted in physical-world perception (Disney's 12 Principles, 1981). Objects decelerate into rest, so ease-out on enter feels natural. Duration thresholds from Miller (1968) and Nielsen (1993): &lt;100ms = instant, 100-300ms = responsive, 300-500ms = cinematic, &gt;500ms = narrative. The expressive decelerate curve (0.16, 1, 0.3, 1) pairs with the warm-but-precise aesthetic.</p>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Duration scale</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--motion-instant</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">100ms</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">ease-out · hover, focus, toggle · feels like direct manipulation</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--motion-fast</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">200ms</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">ease-out · fade, color shift, small position changes</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--motion-moderate</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">350ms</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">cubic-bezier(0.16, 1, 0.3, 1) · slide-in, card enter, layout shift</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--motion-slow</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">500ms</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">cubic-bezier(0.16, 1, 0.3, 1) · page transition, large reveals</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--motion-scroll</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 100px; flex-shrink: 0;">scrub: 0.8</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">GSAP power2.out · scroll-driven narrative, convergence animation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">What animates vs what doesn't</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 12px;">ANIMATE</div>
+          <ul style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 2; list-style: none;">
+            <li>State changes user triggered (hover, click)</li>
+            <li>Entrance of new content (scroll reveals)</li>
+            <li>Scroll-driven convergence paths</li>
+            <li>Theme transitions (color shifts)</li>
+            <li>The aa. mark stroke-draw</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359; margin-bottom: 12px;">DON'T ANIMATE</div>
+          <ul style="font-family: var(--sans); font-size: 14px; color: #6B6359; line-height: 2; list-style: none;">
+            <li>Content the user is trying to read</li>
+            <li>Repeated/looping decorative motion</li>
+            <li>Anything that blocks interaction</li>
+            <li>Layout shifts during reading</li>
+            <li>prefers-reduced-motion: show final state</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 — IMAGERY / DECORATION (starting point) ===== -->
+<section class="section">
+  <div class="section-label">08 — Imagery / Decoration (starting point: material warmth, not decoration)</div>
+  <p class="notes">International Typographic Style (Swiss Design, 1950s): in text-first layouts, visual elements create rhythm and breathing room, not compete with content. For dark editorial: the risk is either looking empty or looking like a gaming site. Subtle texture makes flat digital surfaces feel like a material (Julesz, 1981, pre-attentive texture processing).</p>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Texture and background treatments</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Noise overlay</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">3-4% opacity, monochromatic, ~0.5px grain · visible at 1:1 zoom, invisible at arm's length</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Focal glow</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Radial gradient, gold (#E5A54B) at 4% opacity, ~60vw radius · behind hero content, creates depth</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Dividers</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">1px, rgba(255,255,255,0.08) default · gold accent for emphasis rules (sparingly)</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Whitespace</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Generous negative space IS the primary decoration. Let spacing scale do the work.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">aa. mark</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Already a decorative asset. Use as section anchor or subtle watermark element.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 0;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Avoid</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <ul style="font-family: var(--sans); font-size: 14px; color: #6B6359; line-height: 2; list-style: none;">
+        <li>Visible grid patterns, dot matrices, mesh gradients (2022 trend)</li>
+        <li>Geometric shapes floating in space</li>
+        <li>Abstract blob illustrations</li>
+        <li>Decorative lines that don't divide anything</li>
+        <li>Stock-looking photography. If used: desaturated, warm-graded, consistent treatment.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 — COMPONENTS (starting point) ===== -->
+<section class="section">
+  <div class="section-label">09 — Components (starting point: 7-piece minimum set)</div>
+  <p class="notes">Portfolio sites are transient interfaces (Alan Cooper, "About Face"): users scan, evaluate, and leave. The component set optimizes for reading flow and scannability, not interaction variety. Build only what the scroll-driven narrative demands. Every component you don't build is a design decision you don't have to maintain.</p>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Component inventory</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Button</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Primary (solid gold bg, dark text) + Ghost (1px border, text color). radius-sm. Generous padding (12-16px / 24-32px).</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Inline link</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Gold text, no underline default. Underline on hover. Tufte principle: no noise until interaction.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Section header</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Typography + spacing only. Not a "component." Uses type hierarchy levels directly.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Project card</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Part of scroll flow, not a browsing grid. Dark surface (rgba 255,255,255 0.03-0.05). Thin border, no shadow.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Tag/chip</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Small, low-emphasis. JetBrains Mono, 11px. radius-sm. For skill labels, tech stack, role indicators.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Nav bar</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Minimal: aa. mark + 2-3 links + theme toggle. No mega-menu, no hamburger on desktop.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">Footer</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">Contact + social links. Simple, low-key. The CTA section above carries the weight.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE BUTTON DEMOS -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Button styles — live</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px; display: flex; gap: 24px; flex-wrap: wrap; align-items: center;">
+      <!-- Primary -->
+      <button style="background: #E5A54B; color: #0A0A0A; border: none; border-radius: 4px; padding: 12px 28px; font-family: var(--sans); font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 200ms ease-out;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Get in touch</button>
+      <!-- Ghost -->
+      <button style="background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; padding: 12px 28px; font-family: var(--sans); font-size: 15px; font-weight: 500; cursor: pointer; transition: border-color 200ms ease-out;" onmouseover="this.style.borderColor='rgba(229,165,75,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'">View project</button>
+      <!-- Inline link -->
+      <a href="#" style="color: #E5A54B; text-decoration: none; font-family: var(--sans); font-size: 15px; transition: text-decoration 200ms;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'" onclick="event.preventDefault()">Read case study</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 — VOICE (starting point) ===== -->
+<section class="section">
+  <div class="section-label">10 — Voice (starting point: confident + warm + specific + brief)</div>
+  <p class="notes">NN/g tone research (2016): for professional credibility with enterprise audiences, the highest-trust combination is serious + casual + respectful + matter-of-fact. Tone and typography must match: Satoshi's geometric-humanist character pairs with writing that is clear and direct but not robotic. The formula: write like you're explaining your work to a sharp peer over coffee.</p>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Length rules</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Section heads</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">1-3 words, label-like · "Work" not "Selected Projects & Case Studies"</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Subheads</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">8-15 words, one claim · Poynter EyeTrack: 4-8 words optimal for scanning</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">Body paragraphs</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">2-3 sentences, 40-60 words max · Miller (1956): chunking for working memory</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">CTAs</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">2-3 words, verb-first · "View project" not "Shall we explore this together?"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Tone register (for the audience)</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px;">The audience reads precise documentation daily (Anthropic, Stripe, Linear hiring managers). They value:</p>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); flex-shrink: 0;">DO</div>
+          <div style="font-family: var(--sans); font-size: 14px; color: var(--text-dim);">Clarity over cleverness. Specificity over superlatives. Confidence without arrogance. Show the thinking.</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359; flex-shrink: 0;">DON'T</div>
+          <div style="font-family: var(--sans); font-size: 14px; color: #6B6359;">"Dramatically improved." "Passionate about." "Leveraged synergies." Any hedge word. Any superlative without a number.</div>
+        </div>
+      </div>
+      <div style="margin-top: 24px; padding: 16px; background: rgba(229, 165, 75, 0.06); border-radius: 8px;">
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text); line-height: 1.6;"><strong>Examples:</strong></p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-top: 8px;">Not: "I dramatically improved the delivery experience"<br>But: "Reduced delivery time from 60 days to 7. NPS went from 3.6 to 4.7."</p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-top: 8px;">Not: "Selected Projects & Case Studies"<br>But: "Work"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATUS — CHECKLIST ===== -->
+<section class="section">
+  <div class="section-label">Design system status</div>
   <div class="notes" style="max-width: 100%;">
     <ul style="font-size: 16px; line-height: 2.2;">
       <li style="color: var(--accent);">&#x2713; <strong>01 — Mark</strong> <span style="color: var(--text-dim); font-size: 13px;">aa. Patrick Hand, gold operators, stroke-draw animation</span></li>
@@ -1348,12 +1612,13 @@
       <li style="color: var(--accent);">&#x2713; <strong>03 — Typography</strong> <span style="color: var(--text-dim); font-size: 13px;">Satoshi + JetBrains Mono, Perfect Fourth, locked</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>04 — Spacing</strong> <span style="color: var(--text-dim); font-size: 13px;">4px base, 11-token scale, spacious density, semantic aliases</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>05 — Layout</strong> <span style="color: var(--text-dim); font-size: 13px;">3 width tiers (720/1080/1320), content-based breakpoints (640/1024/1440), no grid, Gestalt rhythm</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>06 — Border radius</strong> <span style="font-size: 13px;">shape language</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>07 — Motion</strong> <span style="font-size: 13px;">easing, duration, what animates</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>08 — Imagery / Decoration</strong> <span style="font-size: 13px;">visual elements beyond text</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>09 — Components</strong> <span style="font-size: 13px;">buttons, links, dividers, building blocks</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>10 — Voice</strong> <span style="font-size: 13px;">copy tone, length rules</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>06 — Border Radius</strong> <span style="color: var(--text-dim); font-size: 13px;">4px/8px/12px/full scale, 8px primary default</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>07 — Motion</strong> <span style="color: var(--text-dim); font-size: 13px;">perception-anchored durations, expressive decelerate curve, scrub: 0.8 for scroll</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>08 — Imagery / Decoration</strong> <span style="color: var(--text-dim); font-size: 13px;">noise overlay, focal glow, whitespace as decoration, avoid trends</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>09 — Components</strong> <span style="color: var(--text-dim); font-size: 13px;">7-piece set: button (solid+ghost), link, header, card, tag, nav, footer</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>10 — Voice</strong> <span style="color: var(--text-dim); font-size: 13px;">confident + warm + specific + brief, verb-first CTAs, no superlatives without numbers</span></li>
     </ul>
+    <p style="font-family: var(--mono); font-size: 13px; color: var(--accent); margin-top: 24px;">Design system complete. Items 01-05 are locked. Items 06-10 are research-backed starting points, expected to iterate once building starts.</p>
   </div>
 </section>
 
