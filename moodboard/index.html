@@ -1147,6 +1147,197 @@
   </div>
 </section>
 
+<!-- ===== 05 — LAYOUT (locked) ===== -->
+<section class="section">
+  <div class="section-label">05 — Layout (locked: width tiers + content-based breakpoints, no grid)</div>
+  <p class="notes">Three named width tiers instead of a grid system. Content-based breakpoints aligned to where spacing and typography already compress. Manuscript layout for sequential narrative. Informed by Bringhurst (measure theory), Muller-Brockmann (grid theory), Tschichold (proportional canons), NN/g (scroll attention + visual anchoring), Gestalt psychology (proximity ratios).</p>
+
+  <!-- WIDTH TIERS VISUALIZATION -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Width tiers — visual</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 100%; overflow-x: auto;">
+      <!-- Nested container demo -->
+      <div style="position: relative; max-width: 1320px; margin: 0 auto;">
+        <!-- Wide tier -->
+        <div style="border: 1px dashed rgba(229, 165, 75, 0.3); border-radius: 8px; padding: 16px; position: relative;">
+          <div style="position: absolute; top: -10px; left: 16px; background: var(--surface); padding: 0 8px; font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.08em;">--width-wide: 1320px</div>
+          <!-- Default tier -->
+          <div style="border: 1px dashed rgba(229, 165, 75, 0.5); border-radius: 8px; padding: 16px; max-width: 1080px; margin: 24px auto 0; position: relative;">
+            <div style="position: absolute; top: -10px; left: 16px; background: var(--surface); padding: 0 8px; font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.08em;">--width-default: 1080px</div>
+            <!-- Narrow tier -->
+            <div style="border: 1px dashed var(--accent); border-radius: 8px; padding: 24px; max-width: 720px; margin: 24px auto 0; position: relative;">
+              <div style="position: absolute; top: -10px; left: 16px; background: var(--surface); padding: 0 8px; font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.08em;">--width-narrow: 720px</div>
+              <p style="font-family: var(--sans); font-size: 15px; color: var(--text-dim); line-height: 1.7; margin-top: 8px;">This is where sustained prose lives. At ~65ch in Satoshi at 16px, it sits within Bringhurst's ideal reading measure of 45-75 characters per line. The eye's return sweep stays accurate, reducing regressions and cognitive load. Chapter text, body paragraphs, about sections.</p>
+            </div>
+            <p style="font-family: var(--mono); font-size: 11px; color: #6B6359; text-align: center; margin-top: 16px;">Structural content: hero headings, cards, asymmetric layouts. 1.5x narrow.</p>
+          </div>
+          <p style="font-family: var(--mono); font-size: 11px; color: #6B6359; text-align: center; margin-top: 16px;">Outer content bound. Beyond this: only background color, SVG layers, full-bleed decoration. NN/g: visual anchoring breaks above ~1400px.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOKEN TABLE -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Width token reference</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--width-narrow</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">720px</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">~65ch · prose, chapters, body text · Bringhurst measure</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--width-default</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">1080px</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">1.5x narrow · hero, cards, structural elements</div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 140px; flex-shrink: 0;">--width-wide</div>
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--text); width: 60px; flex-shrink: 0;">1320px</div>
+          <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">outer content bound · nothing wider except backgrounds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREAKPOINTS -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Breakpoints — content-based</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 24px;">Breakpoints are set where the layout actually breaks, not where devices start. Each threshold marks a shift in which perceptual constraint dominates: touch targets below 640px, reading measure at 1024px, spatial luxury at 1440px.</p>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <!-- Small -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">--bp-small<br><span style="color: var(--text); font-size: 13px;">640px</span></div>
+          <div>
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text); margin-bottom: 4px;">Below: fluid single column</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">All containers collapse to 100% width. Inline padding: --space-6 (24px). Spacing tokens 7-11 compress ~25%. Type clamp() handles scale. Measure drops to ~36ch at 375px, accepted: mobile is scanning mode, not reading mode.</div>
+          </div>
+        </div>
+        <!-- Medium -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">--bp-medium<br><span style="color: var(--text); font-size: 13px;">1024px</span></div>
+          <div>
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text); margin-bottom: 4px;">Narrow container activates</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">720px content + side margins fit comfortably. Reading experience stabilizes at proper measure. Default container available if needed for wider structural elements.</div>
+          </div>
+        </div>
+        <!-- Large -->
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <div style="font-family: var(--mono); font-size: 12px; color: var(--accent); width: 120px; flex-shrink: 0;">--bp-large<br><span style="color: var(--text); font-size: 13px;">1440px</span></div>
+          <div>
+            <div style="font-family: var(--sans); font-size: 14px; color: var(--text); margin-bottom: 4px;">Full spatial luxury</div>
+            <div style="font-family: var(--mono); font-size: 11px; color: #6B6359;">All three width tiers active. Maximum peripheral whitespace as cognitive buffer. Above 1440px: additional space is pure margin, content does not stretch.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NO GRID -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Grid decision: none</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px;">Muller-Brockmann's grid theory: grids reduce cognitive load by creating predictable spatial relationships for <em>parallel</em> content. A manuscript grid (single column with margins) is correct for sequential, linear content.</p>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px;">This product is a scroll-driven narrative. One thing at a time. No sidebars, no parallel content streams, no data tables. Width tiers + spacing tokens handle all layout needs.</p>
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text); line-height: 1.6;">If a future component needs a grid (card arrangement, bento layout), use CSS Grid <code style="font-family: var(--mono); font-size: 12px;">auto-fit</code> with spacing tokens ad hoc. Do not pre-build a grid system for hypothetical needs.</p>
+    </div>
+  </div>
+
+  <!-- SECTION RHYTHM -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Vertical section rhythm</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 24px;">Gestalt proximity: the brain reads spatial distance as semantic distance. The ratio between internal spacing and section spacing must be at least 3:1 to signal a clear grouping change. NN/g scroll attention data: generous section spacing creates re-engagement "beats" but too much triggers the "illusion of completeness" where users think the page is done.</p>
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Within component -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 160px; flex-shrink: 0; text-align: right;">Within a component</div>
+          <div style="width: 16px; height: 20px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">--space-5 (16px) <span style="color: #6B6359;">· 1x base · "same unit"</span></div>
+        </div>
+        <!-- Between components -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 160px; flex-shrink: 0; text-align: right;">Between components</div>
+          <div style="width: 32px; height: 20px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">--space-6 to --space-7 (24-32px) <span style="color: #6B6359;">· 1.5-2x · "related but distinct"</span></div>
+        </div>
+        <!-- Between sections -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); width: 160px; flex-shrink: 0; text-align: right;">Between sections</div>
+          <div style="width: 96px; height: 20px; background: var(--accent); border-radius: 2px; flex-shrink: 0;"></div>
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim);">--space-9 to --space-10 (64-96px) <span style="color: #6B6359;">· 4-6x · "different topic"</span></div>
+        </div>
+      </div>
+      <p style="font-family: var(--mono); font-size: 11px; color: #6B6359; margin-top: 20px;">100vh chapter sections: 96px padding top/bottom on desktop, compresses to 48px on mobile via spacing responsive rules.</p>
+    </div>
+  </div>
+
+  <!-- ALIGNMENT -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Alignment model</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">All containers are horizontally centered (<code style="font-family: var(--mono); font-size: 12px;">margin-inline: auto</code>). Within the default container (1080px), text blocks can be offset left or right. The narrow column (720px) floats within the default, giving ~180px of offset room per side.</p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">The SVG convergence layer is <code style="font-family: var(--mono); font-size: 12px;">position: fixed</code>, full viewport. Its spatial logic is independent of content containers.</p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text); line-height: 1.6;">This gives asymmetry within structure. Tschichold: white space is an active element, not a passive background. The offset room is intentional, not leftover.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BEHAVIOR -->
+  <div style="margin-bottom: 48px;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Mobile behavior (below 640px)</div>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; max-width: 900px;">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">All width tiers collapse. Content is fluid at 100% minus inline padding. Fixed inline padding of <code style="font-family: var(--mono); font-size: 12px;">--space-6</code> (24px) on each side.</p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">At 375px (iPhone SE/13 mini): 327px content width, ~36ch in Satoshi. Below Bringhurst's 45ch minimum. This is accepted: Dyson and Shaikh research shows users adapt to shorter line lengths on mobile, reading in shorter bursts. Content structure matters more than measure at this width.</p>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Spacing tokens 7-11 compress ~25% per the spacing spec. Section padding drops from 96px to 48px. No offset/asymmetry: text is left-aligned, edge-to-edge within padding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYOUT USAGE RULES -->
+  <div style="margin-bottom: 0;">
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 24px;">Layout usage rules (for agents)</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; max-width: 1200px;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 1: CONTENT NEVER EXCEEDS --width-wide</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">No text, image, card, or interactive element wider than 1320px. Full-bleed backgrounds (color, SVG, gradients) are fine. Content is not background.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 2: PROSE USES --width-narrow</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Any sustained reading (paragraphs, chapter text, about sections) must be constrained to 720px / ~65ch. This is a readability constraint from measure theory, not a style preference.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 3: BREAKPOINTS ARE CONTENT-BASED</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Use <code style="font-family: var(--mono); font-size: 12px;">--bp-small</code>, <code style="font-family: var(--mono); font-size: 12px;">--bp-medium</code>, <code style="font-family: var(--mono); font-size: 12px;">--bp-large</code>. Do not add device-specific breakpoints (375px, 768px, etc.). If the layout breaks at a width not covered, the content is too wide for its container, fix the content.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 4: NO PRE-BUILT GRID</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Do not create grid utility classes or a column system. If a component needs columns, use CSS Grid <code style="font-family: var(--mono); font-size: 12px;">auto-fit</code> with spacing tokens inline. The product is sequential narrative, not a dashboard.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 5: SECTION SPACING IS 4-6x INTERNAL</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Gestalt proximity requires a clear ratio gap between "same group" and "different group" spacing. Internal: --space-5 (16px). Between sections: --space-9 to --space-10 (64-96px). Never use the same spacing token for both.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 6: MOBILE = FLUID + FIXED PADDING</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Below --bp-small (640px), all containers are <code style="font-family: var(--mono); font-size: 12px;">width: 100%; padding-inline: var(--space-6)</code>. No offsets, no asymmetry. Left-aligned, edge-to-edge within padding.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 7: CENTERED CONTAINERS, ASYMMETRIC CONTENT</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Containers are always centered. Asymmetry happens within the container via margin-inline offsets. The narrow column has ~180px of offset room within the default container. Use this for alternating chapter layouts.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 11px; color: #E5A54B; margin-bottom: 8px;">RULE 8: VIEWPORT HEIGHT IS NOT A CONTENT UNIT</div>
+        <p style="font-family: var(--sans); font-size: 14px; color: var(--text-dim); line-height: 1.6;">Sections can be min-height: 100vh for scroll-driven chapters, but content should not depend on exact viewport height. Use padding and vertical centering. Let content determine natural height, constrained by min-height for the scroll mechanic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== REMAINING — CHECKLIST ===== -->
 <section class="section">
   <div class="section-label">What's left</div>
@@ -1156,7 +1347,7 @@
       <li style="color: var(--accent);">&#x2713; <strong>02 — Color</strong> <span style="color: var(--text-dim); font-size: 13px;">warm neutrals + gold accent, locked</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>03 — Typography</strong> <span style="color: var(--text-dim); font-size: 13px;">Satoshi + JetBrains Mono, Perfect Fourth, locked</span></li>
       <li style="color: var(--accent);">&#x2713; <strong>04 — Spacing</strong> <span style="color: var(--text-dim); font-size: 13px;">4px base, 11-token scale, spacious density, semantic aliases</span></li>
-      <li style="color: var(--text-dim);">&#x25CB; <strong>05 — Layout</strong> <span style="font-size: 13px;">max widths, grid, breakpoints</span></li>
+      <li style="color: var(--accent);">&#x2713; <strong>05 — Layout</strong> <span style="color: var(--text-dim); font-size: 13px;">3 width tiers (720/1080/1320), content-based breakpoints (640/1024/1440), no grid, Gestalt rhythm</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>06 — Border radius</strong> <span style="font-size: 13px;">shape language</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>07 — Motion</strong> <span style="font-size: 13px;">easing, duration, what animates</span></li>
       <li style="color: var(--text-dim);">&#x25CB; <strong>08 — Imagery / Decoration</strong> <span style="font-size: 13px;">visual elements beyond text</span></li>
