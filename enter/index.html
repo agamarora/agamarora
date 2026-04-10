@@ -192,9 +192,11 @@
       min-height: 100dvh;
       height: auto;
       gap: var(--space-5);
+      transition: padding 0.4s ease;
     }
     .page.has-response {
       justify-content: flex-start;
+      padding-top: var(--space-6);
       min-height: 0;
     }
     .hero {
@@ -320,9 +322,11 @@
 })();
 
 // ============================================
-// MOBILE DETECTION
+// MOBILE DETECTION (cached, updated on resize)
 // ============================================
-const isMobile = () => window.innerWidth <= 768;
+let _isMobile = window.innerWidth <= 768;
+const isMobile = () => _isMobile;
+window.addEventListener('resize', () => { _isMobile = window.innerWidth <= 768; });
 const pageEl = document.querySelector('.page');
 
 // ============================================
@@ -694,10 +698,12 @@ window.addEventListener('resize', applyDepthBlur);
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
 let cachedScale = 2.2;
-document.addEventListener('mousemove', e => {
-  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-});
+if (!isMobile()) {
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+}
 function setKbScale() {
   if (isMobile()) return;
   cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
@@ -706,7 +712,6 @@ function setKbScale() {
 if (!isMobile()) setKbScale();
 window.addEventListener('resize', setKbScale);
 function animate(time) {
-  if (isMobile()) { requestAnimationFrame(animate); return; }
   const bx = Math.sin(time * 0.0003) * 1.5;
   const by = Math.cos(time * 0.00025) * 1;
   driftX += (mouseX * -2 - driftX) * 0.02;
@@ -714,7 +719,7 @@ function animate(time) {
   kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
   requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
+if (!isMobile()) requestAnimationFrame(animate);
 </script>
 </body>
 </html>
