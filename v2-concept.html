@@ -85,26 +85,26 @@
     padding: clamp(28px, 5vw, 64px);
   }
 
-  /* aa. mark — top right, identity corner */
+  /* aa. mark — bottom right, signing the work */
   .mark-wrap {
     position: absolute;
-    top: clamp(24px, 5vw, 48px);
+    bottom: clamp(24px, 4vw, 40px);
     right: clamp(24px, 5vw, 48px);
+    opacity: 0.5;
   }
   .mark-wrap svg { overflow: visible; }
 
-  /* Greeting — quiet top-left identity line */
+  /* Greeting — top left, bigger than the mark, clear hierarchy */
   .hero {
     position: absolute;
-    top: clamp(24px, 5vw, 48px);
-    left: clamp(24px, 5vw, 48px);
+    top: clamp(28px, 5vw, 56px);
+    left: clamp(28px, 5vw, 56px);
   }
   .hero h1 {
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
     line-height: 1;
-    color: var(--text-dim);
   }
 
   /* TERMINAL — the centerpiece. This is the entry point. */
@@ -173,13 +173,13 @@
 <!-- Page content -->
 <div class="page">
   <div class="mark-wrap">
-    <svg id="aa-mark" width="120" height="60" viewBox="0 0 120 60" style="overflow:visible">
-      <text id="aa-stroke" x="4" y="48" fill="none" stroke="#E8E4DF" stroke-width="1.2"
-            font-family="Patrick Hand" font-size="48">aa</text>
-      <text id="dot-fill" x="0" y="48" fill="#E5A54B" opacity="0"
-            font-family="Patrick Hand" font-size="48">.</text>
-      <text id="aa-fill" x="4" y="48" fill="#E8E4DF" opacity="0"
-            font-family="Patrick Hand" font-size="48">aa</text>
+    <svg id="aa-mark" width="72" height="36" viewBox="0 0 72 36" style="overflow:visible">
+      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8"
+            font-family="Patrick Hand" font-size="28">aa</text>
+      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0"
+            font-family="Patrick Hand" font-size="28">.</text>
+      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0"
+            font-family="Patrick Hand" font-size="28">aa</text>
     </svg>
   </div>
 
