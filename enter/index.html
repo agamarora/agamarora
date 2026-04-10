@@ -197,21 +197,6 @@
   /* Loading verb animation */
   .terminal-verb { color: var(--text-dim); font-style: italic; }
 
-  /* Type hint — inside terminal, right-aligned */
-  .type-hint {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--text-dim);
-    margin-left: auto;
-    opacity: 0;
-    animation: hintPulse 4s ease-in-out infinite;
-    animation-delay: 6s;
-    white-space: nowrap;
-  }
-  @keyframes hintPulse {
-    0%, 100% { opacity: 0; }
-    40%, 60% { opacity: 0.4; }
-  }
 </style>
 </head>
 <body>
@@ -243,7 +228,6 @@
              maxlength="200" spellcheck="false" autocomplete="off"
              style="position:absolute;opacity:0;pointer-events:none;width:0">
       <span class="terminal-cursor" id="cursor"></span>
-      <span class="type-hint" id="type-hint">click or type</span>
     </div>
   </div>
 
@@ -361,10 +345,13 @@ for (let i = questionLines.length - 1; i > 0; i--) {
   [questionLines[i], questionLines[j]] = [questionLines[j], questionLines[i]];
 }
 const openingLines = [
+  'type something here...',
   'git commit -m "ship taste, not features"',
   questionLines[0],
+  'type something here...',
   'claude "design a portfolio that thinks"',
   questionLines[1],
+  'type something here...',
   'netlify deploy --prod --message="v2.0"',
   questionLines[2],
   'git push origin craft',
@@ -415,7 +402,6 @@ function enterInputMode() {
   if (state === 'loading' || state === 'streaming') return;
   if (state === 'input') return;
   clearTimeout(returnTimer);
-  document.getElementById('type-hint').style.display = 'none';
   state = 'input';
   promptEl.textContent = '>';
   textEl.style.display = 'none';
