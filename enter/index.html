@@ -215,7 +215,7 @@
 
 <!-- Page content -->
 <div class="page">
-  <div class="hero"><h1>Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
+  <div class="hero"><h1 id="hero-text">Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
 
   <div class="response-zone" id="response-zone"></div>
 
@@ -545,6 +545,12 @@ function finishResponse() {
   cursorEl.style.display = 'none';
   showInput();
   hasInteracted = true;
+  // Swap greeting to "Agam's AI" after first response
+  const heroText = document.getElementById('hero-text');
+  if (heroText && !heroText.dataset.swapped) {
+    heroText.innerHTML = 'Agam\'s <span style="color:var(--accent)">AI</span>.';
+    heroText.dataset.swapped = '1';
+  }
   // Rotate question lines as placeholder hints
   let plIdx = 0;
   inputEl.placeholder = questionLines[0];
