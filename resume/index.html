@@ -184,6 +184,33 @@
   }
   .back a:hover { color: var(--accent); }
 
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .page {
+      padding: 24px 16px;
+    }
+    .header {
+      margin-bottom: 32px;
+    }
+    .header .links {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .role-header {
+      flex-direction: column;
+      gap: 2px;
+    }
+    .role-date {
+      font-size: 0.7rem;
+    }
+    .section {
+      margin-bottom: 36px;
+    }
+    .role {
+      margin-bottom: 24px;
+    }
+  }
+
   /* PRINT */
   @media print {
     body { background: white; color: #111; }
