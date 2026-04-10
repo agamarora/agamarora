@@ -25,31 +25,6 @@ export const imagining = [
 
 
 
-// --- Call Groq Handler ---
-export async function callGroq(prompt, systemPrompt) {
-  try {
-    const response = await fetch("/.netlify/functions/groqHandler", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ prompt, systemPrompt }),
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      return data.result;
-    } else {
-      console.error("Groq error:", data.error);
-      return "Sorry, something went wrong.";
-    }
-  } catch (error) {
-    console.error("Fetch error:", error);
-    return "Network error.";
-  }
-}
-
-
 // --- Logos switching ---
 export function swapLogosForTheme(theme) {
   document.querySelectorAll('.logo').forEach(img => {
