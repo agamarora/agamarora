@@ -38,10 +38,6 @@
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Satoshi', system-ui, -apple-system, sans-serif;
     --mark: 'Patrick Hand', cursive;
-    /* Spacing (4px base, from moodboard) */
-    --space-4: 12px;
-    --space-5: 16px;
-    --space-6: 24px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -51,7 +47,6 @@
     -webkit-font-smoothing: antialiased;
     overflow: hidden;
     height: 100vh;
-    height: 100dvh;
   }
 
   /* KEYBOARD BACKGROUND */
@@ -132,6 +127,33 @@
   .response-zone.visible { opacity: 1; }
   .response-zone.fading { opacity: 0; transition: opacity 2s ease; }
 
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .page {
+      justify-content: flex-start;
+      padding-top: clamp(28px, 8vw, 56px);
+      gap: 1rem;
+    }
+    .hero {
+      position: relative;
+      top: auto; left: auto;
+    }
+    .response-zone {
+      position: relative;
+      top: auto; right: auto;
+      text-align: left;
+      max-width: 100%;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+    .terminal-wrap { max-width: 100%; }
+    .mark-wrap {
+      position: relative;
+      bottom: auto; right: auto;
+      text-align: right;
+      margin-top: auto;
+    }
+  }
+
   /* BOTTOM RIGHT: signature */
   .mark-wrap {
     position: absolute;
@@ -175,79 +197,6 @@
   /* Loading verb animation */
   .terminal-verb { color: var(--text-dim); font-style: italic; }
 
-  /* ==========================================
-     MOBILE — must come AFTER all base styles
-     ========================================== */
-  @media (max-width: 768px) {
-    body { overflow-y: auto; }
-    .kb-scene { display: none; }
-    .kb-fade {
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 60%, rgba(229,165,75,0.04) 0%, transparent 70%),
-        radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
-    }
-    .page {
-      justify-content: center;
-      padding: var(--space-6) var(--space-5);
-      height: 100dvh;
-      gap: var(--space-5);
-    }
-    .page.has-response {
-      justify-content: flex-start;
-      height: auto;
-      min-height: 100dvh;
-    }
-    .hero {
-      position: relative;
-      top: auto; left: auto;
-      flex-shrink: 0;
-    }
-    .hero h1 { font-size: 1.3rem; }
-    .response-zone {
-      position: relative;
-      top: auto; right: auto;
-      text-align: left;
-      max-width: 100%;
-      font-size: clamp(0.95rem, 4vw, 1.15rem);
-      overflow-y: auto;
-      max-height: 50vh;
-    }
-    .terminal-wrap {
-      max-width: 100%;
-      flex-shrink: 0;
-    }
-    .terminal {
-      padding: var(--space-4) var(--space-5);
-      font-size: 0.875rem;
-      min-height: 48px;
-    }
-    .terminal-input { font-size: 0.875rem; }
-    .mark-wrap {
-      position: relative;
-      bottom: auto; right: auto;
-      text-align: right;
-      flex-shrink: 0;
-      padding-top: var(--space-4);
-    }
-  }
-
-  /* Small phones */
-  @media (max-width: 400px) {
-    .page { padding: var(--space-5) var(--space-5); }
-    .hero h1 { font-size: 1.1rem; }
-    .terminal { font-size: 0.8rem; }
-    .terminal-input { font-size: 0.8rem; }
-  }
-
-  /* Landscape on phones */
-  @media (max-width: 768px) and (orientation: landscape) {
-    .page { padding: var(--space-4) var(--space-5); }
-    .response-zone { max-height: 40vh; }
-  }
-  @media (max-height: 400px) {
-    .mark-wrap { display: none; }
-  }
-
 </style>
 </head>
 <body>
@@ -269,7 +218,7 @@
 <div class="page">
   <div class="hero"><h1 id="hero-text">Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
 
-  <div class="response-zone" id="response-zone" aria-live="polite"></div>
+  <div class="response-zone" id="response-zone"></div>
 
   <div class="terminal-wrap">
     <div class="terminal" id="terminal">
@@ -320,14 +269,6 @@
 })();
 
 // ============================================
-// MOBILE DETECTION (cached, updated on resize)
-// ============================================
-let _isMobile = window.innerWidth <= 768;
-const isMobile = () => _isMobile;
-window.addEventListener('resize', () => { _isMobile = window.innerWidth <= 768; });
-const pageEl = document.querySelector('.page');
-
-// ============================================
 // KEYBOARD
 // ============================================
 const allKeys = document.querySelectorAll('.kb-key');
@@ -338,7 +279,6 @@ allKeys.forEach(k => {
   if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
 });
 function pressKey(c, cls = 'lit') {
-  if (isMobile()) return;
   (keyMap[c.toLowerCase()] || []).forEach(k => {
     k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 300);
   });
@@ -358,15 +298,7 @@ let state = 'performing';
 let returnTimer = null;
 let fetching = false;
 let placeholderInterval = null;
-let userScrolled = false;
 const conversationHistory = []; // [{role, content}, ...] — capped at 6
-
-// Auto-scroll: stop if user scrolls up during streaming
-responseZone.addEventListener('scroll', () => {
-  if (state !== 'streaming') return;
-  const atBottom = responseZone.scrollTop >= responseZone.scrollHeight - responseZone.clientHeight - 20;
-  if (!atBottom) userScrolled = true;
-});
 
 // Loading verbs (inspired by Claude Code)
 const verbs = ['thinking', 'considering', 'brewing', 'composing', 'pondering', 'reflecting'];
@@ -461,7 +393,6 @@ function startPerforming() {
   inputEl.value = '';
   cursorEl.style.display = '';
   charIdx = 0; isDeleting = false; pauseUntil = 0;
-  pageEl.classList.remove('has-response');
   requestAnimationFrame(autoType);
 }
 
@@ -498,7 +429,6 @@ async function askGroq(prompt) {
   // Show response zone
   responseZone.textContent = '';
   responseZone.className = 'response-zone visible';
-  if (isMobile()) { pageEl.classList.add('has-response'); userScrolled = false; }
 
   try {
     const controller = new AbortController();
@@ -543,7 +473,6 @@ async function askGroq(prompt) {
       const word = wordQueue.shift();
       displayedText += word;
       responseZone.textContent = displayedText;
-      if (!userScrolled) responseZone.scrollTop = responseZone.scrollHeight;
       for (const ch of word) pressKey(ch, 'lit-reply');
       setTimeout(drip, 100 + Math.random() * 60);
     }
@@ -674,7 +603,6 @@ requestAnimationFrame(autoType);
 // DEPTH-OF-FIELD BLUR
 // ============================================
 function applyDepthBlur() {
-  if (isMobile()) return;
   const board = document.getElementById('kb-board');
   const rect = board.getBoundingClientRect();
   const cx = rect.width / 2, cy = rect.height / 2;
@@ -687,7 +615,7 @@ function applyDepthBlur() {
     k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3)}px)`;
   });
 }
-if (!isMobile()) applyDepthBlur();
+applyDepthBlur();
 window.addEventListener('resize', applyDepthBlur);
 
 // ============================================
@@ -696,18 +624,15 @@ window.addEventListener('resize', applyDepthBlur);
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
 let cachedScale = 2.2;
-if (!isMobile()) {
-  document.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-}
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
 function setKbScale() {
-  if (isMobile()) return;
   cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
   document.documentElement.style.setProperty('--kb-scale', cachedScale);
 }
-if (!isMobile()) setKbScale();
+setKbScale();
 window.addEventListener('resize', setKbScale);
 function animate(time) {
   const bx = Math.sin(time * 0.0003) * 1.5;
@@ -717,7 +642,7 @@ function animate(time) {
   kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
   requestAnimationFrame(animate);
 }
-if (!isMobile()) requestAnimationFrame(animate);
+requestAnimationFrame(animate);
 </script>
 </body>
 </html>
