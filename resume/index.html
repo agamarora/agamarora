@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Agam Arora</title>
+<meta name="description" content="Agam Arora. AI Product Manager. 12 years across analytics, gaming, beauty, logistics, and AI.">
+<meta property="og:title" content="Resume — Agam Arora">
+<meta property="og:description" content="AI Product Manager. 12 years. 5 industries. Ships products that work.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/resume">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: italic;
+  }
+
+  :root {
+    --bg: #0A0A0A;
+    --border: #1E1E1E;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, sans-serif;
+    --mark: 'Patrick Hand', cursive;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(32px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  }
+
+  /* HEADER */
+  .header {
+    margin-bottom: 48px;
+  }
+  .header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .header .links {
+    margin-top: 16px;
+    display: flex;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+  }
+  .header .links a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .header .links a:hover { border-color: var(--accent); }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 20px;
+  }
+
+  /* ROLE */
+  .role {
+    margin-bottom: 28px;
+  }
+  .role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+  .role-title {
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    font-weight: 600;
+  }
+  .role-date {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .role-company {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .role-company a {
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .role-company a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .role ul {
+    list-style: none;
+    padding: 0;
+  }
+  .role li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.85;
+  }
+  .role li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* EDUCATION */
+  .edu {
+    margin-bottom: 12px;
+  }
+  .edu-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* BACK LINK */
+  .back {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+  }
+  .back a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .back a:hover { color: var(--accent); }
+
+  /* PRINT */
+  @media print {
+    body { background: white; color: #111; }
+    .back { display: none; }
+    .role li::before { background: #111; }
+    .section-title { color: #666; }
+    .header .links a { color: #111; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="banner">
+    <img src="/assets/agamarora_banner.png" alt="Agam Arora" style="width:100%;border-radius:8px;margin-bottom:24px;">
+  </div>
+
+  <div class="header">
+    <h1>Agam <span style="color:var(--accent)">Arora</span></h1>
+    <p class="subtitle">AI Product Manager. 12 years. 5 industries.</p>
+    <div class="links">
+      <a href="https://agamarora.com">agamarora.com</a>
+      <a href="https://linkedin.com/in/agamarora">linkedin</a>
+      <a href="https://github.com/agamarora">github</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Experience</div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">AVP, AI Products</span>
+        <span class="role-date">Nov 2025 — Present</span>
+      </div>
+      <div class="role-company"><a href="https://aionos.io" target="_blank">AIonOS India Pvt. Ltd.</a></div>
+      <ul>
+        <li>Delivering E2E customer experience platform for enterprise CX transformation</li>
+        <li>Product portfolio: multi-modal, multi-lingual, multi-agent platform for conversation management and analytics</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Sr Principal Product Manager</span>
+        <span class="role-date">Sep — Nov 2025</span>
+      </div>
+      <div class="role-company"><a href="https://www.ukg.com" target="_blank">Kronos Solutions India Pvt. Ltd.</a></div>
+      <ul>
+        <li>Forecasting, AI and workforce planning product portfolio</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Lead Data Product Manager</span>
+        <span class="role-date">Jun 2024 — Aug 2025</span>
+      </div>
+      <div class="role-company"><a href="https://aionos.io" target="_blank">AIonOS India Pvt. Ltd.</a></div>
+      <ul>
+        <li>Voice AI platform handling 4M+ calls/year at 50% lower cost</li>
+        <li>Delivered 15+ AI POCs across RAG, voice, and agentic systems, driving $1.5M+ in enterprise deals</li>
+        <li>Built GenAI no-code tool for API tagging, onboarding 30+ third-party services</li>
+        <li>Led product discovery for AI-native CRM+CDP suite, 50+ stakeholder interviews</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Lead Product Manager</span>
+        <span class="role-date">Dec 2020 — May 2024</span>
+      </div>
+      <div class="role-company"><a href="https://fareye.com" target="_blank">FarEye Technologies Pvt. Ltd.</a></div>
+      <ul>
+        <li>Flagship data product ANALYZE crossed $1M ARR in 18 months, 35% upsell</li>
+        <li>Reduced data onboarding from 60 days to 7 via API-first workflows</li>
+        <li>Improved NPS from 3.6 to 4.7 through platform reliability changes</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Product & Program Consultant</span>
+        <span class="role-date">Jan — Dec 2020</span>
+      </div>
+      <div class="role-company">Freelance — Canada</div>
+      <ul>
+        <li>Advised startups and VC-backed companies on system design, data analytics, and product marketing</li>
+        <li>Contributed to $500K+ in funds raised</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Manager, Business Development</span>
+        <span class="role-date">Jul 2018 — Dec 2019</span>
+      </div>
+      <div class="role-company"><a href="https://aromamagic.com" target="_blank">Blossom Kochhar (Aroma Magic)</a></div>
+      <ul>
+        <li>Revamped franchise model, converted 70% of existing partners</li>
+        <li>15% reduction in operational costs through process digitization</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Co-Founder & Studio Head</span>
+        <span class="role-date">Jan 2016 — May 2018</span>
+      </div>
+      <div class="role-company">V2 Games India Pvt. Ltd.</div>
+      <ul>
+        <li>Built $75K ARR business, team of 18</li>
+        <li>Indie Game of the Year 2017</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <div class="role-header">
+        <span class="role-title">Analyst, Analytics & Market Research</span>
+        <span class="role-date">Apr 2014 — Dec 2015</span>
+      </div>
+      <div class="role-company">AbsolutData Analytics</div><!-- no longer online -->
+      <ul>
+        <li>Data analytics and market research driving product launches</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu">
+      <div class="edu-title">PGDM, Marketing</div>
+      <div class="edu-school">FORE School of Management, 2014</div>
+    </div>
+    <div class="edu">
+      <div class="edu-title">B.Tech, Computer Science</div>
+      <div class="edu-school">BM Institute of Engineering & Technology, 2012</div>
+    </div>
+  </div>
+
+  <div class="back">
+    <a href="/">← back to agamarora.com</a>
+  </div>
+
+</div>
+</body>
+</html>

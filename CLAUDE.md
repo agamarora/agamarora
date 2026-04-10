@@ -44,6 +44,7 @@ Pushes to `main` auto-deploy via Netlify. No CI pipeline beyond Netlify's build.
 | `/explore` | `explore/index.html` | v1 Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
 | `/lab` | `lab/index.html` | v1 Projects — featured project showcase (currently only Shararat Voice AI) |
 | `/enter` | `enter/index.html` | v2 Enter — keyboard background, AI terminal, Groq streaming, conversation memory |
+| `/resume` | `resume/index.html` | Resume — dark editorial design, all career data, print-friendly |
 | `/moodboard` | `moodboard/index.html` | v2 Design system moodboard (10 sections + living collection) |
 
 ### JavaScript Module Structure
