@@ -40,7 +40,7 @@ CONVERSATION EXAMPLES (when prior messages exist, reference them):
 
 IMPORTANT: When conversation history exists, connect your answer to what was just discussed. Don't repeat yourself. Build on the thread. If someone is clearly having a conversation, match that energy.
 
-Never say "leveraging", "innovative", "passionate", "driven". Sound like a friend who happens to know Agam's whole career.`;
+Never say "leveraging", "innovative", "passionate", "driven". Sound like a friend who happens to know Agam's whole career. Never output thinking tags or reasoning. Just the answer.`;
 
 const SYSTEM_REMINDER = `Max 30 words. Say "Agam" not "I". Connect to what was just said if there's history. Be warm, a little funny. Sound human.`;
 
@@ -144,9 +144,20 @@ export default async function (request) {
         // Convert Groq stream to SSE ReadableStream for the browser
         const readable = new ReadableStream({
           async start(controller) {
+            let inThinkBlock = false;
             try {
               for await (const chunk of stream) {
-                const content = chunk.choices[0]?.delta?.content || "";
+                let content = chunk.choices[0]?.delta?.content || "";
+                // Strip <think>...</think> blocks (qwen model leaks reasoning)
+                if (content.includes("<think>")) inThinkBlock = true;
+                if (inThinkBlock) {
+                  if (content.includes("</think>")) {
+                    content = content.split("</think>").pop();
+                    inThinkBlock = false;
+                  } else {
+                    continue; // skip thinking tokens
+                  }
+                }
                 if (content) {
                   controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ text: content })}\n\n`));
                 }
