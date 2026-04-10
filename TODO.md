@@ -1,12 +1,15 @@
 # TODO — agamarora.com
 
 ## Dead Files
-- [ ] Delete `styles/backup.css` — not referenced by any HTML
-- [ ] Delete `styles/main.css.old` — not referenced by any HTML
-- [ ] Delete `styles/refactored.css` — not referenced by any HTML
-- [ ] Delete `css-refactoring-guide.md` — internal notes cluttering repo root
-- [ ] Delete `how-to-use-css.md` — internal notes cluttering repo root
-- [ ] Delete `assets/avatar-front.png` — PNG duplicate, never referenced (WebP variants used instead)
+- [x] ~~Delete `styles/backup.css`~~ — removed
+- [x] ~~Delete `styles/main.css.old`~~ — removed
+- [x] ~~Delete `styles/refactored.css`~~ — removed
+- [x] ~~Delete `css-refactoring-guide.md`~~ — already gone
+- [x] ~~Delete `how-to-use-css.md`~~ — already gone
+- [x] ~~Delete `assets/avatar-front.png`~~ — removed
+- [x] ~~Delete `assets/logos/ukg_dark.png` / `ukg_light.png`~~ — removed (webp versions used)
+- [x] ~~Delete `experiments/`~~ — removed (phaser prototype, mockup-room)
+- [x] ~~Delete `.DS_Store`~~ — removed, added to .gitignore
 
 ## Inconsistencies
 - [ ] Fix LinkedIn URL: `/in/agamarora` in header links vs `/in/agam-arora/` in schema.org JSON-LD — pick one
