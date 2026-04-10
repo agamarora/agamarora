@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo: `agamarora/aipm` (private).
+Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo: `agamarora/agamarora`.
 
 ## Stack
 
 - **Frontend**: Vanilla HTML, CSS, JavaScript (ES6 modules). No framework, no build step.
 - **Hosting**: Netlify (static site + serverless functions)
-- **Fonts**: Roboto via Google Fonts
+- **Fonts**: Satoshi (self-hosted variable), JetBrains Mono, Patrick Hand (Google Fonts)
 - **Icons**: Font Awesome 6.5.0 (CDN)
 - **Backend**: Single Netlify serverless function (`netlify/functions/groqHandler.js`) using Groq SDK (llama-3.1-8b-instant) — wired but **not called from any UI** currently
 - **Domain**: agamarora.com (Netlify DNS, auto-deploys from `main` branch)
@@ -40,9 +40,11 @@ Pushes to `main` auto-deploy via Netlify. No CI pipeline beyond Netlify's build.
 
 | Route | File | Purpose |
 |-------|------|---------|
-| `/` | `index.html` | Landing — animated greeting, identity, company logos |
-| `/explore` | `explore/index.html` | Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
-| `/lab` | `lab/index.html` | Projects — featured project showcase (currently only Shararat Voice AI) |
+| `/` | `index.html` | v1 Landing — animated greeting, identity, company logos |
+| `/explore` | `explore/index.html` | v1 Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
+| `/lab` | `lab/index.html` | v1 Projects — featured project showcase (currently only Shararat Voice AI) |
+| `/preview` | `preview.html` | v2 Concept — keyboard background, terminal entry point, aa. mark signature |
+| `/moodboard` | `moodboard/index.html` | v2 Design system moodboard (10 sections + living collection) |
 
 ### JavaScript Module Structure
 
@@ -81,22 +83,21 @@ Dark/light theme is a core architectural concern touching HTML, CSS, and JS:
 
 `netlify/functions/groqHandler.js` — CommonJS, accepts POST with `{ prompt, systemPrompt }`, returns `{ result }`. Model: llama-3.1-8b-instant, max_tokens=100, temperature=0.9.
 
-## v2.0 — "The Convergence Engine"
+## v2.0 Redesign
 
-A redesign is in progress on the `v2-experience` branch. The concept: scroll-driven visual convergence — 5 career threads (analytics, gaming, beauty, logistics, AI) physically converge as you scroll, representing skills compounding toward AI product leadership. Mobile-first design. One coherent visual metaphor across all viewports.
+In progress on `dev` branch. The concept has evolved through several iterations (see `BUILD-LOG.md`).
 
-- **Tech stack**: Astro + GSAP ScrollTrigger + SVG + Vite. Netlify deployment.
-- **Current status**: CEO review complete. Next step: `/design-consultation` using `DESIGN-BRIEF.md`.
-- **Key files**: `DESIGN.md` (full spec, some assumptions revised), `DESIGN-BRIEF.md` (current design input), `BUILD-LOG.md` (decision history).
-- Prior approaches explored and rejected: Cinematic Scroll, Playable Portfolio (Phaser.js prototype in `experiments/`), Self-Constructing Portfolio.
+- **Current direction**: Keyboard as background depth layer, terminal as entry point to explore. Live preview at `/preview`.
+- **Design system**: Complete moodboard at `/moodboard` (sections 01-05 locked, 06-10 starting points, 11 living collection).
+- **Key files**: `DESIGN.md` (full spec), `DESIGN-BRIEF.md` (design input), `BUILD-LOG.md` (decision history), `moodboard/aa-mark.html` (mark exploration).
+- **Brand elements**: aa. mark (Patrick Hand, gold dot, stroke-draw animation), keyboard background with 3D perspective tilt, parallax depth layers.
+- Prior approaches explored and rejected: Convergence Engine, Cinematic Scroll, Playable Portfolio (Phaser.js prototype, now deleted), Self-Constructing Portfolio, pixel art character.
 - The current site (v1.0) remains live on `main` until v2.0 ships.
 
 ## Known Issues
 
-Tracked in `TODO.md` (22 items). Key ones:
+Tracked in `TODO.md`. Dead files cleaned up (backup CSS, experiments, duplicate PNGs). Remaining:
 
-- **Dead files**: `styles/backup.css`, `styles/main.css.old`, `styles/refactored.css`, `css-refactoring-guide.md`, `how-to-use-css.md` — none referenced anywhere
-- **Dead code**: `lab.js` has a video click handler for a `<video>` element that was replaced with a YouTube iframe
-- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org; job title mismatch between landing and explore schema.org
+- **Dead code**: `lab.js` video click handler for removed `<video>` element; `callGroq()` wired but unused
+- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org; job title mismatch between pages
 - **Missing**: `og:image` on lab page references non-existent `/assets/lab-preview.png`
-- **Unused**: `callGroq()` in utils.js is wired but no UI element calls it
