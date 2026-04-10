@@ -8,7 +8,7 @@ LinkedIn: linkedin.com/in/agamarora
 - Delivering E2E customer experience platform for Enterprise CX tech transformation.
 - Product portfolio spanning across multi-modal, multi-lingual, unified experience and multi-agent platform for conversation management, post case quality and analytics.
 
-### Sr Prin Product Manager at Kronos Solutions India Pvt. Ltd. (Sep 2025 - Nov 2025)
+### Sr Prin Product Manager at UKG (Ultimate Kronos Group) (Sep 2025 - Nov 2025)
 - Part of Forecasting, AI and workforce planning product portfolio.
 
 ### Lead Data Product Manager at AIonOS India Pvt. Ltd. (June 2024 - Aug 2025)
