@@ -144,11 +144,13 @@
     .page {
       justify-content: center;
       padding: var(--space-6) var(--space-5);
-      height: 100dvh;
+      min-height: 100dvh;
+      height: auto;
       gap: var(--space-5);
     }
     .page.has-response {
       justify-content: flex-start;
+      min-height: 0;
     }
     .hero {
       position: relative;
@@ -162,8 +164,8 @@
       text-align: left;
       max-width: 100%;
       font-size: clamp(0.95rem, 4vw, 1.15rem);
-      flex: 1;
       overflow-y: auto;
+      max-height: 50vh;
     }
     .terminal-wrap {
       max-width: 100%;
