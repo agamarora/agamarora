@@ -189,15 +189,13 @@
     .page {
       justify-content: center;
       padding: var(--space-6) var(--space-5);
-      min-height: 100dvh;
-      height: auto;
+      height: 100dvh;
       gap: var(--space-5);
-      transition: padding 0.4s ease;
     }
     .page.has-response {
       justify-content: flex-start;
-      padding-top: var(--space-6);
-      min-height: 0;
+      height: auto;
+      min-height: 100dvh;
     }
     .hero {
       position: relative;
