@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enter — Agam Arora</title>
+<title>Know Agam</title>
 <meta name="description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
-<meta property="og:title" content="Enter — Agam Arora">
+<meta property="og:title" content="Know Agam">
 <meta property="og:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/enter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Enter — Agam Arora">
+<meta name="twitter:title" content="Know Agam">
 <meta name="twitter:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
@@ -196,6 +196,22 @@
 
   /* Loading verb animation */
   .terminal-verb { color: var(--text-dim); font-style: italic; }
+
+  /* Type hint */
+  .type-hint {
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+    opacity: 0;
+    animation: hintPulse 4s ease-in-out infinite;
+    animation-delay: 6s;
+  }
+  @keyframes hintPulse {
+    0%, 100% { opacity: 0; }
+    40%, 60% { opacity: 0.5; }
+  }
 </style>
 </head>
 <body>
@@ -228,6 +244,7 @@
              style="position:absolute;opacity:0;pointer-events:none;width:0">
       <span class="terminal-cursor" id="cursor"></span>
     </div>
+    <div class="type-hint" id="type-hint">click here or start typing</div>
   </div>
 
   <div class="mark-wrap">
@@ -329,23 +346,16 @@ function showInput() {
 }
 
 // --- AUTO-TYPE (performing) ---
+// Only questions where the bot gives good, grounded answers (eval-tested)
 const questionLines = [
-  'what makes Agam different?',
-  'what has he shipped?',
+  'what does Agam do?',
   'why should I hire him?',
-  'what does he care about?',
-  'tell me about the voice AI',
-  'how did he build autonomous agents?',
+  'what has he shipped?',
   'what was the indie game?',
-  'how did he scale a data platform 10x?',
-  'multi-agent systems... explain',
-  'what prediction models has he built?',
-  'real-time delivery tracking?',
-  'founder or PM?',
-  'CS degree and marketing degree... why both?',
-  'what would he build at Anthropic?',
+  'what does he care about?',
+  'give me some numbers',
 ];
-// Shuffle on load so it never feels scripted
+// Shuffle on load
 for (let i = questionLines.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [questionLines[i], questionLines[j]] = [questionLines[j], questionLines[i]];
@@ -405,7 +415,7 @@ function enterInputMode() {
   if (state === 'loading' || state === 'streaming') return;
   if (state === 'input') return;
   clearTimeout(returnTimer);
-  // Keep response visible — it stays until the next response replaces it
+  document.getElementById('type-hint').style.display = 'none';
   state = 'input';
   promptEl.textContent = '>';
   textEl.style.display = 'none';
@@ -588,13 +598,7 @@ document.addEventListener('keydown', e => {
 });
 
 terminal.addEventListener('click', () => {
-  if (state === 'idle') {
-    const hint = inputEl.placeholder;
-    enterInputMode();
-    if (hint && hint !== '') inputEl.value = hint;
-  } else if (state === 'performing') {
-    enterInputMode();
-  }
+  if (state === 'performing' || state === 'idle') enterInputMode();
   if (state === 'input') inputEl.focus();
 });
 
