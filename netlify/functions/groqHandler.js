@@ -53,29 +53,41 @@ exports.handler = async (event) => {
     ];
 
     // Try each model in the fallback chain
+    // Only fallback on rate limits (429). Other errors = stop immediately.
     let lastError;
     for (const model of MODELS) {
       try {
-        const response = await groq.chat.completions.create({
+        const { data: response, response: raw } = await groq.chat.completions.create({
           model, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
-        });
+        }).withResponse();
+
+        // Log remaining quota for monitoring
+        const remaining = raw.headers.get("x-ratelimit-remaining-requests");
+        if (remaining) console.log(`${model}: ${remaining} requests remaining`);
+
         return {
           statusCode: 200,
           headers: corsHeaders,
           body: JSON.stringify({ result: response.choices[0].message.content }),
         };
       } catch (err) {
-        console.error(`Model ${model} failed:`, err.message);
+        const isRateLimit = err.status === 429;
+        console.error(`${model} ${isRateLimit ? "rate limited" : "error"}: ${err.message}`);
         lastError = err;
+
+        // Only try next model on rate limit. Other errors = bail.
+        if (!isRateLimit) break;
       }
     }
 
-    // All models failed
-    console.error("All models exhausted:", lastError.message);
+    // Return appropriate error
+    const isRateLimit = lastError && lastError.status === 429;
     return {
-      statusCode: 500,
+      statusCode: isRateLimit ? 429 : 500,
       headers: corsHeaders,
-      body: JSON.stringify({ error: "Something went wrong" }),
+      body: JSON.stringify({
+        error: isRateLimit ? "Too many requests. Try again shortly." : "Something went wrong",
+      }),
     };
   } catch (error) {
     console.error("Groq error:", error.message);
