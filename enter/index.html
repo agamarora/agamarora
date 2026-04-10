@@ -197,20 +197,20 @@
   /* Loading verb animation */
   .terminal-verb { color: var(--text-dim); font-style: italic; }
 
-  /* Type hint */
+  /* Type hint — inside terminal, right-aligned */
   .type-hint {
-    text-align: center;
     font-family: var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--text-dim);
-    margin-top: 12px;
+    margin-left: auto;
     opacity: 0;
     animation: hintPulse 4s ease-in-out infinite;
     animation-delay: 6s;
+    white-space: nowrap;
   }
   @keyframes hintPulse {
     0%, 100% { opacity: 0; }
-    40%, 60% { opacity: 0.5; }
+    40%, 60% { opacity: 0.4; }
   }
 </style>
 </head>
@@ -243,8 +243,8 @@
              maxlength="200" spellcheck="false" autocomplete="off"
              style="position:absolute;opacity:0;pointer-events:none;width:0">
       <span class="terminal-cursor" id="cursor"></span>
+      <span class="type-hint" id="type-hint">click or type</span>
     </div>
-    <div class="type-hint" id="type-hint">click here or start typing</div>
   </div>
 
   <div class="mark-wrap">
