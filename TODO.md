@@ -41,6 +41,12 @@
 - [ ] Performance audit — lighthouse scores, bundle sizes, loading times
 - [ ] Mobile QA — test all 3 pages on phone-sized viewports
 
+## v2 — Browser Compatibility Audit
+- [ ] Test `/enter` mobile layout on Safari iOS, Chrome Android, Samsung Internet, Firefox Mobile
+- [ ] Verify CSS feature support: `dvh` units, `gap` in flexbox, `clamp()`, `matchMedia` optional chaining
+- [ ] Check `overflow-y: auto` scroll-to-input behavior across browsers when virtual keyboard opens
+- [ ] Context: eng review flagged `matchMedia` as 98%+ support but other CSS features vary. Inline fallback added for `matchMedia`. Broader audit needed post-launch.
+
 ## v2 — /aa Mark Exploration (continue from moodboard/aa-mark.html)
 - [ ] More font exploration — try beyond Patrick Hand, Kalam, Satisfy (current finalists)
 - [ ] Explore `aa.` variations (with period) — different energy than `/aa`

@@ -38,6 +38,9 @@
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Satoshi', system-ui, -apple-system, sans-serif;
     --mark: 'Patrick Hand', cursive;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 24px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -129,29 +132,89 @@
 
   /* MOBILE */
   @media (max-width: 768px) {
+    html, body {
+      overflow: hidden;
+      height: var(--vv-height, 100vh);
+    }
+    .kb-scene { display: none; }
+    .kb-fade {
+      background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(229,165,75,0.04) 0%, transparent 70%);
+    }
     .page {
+      height: var(--vv-height, 100vh);
+      justify-content: center;
+      padding: var(--space-6) var(--space-5);
+      transition: padding-top 0.3s ease;
+    }
+    .page.keyboard-open {
       justify-content: flex-start;
-      padding-top: clamp(28px, 8vw, 56px);
-      gap: 1rem;
+      padding-top: var(--space-5);
+    }
+    .page.keyboard-open .mark-wrap { display: none; }
+    .page.has-response {
+      justify-content: flex-start;
+      padding-top: var(--space-6);
     }
     .hero {
       position: relative;
       top: auto; left: auto;
+      flex-shrink: 0;
+      margin-bottom: var(--space-5);
     }
+    .hero h1 { font-size: 1.3rem; }
     .response-zone {
       position: relative;
       top: auto; right: auto;
       text-align: left;
       max-width: 100%;
-      font-size: clamp(1rem, 4vw, 1.3rem);
+      flex: 1;
+      overflow-y: auto;
+      font-size: clamp(0.95rem, 4vw, 1.15rem);
+      line-height: 1.5;
+      color: var(--text);
+      -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
     }
-    .terminal-wrap { max-width: 100%; }
+    .response-zone.scrolled-bottom {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+    .response-zone .loading-indicator { color: var(--text-dim); font-style: italic; }
+    .response-zone .loading-dot { display: inline-block; animation: pulse 1.5s ease-in-out infinite; }
+    .response-zone.error-state { cursor: pointer; }
+    .terminal-wrap { max-width: 100%; flex-shrink: 0; }
+    .terminal {
+      background: var(--bg);
+      backdrop-filter: none;
+      font-size: 0.875rem;
+      padding: var(--space-4) var(--space-5);
+      min-height: 48px;
+    }
+    .terminal-input { font-size: 0.875rem; }
     .mark-wrap {
       position: relative;
       bottom: auto; right: auto;
+      flex-shrink: 0;
       text-align: right;
-      margin-top: auto;
+      padding-top: var(--space-5);
+      margin-top: 0;
     }
+  }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* SMALL PHONES */
+  @media (max-width: 400px) {
+    .page { padding: var(--space-5); }
+    .hero h1 { font-size: 1.1rem; }
+    .terminal { font-size: 0.8rem; }
+    .terminal-input { font-size: 0.8rem; }
+  }
+
+  /* LANDSCAPE MOBILE */
+  @media (orientation: landscape) and (max-height: 500px) {
+    .page { padding: var(--space-4) var(--space-5); }
+    .response-zone { max-height: 40vh; }
+    .mark-wrap { display: none; }
   }
 
   /* BOTTOM RIGHT: signature */
@@ -215,10 +278,10 @@
 <div class="kb-fade"></div>
 
 <!-- Page content -->
-<div class="page">
+<div class="page" id="page">
   <div class="hero"><h1 id="hero-text">Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
 
-  <div class="response-zone" id="response-zone"></div>
+  <div class="response-zone" id="response-zone" aria-live="polite"></div>
 
   <div class="terminal-wrap">
     <div class="terminal" id="terminal">
@@ -226,6 +289,7 @@
       <span class="terminal-text" id="terminal-text"></span>
       <input class="terminal-input" id="terminal-input" type="text"
              maxlength="200" spellcheck="false" autocomplete="off"
+             aria-label="Ask Agam's AI a question"
              style="position:absolute;opacity:0;pointer-events:none;width:0">
       <span class="terminal-cursor" id="cursor"></span>
     </div>
@@ -269,18 +333,38 @@
 })();
 
 // ============================================
+// MOBILE DETECTION + VISUAL VIEWPORT
+// ============================================
+const isMobile = () => window.matchMedia?.('(max-width: 768px)').matches ?? (window.innerWidth <= 768);
+
+if (isMobile() && window.visualViewport) {
+  const page = document.getElementById('page') || document.querySelector('.page');
+  function onViewportResize() {
+    const vvh = window.visualViewport.height;
+    document.documentElement.style.setProperty('--vv-height', vvh + 'px');
+    const keyboardOpen = vvh < window.innerHeight * 0.75;
+    if (page) page.classList.toggle('keyboard-open', keyboardOpen);
+  }
+  window.visualViewport.addEventListener('resize', onViewportResize);
+  window.visualViewport.addEventListener('scroll', () => { window.scrollTo(0, 0); });
+  onViewportResize();
+}
+
+// ============================================
 // KEYBOARD
 // ============================================
-const allKeys = document.querySelectorAll('.kb-key');
-allKeys.forEach(k => { k.textContent = (k.getAttribute('data-k') || '').toUpperCase(); });
-const keyMap = {};
-allKeys.forEach(k => {
-  const l = k.getAttribute('data-k');
-  if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
-});
+let keyMap = {};
 function pressKey(c, cls = 'lit') {
   (keyMap[c.toLowerCase()] || []).forEach(k => {
     k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 300);
+  });
+}
+if (!isMobile()) {
+  const allKeys = document.querySelectorAll('.kb-key');
+  allKeys.forEach(k => { k.textContent = (k.getAttribute('data-k') || '').toUpperCase(); });
+  allKeys.forEach(k => {
+    const l = k.getAttribute('data-k');
+    if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
   });
 }
 
@@ -298,6 +382,9 @@ let state = 'performing';
 let returnTimer = null;
 let fetching = false;
 let placeholderInterval = null;
+let lastQuestion = '';
+let userScrolled = false;
+let inErrorState = false;
 const conversationHistory = []; // [{role, content}, ...] — capped at 6
 
 // Loading verbs (inspired by Claude Code)
@@ -367,14 +454,14 @@ function autoType(time) {
   if (!isDeleting) {
     if (charIdx <= line.length) {
       textEl.textContent = line.slice(0, charIdx);
-      if (line[charIdx - 1]) pressKey(line[charIdx - 1]);
+      if (line[charIdx - 1] && !isMobile()) pressKey(line[charIdx - 1]);
       charIdx++;
       pauseUntil = time + 45 + Math.random() * 55;
     } else { isDeleting = true; pauseUntil = time + 2200; }
   } else {
     if (charIdx > 0) {
       charIdx--; textEl.textContent = line.slice(0, charIdx);
-      pressKey('backspace'); pauseUntil = time + 18;
+      if (!isMobile()) pressKey('backspace'); pauseUntil = time + 18;
     } else {
       isDeleting = false; lineIdx = (lineIdx + 1) % activeLines.length;
       pauseUntil = time + 600;
@@ -393,6 +480,7 @@ function startPerforming() {
   inputEl.value = '';
   cursorEl.style.display = '';
   charIdx = 0; isDeleting = false; pauseUntil = 0;
+  document.querySelector('.page')?.classList.remove('has-response');
   requestAnimationFrame(autoType);
 }
 
@@ -413,10 +501,13 @@ function enterInputMode() {
 async function askGroq(prompt) {
   if (fetching) return;
   fetching = true;
+  clearTimeout(returnTimer);
   state = 'loading';
+  lastQuestion = prompt;
+  inErrorState = false;
   clearInterval(placeholderInterval);
   promptEl.textContent = '>';
-  inputEl.value = ''; // clear old query
+  inputEl.value = '';
   textEl.style.display = '';
   hideInput();
   cursorEl.style.display = 'none';
@@ -426,9 +517,16 @@ async function askGroq(prompt) {
   conversationHistory.push({ role: 'user', content: prompt });
   if (conversationHistory.length > 6) conversationHistory.splice(0, conversationHistory.length - 6);
 
-  // Show response zone
-  responseZone.textContent = '';
+  // Show response zone with loading state
+  if (isMobile()) {
+    responseZone.innerHTML = '<span class="loading-indicator"><span class="loading-dot">thinking</span>...</span>';
+  } else {
+    responseZone.textContent = '';
+  }
   responseZone.className = 'response-zone visible';
+  responseZone.classList.remove('error-state');
+  document.querySelector('.page')?.classList.add('has-response');
+  userScrolled = false;
 
   try {
     const controller = new AbortController();
@@ -473,7 +571,8 @@ async function askGroq(prompt) {
       const word = wordQueue.shift();
       displayedText += word;
       responseZone.textContent = displayedText;
-      for (const ch of word) pressKey(ch, 'lit-reply');
+      if (!isMobile()) { for (const ch of word) pressKey(ch, 'lit-reply'); }
+      if (!userScrolled) { responseZone.scrollTop = responseZone.scrollHeight; }
       setTimeout(drip, 100 + Math.random() * 60);
     }
 
@@ -501,7 +600,7 @@ async function askGroq(prompt) {
             if (!dripping) drip();
           }
           if (error) {
-            responseZone.textContent = 'hmm, lost in thought.';
+            showError('hmm, lost in thought.');
           }
         } catch (parseErr) {
           console.warn('SSE parse error:', parseErr);
@@ -523,23 +622,37 @@ async function askGroq(prompt) {
 
   } catch (err) {
     stopVerb();
-    responseZone.textContent = err.name === 'AbortError'
-      ? 'hmm, lost in thought. try again.'
-      : 'signal lost. try again.';
-    finishResponse();
+    const msg = err.name === 'AbortError'
+      ? 'hmm, lost in thought. tap to try again.'
+      : 'signal lost. tap to try again.';
+    showError(msg);
   }
+}
+
+function showError(msg) {
+  fetching = false;
+  state = 'idle';
+  inErrorState = true;
+  responseZone.textContent = msg;
+  responseZone.className = 'response-zone visible error-state';
+  textEl.textContent = '';
+  promptEl.textContent = '>';
+  textEl.style.display = 'none';
+  cursorEl.style.display = 'none';
+  showInput();
 }
 
 function finishResponse() {
   fetching = false;
   state = 'idle';
+  inErrorState = false;
   textEl.textContent = '';
-  // Show input ready state — thin caret signals "type here"
   promptEl.textContent = '>';
   textEl.style.display = 'none';
   cursorEl.style.display = 'none';
   showInput();
   hasInteracted = true;
+  responseZone.classList.remove('error-state');
   // Swap greeting to "Agam's AI" after first response
   const heroText = document.getElementById('hero-text');
   if (heroText && !heroText.dataset.swapped) {
@@ -567,9 +680,23 @@ function finishResponse() {
   }, 60000);
 }
 
+// --- SCROLL TRACKING (mobile) ---
+responseZone.addEventListener('scroll', () => {
+  const { scrollTop, scrollHeight, clientHeight } = responseZone;
+  const atBottom = scrollTop >= scrollHeight - clientHeight - 10;
+  if (!atBottom && state === 'streaming') userScrolled = true;
+  if (atBottom) { responseZone.classList.add('scrolled-bottom'); }
+  else { responseZone.classList.remove('scrolled-bottom'); }
+});
+
+// --- TAP-TO-RETRY ---
+responseZone.addEventListener('click', () => {
+  if (inErrorState && lastQuestion) askGroq(lastQuestion);
+});
+
 // --- EVENTS ---
 document.addEventListener('keydown', e => {
-  pressKey(e.key);
+  if (!isMobile()) pressKey(e.key);
   if ((state === 'performing' || state === 'idle') && e.key.length === 1) {
     e.preventDefault(); // prevent double-type when input gets focus
     const wasPerforming = state === 'performing';
@@ -592,6 +719,7 @@ inputEl.addEventListener('keydown', e => {
     e.preventDefault();
     const val = inputEl.value.trim();
     if (!val) return;
+    userScrolled = false;
     askGroq(val);
   }
 });
@@ -603,10 +731,12 @@ requestAnimationFrame(autoType);
 // DEPTH-OF-FIELD BLUR
 // ============================================
 function applyDepthBlur() {
+  if (isMobile()) return;
   const board = document.getElementById('kb-board');
   const rect = board.getBoundingClientRect();
   const cx = rect.width / 2, cy = rect.height / 2;
   const maxDist = Math.sqrt(cx * cx + cy * cy);
+  const allKeys = document.querySelectorAll('.kb-key');
   allKeys.forEach(k => {
     const kr = k.getBoundingClientRect();
     const kx = kr.left - rect.left + kr.width / 2;
@@ -615,8 +745,8 @@ function applyDepthBlur() {
     k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3)}px)`;
   });
 }
-applyDepthBlur();
-window.addEventListener('resize', applyDepthBlur);
+if (!isMobile()) applyDepthBlur();
+window.addEventListener('resize', () => { if (!isMobile()) applyDepthBlur(); });
 
 // ============================================
 // PARALLAX
@@ -624,17 +754,21 @@ window.addEventListener('resize', applyDepthBlur);
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
 let cachedScale = 2.2;
-document.addEventListener('mousemove', e => {
-  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-});
+if (!isMobile()) {
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+}
 function setKbScale() {
+  if (isMobile()) return;
   cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
   document.documentElement.style.setProperty('--kb-scale', cachedScale);
 }
-setKbScale();
+if (!isMobile()) setKbScale();
 window.addEventListener('resize', setKbScale);
 function animate(time) {
+  if (isMobile()) return; // kill loop on mobile
   const bx = Math.sin(time * 0.0003) * 1.5;
   const by = Math.cos(time * 0.00025) * 1;
   driftX += (mouseX * -2 - driftX) * 0.02;
@@ -642,7 +776,7 @@ function animate(time) {
   kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
   requestAnimationFrame(animate);
 }
-requestAnimationFrame(animate);
+if (!isMobile()) requestAnimationFrame(animate);
 </script>
 </body>
 </html>
