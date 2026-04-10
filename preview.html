@@ -8,7 +8,7 @@
 <meta property="og:title" content="Agam Arora — AI Product Leader">
 <meta property="og:description" content="12 years building products across analytics, gaming, beauty, logistics, and AI.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://agamarora.com/v2-concept">
+<meta property="og:url" content="https://agamarora.com/preview">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Agam Arora — AI Product Leader">
 <meta name="twitter:description" content="12 years building products across analytics, gaming, beauty, logistics, and AI.">
@@ -19,16 +19,12 @@
   @font-face {
     font-family: 'Satoshi';
     src: url('fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
-    font-weight: 300 900;
-    font-display: swap;
-    font-style: normal;
+    font-weight: 300 900; font-display: swap; font-style: normal;
   }
   @font-face {
     font-family: 'Satoshi';
     src: url('fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
-    font-weight: 300 900;
-    font-display: swap;
-    font-style: italic;
+    font-weight: 300 900; font-display: swap; font-style: italic;
   }
 
   :root {
@@ -53,24 +49,15 @@
 
   /* KEYBOARD BACKGROUND */
   .kb-scene {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 0;
-    perspective: 900px;
-    perspective-origin: 50% 35%;
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none; z-index: 0;
+    perspective: 900px; perspective-origin: 50% 35%;
   }
   .kb-board {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    display: flex; flex-direction: column; gap: 6px;
     transform: rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
-    transform-origin: center center;
-    transform-style: preserve-3d;
-    opacity: 0.75;
+    transform-origin: center center; transform-style: preserve-3d; opacity: 0.75;
   }
   .kb-row { display: flex; gap: 6px; justify-content: center; transform-style: preserve-3d; }
   .kb-key {
@@ -78,37 +65,61 @@
     background: #161616; border: 1px solid #2a2a2a; border-bottom: 3px solid #222;
     border-radius: 5px; display: flex; align-items: center; justify-content: center;
     font-family: var(--mono); font-size: 0.55rem; font-weight: 500;
-    color: transparent;
-    transition: all 250ms ease;
+    color: transparent; transition: all 250ms ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .kb-key.lit {
     background: rgba(229,165,75,0.12); border-color: rgba(229,165,75,0.35);
     border-bottom-color: rgba(229,165,75,0.25);
     box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(229,165,75,0.08);
-    color: rgba(229,165,75,0.7);
-    font-size: 0.55rem;
+    color: rgba(229,165,75,0.7); font-size: 0.55rem;
   }
   .kb-key.w2 { width: 78px; } .kb-key.w3 { width: 108px; }
   .kb-key.w4 { width: 138px; } .kb-key.space { width: 320px; }
-
   .kb-fade {
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
     background: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
   }
 
-  /* LAYOUT — terminal-first composition */
+  /* PAGE LAYOUT */
   .page {
     position: relative; z-index: 2;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     padding: clamp(28px, 5vw, 64px);
   }
 
-  /* aa. mark — bottom right, signing the work */
+  /* TOP LEFT: identity */
+  .hero {
+    position: absolute;
+    top: clamp(28px, 5vw, 56px);
+    left: clamp(28px, 5vw, 56px);
+  }
+  .hero h1 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+  }
+
+  /* TOP RIGHT: AI response zone */
+  .response-zone {
+    position: absolute;
+    top: clamp(28px, 5vw, 56px);
+    right: clamp(28px, 5vw, 56px);
+    max-width: 380px;
+    text-align: right;
+    font-family: var(--sans);
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: #4a4a4a;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .response-zone.visible { opacity: 1; }
+  .response-zone.fading { opacity: 0; transition: opacity 2s ease; }
+
+  /* BOTTOM RIGHT: signature */
   .mark-wrap {
     position: absolute;
     bottom: clamp(24px, 4vw, 40px);
@@ -117,76 +128,39 @@
   }
   .mark-wrap svg { overflow: visible; }
 
-  /* Greeting — top left, bigger than the mark, clear hierarchy */
-  .hero {
-    position: absolute;
-    top: clamp(28px, 5vw, 56px);
-    left: clamp(28px, 5vw, 56px);
-  }
-  .hero h1 {
-    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  /* TERMINAL — the centerpiece. This is the entry point. */
-  .terminal-wrap {
-    width: 100%;
-    max-width: 640px;
-  }
+  /* TERMINAL */
+  .terminal-wrap { width: 100%; max-width: 640px; }
   .terminal {
-    font-family: var(--mono);
-    font-size: 0.9rem;
-    color: var(--text-dim);
+    font-family: var(--mono); font-size: 0.9rem; color: var(--text-dim);
     width: 100%;
-    background: rgba(14,14,14,0.9);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(229,165,75,0.15);
-    border-radius: 10px;
+    background: rgba(14,14,14,0.9); backdrop-filter: blur(16px);
+    border: 1px solid rgba(229,165,75,0.15); border-radius: 10px;
     padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    /* Subtle gold glow — this is the focal point */
+    display: flex; align-items: center; gap: 10px;
     box-shadow: 0 0 40px rgba(229,165,75,0.04), 0 4px 24px rgba(0,0,0,0.3);
+    min-height: 58px;
   }
   .terminal:focus-within {
     border-color: rgba(229,165,75,0.3);
     box-shadow: 0 0 60px rgba(229,165,75,0.06), 0 4px 24px rgba(0,0,0,0.3);
   }
   .terminal-prompt { color: var(--accent); flex-shrink: 0; font-weight: 500; }
+  .terminal-text { white-space: nowrap; overflow: hidden; color: var(--text-dim); }
   .terminal-input {
-    flex: 1;
-    background: none; border: none; outline: none;
+    flex: 1; background: none; border: none; outline: none;
     font-family: var(--mono); font-size: 0.9rem;
-    color: var(--text);
-    caret-color: var(--accent);
+    color: var(--text); caret-color: var(--accent);
   }
-  .terminal-input::placeholder { color: #444; }
-
-  /* Auto-typing display */
-  .terminal-auto {
-    color: var(--text-dim);
-    white-space: nowrap;
-  }
+  .terminal-input::placeholder { color: #333; }
   .terminal-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 1.1em;
-    background: var(--accent);
-    vertical-align: text-bottom;
-    animation: blink 1s step-end infinite;
-    margin-left: 1px;
+    display: inline-block; width: 8px; height: 1.1em;
+    background: var(--accent); vertical-align: text-bottom;
+    animation: blink 1s step-end infinite; margin-left: 1px;
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  /* When user takes over, hide auto-type, show input */
-  .terminal.user-mode .terminal-auto,
-  .terminal.user-mode .terminal-cursor { display: none; }
-  .terminal:not(.user-mode) .terminal-input {
-    position: absolute; opacity: 0; pointer-events: none;
-  }
+  /* Loading verb animation */
+  .terminal-verb { color: var(--text-dim); font-style: italic; }
 </style>
 </head>
 <body>
@@ -194,141 +168,130 @@
 <!-- Keyboard background -->
 <div class="kb-scene">
   <div class="kb-board" id="kb-board">
-    <div class="kb-row">
-      <div class="kb-key" data-k="esc"></div><div class="kb-key" data-k="f1"></div><div class="kb-key" data-k="f2"></div><div class="kb-key" data-k="f3"></div><div class="kb-key" data-k="f4"></div><div class="kb-key" data-k="f5"></div><div class="kb-key" data-k="f6"></div><div class="kb-key" data-k="f7"></div><div class="kb-key" data-k="f8"></div><div class="kb-key" data-k="f9"></div><div class="kb-key" data-k="f10"></div><div class="kb-key" data-k="f11"></div><div class="kb-key" data-k="f12"></div><div class="kb-key" data-k="del"></div>
-    </div>
-    <div class="kb-row">
-      <div class="kb-key" data-k="`"></div><div class="kb-key" data-k="1"></div><div class="kb-key" data-k="2"></div><div class="kb-key" data-k="3"></div><div class="kb-key" data-k="4"></div><div class="kb-key" data-k="5"></div><div class="kb-key" data-k="6"></div><div class="kb-key" data-k="7"></div><div class="kb-key" data-k="8"></div><div class="kb-key" data-k="9"></div><div class="kb-key" data-k="0"></div><div class="kb-key" data-k="-"></div><div class="kb-key" data-k="="></div><div class="kb-key w2" data-k="backspace"></div>
-    </div>
-    <div class="kb-row">
-      <div class="kb-key w2" data-k="tab"></div><div class="kb-key" data-k="q"></div><div class="kb-key" data-k="w"></div><div class="kb-key" data-k="e"></div><div class="kb-key" data-k="r"></div><div class="kb-key" data-k="t"></div><div class="kb-key" data-k="y"></div><div class="kb-key" data-k="u"></div><div class="kb-key" data-k="i"></div><div class="kb-key" data-k="o"></div><div class="kb-key" data-k="p"></div><div class="kb-key" data-k="["></div><div class="kb-key" data-k="]"></div><div class="kb-key" data-k="\"></div>
-    </div>
-    <div class="kb-row">
-      <div class="kb-key w3" data-k="caps"></div><div class="kb-key" data-k="a"></div><div class="kb-key" data-k="s"></div><div class="kb-key" data-k="d"></div><div class="kb-key" data-k="f"></div><div class="kb-key" data-k="g"></div><div class="kb-key" data-k="h"></div><div class="kb-key" data-k="j"></div><div class="kb-key" data-k="k"></div><div class="kb-key" data-k="l"></div><div class="kb-key" data-k=";"></div><div class="kb-key" data-k="'"></div><div class="kb-key w3" data-k="enter"></div>
-    </div>
-    <div class="kb-row">
-      <div class="kb-key w4" data-k="shift"></div><div class="kb-key" data-k="z"></div><div class="kb-key" data-k="x"></div><div class="kb-key" data-k="c"></div><div class="kb-key" data-k="v"></div><div class="kb-key" data-k="b"></div><div class="kb-key" data-k="n"></div><div class="kb-key" data-k="m"></div><div class="kb-key" data-k=","></div><div class="kb-key" data-k="."></div><div class="kb-key" data-k="/"></div><div class="kb-key w4" data-k="shift"></div>
-    </div>
-    <div class="kb-row">
-      <div class="kb-key w2" data-k="ctrl"></div><div class="kb-key" data-k="alt"></div><div class="kb-key" data-k="cmd"></div><div class="kb-key space" data-k=" "></div><div class="kb-key" data-k="cmd"></div><div class="kb-key" data-k="alt"></div><div class="kb-key w2" data-k="ctrl"></div>
-    </div>
+    <div class="kb-row"><div class="kb-key" data-k="esc"></div><div class="kb-key" data-k="f1"></div><div class="kb-key" data-k="f2"></div><div class="kb-key" data-k="f3"></div><div class="kb-key" data-k="f4"></div><div class="kb-key" data-k="f5"></div><div class="kb-key" data-k="f6"></div><div class="kb-key" data-k="f7"></div><div class="kb-key" data-k="f8"></div><div class="kb-key" data-k="f9"></div><div class="kb-key" data-k="f10"></div><div class="kb-key" data-k="f11"></div><div class="kb-key" data-k="f12"></div><div class="kb-key" data-k="del"></div></div>
+    <div class="kb-row"><div class="kb-key" data-k="`"></div><div class="kb-key" data-k="1"></div><div class="kb-key" data-k="2"></div><div class="kb-key" data-k="3"></div><div class="kb-key" data-k="4"></div><div class="kb-key" data-k="5"></div><div class="kb-key" data-k="6"></div><div class="kb-key" data-k="7"></div><div class="kb-key" data-k="8"></div><div class="kb-key" data-k="9"></div><div class="kb-key" data-k="0"></div><div class="kb-key" data-k="-"></div><div class="kb-key" data-k="="></div><div class="kb-key w2" data-k="backspace"></div></div>
+    <div class="kb-row"><div class="kb-key w2" data-k="tab"></div><div class="kb-key" data-k="q"></div><div class="kb-key" data-k="w"></div><div class="kb-key" data-k="e"></div><div class="kb-key" data-k="r"></div><div class="kb-key" data-k="t"></div><div class="kb-key" data-k="y"></div><div class="kb-key" data-k="u"></div><div class="kb-key" data-k="i"></div><div class="kb-key" data-k="o"></div><div class="kb-key" data-k="p"></div><div class="kb-key" data-k="["></div><div class="kb-key" data-k="]"></div><div class="kb-key" data-k="\"></div></div>
+    <div class="kb-row"><div class="kb-key w3" data-k="caps"></div><div class="kb-key" data-k="a"></div><div class="kb-key" data-k="s"></div><div class="kb-key" data-k="d"></div><div class="kb-key" data-k="f"></div><div class="kb-key" data-k="g"></div><div class="kb-key" data-k="h"></div><div class="kb-key" data-k="j"></div><div class="kb-key" data-k="k"></div><div class="kb-key" data-k="l"></div><div class="kb-key" data-k=";"></div><div class="kb-key" data-k="'"></div><div class="kb-key w3" data-k="enter"></div></div>
+    <div class="kb-row"><div class="kb-key w4" data-k="shift"></div><div class="kb-key" data-k="z"></div><div class="kb-key" data-k="x"></div><div class="kb-key" data-k="c"></div><div class="kb-key" data-k="v"></div><div class="kb-key" data-k="b"></div><div class="kb-key" data-k="n"></div><div class="kb-key" data-k="m"></div><div class="kb-key" data-k=","></div><div class="kb-key" data-k="."></div><div class="kb-key" data-k="/"></div><div class="kb-key w4" data-k="shift"></div></div>
+    <div class="kb-row"><div class="kb-key w2" data-k="ctrl"></div><div class="kb-key" data-k="alt"></div><div class="kb-key" data-k="cmd"></div><div class="kb-key space" data-k=" "></div><div class="kb-key" data-k="cmd"></div><div class="kb-key" data-k="alt"></div><div class="kb-key w2" data-k="ctrl"></div></div>
   </div>
 </div>
 <div class="kb-fade"></div>
 
 <!-- Page content -->
 <div class="page">
-  <div class="mark-wrap">
-    <svg id="aa-mark" width="72" height="36" viewBox="0 0 72 36" style="overflow:visible">
-      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8"
-            font-family="Patrick Hand" font-size="28">aa</text>
-      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0"
-            font-family="Patrick Hand" font-size="28">.</text>
-      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0"
-            font-family="Patrick Hand" font-size="28">aa</text>
-    </svg>
-  </div>
+  <div class="hero"><h1>Hi, I'm Agam.</h1></div>
 
-  <div class="hero">
-    <h1>Hi, I'm Agam.</h1>
-  </div>
+  <div class="response-zone" id="response-zone"></div>
 
   <div class="terminal-wrap">
     <div class="terminal" id="terminal">
-      <span class="terminal-prompt">~</span>
-      <span class="terminal-auto" id="terminal-auto"></span>
-      <span class="terminal-cursor" id="terminal-cursor"></span>
+      <span class="terminal-prompt" id="prompt">~</span>
+      <span class="terminal-text" id="terminal-text"></span>
       <input class="terminal-input" id="terminal-input" type="text"
-             placeholder="type something..." spellcheck="false" autocomplete="off">
+             maxlength="200" spellcheck="false" autocomplete="off"
+             style="position:absolute;opacity:0;pointer-events:none;width:0">
+      <span class="terminal-cursor" id="cursor"></span>
     </div>
+  </div>
+
+  <div class="mark-wrap">
+    <svg id="aa-mark" width="72" height="36" viewBox="0 0 72 36" style="overflow:visible">
+      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+    </svg>
   </div>
 </div>
 
 <script>
 // ============================================
-// aa. STROKE-DRAW ANIMATION (matches moodboard)
-// Beat 1: aa stroke draws via dashoffset
-// Beat 2: aa fill + gold dot appear instant stroke finishes
-// Dot NEVER draws as stroke — only materializes as fill
+// aa. STROKE-DRAW ANIMATION
 // ============================================
-(function animateMark() {
-  const aaStroke = document.getElementById('aa-stroke');
-  const aaFill = document.getElementById('aa-fill');
-  const dotFill = document.getElementById('dot-fill');
-
+(function() {
+  const s = document.getElementById('aa-stroke');
+  const f = document.getElementById('aa-fill');
+  const d = document.getElementById('dot-fill');
   document.fonts.ready.then(() => {
-    // Position dot snug after aa
-    const aaLen = aaStroke.getComputedTextLength();
-    const dotX = 4 + aaLen - 2;
-    dotFill.setAttribute('x', dotX);
-    aaFill.setAttribute('x', 4);
-
-    // Reset: hide fills, set up stroke dash
-    aaFill.style.opacity = '0';
-    dotFill.style.opacity = '0';
-
-    const len = aaLen * 2;
-    aaStroke.style.strokeDasharray = len;
-    aaStroke.style.strokeDashoffset = len;
-    aaStroke.style.opacity = '1';
-    aaStroke.getBoundingClientRect(); // force reflow
-
-    // Beat 1: aa stroke draws
-    const dur = 1.2;
-    aaStroke.style.transition = `stroke-dashoffset ${dur}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
-    aaStroke.style.strokeDashoffset = '0';
-
-    // Beat 2: fill + dot arrive the INSTANT stroke finishes
-    aaStroke.addEventListener('transitionend', function onDone(e) {
+    const len = s.getComputedTextLength();
+    d.setAttribute('x', 4 + len - 2);
+    f.setAttribute('x', 4);
+    f.style.opacity = '0'; d.style.opacity = '0';
+    const dl = len * 2;
+    s.style.strokeDasharray = dl; s.style.strokeDashoffset = dl;
+    s.style.opacity = '1'; s.getBoundingClientRect();
+    s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+    s.style.strokeDashoffset = '0';
+    s.addEventListener('transitionend', function h(e) {
       if (e.propertyName !== 'stroke-dashoffset') return;
-      aaStroke.removeEventListener('transitionend', onDone);
-      // aa fill appears
-      aaFill.style.transition = 'opacity 0.2s ease';
-      aaFill.style.opacity = '1';
-      // gold dot materializes
-      dotFill.style.transition = 'opacity 0.2s ease';
-      dotFill.style.opacity = '1';
-      // stroke fades out
-      aaStroke.style.transition = 'opacity 0.25s ease 0.05s';
-      aaStroke.style.opacity = '0';
+      s.removeEventListener('transitionend', h);
+      f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+      d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+      s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
     });
   });
 })();
 
 // ============================================
-// KEYBOARD LIGHTING
+// KEYBOARD
 // ============================================
 const allKeys = document.querySelectorAll('.kb-key');
-// Populate key labels from data-k
 allKeys.forEach(k => { k.textContent = (k.getAttribute('data-k') || '').toUpperCase(); });
 const keyMap = {};
 allKeys.forEach(k => {
-  const label = k.getAttribute('data-k');
-  if (label) {
-    if (!keyMap[label.toLowerCase()]) keyMap[label.toLowerCase()] = [];
-    keyMap[label.toLowerCase()].push(k);
-  }
+  const l = k.getAttribute('data-k');
+  if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
 });
-
-function pressKey(char) {
-  const c = char.toLowerCase();
-  const targets = keyMap[c] || [];
-  targets.forEach(k => {
-    k.classList.add('lit');
-    setTimeout(() => k.classList.remove('lit'), 300);
+function pressKey(c) {
+  (keyMap[c.toLowerCase()] || []).forEach(k => {
+    k.classList.add('lit'); setTimeout(() => k.classList.remove('lit'), 300);
   });
 }
 
 // ============================================
-// TERMINAL: auto-type mode → user mode
-// Plays scripted lines with keyboard follow.
-// Click or type = switch to real input forever.
+// TERMINAL — performance-first with streaming response
 // ============================================
 const terminal = document.getElementById('terminal');
-const autoEl = document.getElementById('terminal-auto');
-const input = document.getElementById('terminal-input');
-let userMode = false;
+const textEl = document.getElementById('terminal-text');
+const inputEl = document.getElementById('terminal-input');
+const cursorEl = document.getElementById('cursor');
+const promptEl = document.getElementById('prompt');
+const responseZone = document.getElementById('response-zone');
 
+let state = 'performing';
+let returnTimer = null;
+let fetching = false;
+
+// Loading verbs (inspired by Claude Code)
+const verbs = ['thinking', 'considering', 'brewing', 'composing', 'pondering', 'reflecting'];
+let verbInterval = null;
+
+function showVerb() {
+  let i = 0;
+  const tick = () => {
+    textEl.innerHTML = `<span class="terminal-verb">${verbs[i % verbs.length]}...</span>`;
+    i++;
+  };
+  tick();
+  verbInterval = setInterval(tick, 1200);
+}
+function stopVerb() {
+  clearInterval(verbInterval);
+  verbInterval = null;
+}
+
+function hideInput() {
+  inputEl.style.position = 'absolute';
+  inputEl.style.opacity = '0';
+  inputEl.style.pointerEvents = 'none';
+  inputEl.style.width = '0';
+}
+function showInput() {
+  inputEl.style.position = ''; inputEl.style.opacity = '';
+  inputEl.style.pointerEvents = ''; inputEl.style.width = '';
+}
+
+// --- AUTO-TYPE (performing) ---
 const lines = [
   'git commit -m "ship taste, not features"',
   'claude "design a portfolio that thinks"',
@@ -336,54 +299,183 @@ const lines = [
   'git push origin craft',
   'claude "what would the 10-star version look like?"',
 ];
-
 let lineIdx = 0, charIdx = 0, isDeleting = false, pauseUntil = 0;
 
 function autoType(time) {
-  if (userMode) return;
+  if (state !== 'performing') return;
   if (time < pauseUntil) { requestAnimationFrame(autoType); return; }
-
   const line = lines[lineIdx];
   if (!isDeleting) {
     if (charIdx <= line.length) {
-      autoEl.textContent = line.slice(0, charIdx);
+      textEl.textContent = line.slice(0, charIdx);
       if (line[charIdx - 1]) pressKey(line[charIdx - 1]);
       charIdx++;
       pauseUntil = time + 45 + Math.random() * 55;
-    } else {
-      isDeleting = true;
-      pauseUntil = time + 2200;
-    }
+    } else { isDeleting = true; pauseUntil = time + 2200; }
   } else {
     if (charIdx > 0) {
-      charIdx--;
-      autoEl.textContent = line.slice(0, charIdx);
-      pressKey('backspace');
-      pauseUntil = time + 18;
+      charIdx--; textEl.textContent = line.slice(0, charIdx);
+      pressKey('backspace'); pauseUntil = time + 18;
     } else {
-      isDeleting = false;
-      lineIdx = (lineIdx + 1) % lines.length;
+      isDeleting = false; lineIdx = (lineIdx + 1) % lines.length;
       pauseUntil = time + 600;
     }
   }
   requestAnimationFrame(autoType);
 }
-requestAnimationFrame(autoType);
 
-// Switch to user mode on any interaction
-function switchToUserMode() {
-  if (userMode) return;
-  userMode = true;
-  terminal.classList.add('user-mode');
-  input.focus();
+function startPerforming() {
+  state = 'performing';
+  promptEl.textContent = '~';
+  textEl.textContent = '';
+  textEl.style.display = '';
+  hideInput();
+  inputEl.value = '';
+  cursorEl.style.display = '';
+  charIdx = 0; isDeleting = false; pauseUntil = 0;
+  requestAnimationFrame(autoType);
 }
 
-terminal.addEventListener('click', switchToUserMode);
+// --- INPUT ---
+function enterInputMode() {
+  if (state === 'loading' || state === 'streaming') return;
+  if (state === 'input') return;
+  clearTimeout(returnTimer);
+  state = 'input';
+  promptEl.textContent = '>';
+  textEl.style.display = 'none';
+  showInput();
+  inputEl.focus();
+  cursorEl.style.display = 'none';
+}
+
+// --- LOADING + STREAMING ---
+async function askGroq(prompt) {
+  if (fetching) return;
+  fetching = true;
+  state = 'loading';
+  promptEl.textContent = '>';
+  textEl.style.display = '';
+  hideInput();
+  cursorEl.style.display = 'none';
+  showVerb();
+
+  // Show response zone
+  responseZone.textContent = '';
+  responseZone.className = 'response-zone visible';
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    const res = await fetch('/.netlify/functions/groqHandler', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+
+    // Non-streaming fallback (injection filter returns JSON)
+    const ct = res.headers.get('content-type') || '';
+    if (ct.includes('application/json')) {
+      stopVerb();
+      const data = await res.json();
+      responseZone.textContent = data.result || data.error || 'hmm, lost in thought.';
+      finishResponse();
+      return;
+    }
+
+    // Streaming SSE
+    stopVerb();
+    textEl.innerHTML = '<span class="terminal-verb">speaking...</span>';
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullText = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const lines = buffer.split('\n\n');
+      buffer = lines.pop(); // keep incomplete chunk
+
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const payload = line.slice(6);
+        if (payload === '[DONE]') continue;
+        try {
+          const { text, error } = JSON.parse(payload);
+          if (text) {
+            fullText += text;
+            responseZone.textContent = fullText;
+            // Light up keyboard for streamed chars
+            for (const ch of text) pressKey(ch);
+          }
+          if (error) {
+            responseZone.textContent = 'hmm, lost in thought.';
+          }
+        } catch {}
+      }
+    }
+
+    finishResponse();
+
+  } catch (err) {
+    stopVerb();
+    responseZone.textContent = err.name === 'AbortError'
+      ? 'hmm, lost in thought. try again.'
+      : 'signal lost. try again.';
+    finishResponse();
+  }
+}
+
+function finishResponse() {
+  fetching = false;
+  state = 'idle';
+  textEl.textContent = '';
+  cursorEl.style.display = '';
+
+  // Fade response and return to performing after 6s
+  returnTimer = setTimeout(() => {
+    responseZone.className = 'response-zone fading';
+    setTimeout(() => {
+      responseZone.className = 'response-zone';
+      responseZone.textContent = '';
+      startPerforming();
+    }, 2000);
+  }, 6000);
+}
+
+// --- EVENTS ---
 document.addEventListener('keydown', e => {
-  // Any key press switches to user mode
-  if (!userMode) switchToUserMode();
   pressKey(e.key);
+  if (state === 'performing' && e.key.length === 1) {
+    enterInputMode();
+    inputEl.value = e.key;
+    // Move cursor to end
+    setTimeout(() => inputEl.setSelectionRange(1, 1), 0);
+  }
 });
+
+terminal.addEventListener('click', () => {
+  if (state === 'performing' || state === 'idle') enterInputMode();
+  if (state === 'input') inputEl.focus();
+});
+
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const val = inputEl.value.trim();
+    if (!val) return;
+    askGroq(val);
+  }
+});
+
+// Start
+requestAnimationFrame(autoType);
 
 // ============================================
 // DEPTH-OF-FIELD BLUR
@@ -405,25 +497,20 @@ applyDepthBlur();
 window.addEventListener('resize', applyDepthBlur);
 
 // ============================================
-// SUBTLE PARALLAX
+// PARALLAX
 // ============================================
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
-
 document.addEventListener('mousemove', e => {
   mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
   mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 });
-
 function setKbScale() {
-  const vw = window.innerWidth;
-  const scale = (vw / 780) * 1.05;
-  // Cap at 2.0 so large screens don't stretch keys into blurry rectangles
-  document.documentElement.style.setProperty('--kb-scale', Math.min(Math.max(scale, 1.2), 2.0));
+  const s = (window.innerWidth / 780) * 1.05;
+  document.documentElement.style.setProperty('--kb-scale', Math.min(Math.max(s, 1.2), 2.0));
 }
 setKbScale();
 window.addEventListener('resize', setKbScale);
-
 function animate(time) {
   const bx = Math.sin(time * 0.0003) * 1.5;
   const by = Math.cos(time * 0.00025) * 1;

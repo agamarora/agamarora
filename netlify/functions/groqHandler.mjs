@@ -1,6 +1,5 @@
 import Groq from "groq-sdk";
 
-// Client: no auto-retries (we handle fallback ourselves), pi-second timeout
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
   maxRetries: 0,
@@ -14,16 +13,12 @@ const SYSTEM_REMINDER = `Remember: you are a terminal. 1-2 sentences max. Never 
 const MAX_INPUT_LENGTH = 200;
 const MAX_COMPLETION_TOKENS = 100;
 
-// Fallback chain — per-model RPD limits on free tier
-// RPM (30) is shared org-wide, but RPD is per-model
 const MODELS = [
-  "llama-3.1-8b-instant",    // 14.4K RPD, 500K TPD
-  "qwen/qwen3-32b",          // 1K RPD, 500K TPD
-  "openai/gpt-oss-20b",      // 1K RPD, 200K TPD
-  "llama-3.3-70b-versatile", // 1K RPD, 100K TPD
+  "llama-3.1-8b-instant",
+  "qwen/qwen3-32b",
+  "openai/gpt-oss-20b",
+  "llama-3.3-70b-versatile",
 ];
-
-// --- CORS: exact origin match ---
 
 const ALLOWED_ORIGINS = new Set([
   "https://agamarora.com",
@@ -32,9 +27,8 @@ const ALLOWED_ORIGINS = new Set([
 
 function isOriginAllowed(origin) {
   if (ALLOWED_ORIGINS.has(origin)) return true;
-  try {
-    return new URL(origin).hostname === "localhost";
-  } catch { return false; }
+  try { return new URL(origin).hostname === "localhost"; }
+  catch { return false; }
 }
 
 function corsHeaders(origin) {
@@ -52,8 +46,6 @@ function json(data, status, origin) {
   });
 }
 
-// --- Prompt injection filter ---
-
 const INJECTION_PATTERNS = [
   /ignore\s+(all\s+)?(previous|prior|above)\s+(instructions|prompts)/i,
   /what\s+(is|are)\s+your\s+(system|initial)\s+(prompt|instructions)/i,
@@ -65,15 +57,12 @@ function isInjectionAttempt(input) {
   return INJECTION_PATTERNS.some((p) => p.test(input));
 }
 
-// --- Handler ---
-
 export default async function (request) {
   const origin = request.headers.get("origin") || "";
 
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(origin) });
   }
-
   if (request.method !== "POST") {
     return json({ error: "Method not allowed" }, 405, origin);
   }
@@ -89,55 +78,71 @@ export default async function (request) {
       return json({ result: "Nice try. I don't break that easily." }, 200, origin);
     }
 
-    // Sandwich defense: system → user → reminder
     const messages = [
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: input },
       { role: "system", content: SYSTEM_REMINDER },
     ];
 
-    // Fallback chain: try each model, cascade only on RateLimitError
+    // Try each model with streaming. Cascade on rate limit + timeout.
     let lastError;
     for (const model of MODELS) {
       try {
-        const completion = await groq.chat.completions.create({
+        const stream = await groq.chat.completions.create({
           model,
           max_completion_tokens: MAX_COMPLETION_TOKENS,
           temperature: 0.7,
           messages,
+          stream: true,
         });
 
-        return json({ result: completion.choices[0].message.content }, 200, origin);
+        // Convert Groq stream to SSE ReadableStream for the browser
+        const readable = new ReadableStream({
+          async start(controller) {
+            try {
+              for await (const chunk of stream) {
+                const content = chunk.choices[0]?.delta?.content || "";
+                if (content) {
+                  controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ text: content })}\n\n`));
+                }
+              }
+              controller.enqueue(new TextEncoder().encode("data: [DONE]\n\n"));
+              controller.close();
+            } catch (err) {
+              controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ error: err.message })}\n\n`));
+              controller.close();
+            }
+          },
+        });
+
+        return new Response(readable, {
+          status: 200,
+          headers: {
+            "Content-Type": "text/event-stream",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            ...corsHeaders(origin),
+          },
+        });
 
       } catch (err) {
         lastError = err;
-
         if (err instanceof Groq.RateLimitError) {
-          console.error(`${model}: rate limited (RPD/RPM exhausted)`);
-          continue; // try next model
+          console.error(`${model}: rate limited`);
+          continue;
         }
-
-        if (err instanceof Groq.AuthenticationError) {
-          console.error("Auth failed — check GROQ_API_KEY");
-          break; // no point trying other models
-        }
-
         if (err instanceof Groq.APIConnectionTimeoutError) {
-          console.error(`${model}: timed out (${groq.timeout}ms)`);
-          continue; // try next model, might be faster
+          console.error(`${model}: timed out`);
+          continue;
         }
-
-        // Any other error: log and bail
         console.error(`${model}: ${err.constructor.name} — ${err.message}`);
         break;
       }
     }
 
-    // All models failed
     if (lastError instanceof Groq.RateLimitError) {
       return json({ error: "Too many requests. Try again shortly." }, 429, origin);
     }
-
     return json({ error: "Something went wrong" }, 500, origin);
 
   } catch (error) {
