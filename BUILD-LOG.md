@@ -1,10 +1,10 @@
 # BUILD LOG — agamarora.com v2.0
 
-A documentary of every decision, research finding, dead end, and breakthrough on the road from v1 to v2. The approved spec lives in [DESIGN.md](DESIGN.md). This is the story of how we got there and how we're building it.
+A documentary of every decision, research finding, dead end, and breakthrough on the road from v1 to v2. The design system lives in the [moodboard](moodboard/index.html). Summary in [DESIGN.md](DESIGN.md). This is the story of how we got there.
 
 **Started**: 2026-03-28
-**Branch**: `v2-experience`
-**Status**: Phase 1 in progress. Personality-first home page. Moodboard live at /moodboard.
+**Branch**: `dev`
+**Status**: v2 live. Enter page + resume page shipped. Moodboard at /moodboard. Design spec in [DESIGN.md](DESIGN.md).
 
 ---
 

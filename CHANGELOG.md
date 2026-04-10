@@ -4,17 +4,22 @@ All notable changes to agamarora.com will be documented in this file.
 
 ## [Unreleased]
 
-### v2.0 Design — "The Convergence Engine"
-- Added DESIGN.md with v2.0 spec: "The Convergence Engine" — scroll-driven visual convergence of 5 career threads
-- Added DESIGN-BRIEF.md with CEO review output — mobile-first design direction, current input for design consultation
-- Added BUILD-LOG.md documenting the full design exploration journey (7 entries: Cinematic Scroll → Sprite research → Playable Portfolio prototype → Self-Constructing Portfolio → Convergence Engine)
-- Added experiment prototypes in `experiments/` (pixel art mockup room, Phaser.js playable portfolio — both explored and rejected)
+### v2.0 — Enter + Resume + AI Terminal (2026-04-10)
+- `/enter` page: keyboard background with 3D perspective, AI terminal powered by Groq (llama-3.1-8b-instant), SSE streaming with word-by-word animation, conversation memory (6 messages), rotating question prompts with click-to-prefill, gold keyboard glow for user input, muted white for bot replies
+- `/resume` page: dark editorial design using moodboard tokens, company links, mobile responsive, print-friendly
+- Homepage: "Enter" (CTA), "Explore" (secondary), "Resume" buttons
+- Groq serverless function: 4-model fallback, sandwich prompt defense, injection filter, CORS exact match, conversation history support
+- System prompt v3: few-shot examples, real resume data, eval harness (36 test cases, 8.3/10 score)
+- All metadata updated: "AI Product Manager" (was "Product Leader")
+- Design system: DESIGN.md rewritten to reference moodboard as source of truth (Convergence Engine concept archived)
+- Redirects: /preview and /talk both 301 to /enter
 
 ### Project Documentation
 - Added CLAUDE.md with full project documentation
-- Added TODO.md with 22 tech debt items across 6 categories
+- Added TODO.md tracking tech debt
 - Added CHANGELOG.md and VERSION (1.0.0) for release tracking
-- Updated README.md with page table, stack overview, and dev setup
+- readme.md rewritten as personal intro with banner, links to resume.md
+- resume.md added as career data source of truth
 
 ## [1.0.0] — 2025-05-28
 

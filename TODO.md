@@ -19,7 +19,7 @@
 ## Dead Code
 - [ ] Remove video click handler in `lab.js:17-23` — references a `<video>` element that was replaced with YouTube iframe
 - [ ] Remove empty `<nav>` placeholder tags on all 3 pages (or add real navigation)
-- [ ] Evaluate `callGroq()` in utils.js — fully wired but never called from UI. Either use it or remove it
+- [x] ~~`callGroq()` in utils.js~~ — removed (Groq now called directly from enter/index.html)
 
 ## SEO / Meta
 - [ ] Remove duplicate `<!-- Primary Meta Tags -->` comments on landing and explore pages
