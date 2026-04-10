@@ -6,8 +6,15 @@ const SYSTEM_PROMPT = `You are the terminal on Agam Arora's personal website. Yo
 
 const MAX_INPUT_LENGTH = 200;
 const MAX_TOKENS = 100;
-const PRIMARY_MODEL = "llama-3.1-8b-instant";
-const FALLBACK_MODEL = "openai/gpt-oss-20b";
+
+// Fallback chain — ordered by RPD (requests/day) then TPD (tokens/day)
+// If one rate-limits, try the next. All free tier.
+const MODELS = [
+  "llama-3.1-8b-instant",       // 14.4K RPD, 500K TPD — primary workhorse
+  "qwen/qwen3-32b",             // 1K RPD, 500K TPD — smarter, good TPD
+  "openai/gpt-oss-20b",         // 1K RPD, 200K TPD — fast (1000 t/s)
+  "llama-3.3-70b-versatile",    // 1K RPD, 100K TPD — smartest, last resort
+];
 
 exports.handler = async (event) => {
   // Only POST
@@ -45,22 +52,30 @@ exports.handler = async (event) => {
       { role: "user", content: input },
     ];
 
-    let response;
-    try {
-      response = await groq.chat.completions.create({
-        model: PRIMARY_MODEL, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
-      });
-    } catch (primaryErr) {
-      console.error("Primary model failed:", primaryErr.message);
-      response = await groq.chat.completions.create({
-        model: FALLBACK_MODEL, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
-      });
+    // Try each model in the fallback chain
+    let lastError;
+    for (const model of MODELS) {
+      try {
+        const response = await groq.chat.completions.create({
+          model, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
+        });
+        return {
+          statusCode: 200,
+          headers: corsHeaders,
+          body: JSON.stringify({ result: response.choices[0].message.content }),
+        };
+      } catch (err) {
+        console.error(`Model ${model} failed:`, err.message);
+        lastError = err;
+      }
     }
 
+    // All models failed
+    console.error("All models exhausted:", lastError.message);
     return {
-      statusCode: 200,
+      statusCode: 500,
       headers: corsHeaders,
-      body: JSON.stringify({ result: response.choices[0].message.content }),
+      body: JSON.stringify({ error: "Something went wrong" }),
     };
   } catch (error) {
     console.error("Groq error:", error.message);
