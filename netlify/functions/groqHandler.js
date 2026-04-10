@@ -6,7 +6,8 @@ const SYSTEM_PROMPT = `You are the terminal on Agam Arora's personal website. Yo
 
 const MAX_INPUT_LENGTH = 200;
 const MAX_TOKENS = 100;
-const MODEL = "llama-3.1-8b-instant";
+const PRIMARY_MODEL = "llama-3.1-8b-instant";
+const FALLBACK_MODEL = "openai/gpt-oss-20b";
 
 exports.handler = async (event) => {
   // Only POST
@@ -39,15 +40,22 @@ exports.handler = async (event) => {
       input = input.slice(0, MAX_INPUT_LENGTH);
     }
 
-    const response = await groq.chat.completions.create({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      temperature: 0.7,
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: input },
-      ],
-    });
+    const messages = [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: input },
+    ];
+
+    let response;
+    try {
+      response = await groq.chat.completions.create({
+        model: PRIMARY_MODEL, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
+      });
+    } catch (primaryErr) {
+      console.error("Primary model failed:", primaryErr.message);
+      response = await groq.chat.completions.create({
+        model: FALLBACK_MODEL, max_tokens: MAX_TOKENS, temperature: 0.7, messages,
+      });
+    }
 
     return {
       statusCode: 200,
