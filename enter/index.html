@@ -181,10 +181,10 @@
     /* Kill the keyboard spectacle */
     .kb-scene { display: none; }
 
-    /* Full-screen dark canvas */
+    /* Full-screen dark canvas — 100vh not dvh so keyboard doesn't shrink the page */
     .page {
       height: auto;
-      min-height: 100dvh;
+      min-height: 100vh;
       justify-content: flex-start;
       align-items: flex-start;
       padding: 48px 28px 32px;
