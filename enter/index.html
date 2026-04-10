@@ -3,27 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agam Arora — AI Product Leader</title>
-<meta name="description" content="Agam Arora. 12 years building products across analytics, gaming, beauty, logistics, and AI.">
-<meta property="og:title" content="Agam Arora — AI Product Leader">
-<meta property="og:description" content="12 years building products across analytics, gaming, beauty, logistics, and AI.">
+<title>Enter — Agam Arora</title>
+<meta name="description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
+<meta property="og:title" content="Enter — Agam Arora">
+<meta property="og:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://agamarora.com/preview">
+<meta property="og:url" content="https://agamarora.com/enter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Agam Arora — AI Product Leader">
-<meta name="twitter:description" content="12 years building products across analytics, gaming, beauty, logistics, and AI.">
+<meta name="twitter:title" content="Enter — Agam Arora">
+<meta name="twitter:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
   @font-face {
     font-family: 'Satoshi';
-    src: url('fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
     font-weight: 300 900; font-display: swap; font-style: normal;
   }
   @font-face {
     font-family: 'Satoshi';
-    src: url('fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
     font-weight: 300 900; font-display: swap; font-style: italic;
   }
 
@@ -74,6 +76,12 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(229,165,75,0.08);
     color: rgba(229,165,75,0.7); font-size: 0.55rem;
   }
+  .kb-key.lit-reply {
+    background: rgba(200,200,200,0.08); border-color: rgba(200,200,200,0.25);
+    border-bottom-color: rgba(200,200,200,0.18);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(200,200,200,0.06);
+    color: rgba(200,200,200,0.5); font-size: 0.55rem;
+  }
   .kb-key.w2 { width: 78px; } .kb-key.w3 { width: 108px; }
   .kb-key.w4 { width: 138px; } .kb-key.space { width: 320px; }
   .kb-fade {
@@ -101,23 +109,50 @@
     font-weight: 600; letter-spacing: -0.02em; line-height: 1;
   }
 
-  /* TOP RIGHT: AI response zone */
+  /* RIGHT: AI response zone — offset below greeting */
   .response-zone {
     position: absolute;
-    top: clamp(28px, 5vw, 56px);
+    top: clamp(80px, 12vw, 140px);
     right: clamp(28px, 5vw, 56px);
-    max-width: 380px;
+    max-width: 420px;
     text-align: right;
     font-family: var(--sans);
-    font-size: clamp(0.85rem, 1.2vw, 1rem);
-    font-weight: 400;
-    line-height: 1.5;
-    color: #4a4a4a;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: #7A7A7A;
     opacity: 0;
     transition: opacity 0.6s ease;
   }
   .response-zone.visible { opacity: 1; }
   .response-zone.fading { opacity: 0; transition: opacity 2s ease; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .page {
+      justify-content: flex-start;
+      padding-top: clamp(28px, 8vw, 56px);
+      gap: 1rem;
+    }
+    .hero {
+      position: relative;
+      top: auto; left: auto;
+    }
+    .response-zone {
+      position: relative;
+      top: auto; right: auto;
+      text-align: left;
+      max-width: 100%;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+    .terminal-wrap { max-width: 100%; }
+    .mark-wrap {
+      position: relative;
+      bottom: auto; right: auto;
+      text-align: right;
+      margin-top: auto;
+    }
+  }
 
   /* BOTTOM RIGHT: signature */
   .mark-wrap {
@@ -151,7 +186,7 @@
     font-family: var(--mono); font-size: 0.9rem;
     color: var(--text); caret-color: var(--accent);
   }
-  .terminal-input::placeholder { color: #333; }
+  .terminal-input::placeholder { color: #555; }
   .terminal-cursor {
     display: inline-block; width: 8px; height: 1.1em;
     background: var(--accent); vertical-align: text-bottom;
@@ -180,7 +215,7 @@
 
 <!-- Page content -->
 <div class="page">
-  <div class="hero"><h1>Hi, I'm Agam.</h1></div>
+  <div class="hero"><h1>Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
 
   <div class="response-zone" id="response-zone"></div>
 
@@ -242,9 +277,9 @@ allKeys.forEach(k => {
   const l = k.getAttribute('data-k');
   if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
 });
-function pressKey(c) {
+function pressKey(c, cls = 'lit') {
   (keyMap[c.toLowerCase()] || []).forEach(k => {
-    k.classList.add('lit'); setTimeout(() => k.classList.remove('lit'), 300);
+    k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 300);
   });
 }
 
@@ -261,6 +296,8 @@ const responseZone = document.getElementById('response-zone');
 let state = 'performing';
 let returnTimer = null;
 let fetching = false;
+let placeholderInterval = null;
+const conversationHistory = []; // [{role, content}, ...] — capped at 6
 
 // Loading verbs (inspired by Claude Code)
 const verbs = ['thinking', 'considering', 'brewing', 'composing', 'pondering', 'reflecting'];
@@ -292,19 +329,45 @@ function showInput() {
 }
 
 // --- AUTO-TYPE (performing) ---
-const lines = [
-  'git commit -m "ship taste, not features"',
-  'claude "design a portfolio that thinks"',
-  'netlify deploy --prod --message="built for the age of intelligence"',
-  'git push origin craft',
-  'claude "what would the 10-star version look like?"',
+const questionLines = [
+  'what makes Agam different?',
+  'what has he shipped?',
+  'why should I hire him?',
+  'what does he care about?',
+  'tell me about the voice AI',
+  'how did he build autonomous agents?',
+  'what was the indie game?',
+  'how did he scale a data platform 10x?',
+  'multi-agent systems... explain',
+  'what prediction models has he built?',
+  'real-time delivery tracking?',
+  'founder or PM?',
+  'CS degree and marketing degree... why both?',
+  'what would he build at Anthropic?',
 ];
+// Shuffle on load so it never feels scripted
+for (let i = questionLines.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [questionLines[i], questionLines[j]] = [questionLines[j], questionLines[i]];
+}
+const openingLines = [
+  'git commit -m "ship taste, not features"',
+  questionLines[0],
+  'claude "design a portfolio that thinks"',
+  questionLines[1],
+  'netlify deploy --prod --message="v2.0"',
+  questionLines[2],
+  'git push origin craft',
+  questionLines[3],
+];
+let activeLines = openingLines; // switches to questionLines after first interaction
 let lineIdx = 0, charIdx = 0, isDeleting = false, pauseUntil = 0;
+let hasInteracted = false;
 
 function autoType(time) {
   if (state !== 'performing') return;
   if (time < pauseUntil) { requestAnimationFrame(autoType); return; }
-  const line = lines[lineIdx];
+  const line = activeLines[lineIdx % activeLines.length];
   if (!isDeleting) {
     if (charIdx <= line.length) {
       textEl.textContent = line.slice(0, charIdx);
@@ -317,7 +380,7 @@ function autoType(time) {
       charIdx--; textEl.textContent = line.slice(0, charIdx);
       pressKey('backspace'); pauseUntil = time + 18;
     } else {
-      isDeleting = false; lineIdx = (lineIdx + 1) % lines.length;
+      isDeleting = false; lineIdx = (lineIdx + 1) % activeLines.length;
       pauseUntil = time + 600;
     }
   }
@@ -326,6 +389,7 @@ function autoType(time) {
 
 function startPerforming() {
   state = 'performing';
+  clearInterval(placeholderInterval);
   promptEl.textContent = '~';
   textEl.textContent = '';
   textEl.style.display = '';
@@ -341,12 +405,13 @@ function enterInputMode() {
   if (state === 'loading' || state === 'streaming') return;
   if (state === 'input') return;
   clearTimeout(returnTimer);
+  // Keep response visible — it stays until the next response replaces it
   state = 'input';
   promptEl.textContent = '>';
   textEl.style.display = 'none';
+  cursorEl.style.display = 'none'; // hide block cursor — input has its own caret
   showInput();
   inputEl.focus();
-  cursorEl.style.display = 'none';
 }
 
 // --- LOADING + STREAMING ---
@@ -354,11 +419,17 @@ async function askGroq(prompt) {
   if (fetching) return;
   fetching = true;
   state = 'loading';
+  clearInterval(placeholderInterval);
   promptEl.textContent = '>';
+  inputEl.value = ''; // clear old query
   textEl.style.display = '';
   hideInput();
   cursorEl.style.display = 'none';
   showVerb();
+
+  // Track conversation (cap at 6 messages = 3 exchanges)
+  conversationHistory.push({ role: 'user', content: prompt });
+  if (conversationHistory.length > 6) conversationHistory.splice(0, conversationHistory.length - 6);
 
   // Show response zone
   responseZone.textContent = '';
@@ -371,7 +442,7 @@ async function askGroq(prompt) {
     const res = await fetch('/.netlify/functions/groqHandler', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ prompt, history: conversationHistory.slice(0, -1) }),
       signal: controller.signal,
     });
     clearTimeout(timeout);
@@ -381,28 +452,45 @@ async function askGroq(prompt) {
     if (ct.includes('application/json')) {
       stopVerb();
       const data = await res.json();
-      responseZone.textContent = data.result || data.error || 'hmm, lost in thought.';
+      const text = data.result || data.error || 'hmm, lost in thought.';
+      responseZone.textContent = text;
+      conversationHistory.push({ role: 'assistant', content: text });
       finishResponse();
       return;
     }
 
-    // Streaming SSE
+    // Streaming SSE with typewriter reveal
+    state = 'streaming';
     stopVerb();
     textEl.innerHTML = '<span class="terminal-verb">speaking...</span>';
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
     let fullText = '';
+    const wordQueue = []; // buffer tokens, reveal word by word
+    let displayedText = '';
+    let pendingChars = ''; // accumulate chars until a word boundary
+    let dripping = false;
+
+    function drip() {
+      if (!wordQueue.length) { dripping = false; return; }
+      dripping = true;
+      const word = wordQueue.shift();
+      displayedText += word;
+      responseZone.textContent = displayedText;
+      for (const ch of word) pressKey(ch, 'lit-reply');
+      setTimeout(drip, 100 + Math.random() * 60);
+    }
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
       buffer += decoder.decode(value, { stream: true });
 
-      const lines = buffer.split('\n\n');
-      buffer = lines.pop(); // keep incomplete chunk
+      const chunks = buffer.split('\n\n');
+      buffer = chunks.pop(); // keep incomplete chunk
 
-      for (const line of lines) {
+      for (const line of chunks) {
         if (!line.startsWith('data: ')) continue;
         const payload = line.slice(6);
         if (payload === '[DONE]') continue;
@@ -410,17 +498,32 @@ async function askGroq(prompt) {
           const { text, error } = JSON.parse(payload);
           if (text) {
             fullText += text;
-            responseZone.textContent = fullText;
-            // Light up keyboard for streamed chars
-            for (const ch of text) pressKey(ch);
+            pendingChars += text;
+            // Split on word boundaries, queue complete words
+            const parts = pendingChars.split(/(?<=\s)/); // split after whitespace
+            pendingChars = parts.pop() || ''; // keep incomplete word
+            for (const w of parts) wordQueue.push(w);
+            if (!dripping) drip();
           }
           if (error) {
             responseZone.textContent = 'hmm, lost in thought.';
           }
-        } catch {}
+        } catch (parseErr) {
+          console.warn('SSE parse error:', parseErr);
+        }
       }
     }
 
+    // Flush remaining partial word
+    if (pendingChars) { wordQueue.push(pendingChars); pendingChars = ''; }
+    if (!dripping && wordQueue.length) drip();
+    // Wait for reveal to finish
+    await new Promise(resolve => {
+      const check = () => (wordQueue.length || dripping) ? setTimeout(check, 50) : resolve();
+      check();
+    });
+
+    if (fullText) conversationHistory.push({ role: 'assistant', content: fullText });
     finishResponse();
 
   } catch (err) {
@@ -436,32 +539,56 @@ function finishResponse() {
   fetching = false;
   state = 'idle';
   textEl.textContent = '';
-  cursorEl.style.display = '';
+  // Show input ready state — thin caret signals "type here"
+  promptEl.textContent = '>';
+  textEl.style.display = 'none';
+  cursorEl.style.display = 'none';
+  showInput();
+  hasInteracted = true;
+  // Rotate question lines as placeholder hints
+  let plIdx = 0;
+  inputEl.placeholder = questionLines[0];
+  clearInterval(placeholderInterval);
+  placeholderInterval = setInterval(() => {
+    plIdx = (plIdx + 1) % questionLines.length;
+    inputEl.placeholder = questionLines[plIdx];
+  }, 3000);
+  activeLines = questionLines; // after first interaction, only show questions
 
-  // Fade response and return to performing after 6s
+  // Response stays visible for 60s, then fade, then auto-type questions
   returnTimer = setTimeout(() => {
     responseZone.className = 'response-zone fading';
     setTimeout(() => {
       responseZone.className = 'response-zone';
       responseZone.textContent = '';
       startPerforming();
-    }, 2000);
-  }, 6000);
+    }, 3000);
+  }, 60000);
 }
 
 // --- EVENTS ---
 document.addEventListener('keydown', e => {
   pressKey(e.key);
-  if (state === 'performing' && e.key.length === 1) {
+  if ((state === 'performing' || state === 'idle') && e.key.length === 1) {
+    e.preventDefault(); // prevent double-type when input gets focus
+    const wasPerforming = state === 'performing';
+    // If auto-typing a question, pre-fill it so the visitor can just hit enter
+    const currentLine = activeLines[lineIdx % activeLines.length] || '';
+    const isQuestion = wasPerforming && currentLine.includes('?');
     enterInputMode();
-    inputEl.value = e.key;
-    // Move cursor to end
-    setTimeout(() => inputEl.setSelectionRange(1, 1), 0);
+    inputEl.value = isQuestion ? currentLine : e.key;
+    setTimeout(() => { const l = inputEl.value.length; inputEl.setSelectionRange(l, l); }, 0);
   }
 });
 
 terminal.addEventListener('click', () => {
-  if (state === 'performing' || state === 'idle') enterInputMode();
+  if (state === 'idle') {
+    const hint = inputEl.placeholder;
+    enterInputMode();
+    if (hint && hint !== '') inputEl.value = hint;
+  } else if (state === 'performing') {
+    enterInputMode();
+  }
   if (state === 'input') inputEl.focus();
 });
 
@@ -501,13 +628,14 @@ window.addEventListener('resize', applyDepthBlur);
 // ============================================
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
+let cachedScale = 2.2;
 document.addEventListener('mousemove', e => {
   mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
   mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
 });
 function setKbScale() {
-  const s = (window.innerWidth / 780) * 1.05;
-  document.documentElement.style.setProperty('--kb-scale', Math.min(Math.max(s, 1.2), 2.0));
+  cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
+  document.documentElement.style.setProperty('--kb-scale', cachedScale);
 }
 setKbScale();
 window.addEventListener('resize', setKbScale);
@@ -516,8 +644,7 @@ function animate(time) {
   const by = Math.cos(time * 0.00025) * 1;
   driftX += (mouseX * -2 - driftX) * 0.02;
   driftY += (mouseY * -1.5 - driftY) * 0.02;
-  const s = getComputedStyle(document.documentElement).getPropertyValue('--kb-scale') || 2.2;
-  kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${s}) translate(${bx + driftX}px, ${by + driftY}px)`;
+  kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
   requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);

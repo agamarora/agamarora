@@ -326,6 +326,12 @@ label {
   color: var(--prof-color);
 }
 
+.landing-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .hero .subheadline, .landing .landing-subheadline {
   font-size: 1.5rem;
   line-height: 1.4;

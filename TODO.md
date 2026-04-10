@@ -13,7 +13,7 @@
 
 ## Inconsistencies
 - [ ] Fix LinkedIn URL: `/in/agamarora` in header links vs `/in/agam-arora/` in schema.org JSON-LD — pick one
-- [ ] Fix job title: "AI Product Leader" in landing schema.org vs "AI Product Manager" in explore schema.org
+- [x] Fix job title: "AI Product Leader" in landing schema.org vs "AI Product Manager" in explore schema.org
 - [ ] Update copyright from 2025 to 2026 in landing page footer
 
 ## Dead Code

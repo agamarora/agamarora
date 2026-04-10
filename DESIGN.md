@@ -237,7 +237,7 @@ THE SKILL CARRIED FORWARD — one sentence connecting to AI convergence
 - Astro + Vite build via Netlify build pipeline
 - Share: LinkedIn, GitHub profile README, email signature, cold outreach
 - OG image: screenshot of the page at ~50% scroll — threads mid-convergence, chapter visible
-- OG description: "AI Product Leader. 5 industries. 12 years. One convergence."
+- OG description: "AI Product Manager. 5 industries. 12 years. One convergence."
 
 ## Performance Fallbacks
 

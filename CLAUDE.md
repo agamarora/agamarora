@@ -43,7 +43,7 @@ Pushes to `main` auto-deploy via Netlify. No CI pipeline beyond Netlify's build.
 | `/` | `index.html` | v1 Landing — animated greeting, identity, company logos |
 | `/explore` | `explore/index.html` | v1 Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
 | `/lab` | `lab/index.html` | v1 Projects — featured project showcase (currently only Shararat Voice AI) |
-| `/preview` | `preview.html` | v2 Concept — keyboard background, terminal entry point, aa. mark signature |
+| `/enter` | `enter/index.html` | v2 Enter — keyboard background, AI terminal, Groq streaming, conversation memory |
 | `/moodboard` | `moodboard/index.html` | v2 Design system moodboard (10 sections + living collection) |
 
 ### JavaScript Module Structure
