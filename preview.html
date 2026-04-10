@@ -164,6 +164,29 @@
     caret-color: var(--accent);
   }
   .terminal-input::placeholder { color: #444; }
+
+  /* Auto-typing display */
+  .terminal-auto {
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .terminal-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1.1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 1px;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* When user takes over, hide auto-type, show input */
+  .terminal.user-mode .terminal-auto,
+  .terminal.user-mode .terminal-cursor { display: none; }
+  .terminal:not(.user-mode) .terminal-input {
+    position: absolute; opacity: 0; pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -211,10 +234,12 @@
   </div>
 
   <div class="terminal-wrap">
-    <div class="terminal">
+    <div class="terminal" id="terminal">
       <span class="terminal-prompt">~</span>
+      <span class="terminal-auto" id="terminal-auto"></span>
+      <span class="terminal-cursor" id="terminal-cursor"></span>
       <input class="terminal-input" id="terminal-input" type="text"
-             placeholder="type something..." autofocus spellcheck="false" autocomplete="off">
+             placeholder="type something..." spellcheck="false" autocomplete="off">
     </div>
   </div>
 </div>
@@ -294,16 +319,79 @@ function pressKey(char) {
   });
 }
 
-// Terminal input → lights up background keyboard
+// ============================================
+// TERMINAL: auto-type mode → user mode
+// Plays scripted lines with keyboard follow.
+// Click or type = switch to real input forever.
+// ============================================
+const terminal = document.getElementById('terminal');
+const autoEl = document.getElementById('terminal-auto');
 const input = document.getElementById('terminal-input');
-input.addEventListener('keydown', e => {
+let userMode = false;
+
+const lines = [
+  'claude "design a portfolio that thinks"',
+  'git push origin main --force-with-lease',
+  'npm run build && netlify deploy --prod',
+  'claude "what should our brand personality be?"',
+  'vim DESIGN.md  # the real product is taste',
+  'curl -s https://api.anthropic.com/v1/messages',
+  'docker compose up -d --build',
+  'claude "review my PRD for voice agent"',
+];
+
+let lineIdx = 0, charIdx = 0, isDeleting = false, pauseUntil = 0;
+
+function autoType(time) {
+  if (userMode) return;
+  if (time < pauseUntil) { requestAnimationFrame(autoType); return; }
+
+  const line = lines[lineIdx];
+  if (!isDeleting) {
+    if (charIdx <= line.length) {
+      autoEl.textContent = line.slice(0, charIdx);
+      if (line[charIdx - 1]) pressKey(line[charIdx - 1]);
+      charIdx++;
+      pauseUntil = time + 45 + Math.random() * 55;
+    } else {
+      isDeleting = true;
+      pauseUntil = time + 2200;
+    }
+  } else {
+    if (charIdx > 0) {
+      charIdx--;
+      autoEl.textContent = line.slice(0, charIdx);
+      pressKey('backspace');
+      pauseUntil = time + 18;
+    } else {
+      isDeleting = false;
+      lineIdx = (lineIdx + 1) % lines.length;
+      pauseUntil = time + 600;
+    }
+  }
+  requestAnimationFrame(autoType);
+}
+requestAnimationFrame(autoType);
+
+// Switch to user mode on any interaction
+function switchToUserMode() {
+  if (userMode) return;
+  userMode = true;
+  terminal.classList.add('user-mode');
+  input.focus();
+}
+
+terminal.addEventListener('click', switchToUserMode);
+document.addEventListener('keydown', e => {
+  // Any key press switches to user mode
+  if (!userMode) switchToUserMode();
   pressKey(e.key);
 });
 
 // ============================================
 // DEPTH-OF-FIELD BLUR
 // ============================================
-(function applyDepthBlur() {
+function applyDepthBlur() {
   const board = document.getElementById('kb-board');
   const rect = board.getBoundingClientRect();
   const cx = rect.width / 2, cy = rect.height / 2;
@@ -313,9 +401,11 @@ input.addEventListener('keydown', e => {
     const kx = kr.left - rect.left + kr.width / 2;
     const ky = kr.top - rect.top + kr.height / 2;
     const dist = Math.sqrt((kx - cx) ** 2 + (ky - cy) ** 2) / maxDist;
-    k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3.5)}px)`;
+    k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3)}px)`;
   });
-})();
+}
+applyDepthBlur();
+window.addEventListener('resize', applyDepthBlur);
 
 // ============================================
 // SUBTLE PARALLAX
@@ -329,8 +419,10 @@ document.addEventListener('mousemove', e => {
 });
 
 function setKbScale() {
-  const scale = (window.innerWidth / 780) * 1.05;
-  document.documentElement.style.setProperty('--kb-scale', Math.max(scale, 1.2));
+  const vw = window.innerWidth;
+  const scale = (vw / 780) * 1.05;
+  // Cap at 2.0 so large screens don't stretch keys into blurry rectangles
+  document.documentElement.style.setProperty('--kb-scale', Math.min(Math.max(scale, 1.2), 2.0));
 }
 setKbScale();
 window.addEventListener('resize', setKbScale);
