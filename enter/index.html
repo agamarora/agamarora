@@ -127,6 +127,33 @@
   .response-zone.visible { opacity: 1; }
   .response-zone.fading { opacity: 0; transition: opacity 2s ease; }
 
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .page {
+      justify-content: flex-start;
+      padding-top: clamp(28px, 8vw, 56px);
+      gap: 1rem;
+    }
+    .hero {
+      position: relative;
+      top: auto; left: auto;
+    }
+    .response-zone {
+      position: relative;
+      top: auto; right: auto;
+      text-align: left;
+      max-width: 100%;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+    }
+    .terminal-wrap { max-width: 100%; }
+    .mark-wrap {
+      position: relative;
+      bottom: auto; right: auto;
+      text-align: right;
+      margin-top: auto;
+    }
+  }
+
   /* BOTTOM RIGHT: signature */
   .mark-wrap {
     position: absolute;
@@ -169,112 +196,6 @@
 
   /* Loading verb animation */
   .terminal-verb { color: var(--text-dim); font-style: italic; }
-
-  /* ==========================================
-     MOBILE — auto-playing editorial experience
-     Text-forward. No terminal chrome. The AI
-     text IS the design. Tap to interrupt.
-     ========================================== */
-  @media (max-width: 768px) {
-    body { overflow-y: auto; }
-
-    /* Kill the keyboard spectacle */
-    .kb-scene { display: none; }
-
-    /* Full-screen dark canvas — 100vh not dvh so keyboard doesn't shrink the page */
-    .page {
-      height: auto;
-      min-height: 100vh;
-      justify-content: flex-start;
-      align-items: flex-start;
-      padding: 48px 28px 32px;
-      gap: 0;
-    }
-
-    /* Identity — top left, compact */
-    .hero {
-      position: relative;
-      top: auto; left: auto;
-      margin-bottom: 40px;
-    }
-    .hero h1 {
-      font-size: 1.1rem;
-      font-weight: 500;
-      letter-spacing: 0;
-      color: var(--text-dim);
-    }
-    .hero h1 span { color: var(--text) !important; }
-
-    /* THE RESPONSE — center stage, editorial weight */
-    .response-zone {
-      position: relative;
-      top: auto; right: auto;
-      text-align: left;
-      max-width: 100%;
-      font-family: var(--sans);
-      font-size: clamp(1.25rem, 5.5vw, 1.6rem);
-      font-weight: 400;
-      line-height: 1.55;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      min-height: 40vh;
-      padding-right: 8px;
-    }
-    .response-zone.visible {
-      opacity: 1;
-    }
-    .response-zone.fading {
-      opacity: 0;
-      transition: opacity 2.5s ease;
-    }
-
-    /* Terminal — minimal, bottom-anchored feel */
-    .terminal-wrap {
-      max-width: 100%;
-      margin-top: auto;
-      padding-top: 32px;
-    }
-    .terminal {
-      background: transparent;
-      border: none;
-      border-top: 1px solid rgba(229,165,75,0.1);
-      border-radius: 0;
-      padding: 16px 0 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      min-height: auto;
-      font-size: 0.8rem;
-    }
-    .terminal:focus-within {
-      border-color: rgba(229,165,75,0.25);
-      box-shadow: none;
-    }
-    .terminal-input {
-      font-size: 0.8rem;
-    }
-    .terminal-text {
-      font-size: 0.8rem;
-    }
-
-    /* Signature — inline after terminal */
-    .mark-wrap {
-      position: relative;
-      bottom: auto; right: auto;
-      text-align: right;
-      width: 100%;
-      padding-top: 24px;
-      padding-bottom: 16px;
-      opacity: 0.35;
-    }
-  }
-
-  /* Small phones */
-  @media (max-width: 400px) {
-    .page { padding: 36px 20px 24px; }
-    .response-zone { font-size: 1.15rem; }
-  }
 
 </style>
 </head>
@@ -348,13 +269,6 @@
 })();
 
 // ============================================
-// MOBILE DETECTION
-// ============================================
-let _isMobile = window.innerWidth <= 768;
-const isMobile = () => _isMobile;
-window.addEventListener('resize', () => { _isMobile = window.innerWidth <= 768; });
-
-// ============================================
 // KEYBOARD
 // ============================================
 const allKeys = document.querySelectorAll('.kb-key');
@@ -365,7 +279,6 @@ allKeys.forEach(k => {
   if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
 });
 function pressKey(c, cls = 'lit') {
-  if (isMobile()) return;
   (keyMap[c.toLowerCase()] || []).forEach(k => {
     k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 300);
   });
@@ -690,7 +603,6 @@ requestAnimationFrame(autoType);
 // DEPTH-OF-FIELD BLUR
 // ============================================
 function applyDepthBlur() {
-  if (isMobile()) return;
   const board = document.getElementById('kb-board');
   const rect = board.getBoundingClientRect();
   const cx = rect.width / 2, cy = rect.height / 2;
@@ -703,27 +615,24 @@ function applyDepthBlur() {
     k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3)}px)`;
   });
 }
-if (!isMobile()) applyDepthBlur();
+applyDepthBlur();
 window.addEventListener('resize', applyDepthBlur);
 
 // ============================================
-// PARALLAX (desktop only)
+// PARALLAX
 // ============================================
 const kbBoard = document.getElementById('kb-board');
 let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
 let cachedScale = 2.2;
-if (!isMobile()) {
-  document.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-}
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
 function setKbScale() {
-  if (isMobile()) return;
   cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
   document.documentElement.style.setProperty('--kb-scale', cachedScale);
 }
-if (!isMobile()) setKbScale();
+setKbScale();
 window.addEventListener('resize', setKbScale);
 function animate(time) {
   const bx = Math.sin(time * 0.0003) * 1.5;
@@ -733,7 +642,7 @@ function animate(time) {
   kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
   requestAnimationFrame(animate);
 }
-if (!isMobile()) requestAnimationFrame(animate);
+requestAnimationFrame(animate);
 </script>
 </body>
 </html>
