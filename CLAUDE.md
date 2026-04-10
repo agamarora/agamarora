@@ -82,23 +82,22 @@ Dark/light theme is a core architectural concern touching HTML, CSS, and JS:
 
 ### Serverless Function
 
-`netlify/functions/groqHandler.js` — CommonJS, accepts POST with `{ prompt, systemPrompt }`, returns `{ result }`. Model: llama-3.1-8b-instant, max_tokens=100, temperature=0.9.
+`netlify/functions/groqHandler.mjs` — ESM, Web Standard Request/Response. Groq SDK streaming SSE. 4-model fallback chain (llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile). Sandwich prompt defense, injection filter, conversation history (6 messages, user+assistant). System prompt grounded in resume.md with few-shot examples. Eval harness at `eval-prompt.mjs`.
 
-## v2.0 Redesign
+## v2 Status
 
-In progress on `dev` branch. The concept has evolved through several iterations (see `BUILD-LOG.md`).
+Live on `main`. The `/enter` page is the v2 experience.
 
-- **Current direction**: Keyboard as background depth layer, terminal as entry point to explore. Live preview at `/preview`.
-- **Design system**: Complete moodboard at `/moodboard` (sections 01-05 locked, 06-10 starting points, 11 living collection).
-- **Key files**: `DESIGN.md` (full spec), `DESIGN-BRIEF.md` (design input), `BUILD-LOG.md` (decision history), `moodboard/aa-mark.html` (mark exploration).
+- **Design system**: Moodboard at `/moodboard` is the source of truth. Summary in `DESIGN.md`.
+- **Key files**: `DESIGN.md` (design system summary), `BUILD-LOG.md` (decision history), `moodboard/aa-mark.html` (mark exploration).
 - **Brand elements**: aa. mark (Patrick Hand, gold dot, stroke-draw animation), keyboard background with 3D perspective tilt, parallax depth layers.
-- Prior approaches explored and rejected: Convergence Engine, Cinematic Scroll, Playable Portfolio (Phaser.js prototype, now deleted), Self-Constructing Portfolio, pixel art character.
-- The current site (v1.0) remains live on `main` until v2.0 ships.
+- **AI terminal**: Groq-powered, streaming SSE, word-by-word animation, conversation memory, rotating question prompts.
+- **Resume**: Dark editorial page at `/resume`, career data sourced from `resume.md`.
 
 ## Known Issues
 
-Tracked in `TODO.md`. Dead files cleaned up (backup CSS, experiments, duplicate PNGs). Remaining:
+Tracked in `TODO.md`. Remaining:
 
-- **Dead code**: `lab.js` video click handler for removed `<video>` element; `callGroq()` wired but unused
-- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org; job title mismatch between pages
+- **Dead code**: `lab.js` video click handler for removed `<video>` element
+- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org
 - **Missing**: `og:image` on lab page references non-existent `/assets/lab-preview.png`
