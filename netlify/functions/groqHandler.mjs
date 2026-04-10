@@ -99,7 +99,7 @@ export default async function (request) {
     for (const model of MODELS) {
       try {
         const { data: response, response: raw } = await groq.chat.completions
-          .create({ model, max_tokens: MAX_TOKENS, temperature: 0.7, messages, timeout: TIMEOUT_MS })
+          .create({ model, max_tokens: MAX_TOKENS, temperature: 0.7, messages }, { timeout: TIMEOUT_MS })
           .withResponse();
 
         const remaining = raw.headers.get("x-ratelimit-remaining-requests");
