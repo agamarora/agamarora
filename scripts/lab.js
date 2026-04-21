@@ -5,13 +5,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Animation for featured project element.
-  const projectFeature = document.getElementById('vapi-project');
-  if (projectFeature) {
-    setTimeout(() => {
-      projectFeature.classList.add('loaded');
-    }, 300);
-  }
+  // Fade-in all featured projects on the lab page.
+  const projectFeatures = document.querySelectorAll('.project-feature');
+  projectFeatures.forEach((el, i) => {
+    setTimeout(() => el.classList.add('loaded'), 300 + i * 120);
+  });
   
   // Video functionality.
   const video = document.querySelector('.project-media video');
