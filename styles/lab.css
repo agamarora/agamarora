@@ -273,12 +273,18 @@ main {
 .ai-resume-preview img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 360px;
   object-fit: cover;
-  max-height: 360px;
+  /* Anchor roughly on the aa. mark + proof cards, which sit around 40% down
+     the full screenshot. Prevents stretching and keeps the important content
+     visible when the container is wider than the crop aspect. */
+  object-position: center 38%;
 }
 @media (max-width: 900px) {
-  .ai-resume-preview img { max-height: 300px; }
+  .ai-resume-preview img { height: 300px; }
+}
+@media (max-width: 600px) {
+  .ai-resume-preview img { height: 240px; }
 }
 
 /* Responsive Video */
