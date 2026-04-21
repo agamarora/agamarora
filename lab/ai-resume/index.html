@@ -3,17 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ai-resume — an open-source AI resume template by Agam Arora</title>
-<meta name="description" content="Replace your static resume with a chat. Recruiters click a link, see your proof cards, and ask questions answered in your voice. Open source template. Set up in ~30 minutes with one paste prompt into Claude Code.">
+<title>ai-resume — an open source AI resume template by Agam Arora</title>
+<meta name="description" content="An open source template that turns your resume into a chat. Paste one prompt, get a deployed AI resume in 30 minutes. Free to run.">
 <meta name="theme-color" content="#0A0A0A">
-<meta property="og:title" content="ai-resume — an open-source AI resume template">
-<meta property="og:description" content="Replace your static resume with a chat. Open source. Set up in ~30 min with one paste prompt.">
+<meta property="og:title" content="ai-resume — a resume that answers back">
+<meta property="og:description" content="Open source template. Paste one prompt, get a chat-based resume deployed in 30 minutes. Free to run.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/lab/ai-resume/">
+<meta property="og:image" content="https://agamarora.com/assets/lab/ai-resume-demo.png">
 <meta property="og:site_name" content="Agam Arora">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ai-resume — open-source AI resume template">
-<meta name="twitter:description" content="A chat, not a PDF. Build your own in ~30 min.">
+<meta name="twitter:title" content="ai-resume — a resume that answers back">
+<meta name="twitter:description" content="Open source. 30 minutes. $0/month.">
+<meta name="twitter:image" content="https://agamarora.com/assets/lab/ai-resume-demo.png">
 <link rel="canonical" href="https://agamarora.com/lab/ai-resume/">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
@@ -64,13 +66,13 @@
   ::selection { background: var(--accent); color: var(--bg); }
 
   .page {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0 auto;
     padding: clamp(var(--space-7), 8vw, var(--space-9)) clamp(var(--space-6), 5vw, var(--space-8));
   }
 
   /* HEADER */
-  .header { margin-bottom: var(--space-8); }
+  .header { margin-bottom: var(--space-9); }
   .aa-mark {
     font-family: var(--mark);
     font-size: 1.4rem;
@@ -84,29 +86,28 @@
 
   .eyebrow {
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 400;
     color: var(--accent);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     margin-bottom: var(--space-5);
   }
   .header h1 {
-    font-size: clamp(2rem, 5.5vw, 3.25rem);
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.05;
+    line-height: 1.02;
     margin-bottom: var(--space-5);
   }
   .header h1 .accent { color: var(--accent); }
-  .header .lede {
-    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  .header .subhead {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
     color: var(--text-dim);
     font-weight: 400;
-    max-width: 640px;
+    max-width: 620px;
     line-height: 1.5;
   }
-  .header .lede strong { color: var(--text); font-weight: 500; }
   .header .actions {
     margin-top: var(--space-6);
     display: flex;
@@ -142,15 +143,15 @@
   .section { margin-bottom: var(--space-9); }
   .section-title {
     font-family: var(--mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 500;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     margin-bottom: var(--space-5);
   }
   .section h2 {
-    font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+    font-size: clamp(1.4rem, 2.6vw, 1.75rem);
     font-weight: 600;
     letter-spacing: -0.02em;
     margin-bottom: var(--space-5);
@@ -162,6 +163,7 @@
     opacity: 0.88;
     margin-bottom: var(--space-4);
   }
+  .section p:last-child { margin-bottom: 0; }
   .section p.lead {
     font-size: 1.05rem;
     color: var(--text);
@@ -175,75 +177,77 @@
     transition: border-color 0.2s;
   }
   .section a:hover { border-bottom-color: var(--accent); }
-
-  /* CODE BLOCKS */
-  .code-block, .ascii-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: var(--space-5);
+  .section code {
     font-family: var(--mono);
-    font-size: 0.78rem;
-    line-height: 1.55;
-    color: var(--text);
-    overflow-x: auto;
-    white-space: pre;
-    margin-bottom: var(--space-4);
+    font-size: 0.85em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
   }
-  .ascii-block {
+
+  /* HERO IMAGE */
+  .hero-image {
+    margin: var(--space-7) 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .hero-image .caption {
+    font-family: var(--mono);
     font-size: 0.72rem;
     color: var(--text-dim);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+    text-align: center;
   }
-  .ascii-block .hl { color: var(--accent); }
 
-  /* COMPONENT LIST */
-  .components {
-    list-style: none;
-    padding: 0;
-    margin-top: var(--space-4);
+  /* QUOTE */
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--accent-dim);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   }
-  .components li {
-    padding: var(--space-4) 0;
+  .quote p {
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 1;
+    margin-bottom: var(--space-3);
+  }
+  .quote .attrib {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: normal;
+  }
+
+  /* FAQ */
+  .faq { margin-top: var(--space-5); }
+  .faq-item {
+    padding: var(--space-5) 0;
     border-top: 1px solid var(--border);
   }
-  .components li:last-child { border-bottom: 1px solid var(--border); }
-  .components .name {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 4px;
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
   }
-  .components .desc {
-    font-size: 0.92rem;
+  .faq-a {
+    font-size: 0.95rem;
+    color: var(--text);
     opacity: 0.85;
-  }
-
-  /* PALETTE TABLE */
-  .palettes {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: var(--space-4);
-    font-size: 0.9rem;
-  }
-  .palettes th, .palettes td {
-    text-align: left;
-    padding: var(--space-4) var(--space-3);
-    border-bottom: 1px solid var(--border);
-  }
-  .palettes th {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .palettes td:first-child {
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    color: var(--accent);
-    white-space: nowrap;
+    line-height: 1.6;
   }
 
   /* PASTE PROMPT */
@@ -263,7 +267,7 @@
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
-    max-height: 340px;
+    max-height: 360px;
     overflow-y: auto;
   }
   .copy-btn {
@@ -317,9 +321,9 @@
   }
   .prereqs li {
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     color: var(--text-dim);
-    padding: 6px 10px;
+    padding: 5px 10px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
   }
@@ -345,29 +349,20 @@
   .resources li:last-child { border-bottom: 1px solid var(--border); }
   .resources .r-name {
     font-family: var(--mono);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--accent);
     text-decoration: none;
+    border-bottom: none;
   }
-  .resources .r-name:hover { text-decoration: underline; }
+  .resources .r-name:hover { border-bottom: 1px solid var(--accent); }
   .resources .r-desc {
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--text-dim);
     flex: 1;
     text-align: right;
   }
 
-  /* HIGHLIGHT CALLOUT */
-  .callout {
-    background: var(--accent-dim);
-    border-left: 3px solid var(--accent);
-    padding: var(--space-5) var(--space-6);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-    margin: var(--space-5) 0;
-  }
-  .callout p { margin: 0; opacity: 1; }
-
-  /* BACK LINK */
+  /* BACK */
   .back {
     margin-top: var(--space-9);
     padding-top: var(--space-6);
@@ -383,19 +378,18 @@
     color: var(--text-dim);
     text-decoration: none;
     transition: color 0.2s;
+    border-bottom: none;
   }
   .back a:hover { color: var(--accent); }
 
   /* MOBILE */
   @media (max-width: 600px) {
-    .page {
-      padding: var(--space-6) var(--space-5);
-    }
+    .page { padding: var(--space-6) var(--space-5); }
     .header { margin-bottom: var(--space-7); }
     .section { margin-bottom: var(--space-7); }
     .header .actions { flex-direction: column; align-items: stretch; }
     .btn { text-align: center; }
-    .code-block, .ascii-block, .prompt-box pre { font-size: 0.7rem; }
+    .prompt-box pre { font-size: 0.7rem; }
     .resources li { flex-direction: column; align-items: flex-start; gap: 4px; }
     .resources .r-desc { text-align: left; }
   }
@@ -404,169 +398,118 @@
 <body>
 <div class="page">
 
+  <!-- HEADER / HERO -->
   <div class="header">
     <a href="/" class="aa-mark">aa<span class="dot">.</span></a>
 
     <div class="eyebrow">Lab / ai-resume</div>
     <h1>A resume that <span class="accent">answers back.</span></h1>
-    <p class="lede">
-      Recruiters judge you in 6 seconds from a static resume. You worked for 10 years. They read 3 bullets. Then they bounce.
-      <strong>ai-resume</strong> replaces your resume with a chat. Open source. Set up in ~30 min with one paste prompt.
+    <p class="subhead">
+      Open source template. Paste one prompt, get a chat-based resume deployed in 30 minutes. Free to run.
     </p>
     <div class="actions">
-      <a href="#get-started" class="btn btn-primary">Get your own &rarr;</a>
-      <a href="https://ai-resume-demo.netlify.app" target="_blank" rel="noopener" class="btn btn-secondary">See a live example</a>
+      <a href="#get-started" class="btn btn-primary">Make your own &rarr;</a>
+      <a href="https://ai-resume-demo.netlify.app" target="_blank" rel="noopener" class="btn btn-secondary">See it live &nearr;</a>
     </div>
   </div>
 
-  <!-- WHAT IT IS -->
+  <!-- PRESS RELEASE -->
   <div class="section">
-    <div class="section-title">What it is</div>
-    <h2>A chat, not a PDF.</h2>
+    <div class="section-title">Press release</div>
+    <h2>ai-resume turns your career into a chat, not a PDF.</h2>
+
     <p class="lead">
-      A recruiter clicks the link. They see three proof cards &mdash; your strongest quantified impacts. They ask questions. An AI that knows your career answers in <em>your</em> voice, quotes your metrics, and shows the next proof cards inline when they ask &ldquo;what else?&rdquo; They&rsquo;re in a conversation instead of scanning a PDF.
+      A recruiter clicks your link. They see your strongest proof points as cards. They ask questions. An AI that knows your career answers in your voice and quotes your real metrics. Humans read it. Recruiter AI agents read it too, as structured Schema.org data.
     </p>
+
     <p>
-      Recruiter AI agents can also query <code style="font-family:var(--mono);color:var(--accent);">/.well-known/ai-resume.json</code> for structured Schema.org data. Humans <em>and</em> machines can read your career.
+      <strong>The problem.</strong> A static resume gets read in six seconds. A recruiter skims three bullets and bounces. Ten years of work gets flattened into a PDF that nobody reads twice. Meanwhile, recruiter AI agents are starting to scan candidate profiles. If your resume is a PDF, you lose both audiences.
     </p>
 
-    <div class="ascii-block">
-┌─ Header <span class="hl">─────────────────────────────</span>┐
-│ ac. Alex Chen             [in] [✉]  │
-├─────────────────────────────────────┤
-│                                     │
-│ ┌─ Card <span class="hl">─────────────────────────────</span>┐ │
-│ │ Design System v3            ›   │ │   whole card is a button
-│ │ 400+ teams adopted              │ │   chevron in corner
-│ └─────────────────────────────────┘ │
-│ ┌─ Card <span class="hl">─────────────────────────────</span>┐ │
-│ │ Checkout Redesign           ›   │ │
-│ │ +12% conversion lift            │ │
-│ └─────────────────────────────────┘ │
-│                                     │
-│ ask me anything about Alex's        │
-│ career.                             │
-│                                     │
-│ [what does Alex do?] [why hire?]    │
-│                                     │
-├─────────────────────────────────────┤
-│ [Ask me about Alex...       ] [↑]   │
-└─────────────────────────────────────┘</div>
+    <p>
+      <strong>The solution.</strong> ai-resume ships as a GitHub template. You paste one prompt into Claude Code. A setup wizard walks you through writing a tight system prompt, runs twelve behavioral tests across two Llama models, and deploys to Netlify. The recruiter-facing page is a chat with proof cards. There's also a structured endpoint at <code>/.well-known/ai-resume.json</code> so recruiter agents can query your career without scraping.
+    </p>
 
-    <div class="callout">
-      <p><strong>Cards come back in conversation.</strong> When a recruiter asks a list-type question (&ldquo;show me her ML work&rdquo;), the AI answers with 2&ndash;3 inline cards instead of prose. Same visual grammar. The recruiter never reads a wall of text to find proof. <em>This is the product differentiator.</em></p>
+    <figure class="hero-image">
+      <img src="/assets/lab/ai-resume-demo.png" alt="Screenshot of the ai-resume demo site showing the aa. mark, Agam Arora's name, two proof cards for Voice AI Platform and ANALYZE Data Platform, and suggestion chips below." loading="lazy">
+      <figcaption class="caption">Live demo &middot; ai-resume-demo.netlify.app</figcaption>
+    </figure>
+
+    <div class="quote">
+      <p>"I wanted to see what it looks like when the way you build the thing IS the pitch. The setup wizard runs evals in a loop in front of you. That's the part I'd want a hiring manager to watch."</p>
+      <div class="attrib">Agam Arora &middot; builder</div>
     </div>
-  </div>
 
-  <!-- THE DIFFERENTIATOR -->
-  <div class="section">
-    <div class="section-title">The real differentiator</div>
-    <h2>The setup is the product.</h2>
     <p>
-      You could build a chat UI in a weekend. You cannot replicate the <em>workflow</em> that produces a tight, recruiter-safe system prompt for your specific career &mdash; because that&rsquo;s a coaching loop, not a form.
-    </p>
-    <p>
-      Paste one prompt into Claude Code. It reads the template&rsquo;s instructions and becomes your setup wizard. You paste a rough resume; the wizard critiques it &mdash; vague bullets, missing metrics, weak verbs &mdash; and pushes you to refine. It drafts your AI personality. It runs <strong>12 behavioral tests across 2 Llama models</strong> on Groq. If a test fails, it reads the failure, proposes a targeted edit to the system prompt, re-runs, and keeps a best-so-far snapshot. You watch it happen.
-    </p>
-    <p>
-      That loop is what makes this template worth using over a static HTML file. You&rsquo;re not buying a template, you&rsquo;re buying a workflow.
+      <strong>Availability.</strong> Public today at <a href="https://github.com/agamarora/ai-resume" target="_blank" rel="noopener">github.com/agamarora/ai-resume</a>. MIT licensed. Runs on Groq's free tier plus Netlify's free tier. Zero dollars a month to host.
     </p>
   </div>
 
-  <!-- WHY I BUILT IT -->
+  <!-- FAQ -->
   <div class="section">
-    <div class="section-title">Why I built it</div>
-    <h2>Static resumes are dead on arrival.</h2>
-    <p>
-      I&rsquo;ve been on both sides of the table. As a PM I&rsquo;ve hired. As a candidate I&rsquo;ve watched a decade of work get judged on three bullet points someone scanned at 2am. The format is the problem, not the content.
-    </p>
-    <p>
-      Two other things pushed me to build it. First, <strong>recruiter AI agents are here</strong>. They&rsquo;re going to call your resume like an API. If you don&rsquo;t expose a structured endpoint, you&rsquo;re invisible to them. Second, <strong>the way you build matters as much as what you build</strong>. Running 12 evals in a loop, reverting on regression, coaching a prompt to 12/12 &mdash; that&rsquo;s the skill worth showing off in 2026. The template is a live demo of that skill.
-    </p>
-    <p>
-      Same stack I use for everything on agamarora.com: vanilla HTML/CSS/JS, Groq free tier, Netlify free tier. $0/month to run.
-    </p>
-  </div>
+    <div class="section-title">FAQ</div>
+    <h2>Questions you'd ask before shipping.</h2>
 
-  <!-- WHAT'S INSIDE -->
-  <div class="section">
-    <div class="section-title">What&rsquo;s inside</div>
-    <h2>Eight files. Zero framework.</h2>
-    <p>Single-file chat UI. One serverless function. A config-driven generator that wires everything together.</p>
-    <ul class="components">
-      <li>
-        <span class="name">index.html</span>
-        <span class="desc">Single-file chat UI. Zero deps. Mobile-first. Welcome cards, inline <code style="font-family:var(--mono);color:var(--accent);">[CARD:...]</code> parser for conversation cards, streaming SSE, skeleton loading, PWA.</span>
-      </li>
-      <li>
-        <span class="name">netlify/functions/groqHandler.mjs</span>
-        <span class="desc">Netlify function. 2-model Llama cascade on rate limit, injection filter, SSE streaming, CORS.</span>
-      </li>
-      <li>
-        <span class="name">setup.js</span>
-        <span class="desc">Config-driven multi-file generator. Welcome cards HTML, JSON-LD, PWA manifest, OG tags, agent endpoint. Atomic writes.</span>
-      </li>
-      <li>
-        <span class="name">eval-prompt.mjs</span>
-        <span class="desc">12 behavioral tests &times; 2 models + custom tests from <code style="font-family:var(--mono);color:var(--accent);">eval-custom.json</code>. Exponential backoff on 429s.</span>
-      </li>
-      <li>
-        <span class="name">scripts/check-models.mjs</span>
-        <span class="desc">Fails fast if Groq deprecated any cascade model. Called before setup and in CI.</span>
-      </li>
-      <li>
-        <span class="name">scripts/doctor.mjs</span>
-        <span class="desc">One-command install health: Node version, <code style="font-family:var(--mono);color:var(--accent);">.env</code> key format, config validity, marker integrity, PII scan on <code style="font-family:var(--mono);color:var(--accent);">resume.md</code>.</span>
-      </li>
-      <li>
-        <span class="name">ai-resume.json</span>
-        <span class="desc">Schema.org Person endpoint at <code style="font-family:var(--mono);color:var(--accent);">/.well-known/ai-resume.json</code> for agent-to-agent communication.</span>
-      </li>
-      <li>
-        <span class="name">.github/workflows/eval.yml</span>
-        <span class="desc">CI. Runs the 12-test eval on every PR. Prevents silent regressions when the template evolves.</span>
-      </li>
-    </ul>
-  </div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">What is this, exactly?</div>
+        <div class="faq-a">A GitHub template. One HTML file for the chat. One Netlify function that talks to Groq. One setup wizard that runs in your terminal. Vanilla JS, zero framework, no build step.</div>
+      </div>
 
-  <!-- ARCHITECTURE -->
-  <div class="section">
-    <div class="section-title">How it flows</div>
-    <h2>Your resume in, a live chat out.</h2>
-    <div class="ascii-block">
-resume.md ──[<span class="hl">Claude Code wizard</span>]──→ system-prompt.md
-                                 → setup-config.json
-                                 → setup.js → index.html
-                                            → ai-resume.json
-                                            → manifest.json
-                                 → eval-prompt.mjs (12 × 2 models)
-                                 → .github/workflows/eval.yml (CI on PR)</div>
-    <p>
-      <code style="font-family:var(--mono);color:var(--accent);">resume.md</code> and <code style="font-family:var(--mono);color:var(--accent);">setup-config.json</code> are <code style="font-family:var(--mono);color:var(--accent);">.gitignore</code>&rsquo;d by default. Your career data stays local. Only the hydrated <code style="font-family:var(--mono);color:var(--accent);">index.html</code> and <code style="font-family:var(--mono);color:var(--accent);">system-prompt.md</code> get committed &mdash; and the system prompt only contains what you approved for public consumption.
-    </p>
-  </div>
+      <div class="faq-item">
+        <div class="faq-q">Why not just use ChatGPT, or a static PDF?</div>
+        <div class="faq-a">ChatGPT doesn't know your career, doesn't link from your signature, and can't answer a recruiter without signup. A PDF gets read in six seconds. This is a link you drop on LinkedIn and into email signatures that does the work for you, 24/7.</div>
+      </div>
 
-  <!-- DESIGN -->
-  <div class="section">
-    <div class="section-title">Design</div>
-    <h2>Four palettes. Linear-inspired.</h2>
-    <p>Inter font. 8px grid. Tight border-radius. 150ms transitions. WCAG AA validated. Four curated palettes, plus custom.</p>
-    <table class="palettes">
-      <thead><tr><th>Palette</th><th>Vibe</th></tr></thead>
-      <tbody>
-        <tr><td>midnight-gold</td><td>Dark editorial, warm gold accents</td></tr>
-        <tr><td>deep-ocean</td><td>Navy depths, electric cyan highlights</td></tr>
-        <tr><td>obsidian-rose</td><td>Cool charcoal, dusty rose warmth</td></tr>
-        <tr><td>slate-mint</td><td>Cool slate, fresh mint energy</td></tr>
-      </tbody>
-    </table>
+      <div class="faq-item">
+        <div class="faq-q">How long does setup take?</div>
+        <div class="faq-a">About 30 minutes end-to-end with Claude Code. About 45 on ChatGPT or Gemini. Most of that time is the coaching loop pushing you to add metrics to your weakest bullets.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does it cost to run?</div>
+        <div class="faq-a">Zero. Groq's free tier covers the two Llama models. Netlify's free tier covers static hosting and one serverless function. You bring a domain if you want a custom one.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's the "coaching loop" actually doing?</div>
+        <div class="faq-a">Four things. It reads your pasted resume and flags vague bullets. It drafts a system prompt from your career data. It runs twelve behavioral tests (voice match, hire-worthiness, injection resistance, off-topic deflection) across both Llama models. On failure, it reads the test output, proposes a targeted edit, and re-runs. A best-so-far snapshot means a bad edit can't make things worse.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How is this different from a template I can clone?</div>
+        <div class="faq-a">The value isn't the HTML. The HTML you can clone in 30 seconds. The value is the wizard that turns your messy resume into a tight system prompt that survives adversarial inputs. Try getting a custom prompt to behave on your own, it takes a week. The wizard compresses that week into 30 minutes.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do recruiter AI agents really query this?</div>
+        <div class="faq-a">Some do today. Most will within a year. The <code>/.well-known/ai-resume.json</code> endpoint is Schema.org Person data that any agent can pull without scraping. Bet on where the puck is going.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is my resume data private?</div>
+        <div class="faq-a">Your <code>resume.md</code> and <code>setup-config.json</code> are gitignored by default. Career data stays on your machine. Only the hydrated <code>index.html</code> and <code>system-prompt.md</code> get committed, and the system prompt only contains what you approved for public consumption. <code>npm run doctor</code> scans for PII (phone numbers, stray emails, API tokens) before you push.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if I'm not on Claude Code?</div>
+        <div class="faq-a">The <a href="https://github.com/agamarora/ai-resume/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE</a> covers ChatGPT, Claude Desktop, Copilot, Gemini, and manual. Same flow, a bit slower.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's next?</div>
+        <div class="faq-a">LinkedIn URL import. Analytics on which questions recruiters ask. More palettes. See <a href="https://github.com/agamarora/ai-resume/blob/main/TODOS.md" target="_blank" rel="noopener">TODOS.md</a> for what's on deck.</div>
+      </div>
+    </div>
   </div>
 
   <!-- GET STARTED -->
   <div class="section" id="get-started">
     <div class="section-title">Get started</div>
-    <h2>One paste prompt. ~30 minutes.</h2>
-    <p>Open Claude Code. Paste the block below. It creates the repo from the template, walks you through setup (resume &rarr; personality &rarr; evals), and deploys to Netlify.</p>
+    <h2>One prompt. Paste into Claude Code.</h2>
+    <p>
+      It creates the repo, runs the setup wizard, and deploys to Netlify. You answer its questions about your career. About 30 minutes from paste to live URL.
+    </p>
 
     <ul class="prereqs">
       <li>Claude Code</li>
@@ -574,7 +517,7 @@ resume.md ──[<span class="hl">Claude Code wizard</span>]──→ system-pro
       <li>gh CLI</li>
       <li>git</li>
       <li>netlify CLI</li>
-      <li>Groq API key (free tier)</li>
+      <li>Groq key (free)</li>
     </ul>
 
     <div class="prompt-box">
@@ -610,15 +553,15 @@ ORDER OF OPERATIONS:
 
 I'll answer your questions. Ask before anything destructive (rm, force-push, deleting branches). I have Node 18+, `gh`, `git`, and `netlify` CLIs installed.</pre>
     </div>
-    <p style="font-size: 0.88rem; color: var(--text-dim); margin-top: var(--space-3);">
-      No Claude Code? The same flow works on ChatGPT, Claude Desktop, Copilot, or Gemini &mdash; see <a href="https://github.com/agamarora/ai-resume/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md</a>. ~45 minutes.
+    <p style="font-size: 0.88rem; color: var(--text-dim);">
+      Not on Claude Code? Same flow works for <a href="https://github.com/agamarora/ai-resume/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">ChatGPT, Claude Desktop, Copilot, or Gemini</a>. About 45 minutes.
     </p>
   </div>
 
   <!-- RESOURCES -->
   <div class="section">
     <div class="section-title">Resources</div>
-    <h2>Everything ships public.</h2>
+    <h2>Everything is public.</h2>
     <ul class="resources">
       <li>
         <a class="r-name" href="https://github.com/agamarora/ai-resume" target="_blank" rel="noopener">github.com/agamarora/ai-resume &nearr;</a>
@@ -634,15 +577,15 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
       </li>
       <li>
         <a class="r-name" href="https://github.com/agamarora/ai-resume/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md &nearr;</a>
-        <span class="r-desc">The setup wizard instructions</span>
+        <span class="r-desc">The setup wizard</span>
       </li>
       <li>
         <a class="r-name" href="https://github.com/agamarora/ai-resume/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md &nearr;</a>
-        <span class="r-desc">Setup for other AI assistants</span>
+        <span class="r-desc">For ChatGPT, Copilot, Gemini, manual</span>
       </li>
       <li>
         <a class="r-name" href="https://github.com/agamarora/ai-resume/actions/workflows/eval.yml" target="_blank" rel="noopener">Eval CI &nearr;</a>
-        <span class="r-desc">12 tests &times; 2 models on every PR</span>
+        <span class="r-desc">12 tests x 2 models on every PR</span>
       </li>
     </ul>
   </div>
@@ -664,8 +607,8 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
     if (!btn || !pre) return;
 
     btn.addEventListener('click', async function() {
-      // Decode HTML entities (&lt; &gt; &amp;) back to raw characters so the pasted
-      // prompt works verbatim.
+      // Decode HTML entities (&lt;, &gt;, &amp;) back to literal characters
+      // so the pasted prompt works verbatim in Claude Code.
       const tmp = document.createElement('textarea');
       tmp.innerHTML = pre.innerHTML;
       const text = tmp.value;
@@ -673,7 +616,6 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
       try {
         await navigator.clipboard.writeText(text);
       } catch (err) {
-        // Fallback for older browsers / insecure contexts.
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';

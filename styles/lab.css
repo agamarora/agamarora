@@ -255,6 +255,32 @@ main {
   }
 }
 
+/* ai-resume image preview (mirrors responsive-video-wrapper slot) */
+.ai-resume-preview {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  background: #0A0A0A;
+  border: 1px solid rgba(127,127,127,0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ai-resume-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+.ai-resume-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 360px;
+}
+@media (max-width: 900px) {
+  .ai-resume-preview img { max-height: 300px; }
+}
+
 /* Responsive Video */
 .responsive-video-wrapper {
   width: 100%;
