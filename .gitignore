@@ -8,5 +8,10 @@ node_modules
 .netlify
 .gstack/
 
+# Local Claude Code / session artifacts (never committed)
+.claude/
+.context/
+
 # OS
 .DS_Store
+Thumbs.db
