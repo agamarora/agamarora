@@ -255,10 +255,15 @@ main {
   }
 }
 
-/* ai-resume image preview (mirrors responsive-video-wrapper slot) */
+/* ai-resume image preview (mirrors the responsive-video-wrapper slot so it
+   aligns visually with the Voice AI card). Fills the media flex slot top
+   to bottom, cropped centre-38% to keep the aa. mark and proof cards
+   visible without ever stretching the image. */
 .ai-resume-preview {
   display: block;
   width: 100%;
+  height: 100%;
+  min-height: 320px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 12px rgba(0,0,0,0.1);
@@ -273,18 +278,18 @@ main {
 .ai-resume-preview img {
   display: block;
   width: 100%;
-  height: 360px;
+  height: 100%;
+  min-height: 320px;
   object-fit: cover;
-  /* Anchor roughly on the aa. mark + proof cards, which sit around 40% down
-     the full screenshot. Prevents stretching and keeps the important content
-     visible when the container is wider than the crop aspect. */
   object-position: center 38%;
 }
 @media (max-width: 900px) {
-  .ai-resume-preview img { height: 300px; }
+  .ai-resume-preview,
+  .ai-resume-preview img { min-height: 280px; }
 }
 @media (max-width: 600px) {
-  .ai-resume-preview img { height: 240px; }
+  .ai-resume-preview,
+  .ai-resume-preview img { min-height: 220px; }
 }
 
 /* Responsive Video */
