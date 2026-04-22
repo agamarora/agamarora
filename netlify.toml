@@ -1,0 +1,52 @@
+# agamarora.com — Netlify config
+# Caching strategy: HTML always fresh, static assets cached aggressively.
+# Redirects: /explore is being retired; send visitors to /lab instead.
+
+[build]
+  publish = "."
+
+# Redirect retired /explore page to /lab (the actual project showcase).
+# 301 for SEO consolidation.
+[[redirects]]
+  from = "/explore"
+  to = "/lab/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/explore/*"
+  to = "/lab/"
+  status = 301
+  force = true
+
+# HTML: always revalidate, never cache long.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Static assets: cache hard. Bust by renaming on change.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/styles/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/scripts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
