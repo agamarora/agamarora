@@ -140,12 +140,12 @@
   }
   .icon-bar a:hover { color: var(--accent); }
 
-  /* aa. mark — inline above the eyebrow, stroke-draw on load */
+  /* aa. mark — top-right corner of the header, stroke-draw on load */
   .aa-mark {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
     line-height: 1;
-    margin-bottom: var(--space-7);
   }
   .aa-mark svg { overflow: visible; display: block; }
 
@@ -287,7 +287,7 @@
 
 <div class="page">
 
-  <!-- Header: icon bar top-left (mirrors /lab sizing + positioning), no theme toggle on dark-only v2 -->
+  <!-- Header: icon bar top-left + aa. mark top-right. No theme toggle on dark-only v2. -->
   <header>
     <div class="icon-bar">
       <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
@@ -303,17 +303,17 @@
         <i class="fas fa-house"></i>
       </a>
     </div>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero">
     <a href="/" class="aa-mark" aria-label="agamarora.com">
-      <svg id="aa-mark" width="68" height="34" viewBox="0 0 72 36">
+      <svg id="aa-mark" width="60" height="30" viewBox="0 0 72 36">
         <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
         <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
         <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
       </svg>
     </a>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
     <div class="greeting-line"><span id="greeting">Hello</span><span class="dot">.</span></div>
     <div class="name-line">I'm <strong>Agam</strong>.</div>
     <div class="eyebrow">AI Product Manager</div>
