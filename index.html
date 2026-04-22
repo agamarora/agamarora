@@ -104,38 +104,48 @@
     align-items: flex-start;
     max-width: 1040px;
     margin: 0 auto;
-    padding: clamp(var(--space-7), 8vw, var(--space-9)) clamp(var(--space-6), 5vw, var(--space-8));
+    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) clamp(var(--space-7), 8vw, var(--space-9));
   }
 
-  /* Social icon bar — top-right */
-  .social-bar {
-    position: absolute;
-    top: clamp(var(--space-6), 5vw, var(--space-8));
-    right: clamp(var(--space-6), 5vw, var(--space-8));
+  /* Header bar — mirrors /lab sizing + positioning, v2 skin.
+     Fixed top, full width, 64px tall, icons top-left. No theme
+     toggle since the site is dark-only. */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 100;
+    padding: 0 var(--spacing-md, 1.5rem);
+    background: var(--bg);
     display: flex;
-    gap: var(--space-5);
+    justify-content: space-between;
     align-items: center;
-    z-index: 2;
   }
-  .social-bar a {
+  .icon-bar {
+    display: inline-flex;
+    align-items: center;
+  }
+  .icon-bar a {
     color: var(--text-dim);
-    font-size: 1.05rem;
-    line-height: 1;
-    transition: color 0.2s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-  .social-bar a:hover { color: var(--accent); }
-
-  /* aa. mark — stroke-draw on load */
-  .aa-mark {
-    position: absolute;
-    top: clamp(var(--space-6), 5vw, var(--space-8));
-    left: clamp(var(--space-6), 5vw, var(--space-8));
+    width: 2em;
+    height: 2em;
+    font-size: 1.5em;
+    transition: color 0.2s ease;
     text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
+
+  /* aa. mark — inline above the eyebrow, stroke-draw on load */
+  .aa-mark {
     display: inline-block;
+    text-decoration: none;
     line-height: 1;
+    margin-bottom: var(--space-7);
   }
   .aa-mark svg { overflow: visible; display: block; }
 
@@ -266,35 +276,38 @@
 
 <div class="page">
 
-  <!-- Social links -->
-  <nav class="social-bar" aria-label="Social links">
-    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
-      <i class="fab fa-github"></i>
-    </a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
-      <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
-      <i class="fab fa-youtube"></i>
-    </a>
-  </nav>
-
-  <!-- aa. mark, stroke-draw on load -->
-  <a href="/" class="aa-mark" aria-label="agamarora.com">
-    <svg id="aa-mark" width="68" height="34" viewBox="0 0 72 36">
-      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
-      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
-      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
-    </svg>
-  </a>
+  <!-- Header: icon bar top-left (mirrors /lab sizing + positioning), no theme toggle on dark-only v2 -->
+  <header>
+    <div class="icon-bar">
+      <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="/" aria-label="Home">
+        <i class="fas fa-house"></i>
+      </a>
+    </div>
+  </header>
 
   <!-- Hero -->
   <section class="hero">
+    <a href="/" class="aa-mark" aria-label="agamarora.com">
+      <svg id="aa-mark" width="68" height="34" viewBox="0 0 72 36">
+        <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+        <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+        <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+      </svg>
+    </a>
     <div class="greeting-line"><span id="greeting">Hello</span><span class="dot">.</span></div>
     <div class="eyebrow">AI Product Manager</div>
     <h1>I build AI products that <span class="accent">ship.</span></h1>
     <p class="subhead">
-      12 years. 5 industries. A voice AI platform doing <strong>4M calls/year at half the cost</strong>. A data product that hit <strong>$1M ARR in 18 months</strong>. Looking for my next 0&rarr;1.
+      AI didn't eat product. It <strong>fused</strong> with it. The shape of PM that wins now is <strong>Super-IC and AI-native</strong>: vision, prompts, evals, shipped code &mdash; one person, no handoffs. That's the bet I'm making.
     </p>
     <div class="actions">
       <a href="/enter" class="btn btn-primary">Talk to my AI &rarr;</a>
