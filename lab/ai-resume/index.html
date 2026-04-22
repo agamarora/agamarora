@@ -22,6 +22,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<!-- Font Awesome for shared header icon bar — preload + deferred stylesheet swap -->
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 <style>
   @font-face {
     font-family: 'Satoshi';
@@ -68,8 +72,39 @@
   .page {
     max-width: 720px;
     margin: 0 auto;
-    padding: clamp(var(--space-7), 8vw, var(--space-9)) clamp(var(--space-6), 5vw, var(--space-8));
+    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) clamp(var(--space-7), 8vw, var(--space-9));
   }
+
+  /* Shared v2 header — fixed 64px bar, icons top-left, dark-only. */
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    z-index: 100;
+    padding: 0 1.5rem;
+    background: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .icon-bar {
+    display: inline-flex;
+    align-items: center;
+  }
+  .icon-bar a {
+    color: var(--text-dim);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    font-size: 1.5em;
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
 
   /* HEADER */
   .header { margin-bottom: var(--space-9); }
@@ -396,6 +431,24 @@
 </style>
 </head>
 <body>
+
+<header>
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a href="/" aria-label="Home">
+      <i class="fas fa-house"></i>
+    </a>
+  </div>
+</header>
+
 <div class="page">
 
   <!-- HEADER / HERO -->
