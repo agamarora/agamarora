@@ -274,21 +274,19 @@
   }
   .logo-strip img:hover { opacity: 0.95; filter: grayscale(0) brightness(1); }
 
-  /* Mobile — keep hero vertically centered, let logo strip flow
-     beneath it (absolute positioning would overlap the centered
-     content on short viewports). */
+  /* Mobile — hero vertically centered in the viewport, logo strip
+     stays pinned to the bottom (absolute, inherited from desktop).
+     padding-bottom reserves space so the hero doesn't collide with it. */
   @media (max-width: 640px) {
     .page {
       padding-top: calc(52px + var(--space-7));
-      padding-bottom: var(--space-8);
+      padding-bottom: calc(var(--space-9) * 2.5);
       justify-content: center;
-      gap: var(--space-8);
     }
     .hero h1 { font-size: clamp(2.8rem, 12vw, 3.8rem); }
     .actions { flex-direction: column; align-items: stretch; }
     .btn { text-align: center; }
     .logo-strip {
-      position: static;
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-4);
