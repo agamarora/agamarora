@@ -9,6 +9,20 @@
 <meta property="og:description" content="AI Product Manager. 12 years. 5 industries. Ships products that work.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/resume">
+<link rel="canonical" href="https://agamarora.com/resume">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://agamarora.com/resume",
+  "name": "Resume — Agam Arora",
+  "description": "Full career history for Agam Arora: AI Product Manager with 12 years across analytics, gaming, beauty tech, logistics, and AI.",
+  "mainEntity": { "@type": "Person", "@id": "https://agamarora.com/#person" },
+  "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" }
+}
+</script>
+
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -245,7 +259,8 @@
   /* MOBILE */
   @media (max-width: 600px) {
     .page {
-      padding: var(--space-6) var(--space-5);
+      /* Top padding must clear the fixed 52px header on mobile. */
+      padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8);
     }
     .header {
       margin-bottom: var(--space-7);

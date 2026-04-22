@@ -19,6 +19,8 @@
 <meta name="twitter:description" content="Building products for the age of intelligence. Powered by AI and great taste.">
 <meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
 
+<link rel="canonical" href="https://agamarora.com/">
+
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="manifest" href="/site.webmanifest">
@@ -33,19 +35,51 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Agam Arora",
-  "url": "https://agamarora.com",
-  "sameAs": [
-    "https://www.linkedin.com/in/agamarora/",
-    "https://github.com/agamarora",
-    "https://www.youtube.com/@agam_arora"
-  ],
-  "jobTitle": "AI Product Manager",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "AIonOS"
-  }
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://agamarora.com/#person",
+      "name": "Agam Arora",
+      "givenName": "Agam",
+      "familyName": "Arora",
+      "url": "https://agamarora.com/",
+      "image": "https://agamarora.com/assets/preview.png",
+      "description": "AI Product Manager with 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI. Currently AVP of AI Products at AIonOS.",
+      "jobTitle": "Assistant Vice President — AI Products",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "AIonOS India Pvt. Ltd.",
+        "url": "https://www.aionos.ai/"
+      },
+      "alumniOf": [
+        { "@type": "CollegeOrUniversity", "name": "FORE School of Management" },
+        { "@type": "CollegeOrUniversity", "name": "BM Institute of Engineering & Technology" }
+      ],
+      "knowsAbout": [
+        "Artificial Intelligence",
+        "Product Management",
+        "Voice AI",
+        "Retrieval-Augmented Generation",
+        "Agentic Systems",
+        "Data Products",
+        "Conversational UX"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/agamarora/",
+        "https://github.com/agamarora",
+        "https://www.youtube.com/@agam_arora"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://agamarora.com/#website",
+      "url": "https://agamarora.com/",
+      "name": "Agam Arora",
+      "description": "Personal site of Agam Arora — AI Product Manager.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://agamarora.com/#person" }
+    }
+  ]
 }
 </script>
 
@@ -240,17 +274,25 @@
   }
   .logo-strip img:hover { opacity: 0.95; filter: grayscale(0) brightness(1); }
 
-  /* Mobile */
+  /* Mobile — keep hero vertically centered, let logo strip flow
+     beneath it (absolute positioning would overlap the centered
+     content on short viewports). */
   @media (max-width: 640px) {
     .page {
-      padding-top: calc(64px + var(--space-7));
-      padding-bottom: calc(var(--space-9) * 2);
-      justify-content: flex-start;
+      padding-top: calc(52px + var(--space-7));
+      padding-bottom: var(--space-8);
+      justify-content: center;
+      gap: var(--space-8);
     }
     .hero h1 { font-size: clamp(2.8rem, 12vw, 3.8rem); }
     .actions { flex-direction: column; align-items: stretch; }
     .btn { text-align: center; }
-    .logo-strip { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
+    .logo-strip {
+      position: static;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
     .logo-strip-logos { gap: var(--space-5); }
     .logo-strip img { height: 22px; max-width: 88px; }
   }

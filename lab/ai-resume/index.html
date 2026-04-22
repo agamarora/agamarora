@@ -419,7 +419,8 @@
 
   /* MOBILE */
   @media (max-width: 600px) {
-    .page { padding: var(--space-6) var(--space-5); }
+    /* Top padding must clear the fixed 52px header on mobile. */
+    .page { padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8); }
     .header { margin-bottom: var(--space-7); }
     .section { margin-bottom: var(--space-7); }
     .header .actions { flex-direction: column; align-items: stretch; }
