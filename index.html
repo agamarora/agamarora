@@ -155,11 +155,24 @@
     font-size: 0.78rem;
     color: var(--text-dim);
     letter-spacing: 0.04em;
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-3);
     height: 1em;
     min-width: 120px;
   }
   .greeting-line .dot { color: var(--accent); }
+
+  /* Name line — identity marker between greeting and eyebrow */
+  .name-line {
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: var(--space-5);
+    letter-spacing: -0.005em;
+  }
+  .name-line strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
 
   /* Hero block */
   .hero { max-width: 720px; width: 100%; }
@@ -302,9 +315,10 @@
       </svg>
     </a>
     <div class="greeting-line"><span id="greeting">Hello</span><span class="dot">.</span></div>
+    <div class="name-line">I'm <strong>Agam</strong>.</div>
     <div class="eyebrow">AI Product Manager</div>
     <p class="subhead">
-      Building for the age of super-intelligence is like catching lightning in a bottle. Designer's taste. Engineer's systems. PM's empathy. Or one <strong>AI-native full-stack product builder</strong>.
+      Building for the age of super-intelligence is like catching lightning in a bottle. It needs a designer's taste, an engineer's systems mind, a PM's empathy. Or one <strong>AI-native full-stack product builder</strong>.
     </p>
     <div class="actions">
       <a href="/enter" class="btn btn-primary">Talk to my AI &rarr;</a>
