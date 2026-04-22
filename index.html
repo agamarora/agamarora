@@ -258,20 +258,22 @@
     text-transform: uppercase; flex-shrink: 0;
   }
   .logo-strip-logos { display: flex; gap: var(--space-6); flex-wrap: wrap; align-items: center; }
-  /* Logo sizing — height + max-width + object-fit:contain. Each
-     logo scales to its natural aspect inside the bounding box so
-     wide marks (UKG, AbsolutData) don't dominate narrow ones
-     (V2 Games, FarEye). Ported from the old .logo-strip-overlay
-     strategy in main.css. */
+  /* Logo sizing — normalize by optical weight, not height alone.
+     Near-square marks (AbsolutData, V2 Games) need extra vertical
+     room or they look tiny next to wide marks (AIonOS, Aroma Magic).
+     Row uses align-items:center so mixed heights center-align. */
   .logo-strip img {
     height: 28px;
-    max-width: 110px;
     width: auto;
     object-fit: contain;
     opacity: 0.55;
     filter: grayscale(1) brightness(1.15);
     transition: opacity 0.2s, filter 0.2s;
   }
+  /* Per-logo height tuning — pushed taller for dense/square marks. */
+  .logo-strip img[alt="AbsolutData"] { height: 42px; }
+  .logo-strip img[alt="V2 Games"]    { height: 32px; }
+  .logo-strip img[alt="FarEye"]      { height: 30px; }
   .logo-strip img:hover { opacity: 0.95; filter: grayscale(0) brightness(1); }
 
   /* Mobile — hero vertically centered in the viewport, logo strip
@@ -292,7 +294,11 @@
       gap: var(--space-4);
     }
     .logo-strip-logos { gap: var(--space-5); }
-    .logo-strip img { height: 22px; max-width: 88px; }
+    .logo-strip img { height: 22px; }
+    /* Same optical-weight tuning on mobile, scaled down. */
+    .logo-strip img[alt="AbsolutData"] { height: 34px; }
+    .logo-strip img[alt="V2 Games"]    { height: 26px; }
+    .logo-strip img[alt="FarEye"]      { height: 24px; }
   }
 
   @media (max-width: 380px) {
