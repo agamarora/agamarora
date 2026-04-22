@@ -3,33 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agam Arora — AI Product Manager</title>
-<meta name="description" content="AI Product Manager. 12 years across analytics, gaming, beauty, logistics, and AI. Building products that ship.">
+<title>Agam Arora &mdash; AI Product Manager</title>
+<meta name="description" content="Agam Arora. Building products for the age of intelligence. Powered by AI and great taste.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/">
-<meta property="og:title" content="Agam Arora — AI Product Manager">
-<meta property="og:description" content="12 years. 5 industries. A voice AI platform doing 4M calls/year at half the cost. A data product at $1M ARR in 18 months.">
+<meta property="og:title" content="Agam Arora &mdash; AI Product Manager">
+<meta property="og:description" content="Building products for the age of intelligence. Powered by AI and great taste.">
 <meta property="og:image" content="https://agamarora.com/assets/preview.png">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Agam Arora — AI Product Manager">
-<meta name="twitter:description" content="12 years. 5 industries. Looking for my next 0→1.">
+<meta name="twitter:title" content="Agam Arora &mdash; AI Product Manager">
+<meta name="twitter:description" content="Building products for the age of intelligence. Powered by AI and great taste.">
 <meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="manifest" href="/site.webmanifest">
 
-<!-- Font Awesome for social icons — preload + deferred stylesheet swap -->
-<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
 <script type="application/ld+json">
 {
@@ -81,7 +80,6 @@
     --space-8: 48px;
     --space-9: 64px;
     --radius-sm: 4px;
-    --radius-md: 8px;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -89,135 +87,96 @@
     color: var(--text);
     font-family: var(--sans);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
     min-height: 100dvh;
     overflow-x: hidden;
   }
   ::selection { background: var(--accent); color: var(--bg); }
 
-  .page {
-    position: relative;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) clamp(var(--space-7), 8vw, var(--space-9));
-  }
-
-  /* Header bar — mirrors /lab sizing + positioning, v2 skin.
-     Fixed top, full width, 64px tall, icons top-left. No theme
-     toggle since the site is dark-only. */
+  /* Header */
   header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    z-index: 100;
-    padding: 0 var(--spacing-md, 1.5rem);
-    background: var(--bg);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: fixed; top: 0; left: 0; right: 0; height: 64px;
+    z-index: 100; padding: 0 1.5rem; background: var(--bg);
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .icon-bar {
-    display: inline-flex;
-    align-items: center;
-  }
+  .icon-bar { display: inline-flex; align-items: center; }
   .icon-bar a {
     color: var(--text-dim);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2em;
-    height: 2em;
-    font-size: 1.5em;
-    transition: color 0.2s ease;
-    text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em; font-size: 1.5em;
+    transition: color 0.2s ease; text-decoration: none;
   }
   .icon-bar a:hover { color: var(--accent); }
-
-  /* aa. mark — top-right corner of the header, stroke-draw on load */
   .aa-mark {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-    line-height: 1;
+    display: inline-flex; align-items: center;
+    text-decoration: none; line-height: 1;
   }
   .aa-mark svg { overflow: visible; display: block; }
 
-  /* Greeting line — warm, small, cycles through translations */
+  /* Page + hero — name as display H1, short tagline as body */
+  .page {
+    position: relative;
+    min-height: 100dvh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    max-width: 1040px; margin: 0 auto;
+    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+  .hero { max-width: 720px; width: 100%; }
+
   .greeting-line {
     font-family: var(--mono);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     color: var(--text-dim);
     letter-spacing: 0.04em;
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-5);
     height: 1em;
     min-width: 120px;
   }
   .greeting-line .dot { color: var(--accent); }
 
-  /* Name line — identity marker between greeting and eyebrow */
-  .name-line {
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: var(--space-5);
-    letter-spacing: -0.005em;
+  .hero h1 {
+    font-size: clamp(3.4rem, 9vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin-bottom: var(--space-4);
   }
-  .name-line strong {
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .hero h1 .accent { color: var(--accent); }
 
-  /* Hero block */
-  .hero { max-width: 720px; width: 100%; }
   .eyebrow {
     font-family: var(--mono);
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     font-weight: 400;
     color: var(--accent);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    margin-bottom: var(--space-5);
-  }
-  /* Hero paragraph — promoted to lead / display-paragraph weight
-     since there's no h1 sharing the spotlight. */
-  .hero .subhead {
-    font-size: clamp(1.5rem, 3.2vw, 2.15rem);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.28;
-    color: var(--text);
-    max-width: 760px;
     margin-bottom: var(--space-7);
   }
-  .hero .subhead strong {
+
+  /* Tagline sits between H1+eyebrow and CTAs. Short, so slightly
+     larger than body-copy to give it presence. */
+  .hero .tagline {
+    font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--text);
+    opacity: 0.88;
+    max-width: 600px;
+    margin-bottom: var(--space-7);
+    font-weight: 400;
+  }
+  .hero .tagline strong {
     color: var(--accent);
     font-weight: 600;
+    opacity: 1;
   }
 
-  /* CTAs */
-  .actions {
-    display: flex;
-    gap: var(--space-4);
-    flex-wrap: wrap;
-  }
+  /* Actions */
+  .actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
   .btn {
-    display: inline-block;
-    padding: 11px 20px;
-    font-family: var(--mono);
-    font-size: 0.82rem;
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: var(--radius-sm);
-    transition: all 0.2s;
-    border: 1px solid transparent;
-    cursor: pointer;
+    display: inline-block; padding: 11px 20px;
+    font-family: var(--mono); font-size: 0.82rem; font-weight: 500;
+    text-decoration: none; border-radius: var(--radius-sm);
+    transition: all 0.2s; border: 1px solid transparent; cursor: pointer;
     letter-spacing: 0.01em;
   }
   .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
@@ -225,52 +184,36 @@
   .btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
   .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Logo strip — muted bottom band */
+  /* Logo strip */
   .logo-strip {
     position: absolute;
     bottom: clamp(var(--space-6), 4vw, var(--space-8));
     left: clamp(var(--space-6), 5vw, var(--space-8));
     right: clamp(var(--space-6), 5vw, var(--space-8));
-    display: flex;
-    align-items: center;
-    gap: var(--space-6);
-    flex-wrap: wrap;
-    max-width: 1040px;
-    margin: 0 auto;
+    display: flex; align-items: center; gap: var(--space-6);
+    flex-wrap: wrap; max-width: 1040px; margin: 0 auto;
   }
   .logo-strip-label {
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    color: var(--text-dim);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    flex-shrink: 0;
+    font-family: var(--mono); font-size: 0.68rem;
+    color: var(--text-dim); letter-spacing: 0.14em;
+    text-transform: uppercase; flex-shrink: 0;
   }
-  .logo-strip-logos {
-    display: flex;
-    gap: var(--space-6);
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .logo-strip-logos { display: flex; gap: var(--space-6); flex-wrap: wrap; align-items: center; }
   .logo-strip img {
-    height: 18px;
-    width: auto;
-    opacity: 0.55;
+    height: 18px; width: auto; opacity: 0.55;
     filter: grayscale(1) brightness(1.15);
     transition: opacity 0.2s, filter 0.2s;
   }
-  .logo-strip img:hover {
-    opacity: 0.95;
-    filter: grayscale(0) brightness(1);
-  }
+  .logo-strip img:hover { opacity: 0.95; filter: grayscale(0) brightness(1); }
 
   /* Mobile */
   @media (max-width: 640px) {
     .page {
-      padding-top: calc(var(--space-9) + var(--space-6));
+      padding-top: calc(64px + var(--space-7));
       padding-bottom: calc(var(--space-9) * 2);
       justify-content: flex-start;
     }
+    .hero h1 { font-size: clamp(2.8rem, 12vw, 3.8rem); }
     .actions { flex-direction: column; align-items: stretch; }
     .btn { text-align: center; }
     .logo-strip { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
@@ -279,46 +222,35 @@
   }
 
   @media (max-width: 380px) {
-    .hero h1 { font-size: 2rem; }
+    .hero h1 { font-size: 2.4rem; }
   }
 </style>
 </head>
 <body>
 
+<header>
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="/" aria-label="Home"><i class="fas fa-house"></i></a>
+  </div>
+  <a href="/" class="aa-mark" aria-label="agamarora.com">
+    <svg id="aa-mark" width="60" height="30" viewBox="0 0 72 36">
+      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+    </svg>
+  </a>
+</header>
+
 <div class="page">
-
-  <!-- Header: icon bar top-left + aa. mark top-right. No theme toggle on dark-only v2. -->
-  <header>
-    <div class="icon-bar">
-      <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
-        <i class="fab fa-youtube"></i>
-      </a>
-      <a href="/" aria-label="Home">
-        <i class="fas fa-house"></i>
-      </a>
-    </div>
-    <a href="/" class="aa-mark" aria-label="agamarora.com">
-      <svg id="aa-mark" width="60" height="30" viewBox="0 0 72 36">
-        <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
-        <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
-        <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
-      </svg>
-    </a>
-  </header>
-
-  <!-- Hero -->
   <section class="hero">
     <div class="greeting-line"><span id="greeting">Hello</span><span class="dot">.</span></div>
-    <div class="name-line">I'm <strong>Agam</strong>.</div>
+    <h1>I'm <span class="accent">Agam</span>.</h1>
     <div class="eyebrow">AI Product Manager</div>
-    <p class="subhead">
-      Building for the age of super-intelligence is like catching lightning in a bottle. It needs a designer's taste, an engineer's systems mind, a PM's empathy. Or one <strong>AI-native full-stack product builder</strong>.
+    <p class="tagline">
+      Building products for the age of intelligence. Powered by AI and great <strong>taste</strong>.
     </p>
     <div class="actions">
       <a href="/enter" class="btn btn-primary">Talk to my AI &rarr;</a>
@@ -327,7 +259,6 @@
     </div>
   </section>
 
-  <!-- Logos -->
   <div class="logo-strip">
     <span class="logo-strip-label">Trusted by</span>
     <div class="logo-strip-logos">
@@ -339,11 +270,10 @@
       <img src="/assets/logos/v2g-dark.webp" alt="V2 Games">
     </div>
   </div>
-
 </div>
 
 <script>
-// aa. mark stroke-draw animation (ported from /enter)
+// aa. mark stroke-draw
 (function() {
   const s = document.getElementById('aa-stroke');
   const f = document.getElementById('aa-fill');
@@ -375,34 +305,21 @@
   const el = document.getElementById('greeting');
   if (!el) return;
   const greetings = ['Hello', 'Hola', 'Bonjour', 'नमस्ते', 'こんにちは', '안녕하세요', 'Shalom'];
-  let wordIdx = 0;
-  let charIdx = 0;
-  let deleting = false;
-
+  let wordIdx = 0, charIdx = 0, deleting = false;
   function tick() {
     const word = greetings[wordIdx];
     if (!deleting) {
       charIdx++;
       el.textContent = word.slice(0, charIdx);
-      if (charIdx >= word.length) {
-        deleting = true;
-        setTimeout(tick, 1800);
-        return;
-      }
+      if (charIdx >= word.length) { deleting = true; setTimeout(tick, 1800); return; }
       setTimeout(tick, 90);
     } else {
       charIdx--;
       el.textContent = word.slice(0, charIdx);
-      if (charIdx <= 0) {
-        deleting = false;
-        wordIdx = (wordIdx + 1) % greetings.length;
-        setTimeout(tick, 400);
-        return;
-      }
+      if (charIdx <= 0) { deleting = false; wordIdx = (wordIdx + 1) % greetings.length; setTimeout(tick, 400); return; }
       setTimeout(tick, 40);
     }
   }
-
   el.textContent = '';
   setTimeout(tick, 300);
 })();
