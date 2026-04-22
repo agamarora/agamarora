@@ -1,58 +1,48 @@
 # TODO — agamarora.com
 
 ## Dead Files
-- [x] ~~Delete `styles/backup.css`~~ — removed
-- [x] ~~Delete `styles/main.css.old`~~ — removed
-- [x] ~~Delete `styles/refactored.css`~~ — removed
-- [x] ~~Delete `css-refactoring-guide.md`~~ — already gone
-- [x] ~~Delete `how-to-use-css.md`~~ — already gone
+- [x] ~~Delete `styles/backup.css`, `main.css.old`, `refactored.css`~~ — removed
 - [x] ~~Delete `assets/avatar-front.png`~~ — removed
-- [x] ~~Delete `assets/logos/ukg_dark.png` / `ukg_light.png`~~ — removed (webp versions used)
-- [x] ~~Delete `experiments/`~~ — removed (phaser prototype, mockup-room)
-- [x] ~~Delete `.DS_Store`~~ — removed, added to .gitignore
+- [x] ~~Delete old UKG PNG logos~~ — removed (webp versions used)
+- [x] ~~Delete `experiments/`~~ — removed
+- [x] ~~Delete `styles/main.css` + `styles/lab.css`~~ — removed 2026-04-22 (v2 pages are self-contained inline)
+- [x] ~~Delete `scripts/main.js` + `lab.js` + `utils.js` + `explore.js`~~ — removed 2026-04-22
+- [x] ~~Delete `explore/index.html`~~ — removed 2026-04-22 (netlify.toml handles 301 → /lab)
 
 ## Inconsistencies
-- [ ] Fix LinkedIn URL: `/in/agamarora` in header links vs `/in/agam-arora/` in schema.org JSON-LD — pick one
-- [x] Fix job title: "AI Product Leader" in landing schema.org vs "AI Product Manager" in explore schema.org
-- [ ] Update copyright from 2025 to 2026 in landing page footer
-
-## Dead Code
-- [ ] Remove video click handler in `lab.js:17-23` — references a `<video>` element that was replaced with YouTube iframe
-- [ ] Remove empty `<nav>` placeholder tags on all 3 pages (or add real navigation)
-- [x] ~~`callGroq()` in utils.js~~ — removed (Groq now called directly from enter/index.html)
+- [x] ~~Fix LinkedIn URL mismatch in schema.org vs header~~ — unified on `agamarora` (no hyphen)
+- [x] ~~Fix job title mismatch across pages~~ — "AI Product Manager" everywhere
+- [ ] Update copyright year wherever it still says 2025
 
 ## SEO / Meta
-- [ ] Remove duplicate `<!-- Primary Meta Tags -->` comments on landing and explore pages
-- [ ] Fix `og:image` on lab page — references `/assets/lab-preview.png` which doesn't exist (only `lab-hero.webp`)
-- [ ] Add `<meta name="robots" content="index, follow">` to landing and explore pages (only lab has it)
+- [x] ~~Fix `og:image` on `/lab`~~ — now points at existing `/assets/preview.png`
+- [ ] Add `sitemap.xml`
+- [ ] Add `robots.txt` — disallow `/moodboard/*` (orphan design-doc pages)
+- [ ] Generate a proper OG image for `/lab` (currently using the generic site preview)
 
 ## Content
-- [ ] Add more projects to Lab page — currently only 1 (Shararat Voice AI)
+- [x] ~~Add more projects to `/lab`~~ — 3 now: AI Resume, Voice AI, Claude Code Resource Monitor
 - [ ] Consider a blog/writing section — 12+ years of product experience to share
 - [ ] Consider a contact form instead of bare `mailto:` link in lab footer
-- [ ] Explore page "Learn more about me!" links off-site to LinkedIn — consider on-site about section
 
 ## Performance
-- [ ] Font Awesome 6.5.0 full CSS loaded for ~10 icons — consider subset or self-hosting
+- [x] ~~Delete 2.3 MB unused `agamarora_banner.png`~~ — was unused in site, restored for readme.md (GitHub profile). Still on disk, serves the profile header.
+- [x] ~~Remove main.css weight from site~~ — 32 KB unminified stylesheet, now orphan and deleted
+- [ ] `assets/vapi-thumbnail.png` (927 KB) — webp pair exists (109 KB), serve webp via `<picture>` on `/lab`
+- [ ] Font Awesome 6.5.0 full CSS — could subset to only the icons actually used (~8)
 
-## Next Session — v1 Optimization
-- [ ] Run full site optimization pass on existing v1 (performance, dead files, inconsistencies, dead code)
-- [ ] Fix all items in Dead Files, Inconsistencies, Dead Code, and SEO/Meta sections above
-- [ ] Performance audit — lighthouse scores, bundle sizes, loading times
-- [ ] Mobile QA — test all 3 pages on phone-sized viewports
+## v2 Design System
 
-## v2 — Browser Compatibility Audit
-- [ ] Test `/enter` mobile layout on Safari iOS, Chrome Android, Samsung Internet, Firefox Mobile
-- [ ] Verify CSS feature support: `dvh` units, `gap` in flexbox, `clamp()`, `matchMedia` optional chaining
-- [ ] Check `overflow-y: auto` scroll-to-input behavior across browsers when virtual keyboard opens
-- [ ] Context: eng review flagged `matchMedia` as 98%+ support but other CSS features vary. Inline fallback added for `matchMedia`. Broader audit needed post-launch.
+All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and tokens.
 
-## v2 — /aa Mark Exploration (continue from moodboard/aa-mark.html)
-- [ ] More font exploration — try beyond Patrick Hand, Kalam, Satisfy (current finalists)
-- [ ] Explore `aa.` variations (with period) — different energy than `/aa`
-- [ ] Refine slash treatment — mono slash vs dimmed vs smaller vs alternative symbols (`_`, `>`, `~`, `.`)
-- [ ] Test more stroke weights systematically per font
-- [ ] Color decision — white vs gold vs mixed (dim slash + bright aa)
-- [ ] Multi-size test — hero animation, nav corner, favicon (16px). Which marks survive small?
-- [ ] Decide: does `/` stay or does an alternative prefix win?
-- [ ] Once mark is locked: build the actual hero animation component for the site
+- [x] ~~Landing ported to v2~~
+- [x] ~~`/lab` ported to v2~~
+- [x] ~~`/lab/ai-resume` on v2~~
+- [x] ~~`/resume` on v2~~
+- [x] ~~`/enter` has shared v2 header + aa. mark~~
+
+## Future
+
+- [ ] `/moodboard` — keep as internal design doc, add robots noindex and orphan cleanup
+- [ ] Refresh resume content as roles change
+- [ ] Add `netlify.toml` redirect pre-warm for critical paths

@@ -8,12 +8,12 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 ## Stack
 
-- **Frontend**: Vanilla HTML, CSS, JavaScript (ES6 modules). No framework, no build step.
-- **Hosting**: Netlify (static site + serverless functions)
-- **Fonts**: Satoshi (self-hosted variable), JetBrains Mono, Patrick Hand (Google Fonts)
-- **Icons**: Font Awesome 6.5.0 (CDN)
-- **Backend**: Single Netlify serverless function (`netlify/functions/groqHandler.js`) using Groq SDK (llama-3.1-8b-instant) — wired but **not called from any UI** currently
-- **Domain**: agamarora.com (Netlify DNS, auto-deploys from `main` branch)
+- **Frontend**: Vanilla HTML, CSS, JavaScript. No framework, no build step. Every page is self-contained — no shared stylesheets or scripts.
+- **Hosting**: Netlify (static site + one serverless function)
+- **Fonts**: Satoshi (self-hosted variable woff2 in `/fonts/satoshi/`), JetBrains Mono, Patrick Hand (Google Fonts)
+- **Icons**: Font Awesome 6.5.0 (CDN, preload + onload swap)
+- **Backend**: Netlify serverless function (`netlify/functions/groqHandler.mjs`) using Groq SDK, called from `/enter`
+- **Domain**: agamarora.com (Netlify DNS, auto-deploys from `main`)
 
 ## Development Commands
 
@@ -28,76 +28,66 @@ npx serve .
 netlify dev
 ```
 
-There is no build step, linter, formatter, or test suite. HTML/CSS/JS files are served as-is.
+There is no build step, linter, formatter, or test suite. Files are served as-is.
 
 ## Deployment
 
-Pushes to `main` auto-deploy via Netlify. No CI pipeline beyond Netlify's build. The Groq API key (`GROQ_API_KEY`) is set in the Netlify dashboard, not in the repo.
+Pushes to `main` auto-deploy via Netlify. Cache headers + `/explore → /lab` 301 redirect are in `netlify.toml`. The Groq API key (`GROQ_API_KEY`) is set in the Netlify dashboard, not in the repo.
 
 ## Architecture
 
-### Pages
+Every public page is a single standalone `index.html` with inline `<style>` and `<script>` blocks. No shared CSS, no shared JS, no build step to resolve. This is intentional — each page can be read, edited, or rewritten without cascading impact on the others.
+
+### Pages (all v2)
 
 | Route | File | Purpose |
 |-------|------|---------|
-| `/` | `index.html` | v1 Landing — animated greeting, identity, company logos |
-| `/explore` | `explore/index.html` | v1 Portfolio — scroll-snap sections: hero, trusted-by logos, bento grid, personal section |
-| `/lab` | `lab/index.html` | v1 Projects — featured project showcase (currently only Shararat Voice AI) |
-| `/enter` | `enter/index.html` | v2 Enter — keyboard background, AI terminal, Groq streaming, conversation memory |
-| `/resume` | `resume/index.html` | Resume — dark editorial design, all career data, print-friendly |
-| `/moodboard` | `moodboard/index.html` | v2 Design system moodboard (10 sections + living collection) |
+| `/` | `index.html` | Landing — greeting cycle, name, tagline, 3 CTAs, logo strip |
+| `/lab` | `lab/index.html` | Projects — AI Resume, Voice AI, Claude Code Resource Monitor |
+| `/lab/ai-resume/` | `lab/ai-resume/index.html` | AI Resume PRFAQ + setup wizard paste-prompt |
+| `/resume` | `resume/index.html` | Resume — dark editorial, career data, print-friendly |
+| `/enter` | `enter/index.html` | Immersive AI terminal — keyboard background, Groq streaming, conversation memory |
+| `/moodboard` | `moodboard/index.html` | Design system reference (orphan from main nav, internal use) |
+| `/moodboard/aa-mark` | `moodboard/aa-mark.html` | aa. mark component exploration |
 
-### JavaScript Module Structure
+### Shared layout contract (every v2 page)
 
-All pages load `scripts/main.js` as their entry point. Shared logic lives in `scripts/utils.js`.
+- **Top-left: icon bar** (GitHub, LinkedIn, YouTube, Home) — fluid `clamp(52px, 6vw, 64px)` header, `clamp(1.15rem, 1.3vw, 1.5rem)` font
+- **Bottom-right: aa. mark** — fixed position, `clamp(44px, 5vw, 60px)` wide, stroke-draw animation on load, opacity 0.7 → 1.0 on hover
+- **Content: centered or left-aligned column** — max-width varies per page (~720-880px)
 
-| File | Role |
-|------|------|
-| `scripts/main.js` | Global init: theme setup, greeting typewriter, hero scramble. Runs on all pages. |
-| `scripts/utils.js` | Shared utilities: `setupThemeToggle()`, `swapLogosForTheme()`, `typeLetter()`, `typeAndDeleteLoop()`, `scrambleToWords()`, `scrambleToWordsLockFinal()`, `scrollToElement()`, `callGroq()` |
-| `scripts/explore.js` | Explore-only: wires scroll-down chevron buttons to next section |
-| `scripts/lab.js` | Lab-only: project card fade-in animation |
+Each page defines these CSS rules inline (comment-tagged `=== Shared v2 header ===` / `=== Shared aa. mark ===`) so edits stay local. The stroke-draw animation JS lives inline at the bottom of each page.
 
-### Theme System (critical pattern)
+### Design tokens (inline in every v2 page)
 
-Dark/light theme is a core architectural concern touching HTML, CSS, and JS:
+```
+--bg: #0A0A0A          --mono: 'JetBrains Mono', monospace
+--surface: #111111     --sans: 'Satoshi', system-ui, sans-serif
+--border: #1E1E1E      --mark: 'Patrick Hand', cursive
+--text: #E8E4DF        --accent: #E5A54B (gold)
+--text-dim: #7A7A7A    --accent-dim: rgba(229, 165, 75, 0.12)
+```
 
-1. **CSS**: `:root` defines light tokens; `.dark-theme` class overrides them. Key tokens: `--text-color`, `--background-color`, `--accent-color`, `--prof-color`, `--prof-color-light`.
-2. **JS**: `setupThemeToggle()` in utils.js toggles `.dark-theme` on `<body>`, persists to `localStorage("theme")`, falls back to `prefers-color-scheme`.
-3. **Images**: All logos and some illustrations have light/dark variants. `<img>` tags use `data-light` and `data-dark` attributes; `swapLogosForTheme()` swaps `src` on theme change. **Any new image that differs by theme must follow this pattern.**
+Spacing: 8px base, tokens `--space-3` (8px) through `--space-9` (64px).
 
-| Token | Light | Dark |
-|-------|-------|------|
-| `--text-color` | #333333 | #EEEEEE |
-| `--background-color` | #FFFFFF | #111111 |
-| `--accent-color` | #ACACAC | #FFA726 |
-| `--prof-color` | #005A9C | #FFA726 |
-| `--prof-color-light` | #FFC107 | #FFCC80 |
+Dark-only. No light mode. No theme toggle. The moodboard at `/moodboard` is the design system reference (orphan from live nav but kept as a design doc).
 
-### Layout Constants
+### Serverless function
 
-- `--max-content-width: 1200px`, `--header-height: 64px`, `--border-radius: 8px`
-- Spacing base: 8px (`--spacing-xxs` through `--spacing-lg`)
-- Breakpoints: Desktop 1024px+, Tablet 768–1024px, Mobile <768px, Small mobile <500px
+`netlify/functions/groqHandler.mjs` — ESM, Web Standard Request/Response. Groq SDK streaming SSE. 4-model fallback chain (llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile). Sandwich prompt defense, injection filter, 6-message conversation history. System prompt grounded in `resume.md` with few-shot examples. Eval harness at `eval-prompt.mjs`. Called only from `/enter`.
 
-### Serverless Function
+## Conventions
 
-`netlify/functions/groqHandler.mjs` — ESM, Web Standard Request/Response. Groq SDK streaming SSE. 4-model fallback chain (llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile). Sandwich prompt defense, injection filter, conversation history (6 messages, user+assistant). System prompt grounded in resume.md with few-shot examples. Eval harness at `eval-prompt.mjs`.
-
-## v2 Status
-
-Live on `main`. The `/enter` page is the v2 experience.
-
-- **Design system**: Moodboard at `/moodboard` is the source of truth. Summary in `DESIGN.md`.
-- **Key files**: `DESIGN.md` (design system summary), `BUILD-LOG.md` (decision history), `moodboard/aa-mark.html` (mark exploration).
-- **Brand elements**: aa. mark (Patrick Hand, gold dot, stroke-draw animation), keyboard background with 3D perspective tilt, parallax depth layers.
-- **AI terminal**: Groq-powered, streaming SSE, word-by-word animation, conversation memory, rotating question prompts.
-- **Resume**: Dark editorial page at `/resume`, career data sourced from `resume.md`.
+- **Edit patterns:** when changing the header or aa. mark, update all v2 pages in one commit so the contract stays unified. Look for the `=== Shared v2 header ===` and `=== Shared aa. mark ===` comment blocks.
+- **Card media slots (e.g., `/lab` project cards):** flex row, `flex: 1 1 0; min-width: 0` on both columns, no `aspect-ratio` on the media element — info column drives row height, media stretches, img at `width/height: 100%` with `object-fit: cover` fills deterministically. See `lab-media-slot-parity` learning.
+- **Images on lab cards:** pre-crop the source PNG to the intended aspect, use `object-position` only for a small anchor nudge. Do NOT CSS-crop aggressively. See `precrop-images-not-css` learning.
+- **Icons on CTAs:** use semantic Font Awesome icons (`fa-book-open` for docs, `fa-download` for downloads, `fa-github` for code). Not generic arrows.
+- **Display names:** on lab cards, the title should be plain-English descriptive ("Claude Code Resource Monitor"), not the repo/package name ("luna-monitor"). Repo names stay only in URLs, IDs, class names, asset filenames.
 
 ## Known Issues
 
-Tracked in `TODO.md`. Remaining:
+Tracked in `TODO.md`. Current:
 
-- **Dead code**: `lab.js` video click handler for removed `<video>` element
-- **Inconsistencies**: LinkedIn URL mismatch between header links and schema.org
-- **Missing**: `og:image` on lab page references non-existent `/assets/lab-preview.png`
+- `/moodboard` is orphan from main nav — by design (design doc, not user-facing), but leaks to search engines without a robots directive.
+- No sitemap.xml, no robots.txt.
+- `assets/preview.png` at ~950KB is heavy for a social-share OG image. Could be optimized.
