@@ -172,22 +172,20 @@
     text-transform: uppercase;
     margin-bottom: var(--space-5);
   }
-  .hero h1 {
-    font-size: clamp(2.2rem, 6vw, 3.6rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.02;
-    margin-bottom: var(--space-5);
-  }
-  .hero h1 .accent { color: var(--accent); }
+  /* Hero paragraph — promoted to lead / display-paragraph weight
+     since there's no h1 sharing the spotlight. */
   .hero .subhead {
-    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.28;
     color: var(--text);
-    opacity: 0.82;
-    font-weight: 400;
-    max-width: 620px;
-    line-height: 1.55;
+    max-width: 760px;
     margin-bottom: var(--space-7);
+  }
+  .hero .subhead strong {
+    color: var(--accent);
+    font-weight: 600;
   }
 
   /* CTAs */
@@ -305,9 +303,8 @@
     </a>
     <div class="greeting-line"><span id="greeting">Hello</span><span class="dot">.</span></div>
     <div class="eyebrow">AI Product Manager</div>
-    <h1>I build AI products that <span class="accent">ship.</span></h1>
     <p class="subhead">
-      Building for the age of super-intelligence is like catching lightning in a bottle. It takes one <strong>full-stack product builder</strong>: designer's taste, engineer's systems, PM's empathy.
+      Building for the age of super-intelligence is like catching lightning in a bottle. It needs a designer's taste, an engineer's systems mind, a PM's empathy. Or one <strong>AI-native full-stack product builder</strong>.
     </p>
     <div class="actions">
       <a href="/enter" class="btn btn-primary">Talk to my AI &rarr;</a>
