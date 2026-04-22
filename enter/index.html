@@ -571,7 +571,8 @@ async function askGroq(prompt) {
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
+    // 20s — accommodates cascading model retries when primary hits rate limit.
+    const timeout = setTimeout(() => controller.abort(), 20000);
 
     const res = await fetch('/.netlify/functions/groqHandler', {
       method: 'POST',
@@ -581,12 +582,18 @@ async function askGroq(prompt) {
     });
     clearTimeout(timeout);
 
-    // Non-streaming fallback (injection filter returns JSON)
+    // Non-streaming JSON: either injection-filter result (200) or a
+    // server error (429/500). Route error codes to the error state so the
+    // user gets a tap-to-retry affordance instead of a silent message.
     const ct = res.headers.get('content-type') || '';
     if (ct.includes('application/json')) {
       stopVerb();
       const data = await res.json();
-      const text = data.result || data.error || 'hmm, lost in thought.';
+      if (!res.ok || data.error) {
+        showError(data.error || 'Something went wrong. Tap to try again.');
+        return;
+      }
+      const text = data.result || 'Not sure how to land that.';
       responseZone.textContent = text;
       conversationHistory.push({ role: 'assistant', content: text });
       finishResponse();
@@ -641,7 +648,7 @@ async function askGroq(prompt) {
             if (!dripping) drip();
           }
           if (error) {
-            showError('hmm, lost in thought.');
+            showError('Model dropped the thread. Tap to try again.');
           }
         } catch (parseErr) {
           console.warn('SSE parse error:', parseErr);
@@ -664,8 +671,8 @@ async function askGroq(prompt) {
   } catch (err) {
     stopVerb();
     const msg = err.name === 'AbortError'
-      ? 'hmm, lost in thought. tap to try again.'
-      : 'signal lost. tap to try again.';
+      ? 'Took too long to respond. Tap to try again.'
+      : 'Signal lost. Tap to try again.';
     showError(msg);
   }
 }
