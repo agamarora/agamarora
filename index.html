@@ -92,25 +92,49 @@
   }
   ::selection { background: var(--accent); color: var(--bg); }
 
-  /* Header */
+  /* === Shared v2 header === fluid 52px mobile → 64px desktop,
+     icons scale with font via clamp. Unified contract across pages. */
   header {
-    position: fixed; top: 0; left: 0; right: 0; height: 64px;
-    z-index: 100; padding: 0 1.5rem; background: var(--bg);
-    display: flex; justify-content: space-between; align-items: center;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
+    z-index: 100;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    background: var(--bg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
   .icon-bar { display: inline-flex; align-items: center; }
   .icon-bar a {
     color: var(--text-dim);
     display: inline-flex; align-items: center; justify-content: center;
-    width: 2em; height: 2em; font-size: 1.5em;
-    transition: color 0.2s ease; text-decoration: none;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
+    transition: color 0.2s ease;
+    text-decoration: none;
   }
   .icon-bar a:hover { color: var(--accent); }
+
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load.
+     Permanent across all pages (replaces per-page placement). */
   .aa-mark {
-    display: inline-flex; align-items: center;
-    text-decoration: none; line-height: 1;
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
+    text-decoration: none;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
   }
-  .aa-mark svg { overflow: visible; display: block; }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
 
   /* Page + hero — name as display H1, short tagline as body */
   .page {
@@ -119,7 +143,7 @@
     display: flex; flex-direction: column;
     justify-content: center; align-items: flex-start;
     max-width: 1040px; margin: 0 auto;
-    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
   }
   .hero { max-width: 720px; width: 100%; }
 
@@ -184,14 +208,15 @@
   .btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
   .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Logo strip */
+  /* Logo strip — landing only. Left-aligned now so aa. mark has
+     room in the bottom-right corner without overlap. */
   .logo-strip {
     position: absolute;
     bottom: clamp(var(--space-6), 4vw, var(--space-8));
     left: clamp(var(--space-6), 5vw, var(--space-8));
-    right: clamp(var(--space-6), 5vw, var(--space-8));
+    right: calc(clamp(44px, 5vw, 60px) + clamp(32px, 6vw, 64px));
     display: flex; align-items: center; gap: var(--space-6);
-    flex-wrap: wrap; max-width: 1040px; margin: 0 auto;
+    flex-wrap: wrap;
   }
   .logo-strip-label {
     font-family: var(--mono); font-size: 0.68rem;
@@ -244,14 +269,15 @@
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     <a href="/" aria-label="Home"><i class="fas fa-house"></i></a>
   </div>
-  <a href="/" class="aa-mark" aria-label="agamarora.com">
-    <svg id="aa-mark" width="60" height="30" viewBox="0 0 72 36">
-      <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
-      <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
-      <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
-    </svg>
-  </a>
 </header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
 
 <div class="page">
   <section class="hero">

@@ -72,35 +72,27 @@
   .page {
     max-width: 720px;
     margin: 0 auto;
-    padding: calc(64px + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) clamp(var(--space-7), 8vw, var(--space-9));
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
   }
 
-  /* Shared v2 header — fixed 64px bar, icons top-left, dark-only. */
+  /* === Shared v2 header === fluid 52-64px, icons scale via clamp. */
   header {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
     z-index: 100;
-    padding: 0 1.5rem;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
     background: var(--bg);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
   }
-  .icon-bar {
-    display: inline-flex;
-    align-items: center;
-  }
+  .icon-bar { display: inline-flex; align-items: center; }
   .icon-bar a {
     color: var(--text-dim);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2em;
-    height: 2em;
-    font-size: 1.5em;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
     transition: color 0.2s ease;
     text-decoration: none;
   }
@@ -108,16 +100,24 @@
 
   /* HEADER */
   .header { margin-bottom: var(--space-9); }
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
   .aa-mark {
-    font-family: var(--mark);
-    font-size: 1.4rem;
-    color: var(--text);
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
     text-decoration: none;
-    display: inline-block;
-    margin-bottom: var(--space-7);
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
   }
-  .aa-mark .dot { color: var(--accent); }
-  .aa-mark:hover { opacity: 0.8; }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
 
   .eyebrow {
     font-family: var(--mono);
@@ -449,12 +449,18 @@
   </div>
 </header>
 
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
 <div class="page">
 
   <!-- HEADER / HERO -->
   <div class="header">
-    <a href="/" class="aa-mark">aa<span class="dot">.</span></a>
-
     <div class="eyebrow">Lab / AI Resume</div>
     <h1>A resume that <span class="accent">answers back.</span></h1>
     <p class="subhead">
@@ -653,6 +659,33 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
 <div class="copy-toast" id="copy-toast" role="status" aria-live="polite">Copied. Paste into Claude Code.</div>
 
 <script>
+  // aa. mark stroke-draw on load
+  (function() {
+    const s = document.getElementById('aa-stroke');
+    const f = document.getElementById('aa-fill');
+    const d = document.getElementById('dot-fill');
+    if (!s || !f || !d) return;
+    document.fonts.ready.then(() => {
+      const len = s.getComputedTextLength();
+      d.setAttribute('x', 4 + len - 2);
+      f.setAttribute('x', 4);
+      const dl = len * 2;
+      s.style.strokeDasharray = dl;
+      s.style.strokeDashoffset = dl;
+      s.style.opacity = '1';
+      s.getBoundingClientRect();
+      s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+      s.style.strokeDashoffset = '0';
+      s.addEventListener('transitionend', function h(e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+        s.removeEventListener('transitionend', h);
+        f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+        d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+        s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+      });
+    });
+  })();
+
   (function() {
     const btn = document.getElementById('copy-btn');
     const pre = document.getElementById('paste-prompt');
