@@ -210,24 +210,26 @@
     white-space: nowrap;
   }
 
+  /* Flex row — info column's content drives the row height, media
+     stretches to match. Proven pattern from the previous /lab
+     (see lab-media-slot-parity learning). Avoids the grid +
+     aspect-ratio + align-items:stretch conflict that let the image
+     render at source size. */
   .project-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    display: flex;
+    flex-direction: row;
     gap: var(--space-6);
     padding: var(--space-6);
     align-items: stretch;
   }
-  @media (max-width: 720px) {
-    .project-body { grid-template-columns: 1fr; }
-  }
-
   .project-media {
+    flex: 1 1 0;
+    min-width: 0;
     display: block;
     border-radius: var(--radius-md);
     overflow: hidden;
     background: var(--bg);
     border: 1px solid var(--border);
-    aspect-ratio: 16 / 10;
     position: relative;
   }
   .project-media > a,
@@ -250,6 +252,20 @@
     height: 100%;
     border: 0;
     display: block;
+  }
+  .project-info {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* Mobile: stack media above info. Explicit media height since
+     flex-column doesn't stretch the way flex-row does. */
+  @media (max-width: 720px) {
+    .project-body { flex-direction: column; }
+    .project-media {
+      flex: 0 0 auto;
+      height: clamp(200px, 50vw, 280px);
+    }
+    .project-info { flex: 0 0 auto; }
   }
   /* Specific image crop tweaks per project — match yesterday's
      learnings (pre-crop source, anchor object-position to the
