@@ -16,8 +16,19 @@ B.Tech CS + PGDM Marketing. The rare combo of someone who can write the code and
 
 ## What I'm building
 
-- **This website** — [agamarora.com](https://agamarora.com). Built in public. Vanilla HTML/CSS/JS, Groq-powered AI terminal, no framework. [Enter the terminal](https://agamarora.com/enter).
-- **Enterprise AI products** — RAG, agentic systems, voice AI handling 4M+ calls/year.
+### Open source & side projects
+
+- **[AI Resume](https://github.com/agamarora/ai-resume)** — Open source template that turns your static resume into a recruiter-facing chat. Paste one prompt into Claude Code; a setup wizard drafts a tight system prompt, runs 12 behavioral evals across two Llama models, and deploys to Netlify. About 30 minutes, $0/month. [Live demo](https://ai-resume-demo.netlify.app) · [Read the PRFAQ](https://agamarora.com/lab/ai-resume/).
+- **[Shararat Voice AI](https://github.com/agamarora/shararat-ai)** — Playful two-agent voice experience built for the Vapi Build Challenge. Angel and Dan debate your choices in real time. Exploring multi-agent interactions and creative prompting. [Try it](https://shararat.agamarora.com) · [Watch the demo](https://www.youtube.com/watch?v=ZS2T_5x1on0).
+- **[Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor)** (`luna-monitor`) — Terminal dashboard written in Rust that shows your Claude Code 5-hour / 7-day usage, pace, ETA to cap, and system telemetry (CPU, GPU, memory, disks, temps) in one window. A tiny embedded proxy reads Anthropic's rate-limit headers live — the numbers are real, never scraped.
+
+### Day job
+
+- **Enterprise AI at [AIonOS](https://aionos.io)** — RAG, agentic systems, and voice AI handling 4M+ calls per year at half the cost of the status quo.
+
+### This website
+
+- **[agamarora.com](https://agamarora.com)** — Built in public. Vanilla HTML/CSS/JS, Satoshi + JetBrains Mono, Groq-powered AI terminal. No framework, no build step. [Enter the terminal](https://agamarora.com/enter).
 
 ## Links
 

@@ -199,8 +199,17 @@
     text-transform: uppercase; flex-shrink: 0;
   }
   .logo-strip-logos { display: flex; gap: var(--space-6); flex-wrap: wrap; align-items: center; }
+  /* Logo sizing — height + max-width + object-fit:contain. Each
+     logo scales to its natural aspect inside the bounding box so
+     wide marks (UKG, AbsolutData) don't dominate narrow ones
+     (V2 Games, FarEye). Ported from the old .logo-strip-overlay
+     strategy in main.css. */
   .logo-strip img {
-    height: 18px; width: auto; opacity: 0.55;
+    height: 28px;
+    max-width: 110px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.55;
     filter: grayscale(1) brightness(1.15);
     transition: opacity 0.2s, filter 0.2s;
   }
@@ -218,7 +227,7 @@
     .btn { text-align: center; }
     .logo-strip { flex-direction: column; align-items: flex-start; gap: var(--space-4); }
     .logo-strip-logos { gap: var(--space-5); }
-    .logo-strip img { height: 16px; }
+    .logo-strip img { height: 22px; max-width: 88px; }
   }
 
   @media (max-width: 380px) {
@@ -254,7 +263,7 @@
     </p>
     <div class="actions">
       <a href="/enter" class="btn btn-primary">Talk to my AI &rarr;</a>
-      <a href="/lab/" class="btn btn-secondary">See the lab</a>
+      <a href="/lab/" class="btn btn-secondary">See projects</a>
       <a href="/resume" class="btn btn-secondary">Resume</a>
     </div>
   </section>
