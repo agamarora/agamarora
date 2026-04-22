@@ -92,8 +92,8 @@ async function runEval() {
 
   for (let i = 0; i < testCases.length; i++) {
     const tc = testCases[i];
-    // Rate limit: wait between calls
-    if (i > 0) await new Promise(r => setTimeout(r, 8000));
+    // Rate limit: wait between calls (TPM 6000; bigger prompt = longer gap)
+    if (i > 0) await new Promise(r => setTimeout(r, 20000));
     if (tc.category !== currentCategory) {
       currentCategory = tc.category;
       console.log(`\n--- ${currentCategory} ---`);
@@ -117,10 +117,18 @@ async function runEval() {
       const text = response.choices[0]?.message?.content || "(empty)";
       const words = text.split(/\s+/).length;
       const chars = text.length;
+      const issues = [];
+      if (words > 65) issues.push(`LONG(${words}w)`);
+      // First-person = model referring to itself. "Ask me" / "tell me" are imperative (user asking terminal), those are fine.
+      if (/\b(I|I'm|I'll|I've|my system|my prompt)\b/.test(text)) issues.push("FIRST_PERSON");
+      if (/\b(leverag|innovat|passionate|synergy|cutting-edge|robust|empower|delve)/i.test(text)) issues.push("SLOP");
+      if (/memory bank/i.test(text)) issues.push("MEMORY_BANK");
+      if (tc.category !== "GREETING" && /^[a-z]/.test(text.trim())) issues.push("LOWERCASE_START");
+      const verdict = issues.length ? `FAIL [${issues.join(",")}]` : "PASS";
 
       console.log(`\n  Q: ${tc.input}`);
       console.log(`  A: ${text}`);
-      console.log(`     [${words} words, ${chars} chars]`);
+      console.log(`     [${words}w ${chars}c] ${verdict}`);
     } catch (err) {
       console.log(`\n  Q: ${tc.input}`);
       console.log(`  A: ERROR — ${err.message}`);
