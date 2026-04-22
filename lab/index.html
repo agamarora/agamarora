@@ -1,299 +1,530 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Font Awesome with performance optimization -->
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  </noscript>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab &mdash; Agam Arora</title>
+<meta name="description" content="Open source, side projects, and experiments by Agam Arora. AI Resume, Shararat Voice AI, Claude Code Resource Monitor, and more.">
+<meta name="theme-color" content="#0A0A0A">
 
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/lab/">
+<meta property="og:title" content="Lab &mdash; Agam Arora">
+<meta property="og:description" content="Open source, side projects, and experiments. Some are live, some are forever betas, all are real.">
+<meta property="og:image" content="https://agamarora.com/assets/preview.png">
+<meta property="og:site_name" content="Agam Arora">
 
-  <!-- Important: Load main.css first, then lab.css to extend it -->
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/lab.css" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Lab &mdash; Agam Arora">
+<meta name="twitter:description" content="Open source, side projects, and experiments by Agam Arora.">
+<meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
 
-  <!-- Fonts with performance optimization -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="manifest" href="/site.webmanifest">
 
-  <!-- Meta tags -->
-  <title>Agam Arora | Playground & Lab</title>
-  <meta name="title" content="Agam Arora | Playground & Lab">
-  <meta name="description"
-    content="Welcome to my playground where I explore new technologies and interaction patterns.">
-  <meta property="og:site_name" content="Agam Arora">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-  <!-- Explicit robots directive -->
-  <meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
 
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://agamarora.com/lab/">
-  <meta property="og:title" content="Agam Arora | Playground & Lab">
-  <meta property="og:description"
-    content="Welcome to my playground where I explore new technologies and interaction patterns.">
-  <meta property="og:image" content="https://agamarora.com/assets/preview.png">
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Agam Arora | Playground & Lab">
-  <meta name="twitter:description"
-    content="Welcome to my playground where I explore new technologies and interaction patterns.">
-  <meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
+<link rel="preload" as="image" href="/assets/lab/ai-resume-demo.png" fetchpriority="high">
 
-  <!-- Preload video poster for faster rendering -->
-  <link rel="preload" as="image" href="/assets/lab/voice-assistant-poster.jpg" fetchpriority="high">
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: italic;
+  }
+
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --surface-2: #161616;
+    --border: #1E1E1E;
+    --border-hover: #2A2A2A;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --accent-dim: rgba(229, 165, 75, 0.12);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mark: 'Patrick Hand', cursive;
+    --space-3: 8px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 48px;
+    --space-9: 64px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    min-height: 100dvh;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  /* === Shared v2 header === fluid 52-64px, icons scale via clamp. */
+  header.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
+    z-index: 100;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    background: var(--bg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .icon-bar { display: inline-flex; align-items: center; }
+  .icon-bar a {
+    color: var(--text-dim);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
+
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
+  .aa-mark {
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
+    text-decoration: none;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  /* Page shell */
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-8)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+
+  /* Lab hero */
+  .lab-hero {
+    margin-bottom: var(--space-8);
+  }
+  .lab-hero .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .lab-hero h1 {
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: var(--space-5);
+  }
+  .lab-hero h1 .accent { color: var(--accent); }
+  .lab-hero p.lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.18rem);
+    color: var(--text);
+    opacity: 0.82;
+    max-width: 600px;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  /* Project card */
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-8);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease,
+                border-color 0.2s ease, box-shadow 0.25s ease;
+  }
+  .project-card.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .project-card.loaded:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  }
+
+  .project-head {
+    padding: var(--space-6) var(--space-6) 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .project-head h2 {
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    line-height: 1.25;
+  }
+  .project-head h2 i { color: var(--accent); font-size: 0.95em; }
+  .project-badge {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .project-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-6);
+    padding: var(--space-6);
+    align-items: stretch;
+  }
+  @media (max-width: 720px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+
+  .project-media {
+    display: block;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    aspect-ratio: 16 / 10;
+    position: relative;
+  }
+  .project-media > a,
+  .project-media > .video-wrap {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+  }
+  .project-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .project-media a:hover img { transform: scale(1.02); }
+  .project-media .video-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  /* Specific image crop tweaks per project — match yesterday's
+     learnings (pre-crop source, anchor object-position to the
+     important content). */
+  .project-media.anchor-top img { object-position: center top; }
+  .project-media.anchor-center img { object-position: center center; }
+
+  .project-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .project-description p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    opacity: 0.88;
+  }
+
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: auto;
+  }
+  .icon-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  .icon-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .icon-button i { font-size: 0.95em; }
+
+  /* Collab footer */
+  .collab {
+    margin-top: var(--space-9);
+    padding: var(--space-8) var(--space-6);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .collab h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-4);
+  }
+  .collab p {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.82;
+    margin-bottom: var(--space-6);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .btn {
+    display: inline-block;
+    padding: 11px 22px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .btn-primary:hover { background: #f0b75a; border-color: #f0b75a; }
+
+  @media (max-width: 640px) {
+    .project-head { padding: var(--space-5) var(--space-5) 0; }
+    .project-body { padding: var(--space-5); gap: var(--space-5); }
+    .project-head h2 { font-size: 1.2rem; }
+  }
+</style>
 </head>
+<body>
 
-<body class="build-page">
-  <!-- Skip to content link for accessibility -->
-  <a href="#main" class="skip-link">Skip to content</a>
+<!-- Shared v2 header -->
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="/" aria-label="Home"><i class="fas fa-house"></i></a>
+  </div>
+</header>
 
-  <header>
-    <div class="header-left">
-      <div class="icon-bar">
-        <a href="https://github.com/agamarora" target="_blank" aria-label="GitHub">
-          <i class="fab fa-github icon-size-match"></i>
-        </a>
-        <a href="https://linkedin.com/in/agamarora" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin icon-size-match"></i>
-        </a>
-        <a href="https://www.youtube.com/@agam_arora" target="_blank" aria-label="YouTube">
-          <i class="fab fa-youtube icon-size-match"></i>
-        </a>
-        <a href="/" aria-label="Home">
-          <i class="fas fa-house icon-size-match"></i>
-        </a>
-      </div>
+<!-- Shared aa. mark -->
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
 
-    </div>
-    <nav>
-      <!-- Your nav links here if any -->
-    </nav>
-    <div class="header-right">
-      <div class="header-actions">
+<main class="page">
 
-
-        <div class="theme-toggle" title="Toggle theme">
-          <span class="screen-reader-only">Toggle theme</span>
-          <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="1em" height="1em"
-            class="theme-toggle__lightbulb" stroke-width="0.7" stroke="currentColor" fill="currentColor"
-            stroke-linecap="round" viewBox="0 0 32 32">
-            <!-- Bulb Shape -->
-            <path stroke-width="0"
-              d="M9.4 9.9c1.8-1.8 4.1-2.7 6.6-2.7 5.1 0 9.3 4.2 9.3 9.3 0 2.3-.8 4.4-2.3 6.1-.7.8-2 2.8-2.5 4.4 0 .2-.2.4-.5.4-.2 0-.4-.2-.4-.5v-.1c.5-1.8 2-3.9 2.7-4.8 1.4-1.5 2.1-3.5 2.1-5.6 0-4.7-3.7-8.5-8.4-8.5-2.3 0-4.4.9-5.9 2.5-1.6 1.6-2.5 3.7-2.5 6 0 2.1.7 4 2.1 5.6.8.9 2.2 2.9 2.7 4.9 0 .2-.1.5-.4.5h-.1c-.2 0-.4-.1-.4-.4-.5-1.7-1.8-3.7-2.5-4.5-1.5-1.7-2.3-3.9-2.3-6.1 0-2.3 1-4.7 2.7-6.5z" />
-            <!-- Coil -->
-            <path pathLength="1" class="theme-toggle__lightbulb__coil" fill="none"
-              d="M14.6 27.1c0-3.4 0-6.8-.1-10.2-.2-1-1.1-1.7-2-1.7-1.2-.1-2.3 1-2.2 2.3.1 1 .9 1.9 2.1 2h7.2c1.1-.1 2-1 2.1-2 .1-1.2-1-2.3-2.2-2.3-.9 0-1.7.7-2 1.7 0 3.4 0 6.8-.1 10.2" />
-            <!-- Base lines -->
-            <path d="M19.8 28.3h-7.6" />
-            <path d="M19.8 29.5h-7.6" />
-            <path d="M19.8 30.7h-7.6" />
-            <!-- Light rays -->
-            <g class="theme-toggle__lightbulb__rays">
-              <path pathLength="1" d="M16 6.4V1.3" />
-              <path pathLength="1" d="M26.3 15.8h5.1" />
-              <path pathLength="1" d="m22.6 9 3.7-3.6" />
-              <path pathLength="1" d="M9.4 9 5.7 5.4" />
-              <path pathLength="1" d="M5.7 15.8H.6" />
-            </g>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
+  <!-- Lab hero -->
   <section class="lab-hero">
-    <div class="container">
-      <h1>The <span class="lab-accent">Lab</span></h1>
-      <p>Welcome to my playground where I explore new technologies and interaction patterns.</p>
-    </div>
+    <div class="eyebrow">The Lab</div>
+    <h1>Things I've <span class="accent">shipped</span>.</h1>
+    <p class="lead">Open source, side projects, and experiments. Some are live, some are forever betas, all are real.</p>
   </section>
 
-  <!-- Main Content Section -->
-  <main id="main" class="container">
-    <section class="bridge-section" id="imagining-card">
-      <div class="bridge-header">
-        <h2>
-          <span id="imagining-scramble" style="color: var(--prof-color)"></span>
-        </h2>
+  <!-- AI Resume -->
+  <article class="project-card" id="ai-resume-project">
+    <header class="project-head">
+      <h2><i class="fas fa-file-lines"></i> AI Resume</h2>
+      <span class="project-badge">Open Source</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media anchor-center">
+        <a href="/lab/ai-resume/" aria-label="Open ai-resume landing page">
+          <img src="/assets/lab/ai-resume-demo.png" alt="Preview of the ai-resume demo: header with aa. mark, Agam Arora's name, proof cards for Voice AI and ANALYZE, and suggestion chips." loading="lazy">
+        </a>
       </div>
-      <div class="bridge-body">
-        <p class="bridge-message">Whatever you do, <span class="highlight"><u>do not stop</u></span>.</p>
-      </div>
-    </section>
-
-
-
-
-    <!-- Featured Project: ai-resume -->
-    <article class="project-feature" id="ai-resume-project" data-status="live"
-      data-tags="open-source ai groq template">
-      <div class="project-header">
-        <h2>
-          <span><i class="fas fa-file-lines" style="color: var(--prof-color); margin-right: 10px;"></i> AI Resume</span>
-          <span class="project-badge">Open Source</span>
-        </h2>
-      </div>
-      <div class="project-body">
-        <div class="project-media">
-          <a href="/lab/ai-resume/" class="ai-resume-preview" aria-label="Open ai-resume landing page">
-            <img src="/assets/lab/ai-resume-demo.png" alt="Preview of the ai-resume demo: header with aa. mark, Agam Arora's name, proof cards for Voice AI and ANALYZE, and suggestion chips." loading="lazy">
-          </a>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">AI Resume</span>
+          <span class="project-tag">Open Source</span>
+          <span class="project-tag">AI Agent Friendly</span>
         </div>
-
-        <div class="project-info">
-          <div class="project-tags">
-            <span class="project-tag">AI Resume</span>
-            <span class="project-tag">Open Source</span>
-            <span class="project-tag">AI Agent Friendly</span>
-          </div>
-          <div class="project-description">
-            <p>AI Resume turns your static resume into a live chat. Paste one prompt into Claude Code, run a coaching loop that drafts your system prompt and 12 behavioral evals, then deploy to Netlify. About 30 minutes. $0/month to run.</p>
-          </div>
-          <div class="project-actions icon-actions">
-            <a href="/lab/ai-resume/" class="icon-button" aria-label="Read more about ai-resume" title="Read more">
-              <i class="fas fa-book-open"></i>
-              <span class="icon-label">Read more</span>
-            </a>
-            <a href="https://ai-resume-demo.netlify.app" target="_blank" rel="noopener" class="icon-button" aria-label="Live demo" title="Live demo">
-              <i class="fas fa-play-circle"></i>
-              <span class="icon-label">Live demo</span>
-            </a>
-            <a href="https://github.com/agamarora/ai-resume" target="_blank" rel="noopener" class="icon-button" aria-label="View on GitHub" title="View code">
-              <i class="fab fa-github"></i>
-              <span class="icon-label">Code</span>
-            </a>
-          </div>
+        <div class="project-description">
+          <p>AI Resume turns your static resume into a live chat. Paste one prompt into Claude Code, run a coaching loop that drafts your system prompt and 12 behavioral evals, then deploy to Netlify. About 30 minutes. $0/month to run.</p>
+        </div>
+        <div class="project-actions">
+          <a href="/lab/ai-resume/" class="icon-button" title="Read more"><i class="fas fa-book-open"></i><span>Read more</span></a>
+          <a href="https://ai-resume-demo.netlify.app" target="_blank" rel="noopener" class="icon-button" title="Live demo"><i class="fas fa-play-circle"></i><span>Live demo</span></a>
+          <a href="https://github.com/agamarora/ai-resume" target="_blank" rel="noopener" class="icon-button" title="View code"><i class="fab fa-github"></i><span>Code</span></a>
         </div>
       </div>
-    </article>
-
-
-    <!-- Featured Project as an Article -->
-    <article class="project-feature" id="vapi-project" data-status="beta"
-      data-tags="voice-ai conversational-ux natural-language">
-      <div class="project-header">
-        <h2>
-          <span><i class="fas fa-microphone" style="color: var(--prof-color); margin-right: 10px;"></i> Voice AI</span>
-          <span class="project-badge">VAPI Build Challenge</span>
-        </h2>
-      </div>
-      <div class="project-body">
-        <div class="project-media">
-          <div class="responsive-video-wrapper" aria-label="Teaser video of Voice AI demo">
-            <iframe src="https://www.youtube.com/embed/ML3O1MScNNg?controls=1&fs=1&cc_load_policy=0&modestbranding=1&rel=0&showinfo=0" title="Shararat Voice AI Teaser"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
-            </iframe>
-          </div>
-        </div>
-
-        <div class="project-info">
-          <div class="project-tags">
-            <span class="project-tag">Voice AI</span>
-            <span class="project-tag">Conversational UX</span>
-            <span class="project-tag">Natural Language</span>
-          </div>
-          <div class="project-description">
-            <p>Shararat is a playful voice AI experience where two agents—Angel and Dan—debate your choices. It was
-              built as part of the Vapi Build Challenge to explore multi-agent interactions and creative prompting.</p>
-
-          </div>
-          <div class="project-actions icon-actions">
-
-            <a href="https://shararat.agamarora.com" target="_blank" class="icon-button" aria-label="Try it"
-              title="Try the demo">
-              <i class="fas fa-play-circle"></i>
-              <span class="icon-label">Try it</span>
-            </a>
-            <a href="https://www.youtube.com/watch?v=ZS2T_5x1on0" target="_blank" class="icon-button"
-              aria-label="Watch full video" title="Watch full video">
-              <i class="fas fa-video"></i>
-              <span class="icon-label">Watch</span>
-            </a>
-            <a href="https://github.com/agamarora/shararat-ai" target="_blank" class="icon-button"
-              aria-label="View on GitHub" title="View code">
-              <i class="fab fa-github"></i>
-              <span class="icon-label">Code</span>
-            </a>
-          </div>
-
-
-        </div>
-      </div>
-    </article>
-
-
-    <!-- Featured Project: luna-monitor -->
-    <article class="project-feature" id="luna-monitor-project" data-status="live"
-      data-tags="developer-tools rust claude-code">
-      <div class="project-header">
-        <h2>
-          <span><i class="fas fa-gauge-high" style="color: var(--prof-color); margin-right: 10px;"></i> Claude Code Resource Monitor</span>
-          <span class="project-badge">Rust</span>
-        </h2>
-      </div>
-      <div class="project-body">
-        <div class="project-media">
-          <a href="https://github.com/agamarora/utils/tree/main/luna-monitor" target="_blank" rel="noopener" class="luna-monitor-preview" aria-label="Open Claude Code Resource Monitor on GitHub">
-            <img src="/assets/lab/luna-monitor-demo.png" alt="Claude Code Resource Monitor terminal dashboard: Claude 5h/7d usage bars, CPU, temps, memory, GPU, disks, and processes panels." loading="lazy">
-          </a>
-        </div>
-
-        <div class="project-info">
-          <div class="project-tags">
-            <span class="project-tag">Developer Tool</span>
-            <span class="project-tag">Rust</span>
-            <span class="project-tag">Claude Code</span>
-          </div>
-          <div class="project-description">
-            <p>Know exactly how much Claude you have left. A tiny embedded proxy reads Anthropic's rate-limit headers live, so one terminal window shows your 5-hour and 7-day usage, pace, ETA to cap, and system telemetry (CPU, GPU, memory, disks, temps) side by side. Straight from the source, never scraped.</p>
-          </div>
-          <div class="project-actions icon-actions">
-            <a href="https://github.com/agamarora/utils/tree/main/luna-monitor#readme" target="_blank" rel="noopener" class="icon-button" aria-label="Read more about Claude Code Resource Monitor" title="Read more">
-              <i class="fas fa-book-open"></i>
-              <span class="icon-label">Read more</span>
-            </a>
-            <a href="https://github.com/agamarora/utils/releases" target="_blank" rel="noopener" class="icon-button" aria-label="Download release" title="Download">
-              <i class="fas fa-download"></i>
-              <span class="icon-label">Download</span>
-            </a>
-            <a href="https://github.com/agamarora/utils/tree/main/luna-monitor" target="_blank" rel="noopener" class="icon-button" aria-label="View on GitHub" title="View code">
-              <i class="fab fa-github"></i>
-              <span class="icon-label">Code</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </article>
-
-
-  </main>
-
-  <!-- Lab Footer -->
-  <footer class="lab-footer">
-    <div class="container">
-      <h3>Interested in collaboration?</h3>
-      <p>I'm always looking for new ideas and partnerships to explore the possibilities of AI.</p>
-      <a href="mailto:reachme.agam@gmail.com" class="btn-professional">Get in touch</a>
     </div>
-  </footer>
+  </article>
 
+  <!-- Voice AI -->
+  <article class="project-card" id="vapi-project">
+    <header class="project-head">
+      <h2><i class="fas fa-microphone"></i> Voice AI</h2>
+      <span class="project-badge">Vapi Challenge</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media">
+        <div class="video-wrap" aria-label="Teaser video of Voice AI demo">
+          <iframe src="https://www.youtube.com/embed/ML3O1MScNNg?controls=1&fs=1&cc_load_policy=0&modestbranding=1&rel=0&showinfo=0"
+            title="Shararat Voice AI Teaser" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">Voice AI</span>
+          <span class="project-tag">Conversational UX</span>
+          <span class="project-tag">Natural Language</span>
+        </div>
+        <div class="project-description">
+          <p>Shararat is a playful voice AI experience where two agents, Angel and Dan, debate your choices. Built for the Vapi Build Challenge to explore multi-agent interactions and creative prompting.</p>
+        </div>
+        <div class="project-actions">
+          <a href="https://shararat.agamarora.com" target="_blank" rel="noopener" class="icon-button" title="Try the demo"><i class="fas fa-play-circle"></i><span>Try it</span></a>
+          <a href="https://www.youtube.com/watch?v=ZS2T_5x1on0" target="_blank" rel="noopener" class="icon-button" title="Watch full video"><i class="fas fa-video"></i><span>Watch</span></a>
+          <a href="https://github.com/agamarora/shararat-ai" target="_blank" rel="noopener" class="icon-button" title="View code"><i class="fab fa-github"></i><span>Code</span></a>
+        </div>
+      </div>
+    </div>
+  </article>
 
-  <!-- Important: Load main.js first, then lab.js to ensure global utilities are available -->
-  <script src="/scripts/main.js" type="module" defer></script>
-  <script src="/scripts/lab.js" type="module" defer></script>
-  <script src="/scripts/utils.js" type="module" defer></script>
+  <!-- Claude Code Resource Monitor -->
+  <article class="project-card" id="luna-monitor-project">
+    <header class="project-head">
+      <h2><i class="fas fa-gauge-high"></i> Claude Code Resource Monitor</h2>
+      <span class="project-badge">Rust</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media anchor-top">
+        <a href="https://github.com/agamarora/utils/tree/main/luna-monitor" target="_blank" rel="noopener" aria-label="Open on GitHub">
+          <img src="/assets/lab/luna-monitor-demo.png" alt="Claude Code Resource Monitor terminal dashboard: Claude 5h/7d usage bars, CPU, temps, memory, GPU, disks, and processes panels." loading="lazy">
+        </a>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">Developer Tool</span>
+          <span class="project-tag">Rust</span>
+          <span class="project-tag">Claude Code</span>
+        </div>
+        <div class="project-description">
+          <p>Know exactly how much Claude you have left. A tiny embedded proxy reads Anthropic's rate-limit headers live, so one terminal window shows your 5-hour and 7-day usage, pace, ETA to cap, and system telemetry (CPU, GPU, memory, disks, temps) side by side. Straight from the source, never scraped.</p>
+        </div>
+        <div class="project-actions">
+          <a href="https://github.com/agamarora/utils/tree/main/luna-monitor#readme" target="_blank" rel="noopener" class="icon-button" title="Read more"><i class="fas fa-book-open"></i><span>Read more</span></a>
+          <a href="https://github.com/agamarora/utils/releases" target="_blank" rel="noopener" class="icon-button" title="Download"><i class="fas fa-download"></i><span>Download</span></a>
+          <a href="https://github.com/agamarora/utils/tree/main/luna-monitor" target="_blank" rel="noopener" class="icon-button" title="View code"><i class="fab fa-github"></i><span>Code</span></a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Collab footer -->
+  <section class="collab">
+    <h3>Like what you see?</h3>
+    <p>I'm looking for my next 0&rarr;1. Let's talk.</p>
+    <a href="mailto:reachme.agam@gmail.com" class="btn btn-primary">Get in touch</a>
+  </section>
+
+</main>
+
+<script>
+// aa. mark stroke-draw
+(function() {
+  const s = document.getElementById('aa-stroke');
+  const f = document.getElementById('aa-fill');
+  const d = document.getElementById('dot-fill');
+  if (!s || !f || !d) return;
+  document.fonts.ready.then(() => {
+    const len = s.getComputedTextLength();
+    d.setAttribute('x', 4 + len - 2);
+    f.setAttribute('x', 4);
+    const dl = len * 2;
+    s.style.strokeDasharray = dl;
+    s.style.strokeDashoffset = dl;
+    s.style.opacity = '1';
+    s.getBoundingClientRect();
+    s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+    s.style.strokeDashoffset = '0';
+    s.addEventListener('transitionend', function h(e) {
+      if (e.propertyName !== 'stroke-dashoffset') return;
+      s.removeEventListener('transitionend', h);
+      f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+      d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+      s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+    });
+  });
+})();
+
+// Project card fade-in with stagger
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.project-card');
+  cards.forEach((el, i) => {
+    setTimeout(() => el.classList.add('loaded'), 300 + i * 120);
+  });
+});
+</script>
+
 </body>
-
 </html>
