@@ -221,6 +221,31 @@
     border-radius: 3px;
   }
 
+  /* HERO MEDIA — video variant of /lab/ai-resume's .hero-image */
+  .hero-media {
+    margin: 0 0 var(--space-7);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #000;
+  }
+  .hero-media video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    object-fit: cover;
+    background: #000;
+  }
+  .hero-media .caption {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
   /* QUOTE */
   .quote {
     border-left: 3px solid var(--accent);
@@ -515,6 +540,16 @@
       <a href="https://github.com/agamarora/second-brain" target="_blank" rel="noopener" class="btn btn-secondary">View on GitHub &nearr;</a>
     </div>
   </div>
+
+  <!-- Hero animation — brain-network compounding visual -->
+  <figure class="hero-media">
+    <video
+      src="/assets/lab/second-brain-anim.mp4"
+      poster="/assets/lab/second-brain-poster.jpg"
+      autoplay muted loop playsinline preload="metadata"
+      aria-label="Animated visualization of a knowledge graph forming as sources get ingested"></video>
+    <figcaption class="caption">Compounding in motion &middot; every ingested source links to what came before</figcaption>
+  </figure>
 
   <!-- EPIGRAPH — uses existing .quote treatment (our pull-quote style) -->
   <div class="quote">
