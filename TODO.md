@@ -25,9 +25,11 @@
 - [ ] Generate a proper OG image for `/lab` (currently using the generic site preview)
 
 ## Content
-- [x] ~~Add more projects to `/lab`~~ — 3 now: AI Resume, Voice AI, Claude Code Resource Monitor
+- [x] ~~Add more projects to `/lab`~~ — 4 now: second-brain, AI Resume, Voice AI, Claude Code Resource Monitor
+- [x] ~~Launch `/lab/second-brain/` PRFAQ~~ — shipped 2026-04-23, same body live on [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) and [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/)
 - [ ] Consider a blog/writing section — 12+ years of product experience to share
 - [ ] Consider a contact form instead of bare `mailto:` link in lab footer
+- [ ] Dedicated OG image for `/lab/second-brain/` (currently using generic site preview)
 
 ## Performance
 - [x] ~~Delete 2.3 MB unused `agamarora_banner.png`~~ — was unused in site, restored for readme.md (GitHub profile). Still on disk, serves the profile header.

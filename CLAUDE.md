@@ -43,7 +43,8 @@ Every public page is a single standalone `index.html` with inline `<style>` and 
 | Route | File | Purpose |
 |-------|------|---------|
 | `/` | `index.html` | Landing — greeting cycle, name, tagline, 3 CTAs, logo strip |
-| `/lab` | `lab/index.html` | Projects — AI Resume, Voice AI, Claude Code Resource Monitor |
+| `/lab` | `lab/index.html` | Projects — second-brain, AI Resume, Voice AI, Claude Code Resource Monitor |
+| `/lab/second-brain/` | `lab/second-brain/index.html` | second-brain PRFAQ + launch-article copy + paste-prompt (same body ships to Medium + LinkedIn long-form) |
 | `/lab/ai-resume/` | `lab/ai-resume/index.html` | AI Resume PRFAQ + setup wizard paste-prompt |
 | `/resume` | `resume/index.html` | Resume — dark editorial, career data, print-friendly |
 | `/enter` | `enter/index.html` | Immersive AI terminal — keyboard background, Groq streaming, conversation memory |
@@ -88,6 +89,12 @@ Dark-only. No light mode. No theme toggle. The moodboard at `/moodboard` is the 
 
 Tracked in `TODO.md`. Current:
 
-- `/moodboard` is orphan from main nav — by design (design doc, not user-facing), but leaks to search engines without a robots directive.
-- No sitemap.xml, no robots.txt.
-- `assets/preview.png` at ~950KB is heavy for a social-share OG image. Could be optimized.
+- `/moodboard` is orphan from main nav — by design (design doc, not user-facing). `robots: noindex` and `robots.txt` entries added 2026-04-22.
+- `/lab` OG image is still the generic site preview. A dedicated OG image for the lab page (and for `/lab/second-brain/` individually) would lift social-share CTR.
+- Font Awesome 6.5.0 full CSS loads from CDN on every v2 page. Only ~8 icons actually used — could be subset.
+
+## Conventions for video media in lab slots
+
+- `/lab/second-brain/` uses a looping video both in the `/lab` card media slot and in the PRFAQ hero. Source encoded at 720×720, H.264, no audio, `+faststart`. 1.2MB. Plays `autoplay muted loop playsinline` with a poster JPG for instant paint.
+- Media-slot behavior matches image behavior: `object-fit: cover`, flex-stretched, info column drives row height.
+- When re-encoding: use `imageio-ffmpeg` bundled Python package if ffmpeg is not on PATH (pip install imageio-ffmpeg, then `python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"`).

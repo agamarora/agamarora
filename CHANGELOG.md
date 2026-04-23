@@ -4,13 +4,12 @@ All notable changes to agamarora.com will be documented in this file.
 
 ## [Unreleased]
 
-### /lab — second-brain entry + PRFAQ (2026-04-23)
-- New `/lab/second-brain/` PRFAQ page mirroring `/lab/ai-resume/` structure: hero with gold-accent h1, epigraph via existing `.quote` treatment, problem section, 3-step "How it works", "What's inside" list, paste-prompt block with copy button (KEEP IN SYNC with template README), FAQ (6 items), For-AI-agents callout, resources, back link
-- New product card on `/lab` placed above ai-resume (shares distribution pattern). Media slot: brain-network animation (H.264 MP4, 1.2MB, 720×720, autoplay muted loop), replacing placeholder repo-tree preview
-- Same animation embedded on PRFAQ after hero CTAs — acts as visual anchor before the epigraph. Encoded from source via bundled ffmpeg (imageio-ffmpeg), dropped from 40MB → 1.2MB (97%). Poster JPG 36KB for instant paint
-- CTAs: "Read the PRFAQ" → `/lab/second-brain/`, "Code" → github.com/agamarora/second-brain
-- Mobile + desktop verified via headless browser, no console errors
-- No new components, reuses v2 design tokens + ai-resume page skeleton
+### /lab — second-brain launch (2026-04-23)
+- New project live at [`/lab/second-brain/`](https://agamarora.com/lab/second-brain/). Hook: your AI forgets you every session, and a second brain in git is the file it needed. Body unpacks how the compounding actually works (3-layer provenance, `builds_on` chains, AI running inside the brain). Same body shipped as a [Medium article](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) and a [LinkedIn long-form article](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/).
+- New second-brain card on `/lab`, placed above ai-resume (they share a distribution pattern: GitHub template + paste-prompt).
+- Brain-network animation plays in both the card media slot and the PRFAQ hero. Encoded from a 40 MB master down to a 1.2 MB H.264 MP4 (97% reduction) via the bundled ffmpeg in `imageio-ffmpeg`. Poster JPG (36 KB) paints instantly while the video loads. `autoplay muted loop playsinline` so it behaves on mobile.
+- PRFAQ positioning rewritten after the first draft landed — leads with the AI-memory hook, unpacks the compounding receipt, reorders FAQ so "Why not Notion / Obsidian / Mem?" is the first question. Dropped a circular epigraph and a corporate "Directive" attribution. The rewrite ran through `/plan-ceo-review` (Frame D: A hook + C body).
+- No new components. Reuses v2 design tokens and the ai-resume page skeleton for structure, `object-fit: cover` flex-stretched media for the video slot.
 
 ### v2.0 — Enter + Resume + AI Terminal (2026-04-10)
 - `/enter` page: keyboard background with 3D perspective, AI terminal powered by Groq (llama-3.1-8b-instant), SSE streaming with word-by-word animation, conversation memory (6 messages), rotating question prompts with click-to-prefill, gold keyboard glow for user input, muted white for bot replies
