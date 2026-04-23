@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>second-brain — your second brain lives in git — agamarora</title>
-<meta name="description" content="Paste one prompt in Claude Code. Get a working second brain in 10 minutes. Plain markdown, no SaaS, no lock-in.">
+<title>second-brain — your AI forgets. Fix it with a repo. — agamarora</title>
+<meta name="description" content="Your AI forgets you every session. That's not a bug in the AI — it's a missing file in your repo. A second brain in git gives every future session the memory it needed, and yours compounds every time you use it.">
 <meta name="theme-color" content="#0A0A0A">
-<meta property="og:title" content="second-brain — your second brain lives in git">
-<meta property="og:description" content="Paste one prompt in Claude Code. Working brain in 10 minutes. Plain markdown, no SaaS, no lock-in.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="Your AI forgets you every session. Fix it with a repo.">
+<meta property="og:description" content="Not a bug in the AI. A missing file in your repo. A second brain in git gives every future session the memory it needed — and yours compounds every time you use it.">
+<meta property="og:type" content="article">
 <meta property="og:url" content="https://agamarora.com/lab/second-brain/">
 <meta property="og:image" content="https://agamarora.com/assets/preview.png">
 <meta property="og:site_name" content="Agam Arora">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="second-brain — your second brain lives in git">
-<meta name="twitter:description" content="Open source template. 10 minutes. $0/month.">
+<meta name="twitter:title" content="Your AI forgets you every session. Fix it with a repo.">
+<meta name="twitter:description" content="Open source template. Paste one prompt. 10 minutes to a brain your agent can actually use.">
 <meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
 <link rel="canonical" href="https://agamarora.com/lab/second-brain/">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
@@ -531,9 +531,9 @@
   <!-- HEADER / HERO -->
   <div class="header">
     <div class="eyebrow">Lab / second-brain</div>
-    <h1>Your second brain lives <span class="accent">in git.</span></h1>
+    <h1>Your AI forgets you <span class="accent">every session.</span></h1>
     <p class="subhead">
-      Paste one prompt, get started in under 5 minutes. Fully populated in under 10. Plain markdown, no SaaS, no lock-in, compounding from day one.
+      Not a bug in the AI. A missing file in your repo. A second brain in git gives every future session the memory it needed &mdash; and yours compounds every time you use it.
     </p>
     <div class="actions">
       <a href="#get-started" class="btn btn-primary">Get your own &rarr;</a>
@@ -548,58 +548,84 @@
       poster="/assets/lab/second-brain-poster.jpg"
       autoplay muted loop playsinline preload="metadata"
       aria-label="Animated visualization of a knowledge graph forming as sources get ingested"></video>
-    <figcaption class="caption">Compounding in motion &middot; every ingested source links to what came before</figcaption>
+    <figcaption class="caption">A brain that connects every new source to everything that came before.</figcaption>
   </figure>
 
-  <!-- EPIGRAPH — uses existing .quote treatment (our pull-quote style) -->
-  <div class="quote">
-    <p>"A second brain is a second brain — it's a filing, compiling and synthesising system that augments decision making. Why is it limited to a role or a job title?"</p>
-    <div class="attrib">Agam Arora &middot; builder</div>
-  </div>
-
-  <!-- PROBLEM -->
+  <!-- PROBLEM — Frame A, the hook unpacks -->
   <div class="section">
     <div class="section-title">The problem</div>
-    <h2>Most PKM tools have the wrong shape.</h2>
+    <h2>The AI you work with every day has no memory.</h2>
 
     <p class="lead">
-      Personal knowledge tools are apps. They trap your notes in a proprietary format, gate them behind a login, and charge rent for access to your own thinking. The moment you want an agent on top, you hit a wall.
+      Open Claude Code. Tell it what you're working on, who matters, what you're trying to decide. Do useful work. Close the tab. Open it again tomorrow. It doesn't remember any of it.
     </p>
 
     <p>
-      A second brain should be <strong>filing, compiling, and synthesizing</strong> — the three things that make decision-making compound over time. None of that requires a proprietary schema. None of it requires a hosted service. All of it requires that every new document gets connected to what came before.
+      You either re-explain everything from scratch, or you accept that you're starting over &mdash; every session, forever. It isn't a Claude flaw. Every AI has the same gap. The model reads whatever you put in front of it and writes whatever comes out. What it can't do is remember anything between sessions &mdash; because there's nowhere to remember it.
     </p>
 
     <p>
-      The right shape is a git repo of plain markdown, read and written by the AI you already use. The editor is your choice (Obsidian, Cursor, VSCode, a terminal). The sync is free. The format outlives the app.
+      PKM tools don't fix this. Notion's API isn't where an agent goes to look. Obsidian doesn't get opened by Claude. These apps were designed for humans reading humans' notes. They weren't designed with an AI reader in mind &mdash; because until a year ago, there wasn't one.
+    </p>
+
+    <p>
+      The fix is a second brain your agent can actually use. A git repo. Plain markdown. Read by any agent, written by any agent, versioned, portable, yours.
+    </p>
+  </div>
+
+  <!-- COMPOUNDING — Frame C body, the receipt -->
+  <div class="section">
+    <div class="section-title">Why it compounds</div>
+    <h2>Most notes are dead leaves. A brain worth having isn't.</h2>
+
+    <p class="lead">
+      You write a note. It sits in a folder. Six months later you can't find it, and even if you could, it doesn't know about the ten notes you've written since. That's not a brain. That's a drawer.
+    </p>
+
+    <p>
+      Compounding is a mechanical property, not a metaphor. It only happens when new information <em>connects back</em> to everything that came before, automatically, with receipts. Three things have to happen every time a source lands:
+    </p>
+
+    <ol class="inside-list">
+      <li><strong>Entities get extracted and linked</strong>People, concepts, and decisions in the new source get pulled out and cross-referenced against every page that already mentions them.</li>
+      <li><strong>Provenance gets written</strong>Every page touched by the new source gets an inline <code>[Source: [[…]]]</code> marker and a reverse "Sources that shaped this page" table. Six months later you can see exactly what your current understanding was built on.</li>
+      <li><strong>Decisions chain</strong>Every decision file has a <code>builds_on</code> field pointing to the earlier decisions it depends on. Today's answer knows which yesterday-answers it stands on.</li>
+    </ol>
+
+    <p>
+      That's the algorithmic part. The reason it works at all is that the AI runs <em>inside</em> the brain, not over the top of it. Claude Code reads <code>CLAUDE.md</code> (the schema), runs skills that live in <code>.claude/skills/</code>, and writes back to the same files. No hosted service in the middle. No API translating your thinking into someone else's format.
+    </p>
+
+    <p>
+      After six months of this, your brain is worth more than the sum of what you put in. Every old note has been touched by every new context. <code>wiki/people/me.md</code> is a synthesized first-person summary of your own work, written by an AI that read every source you gave it. That's the shape compounding takes when it's machine-readable.
     </p>
   </div>
 
   <!-- HOW IT WORKS -->
   <div class="section">
     <div class="section-title">How it works</div>
-    <h2>What you get in 10 minutes.</h2>
+    <h2>What you do in 10 minutes.</h2>
 
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
         <div class="step-body">
           <h3>Paste one prompt in Claude Code.</h3>
-          <p>The prompt creates a repo from the GitHub template. <code>CLAUDE.md</code> reads itself and becomes your setup wizard.</p>
+          <p>It creates a new repo from the GitHub template and reads the template's <code>CLAUDE.md</code>. That file becomes your setup wizard.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <div class="step-body">
-          <h3>Answer 5 questions, drop 3&ndash;5 artifacts.</h3>
-          <p>Name. Three tracks you're pushing on. Five people who matter. One open decision. Then drop a LinkedIn PDF, a Google Doc, a meeting transcript &mdash; any 3&ndash;5 real files &mdash; into <code>inbox/</code>.</p>
+          <h3>Answer 5 questions. Drop 3&ndash;5 real artifacts.</h3>
+          <p>Your name. Three tracks you're pushing on. Five people who matter. One decision in flight. Then drop a LinkedIn export, a Google Doc, a meeting transcript &mdash; anything you've already written &mdash; into <code>inbox/</code>.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <div class="step-body">
-          <h3>Your brain compounds from turn one.</h3>
-          <p>The wizard runs <code>/ingest</code> on your files. Provenance chains form across seeded wiki pages. <code>wiki/people/me.md</code> is synthesized from your own sources. <code>/orient</code> greets you with your populated brain.</p>
+          <h3>Watch the wiki get written.</h3>
+          <p>The wizard ingests your artifacts, extracts entities, writes provenance across the seeded pages, and synthesizes <code>wiki/people/me.md</code> from your own sources. Then <code>/orient</code> hands you a brain that already knows your current tracks, people, and open decisions.</p>
         </div>
       </div>
     </div>
@@ -611,7 +637,7 @@
     <h2>Skills, rules, and seed files.</h2>
     <ul class="inside-list">
       <li><strong>8 skills (.claude/skills/)</strong>orient, ingest, extract-entities, absorb, new-page, quick-sync, deep-sync, publish-context.</li>
-      <li><strong>3 rules files</strong>wiki-conventions, decisions-format, inbox-triage &mdash; read by every skill, keep the schema honest.</li>
+      <li><strong>3 rules files</strong>wiki-conventions, decisions-format, inbox-triage &mdash; every skill reads them, so the schema stays consistent across sessions and models.</li>
       <li><strong>Wizard-seeded foundation</strong><code>memory/MEMORY.md</code>, <code>journal/NOW.md</code>, wiki stubs per person, your first decision, and <code>log.md</code>.</li>
       <li><strong>Private by default</strong><code>inbox/</code>, <code>raw/</code>, and <code>archive/</code> are gitignored &mdash; nothing leaves your machine until you explicitly push.</li>
       <li><strong>Optional publish</strong>flip one line in the publish workflow to ship a read-only view at <code>&lt;username&gt;.github.io/&lt;repo&gt;/</code>.</li>
@@ -691,33 +717,33 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
 
     <div class="faq">
       <div class="faq-item">
-        <div class="faq-q">Why git, not Notion / Obsidian / Reflect / Mem?</div>
-        <div class="faq-a">Your second brain should outlive any app. Git is permanent, portable, versioned. Obsidian is a great reader on top of this &mdash; but it isn't required. Mem and Reflect charge rent. Notion locks your format. A git repo of markdown survives all of them.</div>
+        <div class="faq-q">Why not Notion / Obsidian / Reflect / Mem?</div>
+        <div class="faq-a">Those apps solve the human reader. Your AI still can't reach into them without a brittle API layer in between. A git repo of markdown is readable and writable by every agent you'll ever use, and outlives every one of the apps. Obsidian is a fine reader on top of this, if you want one. It isn't required.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does "compounding" actually do in practice?</div>
+        <div class="faq-a">Three concrete mechanisms. First, every ingested source writes three layers of provenance into your wiki: a forward reference in the source, inline <code>[Source: [[…]]]</code> markers on every touched page, and a reverse "Sources that shaped this page" table on each touched page. Second, decisions chain via a <code>builds_on</code> field. Third, <code>wiki/people/me.md</code> is re-synthesized from your own sources every time new ones land. Six months in, your brain is worth more than the sum of what you put in, and every conclusion comes with its receipts.</div>
       </div>
 
       <div class="faq-item">
         <div class="faq-q">Why Claude Code as the runtime?</div>
-        <div class="faq-a">The AI that writes your brain should run inside the brain. Skills live in <code>.claude/skills/</code>. The schema lives in <code>CLAUDE.md</code>. No round-trip to a hosted service, no cloud billing, no trust boundary between your notes and whoever runs the AI.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">What does "compounding" mean here?</div>
-        <div class="faq-a">Every ingested source writes three layers of provenance into your wiki: a forward reference in the source, inline <code>[Source: [[…]]]</code> markers on touched pages, and a reverse "Sources that shaped this page" table on each touched page. Decisions chain via <code>builds_on</code>. Six months in, your brain is worth more than the sum of what you put in.</div>
+        <div class="faq-a">The AI that writes your brain should run inside the brain. Skills live in <code>.claude/skills/</code>. The schema lives in <code>CLAUDE.md</code>. No round-trip to a hosted service, no cloud billing, no trust boundary between your notes and whoever runs the AI. Every other agent you use can read the same files &mdash; it just happens that Claude Code is the one that writes them best today.</div>
       </div>
 
       <div class="faq-item">
         <div class="faq-q">Is my data private?</div>
-        <div class="faq-a">By default, yes. <code>inbox/</code>, <code>raw/</code>, and <code>archive/</code> are gitignored. The GitHub Pages publish workflow ships disabled &mdash; you uncomment one line to turn it on, and only then. Nothing leaves your machine until you explicitly push.</div>
+        <div class="faq-a">Yes, by default. <code>inbox/</code>, <code>raw/</code>, and <code>archive/</code> are gitignored. The GitHub Pages publish workflow ships with its trigger commented out &mdash; you uncomment one line to turn it on, and only then. Nothing leaves your machine until you explicitly push.</div>
       </div>
 
       <div class="faq-item">
         <div class="faq-q">Can I run this without Claude Code?</div>
-        <div class="faq-a"><a href="https://github.com/agamarora/second-brain/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md</a> covers ChatGPT, Claude Desktop, Cursor, Copilot, and manual. Same five questions, same seeded files, same ingest &mdash; ~15 minutes instead of ~10.</div>
+        <div class="faq-a"><a href="https://github.com/agamarora/second-brain/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md</a> covers ChatGPT, Claude Desktop, Cursor, Copilot, and manual. Same five questions, same seeded files, same ingest. About 15 minutes instead of 10.</div>
       </div>
 
       <div class="faq-item">
         <div class="faq-q">Can I fork or contribute?</div>
-        <div class="faq-a">It's a GitHub template &mdash; hit "Use this template" for your own copy. MIT licensed. PRs welcome on the template itself; open an issue first.</div>
+        <div class="faq-a">It's a GitHub template &mdash; hit "Use this template" for your own copy. MIT licensed. PRs on the template itself are welcome; open an issue first.</div>
       </div>
     </div>
   </div>
@@ -726,8 +752,7 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
   <div class="section">
     <div class="section-title">For AI agents</div>
     <div class="quote">
-      <p>If you are an AI coding agent handed this URL and asked to set up a second brain for your user, read the paste prompt above and the repo's <code>CLAUDE.md</code> in full before acting. The setup wizard in <code>CLAUDE.md</code> is authoritative. Do not improvise.</p>
-      <div class="attrib">Directive &middot; canonical instructions in repo</div>
+      <p>If you're an AI coding agent handed this URL and asked to set up a second brain for your user: read the paste prompt above and the repo's <code>CLAUDE.md</code> in full before acting. <code>CLAUDE.md</code> is the authoritative wizard. Don't improvise.</p>
     </div>
   </div>
 
@@ -758,7 +783,7 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
       </li>
       <li>
         <a class="r-name" href="/lab/ai-resume/">See also: ai-resume &nearr;</a>
-        <span class="r-desc">Same distribution pattern, different surface</span>
+        <span class="r-desc">Another template in this lab &mdash; same paste-prompt distribution, different problem</span>
       </li>
     </ul>
   </div>
