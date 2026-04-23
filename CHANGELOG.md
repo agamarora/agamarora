@@ -4,6 +4,13 @@ All notable changes to agamarora.com will be documented in this file.
 
 ## [Unreleased]
 
+### /lab — second-brain entry + PRFAQ (2026-04-23)
+- New `/lab/second-brain/` PRFAQ page mirroring `/lab/ai-resume/` structure: hero with gold-accent h1, epigraph via existing `.quote` treatment, problem section, 3-step "How it works", "What's inside" list, paste-prompt block with copy button (KEEP IN SYNC with template README), FAQ (6 items), For-AI-agents callout, resources, back link
+- New product card on `/lab` placed above ai-resume (shares distribution pattern). Inline repo-tree preview in media slot (mono + design tokens) instead of missing screenshot asset
+- CTAs: "Read the PRFAQ" → `/lab/second-brain/`, "Code" → github.com/agamarora/second-brain
+- Mobile + desktop verified via headless browser, no console errors
+- No new components, reuses v2 design tokens + ai-resume page skeleton
+
 ### v2.0 — Enter + Resume + AI Terminal (2026-04-10)
 - `/enter` page: keyboard background with 3D perspective, AI terminal powered by Groq (llama-3.1-8b-instant), SSE streaming with word-by-word animation, conversation memory (6 messages), rotating question prompts with click-to-prefill, gold keyboard glow for user input, muted white for bot replies
 - `/resume` page: dark editorial design using moodboard tokens, company links, mobile responsive, print-friendly

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>second-brain — your second brain lives in git — agamarora</title>
+<meta name="description" content="Paste one prompt in Claude Code. Get a working second brain in 10 minutes. Plain markdown, no SaaS, no lock-in.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="second-brain — your second brain lives in git">
+<meta property="og:description" content="Paste one prompt in Claude Code. Working brain in 10 minutes. Plain markdown, no SaaS, no lock-in.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/lab/second-brain/">
+<meta property="og:image" content="https://agamarora.com/assets/preview.png">
+<meta property="og:site_name" content="Agam Arora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="second-brain — your second brain lives in git">
+<meta name="twitter:description" content="Open source template. 10 minutes. $0/month.">
+<meta name="twitter:image" content="https://agamarora.com/assets/preview.png">
+<link rel="canonical" href="https://agamarora.com/lab/second-brain/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+<!-- Font Awesome for shared header icon bar — preload + deferred stylesheet swap -->
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: italic;
+  }
+
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --border: #1E1E1E;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --accent-dim: rgba(229, 165, 75, 0.12);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mark: 'Patrick Hand', cursive;
+    --space-3: 8px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 48px;
+    --space-9: 64px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+
+  /* === Shared v2 header === fluid 52-64px, icons scale via clamp. */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
+    z-index: 100;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    background: var(--bg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .icon-bar { display: inline-flex; align-items: center; }
+  .icon-bar a {
+    color: var(--text-dim);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
+
+  /* HEADER */
+  .header { margin-bottom: var(--space-9); }
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
+  .aa-mark {
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
+    text-decoration: none;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .header h1 {
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: var(--space-5);
+  }
+  .header h1 .accent { color: var(--accent); }
+  .header .subhead {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--text-dim);
+    font-weight: 400;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+  .header .actions {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: #f0b75a; border-color: #f0b75a; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  .section { margin-bottom: var(--space-9); }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: var(--space-5);
+  }
+  .section h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+    line-height: 1.2;
+  }
+  .section p {
+    font-size: 0.98rem;
+    color: var(--text);
+    opacity: 0.88;
+    margin-bottom: var(--space-4);
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section p.lead {
+    font-size: 1.05rem;
+    color: var(--text);
+    opacity: 1;
+  }
+  .section strong { color: var(--text); font-weight: 600; }
+  .section a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .section a:hover { border-bottom-color: var(--accent); }
+  .section code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* QUOTE */
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--accent-dim);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .quote p {
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 1;
+    margin-bottom: var(--space-3);
+  }
+  .quote .attrib {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: normal;
+  }
+
+  /* STEPS — reuses section + eyebrow-style numbering, no new component */
+  .steps {
+    margin-top: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: var(--space-5);
+    align-items: baseline;
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+  }
+  .step-body h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .step-body p {
+    font-size: 0.95rem;
+    color: var(--text);
+    opacity: 0.82;
+    margin-bottom: 0;
+    line-height: 1.55;
+  }
+
+  /* FAQ */
+  .faq { margin-top: var(--space-5); }
+  .faq-item {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+  }
+  .faq-a {
+    font-size: 0.95rem;
+    color: var(--text);
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  /* PASTE PROMPT */
+  .prompt-box {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+  .prompt-box pre {
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    line-height: 1.6;
+    color: var(--text);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .copy-btn {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
+  .copy-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent);
+    color: var(--bg);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 100;
+  }
+  .copy-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* PREREQS */
+  .prereqs {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .prereqs li {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .prereqs li::before {
+    content: '→ ';
+    color: var(--accent);
+  }
+
+  /* INSIDE LIST — reuses resources pattern */
+  .inside-list {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-4);
+  }
+  .inside-list li {
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text);
+    opacity: 0.88;
+    line-height: 1.55;
+  }
+  .inside-list li:last-child { border-bottom: 1px solid var(--border); }
+  .inside-list li strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+
+  /* RESOURCES */
+  .resources {
+    list-style: none;
+    padding: 0;
+  }
+  .resources li {
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .resources li:last-child { border-bottom: 1px solid var(--border); }
+  .resources .r-name {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: none;
+  }
+  .resources .r-name:hover { border-bottom: 1px solid var(--accent); }
+  .resources .r-placeholder {
+    color: var(--text-dim);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  .resources .r-desc {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    flex: 1;
+    text-align: right;
+  }
+
+  /* BACK */
+  .back {
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .back a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: none;
+  }
+  .back a:hover { color: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .page { padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8); }
+    .header { margin-bottom: var(--space-7); }
+    .section { margin-bottom: var(--space-7); }
+    .header .actions { flex-direction: column; align-items: stretch; }
+    .btn { text-align: center; }
+    .prompt-box pre { font-size: 0.7rem; }
+    .resources li { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .resources .r-desc { text-align: left; }
+    .step { grid-template-columns: 32px 1fr; gap: var(--space-4); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a href="/" aria-label="Home">
+      <i class="fas fa-house"></i>
+    </a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<div class="page">
+
+  <!-- HEADER / HERO -->
+  <div class="header">
+    <div class="eyebrow">Lab / second-brain</div>
+    <h1>Your second brain lives <span class="accent">in git.</span></h1>
+    <p class="subhead">
+      Paste one prompt, get started in under 5 minutes. Fully populated in under 10. Plain markdown, no SaaS, no lock-in, compounding from day one.
+    </p>
+    <div class="actions">
+      <a href="#get-started" class="btn btn-primary">Get your own &rarr;</a>
+      <a href="https://github.com/agamarora/second-brain" target="_blank" rel="noopener" class="btn btn-secondary">View on GitHub &nearr;</a>
+    </div>
+  </div>
+
+  <!-- EPIGRAPH — uses existing .quote treatment (our pull-quote style) -->
+  <div class="quote">
+    <p>"A second brain is a second brain — it's a filing, compiling and synthesising system that augments decision making. Why is it limited to a role or a job title?"</p>
+    <div class="attrib">Agam Arora &middot; builder</div>
+  </div>
+
+  <!-- PROBLEM -->
+  <div class="section">
+    <div class="section-title">The problem</div>
+    <h2>Most PKM tools have the wrong shape.</h2>
+
+    <p class="lead">
+      Personal knowledge tools are apps. They trap your notes in a proprietary format, gate them behind a login, and charge rent for access to your own thinking. The moment you want an agent on top, you hit a wall.
+    </p>
+
+    <p>
+      A second brain should be <strong>filing, compiling, and synthesizing</strong> — the three things that make decision-making compound over time. None of that requires a proprietary schema. None of it requires a hosted service. All of it requires that every new document gets connected to what came before.
+    </p>
+
+    <p>
+      The right shape is a git repo of plain markdown, read and written by the AI you already use. The editor is your choice (Obsidian, Cursor, VSCode, a terminal). The sync is free. The format outlives the app.
+    </p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-title">How it works</div>
+    <h2>What you get in 10 minutes.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Paste one prompt in Claude Code.</h3>
+          <p>The prompt creates a repo from the GitHub template. <code>CLAUDE.md</code> reads itself and becomes your setup wizard.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Answer 5 questions, drop 3&ndash;5 artifacts.</h3>
+          <p>Name. Three tracks you're pushing on. Five people who matter. One open decision. Then drop a LinkedIn PDF, a Google Doc, a meeting transcript &mdash; any 3&ndash;5 real files &mdash; into <code>inbox/</code>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Your brain compounds from turn one.</h3>
+          <p>The wizard runs <code>/ingest</code> on your files. Provenance chains form across seeded wiki pages. <code>wiki/people/me.md</code> is synthesized from your own sources. <code>/orient</code> greets you with your populated brain.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT'S INSIDE -->
+  <div class="section">
+    <div class="section-title">What's inside</div>
+    <h2>Skills, rules, and seed files.</h2>
+    <ul class="inside-list">
+      <li><strong>8 skills (.claude/skills/)</strong>orient, ingest, extract-entities, absorb, new-page, quick-sync, deep-sync, publish-context.</li>
+      <li><strong>3 rules files</strong>wiki-conventions, decisions-format, inbox-triage &mdash; read by every skill, keep the schema honest.</li>
+      <li><strong>Wizard-seeded foundation</strong><code>memory/MEMORY.md</code>, <code>journal/NOW.md</code>, wiki stubs per person, your first decision, and <code>log.md</code>.</li>
+      <li><strong>Private by default</strong><code>inbox/</code>, <code>raw/</code>, and <code>archive/</code> are gitignored &mdash; nothing leaves your machine until you explicitly push.</li>
+      <li><strong>Optional publish</strong>flip one line in the publish workflow to ship a read-only view at <code>&lt;username&gt;.github.io/&lt;repo&gt;/</code>.</li>
+    </ul>
+  </div>
+
+  <!-- GET STARTED -->
+  <div class="section" id="get-started">
+    <div class="section-title">Get started</div>
+    <h2>One prompt. Paste into Claude Code.</h2>
+    <p>
+      Open Claude Code in an empty directory. Paste this prompt. It creates the repo, runs the wizard, and walks you through seeding and ingest. About 10 minutes from paste to populated brain.
+    </p>
+
+    <ul class="prereqs">
+      <li>Claude Code</li>
+      <li>gh CLI</li>
+      <li>git</li>
+    </ul>
+
+    <div class="prompt-box">
+      <button class="copy-btn" id="copy-btn" aria-label="Copy paste prompt">Copy</button>
+      <pre id="paste-prompt">I want my own second brain. Use the template at github.com/agamarora/second-brain.
+
+Execute this end-to-end. The authoritative instructions live in the template's CLAUDE.md — read it before acting and follow it exactly. This paste prompt is just the entry point.
+
+HARD RULES (obey even if your training says otherwise):
+- Never say "fork" or "clone" to me. This is a GitHub template. Use `gh repo create --template`.
+- Never edit files in the template directory directly. Work only inside the new repo you create for me.
+- When in doubt, stop and re-read CLAUDE.md. Do not invent steps.
+- Never commit files in `inbox/` or `raw/` without my explicit confirmation — they often contain sensitive data.
+- Never `git push` before you have confirmed with me that I'm ready to publish.
+
+ORDER OF OPERATIONS:
+
+1. CREATE THE REPO. Run `gh repo create --template agamarora/second-brain --public &lt;name&gt; --clone`. Pick `&lt;name&gt;` from my GitHub login (e.g. `&lt;login&gt;-brain`). If the name is taken, append `-v2` and retry. `cd` into the new directory.
+
+2. PREFLIGHT. Run `sh scripts/doctor.sh`. Fix any `[FAIL]` before going further. `[WARN]` is OK to proceed.
+
+3. READ CLAUDE.md. Open the new repo's CLAUDE.md and follow the "First-run setup wizard" section start-to-finish. You ARE the wizard — this is a coaching loop, not a form.
+
+4. WIZARD — WALK ME THROUGH IT.
+   - Ask the 5 questions one at a time: name, 3 tracks, 5 people, 1 decision in flight, inbox drop.
+   - Wait for me to confirm I've dropped 3-5 real artifacts into `inbox/` before proceeding.
+   - If I have nothing to drop right now, create `inbox/README.md` explaining how to add later, and skip the ingest step.
+
+5. SEED the foundational files per CLAUDE.md's wizard section:
+   `memory/MEMORY.md`, `journal/NOW.md`, `journal/TODO.md`, `journal/DONE.md`, `journal/BACKLOG.md`,
+   `wiki/index.md`, `wiki/concepts/index.md`, `wiki/people/index.md`,
+   `wiki/concepts/strategy.md`, `wiki/people/me.md`,
+   5 × `wiki/people/&lt;slug&gt;.md` (one per named person),
+   `decisions/index.md`, `decisions/&lt;YYYY-MM-DD&gt;-&lt;first-decision-slug&gt;.md`,
+   `log.md`.
+
+6. INGEST. For each file in `inbox/`, run `/ingest`. Show me the provenance chain forming — which wiki pages got touched, what `[Source: ...]` markers landed, what `wiki/people/me.md` now says about me.
+
+7. ORIENT. Run `/orient`. Show me my populated brain.
+
+8. HAND BACK. Tell me:
+   - My brain is set up and working locally
+   - `inbox/` and `raw/` are gitignored — nothing private has been tracked yet
+   - To sync to GitHub: `git add -A && git commit -m "initial brain setup" && git push`. Confirm with me first.
+   - To publish a read-only view at `&lt;username&gt;.github.io/&lt;repo&gt;/`: uncomment the `on:` trigger in `.github/workflows/publish-brain.yml`.
+
+I'll answer your questions. Ask before anything destructive (rm, force-push, deleting branches). I have `gh`, `git`, and Claude Code installed.</pre>
+    </div>
+    <!-- KEEP IN SYNC WITH github.com/agamarora/second-brain/blob/main/README.md (BEGIN:PASTE_PROMPT … END:PASTE_PROMPT) -->
+    <p style="font-size: 0.88rem; color: var(--text-dim);">
+      No Claude Code? Same flow works on <a href="https://github.com/agamarora/second-brain/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">ChatGPT, Claude Desktop, Cursor, Copilot, or manual</a>. About 15 minutes.
+    </p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-title">FAQ</div>
+    <h2>Questions you'd ask before starting.</h2>
+
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">Why git, not Notion / Obsidian / Reflect / Mem?</div>
+        <div class="faq-a">Your second brain should outlive any app. Git is permanent, portable, versioned. Obsidian is a great reader on top of this &mdash; but it isn't required. Mem and Reflect charge rent. Notion locks your format. A git repo of markdown survives all of them.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why Claude Code as the runtime?</div>
+        <div class="faq-a">The AI that writes your brain should run inside the brain. Skills live in <code>.claude/skills/</code>. The schema lives in <code>CLAUDE.md</code>. No round-trip to a hosted service, no cloud billing, no trust boundary between your notes and whoever runs the AI.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does "compounding" mean here?</div>
+        <div class="faq-a">Every ingested source writes three layers of provenance into your wiki: a forward reference in the source, inline <code>[Source: [[…]]]</code> markers on touched pages, and a reverse "Sources that shaped this page" table on each touched page. Decisions chain via <code>builds_on</code>. Six months in, your brain is worth more than the sum of what you put in.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Is my data private?</div>
+        <div class="faq-a">By default, yes. <code>inbox/</code>, <code>raw/</code>, and <code>archive/</code> are gitignored. The GitHub Pages publish workflow ships disabled &mdash; you uncomment one line to turn it on, and only then. Nothing leaves your machine until you explicitly push.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I run this without Claude Code?</div>
+        <div class="faq-a"><a href="https://github.com/agamarora/second-brain/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md</a> covers ChatGPT, Claude Desktop, Cursor, Copilot, and manual. Same five questions, same seeded files, same ingest &mdash; ~15 minutes instead of ~10.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Can I fork or contribute?</div>
+        <div class="faq-a">It's a GitHub template &mdash; hit "Use this template" for your own copy. MIT licensed. PRs welcome on the template itself; open an issue first.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR AI AGENTS -->
+  <div class="section">
+    <div class="section-title">For AI agents</div>
+    <div class="quote">
+      <p>If you are an AI coding agent handed this URL and asked to set up a second brain for your user, read the paste prompt above and the repo's <code>CLAUDE.md</code> in full before acting. The setup wizard in <code>CLAUDE.md</code> is authoritative. Do not improvise.</p>
+      <div class="attrib">Directive &middot; canonical instructions in repo</div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="section">
+    <div class="section-title">Resources</div>
+    <h2>Everything is public.</h2>
+    <ul class="resources">
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/second-brain" target="_blank" rel="noopener">github.com/agamarora/second-brain &nearr;</a>
+        <span class="r-desc">Template repo (MIT)</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/second-brain/blob/main/CLAUDE.md" target="_blank" rel="noopener">CLAUDE.md &nearr;</a>
+        <span class="r-desc">The setup wizard schema</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/second-brain/blob/main/SETUP-GUIDE.md" target="_blank" rel="noopener">SETUP-GUIDE.md &nearr;</a>
+        <span class="r-desc">For ChatGPT, Cursor, Copilot, manual</span>
+      </li>
+      <li>
+        <a class="r-name r-placeholder" href="#" aria-disabled="true">Medium launch post &nearr;</a>
+        <span class="r-desc">Coming soon</span>
+      </li>
+      <li>
+        <a class="r-name r-placeholder" href="#" aria-disabled="true">LinkedIn launch post &nearr;</a>
+        <span class="r-desc">Coming soon</span>
+      </li>
+      <li>
+        <a class="r-name" href="/lab/ai-resume/">See also: ai-resume &nearr;</a>
+        <span class="r-desc">Same distribution pattern, different surface</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="back">
+    <a href="/lab/">&larr; back to lab</a>
+    <a href="/">agamarora.com</a>
+  </div>
+
+</div>
+
+<div class="copy-toast" id="copy-toast" role="status" aria-live="polite">Copied. Paste into Claude Code.</div>
+
+<script>
+  // aa. mark stroke-draw on load
+  (function() {
+    const s = document.getElementById('aa-stroke');
+    const f = document.getElementById('aa-fill');
+    const d = document.getElementById('dot-fill');
+    if (!s || !f || !d) return;
+    document.fonts.ready.then(() => {
+      const len = s.getComputedTextLength();
+      d.setAttribute('x', 4 + len - 2);
+      f.setAttribute('x', 4);
+      const dl = len * 2;
+      s.style.strokeDasharray = dl;
+      s.style.strokeDashoffset = dl;
+      s.style.opacity = '1';
+      s.getBoundingClientRect();
+      s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+      s.style.strokeDashoffset = '0';
+      s.addEventListener('transitionend', function h(e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+        s.removeEventListener('transitionend', h);
+        f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+        d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+        s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+      });
+    });
+  })();
+
+  (function() {
+    const btn = document.getElementById('copy-btn');
+    const pre = document.getElementById('paste-prompt');
+    const toast = document.getElementById('copy-toast');
+    if (!btn || !pre) return;
+
+    btn.addEventListener('click', async function() {
+      const tmp = document.createElement('textarea');
+      tmp.innerHTML = pre.innerHTML;
+      const text = tmp.value;
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(ta);
+      }
+
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      toast.classList.add('show');
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+        toast.classList.remove('show');
+      }, 2000);
+    });
+  })();
+</script>
+
+</body>
+</html>

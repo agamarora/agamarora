@@ -287,6 +287,60 @@
   .project-media.anchor-top img { object-position: center top; }
   .project-media.anchor-center img { object-position: center center; }
 
+  /* Inline repo-tree preview for media slot when no screenshot
+     yet exists. Uses design tokens, no new colors. */
+  .repo-preview-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--surface-2);
+    text-decoration: none;
+  }
+  .repo-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .repo-preview-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .rp-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    background: var(--border-hover);
+    display: inline-block;
+  }
+  .rp-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-left: 8px;
+    letter-spacing: 0.02em;
+  }
+  .repo-preview-tree {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.75;
+    color: var(--text);
+    opacity: 0.9;
+    padding: var(--space-5) var(--space-6);
+    margin: 0;
+    flex: 1;
+    white-space: pre;
+    overflow: hidden;
+  }
+  .rp-dim { color: var(--text-dim); }
+  .rp-accent { color: var(--accent); }
+  @media (max-width: 720px) {
+    .repo-preview-tree { font-size: 0.72rem; padding: var(--space-4) var(--space-5); }
+  }
+
   .project-info {
     display: flex;
     flex-direction: column;
@@ -416,6 +470,49 @@
     <h1>Things I've <span class="accent">shipped</span>.</h1>
     <p class="lead">Open source, side projects, and experiments. Some are live, some are forever betas, all are real.</p>
   </section>
+
+  <!-- second-brain -->
+  <article class="project-card" id="second-brain-project">
+    <header class="project-head">
+      <h2><i class="fas fa-brain"></i> second-brain</h2>
+      <span class="project-badge">Open Source</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media">
+        <a href="/lab/second-brain/" aria-label="Open second-brain PRFAQ" class="repo-preview-link">
+          <div class="repo-preview" aria-hidden="true">
+            <div class="repo-preview-head"><span class="rp-dot"></span><span class="rp-dot"></span><span class="rp-dot"></span><span class="rp-title">my-brain/</span></div>
+            <pre class="repo-preview-tree">memory/MEMORY.md
+journal/
+  NOW.md
+  TODO.md
+wiki/
+  concepts/strategy.md
+  people/me.md
+decisions/
+  2026-04-23-first.md
+inbox/      <span class="rp-dim">(gitignored)</span>
+log.md
+CLAUDE.md   <span class="rp-accent">← schema</span></pre>
+          </div>
+        </a>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">Claude Code</span>
+          <span class="project-tag">Git</span>
+          <span class="project-tag">Markdown</span>
+        </div>
+        <div class="project-description">
+          <p>Your second brain lives in git. Paste one prompt into Claude Code, answer five questions, drop three to five artifacts. Ten minutes later your wiki is seeded, your inbox is ingested, and every new source compounds via three-layer provenance. Plain markdown, no SaaS, no lock-in.</p>
+        </div>
+        <div class="project-actions">
+          <a href="/lab/second-brain/" class="icon-button" title="Read the PRFAQ"><i class="fas fa-book-open"></i><span>Read the PRFAQ</span></a>
+          <a href="https://github.com/agamarora/second-brain" target="_blank" rel="noopener" class="icon-button" title="View repo"><i class="fab fa-github"></i><span>Code</span></a>
+        </div>
+      </div>
+    </div>
+  </article>
 
   <!-- AI Resume -->
   <article class="project-card" id="ai-resume-project">
