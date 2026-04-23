@@ -6,7 +6,7 @@
 
 ---
 
-12 years building things across analytics, gaming, beauty, logistics, and AI.
+12 years building things across analytics, gaming, retail, logistics, and AI.
 
 I care about taste and craft in product. I code my own prototypes. I think the best products come from people who can hold both the user's problem and the technical constraint in their head at the same time.
 
