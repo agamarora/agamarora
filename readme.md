@@ -12,8 +12,6 @@ I care about taste and craft in product. I code my own prototypes. I think the b
 
 Right now I'm building enterprise AI at [AIonOS](https://aionos.io) — multi-agent systems, voice AI, and AI copilots. Before that I scaled a data platform 10x at [FarEye](https://fareye.com), co-founded a game studio ([V2 Games](https://www.linkedin.com/company/v2-games/)) that won Indie Game of the Year 2017, and helped startups raise $500K+.
 
-B.Tech CS + PGDM Marketing. The rare combo of someone who can write the code and write the positioning.
-
 ## What I'm building
 
 ### Open source & side projects
