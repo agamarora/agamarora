@@ -27,8 +27,6 @@
 ## Content
 - [x] ~~Add more projects to `/lab`~~ — 4 now: second-brain, AI Resume, Voice AI, Claude Code Resource Monitor
 - [x] ~~Launch `/lab/second-brain/` PRFAQ~~ — shipped 2026-04-23, same body live on [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) and [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/)
-- [ ] Consider a blog/writing section — 12+ years of product experience to share
-- [ ] Consider a contact form instead of bare `mailto:` link in lab footer
 - [x] ~~Dedicated OG image for `/lab/second-brain/`~~ — shipped 2026-04-24
 
 ## Performance
@@ -50,10 +48,8 @@ All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and
 ## Future
 
 - [x] ~~`/moodboard` robots noindex~~ — added 2026-04-22 on both `/moodboard/index.html` and `/moodboard/aa-mark.html`; also blocked in `robots.txt`
-- [ ] Refresh resume content as roles change
 - [x] ~~Google Fonts vendored locally~~ — JetBrains Mono + Patrick Hand woff2 self-hosted 2026-04-24. `feedback_no_external_deps` fully satisfied.
 - [x] ~~Security headers~~ — CSP, HSTS, X-Frame-Options, Referrer-Policy, Permissions-Policy, X-Content-Type-Options added to netlify.toml 2026-04-24.
 - [x] ~~Project tag contrast fix~~ — `.project-tag` color #7a7a7a → #8a8a8a, passes WCAG AA (5.18 ratio) 2026-04-24.
 - [x] ~~Lab card aria-labels~~ — descriptive aria-label on Read more / Code CTAs 2026-04-24.
 - [x] ~~Lab card image resize~~ — luna-monitor + ai-resume PNGs resized to displayed dimensions (.v2.png) 2026-04-24.
-- [ ] Add `netlify.toml` redirect pre-warm for critical paths

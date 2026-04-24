@@ -309,6 +309,41 @@
   }
   .sb-media a:hover video { transform: scale(1.02); }
 
+  /* Case study cover — text-only visual, matches card flex-stretch. */
+  .cs-cover {
+    background: linear-gradient(135deg, var(--surface-2) 0%, #0f0f0f 100%);
+    position: relative;
+  }
+  .cs-cover > a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-6) var(--space-6);
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .cs-cover > a:hover { background: rgba(229, 165, 75, 0.04); }
+  .cs-cover-kicker {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-4);
+  }
+  .cs-cover-pull {
+    font-family: var(--sans);
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.35;
+    color: var(--text);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .cs-cover-pull::before { content: "\201C"; color: var(--accent); margin-right: 2px; }
+  .cs-cover-pull::after { content: "\201D"; color: var(--accent); }
+
   .project-info {
     display: flex;
     flex-direction: column;
@@ -501,12 +536,12 @@
       </div>
       <div class="project-info">
         <div class="project-tags">
-          <span class="project-tag">AI Resume</span>
+          <span class="project-tag">Agent-to-Agent Web</span>
+          <span class="project-tag">Schema.org</span>
           <span class="project-tag">Open Source</span>
-          <span class="project-tag">AI Agent Friendly</span>
         </div>
         <div class="project-description">
-          <p>AI Resume turns your static resume into a live chat. Paste one prompt into Claude Code, run a coaching loop that drafts your system prompt and 12 behavioral evals, then deploy to Netlify. About 30 minutes. $0/month to run.</p>
+          <p>Your next recruiter is an AI. Your resume should be too. AI Resume is a live surface for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint for Schema.org career data; humans land on a chat with proof cards. Paste one prompt into Claude Code, deploy in 30 minutes, $0/month to run.</p>
         </div>
         <div class="project-actions">
           <a href="/lab/ai-resume/" class="icon-button" title="Read more" aria-label="Read more about AI Resume"><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span>Read more</span></a>
@@ -517,10 +552,68 @@
     </div>
   </article>
 
-  <!-- Voice AI -->
+  <!-- Case Study: Voice AI in production -->
+  <article class="project-card" id="voice-ai-production-project">
+    <header class="project-head">
+      <h2><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg> Voice AI in production</h2>
+      <span class="project-badge">Case Study</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media cs-cover">
+        <a href="/lab/voice-ai-production/" aria-label="Read the Voice AI in production case study">
+          <div class="cs-cover-kicker">The learning</div>
+          <div class="cs-cover-pull">The voice was never the blocker. The tools behind the voice were.</div>
+        </a>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">Voice AI</span>
+          <span class="project-tag">Enterprise</span>
+          <span class="project-tag">Adoption</span>
+        </div>
+        <div class="project-description">
+          <p>What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos versus adoption. Three verticals, asymmetric conversion, four surprises I didn't see coming, and the integration-surface signal I now screen for before the first demo.</p>
+        </div>
+        <div class="project-actions">
+          <a href="/lab/voice-ai-production/" class="icon-button" title="Read the case study" aria-label="Read the Voice AI in production case study"><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span>Read the case study</span></a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Case Study: Product shape is what you refuse -->
+  <article class="project-card" id="product-shape-project">
+    <header class="project-head">
+      <h2><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg> Product shape is what you refuse</h2>
+      <span class="project-badge">Case Study</span>
+    </header>
+    <div class="project-body">
+      <div class="project-media cs-cover">
+        <a href="/lab/product-shape/" aria-label="Read the Product shape case study">
+          <div class="cs-cover-kicker">The learning</div>
+          <div class="cs-cover-pull">Product shape is decided by what you refuse.</div>
+        </a>
+      </div>
+      <div class="project-info">
+        <div class="project-tags">
+          <span class="project-tag">Scope</span>
+          <span class="project-tag">Platform</span>
+          <span class="project-tag">MCP-first</span>
+        </div>
+        <div class="project-description">
+          <p>Scope lessons from building an enterprise voice AI platform from zero. Choosing a narrow control point over full-stack CCaaS. The MCP-first bet that paid off, the standalone-sellable pivot I got wrong, and the consolidation pattern that followed.</p>
+        </div>
+        <div class="project-actions">
+          <a href="/lab/product-shape/" class="icon-button" title="Read the case study" aria-label="Read the Product shape case study"><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span>Read the case study</span></a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Vapi Voice Agent (hackathon, open source) -->
   <article class="project-card" id="vapi-project">
     <header class="project-head">
-      <h2><svg class="icon" aria-hidden="true"><use href="#i-microphone"/></svg> Voice AI</h2>
+      <h2><svg class="icon" aria-hidden="true"><use href="#i-microphone"/></svg> Vapi Voice Agent</h2>
       <span class="project-badge">Vapi Challenge</span>
     </header>
     <div class="project-body">

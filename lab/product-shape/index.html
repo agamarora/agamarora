@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product shape is what you refuse — Agam Arora</title>
+<meta name="description" content="Scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first bet, the pivot I got wrong, the shape that held.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="Product shape is what you refuse">
+<meta property="og:description" content="Scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first bet, the pivot I got wrong.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://agamarora.com/lab/product-shape/">
+<meta property="og:image" content="https://agamarora.com/assets/og/default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Agam Arora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Product shape is what you refuse">
+<meta name="twitter:description" content="Scope lessons from building an enterprise voice AI platform from zero.">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/default.png">
+<link rel="canonical" href="https://agamarora.com/lab/product-shape/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Product shape is what you refuse",
+  "description": "Scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first bet, the pivot I got wrong, the shape that held.",
+  "author": { "@type": "Person", "name": "Agam Arora", "url": "https://agamarora.com/" },
+  "url": "https://agamarora.com/lab/product-shape/",
+  "mainEntityOfPage": "https://agamarora.com/lab/product-shape/",
+  "inLanguage": "en"
+}
+</script>
+
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: italic;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2');
+    font-weight: 400 500; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Patrick Hand';
+    src: url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2');
+    font-weight: 400; font-display: swap; font-style: normal;
+  }
+
+  .icon { width: 1em; height: 1em; fill: currentColor; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
+
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --border: #1E1E1E;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --accent-dim: rgba(229, 165, 75, 0.12);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mark: 'Patrick Hand', cursive;
+    --space-3: 8px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 48px;
+    --space-9: 64px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+
+  /* === Shared v2 header === */
+  header.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
+    z-index: 100;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    background: var(--bg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .icon-bar { display: inline-flex; align-items: center; }
+  .icon-bar a {
+    color: var(--text-dim);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
+
+  /* === Shared aa. mark === */
+  .aa-mark {
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
+    text-decoration: none;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  /* HEADER */
+  .cs-header { margin-bottom: var(--space-8); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .cs-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: var(--space-5);
+  }
+  .cs-header h1 .accent { color: var(--accent); }
+  .cs-header .deck {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--text-dim);
+    font-weight: 400;
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: var(--space-5);
+  }
+  .cs-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+  .cs-meta span + span::before {
+    content: "·";
+    margin-right: var(--space-4);
+    color: var(--border);
+  }
+
+  /* SECTIONS */
+  .section { margin-bottom: var(--space-8); }
+  .section h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-3);
+    margin-top: var(--space-6);
+    color: var(--text);
+  }
+  .section p {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.9;
+    margin-bottom: var(--space-4);
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section strong { color: var(--text); font-weight: 600; }
+  .section em { color: var(--text); font-style: italic; opacity: 1; }
+  .section a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .section a:hover { border-bottom-color: var(--accent); }
+  .section code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .section ol, .section ul {
+    margin: var(--space-4) 0 var(--space-5) var(--space-6);
+    padding: 0;
+  }
+  .section li {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.9;
+    margin-bottom: var(--space-3);
+    line-height: 1.65;
+  }
+
+  /* PULL QUOTE */
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--accent-dim);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .quote p {
+    font-size: 1.05rem;
+    font-style: italic;
+    opacity: 1;
+    margin-bottom: 0;
+  }
+
+  /* BACK */
+  .back {
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .back a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: none;
+  }
+  .back a:hover { color: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .page { padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8); }
+    .cs-header { margin-bottom: var(--space-7); }
+    .section { margin-bottom: var(--space-7); }
+  }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg>
+    </a>
+    <a href="/" aria-label="Home">
+      <svg class="icon" aria-hidden="true"><use href="#i-house"/></svg>
+    </a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<main class="page">
+
+  <header class="cs-header">
+    <div class="eyebrow">Lab / Case Study</div>
+    <h1>Product shape is <span class="accent">what you refuse.</span></h1>
+    <p class="deck">Scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first bet, the pivot I got wrong, the shape that held.</p>
+    <div class="cs-meta">
+      <span>Case Study</span>
+      <span>Head of product, from zero</span>
+      <span>Real-time conversational execution</span>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Context</h2>
+    <p>A real-time conversational execution platform for enterprise voice agents. I came in as head of product from zero, reporting to the CEO, and owned the product surface end to end. Strategy, roadmap, specs, architecture decisions with engineering, customer-facing POCs, GTM. Two paying enterprise customers in production, a multi-million-dollar deal pipeline, and a live airline deployment over the arc I'm describing.</p>
+  </section>
+
+  <section class="section">
+    <h2>Problem I was solving</h2>
+    <p>Large enterprises wanted voice agents for contact center volume. The market was split. Legacy CCaaS vendors bolted AI onto stacks that didn't meet real-time bars. New LLM-native voice tools demoed well but couldn't execute tools against enterprise systems or hold reliability at production load. The gap was a real-time conversational execution layer. Orchestration, tool execution, latency, reliability, sitting between the voice runtime and the enterprise's systems.</p>
+    <p>The strategic question was where to draw product boundaries. Every enterprise customer wanted the full stack. Voice, telephony, CRM, analytics, QA, agent desktop. The natural answer was yes-to-everything, because the revenue was there. The hard answer was to pick a narrow control point and refuse the rest.</p>
+  </section>
+
+  <section class="section">
+    <h2>What I considered</h2>
+    <p>Three product shapes.</p>
+    <p><strong>Full-stack CCaaS.</strong> Own everything the customer asked for. Attractive because every RFP asked for this shape. Rejected because we'd be a distant third on every axis against incumbents who'd been building each layer for a decade, with zero differentiation on the one layer that was actually new.</p>
+    <p><strong>Voice AI as a point product.</strong> Sell the voice agent standalone, integrate with whatever the customer already ran. Attractive because scope was small and the sales cycle shorter. Rejected because point products in the voice space were commoditizing, and selling without orchestration meant every deal hit a different integration ceiling.</p>
+    <p><strong>Narrow control point.</strong> Real-time conversational execution. Own the agent configuration layer, the tool execution layer, the latency and reliability primitives, the post-call evaluation loop. Partner on telephony, on CRM, on analytics-as-a-product. This was the choice. Least intuitive from "what do customers ask for." Most defensible from "what is actually hard and getting harder."</p>
+  </section>
+
+  <section class="section">
+    <h2>What I shipped</h2>
+    <p>The platform over this arc includes an agent configuration surface with prompts, tools, models, voice, call stages, guardrails, and versioning. A platform-level tool registry with a built-in tester. A post-call evaluation module. A chat engine on a frontier hosted LLM provider, separate from the voice runtime. A consolidated platform API that absorbed CRM and post-call analytics as internal packages.</p>
+    <p>The biggest architectural bet was <strong>MCP-first</strong>. Every new capability ships as an MCP server, not a bespoke SDK and not an agent-local tool definition. I made this call early, before MCP had mass adoption. The team had been burned by bespoke tool APIs in prior products, and customers kept asking for tool portability across agents. The tradeoff was betting on a standard that wasn't yet the default. If it hadn't taken off, we'd have rebuilt. It took off.</p>
+    <p>The second bet was <strong>separation of chat and voice at the runtime level</strong>. Voice on a real-time voice runtime with a frontier open-weight LLM and premium TTS. Chat on a frontier hosted LLM with a channel-agnostic chat API. Competitors were trying to unify both on one runtime. I rejected that because latency profile, interruption behavior, and turn-taking semantics are not the same problem, and a shared abstraction would be worse at both than two focused ones.</p>
+  </section>
+
+  <section class="section">
+    <h2>The hardest call post-ship: the evaluation module pivot</h2>
+    <p>Post-call evaluation and analytics shipped first as a standalone service in its own repo, its own deployment, its own database, its own team allocation. The logic: QA and analytics had standalone-sellable value, so they should be a standalone service. Engineering pushed back that this created ops surface area we couldn't sustain at current headcount. I overruled, because the product case for selling QA to customers who weren't buying voice AI felt real.</p>
+    <p>Six months in, I was wrong. Three things forced the pivot.</p>
+    <ol>
+      <li>The evaluation module was tightly coupled to every call event stream in the voice platform. The service boundary was not a clean domain seam. It was a fiction.</li>
+      <li>The separate ops stack was eating engineer-weeks per sprint in deployment glue. Message queues, auth, observability, a second database to babysit.</li>
+      <li>The standalone sales motion hadn't produced a deal in two quarters. Every customer who bought QA was already buying voice. The "standalone-sellable" thesis was not holding.</li>
+    </ol>
+    <p>I pulled it back into the platform API as an internal package. Roughly 18 data models, 4 services, 28 aggregations, 25 routes moved in. Post-call evaluation now runs fire-and-forget against an internal URL. Four dead frontend pages and ten dead components dropped out. The team got back meaningful sprint capacity. The standalone-sellable thesis, parked.</p>
+    <div class="quote">
+      <p>The pattern I extracted. When a service doesn't warrant its own ops surface, collapse it into the platform API. CRM followed the same path into the same repo by the same reasoning, pulling in another 40 files. The platform API has become the consolidation target for anything not earning its own boundary.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Other things I had to walk back</h2>
+    <p>Feature categorization on the ops board used colored labels. Replaced with prefixed card names after labels got overloaded with "Blocked" and "Bug" flags and the board became unreadable at a glance.</p>
+    <p>Chat and voice were considered for a unified abstraction in early specs. Dropped that for the reasons above, and the separation has held under production load across both surfaces.</p>
+    <p>The standalone pitch for the evaluation module appeared in sales decks for two quarters. I killed the slide after the pivot. Selling a package as a product wastes the first meeting.</p>
+  </section>
+
+  <section class="section">
+    <h2>Where the scope discipline paid off</h2>
+    <p>The narrow control point held under revenue pressure. Customers still asked for CCaaS, CRM, telephony, standalone analytics. I said no with a documented boundary every time. The payoff was that engineering time compounded on the one thing that was actually differentiated, and when the voice agent deployments went live, they worked. Two paying enterprise customers, a multi-million-dollar deal pipeline, and an airline agent live and performing in prod.</p>
+    <p>The MCP-first bet paid off separately. When the standard matured, we were already there. Every new capability since ships as an MCP server in 1 to 2 weeks steady state. New agents compose from the tool registry, not from bespoke tool code. That compounding is visible in every deal cycle now.</p>
+  </section>
+
+  <section class="section">
+    <h2>Metrics, ranges only</h2>
+    <p>Platform consolidation reduced deployable services by 40 to 60 percent across the evaluation module and CRM pullbacks. Sprint capacity freed: 20 to 30 percent in engineering-weeks post-collapse. Time from new capability spec to shipped MCP server: 1 to 2 weeks steady state. Customer-ask-to-scope-boundary rejections: 10+ documented and held, zero reversals. Two paying enterprise customers, multi-million-dollar deal pipeline, airline deployment live.</p>
+  </section>
+
+  <section class="section">
+    <h2>What I learned as a PM</h2>
+    <p><strong>Product shape is decided by what you refuse.</strong> Saying yes to every customer ask made us indistinguishable from incumbents. Saying no to CCaaS, CRM, telephony, and analytics-as-a-product was what made the control point legible. I'd write the scope-boundary document before the first customer meeting, not after, and treat it as a living artifact that every decision is tested against.</p>
+    <p><strong>Standalone-sellable is a seductive frame and usually wrong.</strong> The evaluation module looked like two products in one repo. It was one product with a pretend seam. When someone claims "this could be standalone," I now check three things. Its own data model. Its own deployment rhythm. A customer who'd buy one without the other. If any fails, it's a package, not a service.</p>
+    <p><strong>MCP-first worked because it was a single bet on a converging standard.</strong> The general rule: when you're early on an emerging standard that solves a real pain, going all in is cheaper than hedging. Hedging would have doubled our tool API surface for a year.</p>
+    <p><strong>Consolidation is a product decision, not an engineering cleanup.</strong> When the evaluation module and CRM pulled back into the platform API, that wasn't refactoring. It was the product boundary catching up with reality. I treat the shape of the service graph as part of the product spec now, not a deployment detail the team figures out later.</p>
+  </section>
+
+  <div class="back">
+    <a href="/lab/">&larr; back to lab</a>
+    <a href="/lab/voice-ai-production/">read: voice ai in production &rarr;</a>
+  </div>
+
+</main>
+
+<script>
+  // aa. mark stroke-draw on load
+  (function() {
+    const s = document.getElementById('aa-stroke');
+    const f = document.getElementById('aa-fill');
+    const d = document.getElementById('dot-fill');
+    if (!s || !f || !d) return;
+    document.fonts.ready.then(() => {
+      const len = s.getComputedTextLength();
+      d.setAttribute('x', 4 + len - 2);
+      f.setAttribute('x', 4);
+      const dl = len * 2;
+      s.style.strokeDasharray = dl;
+      s.style.strokeDashoffset = dl;
+      s.style.opacity = '1';
+      s.getBoundingClientRect();
+      s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+      s.style.strokeDashoffset = '0';
+      s.addEventListener('transitionend', function h(e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+        s.removeEventListener('transitionend', h);
+        f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+        d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+        s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

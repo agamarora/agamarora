@@ -11,8 +11,11 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 - [Home](https://agamarora.com/): landing page — greeting cycle, bio, three entry points (AI chat, projects, resume)
 - [Resume](https://agamarora.com/resume): full career history, roles, and education
 - [resume.md](https://agamarora.com/resume.md): plain-markdown source of the resume — ground truth for factual work-history questions
-- [Lab](https://agamarora.com/lab/): open source projects and experiments
-- [AI Resume template](https://agamarora.com/lab/ai-resume/): an open source template that turns a resume into a chat — PRFAQ and setup wizard
+- [Lab](https://agamarora.com/lab/): open source, case studies, and experiments
+- [second-brain](https://agamarora.com/lab/second-brain/): open source template — a git-native second brain your AI can read, write, and compound
+- [AI Resume template](https://agamarora.com/lab/ai-resume/): open source — a resume for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint; humans get a chat with proof cards
+- [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
+- [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
 - [Talk to Agam's AI](https://agamarora.com/enter): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
 
 ## Canonical facts
@@ -30,9 +33,15 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 
 ## Projects
 
-- [Shararat Voice AI](https://shararat.agamarora.com): playful voice AI with two debating agents (Angel and Dan). Built for the Vapi Build Challenge. Code: https://github.com/agamarora/shararat-ai
-- [AI Resume template](https://github.com/agamarora/ai-resume): open source template — paste one prompt, get a chat-based resume deployed in 30 minutes. Live demo: https://ai-resume-demo.netlify.app
+- [second-brain](https://github.com/agamarora/second-brain): open source git-native second brain template for AI agents. MIT licensed. PRFAQ at https://agamarora.com/lab/second-brain/
+- [AI Resume](https://github.com/agamarora/ai-resume): open source. Resume for the agent-to-agent web — dual audience (hiring AI agents via /.well-known/ai-resume.json, humans via chat). Live demo: https://ai-resume-demo.netlify.app
+- [Vapi Voice Agent (Shararat)](https://shararat.agamarora.com): playful voice AI with two debating agents (Angel and Dan). Built for the Vapi Build Challenge. Code: https://github.com/agamarora/shararat-ai
 - [Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor): terminal dashboard for Claude Code usage, CPU, temps, GPU, disks, and processes
+
+## Case studies
+
+- [Voice AI in production](https://agamarora.com/lab/voice-ai-production/): lessons from shipping real-time voice agents into enterprise contact centers over 12-18 months. Demos vs adoption, integration surface, telephony partner risk, multilingual prompt drift, kill criteria.
+- [Product shape is what you refuse](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. The narrow control point, MCP-first bet, standalone-sellable pivot that failed, consolidation pattern that followed.
 
 ## Optional
 

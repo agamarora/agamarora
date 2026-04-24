@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice AI in production — Agam Arora</title>
+<meta name="description" content="What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="Voice AI in production — what the first 90 days taught me">
+<meta property="og:description" content="Demo quality is not adoption. Integration surface is the real variable. Four surprises from shipping voice agents into enterprise call volumes.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://agamarora.com/lab/voice-ai-production/">
+<meta property="og:image" content="https://agamarora.com/assets/og/default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Agam Arora">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voice AI in production — what the first 90 days taught me">
+<meta name="twitter:description" content="Four surprises from shipping voice agents into enterprise call volumes.">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/default.png">
+<link rel="canonical" href="https://agamarora.com/lab/voice-ai-production/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Voice AI in production",
+  "description": "What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria.",
+  "author": { "@type": "Person", "name": "Agam Arora", "url": "https://agamarora.com/" },
+  "url": "https://agamarora.com/lab/voice-ai-production/",
+  "mainEntityOfPage": "https://agamarora.com/lab/voice-ai-production/",
+  "inLanguage": "en"
+}
+</script>
+
+<style>
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
+    font-weight: 300 900; font-display: swap; font-style: italic;
+  }
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2');
+    font-weight: 400 500; font-display: swap; font-style: normal;
+  }
+  @font-face {
+    font-family: 'Patrick Hand';
+    src: url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2');
+    font-weight: 400; font-display: swap; font-style: normal;
+  }
+
+  .icon { width: 1em; height: 1em; fill: currentColor; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
+
+  :root {
+    --bg: #0A0A0A;
+    --surface: #111111;
+    --border: #1E1E1E;
+    --text: #E8E4DF;
+    --text-dim: #7A7A7A;
+    --accent: #E5A54B;
+    --accent-dim: rgba(229, 165, 75, 0.12);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mark: 'Patrick Hand', cursive;
+    --space-3: 8px;
+    --space-4: 12px;
+    --space-5: 16px;
+    --space-6: 24px;
+    --space-7: 32px;
+    --space-8: 48px;
+    --space-9: 64px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+
+  /* === Shared v2 header === fluid 52-64px, icons scale via clamp. */
+  header.site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: clamp(52px, 6vw, 64px);
+    z-index: 100;
+    padding: 0 clamp(1rem, 3vw, 1.5rem);
+    background: var(--bg);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .icon-bar { display: inline-flex; align-items: center; }
+  .icon-bar a {
+    color: var(--text-dim);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2em; height: 2em;
+    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
+    transition: color 0.2s ease;
+    text-decoration: none;
+  }
+  .icon-bar a:hover { color: var(--accent); }
+
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
+  .aa-mark {
+    position: fixed;
+    bottom: clamp(16px, 3vw, 32px);
+    right: clamp(16px, 3vw, 32px);
+    z-index: 50;
+    text-decoration: none;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
+    width: clamp(44px, 5vw, 60px);
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  /* HEADER */
+  .cs-header { margin-bottom: var(--space-8); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .cs-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: var(--space-5);
+  }
+  .cs-header h1 .accent { color: var(--accent); }
+  .cs-header .deck {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--text-dim);
+    font-weight: 400;
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: var(--space-5);
+  }
+  .cs-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+  .cs-meta span + span::before {
+    content: "·";
+    margin-right: var(--space-4);
+    color: var(--border);
+  }
+
+  /* SECTIONS */
+  .section { margin-bottom: var(--space-8); }
+  .section h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-3);
+    margin-top: var(--space-6);
+    color: var(--text);
+  }
+  .section p {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.9;
+    margin-bottom: var(--space-4);
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section strong { color: var(--text); font-weight: 600; }
+  .section em { color: var(--text); font-style: italic; opacity: 1; }
+  .section a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .section a:hover { border-bottom-color: var(--accent); }
+  .section code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .section ol, .section ul {
+    margin: var(--space-4) 0 var(--space-5) var(--space-6);
+    padding: 0;
+  }
+  .section li {
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.9;
+    margin-bottom: var(--space-3);
+    line-height: 1.65;
+  }
+
+  /* PULL QUOTE */
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--accent-dim);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .quote p {
+    font-size: 1.05rem;
+    font-style: italic;
+    opacity: 1;
+    margin-bottom: 0;
+  }
+
+  /* BACK */
+  .back {
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .back a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: none;
+  }
+  .back a:hover { color: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .page { padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8); }
+    .cs-header { margin-bottom: var(--space-7); }
+    .section { margin-bottom: var(--space-7); }
+  }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+    </a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg>
+    </a>
+    <a href="/" aria-label="Home">
+      <svg class="icon" aria-hidden="true"><use href="#i-house"/></svg>
+    </a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<main class="page">
+
+  <header class="cs-header">
+    <div class="eyebrow">Lab / Case Study</div>
+    <h1>Voice AI <span class="accent">in production.</span></h1>
+    <p class="deck">What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria.</p>
+    <div class="cs-meta">
+      <span>Case Study</span>
+      <span>PM lead, end-to-end</span>
+      <span>12&ndash;18 month arc</span>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Context</h2>
+    <p>Over roughly twelve to eighteen months I led product for a voice AI stack inside an enterprise platform company. The product was real-time voice agents for large enterprises. A customer calls, the agent handles the conversation end to end, executes transactions, hands off when it can't. My scope was the full product surface. Stack choices, demo scripts, customer-facing POCs, integration playbook, multilingual deployment, and launch.</p>
+  </section>
+
+  <section class="section">
+    <h2>Problem I was solving</h2>
+    <p>Large enterprises wanted voice agents that could actually replace a human on defined intents. The bar was specific. Sub-second interruption handling, multilingual fluency including code-switching, reliable tool execution against their back-office systems. Generic voice bot platforms didn't clear any of the three. Incumbents were IVR-era stacks with LLM glue. New entrants demoed well and fell over under real telephony load.</p>
+    <p>The pain was concentrated in high-volume inbound centers. A mid-seven-figure annual contact center spend, with 70 to 80 percent on repeatable intent handling a voice agent should own. Every quarter of delay was real money on the floor.</p>
+  </section>
+
+  <section class="section">
+    <h2>What I considered</h2>
+    <p>Three architecture paths.</p>
+    <p><strong>Build the full stack ourselves.</strong> Our own ASR, our own turn-taking, our own TTS integration. Attractive because we'd own latency end to end with no vendor risk. Rejected because the team was small and the frontier on turn-taking was moving faster than we could chase. Going custom would have cost us a year we didn't have.</p>
+    <p><strong>Wrap a voice bot platform.</strong> Attractive because time to demo was a week. Rejected because the platforms abstracted away the exact things I needed control over. Interruption behavior, prompt architecture, streaming boundaries. When we stress-tested them with real enterprise conversations, the abstraction leaked and we couldn't fix it from our layer.</p>
+    <p><strong>Compose a stack.</strong> A leading real-time voice runtime for turn-taking and ASR, a frontier open-weight LLM for reasoning, a premium TTS provider for voice. Wired together at our orchestration layer. We controlled the prompt, the tools, the state machine. The runtime vendor owned the hard real-time bits. This was what I shipped.</p>
+    <p>In parallel, a go-to-market call. Depth in one vertical, or breadth across three. Depth compounds reference value. Breadth gives three shots at signal, three pipelines, three logos. I chose breadth. Three demo agents, three industry activity tables as acceptance criteria. The bet was that the technical stack was the solved problem and remaining variance was vertical fit.</p>
+  </section>
+
+  <section class="section">
+    <h2>What I shipped</h2>
+    <p>The composed stack went into production behind a telephony partner layer. We owned the agent configuration: prompts, tool registry, call stages, guardrails, voice settings. We did not own the telephony carrier or the on-prem SIP stack. That was a deliberate boundary.</p>
+    <p>Prompt architecture used a single system prompt per agent, no tool calling for demos, with conditionals for language mode and call stage. Tools were MCP servers against customer systems. Turn-taking, interruption, and call state were handled by the runtime natively. I wrote the stack reference myself so every demo and customer engagement used the same primitives and nothing drifted between agents.</p>
+    <p>For launch, three verticals, three flagship agents, a demo script each. The plan: demos open conversations, POCs close them, references compound.</p>
+  </section>
+
+  <section class="section">
+    <h2>What happened</h2>
+    <p>Airline adoption went better than planned. A Fortune 500 airline committed to a POC inside the first month, moved to paid production inside the quarter, and is live with the agent handling a material share of inbound volume. Performance is holding in prod. That deal alone was the validation the product needed.</p>
+    <p>The other two verticals did not convert the same way. Hospitality demos landed in the room and then the pipeline slowed. Telecom demos opened a long RFP cycle with a regional operator in a market where code-switching between English and a low-resource language was mandatory. That POC is progressing but on a very different timeline and with very different technical demands than the airline deal.</p>
+    <div class="quote">
+      <p>The pattern I didn't see coming. Segments with clean intent taxonomies and high contact center spend converted fast. Segments where the voice agent had to negotiate across multiple back-office systems without a clean intent boundary stalled. Not because the voice worked worse, but because the integration surface multiplied. The voice was never the blocker. The tools behind the voice were.</p>
+    </div>
+    <p>A second surprise. The telephony partner layer became the single biggest deal risk. I had rejected owning telephony because it was a scope boundary. That call was right. But I underestimated how often a partner's SIP integration timeline would sit on the critical path instead of ours. We had multiple conversations where our agent was ready and the integration was four weeks behind. That friction ate into deal momentum in ways I couldn't fix from our side.</p>
+    <p>A third surprise. Prompt drift in non-English deployments. Our first bilingual prompt for a regional airline engagement and the telecom POC both had the same failure mode. The model drifted into English mid-conversation when reference text was not gated behind language conditionals. Solvable. I re-architected the prompt with explicit language gates, and drift collapsed. But it should have been the default from day one. I had assumed a frontier LLM would hold register from a few examples. It did not hold under real call pressure.</p>
+    <p>A fourth, minor. Demo scripts initially supported tool calling. Removed after the first two demos showed the tool-call round trip blew the latency budget on real networks. Demos now use a single system prompt, no tools. Tool execution became its own product surface, demonstrated separately.</p>
+  </section>
+
+  <section class="section">
+    <h2>Metrics, ranges only</h2>
+    <p>Conversion from demo to paid POC ran 40 to 60 percent in the airline vertical, 0 to 20 percent in the other two over the first 90 days. Latency to interruption held sub-second in English, 2 to 3x target in some non-English conditions before the prompt fix. Drop-off inside POC was minimal in airline, noticeably higher in telecom before language gates were rebuilt. Two paying enterprise customers in production, a multi-million-dollar deal pipeline, and an airline deployment performing in prod.</p>
+  </section>
+
+  <section class="section">
+    <h2>What I learned as a PM</h2>
+    <p><strong>Demo quality is not adoption.</strong> We had demo parity across three verticals. Conversion was not remotely parity. The real variable was integration surface area per intent. I now screen opportunities on that ratio before the demo, not after the POC stalls.</p>
+    <p><strong>Scope boundaries hold value, but partner dependencies need their own playbook.</strong> Not owning telephony was correct. Not having a named engineering owner on the partner's side for each deal was a mistake. I would formalize a joint integration contract at deal start, not at POC.</p>
+    <p><strong>Multilingual voice needs prompt architecture, not prompt examples.</strong> The cheapest way to find this out is to run a bilingual conversation on day one of the stack, not at the first non-English POC. I would put a bilingual evaluation harness into the core stack before the first demo script next time.</p>
+    <p><strong>Breadth bets need explicit kill criteria.</strong> Launching three verticals was defensible. Not setting "if segment X has no paid POC by day N, we reallocate" was the mistake. Without that, breadth silently turns into distraction. Next time I write the kill criteria before the demo scripts.</p>
+  </section>
+
+  <div class="back">
+    <a href="/lab/">&larr; back to lab</a>
+    <a href="/lab/product-shape/">next: product shape is what you refuse &rarr;</a>
+  </div>
+
+</main>
+
+<script>
+  // aa. mark stroke-draw on load
+  (function() {
+    const s = document.getElementById('aa-stroke');
+    const f = document.getElementById('aa-fill');
+    const d = document.getElementById('dot-fill');
+    if (!s || !f || !d) return;
+    document.fonts.ready.then(() => {
+      const len = s.getComputedTextLength();
+      d.setAttribute('x', 4 + len - 2);
+      f.setAttribute('x', 4);
+      const dl = len * 2;
+      s.style.strokeDasharray = dl;
+      s.style.strokeDashoffset = dl;
+      s.style.opacity = '1';
+      s.getBoundingClientRect();
+      s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
+      s.style.strokeDashoffset = '0';
+      s.addEventListener('transitionend', function h(e) {
+        if (e.propertyName !== 'stroke-dashoffset') return;
+        s.removeEventListener('transitionend', h);
+        f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
+        d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
+        s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

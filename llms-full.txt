@@ -67,14 +67,23 @@ LinkedIn: linkedin.com/in/agamarora
 
 ---
 
-## Lab (projects)
+## Lab (open source, case studies, experiments)
 
-Agam's open source, side projects, and experiments. Some are live, some are forever betas, all are real.
+Agam's open source projects, case studies, and experiments. Some are live, some are forever betas, all are real.
 
-### AI Resume — an open source template
-An open source template that turns your resume into a chat. Paste one prompt, get a deployed AI resume in 30 minutes. Free to run. Read more at https://agamarora.com/lab/ai-resume/, live demo at https://ai-resume-demo.netlify.app, code at https://github.com/agamarora/ai-resume.
+### second-brain — an open source template
+A git-native second brain your AI can read, write, and keep improving for you. Paste one prompt into Claude Code, answer five questions, drop three to five artifacts. Ten minutes later you have a brain your agent can actually use. MIT licensed. Read more at https://agamarora.com/lab/second-brain/, code at https://github.com/agamarora/second-brain.
 
-### Shararat Voice AI
+### AI Resume — a resume for the agent-to-agent web
+Your next recruiter is an AI. Your resume should be too. AI Resume is a live surface for the agent-to-agent web. Hiring AI agents hit a well-known JSON endpoint (/.well-known/ai-resume.json) for Schema.org career data. Human recruiters land on a chat with proof cards. Paste one prompt into Claude Code, deploy in 30 minutes, $0/month. Read more at https://agamarora.com/lab/ai-resume/, live demo at https://ai-resume-demo.netlify.app, code at https://github.com/agamarora/ai-resume.
+
+### Voice AI in production (case study)
+What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria. Three verticals, asymmetric conversion, four surprises. The voice was never the blocker — the tools behind the voice were. Read at https://agamarora.com/lab/voice-ai-production/.
+
+### Product shape is what you refuse (case study)
+Scope lessons from building an enterprise voice AI platform from zero. The narrow control point over full-stack CCaaS. The MCP-first bet that paid off. The standalone-sellable pivot I got wrong, and the consolidation pattern that followed. Product shape is decided by what you refuse. Read at https://agamarora.com/lab/product-shape/.
+
+### Vapi Voice Agent (Shararat)
 A playful voice AI experience where two agents, Angel and Dan, debate your choices. Built for the Vapi Build Challenge to explore multi-agent interactions and creative prompting. Try it at https://shararat.agamarora.com, full video at https://www.youtube.com/watch?v=ZS2T_5x1on0, code at https://github.com/agamarora/shararat-ai.
 
 ### Claude Code Resource Monitor (luna-monitor)
