@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo: `agamarora/agamarora`.
 
+## Active Work
+
+**second-brain v1** — canonical spec at `docs/plans/second-brain-v1.md` (CEO review at `docs/plans/second-brain-v1-ceo-review.md`). Three-layer build: wiki (10 themes) + kg.json ontology + /enter v3 as thin playback layer. Locked 2026-04-24, execution starts Step 1 = Agam full-read of 54K-word LinkedIn corpus.
+
+**Corpus** lives in separate private repo `agamarora/agam-linkedin`. Pull: `gh repo clone agamarora/agam-linkedin`. Copy 4 files into `~/.gstack/projects/agamarora-agamarora/corpus/` before synthesis.
+
+**Next session pickup:** read `docs/plans/second-brain-v1.md` §9 (execution order), start Phase A Task #2. See also `~/.claude/projects/D--AA-agamarora/memory/project_second_brain_v1.md`.
+
+
 ## Stack
 
 - **Frontend**: Vanilla HTML, CSS, JavaScript. No framework, no build step. Every page is self-contained — no shared stylesheets or scripts.
