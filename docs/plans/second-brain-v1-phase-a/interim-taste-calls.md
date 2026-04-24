@@ -6,6 +6,26 @@ Updated 2026-04-24.
 
 ---
 
+## Decision 5 — Posting silences are normal, not professional gaps
+
+**Context:** Round 3c style fingerprint flagged Dec 2024 → Jun 2025 as 164-day silence (longest in E4, second-longest all-time) and asked whether intentional.
+
+**Agam call:** "There were downtimes — when I just decided not to post, or was dealing with stressed day job or something, or sometimes was just too focused on day job or family stuff." General pattern, not specific to that one gap.
+
+**Binding effect:**
+- Agent must NOT apologize for or dramatize posting gaps
+- Agent must NOT interpret silence periods as career inactivity, professional setback, burnout narrative, etc.
+- When asked "what was Agam doing during 2025?" → answer with what he WAS doing (AIonOS scale-up, voice platform work, family, focus periods) NOT what he WASN'T doing (posting on LinkedIn)
+- Posting cadence ≠ professional cadence. Wiki should not weight era importance by post volume — E2 has 33% of corpus by volume but is least relevant to current voice (per R3c). Use post-count as a signal of WRITING intensity, not of LIVING intensity.
+- Silence periods can be cited honestly when relevant ("Agam went quiet on LinkedIn between X and Y while heads-down on AIonOS / family / etc.") — but as context, not as drama.
+
+**Implication for wiki narrative:**
+- Era pages do NOT need to explain every gap
+- The 164-day Dec24-Jun25 silence does NOT need its own wiki section
+- If thesis post (Task #5) wants to discuss writing cadence at all, frame as "I write when I have something to say" not "I went silent because X"
+
+---
+
 ## Decision 4 — Em-dash is NOT Agam's fingerprint (Round 3c finding, not Agam pushback — but binding for downstream rounds)
 
 **Context:** Round 3c style fingerprint quantified punctuation patterns: only 3 em-dashes in 287 posts (0.01/post). LLMs commonly default to em-dashes as "intelligent prose" marker. Agent prompts elsewhere may have wrongly assumed Agam uses em-dashes (this CC session has been writing with em-dashes — wrong).

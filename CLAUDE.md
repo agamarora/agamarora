@@ -19,7 +19,7 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 **Phase A pivot 2026-04-24:** Original spec §12 required Agam full-read. Pivoted because synthesizer = source author (Agam wrote the corpus, doesn't need to "learn" it). Replaced with Task #2a (CC subagent fan-out, autonomous, 1-2hr) + Task #2b (Agam taste-pass, 60-90min, irreplaceable). See spec §12 revised + architecture doc §1.
 
-**Next session pickup (READ THIS):** Open `~/.gstack/projects/agamarora-agamarora/corpus/synthesis/STATUS.md` first. It's the live single-source-of-truth for Phase A round-by-round state, updated after every milestone. Tells you exactly which round to spawn next or whether to wait on Agam's taste-pass.
+**Next session pickup (READ THIS):** Open `docs/plans/second-brain-v1-phase-a/STATUS.md` first. It's the git-tracked single source of truth for Phase A round-by-round state, updated + pushed after every milestone. Tells you exactly which round to spawn next, what binding taste-calls to apply, and how to resume across machines/sessions.
 
 
 ## Stack
