@@ -22,14 +22,14 @@
 - [x] ~~Add `<link rel="canonical">` on all v2 pages~~
 - [x] ~~Enhance JSON-LD~~ — Person @graph with alumniOf/knowsAbout/description on `/`, ProfilePage on `/resume`, CollectionPage on `/lab`
 - [x] ~~Add `robots: noindex` to `/moodboard` pages~~
-- [ ] Generate a proper OG image for `/lab` (currently using the generic site preview)
+- [x] ~~Generate a proper OG image for `/lab`~~ — shipped 2026-04-24, per-page OGs for `/`, `/lab`, `/lab/second-brain/`, `/lab/ai-resume/`
 
 ## Content
 - [x] ~~Add more projects to `/lab`~~ — 4 now: second-brain, AI Resume, Voice AI, Claude Code Resource Monitor
 - [x] ~~Launch `/lab/second-brain/` PRFAQ~~ — shipped 2026-04-23, same body live on [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) and [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/)
 - [ ] Consider a blog/writing section — 12+ years of product experience to share
 - [ ] Consider a contact form instead of bare `mailto:` link in lab footer
-- [ ] Dedicated OG image for `/lab/second-brain/` (currently using generic site preview)
+- [x] ~~Dedicated OG image for `/lab/second-brain/`~~ — shipped 2026-04-24
 
 ## Performance
 - [x] ~~Delete 2.3 MB unused `agamarora_banner.png`~~ — was unused in site, restored for readme.md (GitHub profile). Still on disk, serves the profile header.
