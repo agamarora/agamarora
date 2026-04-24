@@ -4,22 +4,14 @@ LinkedIn: linkedin.com/in/agamarora
 
 ## Relevant Work Experience
 
-### Assistant Vice President - AI Products at AIonOS India Pvt. Ltd. (Nov 2025 - Present)
-- Delivering E2E customer experience platform for Enterprise CX tech transformation.
-- Product portfolio spanning across multi-modal, multi-lingual, unified experience and multi-agent platform for conversation management, post case quality and analytics.
-
-### Sr Prin Product Manager at UKG (Ultimate Kronos Group) (Sep 2025 - Nov 2025)
-- Part of Forecasting, AI and workforce planning product portfolio.
-
-### Lead Data Product Manager at AIonOS India Pvt. Ltd. (June 2024 - Aug 2025)
-- Own end-to-end product for a Voice AI platform handling 4M+ calls/year at 50% lower cost.
-- Delivered 15+ AI product POCs across RAG, voice, and agentic systems, driving $1.5M+ in enterprise deals.
-- Built a GenAI-powered no-code tool for API tagging and config, used to onboard 30+ third-party services within Voice AI platform.
-- Led product discovery and roadmap for an AI-native CRM+CDP suite, conducting 50+ stakeholder interviews across enterprise travel clients to define core workflows, data models, and integration needs.
-
-### Associate Product Manager at Interglobe Enterprises (May 2024 - May 2024)
-- Part of the InterGlobe group company AIonOS which is a joint venture of InterGlobe and Assago Group.
-- Leading AI product development.
+### Assistant Vice President - AI Products at AIonOS India Pvt. Ltd. (June 2024 - Present)
+- Leading product end-to-end for an enterprise customer experience platform. Two paying enterprise customers in production, multi-million-dollar deal pipeline, airline deployment live.
+- Voice AI platform handling 4M+ calls/year at 50% lower cost. Three verticals shipped with Fortune 500 engagements.
+- Product portfolio: multi-modal, multi-lingual, multi-agent conversation management, post-call evaluation, and analytics.
+- Delivered 15+ AI POCs across RAG, voice, and agentic systems, driving $1.5M+ in enterprise deals.
+- MCP-first platform bet: every new capability ships as an MCP server, 1-2 week steady state.
+- Built GenAI no-code tool for API tagging and config, onboarded 30+ third-party services.
+- Led product discovery and roadmap for an AI-native CRM+CDP suite, 50+ stakeholder interviews across enterprise travel clients.
 
 ### Lead Product Manager at FarEye Technologies Pvt. Ltd. (December 2020 - May 2024)
 - Led the end to end product lifecycle for company's flagship data product ANALYZE (fareye.com/products/analyze). Platform crossed over $1M ARR in 18 months with 35% upsell.
