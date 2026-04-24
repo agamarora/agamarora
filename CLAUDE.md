@@ -8,11 +8,18 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 ## Active Work
 
-**second-brain v1** — canonical spec at `docs/plans/second-brain-v1.md` (CEO review at `docs/plans/second-brain-v1-ceo-review.md`). Three-layer build: wiki (10 themes) + kg.json ontology + /enter v3 as thin playback layer. Locked 2026-04-24, execution starts Step 1 = Agam full-read of 54K-word LinkedIn corpus.
+**second-brain v1** — three-layer build: wiki (10 themes) + kg.json ontology + /enter v3 as thin playback layer.
 
-**Corpus** lives in separate private repo `agamarora/agam-linkedin`. Pull: `gh repo clone agamarora/agam-linkedin`. Copy 4 files into `~/.gstack/projects/agamarora-agamarora/corpus/` before synthesis.
+- **Spec** (canonical): `docs/plans/second-brain-v1.md` — locked 2026-04-24
+- **CEO review**: `docs/plans/second-brain-v1-ceo-review.md`
+- **Architecture doc** (system stitching, request flow, failure modes, gaps): `~/.claude/plans/rosy-plotting-flame.md` — approved 2026-04-24
+- **Project memory**: `~/.claude/projects/C--aa-agamarora/memory/project_second_brain_v1.md`
 
-**Next session pickup:** read `docs/plans/second-brain-v1.md` §9 (execution order), start Phase A Task #2. See also `~/.claude/projects/D--AA-agamarora/memory/project_second_brain_v1.md`.
+**Corpus** is local at `~/.gstack/projects/agamarora-agamarora/corpus/` (4 files copied 2026-04-24 from private repo `agamarora/agam-linkedin`).
+
+**Phase A pivot 2026-04-24:** Original spec §12 required Agam full-read. Pivoted because synthesizer = source author (Agam wrote the corpus, doesn't need to "learn" it). Replaced with Task #2a (CC subagent fan-out, autonomous, 1-2hr) + Task #2b (Agam taste-pass, 60-90min, irreplaceable). See spec §12 revised + architecture doc §1.
+
+**Next session pickup (READ THIS):** Open `~/.gstack/projects/agamarora-agamarora/corpus/synthesis/STATUS.md` first. It's the live single-source-of-truth for Phase A round-by-round state, updated after every milestone. Tells you exactly which round to spawn next or whether to wait on Agam's taste-pass.
 
 
 ## Stack
@@ -93,6 +100,20 @@ Dark-only. No light mode. No theme toggle. The moodboard at `/moodboard` is the 
 - **Images on lab cards:** pre-crop the source PNG to the intended aspect, use `object-position` only for a small anchor nudge. Do NOT CSS-crop aggressively. See `precrop-images-not-css` learning.
 - **Icons on CTAs:** use semantic Font Awesome icons (`fa-book-open` for docs, `fa-download` for downloads, `fa-github` for code). Not generic arrows.
 - **Display names:** on lab cards, the title should be plain-English descriptive ("Claude Code Resource Monitor"), not the repo/package name ("luna-monitor"). Repo names stay only in URLs, IDs, class names, asset filenames.
+
+## gstack
+
+gstack (Garry Tan's 23-skill engineering toolkit) is the default workflow here. Install it with:
+
+```bash
+git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
+```
+
+**Web browsing:** always use the `/browse` skill from gstack. Never use `mcp__claude-in-chrome__*` tools.
+
+**Available skills:** `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`, `/design-consultation`, `/design-shotgun`, `/design-html`, `/review`, `/ship`, `/land-and-deploy`, `/canary`, `/benchmark`, `/browse`, `/connect-chrome`, `/qa`, `/qa-only`, `/design-review`, `/setup-browser-cookies`, `/setup-deploy`, `/setup-gbrain`, `/retro`, `/investigate`, `/document-release`, `/codex`, `/cso`, `/autoplan`, `/plan-devex-review`, `/devex-review`, `/careful`, `/freeze`, `/guard`, `/unfreeze`, `/gstack-upgrade`, `/learn`.
+
+Run `/gstack-upgrade` periodically to stay current.
 
 ## Known Issues
 

@@ -19,7 +19,9 @@ Execution tracked in Tasks #2-18. Execute in order.
 
 **Why:** Scenarios blocker on /enter v3 is downstream of a larger gap — Agam's public thinking is unstructured. Every surface (agent, writing, thesis, talks) needs the same upstream structured synthesis. Build once, feed many.
 
-**How:** Karpathy method. Full-read first, cluster by theme + era, extract primitives, teach-back per page, publish synthesis as artifact. Agent runtime = thin retrieve-quote-route layer. Heavy reasoning precomputed at wiki-write time.
+**How:** Karpathy method, adapted for synthesizer = source author. CC subagent fan-out does mechanical synthesis (theme clustering, per-post tagging, voice extraction, edge proposal) → Agam taste-pass calibrates (theme deltas vs locked list, surprise validation, voice spot-check) → ontology lock → wiki authoring → publish. Agent runtime = thin retrieve-quote-route layer. Heavy reasoning precomputed at wiki-write time.
+
+**Phase A revision (2026-04-24):** Original spec §12 required Agam full-read pass before any synthesis. Pivot: when synthesizer = source author (Agam wrote these), full read becomes redundant. Replaced with subagent fan-out (Task #2a) followed by 60-90min taste-pass (Task #2b). Same downstream guarantees, ~3hr instead of weekend morning. See revised §9 + §12.
 
 **Launch gate:** wiki + /enter v3 + thesis post live together. No partial ship. Single moment, multiple assets.
 
@@ -115,17 +117,21 @@ Wiki source (markdown) lives in workspace and is edited by Agam. Build script co
 
 ```typescript
 type Node =
-  | { type: 'Belief',  id: string, label: string, era?: string }
+  | { type: 'Belief',  id: string, label: string, first_stated?: string }  // first_stated = ISO date for supersedes ordering
   | { type: 'Post',    id: string, date: string, permalink: string, snippet: string, theme: string[] }
   | { type: 'Comment', id: string, date: string, permalink: string, parent_post?: string, snippet: string }
-  | { type: 'Project', id: string, label: string, status: 'shipped'|'live'|'prfaq'|'archived', url?: string }
+  | { type: 'Project', id: string, label: string, status: 'shipped'|'live'|'prfaq'|'archived'|'private', url?: string, started?: string }
+  | { type: 'Tech',    id: string, label: string, category: 'language'|'framework'|'platform'|'tool'|'protocol' }
   | { type: 'Person',  id: string, label: string }
   | { type: 'Company', id: string, label: string, years: string }
   | { type: 'Theme',   id: string, label: string, slug: string }
-  | { type: 'Era',     id: string, label: string, start: string, end: string }
   | { type: 'Event',   id: string, label: string, date: string }
   | { type: 'Skill',   id: string, label: string }
 ```
+
+**Removed 2026-04-24:** `Era` node type. Reason: reader-value debate concluded eras are organizational scaffold not the message. Temporal ordering preserved via `Belief.first_stated` + `supersedes` edges. `/wiki/eras/index.html` page also dropped — see §4.
+
+**Added 2026-04-24:** `Tech` node type. Reason: project lineage was shallow when limited to 4 site-listed projects; mining corpus for tech/tools mentioned makes lineage richer (per Agam feedback during Phase A pivot).
 
 IDs: lowercase, hyphenated, namespaced (`belief.agent-first`, `project.shararat`, `post.2024-06-14-<hash>`).
 
@@ -209,21 +215,25 @@ Build script parses frontmatter across all pages, deduplicates nodes, validates 
 
 | # | Slug | Title | Era focus | Length target |
 |---|------|-------|-----------|---------------|
-| 1 | `agent-first` | Agent-first thesis | E4 | 1200-1500w |
-| 2 | `voice-ai-craft` | Voice AI craft (cost, latency, scale) | E3-E4 | 800-1200w |
-| 3 | `breadth-as-differentiation` | Breadth over depth for AI PM | E2-E4 | 800-1200w |
-| 4 | `pm-taste` | PM taste (craft, anti-slop, edge cases) | E2-E4 | 1000-1500w |
-| 5 | `early-career` | Early-career grind + humor | E1-E2 | 600-1000w |
-| 6 | `thinking-in-writing` | LinkedIn as reasoning tool | E2-E4 | 600-1000w |
-| 7 | `ai-pm-skillset` | What AI PM actually requires | E3-E4 | 1000-1500w |
-| 8 | `enterprise-ai-reality` | Ships vs demos, enterprise AI truth | E3-E4 | 800-1200w |
-| 9 | `second-brain` | Structured knowledge for agents | E4 | 1000-1500w |
-| 10 | `humor-wit` | Anti-corporate posture, voice calibration input | E1-E4 | 500-800w |
+| 1 | `agent-first` | Agent-first thesis | 1200-1500w |
+| 2 | `voice-ai-craft` | Voice AI craft (cost, latency, scale) | 800-1200w |
+| 3 | `breadth-as-differentiation` | Breadth over depth for AI PM | 800-1200w |
+| 4 | `pm-taste` | PM taste (craft, anti-slop, edge cases) | 1000-1500w |
+| 5 | `early-career` | Early-career grind + humor | 600-1000w |
+| 6 | `thinking-in-writing` | LinkedIn as reasoning tool | 600-1000w |
+| 7 | `ai-pm-skillset` | What AI PM actually requires | 1000-1500w |
+| 8 | `enterprise-ai-reality` | Ships vs demos, enterprise AI truth | 800-1200w |
+| 9 | `second-brain` | Structured knowledge for agents | 1000-1500w |
+| 10 | `humor-wit` | Anti-corporate posture, voice calibration input | 500-800w |
+
+**Note 2026-04-24:** Theme list still PROVISIONAL. Phase A multi-pass synthesis (Round 5 theme refinement) may propose splits/merges/additions before lock at Task #8. Era-focus column dropped (eras no longer first-class — see §3 update).
 
 Plus:
-- `eras/index.html` — timeline (800-1200w)
 - `voice/index.html` — voice calibration public version (400-600w, lighter than internal doc)
-- `index.html` — wiki home (theme grid + era timeline + thesis link)
+- `index.html` — wiki home (theme grid + thesis link)
+- `projects/index.html` — project + tech lineage DAG (NEW, ~600-1000w, mined from corpus including projects beyond the 4 site-listed ones — Agam feedback 2026-04-24)
+
+**Removed 2026-04-24:** `/wiki/eras/index.html` page. Reason: era-as-primitive deprecated. Temporal narrative stays inside theme pages' "How it formed" section.
 
 **Total:** 11 pages + home. ~10K words curated from 54K raw.
 
@@ -553,11 +563,23 @@ Pass criteria: 10/10 for ship. Re-run on each wiki update.
 
 ## 9. Execution Order (maps to Task IDs)
 
-Phase A — synthesis foundation (weekend 1 morning):
-- **Task #2** Agam full-read pass + notes doc
-- **Task #8** Lock ontology v1
-- **Task #4** Draft 2 theme pages (discovery)
-- **Task #3** Ontology refactor → v2
+Phase A — multi-pass recursive synthesis (revised 2026-04-24, expanded after Agam confirmed unlimited token budget):
+- **Task #2a** CC recursive synthesis pipeline (multi-round, autonomous):
+  - Round 1: 4 era chunk subagents (DONE — surface tags + first beliefs + voice samples)
+  - Round 2: cross-era synthesis (RUNNING — first belief net + theme proposal)
+  - Round 3: parallel fan-out × 4 — project+tech lineage, comments+network, style fingerprint, cross-post reference graph
+  - Round 4: per-belief deep dive — 1 subagent per proposed belief, finds all evidence + counter-evidence
+  - Round 5: theme refinement — recluster from refined beliefs
+  - Round 6: per-theme deep dive — 1 subagent per final theme, drafts wiki page structure (per §5)
+  - Round 7: tension surface — cross-theme + intra-theme contradictions
+  - Round 8: voice spec lock
+  - Round 9: final consolidation → `corpus/synthesis/agam-profile-v1.md` + `ontology-v1-draft.md` + `wiki-page-drafts/`
+- **Task #2b** Agam taste-pass → `corpus/agam-taste-pass.md` (60-90min Agam, on Round 9 outputs)
+- **Task #8** Lock ontology v1 from taste-pass (~30min CC)
+- **Task #4** Draft 2 theme pages becomes "polish 2 of the 10 wiki-page-drafts from Round 6" (Agam-led + CC-assisted)
+- **Task #3** Ontology refactor → v2 (after 2 theme pages discovered post-pass)
+
+**Token budget:** unlimited per Agam 2026-04-24. Multi-pass to convergence preferred over one-shot.
 
 Phase B — wiki build (weekend 1 afternoon + evening):
 - **Task #10** Write themes #3-10
@@ -607,21 +629,47 @@ Sequential where listed. Within phase, tasks can parallelize (e.g., theme writin
 
 ---
 
-## 12. The Assignment
+## 12. The Assignment (REVISED 2026-04-24)
 
-**Before CC touches the corpus: you do the full-read pass yourself.**
+**Original:** Agam full-read pass before CC touches corpus. 2-3hr chronological read.
 
-Not write. Not outline. Read. 2-3 hours, chronological, one sitting if possible. Running notes on:
+**Revised rationale:** Karpathy method assumed synthesizer ≠ source author. Agam IS author. Re-reading own posts ≠ learning new material. The downstream guarantees full-read defended (theme list calibration, surprise detection, voice fidelity) can be hit faster with a hybrid:
 
-- Themes that actually emerge (vs the locked list — where do they diverge?)
-- Beliefs that shifted and when
-- Voice patterns, humor triggers, signature moves
-- Posts that surprised you — forgotten wins, opinions you wouldn't write today
-- Audience shifts per era (who were you writing to in 2017 vs 2024?)
+### Task #2a — CC subagent fan-out (1-2hr CC, autonomous)
 
-Output: `~/.gstack/projects/agamarora-agamarora/corpus/agam-read-notes.md`. Raw better than formatted.
+Spawn parallel subagents on the 4 corpus files. Each subagent reads a chunk (split by era to preserve voice-per-era), produces structured output:
 
-Karpathy method requires the synthesizer understand the source. CC compresses what you foreground. Taste is yours. This is Task #2 and it's the only task CC can't do for you.
+- Theme cluster proposal (vs locked §4 list — flag deltas)
+- Per-post tagging: theme[], era, sentiment, post-shape, topics
+- Voice samples: verbatim signature lines (NOT paraphrased — extract, don't rewrite)
+- Outlier flag: posts that don't fit clean ontology bucket
+- Cross-era contradictions
+- Edge proposals: post → belief, post → project, belief supersedes belief
+
+Synthesis subagent merges 4 era outputs into:
+- `corpus/synthesis/corpus-synthesis-v0.md` — theme deltas, cross-era patterns, voice samples
+- `corpus/synthesis/ontology-v0.md` — draft node + edge inventory
+- `corpus/synthesis/voice-samples.md` — verbatim signature lines per era
+
+### Task #2b — Agam taste-pass (60-90min Agam, the irreplaceable step)
+
+Open `corpus/synthesis/corpus-synthesis-v0.md`. Mark up:
+
+1. **Theme list deltas** — accept/reject/refine each LLM-proposed delta vs locked §4 list. ~15min.
+2. **Outlier review** — read the 20-30 LLM-flagged outlier posts. Mark which are real surprises (forgotten wins, opinions you wouldn't write today) vs noise. ~30min.
+3. **Voice calibration** — read voice-samples.md. Mark lines that ARE you, lines that AREN'T. Add 5-10 banned phrases LLM should never write in your name. ~20min.
+4. **Contradiction triage** — review LLM-flagged cross-era contradictions. Mark which are real evolutions (→ `supersedes` edges) vs apparent contradictions (different contexts). ~15min.
+
+Output: `corpus/agam-taste-pass.md`. This is the lockable input to ontology v1 (Task #8).
+
+### What CC cannot do (still locked human-only)
+
+- Pick the 10 themes that survive (you wrote them, you own scope)
+- Decide which "surprises" matter for the wiki narrative
+- Write the voice doc tone (CC drafts, you finalize phrasing)
+- Pick the thesis post angle (Task #5)
+
+Taste is yours. CC accelerates synthesis; CC does not replace taste.
 
 ---
 
