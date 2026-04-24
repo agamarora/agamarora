@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>/enter v3 — Comparison Board</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #000; color: #E8E4DF; font-family: system-ui, sans-serif; padding: 20px; }
+h1 { font-size: 14px; font-weight: 500; margin-bottom: 4px; letter-spacing: 0.02em; }
+.sub { font-size: 12px; color: #888; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: calc(100vh - 80px); }
+.cell { position: relative; border: 1px solid #1E1E1E; border-radius: 8px; overflow: hidden; background: #0A0A0A; display: flex; flex-direction: column; }
+.label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; padding: 8px 12px; background: #111; border-bottom: 1px solid #1E1E1E; color: #E8E4DF; display: flex; justify-content: space-between; align-items: center; }
+.label .name { color: #E5A54B; font-weight: 600; }
+.label a { color: #7A7A7A; text-decoration: none; font-size: 10px; }
+.label a:hover { color: #E8E4DF; }
+iframe { flex: 1; border: none; width: 100%; background: #0A0A0A; }
+.fullsize-btn { padding: 2px 8px; border: 1px solid #1E1E1E; border-radius: 4px; }
+</style>
+</head>
+<body>
+<h1>/enter v3 — 4 wireframe variants (side-by-side)</h1>
+<div class="sub">Click any tile title to open that variant full-screen. Then resize your browser to test breakpoints.</div>
+
+<div class="grid">
+  <div class="cell">
+    <div class="label">
+      <span><span class="name">A) CONSOLE</span> — dense terminal, full-width, horizontal cards</span>
+      <a class="fullsize-btn" href="variant-A.html" target="_blank">open →</a>
+    </div>
+    <iframe src="variant-A.html"></iframe>
+  </div>
+  <div class="cell">
+    <div class="label">
+      <span><span class="name">B) FOCUS</span> — minimal 640px reader, vertical cards</span>
+      <a class="fullsize-btn" href="variant-B.html" target="_blank">open →</a>
+    </div>
+    <iframe src="variant-B.html"></iframe>
+  </div>
+  <div class="cell">
+    <div class="label">
+      <span><span class="name">C) SPLIT</span> — trace inspector left, answer+cards right</span>
+      <a class="fullsize-btn" href="variant-C.html" target="_blank">open →</a>
+    </div>
+    <iframe src="variant-C.html"></iframe>
+  </div>
+  <div class="cell">
+    <div class="label">
+      <span><span class="name">D) COWORK</span> — chat left, live artifact canvas right</span>
+      <a class="fullsize-btn" href="variant-D.html" target="_blank">open →</a>
+    </div>
+    <iframe src="variant-D.html"></iframe>
+  </div>
+</div>
+</body>
+</html>

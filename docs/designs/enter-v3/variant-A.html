@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/enter v3 — A) CONSOLE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A; --surface: #111; --border: #1E1E1E;
+  --text: #E8E4DF; --text-dim: #7A7A7A; --accent: #E5A54B;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mark: 'Patrick Hand', cursive;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
+/* keyboard bg faded */
+.kb-bg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; perspective: 900px; opacity: 0.2; }
+.kb-board { display: flex; flex-direction: column; gap: 6px; transform: rotateX(55deg) rotateZ(-15deg) scale(2); }
+.kb-row { display: flex; gap: 6px; }
+.kb-key { width: 48px; height: 48px; background: #161616; border: 1px solid #2a2a2a; border-radius: 4px; }
+/* icons top-left */
+.icons { position: fixed; top: 24px; left: 24px; display: flex; gap: 14px; z-index: 10; }
+.icons a { color: var(--text); opacity: 0.6; font-size: 16px; width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; }
+/* main container */
+.wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 80px 40px 120px; }
+.status { font-family: var(--mono); font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px; }
+.status .dot { display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-right: 8px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* trace block */
+.trace { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 0; margin-bottom: 32px; }
+.trace-line { font-family: var(--mono); font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 16px; padding: 4px 0; }
+.trace-line .arrow { color: var(--accent); opacity: 0.7; }
+.trace-line .tool { color: #a0a0a0; }
+.trace-line .ms { margin-left: auto; font-size: 11px; opacity: 0.6; }
+.trace-line .check { color: #7bc87b; }
+
+/* answer */
+.answer { font-size: 17px; line-height: 1.65; color: var(--text); max-width: 820px; margin-bottom: 40px; font-weight: 400; }
+
+/* cards carousel */
+.cards { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; margin-bottom: 60px; scrollbar-width: thin; }
+.card { flex: 0 0 300px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; display: flex; gap: 14px; align-items: flex-start; transition: transform 0.15s ease; cursor: pointer; }
+.card:hover { transform: translateY(-2px); border-color: #2c2c2c; }
+.card.priority { border-left: 2px solid var(--accent); }
+.card-icon { width: 36px; height: 36px; background: #1a1a1a; border-radius: 8px; display: grid; place-items: center; font-size: 16px; color: var(--accent); flex-shrink: 0; }
+.card-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+/* input */
+.input-bar { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, transparent, var(--bg) 40%); padding: 40px 40px 32px; z-index: 5; }
+.input-wrap { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-family: var(--mono); font-size: 14px; }
+.input-wrap .prompt { color: var(--accent); }
+.input-wrap input { flex: 1; background: none; border: none; color: var(--text); font: inherit; outline: none; }
+.input-wrap input::placeholder { color: var(--text-dim); }
+
+/* aa mark */
+.aa-mark { position: fixed; bottom: 24px; right: 24px; font-family: var(--mark); font-size: 32px; color: var(--text); opacity: 0.8; z-index: 10; }
+.aa-mark .dot { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="kb-bg"><div class="kb-board">
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+</div></div>
+
+<div class="icons">
+  <a href="#">GH</a><a href="#">in</a><a href="#">▶</a><a href="#">⌂</a>
+</div>
+
+<div class="wrap">
+  <div class="status"><span class="dot"></span>agam-agent · thinking</div>
+
+  <div class="trace">
+    <div class="trace-line"><span class="arrow">→</span><span class="tool">search_resume("voice ai")</span><span class="ms">142ms <span class="check">✓</span></span></div>
+    <div class="trace-line"><span class="arrow">→</span><span class="tool">get_project("shararat-ai")</span><span class="ms">91ms <span class="check">✓</span></span></div>
+    <div class="trace-line"><span class="arrow">→</span><span class="tool">get_case_study("aionos-voice")</span><span class="ms">118ms <span class="check">✓</span></span></div>
+  </div>
+
+  <div class="answer">
+    Voice AI platform at AIonOS handling 4M+ annual calls at half the industry cost per minute. He led 15 engineers on it. Shararat is the public demo.
+  </div>
+
+  <div class="cards">
+    <div class="card priority">
+      <div class="card-icon">🎙</div>
+      <div><div class="card-title">Shararat Voice AI demo</div><div class="card-desc">Live 5-second voice demo, production stack</div></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📄</div>
+      <div><div class="card-title">AIonOS case study</div><div class="card-desc">4M calls, 50% lower cost per minute</div></div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <div><div class="card-title">Resume → AVP role</div><div class="card-desc">AIonOS, Nov 2025 → present</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="input-bar">
+  <div class="input-wrap">
+    <span class="prompt">›</span>
+    <input type="text" placeholder="ask anything about agam">
+  </div>
+</div>
+
+<div class="aa-mark">aa<span class="dot">.</span></div>
+</body>
+</html>

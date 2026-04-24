@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/enter v3 — D) COWORK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A; --surface: #111; --border: #1E1E1E; --surface-2: #0D0D0D;
+  --text: #E8E4DF; --text-dim: #7A7A7A; --accent: #E5A54B;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mark: 'Patrick Hand', cursive;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow: hidden; }
+.kb-bg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; perspective: 900px; opacity: 0.08; }
+.kb-board { display: flex; flex-direction: column; gap: 6px; transform: rotateX(55deg) rotateZ(-15deg) scale(2.2); }
+.kb-row { display: flex; gap: 6px; }
+.kb-key { width: 48px; height: 48px; background: #161616; border: 1px solid #2a2a2a; border-radius: 4px; }
+
+.icons { position: fixed; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 10; }
+.icons a { color: var(--text-dim); font-size: 13px; width: 28px; height: 28px; display: grid; place-items: center; text-decoration: none; opacity: 0.7; }
+
+.app { position: relative; z-index: 1; display: grid; grid-template-columns: 42% 58%; min-height: 100vh; }
+
+/* LEFT: chat */
+.left { padding: 70px 40px 30px; display: flex; flex-direction: column; overflow-y: auto; }
+.status-chip { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--text-dim); padding: 4px 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 20px; margin-bottom: 32px; width: fit-content; }
+.status-chip .dot { width: 6px; height: 6px; background: #7bc87b; border-radius: 50%; }
+
+.thread { flex: 1; display: flex; flex-direction: column; gap: 20px; max-width: 520px; }
+.user-msg { font-family: var(--sans); font-size: 15px; color: var(--text-dim); font-style: italic; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--mono); font-size: 11px; color: var(--text-dim); padding: 4px 10px; background: rgba(229, 165, 75, 0.05); border: 1px solid rgba(229, 165, 75, 0.15); border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; }
+.chip .check { color: #7bc87b; font-size: 10px; }
+.ai-msg { font-size: 16px; line-height: 1.6; color: var(--text); }
+.continue-link { font-family: var(--mono); font-size: 12px; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+
+.input-bar { margin-top: 24px; max-width: 520px; }
+.input-wrap { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 12px 18px; font-family: var(--mono); font-size: 13px; }
+.input-wrap input { flex: 1; background: none; border: none; color: var(--text); font: inherit; outline: none; }
+.input-wrap input::placeholder { color: var(--text-dim); }
+.caret { width: 2px; height: 12px; background: var(--accent); animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* RIGHT: artifact canvas */
+.right { padding: 60px 40px 40px; background: rgba(5,5,5,0.6); border-left: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+
+.queue { display: flex; gap: 10px; }
+.queue-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 11px; color: var(--text-dim); cursor: pointer; transition: all 0.15s; }
+.queue-card:hover { border-color: #2c2c2c; color: var(--text); }
+.queue-card .q-title { font-family: var(--mono); font-size: 10px; margin-bottom: 4px; opacity: 0.6; }
+.queue-card .q-name { font-size: 13px; color: var(--text); font-weight: 500; }
+
+.canvas-label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+
+.preview { background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 28px; flex: 1; display: flex; flex-direction: column; gap: 20px; box-shadow: inset 0 0 40px rgba(229, 165, 75, 0.02); min-height: 420px; }
+.preview-frame-dots { display: flex; gap: 6px; }
+.preview-frame-dots span { width: 10px; height: 10px; border-radius: 50%; background: #222; }
+.preview-title { font-size: 28px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.preview-sub { font-size: 14px; color: var(--text-dim); line-height: 1.5; max-width: 420px; }
+.waveform { height: 80px; display: flex; align-items: center; gap: 3px; padding: 10px 0; }
+.waveform span { flex: 1; background: linear-gradient(180deg, var(--accent), rgba(229, 165, 75, 0.3)); border-radius: 2px; opacity: 0.7; }
+.waveform span:nth-child(1) { height: 30%; } .waveform span:nth-child(2) { height: 60%; }
+.waveform span:nth-child(3) { height: 45%; } .waveform span:nth-child(4) { height: 80%; }
+.waveform span:nth-child(5) { height: 55%; } .waveform span:nth-child(6) { height: 90%; }
+.waveform span:nth-child(7) { height: 70%; } .waveform span:nth-child(8) { height: 40%; }
+.waveform span:nth-child(9) { height: 65%; } .waveform span:nth-child(10) { height: 35%; }
+.waveform span:nth-child(11) { height: 75%; } .waveform span:nth-child(12) { height: 50%; }
+.waveform span:nth-child(13) { height: 85%; } .waveform span:nth-child(14) { height: 45%; }
+.waveform span:nth-child(15) { height: 30%; } .waveform span:nth-child(16) { height: 55%; }
+.waveform span:nth-child(17) { height: 70%; } .waveform span:nth-child(18) { height: 40%; }
+.waveform span:nth-child(19) { height: 60%; } .waveform span:nth-child(20) { height: 25%; }
+
+.preview-stats { display: flex; gap: 24px; margin-top: 8px; }
+.stat { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+.stat strong { display: block; font-size: 18px; color: var(--text); font-family: var(--sans); font-weight: 600; margin-bottom: 2px; }
+
+.preview-cta { margin-top: auto; display: flex; justify-content: flex-end; padding-top: 16px; }
+.open-btn { background: var(--accent); color: #0A0A0A; font-family: var(--mono); font-size: 12px; font-weight: 500; padding: 10px 16px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+.open-btn:hover { filter: brightness(1.1); }
+
+.aa-mark { position: fixed; bottom: 20px; right: 24px; font-family: var(--mark); font-size: 28px; color: var(--text); opacity: 0.8; z-index: 10; }
+.aa-mark .dot { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="kb-bg"><div class="kb-board">
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+</div></div>
+
+<div class="icons">
+  <a href="#">GH</a><a href="#">in</a><a href="#">▶</a><a href="#">⌂</a>
+</div>
+
+<div class="app">
+  <div class="left">
+    <div class="status-chip"><span class="dot"></span>agam-agent · active</div>
+    <div class="thread">
+      <div class="user-msg">what is his best voice ai work</div>
+      <div class="chips">
+        <span class="chip">→ search_resume <span class="check">✓</span></span>
+        <span class="chip">→ get_project <span class="check">✓</span></span>
+        <span class="chip">→ get_case_study <span class="check">✓</span></span>
+      </div>
+      <div class="ai-msg">
+        Voice AI platform at AIonOS handles 4M+ calls a year at half industry cost per minute. He led 15 engineers on it. Shararat is the public demo.
+        <br><br>
+        <a class="continue-link" href="#">continue →</a>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <div class="input-wrap">
+        <input type="text" placeholder="ask anything">
+        <div class="caret"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="canvas-label">queue · 3</div>
+    <div class="queue">
+      <div class="queue-card"><div class="q-title">page</div><div class="q-name">Shararat</div></div>
+      <div class="queue-card"><div class="q-title">page</div><div class="q-name">Case study</div></div>
+      <div class="queue-card"><div class="q-title">page</div><div class="q-name">Resume</div></div>
+    </div>
+
+    <div class="canvas-label">preview · shararat voice ai</div>
+    <div class="preview">
+      <div class="preview-frame-dots"><span></span><span></span><span></span></div>
+      <div class="preview-title">Shararat<br>Voice AI, production.</div>
+      <div class="preview-sub">Live demo. 5-second handshake. Multilingual. Sub-400ms latency. Built on the same stack powering 4M+ annual calls at AIonOS.</div>
+      <div class="waveform">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="preview-stats">
+        <div class="stat"><strong>4M+</strong>annual calls</div>
+        <div class="stat"><strong>-50%</strong>cost/minute</div>
+        <div class="stat"><strong>15</strong>engineers led</div>
+      </div>
+      <div class="preview-cta">
+        <a class="open-btn" href="#">Open → /lab/shararat</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="aa-mark">aa<span class="dot">.</span></div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/enter v3 — C) SPLIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0A0A; --surface: #111; --border: #1E1E1E;
+  --text: #E8E4DF; --text-dim: #7A7A7A; --accent: #E5A54B;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+  --mark: 'Patrick Hand', cursive;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow: hidden; }
+.kb-bg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; perspective: 900px; opacity: 0.12; }
+.kb-board { display: flex; flex-direction: column; gap: 6px; transform: rotateX(55deg) rotateZ(-15deg) scale(2.2); }
+.kb-row { display: flex; gap: 6px; }
+.kb-key { width: 48px; height: 48px; background: #161616; border: 1px solid #2a2a2a; border-radius: 4px; }
+
+.icons { position: fixed; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 10; }
+.icons a { color: var(--text-dim); font-size: 13px; width: 28px; height: 28px; display: grid; place-items: center; text-decoration: none; border: 1px solid var(--border); border-radius: 6px; background: rgba(10,10,10,0.8); }
+
+/* split layout */
+.app { position: relative; z-index: 1; display: grid; grid-template-columns: 35% 65%; min-height: 100vh; }
+
+/* LEFT: trace inspector */
+.left { background: rgba(8,8,8,0.6); border-right: 1px solid var(--border); padding: 70px 24px 100px; overflow-y: auto; }
+.left-header { font-family: var(--mono); font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+.left-header .meta { color: #555; }
+.trace-row { display: flex; align-items: center; gap: 10px; padding: 10px 10px; margin: 2px -10px; border-radius: 6px; font-family: var(--mono); font-size: 12px; color: var(--text-dim); cursor: pointer; transition: background 0.15s; }
+.trace-row:hover { background: rgba(255,255,255,0.03); }
+.trace-row .arrow { color: var(--accent); opacity: 0.8; }
+.trace-row .tool { flex: 1; color: #b0b0b0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.trace-row .ms { color: #555; font-size: 10px; }
+.trace-row .check { color: #7bc87b; }
+.trace-row .chev { color: #444; font-size: 10px; }
+
+/* RIGHT: primary */
+.right { padding: 70px 48px 120px; overflow-y: auto; position: relative; }
+.section-label { font-family: var(--mono); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; opacity: 0.6; }
+.answer { font-size: 16px; line-height: 1.6; color: var(--text); max-width: 660px; margin-bottom: 40px; }
+
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 660px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.15s; }
+.card:hover { border-color: #2c2c2c; transform: translateY(-2px); }
+.card.priority { border-left: 2px solid var(--accent); }
+.card-icon { width: 28px; height: 28px; background: #1a1a1a; border-radius: 6px; display: grid; place-items: center; font-size: 14px; color: var(--accent); margin-bottom: 10px; }
+.card-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+
+.input-bar { position: fixed; bottom: 0; left: 35%; right: 0; padding: 30px 48px; background: linear-gradient(180deg, transparent, var(--bg) 50%); z-index: 5; }
+.input-wrap { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-family: var(--mono); font-size: 13px; max-width: 660px; }
+.input-wrap .prompt { color: var(--accent); }
+.input-wrap input { flex: 1; background: none; border: none; color: var(--text); font: inherit; outline: none; }
+.input-wrap input::placeholder { color: var(--text-dim); }
+
+.aa-mark { position: fixed; bottom: 20px; right: 24px; font-family: var(--mark); font-size: 28px; color: var(--text); opacity: 0.8; z-index: 10; }
+.aa-mark .dot { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="kb-bg"><div class="kb-board">
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+  <div class="kb-row"><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div><div class="kb-key"></div></div>
+</div></div>
+
+<div class="icons">
+  <a href="#">GH</a><a href="#">in</a><a href="#">▶</a><a href="#">⌂</a>
+</div>
+
+<div class="app">
+  <div class="left">
+    <div class="left-header"><span>agent-trace</span><span class="meta">4 calls · 399ms</span></div>
+    <div class="trace-row"><span class="arrow">→</span><span class="tool">list_pages()</span><span class="ms">48ms</span><span class="check">✓</span><span class="chev">›</span></div>
+    <div class="trace-row"><span class="arrow">→</span><span class="tool">search_resume("voice ai")</span><span class="ms">142ms</span><span class="check">✓</span><span class="chev">›</span></div>
+    <div class="trace-row"><span class="arrow">→</span><span class="tool">get_project("shararat-ai")</span><span class="ms">91ms</span><span class="check">✓</span><span class="chev">›</span></div>
+    <div class="trace-row"><span class="arrow">→</span><span class="tool">get_case_study("aionos")</span><span class="ms">118ms</span><span class="check">✓</span><span class="chev">›</span></div>
+  </div>
+
+  <div class="right">
+    <div class="section-label">answer</div>
+    <div class="answer">
+      Voice AI platform at AIonOS handles 4M+ calls a year at half industry cost per minute. He led 15 engineers. Shararat is the public demo.
+    </div>
+
+    <div class="section-label">open →</div>
+    <div class="cards">
+      <div class="card priority">
+        <div class="card-icon">🎙</div>
+        <div class="card-title">Shararat Voice AI demo</div>
+        <div class="card-desc">Live 5-second voice demo</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📄</div>
+        <div class="card-title">AIonOS case study</div>
+        <div class="card-desc">4M calls, −50% cost/min</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Resume → AVP role</div>
+        <div class="card-desc">AIonOS, Nov 2025 → now</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <div class="card-title">GitHub</div>
+        <div class="card-desc">@agamarora</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="input-bar">
+  <div class="input-wrap">
+    <span class="prompt">›</span>
+    <input type="text" placeholder="ask anything about agam">
+  </div>
+</div>
+
+<div class="aa-mark">aa<span class="dot">.</span></div>
+</body>
+</html>
