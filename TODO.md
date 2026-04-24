@@ -35,7 +35,7 @@
 - [x] ~~Delete 2.3 MB unused `agamarora_banner.png`~~ — was unused in site, restored for readme.md (GitHub profile). Still on disk, serves the profile header.
 - [x] ~~Remove main.css weight from site~~ — 32 KB unminified stylesheet, now orphan and deleted
 - [x] ~~`assets/lab/vapi-thumbnail.png` (948 KB)~~ — deleted 2026-04-22 with its webp pair; the /lab Voice AI card embeds a YouTube iframe, neither file was referenced
-- [ ] Font Awesome 6.5.0 full CSS — could subset to only the icons actually used (~8)
+- [x] ~~Font Awesome 6.5.0 full CSS~~ — replaced with inline SVG sprite per page 2026-04-24. 274 KB font + 100 KB CSS → ~4 KB inline. Zero external deps.
 
 ## v2 Design System
 
@@ -51,4 +51,9 @@ All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and
 
 - [x] ~~`/moodboard` robots noindex~~ — added 2026-04-22 on both `/moodboard/index.html` and `/moodboard/aa-mark.html`; also blocked in `robots.txt`
 - [ ] Refresh resume content as roles change
+- [x] ~~Google Fonts vendored locally~~ — JetBrains Mono + Patrick Hand woff2 self-hosted 2026-04-24. `feedback_no_external_deps` fully satisfied.
+- [x] ~~Security headers~~ — CSP, HSTS, X-Frame-Options, Referrer-Policy, Permissions-Policy, X-Content-Type-Options added to netlify.toml 2026-04-24.
+- [x] ~~Project tag contrast fix~~ — `.project-tag` color #7a7a7a → #8a8a8a, passes WCAG AA (5.18 ratio) 2026-04-24.
+- [x] ~~Lab card aria-labels~~ — descriptive aria-label on Read more / Code CTAs 2026-04-24.
+- [x] ~~Lab card image resize~~ — luna-monitor + ai-resume PNGs resized to displayed dimensions (.v2.png) 2026-04-24.
 - [ ] Add `netlify.toml` redirect pre-warm for critical paths
