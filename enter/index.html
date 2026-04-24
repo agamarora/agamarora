@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Know Agam</title>
-<meta name="description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
-<meta property="og:title" content="Know Agam">
-<meta property="og:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
+<title>Know Agam. Live AI terminal grounded in his resume.</title>
+<meta name="description" content="Live AI terminal for Agam Arora. Grounded in his resume, shipped products, and case studies. Ask about voice AI at enterprise scale, RAG, agentic systems, PM craft, or anything in his portfolio. Streaming responses via Groq.">
+<meta property="og:title" content="Know Agam. Live AI terminal grounded in his resume.">
+<meta property="og:description" content="Ask Agam's AI about his work. Grounded in his resume, products, and case studies. Streaming responses, opinionated answers.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/enter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Know Agam">
-<meta name="twitter:description" content="Enter Agam's terminal. AI-powered, opinionated, and sharp.">
+<meta name="twitter:title" content="Know Agam. Live AI terminal grounded in his resume.">
+<meta name="twitter:description" content="Ask Agam's AI about his work. Grounded in his resume and case studies. Streaming responses.">
 <link rel="canonical" href="https://agamarora.com/enter">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
@@ -134,7 +134,7 @@
   }
   .icon-bar a:hover { color: var(--accent); }
 
-  /* Hero — "Hi, I'm Agam." — lives below the fixed header. */
+  /* Hero, "Hi, I'm Agam.", lives below the fixed header. */
   .hero {
     position: absolute;
     top: calc(clamp(52px, 6vw, 64px) + clamp(16px, 2vw, 32px));
@@ -145,7 +145,7 @@
     font-weight: 600; letter-spacing: -0.02em; line-height: 1;
   }
 
-  /* RIGHT: AI response zone — offset below greeting */
+  /* RIGHT: AI response zone, offset below greeting */
   .response-zone {
     position: absolute;
     top: clamp(80px, 12vw, 140px);
@@ -422,7 +422,7 @@ if (!isMobile()) {
 }
 
 // ============================================
-// TERMINAL — performance-first with streaming response
+// TERMINAL, performance-first with streaming response
 // ============================================
 const terminal = document.getElementById('terminal');
 const textEl = document.getElementById('terminal-text');
@@ -438,7 +438,7 @@ let placeholderInterval = null;
 let lastQuestion = '';
 let userScrolled = false;
 let inErrorState = false;
-const conversationHistory = []; // [{role, content}, ...] — capped at 6
+const conversationHistory = []; // [{role, content}, ...], capped at 6
 
 // Loading verbs (inspired by Claude Code)
 const verbs = ['thinking', 'considering', 'brewing', 'composing', 'pondering', 'reflecting'];
@@ -545,7 +545,7 @@ function enterInputMode() {
   state = 'input';
   promptEl.textContent = '>';
   textEl.style.display = 'none';
-  cursorEl.style.display = 'none'; // hide block cursor — input has its own caret
+  cursorEl.style.display = 'none'; // hide block cursor, input has its own caret
   showInput();
   inputEl.focus();
 }
@@ -583,7 +583,7 @@ async function askGroq(prompt) {
 
   try {
     const controller = new AbortController();
-    // 20s — accommodates cascading model retries when primary hits rate limit.
+    // 20s, accommodates cascading model retries when primary hits rate limit.
     const timeout = setTimeout(() => controller.abort(), 20000);
 
     const res = await fetch('/.netlify/functions/groqHandler', {

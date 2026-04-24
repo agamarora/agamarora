@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>aa. — the mark</title>
+<title>aa., the mark</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,7 +94,7 @@
 <body>
 
 <header>
-  <h1>// aa. — the mark</h1>
+  <h1>// aa., the mark</h1>
   <p>
     Patrick Hand. "aa" adapts to background. The dot is always gold.
     Stroke draws, fill snaps in. Drag the slider to tune speed.
@@ -124,19 +124,19 @@
 
 <!-- /aa variant -->
 <div class="section-header">
-  <h2>/aa — with slash</h2>
+  <h2>/aa, with slash</h2>
   <p>Mono slash (JetBrains Mono, light weight) + Patrick Hand aa. Tight spacing. Slash draws first.</p>
 </div>
 <div class="grid" id="grid-slash-dark"></div>
 
 <div class="section-header" style="background: #F5F3EF;">
-  <h2 style="color: #333;">/aa — on light</h2>
+  <h2 style="color: #333;">/aa, on light</h2>
 </div>
 <div class="grid" id="grid-slash-light" style="background: #F5F3EF;"></div>
 
 <!-- Sizes -->
 <div class="section-header">
-  <h2>sizes — aa.</h2>
+  <h2>sizes, aa.</h2>
   <p>Hero (120px), Nav (48px), Small (32px), Favicon (16px).</p>
 </div>
 <div class="grid" id="grid-sizes"></div>
@@ -165,19 +165,19 @@ function buildMark(gridId, aaColor, bgColor) {
     { sw: 2.4, label: 'heavy stroke' },
   ].forEach(variant => {
     counter++;
-    const cell = makeCell(counter, `Patrick Hand — ${variant.label}`);
+    const cell = makeCell(counter, `Patrick Hand, ${variant.label}`);
     if (bgColor === LIGHT_BG) {
       cell.style.background = LIGHT_BG;
     }
     const svg = makeSVG(280, 120);
 
-    // "aa" stroke — position dot dynamically after measuring
+    // "aa" stroke, position dot dynamically after measuring
     const aaX = 30;
     const aaStroke = makeText('aa', aaX, 96, FONT.family, FONT.weight, 82, aaColor, variant.sw);
     aaStroke.dataset.role = 'aa';
     svg.appendChild(aaStroke);
 
-    // Placeholder dot — will reposition after measure
+    // Placeholder dot, will reposition after measure
     const dotStroke = makeText('.', 0, 96, FONT.family, FONT.weight, 82, GOLD, variant.sw);
     dotStroke.dataset.role = 'dot';
     svg.appendChild(dotStroke);
@@ -211,9 +211,9 @@ function buildSlashMark(gridId, aaColor, bgColor) {
   const grid = document.getElementById(gridId);
 
   [
-    { sw: 1.0, label: '/aa — thin stroke' },
-    { sw: 1.6, label: '/aa — medium stroke' },
-    { sw: 2.4, label: '/aa — heavy stroke' },
+    { sw: 1.0, label: '/aa, thin stroke' },
+    { sw: 1.6, label: '/aa, medium stroke' },
+    { sw: 2.4, label: '/aa, heavy stroke' },
   ].forEach(variant => {
     counter++;
     const cell = makeCell(counter, variant.label);
@@ -249,7 +249,7 @@ function buildSlashMark(gridId, aaColor, bgColor) {
 }
 
 // ============================================================
-// ANIMATION: /aa — slash draws first, then aa follows
+// ANIMATION: /aa, slash draws first, then aa follows
 // ============================================================
 function animateSlashMark(cell) {
   const svg = cell.querySelector('svg');
@@ -273,7 +273,7 @@ function animateSlashMark(cell) {
   });
 
   // Beat 1: Slash blinks like a cursor (2 slow blinks)
-  const blinkDur = 300; // ms per blink phase — slower, deliberate
+  const blinkDur = 300; // ms per blink phase, slower, deliberate
   const blinks = 2;
   let blinkCount = 0;
 
@@ -332,10 +332,10 @@ function buildSizes() {
   const grid = document.getElementById('grid-sizes');
 
   [
-    { size: 120, label: 'Hero — 120px', w: 380, h: 150 },
-    { size: 48,  label: 'Nav — 48px',   w: 200, h: 70 },
-    { size: 32,  label: 'Small — 32px', w: 140, h: 50 },
-    { size: 16,  label: 'Favicon — 16px', w: 80, h: 30 },
+    { size: 120, label: 'Hero, 120px', w: 380, h: 150 },
+    { size: 48,  label: 'Nav, 48px',   w: 200, h: 70 },
+    { size: 32,  label: 'Small, 32px', w: 140, h: 50 },
+    { size: 16,  label: 'Favicon, 16px', w: 80, h: 30 },
   ].forEach(s => {
     counter++;
     const cell = makeCell(counter, s.label);
@@ -387,11 +387,11 @@ function animateMark(cell) {
   const aaFill = svg.querySelector('[data-fill-for="aa"]');
   const dotFill = svg.querySelector('[data-fill-for="dot"]');
 
-  // Reset — hide everything
+  // Reset, hide everything
   [aaFill, dotFill].filter(Boolean).forEach(t => {
     t.style.transition = 'none'; t.style.opacity = '0';
   });
-  // Hide dot stroke entirely — dot never draws, it only appears as fill
+  // Hide dot stroke entirely, dot never draws, it only appears as fill
   if (dotStroke) {
     dotStroke.style.transition = 'none'; dotStroke.style.opacity = '0';
   }
@@ -411,7 +411,7 @@ function animateMark(cell) {
     aaStroke.style.transition = `stroke-dashoffset ${aaDur}s cubic-bezier(0.25, 0.1, 0.25, 1) 0s`;
     aaStroke.style.strokeDashoffset = '0';
 
-    // Beat 2: fill + dot arrive the INSTANT stroke finishes — zero gap
+    // Beat 2: fill + dot arrive the INSTANT stroke finishes, zero gap
     function onStrokeDone(e) {
       if (e.propertyName !== 'stroke-dashoffset') return;
       aaStroke.removeEventListener('transitionend', onStrokeDone);

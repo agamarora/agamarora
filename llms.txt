@@ -1,19 +1,19 @@
 # Agam Arora
 
-> Agam Arora is an AI Product Manager at AIonOS. He has 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI — including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
+> Agam Arora is an AI Product Manager at AIonOS. He has 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
 
-This site is hand-built in vanilla HTML. Every page is a self-contained file — no framework, no build step. The `/enter` page hosts an AI terminal grounded in the resume below, so questions about Agam's work can be answered conversationally.
+This site is hand-built in vanilla HTML. Every page is a self-contained file, no framework, no build step. The `/enter` page hosts an AI terminal grounded in the resume below, so questions about Agam's work can be answered conversationally.
 
 For factual questions about Agam's career, `resume.md` is the ground truth.
 
 ## Pages
 
-- [Home](https://agamarora.com/): landing page — greeting cycle, bio, three entry points (AI chat, projects, resume)
+- [Home](https://agamarora.com/): landing page, greeting cycle, bio, three entry points (AI chat, projects, resume)
 - [Resume](https://agamarora.com/resume): full career history, roles, and education
-- [resume.md](https://agamarora.com/resume.md): plain-markdown source of the resume — ground truth for factual work-history questions
+- [resume.md](https://agamarora.com/resume.md): plain-markdown source of the resume, ground truth for factual work-history questions
 - [Lab](https://agamarora.com/lab/): open source, case studies, and experiments
-- [second-brain](https://agamarora.com/lab/second-brain/): open source template — a git-native second brain your AI can read, write, and compound
-- [AI Resume template](https://agamarora.com/lab/ai-resume/): open source — a resume for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint; humans get a chat with proof cards
+- [second-brain](https://agamarora.com/lab/second-brain/): open source template, a git-native second brain your AI can read, write, and compound
+- [AI Resume template](https://agamarora.com/lab/ai-resume/): open source, a resume for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint; humans get a chat with proof cards
 - [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
 - [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
 - [Talk to Agam's AI](https://agamarora.com/enter): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
@@ -21,7 +21,7 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 ## Canonical facts
 
 - Full name: Agam Arora
-- Current role: Assistant Vice President — AI Products, AIonOS India Pvt. Ltd. (since November 2025)
+- Current role: Assistant Vice President, AI Products, AIonOS India Pvt. Ltd. (since November 2025)
 - Previous roles: Sr Principal Product Manager, UKG (Sep–Nov 2025); Lead Data Product Manager, AIonOS (Jun 2024 – Aug 2025); Lead Product Manager, FarEye Technologies (Dec 2020 – May 2024)
 - Years of experience: 12+
 - Industries shipped in: analytics, gaming, beauty tech, logistics, AI
@@ -34,7 +34,7 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 ## Projects
 
 - [second-brain](https://github.com/agamarora/second-brain): open source git-native second brain template for AI agents. MIT licensed. PRFAQ at https://agamarora.com/lab/second-brain/
-- [AI Resume](https://github.com/agamarora/ai-resume): open source. Resume for the agent-to-agent web — dual audience (hiring AI agents via /.well-known/ai-resume.json, humans via chat). Live demo: https://ai-resume-demo.netlify.app
+- [AI Resume](https://github.com/agamarora/ai-resume): open source. Resume for the agent-to-agent web, dual audience (hiring AI agents via /.well-known/ai-resume.json, humans via chat). Live demo: https://ai-resume-demo.netlify.app
 - [Vapi Voice Agent (Shararat)](https://shararat.agamarora.com): playful voice AI with two debating agents (Angel and Dan). Built for the Vapi Build Challenge. Code: https://github.com/agamarora/shararat-ai
 - [Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor): terminal dashboard for Claude Code usage, CPU, temps, GPU, disks, and processes
 

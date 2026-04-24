@@ -1,4 +1,4 @@
-# Agam Arora — Full Site Content
+# Agam Arora, Full Site Content
 
 > Agam Arora is an AI Product Manager at AIonOS. 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
 
@@ -11,9 +11,9 @@ Last updated: 2026-04-22
 
 Agam Arora is an AI Product Manager with a decade-plus track record of shipping real products. He currently serves as Assistant Vice President of AI Products at AIonOS India Pvt. Ltd., where he leads an end-to-end customer experience platform for enterprise CX transformation. The product portfolio spans multi-modal and multi-lingual conversation management, post-case quality, and a multi-agent platform.
 
-Before his current role, Agam was Sr Principal Product Manager at UKG (Ultimate Kronos Group) in the Forecasting, AI, and Workforce Planning portfolio. Earlier at AIonOS as Lead Data Product Manager, he owned a Voice AI platform handling 4M+ calls/year at 50% lower cost and delivered 15+ AI product POCs across RAG, voice, and agentic systems — driving $1.5M+ in enterprise deals. At FarEye Technologies, he led the flagship data product ANALYZE, which crossed $1M ARR in 18 months with 35% upsell, while reducing data onboarding time from 60 days to 7 and improving NPS from 3.6 to 4.7.
+Before his current role, Agam was Sr Principal Product Manager at UKG (Ultimate Kronos Group) in the Forecasting, AI, and Workforce Planning portfolio. Earlier at AIonOS as Lead Data Product Manager, he owned a Voice AI platform handling 4M+ calls/year at 50% lower cost and delivered 15+ AI product POCs across RAG, voice, and agentic systems, driving $1.5M+ in enterprise deals. At FarEye Technologies, he led the flagship data product ANALYZE, which crossed $1M ARR in 18 months with 35% upsell, while reducing data onboarding time from 60 days to 7 and improving NPS from 3.6 to 4.7.
 
-He writes, designs, and occasionally codes his own tools. This site is hand-built in vanilla HTML — every page is a self-contained file. The `/enter` page hosts an AI terminal grounded in the resume below.
+He writes, designs, and occasionally codes his own tools. This site is hand-built in vanilla HTML, every page is a self-contained file. The `/enter` page hosts an AI terminal grounded in the resume below.
 
 ---
 
@@ -71,14 +71,14 @@ LinkedIn: linkedin.com/in/agamarora
 
 Agam's open source projects, case studies, and experiments. Some are live, some are forever betas, all are real.
 
-### second-brain — an open source template
+### second-brain, an open source template
 A git-native second brain your AI can read, write, and keep improving for you. Paste one prompt into Claude Code, answer five questions, drop three to five artifacts. Ten minutes later you have a brain your agent can actually use. MIT licensed. Read more at https://agamarora.com/lab/second-brain/, code at https://github.com/agamarora/second-brain.
 
-### AI Resume — a resume for the agent-to-agent web
+### AI Resume, a resume for the agent-to-agent web
 Your next recruiter is an AI. Your resume should be too. AI Resume is a live surface for the agent-to-agent web. Hiring AI agents hit a well-known JSON endpoint (/.well-known/ai-resume.json) for Schema.org career data. Human recruiters land on a chat with proof cards. Paste one prompt into Claude Code, deploy in 30 minutes, $0/month. Read more at https://agamarora.com/lab/ai-resume/, live demo at https://ai-resume-demo.netlify.app, code at https://github.com/agamarora/ai-resume.
 
 ### Voice AI in production (case study)
-What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria. Three verticals, asymmetric conversion, four surprises. The voice was never the blocker — the tools behind the voice were. Read at https://agamarora.com/lab/voice-ai-production/.
+What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taught me about demos, adoption, integration surface, and kill criteria. Three verticals, asymmetric conversion, four surprises. The voice was never the blocker, the tools behind the voice were. Read at https://agamarora.com/lab/voice-ai-production/.
 
 ### Product shape is what you refuse (case study)
 Scope lessons from building an enterprise voice AI platform from zero. The narrow control point over full-stack CCaaS. The MCP-first bet that paid off. The standalone-sellable pivot I got wrong, and the consolidation pattern that followed. Product shape is decided by what you refuse. Read at https://agamarora.com/lab/product-shape/.
@@ -93,7 +93,7 @@ A terminal dashboard for Claude Code usage (5h/7d windows), CPU, temperatures, m
 
 ## Talk to Agam's AI
 
-At https://agamarora.com/enter there is an immersive AI terminal: a keyboard-background UI with a Groq-streamed conversation grounded in Agam's resume. It's opinionated and sharp — ask it about Agam's work, his taste, or anything the resume speaks to.
+At https://agamarora.com/enter there is an immersive AI terminal: a keyboard-background UI with a Groq-streamed conversation grounded in Agam's resume. It's opinionated and sharp, ask it about Agam's work, his taste, or anything the resume speaks to.
 
 ---
 
