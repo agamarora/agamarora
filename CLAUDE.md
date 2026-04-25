@@ -22,6 +22,17 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 **Next session pickup (READ THIS):** Open `docs/plans/second-brain-v1-phase-a/STATUS.md` first. It's the git-tracked single source of truth for Phase A round-by-round state, updated + pushed after every milestone. Tells you exactly which round to spawn next, what binding taste-calls to apply, and how to resume across machines/sessions.
 
 
+## Subagent model policy (HARD RULE)
+
+For this project, subagents MUST run sonnet or haiku — never opus, never inherit opus from parent.
+
+- **Default**: `model: "sonnet"` on every Agent tool call.
+- **Haiku exception**: pass `model: "haiku"` for simple stateless tasks — single-file lookups, single-grep, format conversions, trivial diffs, doc reformats. No reasoning chain, no multi-step research.
+- **Never**: `model: "opus"` for any subagent. No exceptions.
+- Agent definitions at `~/.claude/agents/*.md` already pin sonnet via frontmatter; the per-call `model` param here exists only to drop to haiku when warranted.
+
+Decision rule: if task is "find/read/transform one thing, no judgment" → haiku. Else → sonnet.
+
 ## Stack
 
 - **Frontend**: Vanilla HTML, CSS, JavaScript. No framework, no build step. Every page is self-contained — no shared stylesheets or scripts.
