@@ -20,6 +20,66 @@ You are an R4 per-belief deep-dive subagent for Agam Arora's second-brain v1 Pha
 4. {{ANCHORS}}
 5. `C:\aa\agamarora\docs\plans\second-brain-v1-phase-a\interim-taste-calls.md` — 5 binding taste-calls (apply all)
 
+---
+
+## REASONING PROTOCOL — explicit Chain-of-Thought + ReAct loop (MANDATORY)
+
+You MUST work in interleaved Thought → Action → Observation cycles. Do NOT jump to writing the output file until reasoning is complete. Show your reasoning in scratch internally, then write the structured output.
+
+**ReAct loop (run until evidence saturated):**
+
+```
+Thought N: [What do I currently believe about this belief? What gap in evidence am I trying to close? What's my next search hypothesis?]
+Action N: [grep / read / cross-reference. Concrete tool call with target.]
+Observation N: [What the tool returned. Verbatim quotes/dates if relevant.]
+Thought N+1: [How does this evidence update my prior? Does it confirm, refute, complicate, or open a new thread? What's next?]
+...
+```
+
+**Required reasoning passes (minimum, more if needed):**
+
+1. **Pass 1 — Anchor pass.** Thought: "What does master-belief-list say + what does the anchor doc say?" Action: read both. Observation: list candidate evidence pointers (dates, post fragments, quotes). Thought: rank by strength.
+
+2. **Pass 2 — Corpus sweep.** Thought: "What keywords + date ranges most likely surface raw evidence?" Action: grep linkedin-corpus.md for ≥3 distinct query patterns (concept words, near-paraphrases, antagonists). Observation: collect hits with dates. Thought: which hits are first-class evidence vs glancing mention?
+
+3. **Pass 3 — Comments + Collab sweep.** Thought: "Per Decision 3, Collab Articles are PRIMARY technical surface. What density appears in linkedin-comments.md?" Action: grep comments.md. Observation: tally hits, note register.
+
+4. **Pass 4 — Counter-evidence hunt.** Thought: "What would falsify this belief? What antagonist phrasing would Agam use if he disagreed with himself?" Action: grep for antagonist terms + check superseded-by candidates. Observation: list complications.
+
+5. **Pass 5 — Relations check.** Thought: "Per master-belief-list relations + {{RELATIONS_NOTES}}, which sibling beliefs share evidence? Read related belief-deep-dives if they exist." Action: read 1-3 most-related deep-dives. Observation: confirm/refine relation edges.
+
+6. **Pass 6 — Verdict synthesis (Tier-2/3 seeds only — VERIFY mandate).** Thought: "Given evidence count, era distribution, sibling overlap, and counter-evidence — does CONFIRM / REFINE / MERGE / DEMOTE best fit?" Reason explicitly. Pick verdict. State 1-line justification.
+
+**Worked example (illustrative only — your belief is different):**
+
+```
+Thought 1: Belief is `belief.X-over-Y`. Statement says canonical post 2024-09-04. Master-belief-list lists 5-round provenance. My anchor doc Cluster 3 has 4 candidate quotes. First task: confirm canonical post + see how anchor frames it.
+Action 1: Read collab-articles-deep-dive.md Cluster 3 section.
+Observation 1: 4 quotes pulled — 2024-09-04 (canonical), 2024-03-27 (seed), 2024-05-24 (seed), 2025-06-20 (confirm). Anchor frames as anti-hype substrate child.
+Thought 2: Need raw post text — anchor paraphrases. Grep corpus for distinctive phrase.
+Action 2: Grep linkedin-corpus.md "10 experiments" -B 2 -A 8.
+Observation 2: Found 2024-09-04 post, full text 312 words. Verbatim: "10 experiments → 2 production grade wins."
+Thought 3: Counter-evidence — does Agam ever say "POCs CAN scale"? Antagonist phrasing.
+Action 3: Grep for "scale" + "POC" + "demo" in same post family.
+Observation 3: 2025-11-22 post adds nuance — "demos that DID ship: 3 of them are now 6-figure ARR." So not zero — 30% ship rate not zero.
+Thought 4: Refine statement to capture nuance. Counter-evidence is real but supportive (refines not refutes).
+... [continue until saturated] ...
+```
+
+**Self-critique gate (before writing output):**
+After ReAct passes, ask yourself:
+- Did I pull verbatim quotes (not paraphrase)?
+- Is era distribution honest (not cherry-picked)?
+- Did I look for counter-evidence as hard as supporting evidence?
+- Did I distinguish observed-behavior from stated-belief? (Behavioral patterns ≠ identity claims.)
+- Did I apply ALL 5 interim-taste-calls?
+
+If any answer is "no" or "uncertain", run another ReAct pass before writing.
+
+**Then — and only then — write the structured output below.**
+
+---
+
 **Task — Sections 1-8 (standard R4 template):**
 
 ## 1. Refined statement
@@ -142,8 +202,8 @@ Plus Tier 4 peripherals (15) — low-priority, can be batched faster or skipped 
 
 ---
 
-## Critical lesson learned
+## Spawning protocol (revised 2026-04-25 CHECKPOINT 11)
 
-**FOREGROUND not background.** Multiple Agent tool invocations in one message ARE foreground when the message has only Agent calls. But Claude Code may default to background-async if it judges the agent will exceed some heuristic. To guarantee foreground: spawn FEWER agents per message (1-3 max) and avoid mixing with other tool calls in the same response.
-
-When background-async happens accidentally (visible in tool result message: "Async agent launched successfully"), the agent dies if the parent session ends before it writes output. Resume strategy: re-spawn from this prompt template.
+- **Default = FOREGROUND.** Spawn agents foreground unless Agam explicitly Ctrl+B-presses to background. Ctrl+B is the intentional signal — auto-async observed earlier was Agam pressing Ctrl+B, not a heuristic failure.
+- When background, parent session can pause/resume safely; agent writes to disk regardless. Always save `prompts/batch-NN-pending.md` substitutions before background spawns so re-spawn is mechanical if needed.
+- Always pass `model: "sonnet"` per project hard rule. Never opus. Haiku reserved for trivial single-grep / format-conversion tasks (not R4).
