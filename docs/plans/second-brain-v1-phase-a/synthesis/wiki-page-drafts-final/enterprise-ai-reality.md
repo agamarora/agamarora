@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: enterprise-ai-reality
-title: Enterprise AI reality — ships vs demos
+title: Enterprise AI reality  -  ships vs demos
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
@@ -10,10 +10,10 @@ beliefs:
   - belief.moats-are-infra-talent-data
   - belief.data-readiness-is-pipeline-not-corpus
   - belief.non-functional-reqs-are-dominant-failure-mode (renamed; 55% Standish stat dropped per E4)
-  - belief.mcp-as-enterprise-primitive (ghost — resume-grounded only)
+  - belief.mcp-as-enterprise-primitive (ghost  -  resume-grounded only)
 ---
 
-# Enterprise AI reality — ships vs demos
+# Enterprise AI reality  -  ships vs demos
 
 *Era: 2024 to 2026 · 12+ posts + 4 Collab items · 4 beliefs*
 
@@ -35,7 +35,7 @@ The enterprise voice AI platform role started 2024-07-04. Sixty days later, on 2
 
 The nine takeaways were observation. That final sentence was a prediction.
 
-Three months later, on 2024-12-04, the field data distilled into competitive strategy: infrastructure, talent, data are the three durable AI moats. That post was the lift-out — the answer to what survives when 80% of experiments die.
+Three months later, on 2024-12-04, the field data distilled into competitive strategy: infrastructure, talent, data are the three durable AI moats. That post was the lift-out  -  the answer to what survives when 80% of experiments die.
 
 Nine months after the anchor, on 2025-06-20, Agam returned to confirm the pattern: "The shift from '10 experiments' to '2 production grade wins' is underway." The honeymoon-period prediction had closed. The durable frame: roughly 80% of enterprise AI experiments don't reach production. The same post opened toward agent-first territory: enterprises want agent onboarding, not agent building. Production reality and agent-first are not separate beliefs. They are the same observation at two different time points in the enterprise AI adoption cycle.
 
@@ -57,9 +57,9 @@ Roughly 80% don't ship. Three implications follow.
 
 The agent-first theme is optimistic about enterprise AI's direction. This theme is cautious about its deployment rate. The 2025-06-20 post is where both stitched together.
 
-The resolution is scope-difference, not contradiction. Production reality names the rate at which experiments clear the production bar, today. Agent-first names the direction enterprises are consolidating toward, next. The same field data produces both: "10 experiments yield 2 wins" and "horizontal AI does not scale, agentic AI is the new direction." Skepticism about the rate is not pessimism about the destination. Agent-first IS the framework for being among the 2-of-10: serving-lens-first, reversibility in from the start, NFRs specified at PRD-time — those are what the production-grade projects do differently.
+The resolution is scope-difference, not contradiction. Production reality names the rate at which experiments clear the production bar, today. Agent-first names the direction enterprises are consolidating toward, next. The same field data produces both: "10 experiments yield 2 wins" and "horizontal AI does not scale, agentic AI is the new direction." Skepticism about the rate is not pessimism about the destination. Agent-first IS the framework for being among the 2-of-10: serving-lens-first, reversibility in from the start, NFRs specified at PRD-time  -  those are what the production-grade projects do differently.
 
-Cross-link: [`agent-first`](/wiki/agent-first/) — same 2025-06-20 post carries both claims. Different analytical frame: direction vs current rate.
+Cross-link: [`agent-first`](/wiki/agent-first/)  -  same 2025-06-20 post carries both claims. Different analytical frame: direction vs current rate.
 
 ---
 
@@ -75,7 +75,7 @@ Cross-link: [`agent-first`](/wiki/agent-first/) — same 2025-06-20 post carries
 | 2025-06-20 | Post (GenAI paradox) | Confirmation: roughly 80% bench rate; honeymoon period is gone; agent-first pivot named |
 | 2025-06-20 | Own-comment on post | McKinsey Seizing the Agentic AI Advantage (June 2025) cited as external validation within hours |
 | 2025-09-29 | Comment-thread reply | Field data: production enterprise voice AI stack (cloud LLMs, MCP-first API layer, business KPI ordered ahead of tech KPI); one worked example among many |
-| 2025-12-04 | Post (anti-customization) | Extension to PM craft: "six months of implementation, an implementation partner, hundreds of training documents" — the demo-vs-production gap at the PRD layer |
+| 2025-12-04 | Post (anti-customization) | Extension to PM craft: "six months of implementation, an implementation partner, hundreds of training documents"  -  the demo-vs-production gap at the PRD layer |
 
 ---
 

@@ -6,8 +6,8 @@ status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.breadth-as-differentiation (parent thesis — implicit, 18 posts E1-E4)
-  - belief.breadth-needs-depth (own sub-page anchor — Human-GPT coinage, 2024-04-12; humanness-as-depth = Agam's synthesis, April 2024 EQ post predates September 2024 Mo Gawdat citation)
+  - belief.breadth-as-differentiation (parent thesis  -  implicit, 18 posts E1-E4)
+  - belief.breadth-needs-depth (own sub-page anchor  -  Human-GPT coinage, 2024-04-12; humanness-as-depth = Agam's synthesis, April 2024 EQ post predates September 2024 Mo Gawdat citation)
 ---
 
 # Breadth as differentiation
@@ -84,7 +84,7 @@ Cross-link: [`career-reflection`](/wiki/career-reflection/) for the learning met
 | **2024-04-12** | **Post** | **Crystallization** | **"If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest."** | **canonical anchor** |
 | 2024-06-14 | Collab Article | Tech-PM playbook | "You need deep technical understanding to succeed here... You can't be done with the studies ever in this role." | strong |
 | 2024-07-17 | Collab Article | Career method | Inside-out x outside-in self-narration; the AIonOS depth-pick | strong |
-| 2024-09-25 | Post | Supporting-voice citation | Mo Gawdat: knowledge as utility; humanness as durable depth; "if you know how to connect with humans you will be loved" — confirms April 2024 synthesis, not the source of it | strong |
+| 2024-09-25 | Post | Supporting-voice citation | Mo Gawdat: knowledge as utility; humanness as durable depth; "if you know how to connect with humans you will be loved"  -  confirms April 2024 synthesis, not the source of it | strong |
 | 2025-07-22 | Post | Locus-of-control / existential | "We humans are built this way: to deeply feel... This is both our greatest vulnerability and our greatest strength." | strong |
 
 **Post count:** 8 distinct evidence items. 5 are original posts; 3 are Collab Article surfaces (Decision 3 compliant: treated as primary technical evidence). The Human-GPT label surfaces by name once (2024-04-12); the critique-pattern underlying it surfaces across 5+ items from 2018 forward.

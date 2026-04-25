@@ -2,14 +2,14 @@
 type: Root
 tier: root
 slug: root.substance-over-hype
-title: The root disposition — substance over hype
+title: The root disposition  -  substance over hype
 status: draft-r9-polished
 length_target: 400-600
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.substance-over-hype — root anchor (2018-2026, 8-year through-line)
-  - belief.ico-is-funding-not-product — archetype example
-  - belief.never-be-smartest-in-room — standard belief, team-joining heuristic (demoted from co-root per F4; lives primarily on career-reflection)
+  - belief.substance-over-hype  -  root anchor (2018-2026, 8-year through-line)
+  - belief.ico-is-funding-not-product  -  archetype example
+  - belief.never-be-smartest-in-room  -  standard belief, team-joining heuristic (demoted from co-root per F4; lives primarily on career-reflection)
 ---
 
 # Substance over hype

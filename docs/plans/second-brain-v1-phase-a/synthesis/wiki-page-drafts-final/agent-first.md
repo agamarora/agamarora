@@ -6,14 +6,14 @@ status: draft-r9-polished
 length_target: 1200-1500
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.agent-first — Platforms that can't talk to autonomous agents are behind
-  - belief.agent-first-ecosystem-instinct — ChatGPT plugins were the first AI marketplace
-  - belief.application-layer-is-where-safety-lives — agents kept from decisions unless programmatic
-  - belief.reversibility-over-consequences — decouple tokens from decisions
-  - belief.agent-layer-is-threat-surface — model wasn't broken, agent layer was
-  - belief.prompts-as-engineering-primitive — prompts are plumbing, not UX
-  - belief.context-over-prompt — context is the lever
-  - belief.kill-prompting — stance evolved (prompting -> context engineering -> harness engineering); verdict held, layer migrated
+  - belief.agent-first  -  Platforms that can't talk to autonomous agents are behind
+  - belief.agent-first-ecosystem-instinct  -  ChatGPT plugins were the first AI marketplace
+  - belief.application-layer-is-where-safety-lives  -  agents kept from decisions unless programmatic
+  - belief.reversibility-over-consequences  -  decouple tokens from decisions
+  - belief.agent-layer-is-threat-surface  -  model wasn't broken, agent layer was
+  - belief.prompts-as-engineering-primitive  -  prompts are plumbing, not UX
+  - belief.context-over-prompt  -  context is the lever
+  - belief.kill-prompting  -  stance evolved (prompting -> context engineering -> harness engineering); verdict held, layer migrated
 ---
 
 # Agent-first thesis
@@ -76,7 +76,7 @@ No: different scopes. Enterprise-ai-reality is about what is currently happening
 
 The tension with `reversibility-over-consequences` is structural and held, not resolved. Bullish on deployment. Bearish on decision authority without programmatic evaluability. The 2026-01-06 post holds both: "Not just guardrails, but checks and balances." Deployment scope and authorization scope are not the same dial.
 
-Cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/) — same field data, different analytical frame: direction vs current rate.
+Cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/)  -  same field data, different analytical frame: direction vs current rate.
 
 ---
 

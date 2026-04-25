@@ -1,18 +1,18 @@
 ---
 type: Theme
 slug: voice-ai-craft
-title: Voice AI craft — cost, latency, scale
+title: Voice AI craft  -  cost, latency, scale
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 4 (technical-practitioner numbered precision)
 positioning: peer_page (confirmed per E1)
-evidence_anchor: agamarora.com /lab voice-AI production case study (2025-2026) — public surface independent from LinkedIn corpus
+evidence_anchor: agamarora.com /lab voice-AI production case study (2025-2026)  -  public surface independent from LinkedIn corpus
 beliefs:
   - belief.voice-as-enterprise-wedge (ghost belief; intentional under-share per Decision 2)
   - belief.enterprise-ai-production-reality (cross-linked anchor)
 ---
 
-# Voice AI craft — cost, latency, scale
+# Voice AI craft  -  cost, latency, scale
 
 *Era: 2024 to 2026 · 2 corpus posts + 1 production-stack comment · 1 ghost belief + cross-link to enterprise-ai-reality*
 
@@ -36,8 +36,8 @@ The public corpus has one pre-platform voice mention: a March 2024 post observin
 
 The craft knowledge accumulated during the enterprise voice AI platform role starting July 2024, in a period with no corresponding LinkedIn post cadence on the topic. That is the field-data window: building, demoing, shipping at enterprise scale, and not writing about it publicly. When a direct production-stack survey asked in September 2025, the reply was specific:
 
-> "Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric — business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls)."
-> — 2025-09-29 comment-thread reply (`urn:li:activity:7378427141190799360`)
+> "Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric  -  business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls)."
+>  -  2025-09-29 comment-thread reply (`urn:li:activity:7378427141190799360`)
 
 That reply contains more voice-AI engineering specificity than all prior public LinkedIn output combined. Three principles come out of it cleanly.
 
@@ -73,13 +73,13 @@ The implication generalizes beyond voice: in any agentic system at production sc
 
 The productive paradox sitting at the core of this page is not between voice AI and any adjacent technical belief. It is between voice-ai-craft and [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/).
 
-LinkedIn-as-instrument holds that posting IS the thinking — that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).
+LinkedIn-as-instrument holds that posting IS the thinking  -  that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).
 
 Both are true: posting is thinking-out-loud when the topic is safe to think out loud about. When the topic carries disclosure risk (live enterprise platform, customer NPS, production stack specifics), the practice shifts to private. The paradox names something real about professional voice: you can only think publicly about what you can afford to publish. The voice-ai-craft under-share is not a contradiction of the linkedin-as-instrument thesis; it is the constraint that defines its boundary condition.
 
 The 2025-09-29 reply shows the private-to-public pattern at its most concentrated: two-plus years of production work, one field-data comment when a direct question landed on a survey thread. The framing in the corpus is correct: "The absence is not ignorance. It is restraint."
 
-Secondary cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/) — where the production voice AI reply appears as a worked example in the evidence section.
+Secondary cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/)  -  where the production voice AI reply appears as a worked example in the evidence section.
 
 ---
 
@@ -105,7 +105,7 @@ Per Decision 2: voice-AI is one example of the production-reality described in `
 
 Structural note: this page is confirmed as a peer wiki theme (not satellite to enterprise-ai-reality) per E1. The agamarora.com /lab voice-AI case study is the public evidence anchor that sustains peer status independent of the thin LinkedIn corpus.
 
-Primary tension cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) — productive paradox: under-share on LinkedIn vs richer public surface on agamarora.com case study. Secondary cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/) — production AI realities exemplified.
+Primary tension cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/)  -  productive paradox: under-share on LinkedIn vs richer public surface on agamarora.com case study. Secondary cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/)  -  production AI realities exemplified.
 
 ---
 

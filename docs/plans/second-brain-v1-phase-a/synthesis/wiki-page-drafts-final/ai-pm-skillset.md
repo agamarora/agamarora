@@ -35,11 +35,11 @@ The origin is older than it looks. In December 2017, before "AI PM" was a job ti
 
 From 2017 to 2022, the belief ran at low altitude. A 2021 post compressed it: "It's not about the model, it's about the problem." The PM's job is to frame the problem correctly; model selection follows from that. This framing survived the ChatGPT inflection intact because it was operating at the right level of abstraction.
 
-ChatGPT shipped November 30, 2022. The corpus had already gone quiet in October 2022 and stayed quiet into early 2023. Agam published before, posted less frequently during that window, and came back in a different register on March 14, 2023 — roughly 15 weeks after ChatGPT's arrival.
+ChatGPT shipped November 30, 2022. The corpus had already gone quiet in October 2022 and stayed quiet into early 2023. Agam published before, posted less frequently during that window, and came back in a different register on March 14, 2023  -  roughly 15 weeks after ChatGPT's arrival.
 
 March 14, 2023: the manifesto. "As a product manager, I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Six concrete use cases followed: data analysis, marketing copy, note-structuring, building the personal website, Linux home-lab, network security. Five days later, the belief generalized: "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." The PowerPoint and Excel analogy. Table stakes in the literal poker sense: not a differentiator, a non-negotiable buy-in.
 
-The 2023 line still holds in 2026. AI replaces the grunt: thinking-as-execution, writing, coding, PRDs. AI does NOT replace taste. PM remains taste of what to build, what experience, what value. What changed by 2026: Claude Code is helping write specs, structure context, and validate taste at the bench level. AI moved up the stack into PM craft — but only because the PM's craft moved up first: spec, taste, context above the execution layer. The 2023 anchor names the moment AI became table stakes at the operational layer. The craft differentiation moved upstream from there. The boundary statement: I observe foundation, I work application. AI tools handle the grunt; taste is the irreducible PM job.
+The 2023 line still holds in 2026. AI replaces the grunt: thinking-as-execution, writing, coding, PRDs. AI does NOT replace taste. PM remains taste of what to build, what experience, what value. What changed by 2026: Claude Code is helping write specs, structure context, and validate taste at the bench level. AI moved up the stack into PM craft  -  but only because the PM's craft moved up first: spec, taste, context above the execution layer. The 2023 anchor names the moment AI became table stakes at the operational layer. The craft differentiation moved upstream from there. The boundary statement: I observe foundation, I work application. AI tools handle the grunt; taste is the irreducible PM job.
 
 Then came the grinding window. Between November 2023 and July 2024, Collaborative Articles became the densest technical surface in the corpus. LinkedIn awarded Community Top Voice badges to contributors who ranked in the top 1-2% globally by peer vote. The incentive forced compression of real expertise into structured responses. PM Top Voice landed by February 2024. AI Top Voice by July 4, 2024. The 58 Collab responses in that window are the most technically dense AI-PM material in eleven years of posting.
 
@@ -69,31 +69,31 @@ The "application-layer" boundary means: I do not build models, I use them. It do
 
 The belief `belief.llm-as-primary-daily-tool` sits at the intersection of this theme and the second-brain theme. LLMs are a great tool: used daily, more than any other tool in the stack. That is the operative 2026 claim. The operational framing (how LLMs embed into daily workflow: note-structuring, brainstorming, writing, spec-drafting) lives here as primary home. The second-brain page cross-lists it as the precursor in the substrate chain (self-instrumentation to quantified-self-as-mindfulness to llm-as-primary-daily-tool to second-brain-is-context-layer). (See: [`second-brain`](/wiki/second-brain/).)
 
-A subtler tension sits between this theme and agent-first. Agent-first, by 2026, has become a builder posture — spec, context, craft at the bench level. Application-layer AI-PM positions Agam in archetype 2 (using models, not building them). Both hold simultaneously: "application-layer" was always defined relative to foundation-layer (do you improve the model?), not relative to how hands-on the building is. The same field data from 2026 produces both: the archetype-2 AI-PM identity AND the builder-trilogy framing. (See: [`agent-first`](/wiki/agent-first/).)
+A subtler tension sits between this theme and agent-first. Agent-first, by 2026, has become a builder posture  -  spec, context, craft at the bench level. Application-layer AI-PM positions Agam in archetype 2 (using models, not building them). Both hold simultaneously: "application-layer" was always defined relative to foundation-layer (do you improve the model?), not relative to how hands-on the building is. The same field data from 2026 produces both: the archetype-2 AI-PM identity AND the builder-trilogy framing. (See: [`agent-first`](/wiki/agent-first/).)
 
 ---
 
 ## Evidence
 
-1. **2017-12-21 · post** — "Decision Management and ML platforms. The two hottest and profitable AI technologies right now." Origin node. `belief.ai-is-the-next-wave` ancestor. [urn:li:activity:6349574083381944321]
+1. **2017-12-21 · post**  -  "Decision Management and ML platforms. The two hottest and profitable AI technologies right now." Origin node. `belief.ai-is-the-next-wave` ancestor. [urn:li:activity:6349574083381944321]
 
-2. **2021-07-14 · post** — "It's not about the model it's about the problem." Pre-ChatGPT PM-craft frame. `belief.its-not-the-model-its-the-problem`. [urn:li:activity:6820970631484465152]
+2. **2021-07-14 · post**  -  "It's not about the model it's about the problem." Pre-ChatGPT PM-craft frame. `belief.its-not-the-model-its-the-problem`. [urn:li:activity:6820970631484465152]
 
-3. **2023-03-14 · post** — "I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Manifesto post. THE crystallization moment. Six concrete use cases. `belief.ai-pm-skillset-table-stakes` anchor. [urn:li:activity:7041317366437163008]
+3. **2023-03-14 · post**  -  "I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Manifesto post. THE crystallization moment. Six concrete use cases. `belief.ai-pm-skillset-table-stakes` anchor. [urn:li:activity:7041317366437163008]
 
-4. **2023-03-19 · post** — "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." PowerPoint + Excel analogy. `belief.ai-fluency-required`. [urn:li:activity:7042902...]
+4. **2023-03-19 · post**  -  "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." PowerPoint + Excel analogy. `belief.ai-fluency-required`. [urn:li:activity:7042902...]
 
-5. **2024-03-06 · Collab Article** — "Being technical is not about knowing a technology but using the technology... play with APIs when you are bored :)" Applied-not-certified fluency. `belief.learn-concepts-not-tools` intersection. Top 1-2% peer-voted surface. [urn:li:activity:7171171307559043072]
+5. **2024-03-06 · Collab Article**  -  "Being technical is not about knowing a technology but using the technology... play with APIs when you are bored :)" Applied-not-certified fluency. `belief.learn-concepts-not-tools` intersection. Top 1-2% peer-voted surface. [urn:li:activity:7171171307559043072]
 
-6. **2024-03-28 · Collab Article** — "1/ AI PMs working on improving the AI models / 2/ AI PMs using existing AI models to unlock growth... I feel the second one would have higher demand." THE archetype split. Self-positioning in application-layer, from credentialed surface. [urn:li:activity:7178931908863561728]
+6. **2024-03-28 · Collab Article**  -  "1/ AI PMs working on improving the AI models / 2/ AI PMs using existing AI models to unlock growth... I feel the second one would have higher demand." THE archetype split. Self-positioning in application-layer, from credentialed surface. [urn:li:activity:7178931908863561728]
 
-7. **2024-05-24 · Collab Article** — "One thing that worked for me and continues to help me with the need for speed is design thinking. Don't confuse design thinking with making UI/UX first... I have a jupyter notebook where I try different models and a quick paper wireframe." `belief.design-thinking-as-speed-tool`. [urn:li:activity:7199797475379978240]
+7. **2024-05-24 · Collab Article**  -  "One thing that worked for me and continues to help me with the need for speed is design thinking. Don't confuse design thinking with making UI/UX first... I have a jupyter notebook where I try different models and a quick paper wireframe." `belief.design-thinking-as-speed-tool`. [urn:li:activity:7199797475379978240]
 
-8. **2024-07-04 · post** — "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager." Top Voice AI badge + AIonOS join. Fluency claim becomes operational title. [urn:li:activity:7214487...]
+8. **2024-07-04 · post**  -  "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager." Top Voice AI badge + AIonOS join. Fluency claim becomes operational title. [urn:li:activity:7214487...]
 
-9. **2025-06-20 · post** — "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." Agent-first manifesto. AI-PM table-stakes assumed floor; new differentiation moves up the stack. [urn:li:activity:7341662...]
+9. **2025-06-20 · post**  -  "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." Agent-first manifesto. AI-PM table-stakes assumed floor; new differentiation moves up the stack. [urn:li:activity:7341662...]
 
-10. **2026-04-09 · post** — "When you have already spent hours speccing every pixel... a generative tool gives you a worse version of what you have already decided. Spec > Sprint / Taste > Execution / Context > Prompt." The trilogy. Application-layer AI-PM has matured to spec-and-taste craft. [urn:li:activity:7447981735901949952]
+10. **2026-04-09 · post**  -  "When you have already spent hours speccing every pixel... a generative tool gives you a worse version of what you have already decided. Spec > Sprint / Taste > Execution / Context > Prompt." The trilogy. Application-layer AI-PM has matured to spec-and-taste craft. [urn:li:activity:7447981735901949952]
 
 ---
 

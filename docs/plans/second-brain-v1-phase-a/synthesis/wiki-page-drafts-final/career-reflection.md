@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: career-reflection
-title: Career reflection — IC path, learning compound interest, collaborative growth
+title: Career reflection  -  IC path, learning compound interest, collaborative growth
 status: draft-r9-polished
 length_target: 1000-1400
 voice_register: 1 (free-form post-essay)
@@ -13,11 +13,11 @@ beliefs:
   - belief.muscle-memory-over-novelty (sub-section under learn-concepts)
   - belief.two-roles-ahead-framing (elevated from peripheral to named callout per F2)
   - belief.lead-yourself-first (E1 historical)
-  - belief.never-be-smartest-in-room (standard belief, team-joining heuristic scope per F4 — demoted from co-root)
+  - belief.never-be-smartest-in-room (standard belief, team-joining heuristic scope per F4  -  demoted from co-root)
   - project.v2-games (career-stage chapter here per F1, not in personal-projects-tinkering)
 ---
 
-# Career reflection — IC path, learning compound interest, collaborative growth
+# Career reflection  -  IC path, learning compound interest, collaborative growth
 
 *Era: 2014 - 2026 · 18+ posts · 8 beliefs*
 
@@ -57,7 +57,7 @@ The universal claim is the load-bearing part: people management is critical, but
 
 The 2026 reframe makes the IC path more important, not less. Individuals with AI agents can produce significantly more leverage than before. The throughput of an IC plus AI is closer to a small team than ever. The IC-path legitimacy belief has grown stronger in the AI era, not weakened. (Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for AI agents as productivity multiplier; [`breadth-as-differentiation`](/wiki/breadth-as-differentiation/) for depth of IC craft as differentiator.)
 
-What gives this declaration weight is the maintenance evidence. Four years later, in June 2024, Agam's Collaborative Article career mentoring closes with: "It is a wonderful opportunity to be a product manager. I wouldn't trade it for anything." The conviction held across roles and companies. He joined AIonOS in 2024 as Senior AI Product Manager — an IC-track title, living the belief in role.
+What gives this declaration weight is the maintenance evidence. Four years later, in June 2024, Agam's Collaborative Article career mentoring closes with: "It is a wonderful opportunity to be a product manager. I wouldn't trade it for anything." The conviction held across roles and companies. He joined AIonOS in 2024 as Senior AI Product Manager  -  an IC-track title, living the belief in role.
 
 ### Concepts over tools: the 2019 learning thesis
 
@@ -111,29 +111,29 @@ Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the learning method as
 
 ## Evidence
 
-1. **2017-09-14** — help-market-flourish origin event: Cardone video, seduction, public walk-back. "Or would you help the market flourish while you try to make your healthy share?" `urn:li:activity:6314056957212876800`
+1. **2017-09-14**  -  help-market-flourish origin event: Cardone video, seduction, public walk-back. "Or would you help the market flourish while you try to make your healthy share?" `urn:li:activity:6314056957212876800`
 
-2. **2017-12-22** — lead-yourself-first: "being a leader is not about motivating your team, but yourself." E1 compact heuristic.
+2. **2017-12-22**  -  lead-yourself-first: "being a leader is not about motivating your team, but yourself." E1 compact heuristic.
 
-3. **2018-07-12** — help-market-flourish crystallized: "Go increase the size of the pie if you want a bigger share." V2-to-FarEye transition. `urn:li:activity:6423036084040630272`
+3. **2018-07-12**  -  help-market-flourish crystallized: "Go increase the size of the pie if you want a bigger share." V2-to-FarEye transition. `urn:li:activity:6423036084040630272`
 
-4. **2019-03-02** — STP as framework-endurance evidence: "after five years of working on and off projects... if there is one thing I believe in is the power of the basic model." (absorbed into learn-concepts)
+4. **2019-03-02**  -  STP as framework-endurance evidence: "after five years of working on and off projects... if there is one thing I believe in is the power of the basic model." (absorbed into learn-concepts)
 
-5. **2019-12-04** — learn-concepts-not-tools canonical: driver/mechanic/engineer analogy. "The world doesn't need more drivers. AI will make you redundant if not now but soon. Strive to learn concepts and not tools. Be a creater!"
+5. **2019-12-04**  -  learn-concepts-not-tools canonical: driver/mechanic/engineer analogy. "The world doesn't need more drivers. AI will make you redundant if not now but soon. Strive to learn concepts and not tools. Be a creater!"
 
-6. **2021-10-30** — ic-path-legitimacy supersession: family-default named and broken publicly. "People management is a critical skill but it's not for everyone."
+6. **2021-10-30**  -  ic-path-legitimacy supersession: family-default named and broken publicly. "People management is a critical skill but it's not for everyone."
 
-7. **2023-11-22** — help-market-flourish in giving-register (Collab Article): "You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there." `urn:li:activity:7133126861819117568`
+7. **2023-11-22**  -  help-market-flourish in giving-register (Collab Article): "You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there." `urn:li:activity:7133126861819117568`
 
-8. **2024-02-11** — certifications-are-collectibles setup: Top Voice PM earned, immediately diagnosed. "This kind of feedback... is more valuable than any badge." `urn:li:activity:7162451080759459840`
+8. **2024-02-11**  -  certifications-are-collectibles setup: Top Voice PM earned, immediately diagnosed. "This kind of feedback... is more valuable than any badge." `urn:li:activity:7162451080759459840`
 
-9. **2024-06-25** — ic-path maintenance via Mastery-by-Greene (Collab): "I wouldn't trade it for anything." "The lowest common denominator came out to be hours put in. And this is something you can't skim on." `urn:li:activity:7211156691101327360`
+9. **2024-06-25**  -  ic-path maintenance via Mastery-by-Greene (Collab): "I wouldn't trade it for anything." "The lowest common denominator came out to be hours put in. And this is something you can't skim on." `urn:li:activity:7211156691101327360`
 
-10. **2024-11-15** — certifications-are-collectibles canonical: "They are in no shape or means a validation of what you can and cannot do." Steve Jobs anchor. `urn:li:activity:7263044949686824960`
+10. **2024-11-15**  -  certifications-are-collectibles canonical: "They are in no shape or means a validation of what you can and cannot do." Steve Jobs anchor. `urn:li:activity:7263044949686824960`
 
-11. **2025-11-25** — ic-path at altitude: "Growth as a product manager is moving from 'we are building the best product' to 'we are building a profitable and valuable business'." Altitude-of-thinking, not altitude-of-org-chart.
+11. **2025-11-25**  -  ic-path at altitude: "Growth as a product manager is moving from 'we are building the best product' to 'we are building a profitable and valuable business'." Altitude-of-thinking, not altitude-of-org-chart.
 
-12. **2025-12-26** — muscle-memory-over-novelty canonical: "To get this into my muscle memory... Use this man's writing/talks as not just one-offs, but commit to them." Doshi re-watch prescription. `urn:li:activity:7410323391465062400`
+12. **2025-12-26**  -  muscle-memory-over-novelty canonical: "To get this into my muscle memory... Use this man's writing/talks as not just one-offs, but commit to them." Doshi re-watch prescription. `urn:li:activity:7410323391465062400`
 
 ---
 

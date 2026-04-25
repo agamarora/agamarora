@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: second-brain
-title: Second brain — structured knowledge for agents
+title: Second brain  -  structured knowledge for agents
 status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 1 (free-form post-essay)
@@ -13,7 +13,7 @@ beliefs:
   - belief.personal-website-is-present-tense
 ---
 
-# Second brain — structured knowledge for agents
+# Second brain  -  structured knowledge for agents
 
 *Era: 2018 to 2026 · 14+ posts · 5 beliefs*
 
@@ -59,7 +59,7 @@ This has a specific technical shape. The wiki is human-readable. The kg.json ont
 
 The "why it failed before" framing matters here. Most second-brain attempts broke on maintenance: keeping a personal knowledge system updated and cross-linked was itself a job. AI mostly solves that. The grunt work of categorizing and surfacing connections is automatable. Human judgment is upstream (what to include) and downstream (calibration, voice). The middle layer, which was the failure mode, is now handled.
 
-The belief slug is `llm-as-primary-daily-tool` — factual daily-use claim. LLMs are a great tool; I use them daily more than any other tool in my stack. This is entirely separate from voice-AI products; see the [`voice-ai-craft`](/wiki/voice-ai-craft/) theme for that.
+The belief slug is `llm-as-primary-daily-tool`  -  factual daily-use claim. LLMs are a great tool; I use them daily more than any other tool in my stack. This is entirely separate from voice-AI products; see the [`voice-ai-craft`](/wiki/voice-ai-craft/) theme for that.
 
 ---
 
@@ -75,23 +75,23 @@ Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the operational framin
 
 ## Evidence
 
-**2018-05-28 — gaming retrospection.** V2 Games self-classification: four named patterns extracted from gaming behavior through deliberate retrospection. The cognitive seed: observable-self-patterns as insight source. No apparatus yet, but the practice is in place.
+**2018-05-28  -  gaming retrospection.** V2 Games self-classification: four named patterns extracted from gaming behavior through deliberate retrospection. The cognitive seed: observable-self-patterns as insight source. No apparatus yet, but the practice is in place.
 
-**2020-02-20 — Toggl + mindfulness-as-skill.** First externalization: a tool now mediates between Agam and his patterns. The it-isn't-the-tool maxim. "I have been using toggl.com to track my working hours. And soon after I was tracking my personal chores over here." Read-only by Agam; no synthesis, no cross-session compounding. But the habit is formed.
+**2020-02-20  -  Toggl + mindfulness-as-skill.** First externalization: a tool now mediates between Agam and his patterns. The it-isn't-the-tool maxim. "I have been using toggl.com to track my working hours. And soon after I was tracking my personal chores over here." Read-only by Agam; no synthesis, no cross-session compounding. But the habit is formed.
 
-**2023-03-14 — "tis but an extension."** The canonical anchor. Six concrete use cases. "Structuring my thoughts and notes — my notes have never been so actionable thanks to ChatGPT's help." Cognitive perimeter expands to include the LLM. The second-brain seed: but context still dies when the window closes.
+**2023-03-14  -  "tis but an extension."** The canonical anchor. Six concrete use cases. "Structuring my thoughts and notes  -  my notes have never been so actionable thanks to ChatGPT's help." Cognitive perimeter expands to include the LLM. The second-brain seed: but context still dies when the window closes.
 
-**2023-04-16 — agamarora.com v1 ships.** "It took me 12 years!" After 12 years of procrastination, the personal site goes live. Python + Streamlit, open-source. Sister belief: personal-website-is-present-tense. Externalizing identity to a public substrate is the same structural move as externalizing context to git.
+**2023-04-16  -  agamarora.com v1 ships.** "It took me 12 years!" After 12 years of procrastination, the personal site goes live. Python + Streamlit, open-source. Sister belief: personal-website-is-present-tense. Externalizing identity to a public substrate is the same structural move as externalizing context to git.
 
-**2024-05-31 — per-subject GPT wrappers.** "I have created a personal GPT wrapper for each subject that I am after. I tend to look up top programs, look at their curriculum and add that as a structure to my wrappers. This has replaced my podcast addiction with a more interactive version."
+**2024-05-31  -  per-subject GPT wrappers.** "I have created a personal GPT wrapper for each subject that I am after. I tend to look up top programs, look at their curriculum and add that as a structure to my wrappers. This has replaced my podcast addiction with a more interactive version."
 
-**2024-06-05 — local-first move.** ChatGPT outage triggers Agam to download Ollama + LLaMA3 + PHI3 and bind them to a keyboard shortcut. "But this prompted me to be prepared for the times when I have to be off-the-grid but with my trusty LLM peer."
+**2024-06-05  -  local-first move.** ChatGPT outage triggers Agam to download Ollama + LLaMA3 + PHI3 and bind them to a keyboard shortcut. "But this prompted me to be prepared for the times when I have to be off-the-grid but with my trusty LLM peer."
 
-**2026-04-09 — Context > Prompt trilogy.** "Spec > Sprint. Taste > Execution. Context > Prompt." The thesis post that the second-brain operationalizes. Twelve days before the public launch.
+**2026-04-09  -  Context > Prompt trilogy.** "Spec > Sprint. Taste > Execution. Context > Prompt." The thesis post that the second-brain operationalizes. Twelve days before the public launch.
 
-**2026-04-21 — second-brain announcement.** "The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now and it has become my preferred way to use Claude."
+**2026-04-21  -  second-brain announcement.** "The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now and it has become my preferred way to use Claude."
 
-**2026-04-23 — canonical launch.** Paste-prompt, setup guide, public artifact. "All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever." Karpathy's LLM Wiki gist cited and credited; substance-over-hype move throughout.
+**2026-04-23  -  canonical launch.** Paste-prompt, setup guide, public artifact. "All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever." Karpathy's LLM Wiki gist cited and credited; substance-over-hype move throughout.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: personal-projects-tinkering
-title: Personal projects — ship it or it doesn't exist
+title: Personal projects  -  ship it or it doesn't exist
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
@@ -12,7 +12,7 @@ beliefs:
   - belief.gaming-as-economic-intuition (peripheral historical; V2 Games reclassified to career-reflection per F1)
 ---
 
-# Personal projects — ship it or it doesn't exist
+# Personal projects  -  ship it or it doesn't exist
 
 *Era: 2016 to 2026 · 12+ posts · 4 beliefs · 52-project lineage*
 
@@ -48,7 +48,7 @@ Pattern across every era: identify a gap, acquire what closes it, build the smal
 
 ### Top-tier projects (open-source, shipped, on GitHub)
 
-**Shararat — Vapi Build Challenge (2025):** Voice AI multi-agent personal project. Hackathon-shipped. Demonstrates ship-the-prototype and agent-first applied to a personal build outside the day job.
+**Shararat  -  Vapi Build Challenge (2025):** Voice AI multi-agent personal project. Hackathon-shipped. Demonstrates ship-the-prototype and agent-first applied to a personal build outside the day job.
 
 **second-brain v1 (2026):** wiki + kg.json + /enter v3. Plain markdown. Git. Open source. MIT. Free forever. Four months of private use before public launch, then one clean announcement. This is the page you are on.
 
@@ -78,7 +78,7 @@ Not always simultaneous: the second-brain ran privately for four months before a
 
 `belief.ship-the-prototype` (absorbs tinker-publicly per A3) is what this looks like when applied to personal/lab work and posted via `linkedin-as-instrument`.
 
-Cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) — where the build-post-teach-learn loop is analyzed as platform strategy.
+Cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/)  -  where the build-post-teach-learn loop is analyzed as platform strategy.
 
 ---
 
@@ -88,7 +88,7 @@ In 2020: any prototype beats no prototype. Ship even when embarrassed. Reid Hoff
 
 By 2026, the belief had been refined. `belief.spec-over-sprint` (2026-04-09): "When you've specced every pixel, a generative tool gives you a worse version of what you already decided. Invest in the spec, not the iteration speed." Same verb (ship), tighter upstream constraint (spec first). 2020: artifact-existence beats idea-only. 2026: artifact-quality starts at the spec.
 
-This is a temporal evolution with a specific trigger: AI makes iteration near-zero-cost. Pre-LLM, the binding constraint was existence — ship the thing or the idea stays theoretical. Post-LLM, the binding constraint moved upstream to quality-of-spec, because the model amplifies whatever you put in front of it. The ship-fast belief is correctly listed as superseded in the ontology. The shipping cadence did not change. The preparation upstream of it did.
+This is a temporal evolution with a specific trigger: AI makes iteration near-zero-cost. Pre-LLM, the binding constraint was existence  -  ship the thing or the idea stays theoretical. Post-LLM, the binding constraint moved upstream to quality-of-spec, because the model amplifies whatever you put in front of it. The ship-fast belief is correctly listed as superseded in the ontology. The shipping cadence did not change. The preparation upstream of it did.
 
 What did not change: the shipping cadence. Between December 2025 and April 2026, three projects shipped (/buddy, second-brain v1 private, second-brain v1 public). The upstream discipline tightened; the downstream verb stayed.
 

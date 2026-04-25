@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: linkedin-as-instrument
-title: LinkedIn as instrument — the meta-platform game
+title: LinkedIn as instrument  -  the meta-platform game
 status: draft-r9-polished
 length_target: 800-1000
 voice_register: 1 (free-form post-essay)
@@ -10,11 +10,11 @@ beliefs:
   - belief.ship-the-prototype (tinker-publicly MERGED here per A3; posting is loop closure, not distribution step)
   - belief.strong-opinion-about-no-strong-opinions (cross-listed paradox-voice; licenses public posting conviction per A2)
 achievements:
-  - achievement.linkedin-top-voice-pm — Community Top Voice, PM category, top 1-2% globally (earned by 2024-02-11)
-  - achievement.linkedin-top-voice-ai — Community Top Voice, AI category, top 1-2% globally (earned by 2024-07-04)
+  - achievement.linkedin-top-voice-pm  -  Community Top Voice, PM category, top 1-2% globally (earned by 2024-02-11)
+  - achievement.linkedin-top-voice-ai  -  Community Top Voice, AI category, top 1-2% globally (earned by 2024-07-04)
 ---
 
-# LinkedIn as instrument — the meta-platform game
+# LinkedIn as instrument  -  the meta-platform game
 
 *Era: 2017 to 2026 · 12+ posts · 3 beliefs + 2 achievements*
 
@@ -40,7 +40,7 @@ The meta-articulation surfaced when there was standing to say it from. That stan
 
 > "Now that I've earned a Top Voice badge, let me share what I truly believe is happening here. Linkedin is getting the community to train its AI model to give accurate and crisp answers... Linkedin has a superior human feedback loop going on here."
 
-He diagnosed the loop in the post itself — LinkedIn as a superior human feedback loop, training its own AI model with expert peer input. Then he closed by re-committing to the play:
+He diagnosed the loop in the post itself  -  LinkedIn as a superior human feedback loop, training its own AI model with expert peer input. Then he closed by re-committing to the play:
 
 > "Funny, my perspective on this yet my commitment to sharing my views every time I find a worthy enough question/article to contribute to."
 
@@ -78,7 +78,7 @@ The first is with `pm-taste`. The post that diagnoses the LinkedIn feedback loop
 
 The distinction Agam maintains: competition-driven recognition earned through demonstrated-quality content is not monetized standing. He earned the badges. He did not then sell templates, ebooks, or courses built on that standing. The instrumental stance stops where the transaction starts.
 
-The second tension is with `voice-ai-craft`. LinkedIn-as-instrument holds that posting IS the thinking — that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).
+The second tension is with `voice-ai-craft`. LinkedIn-as-instrument holds that posting IS the thinking  -  that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).
 
 Both are true: posting is thinking-out-loud when the topic is safe to think out loud about. When the topic carries disclosure risk (live enterprise platform, customer NPS, production stack specifics), the practice shifts to private. The paradox names something real about professional voice: you can only think publicly about what you can afford to publish. The voice-ai-craft under-share is not a contradiction of the linkedin-as-instrument thesis; it is the constraint that defines its boundary condition.
 
