@@ -50,7 +50,7 @@ The origin is older than it looks. In December 2017, before "AI PM" was a job ti
 
 From 2017 to 2022, the belief ran at low altitude. A 2021 post compressed it: "It's not about the model, it's about the problem." The PM's job is to frame the problem correctly; model selection follows from that. This framing survived the ChatGPT inflection intact because it was operating at the right level of abstraction.
 
-ChatGPT shipped November 30, 2022. There is a 137-day silence in the corpus before the next meaningful post on the subject. The observation period ended in late February 2023.
+ChatGPT shipped November 30, 2022. The corpus had already gone quiet in October 2022 and stayed quiet into early 2023. Agam published before, posted less frequently during that window, and came back in a different register on March 14, 2023 — roughly 15 weeks after ChatGPT's arrival.
 
 March 14, 2023: the manifesto. "As a product manager, I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Six concrete use cases followed: data analysis, marketing copy, note-structuring, building the personal website, Linux home-lab, network security. Five days later, the belief generalized: "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." The PowerPoint and Excel analogy. Table stakes in the literal poker sense: not a differentiator, a non-negotiable buy-in.
 

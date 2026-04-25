@@ -119,6 +119,14 @@ open_qs_for_taste_pass:
 
 ---
 
+**Audit-derived prompt rules (post-batch-6c qualitative review):**
+
+- **A. Silence framing prohibition.** Do NOT use "X-day silence" language or describe any posting gap as significant. If you reference a quiet period, say only "Agam posted less frequently during this window" or similar. Treat silences as normal cadence variation per Decision 5.
+- **B. Date-interval arithmetic.** Before stating any relative-timing claim ("one week before," "three months later," "just after"), compute the actual interval from the corpus dates. Do not estimate from context — derive from the dates.
+- **C. Voice register for connective prose.** Connective sentences between quotes should be direct declarative. Prefer "The page turned here: [quote]" over "This belief reached maturity when Agam recognized that..." Avoid third-person character-analysis framing ("Agam's X is Y"). If you find yourself writing analytical-summary prose about Agam's beliefs, replace with a direct quote or a simpler factual statement.
+- **D. Don't pre-answer Open Qs.** If R5 or R4 flagged a question as Open for taste-pass, the body prose must NOT commit to an answer. Hedge the body, keep the answer in the callout.
+- **E. Verify single-superlative claims.** Avoid "the only post in N years" / "the first time he ever" claims unless explicitly supported in master-belief-list. Use "the clearest instance" / "the canonical surface" instead.
+
 **Apply interim-taste-calls (all 5):**
 - Drop interior-design (2017) refs
 - Voice-AI under-share intentional — even if writing voice-ai-craft theme, lead with craft/principle, not identity

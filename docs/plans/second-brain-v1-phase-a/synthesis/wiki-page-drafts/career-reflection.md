@@ -56,7 +56,7 @@ On 2017-09-14, after watching a Cardone video, Agam wrote a post in real time th
 
 > "Choose wisely, domination comes at a cost. Morally, emotionally, financially or even plain aesthetics. All this coming after I had watched Grant Cardone's video where he opens with, 'Dominate, don't compete'. And interestingly I was just awed by the presentation of it that I was like 'hell yeah, dominate'. As reality hits, I am here pondering if domination is feasible or let's say a smart move? Would you rather just kill everyone out there and crush your market after you are number one? Or would you help the market flourish while you try to make your healthy share?"
 
-This is the only post in eleven years where a prior posture, its seduction, and the walk-back are visible in one document. One year later, at the V2-to-FarEye transition, Agam reached for the professor's line as a working mnemonic: "Go increase the size of the pie if you want a bigger share." The belief had become a tool.
+This is the clearest instance in the corpus where a prior posture, its seduction, and the walk-back are visible in one document. One year later, at the V2-to-FarEye transition, Agam reached for the professor's line as a working mnemonic: "Go increase the size of the pie if you want a bigger share." The belief had become a tool.
 
 The lead-yourself-first signal lands in the same window: "being a leader is not about motivating your team, but yourself." Compact, single-surface, held quietly. It is the E1-E2 founder register: build the discipline in yourself before you build a team.
 

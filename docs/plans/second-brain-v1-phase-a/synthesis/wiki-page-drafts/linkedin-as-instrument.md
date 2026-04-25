@@ -54,7 +54,7 @@ The meta-articulation surfaced when there was standing to say it from. That stan
 
 > "Now that I've earned a Top Voice badge, let me share what I truly believe is happening here. Linkedin is getting the community to train its AI model to give accurate and crisp answers... Linkedin has a superior human feedback loop going on here."
 
-He called it RLHF farming. Then he closed by re-committing to the play:
+He diagnosed the loop in the post itself — LinkedIn as a superior human feedback loop, training its own AI model with expert peer input. Then he closed by re-committing to the play:
 
 > "Funny, my perspective on this yet my commitment to sharing my views every time I find a worthy enough question/article to contribute to."
 
@@ -84,7 +84,7 @@ Third: building things and posting them are part of the same loop. The tinker-pu
 
 ## Tension with `pm-taste`
 
-The paradox is structural, not accidental: the post that diagnoses LinkedIn as an RLHF farm IS a LinkedIn post.
+The paradox is structural, not accidental: the post that diagnoses the LinkedIn feedback loop IS a LinkedIn post.
 
 Agam critiques the PM-influencer economy in a 2024-04-01 post: "There are more senior PMs selling services to aspiring PMs than in any other job function." He wrote that while holding two Community Top Voice badges. He grinds badge quotas while writing that badge competition is an aspiration trap. The meta-awareness is not hypocrisy; it is the register. The belief cross-listed here, `belief.strong-opinion-about-no-strong-opinions`, captures the same stance: holding a productive paradox open rather than resolving it into a safer position.
 

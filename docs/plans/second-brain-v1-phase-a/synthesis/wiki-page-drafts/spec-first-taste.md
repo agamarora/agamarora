@@ -46,7 +46,7 @@ This is Agam's builder stance as of E4b. Not a PM methodology. A disposition.
 
 ## How it formed
 
-The vocabulary arrived on April 9, 2026. The disposition had been building for five years.
+The vocabulary arrived on April 9, 2026. Whether the disposition had been building for five years or whether this was a genuine new crystallization is an open question for taste-pass — the evidence below is consistent with both readings.
 
 **2021-22: taste-work without taste-vocabulary.** The PM metaphor stack - featherless hat (2021-09-22), 99/1 grind (2022-06-03), product-as-parenting (2021-07-12) - was doing taste-work under a different name. "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'" The 99 should-we questions are discrimination work. Refusal work. Spec work. Five years before the explicit axiom, Agam had framed the PM job as 99% taste / 1% execution - he just hadn't named it yet.
 
