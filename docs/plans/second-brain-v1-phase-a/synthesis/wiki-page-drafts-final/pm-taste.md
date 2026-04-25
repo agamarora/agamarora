@@ -2,20 +2,20 @@
 type: Theme
 slug: pm-taste
 title: PM taste — craft, metaphors, and what a PM actually does
-status: draft-r9
+status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 1 (free-form post-essay)
 beliefs:
+  - belief.strong-opinion-about-no-strong-opinions — NAMED META-BELIEF (licenses every other belief on this page per A2; 2021-12-12 anchor)
   - belief.pm-is-99-should-we-1-can-we — anchor
   - belief.pm-is-featherless-hat — origin metaphor
   - belief.pm-as-parenting — metaphor stack
-  - belief.anti-customization — taste applied
+  - belief.anti-customization — taste applied (scope: enterprise per D1; consumer cost structure differs)
   - belief.data-literacy-is-pm-core — craft fundamental
   - belief.build-measure-learn — methodology floor
   - belief.idea-validation-3-pillars — V/C/S frame
-  - belief.non-functional-reqs-are-55pct-of-failure — failure-mode awareness
+  - belief.non-functional-reqs-are-dominant-failure-mode — renamed; 55% Standish stat dropped per E4
   - belief.design-thinking-as-speed-tool — alignment not UI
-  - belief.strong-opinion-about-no-strong-opinions — productive paradox (held, not resolved)
 ---
 
 # PM taste — craft, metaphors, and what a PM actually does
@@ -23,6 +23,14 @@ beliefs:
 *Era: 2021 - 2026 · 15+ posts · 10 beliefs*
 
 ---
+
+## The meta-belief
+
+Before the craft beliefs, one line from 2021-12-12: "I have a very strong opinion about having no strong opinions."
+
+This is not a contradiction to explain away. It is the license for everything else on this page. The PM who has no strong opinions is a pushover who says yes to 99 of the 99 should-we questions. The PM who has only strong opinions is a tyrant who says no to all 99 and never gets to the 1. The productive space: strong opinions held hard, discarded faster when shown wrong. Conviction is real; it just has to earn its place. Read this page with that filter. Every belief below is held with conviction and held provisionally. The paradox is the voice.
+
+Cross-listed in [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) as the disposition that licenses public posting.
 
 ## Core belief
 
@@ -34,7 +42,7 @@ Product management is not a role you see when it's done right. It is 99% discrim
 
 ### 2021: the metaphor-maker era
 
-The PM-craft metaphors arrive in a tight cluster in 2021, posted within months of each other at FarEye. They never contradict each other. They stack.
+The PM-craft metaphors arrive in a tight cluster in 2021, posted within months of each other at FarEye. Looking back, they stack. At the time each was its own post.
 
 The first is parenting (2021-07-12):
 
@@ -70,9 +78,9 @@ Two beliefs crystallize during the LinkedIn Collab Articles badge-grind (late 20
 
 On NFRs (2024-03-08):
 
-> "Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards. 55% of software production issues are due to non-functional requirements." [Standish Group Chaos report 2023 — pending taste-pass verification]
+> "Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards."
 
-Performance, scalability, security, ease of use: these are not afterthoughts delegated to QA. They are the specification layer where most products fail. Feature completeness is table stakes. When uptime holds and latency is invisible, no one credits the PM. When any fails, every user notices. This is featherless-hat work operating at the requirement layer.
+Non-functional requirements are the dominant failure mode. Performance, scalability, security, ease of use: not afterthoughts delegated to QA. They are the specification layer where most products fail. Feature completeness is table stakes. When uptime holds and latency is invisible, no one credits the PM. When any fails, every user notices. This is featherless-hat work operating at the requirement layer. (`belief.non-functional-reqs-are-dominant-failure-mode`)
 
 On design thinking (2024-05-24):
 
@@ -88,11 +96,11 @@ The anti-customization post (2025-12-04) is the clearest first-person expression
 
 Note the shift in register from 2021-22. The earlier metaphors described PM work from the outside. This post describes it from the inside: a battle with the self. "Super customizable" is in scare quotes because that is what sells in the meeting room. The taste is the thing that refuses it anyway. Each customization setting in a PRD is a design decision deferred to the user — and a pre-paid mortgage on every future deployment. Anti-customization is the 99/1 ratio made personal: one of the 99 should-we questions answered with maximum conviction.
 
-### The meta-belief
+Scope: this belief is enterprise-rooted. The economic argument (six months of implementation, an implementation partner, hundreds of training documents) is shaped by enterprise deployment cycles and foundation-model coupling. I have not tested this conviction against consumer products where the cost structure differs. (Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the enterprise scope framing.)
 
-The pm-taste page carries approximately 10 beliefs, all held with conviction. And in 2021, Agam also wrote: "I have a very strong opinion about having no strong opinions."
+### The meta-belief in practice
 
-This is not hypocrisy. It is the meta-belief that licenses the other ten. The PM who has no strong opinions is a pushover who says yes to 99 of the 99 should-we questions. The PM who has only strong opinions is a tyrant who says no to all 99 and never gets to the 1. The productive space: strong opinions held loosely, updated on evidence, deployed with conviction when the evidence is clear. The strong-opinion-about-no-strong-opinions line is Agam's way of naming the tension without resolving it into a rule. Rules are brittle. Taste — knowing WHEN to hold firm and WHEN to update — is durable.
+The ten beliefs on this page are all held with conviction. The meta-belief at the top of the page explains why that is not a contradiction. "I have a very strong opinion about having no strong opinions." (2021-12-12) Conviction is real; it has to earn its place. Taste — knowing WHEN to hold firm and WHEN to update — is what makes the conviction productive rather than rigid.
 
 ---
 
@@ -134,36 +142,12 @@ Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the builder trilog
 | 2021-12-12 | corpus post | belief.strong-opinion-about-no-strong-opinions | "I have a very strong opinion about having no strong opinions" |
 | 2022-05-17 | corpus post (78 reactions) | belief.data-literacy-is-pm-core | Umbrella causation aphorism — highest-engagement craft post of the era |
 | 2022-06-03 | corpus post | belief.pm-is-99-should-we-1-can-we | "That 1 is disruption. The rest, food." |
-| 2024-03-08 | Collab Article | belief.non-functional-reqs-are-55pct-of-failure | Standish 55% citation; NFR as primary PM work |
+| 2024-03-08 | Collab Article | belief.non-functional-reqs-are-dominant-failure-mode | NFR as dominant failure mode; non-functional requirements as primary PM work (55% Standish stat dropped per E4) |
 | 2024-05-24 | Collab Article | belief.design-thinking-as-speed-tool | Jupyter notebook + paper wireframe as alignment apparatus |
 | 2025-12-04 | corpus post | belief.anti-customization | "Hard-fought battle with myself" — taste as personal craft-axis |
 
 ---
 
-## Open question
-
-There is a productive paradox at the center of this page that resists resolution.
-
-Agam holds approximately 30 strong opinions across 15 years of public writing — on blockchain, on Devin, on customization, on NFRs, on data causation. He deploys conviction as a register constantly. And in 2021, he also wrote: "I have a very strong opinion about having no strong opinions."
-
-This is not hypocrisy. It is not a contradiction to clean up. The paradox IS the voice. The PM who has no strong opinions is a pushover who says yes to 99 of the 99 should-we questions. The PM who has only strong opinions is a tyrant who says no to all 99 and never gets to the 1. The productive space: strong opinions held loosely, updated on evidence, deployed with conviction when the evidence is clear.
-
-The strong-opinion-about-no-strong-opinions line is Agam's way of naming the tension without resolving it into a rule. Rules are brittle. Taste — knowing WHEN to hold firm and WHEN to update — is durable. This draft names it explicitly as the meta-belief (per R7 recommendation). Agam to confirm whether explicit naming is the preferred treatment, or whether left-as-implied-current is the right altitude.
-
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-> **Open Qs for Agam taste-pass (callout)**
->
-> 1. **Metaphor-stack as deliberate arc vs retrospective pattern:** The 2021 metaphors (parenting July 12, featherless-hat Sept 22, 99/1 June 2022) form a clear progression in hindsight. Was this a deliberate build, or does the pattern feel retrospectively tidy in a way the wiki should acknowledge?
->
-> 2. **Strong-opinion paradox — explicit or implicit?** This draft names it explicitly as the "meta-belief that licenses the other ten." Alternative: let it sit as a register signal the reader notices without annotation. Your call on the right altitude.
->
-> 3. **Standish 55% number:** Appears once in the corpus (2024-03-08 Collab Article). Needs source verification before the wiki publishes it as a cited statistic. If unverifiable, reframe as "NFRs are the dominant failure mode" without the number.
->
-> 4. **Anti-customization scope:** The economic argument (six months, implementation partner, training docs) is enterprise-shaped. Does the belief apply equally to consumer products, or is the core claim enterprise-rooted with a general disposition?
->
-> 5. **PM-influencer critique inclusion:** A 2024-04-01 post critiques the visible-PM-influencer-economy from inside LinkedIn. This sits in productive tension with the Top Voice PM badge grind. Worth naming on this page, or better left for the linkedin-as-instrument page?
+*Polished: taste-pass decisions applied 2026-04-26.*

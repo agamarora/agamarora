@@ -2,17 +2,16 @@
 type: Theme
 slug: ai-pm-skillset
 title: What AI PM actually requires
-status: draft-r9
+status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 4 (structured-prompt-response, Collab Articles surface)
 beliefs:
   - belief.ai-pm-skillset-table-stakes (anchor)
   - belief.ai-fluency-required
   - belief.learn-concepts-not-tools (cross-link career-reflection)
-  - belief.llm-as-voice-extension (sub-page candidate)
+  - belief.llm-as-primary-daily-tool (renamed from llm-as-voice-extension per B2)
   - belief.its-not-the-model-its-the-problem
   - belief.tech-as-enabler (softened/historical)
-  - belief.value-viability-usability-triad (heuristic, AI-context refinement)
   - belief.design-thinking-as-speed-tool (cross-link pm-taste)
 ---
 
@@ -40,7 +39,7 @@ ChatGPT shipped November 30, 2022. The corpus had already gone quiet in October 
 
 March 14, 2023: the manifesto. "As a product manager, I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Six concrete use cases followed: data analysis, marketing copy, note-structuring, building the personal website, Linux home-lab, network security. Five days later, the belief generalized: "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." The PowerPoint and Excel analogy. Table stakes in the literal poker sense: not a differentiator, a non-negotiable buy-in.
 
-The 2023 line was accurate in March 2023. What changed: by 2026, Claude Code is helping write specs, structure context, and validate taste. AI has moved up the stack into PM craft — but only because the PM's craft moved up first: spec, taste, context above the execution layer. The correct 2026 reading of that 2023 anchor: it names the moment AI became table stakes at the operational layer. The craft differentiation moved upstream from there.
+The 2023 line still holds in 2026. AI replaces the grunt: thinking-as-execution, writing, coding, PRDs. AI does NOT replace taste. PM remains taste of what to build, what experience, what value. What changed by 2026: Claude Code is helping write specs, structure context, and validate taste at the bench level. AI moved up the stack into PM craft — but only because the PM's craft moved up first: spec, taste, context above the execution layer. The 2023 anchor names the moment AI became table stakes at the operational layer. The craft differentiation moved upstream from there. The boundary statement: I observe foundation, I work application. AI tools handle the grunt; taste is the irreducible PM job.
 
 Then came the grinding window. Between November 2023 and July 2024, Collaborative Articles became the densest technical surface in the corpus. LinkedIn awarded Community Top Voice badges to contributors who ranked in the top 1-2% globally by peer vote. The incentive forced compression of real expertise into structured responses. PM Top Voice landed by February 2024. AI Top Voice by July 4, 2024. The 58 Collab responses in that window are the most technically dense AI-PM material in eleven years of posting.
 
@@ -68,9 +67,7 @@ The "application-layer" boundary means: I do not build models, I use them. It do
 
 ## Tension with `second-brain` and `agent-first`
 
-The belief `belief.llm-as-voice-extension` sits at the intersection of this theme and the second-brain theme. The case for housing it here: it is the operational form of AI-PM fluency — the LLM bound into daily workflow for note-structuring and brainstorming and writing. The case for housing it in the second-brain theme: the LLM-as-extension eventually becomes the context infrastructure that makes every future AI session compounding rather than session-bound.
-
-Current recommendation: primary home under this theme for the operational framing, cross-listed in second-brain as the precursor in the four-step substrate chain (self-instrumentation → quantified-self-as-mindfulness → llm-as-voice-extension → second-brain-is-context-layer). Agam to confirm. (See: [`second-brain`](/wiki/second-brain/).)
+The belief `belief.llm-as-primary-daily-tool` sits at the intersection of this theme and the second-brain theme. LLMs are a great tool: used daily, more than any other tool in the stack. That is the operative 2026 claim. The operational framing (how LLMs embed into daily workflow: note-structuring, brainstorming, writing, spec-drafting) lives here as primary home. The second-brain page cross-lists it as the precursor in the substrate chain (self-instrumentation to quantified-self-as-mindfulness to llm-as-primary-daily-tool to second-brain-is-context-layer). (See: [`second-brain`](/wiki/second-brain/).)
 
 A subtler tension sits between this theme and agent-first. Agent-first, by 2026, has become a builder posture — spec, context, craft at the bench level. Application-layer AI-PM positions Agam in archetype 2 (using models, not building them). Both hold simultaneously: "application-layer" was always defined relative to foundation-layer (do you improve the model?), not relative to how hands-on the building is. The same field data from 2026 produces both: the archetype-2 AI-PM identity AND the builder-trilogy framing. (See: [`agent-first`](/wiki/agent-first/).)
 
@@ -100,28 +97,10 @@ A subtler tension sits between this theme and agent-first. Agent-first, by 2026,
 
 ---
 
-## Open question
+## Cross-link: IC path in the AI era
 
-The maturation arc raises a calibration problem. The 2023 claim "ChatGPT for everything except product management" was accurate in March 2023. By 2026, Claude Code is helping write specs, structure context, and validate taste. AI has moved up the stack into PM craft.
-
-Both framings are available simultaneously: the 2023 line as the crystallization anchor ("this is when AI became table stakes at the operational layer") and a 2026 successor framing ("the constraint has moved from operational fluency to taste-and-spec above the execution layer"). The wiki holds both. Agam to confirm the 2026 successor frame.
-
-The second open question: does Agam still actively position the application-layer vs foundation-layer boundary as a hard line in 2026, or has proximity to the Anthropic ecosystem (Mythos, Claude Code, second-brain work) softened it to "I observe foundation-layer; I work application-layer"? A hard boundary says: foundation-layer is a different discipline, do not conflate. A soft boundary says: I engage with it, I respect it, I have chosen a different lane. Agam to confirm.
+The AI-era reframe extends to the IC path itself. IC paths matter more in 2026 than before. An individual contributor with AI agents can produce significantly more than before. The throughput of an IC plus AI is closer to a small team than ever. This makes the application-layer AI-PM identity not just a job-type choice but a leverage multiplier. (See: [`career-reflection`](/wiki/career-reflection/) for the IC-path legitimacy belief and its AI-era amplification.)
 
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-> ## Open Qs for Agam taste-pass
->
-> 1. **llm-as-voice-extension home:** Recommended as sub-page under this theme for the operational framing, with cross-link to second-brain for the context infrastructure framing. Does that split work, or should it live entirely in one place?
->
-> 2. **Application-layer vs foundation-layer axis in 2026:** Does this framing still hold as the defining AI-PM axis? Has proximity to the Anthropic ecosystem softened the boundary to "I observe foundation-layer; I work application-layer"?
->
-> 3. **The 2023-03-14 line in 2026:** This draft keeps it as the crystallization anchor with a "what changed" note for the 2026 form. Does that framing hold, or does the 2023 line need a 2026 successor statement to replace it outright?
->
-> 4. **Top Voice badge framing:** Community Top Voice in AI and Product Management (top 1-2% globally, 2024) is cited in the Evidence section and in the prose. Should it appear as a credentials callout on the wiki page, or evidence-only?
->
-> 5. **Value/Viability/Usability triad:** Kept as a heuristic mention in the trilogy section per R5 demotion. Any reason to give it more prominence here, or does the demotion-to-heuristic stand?
+*Polished: taste-pass decisions applied 2026-04-26.*

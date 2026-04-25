@@ -2,14 +2,14 @@
 type: Theme
 slug: spec-first-taste
 title: Spec first, taste always — the builder trilogy
-status: draft-r9
+status: draft-r9-polished
 length_target: 900-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.spec-over-sprint (anchor)
   - belief.taste-over-execution (co-anchor)
   - belief.context-over-prompt (cross-listed agent-first)
-  - belief.anti-customization (cross-linked pm-taste)
+  - belief.anti-customization (cross-linked pm-taste; scope: enterprise per D1)
 ---
 
 # Spec first, taste always — the builder trilogy
@@ -34,9 +34,11 @@ This is Agam's builder stance as of E4b. Not a PM methodology. A disposition.
 
 ## How it formed
 
-The vocabulary arrived on April 9, 2026. Whether the disposition had been building for five years or whether this was a genuine new crystallization is an open question for taste-pass — the evidence below is consistent with both readings.
+Lived this since 2021. Named it in April 2026. Same disposition, sharper words.
 
-**2021-22: taste-work without taste-vocabulary.** The PM metaphor stack — featherless hat (2021-09-22), 99/1 grind (2022-06-03), product-as-parenting (2021-07-12) — was doing taste-work under a different name. "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'" The 99 should-we questions are discrimination work. Refusal work. Spec work. Five years before the explicit axiom, Agam had framed the PM job as 99% taste / 1% execution — he just hadn't named it yet.
+The vocabulary arrived on April 9, 2026. The disposition predates it by five years.
+
+**2021-22: taste-work without taste-vocabulary.** The PM metaphor stack — featherless hat (2021-09-22), 99/1 grind (2022-06-03), product-as-parenting (2021-07-12) — was doing taste-work under a different name. Looking back, these stack. At the time each was its own post. "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'" The 99 should-we questions are discrimination work. Refusal work. Spec work. Five years before the explicit axiom, the PM job was already framed as 99% taste / 1% execution — just not named that way.
 
 **2024: field data from AIonOS.** Building GenAI products for enterprise customers produced a clear signal: smaller implementations are sought after; time to value is king; plug and play is the dream. The enterprise-AI-production-reality thesis forms here. Anti-customization-adjacent observations, but the personal craft-axis hasn't locked.
 
@@ -61,6 +63,8 @@ This is a clean temporal evolution with a specific economics trigger: AI changed
 **Context > Prompt:** the lever for useful AI output is the context you have curated, not the prompt you compose at the I/O seam. A rich personal and organizational context layer — structured knowledge, historical decisions, domain priors — outperforms clever prompting every time. The second-brain is the operational form of this claim: a living wiki that every future AI session reads. Context beats prompt the same way spec beats sprint.
 
 The underlying disposition across all three: refuse the fast path. Let the AI sprint at an under-spec'd build and you get noise. Ship a feature without deciding what the product is and you accumulate debt. Craft a clever prompt without curating the context layer and you are optimizing the wrong variable. Agam's builder stance is the systematic refusal of those defaults.
+
+Anti-customization scope: the belief applies to enterprise AI deployments. Six-month implementation cycles, training documents, foundation-model coupling are all enterprise-shaped. The economic argument has not been fully tested against consumer products where the cost structure differs. (Cross-link: [`pm-taste`](/wiki/pm-taste/) for the full anti-customization belief with enterprise scope note; [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/) for the production-reality context.)
 
 ---
 
@@ -95,24 +99,6 @@ Cross-link: [`pm-taste`](/wiki/pm-taste/) — same disposition, institutional al
 
 ---
 
-## Open question
-
-The trilogy's temporal anchor is the most recent in this corpus. The explicit axiom crystallized in April 2026. Every other wiki page describes a belief with five-plus years behind it.
-
-Is the builder trilogy a mature thesis or a working stance still forming? The 2021-22 metaphor stack provides lineage. The second-brain launch provides embodiment. But naming changes things — "Taste > Execution" as a declared axiom invites challenge and comparison in a way that the earlier metaphors did not. The next few years of building will test whether the trilogy holds, expands, or refines.
-
-For now: strong wiki candidate, confirmed core across four rounds, builder-register distinct from pm-taste. The vocabulary is new; the disposition is not. The wiki should carry that distinction clearly.
-
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-## Open Qs for Agam taste-pass (callout)
-
-- **(1)** Title "builder trilogy" or something more general? Does naming the 2026-04-09 post structure as the page title feel too self-referential, or does it correctly honor the crystallization post as the anchor?
-- **(2)** Anchor on taste-over-execution (timeless) or spec-over-sprint (AI-tool-specific)? Current draft opens with the trilogy as composite and treats taste as the through-line connecting 2021 to 2026. Does this framing hold?
-- **(3)** The narrative arc claims taste was "lived since 2021 but named in 2026" — vocabulary upgrade, not new realization. Does Agam endorse this, or was April 2026 a genuine new realization rather than retrospective crystallization?
-- **(4)** Ship-fast supersession: the spec-over-sprint deep-dive documents a clean pre-LLM / post-LLM iteration-economics flip. Should this page name the flip explicitly ("earlier stance was speed-over-spec; post-LLM, flipped to spec-over-sprint"), or is that detail better held in the personal-projects-tinkering theme?
-- **(5)** Anti-customization cross-link: current framing positions anti-customization as the "most concrete on-record example" of the spec-first-taste disposition, with pm-taste as its primary home. Does Agam see this as accurate, or should anti-customization live more centrally on this page?
+*Polished: taste-pass decisions applied 2026-04-26.*

@@ -2,12 +2,12 @@
 type: Theme
 slug: breadth-as-differentiation
 title: Breadth as differentiation
-status: draft-r9
+status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.breadth-as-differentiation (parent thesis — implicit, 18 posts E1-E4)
-  - belief.breadth-needs-depth (own sub-page anchor — Human-GPT coinage, 2024-04-12)
+  - belief.breadth-needs-depth (own sub-page anchor — Human-GPT coinage, 2024-04-12; humanness-as-depth = Agam's synthesis, April 2024 EQ post predates September 2024 Mo Gawdat citation)
 ---
 
 # Breadth as differentiation
@@ -42,7 +42,7 @@ Two months later, in a Collab Article on Tech PM, the operational application: "
 
 In July 2024, in a Collab piece on career positioning, Agam narrated how he applied the belief to his own move to AIonOS: inside-out (skills and interests) crossed with outside-in (market demand) produced the depth-pick. "Inside-out: I am good at product management, data and software. I enjoy genAI's leaps in code gen and time saving capabilities. Outside-in: Demand for AI product managers, genAI wrappers and LLM based solutions." The belief became a working tool, not just a published stance.
 
-The frame kept widening. In September 2024, Agam relayed Mo Gawdat verbatim ("He concluded by saying and I quote..."): "in the future, if you know how to use AI you will be efficient but if you know how to connect with humans you will be loved." Whether Agam owns this humanness extension as his own synthesis or is citing an endorsed frame is held open for taste-pass. The April 2024 post already led with EQ as its first prescription ("Focus on EQ. First principle thinking is nothing but EQ") — which suggests the humanness-axis was present before Mo Gawdat confirmed it publicly in September. Knowledge, in that frame, becomes a utility. The depth that remains durable is being human: connection, emotional precision, imperfection-as-strength.
+The frame kept widening. The April 2024 post already led with EQ as its first prescription: "Focus on EQ. First principle thinking is nothing but EQ." Humanness-as-depth is my synthesis. The September 2024 Mo Gawdat citation ("in the future, if you know how to use AI you will be efficient but if you know how to connect with humans you will be loved") confirms it from an independent voice. Mo Gawdat is a supporting voice, not the source. Knowledge becomes a utility; the depth that remains durable is being human: connection, emotional precision, imperfection-as-strength.
 
 By July 2025, that arc closed. "We humans are built this way: to deeply feel, to be affected, and still have the resilience to bounce back. And no AI will ever take that away. This is both our greatest vulnerability and our greatest strength." The belief had moved from career-craft register to something close to an existential stance. The deepest niche is being irreducibly human.
 
@@ -84,7 +84,7 @@ Cross-link: [`career-reflection`](/wiki/career-reflection/) for the learning met
 | **2024-04-12** | **Post** | **Crystallization** | **"If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest."** | **canonical anchor** |
 | 2024-06-14 | Collab Article | Tech-PM playbook | "You need deep technical understanding to succeed here... You can't be done with the studies ever in this role." | strong |
 | 2024-07-17 | Collab Article | Career method | Inside-out x outside-in self-narration; the AIonOS depth-pick | strong |
-| 2024-09-25 | Post | Named-thinker citation (endorsed) | Mo Gawdat: knowledge as utility; humanness as durable depth; "if you know how to connect with humans you will be loved" | strong |
+| 2024-09-25 | Post | Supporting-voice citation | Mo Gawdat: knowledge as utility; humanness as durable depth; "if you know how to connect with humans you will be loved" — confirms April 2024 synthesis, not the source of it | strong |
 | 2025-07-22 | Post | Locus-of-control / existential | "We humans are built this way: to deeply feel... This is both our greatest vulnerability and our greatest strength." | strong |
 
 **Post count:** 8 distinct evidence items. 5 are original posts; 3 are Collab Article surfaces (Decision 3 compliant: treated as primary technical evidence). The Human-GPT label surfaces by name once (2024-04-12); the critique-pattern underlying it surfaces across 5+ items from 2018 forward.
@@ -93,28 +93,6 @@ The parent belief (`belief.breadth-as-differentiation`) registers across 18 post
 
 ---
 
-## Open question
-
-The 2024-09-25 extension (depth = humanness), attributed to Mo Gawdat (endorsed), raises a question the evidence cannot close. Is this Agam adopting a named thinker's frame because it resonates? Or does he hold humanness-as-depth as his own synthesis, with Mo Gawdat as a cite that happened to name it first? The April 2024 post already led with EQ as its first prescription: "Focus on EQ. First principle thinking is nothing but EQ." That suggests the humanness-axis was already present in the original belief, not imported from Mo Gawdat in September. The September post may be confirmation more than introduction.
-
-But the attribution chain matters for how the wiki presents it. If Agam owns the humanness extension as his synthesis, the page foregrounds it. If it is attribution-only, the page foregrounds the niche-and-invest prescription and cites Mo Gawdat as one endorsed extension.
-
-This is an Agam call. The wiki currently treats the humanness extension as his own synthesis, with named-thinker citation as evidence, not as the source. Flag for taste-pass.
-
 ---
 
-*Draft for taste-pass. Not final.*
-
----
-
-## Open Qs for Agam taste-pass
-
-> **Q1 — Mo Gawdat attribution:** The wiki presents humanness-as-depth as Agam's own synthesis confirmed by Mo Gawdat's framing (April 2024 EQ prescription precedes September 2024 citation). Is that right — or is it attribution-only, with Agam relaying a frame he found useful but does not fully claim?
->
-> **Q2 — "Human-GPT" in active agent vocabulary:** The term was coined in April 2024 and has not reappeared in the corpus. Should the agent use "Human-GPT" as a live shorthand when discussing the failure mode, or should it stay as wiki-historical coinage only?
->
-> **Q3 — Badge timing and critique coherence:** The Human-GPT post was published between the Top Voice PM badge (February 2024) and the Top Voice AI badge (July 2024). The wiki can name this explicitly as a coherence note: peer-voted breadth is not the same thing as ChatGPT-replicable breadth. Does Agam want this named on the page, or left as implicit?
->
-> **Q4 — Depth-axis altitude:** April 2024 prescribes niche specialization. September 2024 through July 2025 widens to humanness (EQ, connection, imperfection). The wiki treats this as one belief evolving across two altitudes. Confirm: one belief, two registers — or two separate beliefs that should be separated in the ontology?
->
-> **Q5 — Pivot speed threshold:** The 2024-04-12 post says "pivot as much as you want but quickly." The wiki leaves the threshold deliberately open. Confirm that the right call is to leave it ambiguous, or specify what "quickly" means for you in practice.
+*Polished: taste-pass decisions applied 2026-04-26.*

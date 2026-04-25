@@ -1,3 +1,5 @@
+> **STATUS:** RESOLVED 2026-04-26. See `_taste-pass-decisions.md` for the 21 binding decisions. This file remains as historical record of the pre-decision question state.
+
 ---
 type: TastePassIndex
 status: draft-r9

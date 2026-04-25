@@ -2,18 +2,19 @@
 type: Theme
 slug: career-reflection
 title: Career reflection — IC path, learning compound interest, collaborative growth
-status: draft-r9
+status: draft-r9-polished
 length_target: 1000-1400
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.help-market-flourish (primary anchor)
-  - belief.ic-path-legitimacy
+  - belief.help-market-flourish (primary anchor; live 2026 evidence: open-source repos per D3)
+  - belief.ic-path-legitimacy (universal claim, no family-rebellion frame; AI-era amplifies IC leverage per F3)
   - belief.learn-concepts-not-tools (own sub-page)
   - belief.certifications-are-collectibles
   - belief.muscle-memory-over-novelty (sub-section under learn-concepts)
-  - belief.two-roles-ahead-framing (peripheral)
+  - belief.two-roles-ahead-framing (elevated from peripheral to named callout per F2)
   - belief.lead-yourself-first (E1 historical)
-  - belief.never-be-smartest-in-room (cross-listed root)
+  - belief.never-be-smartest-in-room (standard belief, team-joining heuristic scope per F4 — demoted from co-root)
+  - project.v2-games (career-stage chapter here per F1, not in personal-projects-tinkering)
 ---
 
 # Career reflection — IC path, learning compound interest, collaborative growth
@@ -34,9 +35,7 @@ The core posture here is collaborative-growth over zero-sum conquest: build care
 
 ### Foundations and defaults: E1-E2, 2014-2020
 
-Agam started in founder mode at V2 Premium Apparels (2016-2018). The ambient register was conquest-shaped: dominate, don't compete. Coming from a business family, the implied career logic was equally clear: the endgame is people management, org-chart altitude, span of control.
-
-Neither default survived contact with his own reasoning.
+Agam started in founder mode at V2 Premium Apparels (2016-2018). The ambient register was conquest-shaped: dominate, don't compete. Neither default survived contact with his own reasoning.
 
 On 2017-09-14, after watching a Cardone video, Agam wrote a post in real time that named the seduction and then publicly rejected it:
 
@@ -46,19 +45,17 @@ This is the clearest instance in the corpus where a prior posture, its seduction
 
 The lead-yourself-first signal lands in the same window: "being a leader is not about motivating your team, but yourself." Compact, single-surface, held quietly. It is the E1-E2 founder register: build the discipline in yourself before you build a team.
 
-The second default to go was the family-default career shape.
-
 ### The IC-path declaration: 2021
 
-On 2021-10-30, five years into a PM career at FarEye, Agam wrote a post that named an inherited frame in order to break it:
-
-> "Being an ex-entrepreneur and coming from a business family it was always evident that people management is the end goal. But somewhere deep inside I was not always bought on this idea. I challenged it internally a lot and weighed the sides. Untill recently I came across a career path that bends towards functional expertise over people management and is not bottlenecked in terms of growth."
+On 2021-10-30, five years into a PM career at FarEye, Agam wrote a post that named a career default in order to break it:
 
 > "People management is a critical skill but it's not for everyone. I am glad we are growing as a society to understand different leadership styles and let them room to grow. That's how we create and preserve people and culture."
 
 > "It's truly like a plant being taken from a pot and given a whole garden to grow into a tree."
 
-The post has four moves: name the default, name the internal challenge, name the alternative, and close with the universal claim. Three of the four are personal narrative. The supersession of `belief.people-management-is-endgame` is performed in public, not just arrived at privately.
+The universal claim is the load-bearing part: people management is critical, but it is not for everyone. IC paths are legitimate. The supersession of `belief.people-management-is-endgame` is performed in public, not just arrived at privately.
+
+The 2026 reframe makes the IC path more important, not less. Individuals with AI agents can produce significantly more leverage than before. The throughput of an IC plus AI is closer to a small team than ever. The IC-path legitimacy belief has grown stronger in the AI era, not weakened. (Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for AI agents as productivity multiplier; [`breadth-as-differentiation`](/wiki/breadth-as-differentiation/) for depth of IC craft as differentiator.)
 
 What gives this declaration weight is the maintenance evidence. Four years later, in June 2024, Agam's Collaborative Article career mentoring closes with: "It is a wonderful opportunity to be a product manager. I wouldn't trade it for anything." The conviction held across roles and companies. He joined AIonOS in 2024 as Senior AI Product Manager — an IC-track title, living the belief in role.
 
@@ -88,9 +85,15 @@ This is the belief at maturity. Not just "learn concepts" as a declarative. "Abs
 
 **On credentials:** Certifications are collectibles. Agam wrote this directly on 2024-11-15, three sentences, no hedging: "They are in no shape or means a validation of what you can and cannot do." Steve Jobs did not take a PM course to build the iPhone.
 
+**On next-role selection:** When picking your next role, optimize for the role after that. This heuristic shows up in mentoring regularly: where you start is only 5% important versus where you land eventually. Play the long game. A June 2024 Collaborative Article put it directly: "I would recommend looking at the two roles ahead when joining a new company." (belief.two-roles-ahead-framing)
+
+**On room selection:** Never be the smartest person in the room. If you feel you are, get more people in the room or change the room. This is a team-joining heuristic: seek rooms with people smarter than you. The company you join uplifts you. This is a standard career heuristic, not a root disposition. (belief.never-be-smartest-in-room)
+
 The apparent tension with Top Voice badge acceptance resolves into a clean distinction: peer-voted recognition earned through quality work (LinkedIn Collaborative Articles, 60-day quality quota, no exam fee) is a collectible and a career-context signal. An institution issuing paper for passing an exam is not. On earning the Top Voice PM badge in February 2024, Agam framed it immediately: "This kind of feedback, from not just any human but humans that are experts in their fields, is more valuable than any badge." He earned the badge. He correctly ranked what produced it.
 
 **On market posture:** Help-market-flourish produces a register, not just a rule. The FarEye farewell post in 2024: "This rocket ship is still firing on all cylinders while I take my leave." The BD triplet from 2019: "Value over revenue. Humans over resources. Trust over contracts." The Collaborative Articles giving-frame: "You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there." When Agam makes a career move, changes a role, or gives advice to peers, the framing is expansion of the field, not extraction from it.
+
+The most recent live application of this belief: agamarora.com, second-brain v1, luna-monitor, and ai-resume are all open-source as of 2026-04-26. Repo: `agamarora/agamarora`. Not a coincidence. The same instinct that produced the Cardone walk-back in 2017 is the same instinct that publishes personal builds as open source in 2026. (Cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) for public posting as the same instinct; [`personal-projects-tinkering`](/wiki/personal-projects-tinkering/) for loop closure by sharing.)
 
 ---
 
@@ -100,7 +103,7 @@ The `learn-concepts-not-tools` belief sits at an unusual position in the wiki ar
 
 The distinction is intentional. Career-reflection is where the belief originated (2019, Aroma-era reflective, drawing on five years of founder experience) and where its identity-level force lives: this is how Agam thinks about professional survival across a lifetime, not just PM craft. The ai-pm-skillset cross-link surfaces the operational implication: to be an effective AI PM at the application layer, you need the underlying concepts (data literacy, product frameworks, AI architecture vocabulary), not the tool-of-the-month. The parent is career-reflection. The application is ai-pm-skillset.
 
-`belief.never-be-smartest-in-room` is cross-listed here from the root beliefs page because it generates the learning diet that learn-concepts-not-tools fills. Never-be-smartest says: seek rooms with people smarter than you. Learn-concepts-not-tools says: in those rooms, extract frameworks, not tool names. Muscle-memory-over-novelty says: re-engage those frameworks until they operate at instinct level. Three beliefs, one learning loop.
+`belief.never-be-smartest-in-room` lives on this page as a standard belief (team-joining heuristic scope, not a root disposition). Never-be-smartest says: seek rooms with people smarter than you. Learn-concepts-not-tools says: in those rooms, extract frameworks, not tool names. Muscle-memory-over-novelty says: re-engage those frameworks until they operate at instinct level. Three beliefs, one learning loop.
 
 Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the learning method as applied AI-PM practice, and [`breadth-as-differentiation`](/wiki/breadth-as-differentiation/) for the WHY of going deep.
 
@@ -134,22 +137,10 @@ Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the learning method as
 
 ---
 
-## Open question
+## V2 Games: career chapter, not personal tinkering
 
-Two-roles-ahead framing surfaces once in the corpus, during the June 2024 interregnum between FarEye and AIonOS: "I would recommend looking at the two roles ahead when joining a new company. Where you start is only 5% important vs where you land eventually. Play the long game my friends." The advice is genuine in register (outward-facing Collaborative Article, explicit recommendation mode), the 5% framing is quantified in characteristic Agam style, and the closing "Play the long game my friends" is unusually warm. But it appears once, during a career transition that would have made the advice self-reinforcing for Agam personally. Whether this is a heuristic he gives routinely in private mentoring or a crystallization specific to that transition moment is a taste-pass call. If confirmed as routine, it earns a named callout under the ic-path sub-section. Until then, it sits at the periphery of the theme.
-
-The theme also carries a genuine inheritance story: the IC-path belief explicitly names a family-of-origin default ("coming from a business family it was always evident that people management is the end goal") and publicly breaks from it. That level of autobiographical disclosure is already in the corpus, already public. How explicitly the wiki leans into the family-rebellion framing versus the universal claim ("people management is critical but not for everyone") is a tone call for Agam.
+V2 Games India (2014-2016) is a career-stage chapter, not a personal tinkering project. Co-founded startup, studio head role: analytics, some dev and QA, CEO and business work for the studio. The gaming-as-economic-intuition signal comes from here. It belongs in this career arc, not in the personal-projects-tinkering page. (Cross-reference: [`personal-projects-tinkering`](/wiki/personal-projects-tinkering/) foregrounds the open-source personal builds from 2020 onward.)
 
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-## Open Qs for Agam taste-pass (callout)
-
-- **(1)** IC path explicitly anchored in "rejecting family-business default for people management" — the 2021-10-30 post names this publicly. Does the wiki lean into the full family-rebellion framing, or let the universal claim carry the weight and use the autobiography as color?
-- **(2)** Two-roles-ahead framing: is this a heuristic you give routinely in mentoring, or was the 2024-06-08 Collab item specific to the FarEye-to-AIonOS transition context? If routine, promote to named callout. If context-specific, peripheral status holds.
-- **(3)** The 2017-09-14 Cardone walk-back is the only post in eleven years where seduction and reversal are visible in one document. Worth foregrounding as the "how this started" story, or too personally revealing?
-- **(4)** E1-E2 humor register: fold 2-3 early-era examples into a brief "how the voice sounded then" note in the How it formed section, or keep the early voice purely for voice-spec (R8)?
-- **(5)** Does help-market-flourish feel current to you at 2026-04-25? Last direct restatement in corpus: 2024-05-23. If still a live belief, confirm as core foundational. If it has aged into background posture you no longer consciously deploy, that affects how prominently the wiki leads with it.
+*Polished: taste-pass decisions applied 2026-04-26.*

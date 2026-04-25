@@ -2,14 +2,14 @@
 type: Theme
 slug: second-brain
 title: Second brain — structured knowledge for agents
-status: draft-r9
+status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.second-brain-is-context-layer (anchor)
+  - belief.second-brain-is-context-layer (anchor; hobbyist scope, hint of universal per B3)
   - belief.self-instrumentation (trunk)
   - belief.quantified-self-as-mindfulness
-  - belief.llm-as-voice-extension (sub-page)
+  - belief.llm-as-primary-daily-tool (renamed from llm-as-voice-extension per B2; cross-list from ai-pm-skillset as input/precursor)
   - belief.personal-website-is-present-tense
 ---
 
@@ -21,9 +21,11 @@ beliefs:
 
 ## Core belief
 
-All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it.
+Built this for me. Karpathy-inspired wiki version. Not a product, not a prescription.
 
-That sentence is the whole thesis. The second-brain is not a productivity tool. It is not a notes app, a Roam replacement, or a knowledge-management system. It is the substrate: plain markdown, git, a kg.json ontology. Any AI session (Claude, ChatGPT, Cursor, Claude Code) reads from it and writes back to it, so the next session inherits everything the last session learned. The belief is that this compounding is the lever. Context > Prompt. The second-brain is what makes that operationally true, not just a slogan.
+Every future AI session reads the same brain and writes back to it. The second-brain is not a productivity tool. It is not a notes app, a Roam replacement, or a knowledge-management system. It is the substrate: plain markdown, git, a kg.json ontology. Any AI session (Claude, ChatGPT, Cursor, Claude Code) reads from it and writes back to it, so the next session inherits everything the last session learned. The belief is that this compounding is the lever. Context > Prompt. The second-brain is what makes that operationally true, not just a slogan.
+
+If you are a builder working with AI tools daily, the pattern probably generalizes. Try it. Don't take my word for it.
 
 ---
 
@@ -57,15 +59,15 @@ This has a specific technical shape. The wiki is human-readable. The kg.json ont
 
 The "why it failed before" framing matters here. Most second-brain attempts broke on maintenance: keeping a personal knowledge system updated and cross-linked was itself a job. AI mostly solves that. The grunt work of categorizing and surfacing connections is automatable. Human judgment is upstream (what to include) and downstream (calibration, voice). The middle layer, which was the failure mode, is now handled.
 
-One disambiguation note: the belief slug is `llm-as-voice-extension`, but the "voice" here is metaphorical — authorial voice, cognitive voice, the thinking surface. This is entirely separate from voice-AI products; see the [`voice-ai-craft`](/wiki/voice-ai-craft/) theme for that.
+The belief slug is `llm-as-primary-daily-tool` — factual daily-use claim. LLMs are a great tool; I use them daily more than any other tool in my stack. This is entirely separate from voice-AI products; see the [`voice-ai-craft`](/wiki/voice-ai-craft/) theme for that.
 
 ---
 
 ## Tension with `ai-pm-skillset`
 
-The belief `belief.llm-as-voice-extension` lives in both themes. As an operational claim, it belongs under ai-pm-skillset: how Agam uses AI in daily workflow, from note-structuring to code-debugging to brainstorming. As an architectural claim, it belongs here: the LLM as the cognitive substrate that makes the context layer meaningful.
+The belief `belief.llm-as-primary-daily-tool` lives in both themes. As an operational claim, it belongs under ai-pm-skillset: how Agam uses AI in daily workflow, from note-structuring to code-debugging to brainstorming. As an architectural claim, it belongs here: the LLM as the cognitive substrate that makes the context layer meaningful.
 
-The recommendation from synthesis: primary home under ai-pm-skillset (the operational framing, the "extension of thinking" page, the six-use-case anchor), cross-listed here as the precursor belief in the substrate chain. The second-brain page closes the chain; the llm-as-voice-extension page is the middle link. Both should cross-reference. The four-step lineage runs: self-instrumentation (2018) to quantified-self-as-mindfulness (2020) to llm-as-voice-extension (2023) to second-brain-is-context-layer (2026).
+Primary home: ai-pm-skillset (the operational framing). Cross-listed here as the precursor belief in the substrate chain. The second-brain page closes the chain. Four-step lineage: self-instrumentation (2018) to quantified-self-as-mindfulness (2020) to llm-as-primary-daily-tool (2023) to second-brain-is-context-layer (2026).
 
 Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the operational framing, and [`spec-first-taste`](/wiki/spec-first-taste/) where the "Context > Prompt" axiom this theme operationalizes was declared.
 
@@ -93,34 +95,6 @@ Cross-link: [`ai-pm-skillset`](/wiki/ai-pm-skillset/) for the operational framin
 
 ---
 
-## Open question
-
-The second-brain belief is tightly held and internally consistent. The genuine open question is not whether it works, but what "works" means at scale.
-
-Agam's claim is grounded in 4+ months of private use, in his own context, with his own corpus. The question the wiki page cannot answer is whether the pattern holds when the context layer is someone else's: different writing style, different domain, different volume of material. The Karpathy-inspired barebones wiki is hobbyist-grade by design. What happens when the context layer is enterprise-scale?
-
-A second version of this question: the second-brain makes context > prompt operational for Agam. But context has to be good to be useful. A context layer populated with inconsistent, low-quality, or outdated beliefs is worse than no context layer, because it compounds errors rather than insights. The maintenance question returns at a higher level: not "who maintains the structure" (AI handles that) but "who maintains the quality" (still the human). The taste-pass is not a launch artifact; it is the ongoing job.
-
-Agam's own honest scoping, from the 2026-04-23 comment to Ishant Kathuria: "Mine is more of a personal framework that is working for me for past 4 months and have proved helpful. This post is mostly for hobbyist like me who want a barebones, Karpathy inspired, wiki version that one can run and customise." The intra-theme tension: the belief statement ("All of us know the power of a personal context layer") has no such hedge. Both should stay on the page. Agam to confirm whether the hobbyist scoping still feels right at 2026-04-25.
-
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-> **Open Qs for Agam taste-pass**
->
-> 1. **(R5 Theme 10 #1)** The 8-year arc from gaming (2018) to wiki (2026) is drawn as the "How it formed" narrative. Does this feel too retrospectively tidy, or does the arc hold as genuine lineage? Any substrate-jump that should be described differently or omitted?
->
-> 2. **(R5 Theme 10 #2)** Quantified-self-as-mindfulness (Toggl, 2020) is included as evidence in the arc but not given a named section. Should it get more prominence, or is evidence-only the right treatment?
->
-> 3. **(R5 Open Q #5)** llm-as-voice-extension: primary home under ai-pm-skillset (operational) with cross-list here, or primary home here? Current draft assumes ai-pm-skillset is primary. Confirm.
->
-> 4. **(R6 new)** The 2026-03-25 gateway-trace comment (Obsidian + Claude Code, "Chief of Staff" thread with Milan Dhingra) is paraphrased as evidence of operational use but not quoted verbatim. Is that the right treatment, or should it be quoted?
->
-> 5. **(R6 new)** Page opens with 2026-04-23 launch anchor, then the arc begins at 2018. Alternative: open with 2018 seed and walk forward to the launch. Which page-shape works better for the wiki reader?
->
-> 6. **(R6 new)** The wiki page is part of the second-brain it describes. There is a light self-referential loop there. Currently not named in the text. Should it be? ("This page is one node in the wiki it describes.")
->
-> 7. **(R6 new)** The Open question section closes with the hobbyist-scoping quote from the launch. Does Agam still endorse that framing as the right expectation-setter, or has it evolved?
+*Polished: taste-pass decisions applied 2026-04-26.*

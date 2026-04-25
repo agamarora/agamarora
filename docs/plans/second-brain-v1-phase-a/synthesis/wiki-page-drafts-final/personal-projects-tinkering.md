@@ -2,14 +2,14 @@
 type: Theme
 slug: personal-projects-tinkering
 title: Personal projects — ship it or it doesn't exist
-status: draft-r9
+status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.ship-the-prototype (anchor)
+  - belief.ship-the-prototype (anchor; absorbs tinker-publicly as loop closure per A3: build -> post -> teach -> learn -> build)
   - belief.personal-website-is-present-tense
-  - belief.tinker-publicly (MERGED — content here, slug retired)
-  - belief.gaming-as-economic-intuition (E2 historical)
+  - belief.help-market-flourish (cross-link; open-source on GitHub = the same instinct per D3)
+  - belief.gaming-as-economic-intuition (peripheral historical; V2 Games reclassified to career-reflection per F1)
 ---
 
 # Personal projects — ship it or it doesn't exist
@@ -30,7 +30,7 @@ That phrase names a prior identity and walks away from it. The "just an idea" pe
 
 ## How it formed
 
-The behavior predates the belief. Between 2016 and 2018, V2 Games India shipped mobile Unity3D titles, ran eSports positioning, and pivoted to a blockchain-gaming product (Flow.live, Solidity). Projects shipped; identity around shipping had not crystallized. Flow.live dissolved in 2018. V2 Games archived. The lesson: shipping is necessary but not sufficient. A product can ship and a company can still fail. That gap is where `belief.idea-validation-3-pillars` later grew, but it did not suppress the shipping habit. It supplemented it.
+The behavior predates the belief. The early habit formed through shipping that didn't pan out: projects that shipped, ideas that proved insufficient, companies that archived. The lesson: shipping is necessary but not sufficient. A product can ship and a company can still fail. That gap is where `belief.idea-validation-3-pillars` later grew, but it did not suppress the shipping habit. It supplemented it.
 
 The freelance years (2019-2020) compressed the constraint. No internal team, no budget, no external dev capacity. When lockdown removed even the theoretical option of hiring someone, Agam acquired the capability personally. The 2020-04-26 post: "Tough times call for action more than anything. Wasn't able to invest into an app development team for an idea of mine. Pulled up this brilliant app development course on Introduction to Flutter development using Dart by Dr. Angela Yu and got it done with."
 
@@ -46,29 +46,39 @@ The full project lineage is at `projects/index.html`: 52 projects, 41 lineage ed
 
 Pattern across every era: identify a gap, acquire what closes it, build the smallest thing that proves the point, post the link. Then move.
 
-Five milestone projects (see Open Qs for the taste-pass selection decision):
+### Top-tier projects (open-source, shipped, on GitHub)
 
-**V2 Games India (2016):** Mobile games studio, Unity3D titles, eSports push. Pre-belief, but already-shipping. The company archived; the habit did not. Historical origin of `belief.gaming-as-economic-intuition`. Whether V2 belongs prominently here or in the early-career section is a taste-pass call.
-
-**Flutter/Dart capability (2020):** The canonical moment. "Quick and dirty, yet powerful and clean looking mobile app prototypes — fully working applications or MVP if you may — to go along a business pitch." The personal website did not exist yet; this WAS the portfolio.
-
-**agamarora.com v1 (2023):** Python + Streamlit, shipped April 2023. "How much time does it take to build your own personal website? It took me 12 years!" Confessional register: late arrival is still arrival. v2 (vanilla HTML/CSS/JS) came in 2024: same belief, upgraded substrate.
-
-**LLM comparator + CrewAI experiments (2024):** The densest tinkering window. Ollama keyboard shortcut (June), CrewAI/Autogen/AutoGPT comparison (July-August), Groq + Streamlit LLM comparator open-sourced (September). Each project ran a framework, formed an opinion, posted findings. "AI building AI is now :)"
+**Shararat — Vapi Build Challenge (2025):** Voice AI multi-agent personal project. Hackathon-shipped. Demonstrates ship-the-prototype and agent-first applied to a personal build outside the day job.
 
 **second-brain v1 (2026):** wiki + kg.json + /enter v3. Plain markdown. Git. Open source. MIT. Free forever. Four months of private use before public launch, then one clean announcement. This is the page you are on.
 
+**luna-monitor / Claude Code Resource Monitor (2026):** Open-source dev tool for tracking Claude Code resource usage. Shipped, on GitHub. Demonstrates help-market-flourish: built something useful, made it public immediately.
+
+**ai-resume (2025):** Open-source AI-powered resume tool. Built on the same agamarora.com substrate. Demonstrates personal-website-is-present-tense and ship-the-prototype.
+
+**agamarora.com (2023-2026):** The personal site itself. Python + Streamlit v1 (2023), then vanilla HTML/CSS/JS v2 (2024). "How much time does it take to build your own personal website? It took me 12 years!" Late arrival is still arrival. Open source. The site IS the belief made operational.
+
+### Learning-tinkering tier (category, not foregrounded individually)
+
+These projects belong in the tinkering lineage but as a tier, not as individual featured builds: Flutter/Dart minis (2020, learning the framework), LLM comparator + CrewAI experiments (2024, learning multi-agent orchestration and LLMs), Pi-based Python scripts (various, hardware-flavored tinkering). Each closed a learning gap. None were trying to be products.
+
+### V2 Games: career chapter, not this page
+
+V2 Games India (2014-2016) is a career-stage entity, not a personal tinkering project. Co-founded startup, studio head role: analytics, some dev and QA, CEO and business work for the studio. It lives in [`career-reflection`](/wiki/career-reflection/), not here. The gaming-as-economic-intuition signal travels with it.
+
 ---
 
-## The distribution layer
+## The loop
 
-The tinkering and the publishing are related but not fused.
+Build, post, teach, learn, build again. Posting is not distribution. It is the closing step that converts personal projects into reusable artifacts and feedback. The loop doesn't close until someone else can learn from it.
 
-The pattern: personal/lab project ships, the link gets posted. The ollama keyboard-shortcut came with a tutorial video. The LLM comparator came with a Streamlit-share link. The second-brain v1 launch came with a paste-prompt in the post body. But not always simultaneously: the second-brain ran privately for four months before any public post. Personal-use notebooks were never posted. Enterprise work is intentionally under-shared.
+The pattern holds across every era: the ollama keyboard-shortcut came with a tutorial video. The LLM comparator came with a Streamlit-share link. The second-brain v1 launch came with a paste-prompt in the post body. The top-tier projects are all open-source on GitHub. Not a coincidence: open-source IS the posting step for code. The same instinct that drives posting drives open-sourcing. (Cross-link: [`career-reflection`](/wiki/career-reflection/) for help-market-flourish with 2026 open-source evidence.)
 
-`belief.tinker-publicly` (R4 verdict: MERGED here) is what ship-the-prototype looks like when applied to personal/lab work and broadcast via `linkedin-as-instrument`. The "publicly" qualifier describes a distribution decision, not a universal identity claim.
+Not always simultaneous: the second-brain ran privately for four months before any public post. Personal-use notebooks were never posted. Day-job enterprise work is intentionally under-shared. The loop applies to personal builds. The boundary is real.
 
-Cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) — where the broadcast mechanism lives and the build-post-teach loop is analyzed.
+`belief.ship-the-prototype` (absorbs tinker-publicly per A3) is what this looks like when applied to personal/lab work and posted via `linkedin-as-instrument`.
+
+Cross-link: [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) — where the build-post-teach-learn loop is analyzed as platform strategy.
 
 ---
 
@@ -90,40 +100,22 @@ Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the builder trilog
 
 | Date | Project / post | What it demonstrates |
 |---|---|---|
-| 2016-01 | V2 Games India: Unity3D titles, eSports push | Pre-belief but already-shipping behavioral pattern |
-| 2018-01 | Flow.live: Solidity/blockchain pivot of V2 | Shipped pivot, not a deck |
-| 2020-04-26 | Flutter/Dart course: "Off to creating" | Capability acquisition as personal ship |
+| 2020-04-26 | Flutter/Dart course: "Off to creating" | Capability acquisition as personal ship (learning-tinkering tier) |
 | 2020-05-19 | Flutter/Dart prototyping ready: "No longer 'just an idea!'" | Canonical inversion. Belief crystallizes. |
-| 2021-03-26 | Pi-day Jupyter/Kaggle notebook | Pattern holds at zero-stakes |
-| 2023-04-16 | agamarora.com v1 (Python + Streamlit): "It took me 12 years!" | Personal-brand surface shipped |
-| 2024-06-05 | Ollama + LLaMA3 keyboard-shortcut script + tutorial video | Self-effacing but the artifact and link are there |
-| 2024-06-28 | "Here are a few AI projects you can do over the weekend" (Collab) | Belief becomes prescriptive teaching |
-| 2024-07-24 | CrewAI / Autogen / AutoGPT comparison, ran all three, posted findings | Opinion-with-receipts register |
-| 2024-09-17 | Groq + Streamlit LLM comparator: "open-source, links below" | Open-sourced with distribution |
-| 2025 est. | Shararat: Vapi Build Challenge multi-agent voice experience | Hackathon ship |
+| 2021-03-26 | Pi-day Jupyter/Kaggle notebook | Pattern holds at zero-stakes (learning-tinkering tier) |
+| 2023-04-16 | agamarora.com v1 (Python + Streamlit): "It took me 12 years!" | Personal-brand surface shipped; top-tier |
+| 2024-06-05 | Ollama + LLaMA3 keyboard-shortcut script + tutorial video | Self-effacing but the artifact and link are there (learning-tinkering tier) |
+| 2024-06-28 | "Here are a few AI projects you can do over the weekend" (Collab) | Belief becomes prescriptive teaching; loop closure via LinkedIn |
+| 2024-07-24 | CrewAI / Autogen / AutoGPT comparison, ran all three, posted findings | Opinion-with-receipts register (learning-tinkering tier) |
+| 2024-09-17 | Groq + Streamlit LLM comparator: "open-source, links below" | Open-sourced with distribution (learning-tinkering tier) |
+| 2025 est. | Shararat: Vapi Build Challenge multi-agent voice experience | Hackathon ship; top-tier |
+| 2025 | ai-resume: open-source AI resume tool | Top-tier; open-source on GitHub |
 | 2026-04-16 | Claude Code /buddy + Brindle the duck | Small-stakes tinker posted |
-| 2026-04-23 | second-brain v1: "Plain markdown. Git. Open source. MIT. Free forever." | Latest-era register. Eight years from the first ship to this one. |
+| 2026-04 | luna-monitor: Claude Code Resource Monitor | Top-tier; open-source on GitHub |
+| 2026-04-23 | second-brain v1: "Plain markdown. Git. Open source. MIT. Free forever." | Top-tier. Latest-era register. The belief embodied. |
 
 ---
 
-## Open question
-
-The 52-project lineage is the evidence base. A wiki page cannot carry 52 paragraphs. The compression is a taste decision: which projects does Agam want foregrounded as the representative arc?
-
-Current draft: capability acquisition (2020), personal brand (2023), AI tinkering density (2024), second-brain (2026). Gaming is historical origin (V2 Games, 2016), evidence-table only. Shararat (Vapi Build Challenge, 2025) is in the evidence table but not main prose. Both could be promoted pending taste-pass.
-
-See `projects/index.html` for the full DAG. The wiki page carries the belief narrative; the DAG carries the catalog.
-
 ---
 
-*Draft for taste-pass — not final.*
-
----
-
-## Open Qs for Agam taste-pass (callout)
-
-- **(1) Which 5-7 projects to foreground?** Current selection: V2 Games (E2 origin), Flutter/Dart prototyping (2020 canonical), agamarora.com v1 (2023), LLM comparator + CrewAI (2024), second-brain v1 (2026). Should Shararat replace one entry? Is the Pi-day notebook worth naming in prose vs. evidence-table-only?
-- **(2) Gaming inclusion level?** V2 Games appears as E2 historical origin of `belief.gaming-as-economic-intuition`. Full paragraph here, or evidence-table entry only? Alternative: gaming stays primarily in early-career sub-section of career-reflection, cross-reference here only.
-- **(3) tinker-publicly merge: distribution or loop?** Draft frames publishing as a distribution decision (separate from building). If Agam endorses "the loop doesn't close until I've posted it and someone learned from it," framing should shift to loop-closure. R4 deep-dive OQ1: "Is publishing part of the tinkering itself, or is it the downstream distribution step?"
-- **(4) AIonOS explicit or implicit?** Draft says "enterprise work intentionally under-shared" without naming AIonOS or the voice platform. Name it explicitly, or leave as contextual footnote?
-- **(5) V2 Games dissolution: name or soften?** Draft briefly references that V2 archived and that this is what made validation thinking necessary. Willing to be that direct, or soften to "early studio work"?
+*Polished: taste-pass decisions applied 2026-04-26.*

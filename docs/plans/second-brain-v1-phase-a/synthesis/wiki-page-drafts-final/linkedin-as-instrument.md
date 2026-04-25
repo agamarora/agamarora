@@ -2,13 +2,13 @@
 type: Theme
 slug: linkedin-as-instrument
 title: LinkedIn as instrument — the meta-platform game
-status: draft-r9
+status: draft-r9-polished
 length_target: 800-1000
 voice_register: 1 (free-form post-essay)
 beliefs:
-  - belief.linkedin-as-instrumental-platform (anchor)
-  - belief.tinker-publicly (MERGED — distribution behavior)
-  - belief.strong-opinion-about-no-strong-opinions (cross-listed paradox-voice)
+  - belief.linkedin-as-instrumental-platform (anchor; loop-closure framing per A3: build -> post -> teach -> learn -> build)
+  - belief.ship-the-prototype (tinker-publicly MERGED here per A3; posting is loop closure, not distribution step)
+  - belief.strong-opinion-about-no-strong-opinions (cross-listed paradox-voice; licenses public posting conviction per A2)
 achievements:
   - achievement.linkedin-top-voice-pm — Community Top Voice, PM category, top 1-2% globally (earned by 2024-02-11)
   - achievement.linkedin-top-voice-ai — Community Top Voice, AI category, top 1-2% globally (earned by 2024-07-04)
@@ -64,7 +64,9 @@ First: writing because thinking-out-loud IS the practice, not because there is a
 
 Second: platform mechanics are worth teaching. Agam used his Top Voice standing to address LinkedIn's product team directly about AI-generated content plagiarism, peer-to-peer rather than user-to-platform. The instrumental stance scales with leverage: when the network reaches 16k+ and the badge places you in the top 1-2%, the instrument responds to you differently.
 
-Third: building things and posting them are part of the same loop. The tinker-publicly pattern across eight years: Flutter/Dart tool built during lockdown and posted publicly; an LLM comparator open-sourced on Streamlit; the ollama keyboard-shortcut tutorial with a video ("I am not a youtuber so bear with my subpar video editing skills"). Each artifact exits privately into public. LinkedIn is the broadcast mechanism for things built outside of work. The instrument and the builder identity run together.
+Third: building and posting are one loop, not two. Build, post, teach, learn, build again. Posting is the closing step that converts personal projects into reusable artifacts and feedback. The tinker-publicly pattern across eight years: Flutter/Dart tool built during lockdown and posted publicly; an LLM comparator open-sourced on Streamlit; the ollama keyboard-shortcut tutorial with a video ("I am not a youtuber so bear with my subpar video editing skills"). Each artifact exits privately into public. The loop doesn't close until someone else can learn from it. Posting is not distribution. It is part of how the build completes.
+
+This is the same instinct as open-sourcing personal projects. agamarora.com, second-brain v1, luna-monitor, ai-resume: all open-source. The help-market-flourish belief and the tinker-publicly loop are the same movement at different altitudes. (Cross-link: [`career-reflection`](/wiki/career-reflection/) for help-market-flourish with 2026 open-source evidence.)
 
 ---
 
@@ -72,7 +74,7 @@ Third: building things and posting them are part of the same loop. The tinker-pu
 
 Two tensions sit on this page. Both are productive paradoxes: held, not resolved.
 
-The first is with `pm-taste`. The post that diagnoses the LinkedIn feedback loop IS a LinkedIn post. Agam critiques the PM-influencer economy in a 2024-04-01 post: "There are more senior PMs selling services to aspiring PMs than in any other job function." He wrote that while holding two Community Top Voice badges. He grinds badge quotas while writing that badge competition is an aspiration trap. The meta-awareness is not hypocrisy; it is the register. The belief cross-listed here, `belief.strong-opinion-about-no-strong-opinions`, captures the same stance: holding a productive paradox open rather than resolving it into a safer position.
+The first is with `pm-taste`. The post that diagnoses the LinkedIn feedback loop IS a LinkedIn post. Agam critiques the PM-influencer economy in a 2024-04-01 post: "There are more senior PMs selling services to aspiring PMs than in any other job function." He wrote that while holding two Community Top Voice badges. He grinds badge quotas while writing that badge competition is an aspiration trap. The meta-awareness is not hypocrisy; it is the register. The belief cross-listed here, `belief.strong-opinion-about-no-strong-opinions`, is the meta-belief that licenses every conviction on this page: strong opinions held hard, discarded faster when shown wrong. The paradox licenses the posting; the posting is where the opinions get tested. (Cross-link: [`pm-taste`](/wiki/pm-taste/) where this meta-belief lives as primary home.)
 
 The distinction Agam maintains: competition-driven recognition earned through demonstrated-quality content is not monetized standing. He earned the badges. He did not then sell templates, ebooks, or courses built on that standing. The instrumental stance stops where the transaction starts.
 
@@ -96,7 +98,7 @@ Cross-link: [`pm-taste`](/wiki/pm-taste/) for the strong-opinion paradox, and [`
 | 2024-05-23 | Post `7199275652301086720` | Platform-purpose reframe: "Stop treating it like another job board. Human connections matter and LinkedIn knows it too well" |
 | 2024-06-07 | Post `7204875923110699010` | Network-as-leverage stat: "16k+ connections... Linkedin has 3x more employers than employees" |
 | 2024-07-02 | Post `7213869316083961857` | Peer-imperative register: product feature suggestion to LinkedIn AI, Microsoft cross-reference, Top Voice tone |
-| 2024-07-04 | Post `7214487241681772545` | Top Voice AI badge announced alongside AIonOS hire: badge as career-context signal, not credential |
+| 2024-07-04 | Post `7214487241681772545` | Top Voice AI badge announced alongside new AI PM role: badge as career-context signal, not credential |
 | 2024-11-15 | Post `7263044949686824960` | Certifications-are-collectibles: peer-voted competition output accepted; paid exam-gated credentials rejected |
 
 Collab Articles (58 items, 2023-11 to 2024-09) are the underlying practice base. Both badge categories earned through content in areas Agam already held strong views on. The quota forced expression of what was already there.
@@ -111,13 +113,4 @@ The 2025-2026 window shifted to agent-first and spec-first content, using Linked
 
 ---
 
-*Draft for taste-pass — not final.*
-
-## Open Qs for Agam taste-pass (callout)
-
-- **(1)** Name the Community Top Voice PM and AI achievements explicitly on this page (dates, categories, top 1-2% globally), or keep implicit? They are cited in the Evidence table and the prose body. Promote further if Agam confirms this is a credential surface he wants foregrounded.
-- **(2)** "RLHF farm" framing: the 2024-02-11 post uses this phrase publicly. Still a frame Agam would use now, or has it become an internal shorthand he'd re-word for a public wiki?
-- **(3)** "Commenting for reach" tag-comments: these exist in the corpus and are the instrumental stance at its most transparent. Brief mention as evidence of consistently-disclosed mechanics, or leave undiscussed?
-- **(4)** 16k+ connections stat from 2024-06-07: cite as "16k+ at the time" with date, or does Agam want to provide a 2026 number?
-- **(5)** "Ask daddy Microsoft to share some learnings with you" (2024-07-02): this line is voice-distinctive and earns its place as a register marker. Include in the wiki body, or keep in Evidence table only?
-- **(6)** tinker-publicly loop framing: does the tinkering loop feel incomplete until it is posted and someone learns from it? If yes, the merged belief upgrades from distribution-behavior to a closed loop ("build, post, teach, build again"), which changes how the "What it implies" section frames the builder-broadcast pattern.
+*Polished: taste-pass decisions applied 2026-04-26.*

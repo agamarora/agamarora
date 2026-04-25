@@ -2,7 +2,7 @@
 type: Theme
 slug: agent-first
 title: Agent-first thesis
-status: draft-r9
+status: draft-r9-polished
 length_target: 1200-1500
 voice_register: 1 (free-form post-essay)
 beliefs:
@@ -13,7 +13,7 @@ beliefs:
   - belief.agent-layer-is-threat-surface — model wasn't broken, agent layer was
   - belief.prompts-as-engineering-primitive — prompts are plumbing, not UX
   - belief.context-over-prompt — context is the lever
-  - belief.kill-prompting — historical waypoint, refined not held literally
+  - belief.kill-prompting — stance evolved (prompting -> context engineering -> harness engineering); verdict held, layer migrated
 ---
 
 # Agent-first thesis
@@ -56,7 +56,7 @@ After the manifesto, agent-first became a flat assumption. By April 2026 it had 
 
 **Craft: prompts as plumbing, context as lever.** The December 2024 "kill prompting" post was a correct diagnosis with an overstated verb. What needed killing was prompts as user-facing incantation. What survived: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." (2025-07-17) Prompts enable guardrails, tool calling, output parsing, memory. The engineer ships them; the user never sees them.
 
-Named waypoint: the 2024-12-24 kill-prompting post and the 2025-07-17 re-admission are both public, both still live. The arc is honest: overstated verb, correct diagnosis, refinement applied. Prompts-as-UX-layer died. Prompts-as-engineering-primitive survived. The U-turn is the evidence that the belief is held empirically, not as identity.
+Named waypoint: the 2024-12-24 kill-prompting post and the 2025-07-17 re-admission are both public, both still live. The arc is honest: overstated verb, correct diagnosis, stance evolved. Prompts-as-UX-layer died. Prompts-as-engineering-primitive survived. The skill layer migrated (prompting to context engineering to harness engineering); the verdict held. The arc is the evidence that the belief is held empirically, not as identity.
 
 When the prompt is plumbing, the leverage moves upstream: to the context layer, the personal and organizational data and history that determines what the agent knows before it reasons. "Context > Prompt" (2026-04-09). The second-brain wiki and kg.json are the operational form: a durable context layer every agent session reads without being prompted.
 
@@ -70,9 +70,9 @@ The threat-surface corollary arrived November 2025 when a Chinese threat actor r
 
 ## Tension with `enterprise-ai-reality`
 
-The enterprise-ai-reality theme holds a field observation: 10 experiments produce 2 production-grade wins. If agent-first is bullish on deployment and enterprise reality is cautious on production wins, is there a contradiction?
+The enterprise-ai-reality theme holds a field observation: roughly 80% of enterprise AI experiments don't reach production. If agent-first is bullish on deployment and enterprise reality is cautious on production wins, is there a contradiction?
 
-No: different scopes. Enterprise-ai-reality is about what is currently happening. Deployments fail to reach production not because the architecture is wrong but because conditions are not met: data readiness, KPI definition, reversibility, non-functional requirements. Agent-first is a structural bet about where the architecture is going. The reconciliation: agent-first IS the framework for being among the 2-of-10. Serving-lens-first, reversibility in from the start, agent layer hardened — those are the production-grade projects.
+No: different scopes. Enterprise-ai-reality is about what is currently happening. Deployments fail to reach production not because the architecture is wrong but because conditions are not met: data readiness, KPI definition, reversibility, non-functional requirements. Agent-first is a structural bet about where the architecture is going. The reconciliation: agent-first IS the framework for being among the projects that do ship. Serving-lens-first, reversibility in from the start, agent layer hardened: those are the production-grade projects.
 
 The tension with `reversibility-over-consequences` is structural and held, not resolved. Bullish on deployment. Bearish on decision authority without programmatic evaluability. The 2026-01-06 post holds both: "Not just guardrails, but checks and balances." Deployment scope and authorization scope are not the same dial.
 
@@ -108,18 +108,4 @@ Agent-first is bullish on deployment. Whether the safety stack matures at the sa
 
 ---
 
-*Draft for taste-pass: not final.*
-
----
-
-> **Open Qs for Agam taste-pass (callout)**
->
-> 1. **kill-prompting visibility:** The 2024-12-24 U-turn post is on the public record. This draft names it as a named waypoint ("overstated verb, correct diagnosis, refinement applied"). Does this framing read as honest intellectual evolution, or should the arc be described more directly?
->
-> 2. **application-layer-safety placement:** All three safety beliefs (application-layer-is-where-safety-lives, reversibility-over-consequences, agent-layer-is-threat-surface) are nested under "What it implies." Should they stay here, or should one anchor a cross-theme sidebar?
->
-> 3. **serving-lens vs craft as lead:** The 2025-06-20 manifesto leads with the serving lens. By 2026-04-09 it has become craft posture. Does Agam want the page to open with the 2025 strategic frame and trace forward, or lead with current-voice (craft) and trace backward?
->
-> 4. **"(and maybe first)" parenthetical weight:** Does Agam endorse the radical reading (agents may be primary users before humans) as the operative framing, or the softer reading (agents are also users, treat them as first-class)?
->
-> 5. **2025-09-29 production comment framing:** Decision 2 binds voice-AI as intentional under-share. Preferred citation: (a) cite as voice-AI production ("one application of the serving lens"), or (b) paraphrase as "MCP-first backend-driven deployment" without naming voice-AI explicitly?
+*Polished: taste-pass decisions applied 2026-04-26.*

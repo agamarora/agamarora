@@ -1,25 +1,26 @@
 ---
 type: Root
+tier: root
 slug: root.substance-over-hype
 title: The root disposition — substance over hype
-status: draft-r9
+status: draft-r9-polished
 length_target: 400-600
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.substance-over-hype — root anchor (2018-2026, 8-year through-line)
-  - belief.never-be-smartest-in-room — co-root (epistemic posture)
   - belief.ico-is-funding-not-product — archetype example
+  - belief.never-be-smartest-in-room — standard belief, team-joining heuristic (demoted from co-root per F4; lives primarily on career-reflection)
 ---
 
-# The root disposition: substance over hype
+# Substance over hype
 
-## The frame
+## The disposition
 
-Every theme on this wiki runs through a single filter first: reduce the hyped category to what it actually does, then evaluate.
+Reduce any hyped category to its substrate, then evaluate.
 
 Not cynicism. Not contrarianism. A procedure. When a new label arrives, name the substrate: what problem does it actually solve, and does it solve it in a way that is genuinely new? If the substrate is real, the enthusiasm is earned. If the substrate is borrowed technology with a better-sounding name, refuse the frame.
 
-This disposition shows up across eight years and four distinct hype cycles. Same move, different target each time. That consistency is what makes it a root: not a topical position but a posture toward categories. Every other thesis on this wiki is this posture applied somewhere specific.
+This disposition shows up across eight years and four distinct hype cycles. Same move, different target each time.
 
 ## How it shows up
 
@@ -33,26 +34,12 @@ This disposition shows up across eight years and four distinct hype cycles. Same
 
 **Product customization, 2025:** "I am extremely opinionated about adding customization to products." Strip it back: every customization setting is a design decision deferred to the user. The hype-word is "flexibility." The substrate is cost.
 
-## The companion
+## Cross-links
 
-The substance filter is one axis. The other is the room.
+The same instinct runs through multiple themes: [`agent-first`](/wiki/agent-first) (agents as substrate, not chatbots with UX skins), [`enterprise-ai-reality`](/wiki/enterprise-ai-reality) (demo vs production as the substrate test), [`pm-taste`](/wiki/pm-taste) (anti-customization as the same disposition at PRD level), [`breadth-as-differentiation`](/wiki/breadth-as-differentiation) (Human-GPT as the failure mode of breadth without substance). The themes apply this filter to specific domains. This page names the filter itself.
 
-"Never be the smartest person in the room. If you feel you are, get more people in the room or change the room."
-
-These two operate together. The substance-over-hype posture answers: what is this, actually? The never-be-smartest posture answers: who has thought harder about this than I have? The first is a content filter. The second is a room-finder. Together they explain both what Agam writes and where the writing comes from: positions formed under pressure from smarter peers, stripped of category flattery.
-
-## How to read this wiki
-
-This page sits above the theme grid. It is not Theme 1 of 12. It is the frame the other 12 assume.
-
-Every theme below applies the substance-over-hype posture to a specific domain: [`agent-first`](/wiki/agent-first), [`enterprise AI reality`](/wiki/enterprise-ai-reality), [`PM taste`](/wiki/pm-taste), [`spec-first taste`](/wiki/spec-first-taste), [`second brain`](/wiki/second-brain), and the rest. None of those pages re-explain this frame. They inherit it.
-
-Read this once. The rest of the wiki earns its weight from here.
+Related: [`career-reflection`](/wiki/career-reflection/) for help-market-flourish, which is the positive form of the same disposition: expand the pie rather than extract from it.
 
 ---
-*Draft for taste-pass — not final.*
 
-> ## Open Qs for Agam taste-pass
-> - **(1)** Explicitly name substance-over-hype as "root disposition" on the wiki, or leave as implied frame readers feel from theme pages? The named-root approach is more confident. The implied approach lets themes speak for themselves.
-> - **(2)** Co-root with never-be-smartest-in-room: one root page (this draft) or two separate brief pages? One page frames them as inseparable operating pair. Two pages give each more room.
-> - **(3)** Five archetype examples (blockchain through anti-customization) span 2018-2025. Right scope, or should the page front-load only 2024-26 examples for a current-reader frame?
+*Polished: taste-pass decisions applied 2026-04-26.*
