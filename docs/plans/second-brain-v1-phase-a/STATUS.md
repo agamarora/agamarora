@@ -2,9 +2,39 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 17 — R9 COMPLETE. Ready for Agam taste-pass (Task 2b).**
+Last updated: 2026-04-26 — **CHECKPOINT 18 — Phase A finishing pass locked + executing autonomously.**
 
-## CURRENT STATE (R9 DONE — all 14 Phase A files written)
+## CURRENT STATE (taste-pass DONE; autonomous Phase A finish executing)
+
+- **Task #2b taste-pass DONE** (2026-04-26 session w/ Claude). 21 binding decisions captured at `synthesis/wiki-page-drafts-final/_taste-pass-decisions.md`. Pushed.
+- **3 binding docs written + pushed** (drift-catch + integration + execution):
+  - `ARCHITECTURE-AND-FILE-AUDIT.md` — file audit + LLM arch sketch + second-brain destiny (note: §2 LLM arch sketch was an underdraft — see GAPS doc)
+  - `GAPS-vs-SPEC-AND-SYSTEM-ARCH.md` — 17 gaps cataloged. My initial sketch underdrafted /enter v3; spec already specified richer system. Corrections folded into integration plan.
+  - `INTEGRATION-PLAN.md` — synthesis-to-consumer mapping for /enter v3 (Track A) + site-wide content (Track B). No new architecture; uses spec.
+  - `EXECUTION-PLAN-v1.md` — locked for execution. 5 architectural decisions resolved autonomously (D1 in-function bundle / D2 scaffold + hand-finish / D3 two harnesses / D4 card schema / D5 x-nf-client-connection-ip). 23 scenarios derived from synthesis. CoT+ReAct + drift-catch protocol baked in.
+- **Executing Tasks A-G** (~4-6 hr autonomous):
+  - A: STATUS update (THIS COMMIT)
+  - B: Lock ontology v1 → `ontology-v1.md`
+  - C: Final wiki polish → `wiki-page-drafts-final/*.md` (13 files)
+  - D: 23 scenarios → `docs/plans/enter-v3-scenarios-v2.md`
+  - E: site.json
+  - F: kg-themes-summary.mjs
+  - G: STATUS to CHECKPOINT 19, Phase A done
+
+## NEW SESSION? READ IN THIS ORDER
+
+1. `docs/plans/second-brain-v1.md` — canonical spec
+2. `docs/plans/enter-v3.md` — /enter v3 working spec (6 LOCKED sections)
+3. `~/.claude/plans/rosy-plotting-flame.md` — system arch (approved 2026-04-24)
+4. **THIS FILE** — round + task state
+5. `docs/plans/second-brain-v1-phase-a/EXECUTION-PLAN-v1.md` — current execution lock + decisions
+6. `docs/plans/second-brain-v1-phase-a/INTEGRATION-PLAN.md` — synthesis → consumer mapping
+7. `docs/plans/second-brain-v1-phase-a/GAPS-vs-SPEC-AND-SYSTEM-ARCH.md` — drift catalog
+8. `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/_taste-pass-decisions.md` — 21 binding decisions
+9. `docs/plans/second-brain-v1-phase-a/interim-taste-calls.md` — 5 binding decisions
+10. `docs/plans/second-brain-v1-phase-a/synthesis/theme-refinement.md` — R5 final theme list
+
+## PRIOR STATE (R9 DONE — all 14 Phase A files written)
 
 - **R9 final consolidation DONE.** Three artifact types, 14 files total, written to `synthesis/`:
   - `synthesis/agam-profile-v1.md` — ~900 words, Register 1, 5 sections, all voice rules applied, 7 open Qs in §What I am still figuring out
