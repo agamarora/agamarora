@@ -2,7 +2,7 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-25 — CHECKPOINT 4. R4 batch 1 complete: 8 Tier-1 belief deep dives (~200KB). Master belief list compiled (R4 prep). Next: R4 batch 2 (remaining 16 Tier-1 cores) + Tier 2 seeds + Tier 3 tensions.
+Last updated: 2026-04-25 — CHECKPOINT 5. R4 batch 2 partial: 3 of 6 spawned subagents wrote outputs before hitting Anthropic rate limit (resets 12:30pm Asia/Calcutta). Tier-1 R4 progress: **11 of 24 done**. R4 batch template saved at `prompts/r4-batch-template.md` for mechanical re-spawn. Session pausing.
 
 **Repo path (canonical):** `docs/plans/second-brain-v1-phase-a/STATUS.md` (this file, git-tracked)
 **Workspace cache path (legacy, in-flight subagents only):** `~/.gstack/projects/agamarora-agamarora/corpus/synthesis/STATUS.md`
@@ -48,7 +48,7 @@ See `README.md` in this directory for clone + corpus-pull steps.
 | R3c | Style fingerprint | DONE | `synthesis/style-fingerprint.md` (29.2KB) | Word range 32-280, ideal 80-180 (E4 median 116.5). **Em-dash NOT signature** (only 3 in 287 posts) — colon + hyphen-with-spaces are real rhythm. Hashtags hard-zero in E4. ChatGPT Nov/Dec 2022 = sharpest style break (median 28→185 words). Voice-AI under-share quantitatively confirmed. **Open Q for Agam:** Dec 2024-Jun 2025 = 164-day silence — intentional or life event? |
 | R3d | Cross-post reference graph | DONE | `synthesis/cross-post-references.md` (53.2KB) | All 18 clusters mapped (pt1 1-7 + pt2 8-18 concat'd). **Top finding:** anti-hype/substance is the most stable cross-era stance (8-year through-line — blockchain 2018 → Devin → GenAI → customization 2026). **Candidate root disposition** for wiki. Self-callback is deliberate — Agam writes aware of own corpus, makes belief-supersession edges easier. **New proposed belief:** `silence-precedes-crystallization` (2 silences each preceded thesis-lock posts, 2 data points = open Q). |
 | R3e | Collaborative Articles deep dive | DONE | `synthesis/collab-articles-deep-dive.md` (83.4KB) | All sections done (pt1 TL;DR+inventory + pt2 sections 2-6 concat'd). 48 technical-signal entries. All 12 existing ontology-v0 beliefs gain new evidence. All 6 new beliefs proposed bodied (`belief.value-viability-usability-triad`, `belief.non-functional-reqs-are-55pct-of-failure`, `belief.data-readiness-is-pipeline-not-corpus`, `belief.design-thinking-as-speed-tool`, `belief.outcome-billing-over-hourly`, `belief.two-roles-ahead-framing`). 2 Top Voice achievements anchored. **Register #4 refined:** 40-210 words (median ~110), `1/ ` slash-format ~60% — genuine signature. Distinctness from registers #1-3: only register w/ numbered lists as dominant structural move. |
-| R4 | Per-belief deep dive (1 subagent per proposed belief, ~40 parallel) | **IN PROGRESS** (8/24 Tier-1 + 0/9 Tier-2 + 0/2 Tier-3 + 0/15 Tier-4) | `belief-deep-dives/<slug>.md` | Master list at `synthesis/master-belief-list.md`. **Batch 1 done:** substance-over-hype (ROOT confirmed, 27.8KB), agent-first (kills horizontal-ai-will-scale, 29KB), spec-over-sprint (ship-fast superseded, 25.2KB), taste-over-execution (9-stage genealogy 2017→2026, 25KB), context-over-prompt (kill-prompting reconciled as evolution, 24.4KB), self-instrumentation (8-year arc, 26 surfaces, 25KB), pm-is-99-should-we-1-can-we (badge-grade thesis, 24.9KB), never-be-smartest-in-room (proposes TWO roots — epistemic + social — vs master-list single-root, 24.9KB). **NEW Open Q for Agam:** one root or two? See never-be-smartest-in-room.md §6. |
+| R4 | Per-belief deep dive (1 subagent per proposed belief, ~40 parallel) | **IN PROGRESS** (11/24 Tier-1 + 0/9 Tier-2 + 0/2 Tier-3 + 0/15 Tier-4) | `belief-deep-dives/<slug>.md` | Master list at `synthesis/master-belief-list.md`. **Batch template** at `prompts/r4-batch-template.md`. **Batch 1 done (8):** substance-over-hype (ROOT confirmed, 27.8KB), agent-first (29KB, kills horizontal-ai), spec-over-sprint (25.2KB), taste-over-execution (25KB), context-over-prompt (24.4KB), self-instrumentation (25KB, 8-year arc), pm-is-99-should-we-1-can-we (24.9KB), never-be-smartest-in-room (24.9KB — **NEW Open Q: one root or two?**). **Batch 2 partial (3 of 6 — 3 lost to rate limit):** ai-pm-skillset-table-stakes (28KB), enterprise-ai-production-reality (38KB), second-brain-is-context-layer (30KB). **Batch 2 LOST (need re-spawn next session):** `belief.anti-customization`, `belief.learn-concepts-not-tools`, `belief.ship-the-prototype`. Re-spawn templates in `prompts/r4-batch-template.md` Batch 2 substitutions section. |
 | R5 | Theme refinement (recluster from refined beliefs) | NOT STARTED | `theme-refinement.md` | Blocks on R4 |
 | R6 | Per-theme wiki page draft (1 subagent per final theme, ~10-15 parallel) | NOT STARTED | `wiki-page-drafts/<theme-slug>.md` × ~10-15 | Blocks on R5 |
 | R7 | Tension surface | NOT STARTED | `tensions.md` | Blocks on R6 |
@@ -200,10 +200,31 @@ I'm resuming second-brain v1 Phase A work in this repo. Read these in order:
 2. docs/plans/second-brain-v1-phase-a/README.md (directory guide)
 3. docs/plans/second-brain-v1-phase-a/STATUS.md (round-by-round state)
 4. docs/plans/second-brain-v1-phase-a/interim-taste-calls.md (5 binding inline decisions)
+5. docs/plans/second-brain-v1-phase-a/prompts/r4-batch-template.md (R4 universal prompt template + batch substitutions)
 
-Then check ~/.gstack/projects/agamarora-agamarora/corpus/synthesis/ for any subagent outputs not yet synced to repo (cross-post-references.md, collab-articles-deep-dive.md). Sync any found. Update STATUS.
+Current state: R3 fully done. R4 batch 1+2 = 11/24 Tier-1 belief deep dives complete. Next steps:
 
-Then: launch the next round per STATUS table. If R4 is next, spawn per-belief deep dive subagents — see Step 4 in STATUS "How to resume" section.
+STEP A: Re-spawn 3 LOST batch-2 beliefs (rate-limited last session): anti-customization, learn-concepts-not-tools, ship-the-prototype. Substitutions ready in r4-batch-template.md. CRITICAL: spawn FOREGROUND not background — use 1-3 Agent calls per message max.
+
+STEP B: Spawn batch 3 = remaining 10 Tier-1 cores: breadth-needs-depth, build-measure-learn, data-literacy-is-pm-core, help-market-flourish, ic-path-legitimacy, linkedin-as-instrumental-platform, llm-as-voice-extension, moats-are-infra-talent-data, pm-is-featherless-hat, prompts-as-engineering-primitive. Anchors documented in r4-batch-template.md.
+
+STEP C: Tier 2 seeds (9 verifications) + Tier 3 tensions (2). See master-belief-list.md.
+
+STEP D: When Tier 1+2+3 done, launch R5 (theme refinement from refined beliefs).
 
 Auto mode active. Caveman mode active. Multi-pass to convergence; unlimited token budget per Agam.
 ```
+
+## Spawning protocol (lessons learned)
+
+When invoking R4 (or any) subagents:
+- **Spawn FOREGROUND.** 1-3 Agent calls per message maximum. Mixing more than ~3-4 in a single message can flip them to background-async, where they die with parent session if they don't finish in time.
+- **Watch the tool result.** "Async agent launched successfully" message = background. If you see this, immediately save the verbatim prompt to `prompts/` so re-spawn is mechanical if the session ends.
+- **Anthropic rate limits exist.** Subagents share parent session's quota. Plan for ~10-12 subagents per quota window before rate-limit hits. Resets every ~5 hours per session signal.
+
+**Batch sizing recommendation for R4:**
+- 3-4 subagents per Agent-message (foreground guarantee)
+- Wait for return + sync to disk
+- Commit checkpoint after each batch
+- Then next batch
+- Expect ~10-12 successful subagents per rate-limit window
