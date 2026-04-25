@@ -2,9 +2,64 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 18 — Phase A finishing pass locked + executing autonomously.**
+Last updated: 2026-04-26 — **CHECKPOINT 19 — Phase A COMPLETE. Ready for Phase B (wiki HTML build).**
 
-## CURRENT STATE (taste-pass DONE; autonomous Phase A finish executing)
+## CURRENT STATE (Phase A DONE — all artifacts ready for HTML scaffolding)
+
+**Phase A summary — what landed:**
+
+| Artifact | File | Status |
+|---|---|---|
+| Locked ontology | `synthesis/ontology-v1.md` (500 lines) | LOCKED |
+| 13 polished theme + root wiki drafts | `synthesis/wiki-page-drafts-final/*.md` | All 21 taste-pass decisions applied; zero em-dashes; zero banned LLM-isms |
+| 19 Tier-1 belief sub-page drafts | `synthesis/belief-page-drafts-final/*.md` | All 19 written; 400-800w each; zero em-dashes |
+| /wiki/graph/ design spec | `docs/designs/wiki-graph-spec.md` | Phase B/C implementation contract |
+| 23 /enter v3 scenarios | `docs/plans/enter-v3-scenarios-v2.md` | Coverage matrix from synthesis (T01-T12 + C01-C06 + M01-M02 + X01-X03) |
+| Sitemap DAG | `site.json` (root) | Pages + wiki + externals + actions + agent persona + runtime spec |
+| In-function KG index | `netlify/functions/lib/kg-themes-summary.mjs` | 12 themes, KG_STATS, KG_DEFAULT_ROUTING, KG_TENSION_MAP, helper fns |
+| Taste-pass decisions | `synthesis/wiki-page-drafts-final/_taste-pass-decisions.md` | 21 binding decisions from 2026-04-26 |
+| Architecture + integration plans | `ARCHITECTURE-AND-FILE-AUDIT.md`, `INTEGRATION-PLAN.md`, `EXECUTION-PLAN-v1.md`, `GAPS-vs-SPEC-AND-SYSTEM-ARCH.md` | Drift-catch + spec-anchor |
+
+**All Tasks A-I complete. 17 commits this checkpoint.**
+
+## PHASE B ENTRY CONDITIONS (now READY)
+
+Per spec §9 + EXECUTION-PLAN-v1 §6 + revised page count post-brainstorm:
+
+**Phase B target — hand-author wiki HTML pages from polished markdown drafts:**
+
+| Page | Source markdown | Output HTML | Per spec/decision |
+|---|---|---|---|
+| `/wiki/index.html` | (theme grid + 12 cards + graph link) | net-new | spec §4 |
+| `/wiki/<theme>/index.html` × 12 | `synthesis/wiki-page-drafts-final/<theme>.md` | scaffold + hand-finish | D2 |
+| `/wiki/root.substance-over-hype/index.html` | `synthesis/wiki-page-drafts-final/root.substance-over-hype.md` | scaffold + hand-finish | D2 |
+| `/wiki/beliefs/<slug>/index.html` × 19 | `synthesis/belief-page-drafts-final/<slug>.md` | scaffold + hand-finish | new (Task H output) |
+| `/wiki/voice/index.html` | derive from `voice-spec.md` §9 | net-new (400-600w) | spec §4 |
+| `/wiki/quotes/index.html` | derive from `voice-samples.md` + `voice-spec.md` §3 | net-new (~50-80 lines) | CEO scope |
+| `/wiki/projects/index.html` | derive from `projects-tech-lineage.md` | net-new DAG view | spec §4 |
+| `/wiki/graph/index.html` | per `docs/designs/wiki-graph-spec.md` | net-new viz | new (Task I) |
+
+**Total Phase B HTML pages:** ~37 (vs spec's original ~15).
+
+**Phase B build script (Task #12 from spec):**
+- `scripts/build-kg.mjs` — reads `ontology-v1.md` + frontmatter from all wiki pages → emits `/wiki/kg.json` (full graph public static) + regenerates `netlify/functions/lib/kg-themes-summary.mjs` (in-function bundle).
+
+**Phase C (site publish) + Phase D (groqHandler upgrade) + Phase E (launch):** unchanged per spec §9.
+
+## NEW SESSION? READ IN THIS ORDER
+
+1. `docs/plans/second-brain-v1.md` — canonical spec
+2. `docs/plans/enter-v3.md` — /enter v3 working spec (6 LOCKED sections)
+3. `docs/plans/enter-v3-scenarios-v2.md` — 23 scenarios (supersedes enter-v3 §3 draft)
+4. `~/.claude/plans/rosy-plotting-flame.md` — system arch
+5. **THIS FILE** — task state
+6. `docs/plans/second-brain-v1-phase-a/EXECUTION-PLAN-v1.md` — execution lock
+7. `docs/plans/second-brain-v1-phase-a/INTEGRATION-PLAN.md` — synthesis → consumer mapping
+8. `docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md` — locked ontology
+9. `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/_taste-pass-decisions.md` — 21 binding decisions
+10. `docs/plans/second-brain-v1-phase-a/interim-taste-calls.md` — 5 binding R3 decisions
+
+## PRIOR STATE (CHECKPOINT 18 — autonomous Phase A finish executing)
 
 - **Task #2b taste-pass DONE** (2026-04-26 session w/ Claude). 21 binding decisions captured at `synthesis/wiki-page-drafts-final/_taste-pass-decisions.md`. Pushed.
 - **3 binding docs written + pushed** (drift-catch + integration + execution):
