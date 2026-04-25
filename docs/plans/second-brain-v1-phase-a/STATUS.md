@@ -2,14 +2,28 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 16 — R7 + R8 COMPLETE.**
+Last updated: 2026-04-26 — **CHECKPOINT 17 — R9 COMPLETE. Ready for Agam taste-pass (Task 2b).**
 
-## CURRENT STATE (R7 + R8 DONE; R9 next)
+## CURRENT STATE (R9 DONE — all 14 Phase A files written)
+
+- **R9 final consolidation DONE.** Three artifact types, 14 files total, written to `synthesis/`:
+  - `synthesis/agam-profile-v1.md` — ~900 words, Register 1, 5 sections, all voice rules applied, 7 open Qs in §What I am still figuring out
+  - `synthesis/ontology-v1-draft.md` — comprehensive: 12+1 themes, 44+ beliefs, 52 projects, ~54 people, 58 tech nodes, 180+ edges, date corrections (enter-v3 corrected from 2023-05-10 to April 2026), interior-design-2017 excluded per D1
+  - `synthesis/wiki-page-drafts-final/*.md` — 13 files: 12 theme polishes + `_open-qs-for-taste-pass.md`
+- **R9 key changes vs R6 drafts:**
+  - voice-ai-craft: tension section FIXED — primary tension is now `linkedin-as-instrument` (productive paradox: under-share ↔ think-out-loud-is-practice), secondary is `enterprise-ai-reality`. R6 had it backwards (said primary = agent-first).
+  - agent-first: kill-prompting named as explicit waypoint (per R7 recommendation). Named arc framing.
+  - ai-pm-skillset: added "what changed" note for 2023-03-14 line vs 2026 reality; application-layer boundary discussion added.
+  - pm-taste: strong-opinion-about-no-strong-opinions named explicitly as meta-belief (per R7 recommendation).
+  - All 13 files: em-dashes stripped, banned LLM-isms removed, 80%+ R6 content preserved.
+- **Open Qs consolidated:** `_open-qs-for-taste-pass.md` — 26 distinct questions (after deduplication across R7 §8, R8 §10, R6 per-page callouts, agam-profile-v1 §7). Grouped A-G with session order recommendation.
+- **NEXT: Task 2b — Agam taste-pass (60-90 min, irreplaceable).** Read `synthesis/wiki-page-drafts-final/_open-qs-for-taste-pass.md` first. Then skim each wiki page. Make calls on the 26 questions. Return decisions to lock ontology (Task 8).
+
+## PRIOR STATE (R7 + R8 DONE)
 
 - **R7 tension surface DONE.** `synthesis/tensions.md` (40KB, 5438 words). 8 sections: TL;DR, cross-theme genuine contradictions, productive paradoxes, context-not-contradiction, intra-theme tensions, evolution arcs, industry-consensus tensions, cross-link map for R9 (table for all 12 themes + root), 7 Open Qs for Agam taste-pass.
 - **R8 voice spec lock DONE.** `synthesis/voice-spec.md` (35KB, 5605 words). 4 registers fully documented with all 7 fields each; 13 banned LLM-isms; 12 real signatures; 30 verbatim samples 2014-10-09 → 2026-04-21; mechanical self-checks; wiki-home voice-doc snippet (§9); 7 Open Qs for taste-pass.
 - **Both ran in parallel as foreground sonnet subagents.** R7 hit rate-limit notice at end but file landed complete (verified — ends "*R7 draft — not final. Inputs to R9 consolidation.*").
-- **Next: R9 final consolidation synthesizer.** Inputs ready: 12 R6 drafts + R7 tensions + R8 voice spec + R5 theme-refinement + master-belief-list. Output: `agam-profile-v1.md` + `ontology-v1-draft.md` + final-polished `wiki-page-drafts/` (apply R7 cross-links + R8 register calibration).
 
 ## PRIOR STATE (R6 COMPLETE, audited, fixed)
 
@@ -130,8 +144,8 @@ See `README.md` in this directory for clone + corpus-pull steps.
 | R6 | Per-theme wiki page draft (1 subagent per final theme) | **DONE 12/12** (CHECKPOINT 15, audited+fixed) | `wiki-page-drafts/*.md` (12 files) + `r6-qualitative-audit.md` + `r6-qualitative-audit-batch-6d.md` | Both audit files written. 28/30 quotes verified exact. 0 fabrications. All 9 audit issues fixed inline. |
 | R7 | Tension surface | **DONE** (CHECKPOINT 16) | `tensions.md` (40KB, 5438w) | 8 sections incl. cross-link map for R9 + 7 Open Qs |
 | R8 | Voice spec lock | **DONE** (CHECKPOINT 16) | `voice-spec.md` (35KB, 5605w) | 4 registers, 13 banned LLM-isms, 12 signatures, 30 verbatim samples, 7 Open Qs |
-| R9 | Final consolidation | NOT STARTED — READY TO LAUNCH | `agam-profile-v1.md` + `ontology-v1-draft.md` (final) + `wiki-page-drafts/` (final) | All inputs ready (R6 drafts + R7 tensions + R8 voice spec + R5 theme-refinement + master-belief-list) |
-| Task #2b | **AGAM** taste-pass | NOT STARTED | `corpus/agam-taste-pass.md` | Blocks on R9 |
+| R9 | Final consolidation | **DONE** (CHECKPOINT 17) | `agam-profile-v1.md` + `ontology-v1-draft.md` + `wiki-page-drafts-final/` (13 files) | All 14 Phase A artifacts written. voice-ai-craft tension fixed (linkedin-as-instrument primary). 26 open Qs consolidated. |
+| Task #2b | **AGAM** taste-pass | **READY TO START** | `wiki-page-drafts-final/_open-qs-for-taste-pass.md` | 60-90 min. Read open-qs index first, then skim wiki pages. 26 questions to answer. |
 | Task #8 | Lock ontology v1 (CC, ~30min) | NOT STARTED | `~/.gstack/.../ontology-v1.md` | Blocks on Task #2b |
 
 ---
