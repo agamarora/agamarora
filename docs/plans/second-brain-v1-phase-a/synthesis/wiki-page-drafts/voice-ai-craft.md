@@ -38,7 +38,7 @@ This page names what can be named: three craft principles distilled from the lim
 
 The belief formed on the job, not on LinkedIn.
 
-The public corpus has one pre-AIonOS voice mention: a March 2024 post experimenting with voice-based LLM input for drafting LinkedIn Collaborative Article responses (`urn:li:activity:7179449143407386624`). That is a hobbyist use case, not enterprise craft. It establishes that voice-as-interface was on the radar early in E4, but it carries no production learning.
+The public corpus has one pre-AIonOS voice mention: a March 2024 post observing that voice-as-input would help drafting LinkedIn Collaborative Article responses (`urn:li:activity:7179449143407386624`). It is a product-feature observation, not hands-on experimentation. It establishes that voice-as-interface was on the radar early in E4, but carries no production learning.
 
 The craft knowledge accumulated after the AIonOS join in July 2024, in a period with no corresponding LinkedIn post cadence on the topic. That is the field-data window: building, demoing, shipping at enterprise scale, and not writing about it publicly. When a direct production-stack survey asked in September 2025, the reply was specific:
 

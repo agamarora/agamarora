@@ -110,7 +110,7 @@ Cross-link: `spec-first-taste` for the builder trilogy (Spec > Sprint / Taste > 
 | 2018-01 | Flow.live: Solidity/blockchain pivot of V2 | Shipped pivot, not a deck |
 | 2020-04-26 | Flutter/Dart course: "Off to creating" | Capability acquisition as personal ship |
 | 2020-05-19 | Flutter/Dart prototyping ready: "No longer 'just an idea!'" | Canonical inversion. Belief crystallizes. |
-| 2021-03-26 | Pi-day Gauss-Legendre Jupyter/Kaggle notebook | Pattern holds at zero-stakes |
+| 2021-03-26 | Pi-day Jupyter/Kaggle notebook (simpler series; Gauss-Legendre came in 2022) | Pattern holds at zero-stakes |
 | 2023-04-16 | agamarora.com v1 (Python + Streamlit): "It took me 12 years!" | Personal-brand surface shipped |
 | 2024-06-05 | Ollama + LLaMA3 keyboard-shortcut script + tutorial video | Self-effacing but the artifact and link are there |
 | 2024-06-28 | "Here are a few AI projects you can do over the weekend" (Collab) | Belief becomes prescriptive teaching |

@@ -2,7 +2,77 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-25 — CHECKPOINT 14. **R5 COMPLETE.** theme-refinement.md written (53KB). Final theme count: 12 live wiki pages + 1 root page (substance-over-hype above grid), up from 10 locked. Key changes: pm-taste SPLIT into pm-taste + spec-first-taste (Theme 11, 2026 builder trilogy); personal-projects-tinkering FORMALIZED (Theme 13, ship-the-prototype anchor); humor-wit DROPPED as standalone wiki page (voice-register, lives in R8 voice-spec); early-career + thinking-in-writing MERGED into career-reflection (Theme 12) + linkedin-as-instrument (Theme 9) respectively; linkedin-as-instrument FORMALIZED (Theme 9). 5 beliefs DROPPED from graph: silence-precedes-crystallization, outcome-billing-over-hourly, tinker-publicly (merged), value-viability-usability-triad (heuristic), named-citation-as-confidence-marker. substance-over-hype ELEVATED to root page above theme grid. R6 ready to launch. **R5 launching now** entry below is from CP13. CHECKPOINT 12 below. **R4 Tier-1: 24/24 DONE. Tier-2: 7/10 done. Tier-3: 1/1 DONE.** Batch 5a + 5b returns: data-readiness-is-pipeline-not-corpus (20.5KB CONFIRM, sub-section under moats-are-infra-talent-data), non-functional-reqs-are-55pct-of-failure (30KB CONFIRM seed, theme.pm-taste primary; 55% number is single-surface — Open Q for taste-pass), design-thinking-as-speed-tool (31KB CONFIRM, status seed→core-B, sub-section pm-taste with cross-edge ai-pm-skillset), muscle-memory-over-novelty (21.5KB CONFIRM DISTINCT from learn-concepts-not-tools, status seed→peripheral, sub-section under learn-concepts-not-tools wiki page with refines-practice-of edge), **silence-precedes-crystallization (14.9KB REFINE→DEMOTE per Decision 5; drop from belief list, re-home as wiki narrative footnote — base rate 7/9 silences had no crystallization)**, certifications-are-collectibles (48KB CONFIRM R3d Cluster 13 peer-voted/exam-gated split, refinement: anti-cert ≠ anti-recognition, anti-institutional-gatekeeping). **Template refined CHECKPOINT 11 with explicit CoT + ReAct loop + worked example + 5-question self-critique gate — applied successfully to 5b.** Remaining Tier-2 (3): outcome-billing-over-hourly, two-roles-ahead-framing, tinker-publicly. Then Tier-4 triage + R5.
+Last updated: 2026-04-25 — **CHECKPOINT 15 — SESSION-PAUSE BASELINE.**
+
+## CURRENT STATE (R6 COMPLETE, audited, fixed)
+
+- **R1-R5 DONE.** Phase A synthesis layers all complete: era chunks, cross-era, R3a-e parallel rounds, 35 R4 belief deep-dives, R5 theme refinement (12 themes + 1 root page).
+- **R6 DONE 12/12 wiki page drafts.** 4 batches (3+3+3+3) all landed:
+  - Batch 6a: agent-first, pm-taste, root.substance-over-hype
+  - Batch 6b: enterprise-ai-reality, ai-pm-skillset, second-brain
+  - Batch 6c: spec-first-taste, career-reflection, linkedin-as-instrument
+  - Batch 6d: voice-ai-craft, breadth-as-differentiation, personal-projects-tinkering
+- **2 qualitative audits executed by independent subagents:**
+  - `synthesis/r6-qualitative-audit.md` (22KB) — first 9 drafts: 7 SHIP, 2 REVISE, 0 REWRITE. 28/30 verbatim quotes verified exact. Zero fabrications.
+  - `synthesis/r6-qualitative-audit-batch-6d.md` (20KB) — final 3 drafts: 2 SHIP, 1 REVISE, 0 REWRITE.
+- **All audit fixes applied (CHECKPOINT 15):**
+  - HIGH H1 ai-pm-skillset: 137-day silence sentence rewritten (correct dates)
+  - HIGH H2 enterprise-ai-reality: "one week before AIonOS" → "about four weeks"
+  - MEDIUM M1 linkedin-as-instrument: "RLHF farming" attribution replaced with paraphrase
+  - MEDIUM M3 enterprise-ai-reality: moats peer-credit acknowledgment (already in body)
+  - MEDIUM M4 spec-first-taste: arc claim hedged
+  - MEDIUM M5 career-reflection: "the only post in eleven years" → "the clearest instance"
+  - HIGH (batch 6d) voice-ai-craft: 2024-03-29 "experimenting" → "observing" (was inversion)
+  - MEDIUM (6d) breadth-as-differentiation: Mo Gawdat attribution hedged
+  - MEDIUM (6d) personal-projects-tinkering: Pi-day Gauss-Legendre date corrected
+- **R6 prompt template revised** with 5 audit-derived rules (A-E: silence framing prohibition, date arithmetic, declarative connective prose, no pre-answering Open Qs, no unsupported superlatives).
+
+## NEXT SESSION — PICK UP HERE
+
+**Read in this order to fully resume:**
+1. `docs/plans/second-brain-v1.md` — canonical spec (revised 2026-04-24)
+2. `docs/plans/second-brain-v1-phase-a/README.md` — directory guide
+3. **THIS FILE** — full state
+4. `docs/plans/second-brain-v1-phase-a/interim-taste-calls.md` — 5 binding decisions
+5. `docs/plans/second-brain-v1-phase-a/synthesis/theme-refinement.md` — R5 final theme list (12 + 1 root)
+6. `docs/plans/second-brain-v1-phase-a/synthesis/r6-qualitative-audit.md` — first audit
+7. `docs/plans/second-brain-v1-phase-a/synthesis/r6-qualitative-audit-batch-6d.md` — second audit
+
+**Remaining Phase A rounds (R7, R8, R9):**
+
+| Round | Description | Inputs ready? |
+|---|---|---|
+| R7 | Tension surface (cross-theme + intra-theme contradictions) | YES — 12 R6 drafts + master-belief-list tension pairs + R3d clusters all available |
+| R8 | Voice spec lock (canonical voice doc — bans, signatures, registers) | YES — style-fingerprint.md + voice-samples.md + R3c register findings + Decision 4 binding |
+| R9 | Final consolidation → agam-profile-v1.md + ontology-v1-draft.md (final) + wiki-page-drafts/ (final polished) | Blocks on R7+R8 |
+| Task #2b | **AGAM** taste-pass (60-90min, irreplaceable human step) | Blocks on R9 |
+| Task #8 | Lock ontology v1 (CC, ~30min) | Blocks on Task #2b |
+
+**Recommended next-session action: spawn R7 + R8 in parallel (independent), then R9 synthesizer once both return. Use refined CoT+ReAct + audit-derived rules template at `prompts/r6-batch-template.md` (reusable for R7/R8).**
+
+## R7 + R8 prompt seeds (ready to fire)
+
+**R7 — Tension surface synthesizer:**
+- Read all 12 R6 drafts + master-belief-list "Tension pairs" table + theme-refinement.md Section 4 deltas
+- Output `synthesis/tensions.md`: cross-theme contradictions, productive paradoxes (D R3d HOLD = strong-opinion-about-no-strong-opinions), evolution arcs (kill-prompting → prompts-as-primitive), context-not-contradiction (agent-first ↔ reversibility)
+- Goal: feed Tension sections in R9 final wiki polish
+
+**R8 — Voice spec lock:**
+- Read style-fingerprint.md + voice-samples.md + comments-network.md (4 voice registers found) + collab-articles-deep-dive.md (Top Voice register #4) + Decision 4 (em-dash NOT signature)
+- Output `synthesis/voice-spec.md`: 4 registers documented with signatures, banned LLM-isms, sentence-length distribution, punctuation rhythm (colon + hyphen-with-spaces = real signatures), specific positive samples per register
+- Goal: agent voice calibration + wiki home-page voice doc
+
+**R9 — Final consolidation synthesizer:**
+- Read R7 tensions + R8 voice spec + 12 R6 drafts + R5 theme-refinement + master-belief-list
+- Output: `agam-profile-v1.md` + `ontology-v1-draft.md` + final-polished wiki-page-drafts (apply tension cross-links + voice-spec calibration)
+
+## Spawn protocol (revised CHECKPOINT 11)
+
+- Foreground default. 1-3 Agent calls per message max.
+- Background only on explicit Ctrl+B.
+- Always pass `model: "sonnet"` (project hard rule, never opus).
+- After each batch: mechanical verify (length, em-dash-in-prose, sections, banned LLM-isms) → qualitative audit (independent subagent on 3-9 drafts) → fix HIGH/MEDIUM issues inline → commit checkpoint → push to main.
+- Commit + push after every milestone. Push permission: granted. **R5 launching now** entry below is from CP13. CHECKPOINT 12 below. **R4 Tier-1: 24/24 DONE. Tier-2: 7/10 done. Tier-3: 1/1 DONE.** Batch 5a + 5b returns: data-readiness-is-pipeline-not-corpus (20.5KB CONFIRM, sub-section under moats-are-infra-talent-data), non-functional-reqs-are-55pct-of-failure (30KB CONFIRM seed, theme.pm-taste primary; 55% number is single-surface — Open Q for taste-pass), design-thinking-as-speed-tool (31KB CONFIRM, status seed→core-B, sub-section pm-taste with cross-edge ai-pm-skillset), muscle-memory-over-novelty (21.5KB CONFIRM DISTINCT from learn-concepts-not-tools, status seed→peripheral, sub-section under learn-concepts-not-tools wiki page with refines-practice-of edge), **silence-precedes-crystallization (14.9KB REFINE→DEMOTE per Decision 5; drop from belief list, re-home as wiki narrative footnote — base rate 7/9 silences had no crystallization)**, certifications-are-collectibles (48KB CONFIRM R3d Cluster 13 peer-voted/exam-gated split, refinement: anti-cert ≠ anti-recognition, anti-institutional-gatekeeping). **Template refined CHECKPOINT 11 with explicit CoT + ReAct loop + worked example + 5-question self-critique gate — applied successfully to 5b.** Remaining Tier-2 (3): outcome-billing-over-hourly, two-roles-ahead-framing, tinker-publicly. Then Tier-4 triage + R5.
 
 **Repo path (canonical):** `docs/plans/second-brain-v1-phase-a/STATUS.md` (this file, git-tracked)
 **Workspace cache path (legacy, in-flight subagents only):** `~/.gstack/projects/agamarora-agamarora/corpus/synthesis/STATUS.md`
@@ -50,8 +120,8 @@ See `README.md` in this directory for clone + corpus-pull steps.
 | R3e | Collaborative Articles deep dive | DONE | `synthesis/collab-articles-deep-dive.md` (83.4KB) | All sections done (pt1 TL;DR+inventory + pt2 sections 2-6 concat'd). 48 technical-signal entries. All 12 existing ontology-v0 beliefs gain new evidence. All 6 new beliefs proposed bodied (`belief.value-viability-usability-triad`, `belief.non-functional-reqs-are-55pct-of-failure`, `belief.data-readiness-is-pipeline-not-corpus`, `belief.design-thinking-as-speed-tool`, `belief.outcome-billing-over-hourly`, `belief.two-roles-ahead-framing`). 2 Top Voice achievements anchored. **Register #4 refined:** 40-210 words (median ~110), `1/ ` slash-format ~60% — genuine signature. Distinctness from registers #1-3: only register w/ numbered lists as dominant structural move. |
 | R4 | Per-belief deep dive (1 subagent per proposed belief, ~40 parallel) | **DONE** (24/24 Tier-1 + 10/10 Tier-2 + 1/1 Tier-3 = 35 dives. Tier-4 15 peripheral SKIPPED — R5 folds from master-list directly. Verdict tally: 27 CONFIRM, 4 REFINE-or-downgrade, 3 MERGE, 2 DEMOTE.) | `belief-deep-dives/<slug>.md` | Master list at `synthesis/master-belief-list.md`. Batch template at `prompts/r4-batch-template.md`. **Batch 1 (8):** substance-over-hype (ROOT, 27.8KB), agent-first (29KB), spec-over-sprint (25.2KB), taste-over-execution (25KB), context-over-prompt (24.4KB), self-instrumentation (25KB), pm-is-99-should-we-1-can-we (24.9KB), never-be-smartest-in-room (24.9KB). **Batch 2 (3+3 recovered = 6):** ai-pm-skillset-table-stakes (28KB), enterprise-ai-production-reality (38KB), second-brain-is-context-layer (30KB), anti-customization (25.7KB — nest under theme.pm-taste, not own page), learn-concepts-not-tools (25.9KB — STP merge CONFIRMED, muscle-memory DISTINCT), ship-the-prototype (30.9KB — tinker-publicly RECOMMEND MERGE >90% overlap). **NEW Open Qs / R4 resolutions (preliminary, await Agam taste-pass):** (1) one root or two roots (substance + never-smartest)? (2) STP merge into learn-concepts-not-tools confirmed; (3) muscle-memory-over-novelty distinct from learn-concepts-not-tools with `refines-practice-of` edge; (4) tinker-publicly merge into ship-the-prototype recommended. **Batch 3a (3):** breadth-needs-depth (27.7KB — own page under theme.breadth-as-differentiation), prompts-as-engineering-primitive (25.9KB — sub-section under theme.agent-first-craft, kill-prompting layer-migration edge), moats-are-infra-talent-data (29.6KB — own page under theme.enterprise-ai-reality). **Batch 3b (3):** pm-is-featherless-hat (28.5KB), help-market-flourish (23.5KB), data-literacy-is-pm-core (25.8KB). **Batch 3c (3):** ic-path-legitimacy (26.9KB), linkedin-as-instrumental-platform (37KB), llm-as-voice-extension (31KB). **Batch 4a (3 in flight, async-lost on session pause):** build-measure-learn, value-viability-usability-triad (seed), application-layer-is-where-safety-lives (seed). Substitutions in `prompts/batch-4a-pending.md`. **Remaining Tier-1 (1, in flight):** build-measure-learn. **Remaining Tier-2 (9):** application-layer-is-where-safety-lives, data-readiness-is-pipeline-not-corpus, design-thinking-as-speed-tool, muscle-memory-over-novelty, non-functional-reqs-are-55pct-of-failure, outcome-billing-over-hourly, silence-precedes-crystallization, tinker-publicly (master-list says MERGE recommended already — may skip dedicated R4), two-roles-ahead-framing, value-viability-usability-triad. **Remaining Tier-3 (1):** certifications-are-collectibles. **Tier-4 (15):** triage decision pending — voice/meat value vs skip. | |
 | R5 | Theme refinement (recluster from refined beliefs) | **DONE** (CHECKPOINT 14) | `synthesis/theme-refinement.md` (53KB) | 12 final themes + 1 root page. pm-taste SPLIT; spec-first-taste NEW; personal-projects-tinkering FORMALIZED; humor-wit DROPPED; early-career+thinking-in-writing MERGED; linkedin-as-instrument FORMALIZED; substance-over-hype ELEVATED to root. 5 beliefs DROPPED from graph. 10 Open Qs for Agam taste-pass. Full R6 hand-off instructions in Section 9. |
-| R6 | Per-theme wiki page draft (1 subagent per final theme, ~10-15 parallel) | NOT STARTED | `wiki-page-drafts/<theme-slug>.md` × ~10-15 | Blocks on R5 |
-| R7 | Tension surface | NOT STARTED | `tensions.md` | Blocks on R6 |
+| R6 | Per-theme wiki page draft (1 subagent per final theme) | **DONE 12/12** (CHECKPOINT 15, audited+fixed) | `wiki-page-drafts/*.md` (12 files) + `r6-qualitative-audit.md` + `r6-qualitative-audit-batch-6d.md` | Both audit files written. 28/30 quotes verified exact. 0 fabrications. All 9 audit issues fixed inline. |
+| R7 | Tension surface | NOT STARTED — READY TO LAUNCH | `tensions.md` | R6 done. R7 prompt seed in CHECKPOINT 15 baseline above. |
 | R8 | Voice spec lock | NOT STARTED | `voice-spec.md` | Blocks on R6 (parallel with R7) |
 | R9 | Final consolidation | NOT STARTED | `agam-profile-v1.md` + `ontology-v1-draft.md` (final) + `wiki-page-drafts/` (final) | Blocks on R7+R8 |
 | Task #2b | **AGAM** taste-pass | NOT STARTED | `corpus/agam-taste-pass.md` | Blocks on R9 |
