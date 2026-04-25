@@ -312,9 +312,70 @@ Each task gets its own milestone commit. Frequent, not batched.
 
 **Estimate:** 10 min.
 
+### Task H — Belief sub-pages polish (NEW, post-brainstorm 2026-04-26)
+
+**Why added:** v1 wiki was 12 themes + root only — too thin given 35 belief deep-dives sitting in synthesis. User flagged "feels like missed opportunity of the massive analysis." Adding belief sub-pages turns the wiki into a navigable knowledge graph: theme page → belief page → cross-belief navigation via supports/contradicts/supersedes edges. People + project sub-pages explicitly DROPPED from v1 per user call.
+
+**Goal:** produce 19 polished belief page markdown drafts at `synthesis/belief-page-drafts-final/<slug>.md`, ready for Phase B HTML scaffolding.
+
+**Source:** existing `synthesis/belief-deep-dives/*.md` (35 files, 25-50KB each). Light edit pass — NOT rewriting from scratch.
+
+**Per belief page:**
+- Frontmatter: `type: BeliefPage`, `slug`, `parent_theme`, `related_beliefs[]` (from ontology supports/contradicts/supersedes edges), `tier: 1`, `length_target: 400-800w`
+- Sections (per spec §5 page structure, lighter than theme pages):
+  - **Statement** — 1-paragraph distillation (the belief itself)
+  - **Origin** — earliest evidence, dated post(s)
+  - **Refinement arc** — how the belief evolved (if relevant; uses supersedes/refines edges)
+  - **Cross-links** — to related beliefs + parent theme
+  - **Evidence** — 3-7 dated post citations
+- Apply same voice rules: no em-dashes, banned LLM-isms removed, taste-pass decisions baked in (renames, scope notes, etc.).
+
+**Scope:** 19 Tier-1 beliefs from ontology-v1.md. Tier-2/Tier-3 beliefs stay as graph nodes only (no wiki pages).
+
+**Sub-task:** subagent fan-out, batches of 3-4 per Agent message. ~6 batches. Estimate 3-4 hr autonomous CC work.
+
+**Output destination:** `docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final/<slug>.md` (19 files).
+
+**Estimate:** 3-4 hours.
+
+### Task I — Wiki graph visualization page spec (NEW, post-brainstorm 2026-04-26)
+
+**Why added:** kg.json is a public static asset with 250+ nodes / 180+ edges. Without a viz, density is invisible to a wandering visitor. Adding `/wiki/graph/` makes density navigable.
+
+**Goal:** design + spec the /wiki/graph/ page. Self-contained HTML per site convention. Reads `/wiki/kg.json` client-side, renders force-directed graph, click-to-navigate to wiki pages.
+
+**Output:** `docs/designs/wiki-graph-spec.md` covering:
+- Layout (canvas + sidebar filters + selected-node detail panel)
+- Library choice — d3-force vs cytoscape.js vs vis-network. Pick lightest fit-for-purpose, vendor as inline `<script>` per site convention (no npm deps).
+- Filters: by theme, by tier (root/theme/tier1/tier2/tier3), by node type (belief/project/person/tech), by relationship (supports/contradicts/supersedes/builds_on/etc.)
+- Interactions: hover = highlight node + 1-hop neighbors; click = navigate to wiki page (theme/belief) OR open detail panel (project/person/tech without page); double-click = focus node + zoom.
+- Performance budget: render 250 nodes + 180 edges smooth; lazy-load heavy details.
+- Mobile: simplified — list view by theme, expand to subtree, no force layout (force layout sucks on small screens).
+- Color encoding: theme = color hue (12 distinct), tier = saturation, edge type = stroke style.
+- Empty-state hint: "Click any node to enter that part of his thinking. Drag to explore. Filter by theme to focus."
+- Accessibility: keyboard navigation through nodes; screen-reader-friendly fallback list view; ARIA labels.
+
+**Implementation deferred:** spec only at this task; Phase B/C builds the HTML page.
+
+**Estimate:** 1-2 hours design pass.
+
 ---
 
-## 6. After Task G — Phase B/C/D entry
+## 6. After Tasks A-I — Phase B/C/D entry
+
+Phase A done = synthesis final + integrated + locked + dense surface scoped. Phase B starts: hand-author wiki HTML pages from polished markdown drafts.
+
+**Phase B page count (revised post-brainstorm):**
+- Theme HTML: 12 + 1 root = 13 pages
+- Belief HTML: 19 pages
+- Voice page: 1
+- Quote page: 1
+- Projects DAG page: 1 (per spec §4)
+- Graph viz page: 1 (NEW)
+- Wiki home: 1
+- **Total: ~37 pages** (vs. ~15 in original spec)
+
+This is denser but still scoped. People + project deep-dive pages explicitly NOT in v1.
 
 Phase A done = the synthesis is final + integrated + locked. Phase B starts: hand-author 12 wiki HTML pages from polished markdown drafts using scaffold + hand-finish (D2). Phase B/C/D timeline per spec §9.
 
