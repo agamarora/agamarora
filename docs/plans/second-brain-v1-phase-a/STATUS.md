@@ -18,7 +18,9 @@ Last updated: 2026-04-26 — **CHECKPOINT 28 — Phase C / C-voice-beliefs SHAPE
 - Zero em-dashes, zero banned LLM-isms, zero triadic prose, zero biographical date framing in body (posts ONLY in Evidence table)
 - Mobile: chip strip stacks vertically, tag strip wraps confidence below tags, ol counter circles render as ::before pseudo-elements with mono accent number
 
-**Next action on resume: CP-3 = sonnet subagent reauthor of belief.spec-over-sprint.** Use template at `prompts/c-voice-beliefs-d61-template.md`, swap `{SLUG}=spec-over-sprint` and `{REF_SLUG}=context-over-prompt` (closest sibling). After subagent returns: run 11-point review checklist from template, then commit + push + STATUS bump → CP-4.
+**CP-3 spec-over-sprint DONE 2026-04-26** (sonnet subagent, 512w body, all gates pass; manual fix: slug `belief.spec-over-sprint` → `spec-over-sprint` per other beliefs convention). Now CP-4 next.
+
+**Next action on resume: CP-4 = sonnet subagent reauthor of belief.taste-over-execution.** Use template at `prompts/c-voice-beliefs-d61-template.md`, swap `{SLUG}=taste-over-execution` and `{REF_SLUG}=spec-over-sprint` (just-shipped trilogy partner, same parent theme). After subagent returns: run 11-point review checklist from template, then commit + push + STATUS bump → CP-5.
 
 **CP order remaining (17 CPs):** CP-3 spec-over-sprint → CP-4 taste-over-execution → CP-5 second-brain-is-context-layer → CP-6 substance-over-hype → CP-7 enterprise-ai-production-reality → CP-8 ship-the-prototype → CP-9 pm-is-99-should-we-1-can-we → CP-10 ic-path-legitimacy → CP-11 help-market-flourish → CP-12 anti-customization → CP-13 ai-pm-skillset-table-stakes → CP-14 breadth-as-differentiation → CP-15 breadth-needs-depth → CP-16 learn-concepts-not-tools → CP-17 linkedin-as-instrumental-platform → CP-18 llm-as-primary-daily-tool → CP-19 self-instrumentation. ~5-6hr estimated, multi-session expected.
 

@@ -1,8 +1,9 @@
 ---
 type: BeliefPage
-slug: belief.spec-over-sprint
+slug: spec-over-sprint
 title: Spec over Sprint
-one_line: "When AI makes iteration nearly free, the binding constraint is spec quality - the model amplifies whatever you put in front of it."
+one_line: "When AI makes iteration nearly free, the binding constraint is spec quality - the model amplifies whatever you put in front of it, not how fast you put something in front of it."
+quotable: "Spec > Sprint: when iteration is cheap, the binding constraint is how clearly you can spec, not how fast you can ship."
 parent_theme: spec-first-taste
 related_beliefs:
   - belief.taste-over-execution
@@ -17,50 +18,64 @@ conditioned_by:
 holds_with:
   - taste-over-execution
   - context-over-prompt
+applies_to:
+  - product-management
+  - ai-pm
+  - prd-writing
+  - ai-product-development
+  - scope-management
+  - agile-methodology
+confidence: settled
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp3-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
 ---
 
 # Spec over Sprint
 
-## Statement
+## The belief
 
-When you have already spent hours speccing every pixel (typography scale, spacing tokens, color palette, border radius), a generative tool gives you a worse version of what you already decided. This is the shift: in an era where AI makes iteration nearly free, the binding constraint is no longer how fast you can build. It is how clearly you can spec. The model amplifies whatever you give it. Invest in the spec, not the iteration speed.
+When iteration is cheap, preparation is the lever. Generative tools produce full layouts in seconds - wrong fonts, wrong colors, approximate everything. The tool averaged across a population; the spec had already converged. Invest upstream in what you want, not downstream in how fast you ship it.
 
-## Origin
+## How to apply
 
-Earliest dated evidence: 2022-06-03: "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'." The 99 "should we" questions are spec-work. The habit predates the vocabulary by four years.
+1. **Default to spec-first when AI is in the loop.** Before opening any generative tool, write down what you want: the exact typography scale, the color tokens, the interaction model, the core jobs-to-be-done. The AI amplifies whatever you give it. Give it precision, get precision back. Give it a vague brief, get a plausible-but-wrong draft back.
 
-The crystallization post: 2026-04-09. Agam tried Google Stitch, dropped it in under 30 minutes, and published the three-line builder thesis: "Spec > Sprint / Taste > Execution / Context > Prompt." The post explains the reason directly: the tool generated a decent layout in seconds but couldn't hit locked design tokens. Wrong fonts, wrong colors, approximate everything. The generative tool averaged across a population; the spec had already converged.
+2. **Audit the spec before blaming the tool.** When a generative output disappoints - wrong voice, wrong layout, missing constraints - the first question is not "how do I re-prompt?" It is "what was missing from the spec?" Most tool failures are spec gaps wearing a prompt mask.
 
-## Refinement arc
+3. **Treat quick-and-dirty as a cost, not a virtue.** The case for "ship fast and iterate" was built on the assumption that iteration was scarce. When a design round took two weeks and a coding cycle took four, fast prototypes delivered irreplaceable signal. That economics has changed. When a tool can produce a full layout in 30 seconds, a fast prototype produces noise. The correct virtue is: ship the well-spec'd prototype.
 
-**Supersedes `belief.ship-fast` (2020-05-19):** The earlier stance was "quick and dirty, yet powerful and clean" - speed-to-prototype as the primary virtue. The 2026-04-09 post inverts this exactly. The 2020 virtue was a 30-minute ship; the 2026 virtue is a 30-minute drop.
+4. **Hold the scope line in the PRD before the sprint begins.** Scope creep is a spec failure that shows up late. "Should we do it?" is the PM's job. "Can we do it?" is the bonus question at the end. Every hour of sprint debate that could have been settled in the PRD is a tax on spec quality. The 99 "should we" questions are spec-work.
 
-The flip is not arbitrary. The economics changed. When iteration was scarce (slow CI, manual coding, week-long design rounds), a fast prototype gave irreplaceable user-feedback signal. Speed mattered more than preparation. When iteration is cheap (generative tools produce full layouts in seconds), a fast prototype produces noise: "approximate everything." Now preparation matters more than speed, because spec quality is what the AI amplifies.
+5. **Use iteration for refinement, not discovery.** Fast iteration is real leverage when the question is "how polished is this?" not "what are we building?" Generative tools excel at refinement. They are poor instruments for discovering what you want in the first place. Discovery lives in the spec.
 
-**Does not supersede `belief.ship-the-prototype`:** Agam still ships. The second-brain v1 launch (2026-04-23: "Plain markdown. Git. Open source. MIT. Free forever.") is shipping. What died was the sub-axiom that "quick and dirty is acceptable." The successor position: ship the well-spec'd prototype.
+## What this is not
 
-**Trilogy relationship (2026-04-09):** Spec > Sprint, Taste > Execution, and Context > Prompt are siblings, not a hierarchy. They are three views of one disposition across three layers: process (what you write before building), craft (what you discriminate worth building), and tooling (what context you give the model). All three appeared in the same post; all three name the same structural claim: the load-bearing work has migrated from doing to deciding. Wiki surface: one theme page, not three.
+- **Not "never ship until the spec is perfect."** The spec governs what you build, not whether you build. The second-brain v1 shipped as plain markdown: "Plain markdown. Git. Open source. MIT. Free forever." That is Spec > Sprint in action: a tight scope, shipped fully, without iteration-as-discovery.
+- **Not "agile is dead."** Sprints still matter for sequencing, unblocking, and team cadence. The belief targets the sub-axiom that equates sprint velocity with product quality. Speed inside a well-spec'd system is a virtue. Speed as a substitute for a spec is not.
+- **Not a solo PM principle only.** The claim applies anywhere AI is generating work output: design, code, copy, data pipelines. If you are directing a model, your spec quality is the binding constraint on output quality. The domain is irrelevant.
 
-## Cross-links
+## Argues against
 
-- Parent theme: wiki:spec-first-taste
-- Related beliefs: wiki:beliefs:belief.taste-over-execution
-- Related beliefs: wiki:beliefs:belief.context-over-prompt
-- Related beliefs: wiki:beliefs:belief.anti-customization
-- Related beliefs: wiki:beliefs:belief.ship-the-prototype
-- Root disposition: wiki:root.substance-over-hype
+- "Move fast and iterate - the market will tell you what to build."
+- "Good prompting can compensate for a weak brief - just keep refining."
+- "Spec-first slows teams down; velocity is the real competitive advantage."
+
+## Where to go from here
+
+If you want the **parent theme** that this belief belongs to, go to [spec-first-taste](/wiki/spec-first-taste/). The theme holds the full argument for why preparation outranks execution speed across the spec-first trilogy.
+
+If you want the **trilogy partner** that makes the same claim at the craft layer, go to [taste over execution](/wiki/beliefs/taste-over-execution/). If you want it at the tooling layer, go to [context over prompt](/wiki/beliefs/context-over-prompt/). The three beliefs share one structural claim: the load-bearing work has migrated from doing to deciding.
+
+If you want the **anti-pattern** this belief directly argues against - the instinct to customize rather than scope tightly - go to [anti-customization](/wiki/beliefs/anti-customization/).
 
 ## Evidence
 
-- 2022-06-03 - "PM is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'" - linkedin-corpus, Cluster 6
-- 2025-12-04 - "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." - linkedin-corpus, urn:li:activity:7402319253036531712
-- 2025-12-26 - "While I continue to spend more time practising these, it continues to benefit me to re-watch and re-read some of his material. To get this into my muscle memory." (Shreyas Doshi) - linkedin-corpus, Cluster 16
-- 2026-04-08 - "I am going to be watching this very carefully." (Mythos observer posture) - linkedin-corpus, Cluster 16
-- 2026-04-09 - "Tried and dropped Google Stitch in under 30 minutes...wrong fonts, wrong colors, approximate everything...Spec > Sprint / Taste > Execution / Context > Prompt" - linkedin-corpus, Cluster 16 (canonical)
-- 2026-04-23 - "Plain markdown. Git. Open source. MIT. Free forever." (second-brain v1 launch, belief embodied as shipped product) - project.second-brain-v1
-
----
-*Draft for Phase B HTML scaffolding.*
+| Date | Entry | Post |
+|---|---|---|
+| 2022-06-03 | "PM is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'" The spec-work habit predates the vocabulary by four years. | linkedin-corpus, Cluster 6 |
+| 2025-12-04 | "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." Scope held at the spec layer, not the sprint layer. | urn:li:activity:7402319253036531712 |
+| 2026-04-09 | "Tried and dropped Google Stitch in under 30 minutes...wrong fonts, wrong colors, approximate everything...Spec > Sprint / Taste > Execution / Context > Prompt" Canonical crystallization. The tool failed because the spec had already converged. | linkedin-corpus, Cluster 16 |
+| 2026-04-23 | "Plain markdown. Git. Open source. MIT. Free forever." second-brain v1 launch. A tight scope, shipped fully: belief embodied as shipped product. | project.second-brain-v1 |
