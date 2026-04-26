@@ -111,6 +111,10 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
+
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
   details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
@@ -168,30 +172,30 @@
 <h3 id="2021-the-metaphor-maker-era">2021: the metaphor-maker era</h3>
 <p>The PM-craft metaphors arrive in a tight cluster in 2021, posted within months of each other at FarEye. Looking back, they stack. At the time each was its own post.</p>
 <p>The first is parenting (2021-07-12):</p>
-<p>&gt; &quot;Building a product is like raising a child. You'll have to make tough decisions and piss people off at higher places to ensure least influence on your goal. You can't let your child be influenced by everything out there. Nor should you let your product be built around wants and whims.&quot;</p>
+<blockquote>&quot;Building a product is like raising a child. You'll have to make tough decisions and piss people off at higher places to ensure least influence on your goal. You can't let your child be influenced by everything out there. Nor should you let your product be built around wants and whims.&quot;</blockquote>
 <p>This is about refusal as PM craft. The parent protects a developing thing from the noise that would distort it. The PM does the same. Notice the active verbs: <em>make tough decisions</em>, <em>not let</em>. Not create. Not ship. Refuse.</p>
 <p>Ten weeks later, the second metaphor lands (2021-09-22):</p>
-<p>&gt; &quot;Product management is a featherless hat that is omnipresent yet indistinguishable if done properly.&quot;</p>
+<blockquote>&quot;Product management is a featherless hat that is omnipresent yet indistinguishable if done properly.&quot;</blockquote>
 <p>A feathered hat announces itself. A featherless hat does its job without claiming the room. PM work is omnipresent at integration-level: it touches story-level QA, PAT, business-requirement framing, stakeholder alignment. But when done properly, the output is a working product that foregrounds no individual contributor. Engineers ship code. Designers ship UI. PM ships integration  -  and integration disappears when it works. Two days later, Agam adds the counterbalance: &quot;I truly believe it's near impossible to hide your performance. If you're good at it, no amount of politics will hold you back.&quot; The artifact is invisible; the track record compounds. The hat is featherless, not nonexistent.</p>
 <h3 id="2022-quantification">2022: quantification</h3>
 <p>Metaphors compress a feeling. What they leave unanswered is: what, exactly, is the PM doing all day?</p>
 <p>The 2022-06-03 post answers it in 37 words:</p>
-<p>&gt; &quot;Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'. That 1 is disruption. The rest, food.&quot;</p>
+<blockquote>&quot;Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'. That 1 is disruption. The rest, food.&quot;</blockquote>
 <p>This is the metaphor-stack's cognitive layer. Featherless-hat explained the output (invisible). Parenting explained the emotional posture (protective refusal). 99/1 explains the cognitive work: discrimination at scale. The 99 should-we judgments are the grind that keeps the company fed. The 1 can-we is the rare disruption-grade opportunity that only materializes when the 99 were answered well.</p>
 <p>One month before, the umbrella post appears (2022-05-17, 78 reactions):</p>
-<p>&gt; &quot;Just because you open an umbrella when it's raining does not mean it will rain whenever you open the umbrella. Not everything can be explained by your data. Identify what can be, and build accordingly.&quot;</p>
+<blockquote>&quot;Just because you open an umbrella when it's raining does not mean it will rain whenever you open the umbrella. Not everything can be explained by your data. Identify what can be, and build accordingly.&quot;</blockquote>
 <p>Data literacy is not the belief that data explains everything. It is the discipline of knowing which questions data can answer and which ones it cannot  -  then building against the first category without letting the second category leak in. The 99 should-we judgments are answered with data AND taste. Neither alone is enough.</p>
 <h3 id="2024-the-craft-layers-deepen">2024: the craft layers deepen</h3>
 <p>Two beliefs crystallize during the LinkedIn Collab Articles badge-grind (late 2023 to early 2024), where Agam competed for Top Voice PM by writing at maximum technical compression.</p>
 <p>On NFRs (2024-03-08):</p>
-<p>&gt; &quot;Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards.&quot;</p>
+<blockquote>&quot;Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards.&quot;</blockquote>
 <p>Non-functional requirements are the dominant failure mode. Performance, scalability, security, ease of use: not afterthoughts delegated to QA. They are the specification layer where most products fail. Feature completeness is table stakes. When uptime holds and latency is invisible, no one credits the PM. When any fails, every user notices. This is featherless-hat work operating at the requirement layer. (<code>belief.non-functional-reqs-are-dominant-failure-mode</code>)</p>
 <p>On design thinking (2024-05-24):</p>
-<p>&gt; &quot;Don't confuse design thinking with making UI/UX first. It is the process of aligning stakeholders and gathering diverse feedback. In the context of AI, I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch and experience first hand.&quot;</p>
+<blockquote>&quot;Don't confuse design thinking with making UI/UX first. It is the process of aligning stakeholders and gathering diverse feedback. In the context of AI, I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch and experience first hand.&quot;</blockquote>
 <p>Design thinking in Agam's practice is not an aesthetic process. It is a speed tool. The faster you align stakeholders on a shared mental model, the faster you build the right thing. The paper wireframe and the model-comparison notebook are both the same move: make something touchable before committing. The belief is downstream of BML (build-measure-learn, 2016 origin)  -  iteration loops are most efficient when the first build is aimed correctly.</p>
 <h3 id="2025-taste-as-declared-craft-axis">2025: taste as declared craft-axis</h3>
 <p>The anti-customization post (2025-12-04) is the clearest first-person expression of PM taste as a held, personal, costly commitment:</p>
-<p>&gt; &quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live.&quot;</p>
+<blockquote>&quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live.&quot;</blockquote>
 <p>Note the shift in register from 2021-22. The earlier metaphors described PM work from the outside. This post describes it from the inside: a battle with the self. &quot;Super customizable&quot; is in scare quotes because that is what sells in the meeting room. The taste is the thing that refuses it anyway. Each customization setting in a PRD is a design decision deferred to the user  -  and a pre-paid mortgage on every future deployment. Anti-customization is the 99/1 ratio made personal: one of the 99 should-we questions answered with maximum conviction.</p>
 <p>Scope: this belief is enterprise-rooted. The economic argument (six months of implementation, an implementation partner, hundreds of training documents) is shaped by enterprise deployment cycles and foundation-model coupling. I have not tested this conviction against consumer products where the cost structure differs. (Cross-link: <a href="/wiki/spec-first-taste/"><code>spec-first-taste</code></a> for the enterprise scope framing.)</p>
 <h3 id="the-meta-belief-in-practice">The meta-belief in practice</h3>
@@ -205,7 +209,7 @@
 <p><strong>Align before you build.</strong> The paper wireframe is not a mockup. It is a shared-understanding artifact. The jupyter notebook is not output. It is model-selection evidence stakeholders can react to. Design thinking as a speed tool means: catch misalignment before it compounds.</p>
 <p><strong>Ship with conviction, not configurability.</strong> Products with no settings pane ship a PM's decided stance. Products with 47 preference toggles ship a PM's inability to decide.</p>
 <hr>
-<details class="evidence-block"><summary>Evidence (12 dated rows - click to expand)</summary>
+<details class="evidence-block"><summary>Evidence (11 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Belief evidenced</th><th>Notes</th></tr></thead>
 <tbody>

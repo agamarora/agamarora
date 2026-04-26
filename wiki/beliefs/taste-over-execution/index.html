@@ -111,6 +111,10 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
+
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
   details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
@@ -152,7 +156,7 @@
 
 <main class="page">
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/">beliefs</a><span class="sep">/</span><a href="/wiki/spec-first-taste/">Spec first, taste always</a><span class="sep">/</span><span>Taste over Execution</span>
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>beliefs</span><span class="sep">/</span><a href="/wiki/spec-first-taste/">Spec first, taste always</a><span class="sep">/</span><span>Taste over Execution</span>
   </nav>
 
   <article role="main">

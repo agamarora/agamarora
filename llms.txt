@@ -34,7 +34,7 @@ The wiki is the source layer; /enter is the playback layer. Every theme page has
 - [Enterprise AI reality](https://agamarora.com/wiki/enterprise-ai-reality/): roughly 80% of enterprise AI experiments don't reach production
 - [Second brain](https://agamarora.com/wiki/second-brain/): personal context layer for AI sessions, hobbyist scope, Karpathy-inspired
 - [Spec first, taste always](https://agamarora.com/wiki/spec-first-taste/): Spec > Sprint, Taste > Execution, Context > Prompt
-- [Career reflection](https://agamarora.com/wiki/career-reflection/): IC path, AI-era leverage, learn concepts not tools, help market flourish
+- [Career reflection](https://agamarora.com/wiki/career-reflection/): IC path, AI-era multiplier on the IC, learn concepts not tools, help market flourish
 - [LinkedIn as instrument](https://agamarora.com/wiki/linkedin-as-instrument/): platform to be gamed productively, posting IS the thinking
 - [Personal projects](https://agamarora.com/wiki/personal-projects-tinkering/): ship it or it doesn't exist; the prototype is the argument
 - [Voice doc](https://agamarora.com/wiki/voice/): how I write - banned LLM-isms, real signatures, four registers

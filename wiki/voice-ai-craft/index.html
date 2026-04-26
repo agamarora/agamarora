@@ -111,6 +111,10 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
+
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
   details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
@@ -166,7 +170,7 @@
 <p>The belief formed on the job, not on LinkedIn.</p>
 <p>The public corpus has one pre-platform voice mention: a March 2024 post observing that voice-as-input would help drafting LinkedIn Collaborative Article responses (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code>). It is a product-feature observation, not hands-on experimentation. It establishes that voice-as-interface was on the radar early in E4, but carries no production learning.</p>
 <p>The craft knowledge accumulated during the enterprise voice AI platform role starting July 2024, in a period with no corresponding LinkedIn post cadence on the topic. That is the field-data window: building, demoing, shipping at enterprise scale, and not writing about it publicly. When a direct production-stack survey asked in September 2025, the reply was specific:</p>
-<p>&gt; &quot;Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric  -  business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls).&quot; &gt;  -  2025-09-29 comment-thread reply (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code>)</p>
+<blockquote>&quot;Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric  -  business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls).&quot;  -  2025-09-29 comment-thread reply (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code>)</blockquote>
 <p>That reply contains more voice-AI engineering specificity than all prior public LinkedIn output combined. Three principles come out of it cleanly.</p>
 <hr>
 <h2 id="what-it-implies">What it implies</h2>

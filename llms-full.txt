@@ -106,7 +106,7 @@ Theme one-liners:
 - Enterprise AI reality: roughly 80 percent of enterprise AI experiments don't reach production. Demos are not deployments.
 - Second brain: personal context layer for AI sessions. Hobbyist scope, Karpathy-inspired wiki version.
 - Spec first, taste always: Spec greater than Sprint, Taste greater than Execution, Context greater than Prompt.
-- Career reflection: IC path is legitimate. AI-era amplifies IC leverage. Learn concepts, not tools. Help the market flourish.
+- Career reflection: IC path is legitimate. AI-era amplifies what the IC can do. Learn concepts, not tools. Help the market flourish.
 - LinkedIn as instrument: platform to be gamed productively. Posting IS the thinking.
 - Personal projects: ship it or it doesn't exist. The prototype is the argument.
 

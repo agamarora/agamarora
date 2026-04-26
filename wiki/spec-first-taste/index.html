@@ -111,6 +111,10 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
+
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
   details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
@@ -159,7 +163,7 @@
 <h1 id="spec-first-taste-always-the-builder-trilogy">Spec first, taste always  -  the builder trilogy</h1>
 <h2 id="core-belief">Core belief</h2>
 <p>Three lines. One post. April 9, 2026:</p>
-<p>&gt; Spec &gt; Sprint &gt; Taste &gt; Execution &gt; Context &gt; Prompt</p>
+<blockquote>Spec &gt; Sprint Taste &gt; Execution Context &gt; Prompt</blockquote>
 <p>These are not three independent claims. They are three views of the same axiom across three layers: process, craft, and tooling. The composite statement: <strong>the load-bearing work has migrated from doing to deciding.</strong> In an era where AI commoditizes iteration, the constraint is no longer execution speed. It is taste  -  knowing what to build, what to ship, and what to refuse. When you have already specced every pixel, a generative tool gives you a worse version of what you already decided. The spec is the leverage. The model amplifies whatever you put in front of it.</p>
 <p>This is Agam's builder stance as of E4b. Not a PM methodology. A disposition.</p>
 <hr>
@@ -181,7 +185,7 @@
 <p>The underlying disposition across all three: refuse the fast path. Let the AI sprint at an under-spec'd build and you get noise. Ship a feature without deciding what the product is and you accumulate debt. Craft a clever prompt without curating the context layer and you are optimizing the wrong variable. Agam's builder stance is the systematic refusal of those defaults.</p>
 <p>Anti-customization scope: the belief applies to enterprise AI deployments. Six-month implementation cycles, training documents, foundation-model coupling are all enterprise-shaped. The economic argument has not been fully tested against consumer products where the cost structure differs. (Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a> for the full anti-customization belief with enterprise scope note; <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a> for the production-reality context.)</p>
 <hr>
-<details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
+<details class="evidence-block"><summary>Evidence (8 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Claim</th></tr></thead>
 <tbody>

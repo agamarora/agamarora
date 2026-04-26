@@ -111,6 +111,10 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
+
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
   details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
@@ -174,7 +178,7 @@
 <p><strong>On moats:</strong> three durable assets survive the 2/10 rate. Infrastructure: compute and serving substrate that scales with agents, not just chatbots. Talent: the small population of people who can build, fine-tune, and operate foundational AI systems; there are not many, and that scarcity compounds. Data: not raw corpus volume but the architecture underneath it. &quot;Having data is one thing; having AI-ready data is where the value lies.&quot; Data collection pipelines, transformation layers, continuous ingestion systems. Plant the seed today. What is NOT on the moats list: the model itself. Foundation-model capability runs on a rough 12-month commoditization cycle. GPT-4 cost went from $36 to $4 per million tokens in one year. A position built on &quot;we have a great model&quot; is a position that resets every release cycle.</p>
 <p><strong>On data specifically:</strong> data readiness is not a volume problem. An enterprise with a large historical corpus and no live pipeline is building on a decaying foundation. The relevant question is not &quot;how much data do we have?&quot; but &quot;how quickly can that data be collected, processed, and updated?&quot; Pipeline infrastructure is the hardest moat to replicate by spending money. That is why data ranks highest of the three.</p>
 <hr>
-<details class="evidence-block"><summary>Evidence (10 dated rows - click to expand)</summary>
+<details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>What it shows</th></tr></thead>
 <tbody>

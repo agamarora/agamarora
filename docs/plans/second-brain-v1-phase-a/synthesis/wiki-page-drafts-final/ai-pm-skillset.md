@@ -81,7 +81,7 @@ A subtler tension sits between this theme and agent-first. Agent-first, by 2026,
 
 3. **2023-03-14 · post**  -  "I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension." Manifesto post. THE crystallization moment. Six concrete use cases. `belief.ai-pm-skillset-table-stakes` anchor. [urn:li:activity:7041317366437163008]
 
-4. **2023-03-19 · post**  -  "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." PowerPoint + Excel analogy. `belief.ai-fluency-required`. [urn:li:activity:7042902...]
+4. **2023-03-19 · post**  -  "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software." PowerPoint + Excel analogy. `belief.ai-fluency-required`. [urn:li:activity:7043263140091899904]
 
 5. **2024-03-06 · Collab Article**  -  "Being technical is not about knowing a technology but using the technology... play with APIs when you are bored :)" Applied-not-certified fluency. `belief.learn-concepts-not-tools` intersection. Top 1-2% peer-voted surface. [urn:li:activity:7171171307559043072]
 
@@ -89,9 +89,9 @@ A subtler tension sits between this theme and agent-first. Agent-first, by 2026,
 
 7. **2024-05-24 · Collab Article**  -  "One thing that worked for me and continues to help me with the need for speed is design thinking. Don't confuse design thinking with making UI/UX first... I have a jupyter notebook where I try different models and a quick paper wireframe." `belief.design-thinking-as-speed-tool`. [urn:li:activity:7199797475379978240]
 
-8. **2024-07-04 · post**  -  "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager." Top Voice AI badge + AIonOS join. Fluency claim becomes operational title. [urn:li:activity:7214487...]
+8. **2024-07-04 · post**  -  "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager." Top Voice AI badge + AIonOS join. Fluency claim becomes operational title. [urn:li:activity:7214487241681772545]
 
-9. **2025-06-20 · post**  -  "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." Agent-first manifesto. AI-PM table-stakes assumed floor; new differentiation moves up the stack. [urn:li:activity:7341662...]
+9. **2025-06-20 · post**  -  "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." Agent-first manifesto. AI-PM table-stakes assumed floor; new differentiation moves up the stack. [urn:li:activity:7341662205257433088]
 
 10. **2026-04-09 · post**  -  "When you have already spent hours speccing every pixel... a generative tool gives you a worse version of what you have already decided. Spec > Sprint / Taste > Execution / Context > Prompt." The trilogy. Application-layer AI-PM has matured to spec-and-taste craft. [urn:li:activity:7447981735901949952]
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T04:44:19.711Z",
+  "generated_at": "2026-04-26T05:11:21.305Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1427,9 +1427,9 @@
     },
     {
       "type": "Post",
-      "id": "post.urn-li-activity-7042902",
-      "urn": "urn:li:activity:7042902",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7042902/",
+      "id": "post.urn-li-activity-7043263140091899904",
+      "urn": "urn:li:activity:7043263140091899904",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7043263140091899904/",
       "label": "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, Ch",
       "date": "2023-03-19",
       "snippet": "Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software."
@@ -1463,21 +1463,12 @@
     },
     {
       "type": "Post",
-      "id": "post.urn-li-activity-7214487",
-      "urn": "urn:li:activity:7214487",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7214487/",
+      "id": "post.urn-li-activity-7214487241681772545",
+      "urn": "urn:li:activity:7214487241681772545",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7214487241681772545/",
       "label": "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as ",
       "date": "2024-07-04",
       "snippet": "I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7341662",
-      "urn": "urn:li:activity:7341662",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7341662/",
-      "label": "start thinking 'agent first'. Not just from a building lens but from a serving l",
-      "date": "2025-06-20",
-      "snippet": "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
     },
     {
       "type": "Post",
@@ -1550,15 +1541,6 @@
       "label": "The public corpus has one pre-platform voice mention: a March 2024 post observin",
       "date": "",
       "snippet": "The public corpus has one pre-platform voice mention: a March 2024 post observing that voice-as-input would help draftin"
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7214487241681772545",
-      "urn": "urn:li:activity:7214487241681772545",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7214487241681772545/",
-      "label": "2024-07-04 · `urn:li:activity:7214487241681772545`**",
-      "date": "2024-07-04",
-      "snippet": "2024-07-04 · `urn:li:activity:7214487241681772545`**"
     },
     {
       "type": "Post",
@@ -2283,7 +2265,7 @@
     {
       "from": "theme.ai-pm-skillset",
       "rel": "cites-post",
-      "to": "post.urn-li-activity-7042902"
+      "to": "post.urn-li-activity-7043263140091899904"
     },
     {
       "from": "theme.ai-pm-skillset",
@@ -2303,12 +2285,12 @@
     {
       "from": "theme.ai-pm-skillset",
       "rel": "cites-post",
-      "to": "post.urn-li-activity-7214487"
+      "to": "post.urn-li-activity-7214487241681772545"
     },
     {
       "from": "theme.ai-pm-skillset",
       "rel": "cites-post",
-      "to": "post.urn-li-activity-7341662"
+      "to": "post.urn-li-activity-7341662205257433088"
     },
     {
       "from": "theme.ai-pm-skillset",
@@ -2613,7 +2595,7 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 38,
+    "posts": 36,
     "edges": {
       "total": 167,
       "by_relation": {
@@ -2628,6 +2610,6 @@
         "cites-post": 56
       }
     },
-    "nodes_total": 190
+    "nodes_total": 188
   }
 }

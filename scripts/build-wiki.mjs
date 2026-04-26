@@ -229,6 +229,18 @@ function blockMd(body) {
       continue;
     }
 
+    // Blockquote: `> text` lines, possibly multi-line. Renders as semantic
+    // <blockquote>. Used heavily by /wiki/quotes/.
+    if (/^>\s?/.test(line)) {
+      const items = [];
+      while (i < lines.length && /^>\s?/.test(lines[i])) {
+        items.push(lines[i].replace(/^>\s?/, ""));
+        i++;
+      }
+      out.push(`<blockquote>${inlineMd(items.join(" "))}</blockquote>`);
+      continue;
+    }
+
     // Unordered list
     if (/^\s*[-*]\s+/.test(line)) {
       const items = [];
@@ -356,6 +368,10 @@ const SHARED_HEAD_STYLES = `
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Blockquotes (used heavily on /wiki/quotes/). */
+  article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
+  article blockquote strong { color: var(--accent); }
 
   /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
   details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
@@ -566,10 +582,16 @@ function stripDraftTraces(body) {
 // by default. Operates on the HTML output of blockMd. Looks for <h2 ...>Evidence</h2>
 // and wraps from there until the next <h2>, <hr>, or end of article.
 function collapseEvidenceHtml(html) {
-  // Match the evidence h2 plus everything until the next h2/hr or end
   const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
   return html.replace(pattern, (_, heading, body) => {
-    return `<details class="evidence-block"><summary>Evidence (${(body.match(/<tr>/g) || body.match(/<li>/g) || []).length} dated ${body.includes('<table') ? 'rows' : 'items'} - click to expand)</summary>${body}</details>`;
+    // Count data rows only - <tbody> contents for tables, <li> count for bullets.
+    // Avoids the off-by-one from including <thead><tr>.
+    const tbodyMatch = body.match(/<tbody>([\s\S]*?)<\/tbody>/);
+    const rowCount = tbodyMatch
+      ? (tbodyMatch[1].match(/<tr>/g) || []).length
+      : (body.match(/<li>/g) || []).length;
+    const noun = body.includes("<table") ? "rows" : "items";
+    return `<details class="evidence-block"><summary>Evidence (${rowCount} dated ${noun} - click to expand)</summary>${body}</details>`;
   });
 }
 
@@ -639,8 +661,10 @@ function buildBeliefPage(slug, src) {
     description: `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
     canonical: `https://agamarora.com/wiki/beliefs/${slug}/`,
     schemaType: "Article",
+    // 'beliefs' renders as a non-clickable span until /wiki/beliefs/ landing
+    // ships in C-struct. Linking it to /wiki/ silently was misleading.
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/">beliefs</a><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>beliefs</span><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
   </nav>`,
     articleHtml,
     navHtml: parentTheme
@@ -812,6 +836,7 @@ function buildGraphPage() {
 <link rel="canonical" href="https://agamarora.com/wiki/graph/">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="manifest" href="/site.webmanifest">
 
 <style>${SHARED_HEAD_STYLES}
   .graph-page { max-width: 1200px; }

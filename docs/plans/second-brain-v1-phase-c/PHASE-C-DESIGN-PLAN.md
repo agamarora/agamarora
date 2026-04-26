@@ -131,16 +131,39 @@ Per user feedback this session:
 - Run `/review` + `/design-review` after every 2-3 steps, not just at the end.
 - If the plan needs revision (new info, changed direction), edit THIS doc first, get user sign-off, then code.
 
-## Where this stops and asks the user
+## Decisions locked 2026-04-26
 
-This plan locks the **structural shape** but leaves three taste calls open:
+User taste calls received:
 
-- **D1 - Voice approach for themes + beliefs:** P1a (full reauthor) vs P1b (voice intro + collapsed deep-dive) vs P1c (replace with distillation).
-- **D2 - Graph viz target:** P2a (tighter vis-network) for v1 + P2c (constellation) for v2, OR jump straight to P2c?
-- **D3 - Sequencing:** mechanical-fixes first vs voice-pass first vs graph viz first? The plan above proposes mechanical → structural → voice → graph, but the user may want the visible-impact pieces (graph + voice) earlier.
+- **D1 - Voice approach: P1a Full reauthor in R1 voice.** Each draft rewritten from scratch in Agam's actual voice (declarative thesis, colon rhythm, hyphen-with-spaces aside, short paragraphs, no hedging). Drop analytical scaffolding entirely. Re-use synthesis evidence to ground claims, don't show the work. Highest fidelity. Effort: ~10-12hr via subagent fan-out across multiple sessions.
+- **D2 - Graph viz target: P2c hand-designed constellation.** Drop the vis-network force layout entirely. Build a curated SVG constellation: 12 themes in a deliberate ring, click-to-expand belief clusters per theme, posts as small dots near parent. Always-centered, scroll-friendly, visually appealing. ~6-8hr.
+- **D3 - Sequencing: mechanical → structural → voice → graph (plan default).** Multiple checkpoints per step. Multi-session persistence via STATUS.md. Frequent commits.
 
-Pause for user direction on D1/D2/D3 before C-mech kickoff.
+## Locked execution sequence
+
+| Step | Scope | Effort | Sub-checkpoints | Self-eval gate |
+|---|---|---|---|---|
+| **C-mech** | All mechanical fixes from /review + /design-review in one batch | 30-45 min | None (single batch) | All counts match, breadcrumb resolves or non-clickable, blockquotes semantic, manifest links present, 404 center fixed, llms.txt clean of banned LLM-isms |
+| **C-struct** | Page-purpose layer (one-line hook under h1, cross-link footers, /wiki/beliefs/ landing index) | 1-2 hr | CP-1 hooks added; CP-2 footers added; CP-3 beliefs index | Every page has hook + 4-6 cross-links. Belief breadcrumb resolves to a real index page. |
+| **C-voice-themes** | Full reauthor of 12 theme + 1 root pages in R1 voice via subagent fan-out | 4-5 hr | CP-1 reference pass on agent-first by hand; CP-2 batch of 4 (subagent); CP-3 batch of 4; CP-4 batch of 4; CP-5 final root | Each batch reviewed against voice-spec before merge. Voice fidelity gate B+ minimum. |
+| **C-voice-beliefs** | Full reauthor of 19 belief pages | 5-6 hr | CP-1 reference belief by hand; CP-2 through CP-5 batches of 4-5 | Voice fidelity gate B+ minimum. |
+| **C-graph** | P2c hand-designed constellation viz | 6-8 hr | CP-1 SVG layout sketch; CP-2 theme ring + click handlers; CP-3 belief cluster expand/collapse; CP-4 post dot rendering; CP-5 mobile fallback list view; CP-6 final polish + a11y | Manual UX test desktop + mobile. Always-centered. No scroll capture. Looks intentional, not auto-laid. |
+| **C-final** | /design-review + /review on full wiki, STATUS update CHECKPOINT 23 (Phase C complete) | 1-2 hr | CP-1 design-review pass; CP-2 review pass; CP-3 fixes; CP-4 STATUS commit | Both gates clean. Phase D entry conditions met. |
+
+**Total: ~17-25hr.** Will span multiple sessions. STATUS.md tracks current step + sub-checkpoint after every commit so any new session can resume immediately.
+
+## Multi-session persistence binding
+
+After every commit:
+1. Update STATUS.md with current step + sub-checkpoint reached
+2. Push to origin/main (cross-machine handoff)
+3. Note any blocker / open question / decision needed in STATUS
+
+Before any new session start:
+1. Read STATUS.md last entry
+2. Read this plan doc
+3. Resume at the named sub-checkpoint, do not start from scratch
 
 ---
 
-*Drafted 2026-04-26 in response to user feedback. Subject to change once user replies on D1-D3.*
+*Drafted 2026-04-26 in response to user feedback. Updated 2026-04-26 with locked D1/D2/D3 decisions. C-mech kicks off immediately.*

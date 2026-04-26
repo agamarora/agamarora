@@ -369,6 +369,13 @@ function scanDraftsForUrns(dir, parentKind /* 'theme' | 'belief' */) {
       const urnMatch = line.match(/urn:li:activity:(\d+)/);
       if (!urnMatch) continue;
       const urn = `urn:li:activity:${urnMatch[1]}`;
+      // Real LinkedIn activity URNs are 18-20 digits. Anything shorter is a
+      // truncated draft entry like 'urn:li:activity:7341662...' - those
+      // produce ghost Post nodes with broken permalinks.
+      if (urnMatch[1].length < 18) {
+        console.warn(`[build-kg] WARNING: truncated URN in ${dir}/${f}: ${urn}`);
+        continue;
+      }
       if (seenInThisFile.has(urn)) continue;
       seenInThisFile.add(urn);
       const id = `post.${urn.replace(/:/g, "-")}`;

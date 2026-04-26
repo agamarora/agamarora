@@ -11,6 +11,7 @@
 <link rel="canonical" href="https://agamarora.com/">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="manifest" href="/site.webmanifest">
 
 <style>
   @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
@@ -32,7 +33,7 @@
     --radius-sm:4px; --radius-md:8px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100dvh;display:flex;align-items:center;justify-content:center;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.55;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding-top:clamp(52px,6vw,64px);}
   ::selection{background:var(--accent);color:var(--bg);}
 
   header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
