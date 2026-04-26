@@ -98,7 +98,7 @@
     justify-content: flex-start;
     align-items: center;
   }
-  .icon-bar { display: inline-flex; align-items: center; gap: 0; }
+  .icon-bar { display: inline-flex; align-items: center; }
   .icon-bar a {
     color: var(--text-dim);
     display: inline-flex; align-items: center; justify-content: center;
@@ -108,28 +108,12 @@
     text-decoration: none;
   }
   .icon-bar a:hover { color: var(--accent); }
-  .icon-bar .sep {
-    width: 1px;
-    height: 1.1em;
-    background: var(--border);
-    margin: 0 clamp(0.25rem, 0.6vw, 0.5rem);
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .icon-bar a.nav-label {
-    width: auto; height: 2em;
-    padding: 0 clamp(0.4rem, 0.8vw, 0.7rem);
+  .icon-bar a.nav-icon {
     font-family: var(--mono);
-    font-size: clamp(0.66rem, 0.78vw, 0.78rem);
-    font-weight: 400;
-    letter-spacing: 0.14em;
+    font-size: clamp(0.78rem, 0.95vw, 0.92rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    line-height: 1;
-  }
-  @media (max-width: 480px) {
-    .icon-bar a.nav-label { font-size: 0.6rem; padding: 0 0.32rem; letter-spacing: 0.08em; }
-    .icon-bar .sep { margin: 0 0.18rem; }
-    .icon-bar a { width: 1.7em; height: 1.7em; }
   }
 
   /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
@@ -342,10 +326,7 @@
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube">
       <svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg>
     </a>
-    <span class="sep" aria-hidden="true"></span>
-    <a class="nav-label" href="/resume">CV</a>
-    <a class="nav-label" href="/wiki/">Wiki</a>
-    <a class="nav-label" href="/lab">Lab</a>
+    <a class="nav-icon" href="/resume" aria-label="CV">CV</a>
     <a href="/" aria-label="Home">
       <svg class="icon" aria-hidden="true"><use href="#i-house"/></svg>
     </a>
