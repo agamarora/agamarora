@@ -12,6 +12,9 @@ related_beliefs:
   - belief.taste-over-execution
   - belief.pm-is-99-should-we-1-can-we
   - belief.breadth-needs-depth
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

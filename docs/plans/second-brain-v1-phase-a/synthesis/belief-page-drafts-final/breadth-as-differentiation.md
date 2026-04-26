@@ -9,6 +9,9 @@ related_beliefs:
   - belief.learn-concepts-not-tools
   - belief.never-be-smartest-in-room
   - belief.ic-path-legitimacy
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

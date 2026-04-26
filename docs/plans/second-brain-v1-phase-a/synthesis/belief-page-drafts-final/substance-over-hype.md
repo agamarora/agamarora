@@ -9,6 +9,9 @@ related_beliefs:
   - belief.agent-first
   - belief.spec-over-sprint
   - belief.anti-customization
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: root
 length_target: 400-800w
 status: draft-task-h

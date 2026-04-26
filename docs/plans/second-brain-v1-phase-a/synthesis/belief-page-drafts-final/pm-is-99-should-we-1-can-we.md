@@ -11,6 +11,9 @@ related_beliefs:
   - belief.pm-is-featherless-hat
   - belief.anti-customization
   - belief.idea-validation-3-pillars
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

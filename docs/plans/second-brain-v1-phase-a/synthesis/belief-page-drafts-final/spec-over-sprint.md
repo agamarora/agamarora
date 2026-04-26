@@ -10,6 +10,13 @@ related_beliefs:
   - belief.anti-customization
   - belief.ship-the-prototype
   - belief.substance-over-hype
+supersedes:
+  - ship-fast
+conditioned_by:
+  - substance-over-hype
+holds_with:
+  - taste-over-execution
+  - context-over-prompt
 tier: 1
 length_target: 400-800w
 status: draft-task-h

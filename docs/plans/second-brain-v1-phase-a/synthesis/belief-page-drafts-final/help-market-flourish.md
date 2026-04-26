@@ -9,6 +9,10 @@ related_beliefs:
   - belief.ic-path-legitimacy
   - belief.linkedin-as-instrumental-platform
   - belief.substance-over-hype
+supersedes:
+  - dominate-dont-compete
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

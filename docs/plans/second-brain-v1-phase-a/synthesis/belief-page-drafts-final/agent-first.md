@@ -11,47 +11,43 @@ related_beliefs:
   - belief.reversibility-over-consequences
   - belief.agent-layer-is-threat-surface
   - belief.substance-over-hype
+supersedes:
+  - horizontal-ai-will-scale
+  - prompt-as-primary-interface
+conditioned_by:
+  - substance-over-hype
+holds_with:
+  - enterprise-ai-production-reality
 tier: 1
-length_target: 600-800w
-status: c-voice-beliefs-r1-cp1-reference
+length_target: 500-700w
+status: c-voice-beliefs-r1-cp1-reference-qa
 voice_register: 1 (free-form post-essay)
+shape: qa-card-d5
 ---
 
 # Agent-first thesis
 
-This is the central belief that gives the [agent-first theme](/wiki/agent-first/) its name. It says: platforms that cannot talk to autonomous agents are already behind. The serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation lives. You are likely here from the parent theme and want the bare claim plus the supersession edges. Two minutes is enough.
+## The question
 
-## The claim
+What does Agam mean by "agent-first," and is this just another AI buzzword?
 
-Verbatim from the June 20, 2025 manifesto: "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
+## The answer
 
-The strongest single move in that post is the parenthetical. "(and maybe first)." Agents are users too, and maybe first. Not a 2030 prediction. A 2026 claim. One enterprise voice deployment in the corpus is already running 0% automation through UI, 100% through MCP and APIs.
+Agent-first is one stance from a 2025 manifesto post: platforms that cannot talk to autonomous agents are already behind, and the serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation lives. The strongest single line in that post is the parenthetical: "agents are users too, and maybe first."
 
-Three things follow at the craft layer. Each is a separate belief in this graph, not a sub-claim of this one.
+Verbatim from the June 20, 2025 post: "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
 
-- Prompts are plumbing, not user-facing UX. See [prompts as engineering primitive](/wiki/beliefs/prompts-as-engineering-primitive/).
-- Context is the lever, not the prompt. See [context over prompt](/wiki/beliefs/context-over-prompt/).
-- Reversibility comes before consequences. The application layer is where safety lives. See [application-layer-is-where-safety-lives](/wiki/beliefs/application-layer-is-where-safety-lives/).
+This is not a 2030 prediction. It is a 2026 claim. One enterprise voice deployment in the public corpus is already running 0% automation through UI, 100% through MCP and APIs.
+
+The intuition was early. The vocabulary lagged. March 2023, on ChatGPT Plugins: "This will open up a new ecosystem in itself. The very first AI marketplace." The instinct read the LLM-plus-tools-plus-actions surface as the actual product, not the LLM alone. Eighteen months of enterprise field work followed. June 2024: multi-agent systems "not a question of if, but when." September 2024: demo-versus-production "is a different beast" with nine takeaways. December 2024: the kill-prompting post named the broken layer with a verb that overshot the actual claim.
+
+The crystallization landed in one June 20, 2025 post. Three moves at once: horizontal AI declared dead, agentic AI named as the new direction, the serving lens introduced as the differentiation move. After that post, agent-first stopped being an argument in the corpus and started behaving like a flat assumption. By July 2025: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Prompts re-admitted as plumbing. By April 2026 the whole stance had compressed into three lines: Spec over Sprint, Taste over Execution, Context over Prompt. Craft posture, not strategy posture.
+
+What got superseded, by direct declaration on 2025-06-20: horizontal-AI-will-scale and prompt-as-primary-interface. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") sits on the pre-hinge side of the same arc. It stayed live. The supersession is public.
+
+What holds simultaneously: enterprise AI reality. Roughly 80% of enterprise AI experiments do not reach production. Both claims are true at once. Agent-first is the framework for being in the 20% that ships. Direction versus current rate. Different scopes.
 
 A team that says "agent-first" but ships prompt-as-UX, context-by-accident, and irreversible-action-by-default has not absorbed the belief. They have adopted the language.
-
-## How the belief formed
-
-The intuition was early. The vocabulary lagged.
-
-March 2023: "This will open up a new ecosystem in itself. The very first AI marketplace." A ChatGPT Plugins post. The instinct read the LLM-plus-tools-plus-actions surface as the actual product, not the LLM alone. A marketplace-economics frame carried over from V2 Games - a database thinker's instinct applied to AI infrastructure.
-
-Eighteen months of enterprise field work followed. June 2024: multi-agent systems "not a question of if, but when." September 2024: demo-versus-production "is a different beast" with nine takeaways. December 2024: the kill-prompting post named the broken layer with a verb that overshot the actual claim.
-
-The crystallization landed in one June 20, 2025 post. Three moves at once: horizontal AI declared dead ("chatbots and copilots hit a wall without real domain depth"), agentic AI named as the new direction, the serving lens introduced as the differentiation move. After that post, agent-first stopped being an argument in the corpus and started behaving like a flat assumption. By July 2025 the prompts layer was re-admitted as plumbing: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." By April 2026 the whole stance had compressed into three lines: Spec over Sprint, Taste over Execution, Context over Prompt.
-
-## What it supersedes, what conditions it, what it holds with
-
-What got superseded, by direct declaration on 2025-06-20: horizontal-AI-will-scale, single-model-as-substrate, prompt-as-primary-interface. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") sits on the pre-hinge side of the same arc. It stayed live. The supersession is public.
-
-What conditions this belief: [substance over hype](/wiki/root.substance-over-hype/). Agent-first is the substance test applied to AI architecture - agents as substrate, not chatbots in a UX skin. Same disposition that called blockchain a database innovation in 2018.
-
-What holds simultaneously: [enterprise AI reality](/wiki/enterprise-ai-reality/). Roughly 80% of enterprise AI experiments do not reach production. Both claims are true at once. Agent-first is the framework for being in the 20% that ships. Direction versus current rate. Different scopes.
 
 ## Where to go from here
 

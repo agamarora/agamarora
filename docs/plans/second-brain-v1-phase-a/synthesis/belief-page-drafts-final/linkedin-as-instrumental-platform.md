@@ -5,6 +5,9 @@ title: LinkedIn as instrumental platform
 one_line: "Posting closes the build-teach-learn loop - LinkedIn as instrument, not stage."
 parent_theme: linkedin-as-instrument
 related_beliefs: [substance-over-hype, ship-the-prototype, strong-opinion-about-no-strong-opinions]
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

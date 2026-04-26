@@ -10,6 +10,9 @@ related_beliefs:
   - belief.self-instrumentation
   - belief.ai-fluency-required
   - belief.ship-the-prototype
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

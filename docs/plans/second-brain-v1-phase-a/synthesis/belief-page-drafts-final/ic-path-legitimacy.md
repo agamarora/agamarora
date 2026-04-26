@@ -11,6 +11,10 @@ related_beliefs:
   - belief.pm-is-99-should-we-1-can-we
   - belief.taste-over-execution
   - belief.two-roles-ahead-framing
+supersedes:
+  - people-management-is-endgame
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

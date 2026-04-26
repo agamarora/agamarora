@@ -11,6 +11,9 @@ related_beliefs:
   - belief.ai-pm-skillset-table-stakes
   - belief.taste-over-execution
   - belief.spec-over-sprint
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

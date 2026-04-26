@@ -370,6 +370,15 @@ const SHARED_HEAD_STYLES = `
   /* Page-purpose hook: one-line "what is this for?" rendered directly under h1. */
   .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
 
+  /* Belief chip strip: graph-position metadata (parent theme, supersedes, conditions, holds-with) under h1. */
+  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:center;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-6);}
+  .belief-chips .group{display:inline-flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;}
+  .belief-chips .group-label{color:var(--accent);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.08em;font-weight:500;}
+  .belief-chips .chip{color:var(--text);text-decoration:none;border-bottom:1px dashed var(--border-hover);padding-bottom:1px;transition:color 0.2s,border-color 0.2s;}
+  .belief-chips .chip:hover{color:var(--accent);border-color:var(--accent);}
+  .belief-chips .chip.dead{color:var(--text-dim);opacity:0.65;border-bottom:1px dotted var(--border);cursor:help;}
+  .belief-chips .sep-dot{opacity:0.45;}
+
   /* Related cross-links footer: rendered above theme-nav. */
   .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
   .related-links h2{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin:0 0 var(--space-5) 0;}
@@ -669,6 +678,61 @@ function injectPagePurpose(articleHtml, oneLine) {
   return articleHtml.replace(/<\/h1>/, `</h1>${purpose}`);
 }
 
+// Belief chip strip: graph-position metadata under h1. Reads parent_theme +
+// supersedes + conditioned_by + holds_with frontmatter, resolves each slug to
+// a renderable link if a wiki page exists, otherwise shows it as a dead chip
+// (the slug is a graph node without a page - T2/T3 belief or pre-supersession
+// state). The chip strip carries pre-req context that orientation prose used
+// to carry, so a cold reader (or an agent) gets graph position in <1 second.
+function injectBeliefChips(articleHtml, meta) {
+  const groups = [];
+
+  const parent = (meta.parent_theme || "").trim();
+  if (parent) {
+    groups.push({ label: "Theme", items: [{ slug: parent, kind: "theme" }] });
+  }
+
+  const addGroup = (label, slugs, kind) => {
+    const items = normList(slugs)
+      .map((s) => String(s).replace(/^belief\./, "").trim())
+      .filter(Boolean);
+    if (items.length) {
+      groups.push({ label, items: items.map((slug) => ({ slug, kind })) });
+    }
+  };
+  addGroup("Supersedes", meta.supersedes, "belief");
+  addGroup("Conditions", meta.conditioned_by, "either");
+  addGroup("Holds with", meta.holds_with, "belief");
+
+  if (groups.length === 0) return articleHtml;
+
+  const renderItem = ({ slug, kind }) => {
+    const themeHit = HAS_PAGE.themes.has(slug);
+    const beliefHit = HAS_PAGE.beliefs.has(slug);
+    if (kind === "theme" && themeHit) {
+      return `<a class="chip" href="/wiki/${slug}/">${escHtml(NAV_TITLES[slug] || slug)}</a>`;
+    }
+    if (kind === "belief" && beliefHit) {
+      return `<a class="chip" href="/wiki/beliefs/${slug}/">${escHtml(slug)}</a>`;
+    }
+    if (kind === "either") {
+      if (themeHit) return `<a class="chip" href="/wiki/${slug}/">${escHtml(NAV_TITLES[slug] || slug)}</a>`;
+      if (beliefHit) return `<a class="chip" href="/wiki/beliefs/${slug}/">${escHtml(slug)}</a>`;
+    }
+    return `<span class="chip dead" title="graph node, no page">${escHtml(slug)}</span>`;
+  };
+
+  const groupHtml = groups
+    .map(
+      (g) =>
+        `<span class="group"><span class="group-label">${escHtml(g.label)}:</span> ${g.items.map(renderItem).join(", ")}</span>`
+    )
+    .join('<span class="sep-dot">·</span>');
+
+  const chipStrip = `\n<div class="belief-chips" aria-label="Graph position">${groupHtml}</div>`;
+  return articleHtml.replace(/<\/h1>/, `</h1>${chipStrip}`);
+}
+
 // Pick "next" theme slug in NAV_ORDER, wrapping past root for variety.
 function siblingTheme(parentTheme) {
   const idx = NAV_ORDER.indexOf(parentTheme);
@@ -769,6 +833,7 @@ function buildBeliefPage(slug, src) {
   let articleHtml = blockMd(trimmed.trim());
   articleHtml = collapseEvidenceHtml(articleHtml);
   articleHtml = injectPagePurpose(articleHtml, m.oneLine);
+  articleHtml = injectBeliefChips(articleHtml, meta);
 
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme

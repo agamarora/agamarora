@@ -139,6 +139,7 @@ User taste calls received:
 - **D2 - Graph viz target: P2c hand-designed constellation.** Drop the vis-network force layout entirely. Build a curated SVG constellation: 12 themes in a deliberate ring, click-to-expand belief clusters per theme, posts as small dots near parent. See §D2-graph-UX-binding below for the binding UX invariants (scroll isolation, always-centered, narrative entry, anti-drift floor, mobile fallback). ~6-8hr.
 - **D3 - Sequencing: mechanical → structural → voice → graph (plan default).** Multiple checkpoints per step. Multi-session persistence via STATUS.md. Frequent commits. Graph stays last per user taste-call 2026-04-26: voice work compounds quality on already-readable pages, but graph UX is a usability gate that bypasses voice value if visitors bounce. Despite that ordering logic, sequence stays mechanical → structural → voice → graph because voice batches will surface narrative patterns that the graph "tour" path needs to encode (graph entry tour cites pages by their cold-reader open lines).
 - **D4 - Frequent checkin cadence (binding 2026-04-26).** Every 2-4 page rewrites: stop, show user 1 sample page, take taste-call, apply learnings to remaining batches before continuing. /design-review after every C-step (not deferred to C-final). Self-eval lives in commit message: what optimized for, what tradeoffs.
+- **D5 - Belief page shape: Q&A card + auto-rendered chip strip (locked 2026-04-26 mid-CP-3 taste-call).** After CP-1 (hand-author belief.agent-first) and CP-2 (sonnet subagent belief.context-over-prompt) shipped, user surfaced fundamental question: belief pages are not for human-direct landing; they are for /enter v3 agent retrieval, /llms.txt-fed external AI assistants (Claude/ChatGPT/Cursor), and AEO/SEO answer-machines (Perplexity, Google AI Overviews, ChatGPT search). Reframe accordingly. See §D5-belief-shape-binding below for the full shape contract. Effective immediately: CP-1 and CP-2 retrofit to Q&A shape; CP-3..CP-19 fan out under new template; AEO/SEO Q&A restructure pass (currently queued as a separate gate before Phase D) folds into this work, killing one Phase-D blocker.
 
 ### §D1-narrative-binding — cold-reader contract for every reauthored page
 
@@ -174,6 +175,45 @@ The graph viz is a user-experience problem first, technology second. The current
 10. **Re-fit-on-resize.** Window resize triggers re-fit, not stale viewBox.
 
 These invariants are gates. Any C-graph implementation that fails one is not done. /design-review run on C-graph must verify all ten with a manual UX test on desktop (incl. touchpad) + mobile viewport + screen-reader-emulator.
+
+### §D5-belief-shape-binding — Q&A card + chip strip contract for every belief page
+
+Belief pages are not primarily for human direct-landing. The actual readers ranked by traffic share:
+
+1. /enter v3 agent (Phase D) doing retrieval-augmented grounding when a user asks about Agam
+2. External AI assistants (Claude, ChatGPT, Cursor, Perplexity) reading via /llms.txt + /llms-full.txt
+3. AEO/SEO answer-machines (Google AI Overviews, Perplexity, ChatGPT search) indexing for "what does Agam think about X" queries
+4. Human deep-link from theme page or graph node — secondary, not primary
+
+User confirmed 2026-04-26: human direct-land is rare; the routing is via agent or AEO. Therefore optimize the page for retrieval and answer-extraction, not for narrative deep-read. R1 voice still applies in the answer body (humans who DO land get a readable answer), but the structure is Q&A-first.
+
+Binding shape per belief page:
+
+1. **Frontmatter additions.** Three new lists alongside `related_beliefs`: `supersedes:` (list of belief slugs this belief replaces), `conditioned_by:` (list of belief/theme slugs this belief depends on), `holds_with:` (list of belief slugs that hold simultaneously despite apparent tension). Source: extracted from current `## Cross-links` sections that the build-wiki strip already drops. These three fields drive both the chip strip render AND eventual kg.json edge generation.
+
+2. **Auto-rendered chip strip under h1.** build-wiki.mjs reads the three frontmatter fields, filters to existing pages (themes + Tier-1 beliefs that have pages), emits a mono-font dim-color chip strip directly under h1 and above the page-purpose block. Format: `Conditions: [parent_theme]  ·  Supersedes: [list]  ·  Holds with: [list]`. Each chip is a clickable link. Reader gets graph position in <1 second instead of parsing a 2-3 sentence orientation paragraph. Same data the agent already wants from kg.json.
+
+3. **Body sections — Q&A shape.** Replace the current essay structure (`## The claim` / `## How the belief formed` / `## What it supersedes`) with two body sections:
+   - `## The question` — 1-2 sentences phrasing the natural-language question someone would ask an AI assistant about Agam that this belief answers. Examples: "What is Agam's agent-first thesis?" / "Does Agam think prompt engineering still matters?" / "Why does Agam say context beats prompt?" These become the AEO-indexable question stems.
+   - `## The answer` — R1 voice, ~300-500w. Folds in the claim, when it formed, the supersession arc, and the simultaneity edges. One block of prose, not three sections. Tighter than current essay because the chip strip carries the graph context that orientation prose used to carry.
+
+4. **Closing sections retained:**
+   - `## Where to go from here` — 3 named exit paths in prose (current shape).
+   - `## Evidence` — table with Date / Entry / Post columns (current shape).
+
+5. **Length target: 500-700w body** (down from 600-800w). Chip strip + Q&A structure mean less prose is needed to deliver the same information.
+
+6. **Voice: still R1.** Declarative thesis, colon rhythm, hyphen-with-spaces aside, short paragraphs, no hedging. The shape changed; the voice did not. A human who DOES land on the page reads a piece of writing, not a database row.
+
+7. **Cold-reader contract still applies but redistributed.** Orientation work moves from prose paragraph (current) into chip strip (auto) + question stem (manual). The combined effect: a cold reader knows what the page is, what it depends on, what it supersedes, and what question it answers — all in the first 5 seconds, all above the fold.
+
+8. **AEO/SEO fold-in.** The Q&A shape is the AEO restructure. The currently-queued "AEO Q&A restructure on /wiki/voice/ + /wiki/quotes/" gate (per STATUS line 17) extends to belief pages naturally. Belief pages become the primary AEO surface; voice + quotes pages get a lighter Q&A overlay. One pass, two surfaces.
+
+9. **kg.json downstream.** build-kg.mjs is updated in a follow-on pass (not blocking) to ingest `supersedes` / `conditioned_by` / `holds_with` from belief frontmatter and emit corresponding edges (rel: `supersedes`, `conditioned-by`, `holds-with`). Today these relationships live only in prose; making them frontmatter-typed lets the graph carry them.
+
+10. **Retrofit CP-1 + CP-2.** Both already-shipped pages (belief.agent-first 0c50e5f, belief.context-over-prompt 253fcef) are rewritten to the new shape in the same retrofit commit. Retrofit cost: ~30min for both. Lower than re-running them as fresh CPs because the source content is already correct, only the structure changes.
+
+These are gates. Any belief page that ships without all three frontmatter fields, the chip strip render, and the Q&A body shape is not done.
 
 ## Locked execution sequence
 

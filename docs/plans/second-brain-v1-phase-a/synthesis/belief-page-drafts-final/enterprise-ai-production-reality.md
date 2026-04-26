@@ -5,6 +5,10 @@ title: Enterprise AI reality: demos are not deployments
 one_line: "~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model."
 parent_theme: enterprise-ai-reality
 related_beliefs: [substance-over-hype, anti-customization, moats-are-infra-talent-data, non-functional-reqs-are-dominant-failure-mode, agent-first, spec-over-sprint]
+supersedes: []
+conditioned_by:
+  - substance-over-hype
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

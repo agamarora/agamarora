@@ -11,6 +11,9 @@ related_beliefs:
   - belief.never-be-smartest-in-room
   - belief.certifications-are-collectibles
   - belief.ic-path-legitimacy
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

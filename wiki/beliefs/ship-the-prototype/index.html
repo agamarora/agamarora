@@ -107,6 +107,15 @@
   /* Page-purpose hook: one-line "what is this for?" rendered directly under h1. */
   .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
 
+  /* Belief chip strip: graph-position metadata (parent theme, supersedes, conditions, holds-with) under h1. */
+  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:center;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-6);}
+  .belief-chips .group{display:inline-flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;}
+  .belief-chips .group-label{color:var(--accent);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.08em;font-weight:500;}
+  .belief-chips .chip{color:var(--text);text-decoration:none;border-bottom:1px dashed var(--border-hover);padding-bottom:1px;transition:color 0.2s,border-color 0.2s;}
+  .belief-chips .chip:hover{color:var(--accent);border-color:var(--accent);}
+  .belief-chips .chip.dead{color:var(--text-dim);opacity:0.65;border-bottom:1px dotted var(--border);cursor:help;}
+  .belief-chips .sep-dot{opacity:0.45;}
+
   /* Related cross-links footer: rendered above theme-nav. */
   .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
   .related-links h2{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin:0 0 var(--space-5) 0;}
@@ -173,6 +182,7 @@
 
   <article role="main">
 <h1 id="ship-the-prototype">Ship the prototype</h1>
+<div class="belief-chips" aria-label="Graph position"><span class="group"><span class="group-label">Theme:</span> <a class="chip" href="/wiki/personal-projects-tinkering/">Personal projects</a></span><span class="sep-dot">·</span><span class="group"><span class="group-label">Supersedes:</span> <span class="chip dead" title="graph node, no page">ideas-are-enough</span></span></div>
 <p class="page-purpose">Ideas are cheap. The prototype is the position - 'no longer just an idea' as the inversion marker.</p>
 <h2 id="statement">Statement</h2>
 <p>Ideas are cheap. Ship the prototype.</p>

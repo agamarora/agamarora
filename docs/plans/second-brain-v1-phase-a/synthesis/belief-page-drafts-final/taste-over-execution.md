@@ -10,6 +10,10 @@ related_beliefs:
   - belief.anti-customization
   - belief.pm-is-99-should-we-1-can-we
   - belief.substance-over-hype
+supersedes: []
+conditioned_by:
+  - substance-over-hype
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h

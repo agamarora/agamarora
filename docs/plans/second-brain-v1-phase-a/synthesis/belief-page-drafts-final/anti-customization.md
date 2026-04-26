@@ -10,6 +10,9 @@ related_beliefs:
   - belief.pm-is-99-should-we-1-can-we
   - belief.enterprise-ai-production-reality
   - belief.non-functional-reqs-are-dominant-failure-mode
+supersedes: []
+conditioned_by: []
+holds_with: []
 tier: 1
 length_target: 400-800w
 status: draft-task-h
