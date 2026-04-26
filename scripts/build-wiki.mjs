@@ -371,13 +371,28 @@ const SHARED_HEAD_STYLES = `
   .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
 
   /* Belief chip strip: graph-position metadata (parent theme, supersedes, conditions, holds-with) under h1. */
-  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:center;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-6);}
+  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:center;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-5);}
   .belief-chips .group{display:inline-flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;}
   .belief-chips .group-label{color:var(--accent);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.08em;font-weight:500;}
   .belief-chips .chip{color:var(--text);text-decoration:none;border-bottom:1px dashed var(--border-hover);padding-bottom:1px;transition:color 0.2s,border-color 0.2s;}
   .belief-chips .chip:hover{color:var(--accent);border-color:var(--accent);}
   .belief-chips .chip.dead{color:var(--text-dim);opacity:0.65;border-bottom:1px dotted var(--border);cursor:help;}
   .belief-chips .sep-dot{opacity:0.45;}
+
+  /* Belief tag strip: applies-to domain tags + confidence marker. Second row under chip strip. */
+  .belief-tags{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-4);align-items:center;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-3));margin-bottom:var(--space-7);}
+  .belief-tags .group-label{color:var(--accent);text-transform:uppercase;font-size:0.66rem;letter-spacing:0.08em;font-weight:500;}
+  .belief-tags .tag{display:inline-block;padding:2px 8px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-size:0.7rem;}
+  .belief-tags .confidence{margin-left:auto;display:inline-flex;align-items:center;gap:var(--space-3);}
+  .belief-tags .confidence .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
+  .belief-tags .confidence.settled .dot{background:var(--accent);}
+  .belief-tags .confidence.evolving .dot{background:var(--text-dim);}
+  .belief-tags .confidence.contested .dot{background:#a23b3b;}
+
+  /* TL;DR quotable assertion: agent-grabbable single-line quote at top of body. */
+  .belief-tldr{margin:0 0 var(--space-7) 0;padding:var(--space-5) var(--space-6);background:linear-gradient(90deg, var(--accent-dim), transparent 70%);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
+  .belief-tldr .label{font-family:var(--mono);font-size:0.7rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;display:block;margin-bottom:var(--space-3);}
+  .belief-tldr .quote{font-family:var(--sans);font-size:1.15rem;line-height:1.5;color:var(--text);font-weight:500;margin:0;}
 
   /* Related cross-links footer: rendered above theme-nav. */
   .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
@@ -733,6 +748,45 @@ function injectBeliefChips(articleHtml, meta) {
   return articleHtml.replace(/<\/h1>/, `</h1>${chipStrip}`);
 }
 
+// Belief tag strip: applies-to domain tags + confidence marker, second row
+// under the chip strip. Renders only if frontmatter has either field.
+// applies_to lists the domains/topics this belief is relevant to (agent
+// matches user-query topic against these to decide which beliefs to retrieve).
+// confidence marks the belief's settledness (settled / evolving / contested).
+function injectBeliefTags(articleHtml, meta) {
+  const tags = normList(meta.applies_to)
+    .map((s) => String(s).trim())
+    .filter(Boolean);
+  const confidence = String(meta.confidence || "").trim().toLowerCase();
+  const validConf = ["settled", "evolving", "contested"].includes(confidence);
+  if (tags.length === 0 && !validConf) return articleHtml;
+
+  const tagsHtml = tags.length
+    ? `<span class="group-label">Applies to:</span> ${tags.map((t) => `<span class="tag">${escHtml(t)}</span>`).join(" ")}`
+    : "";
+  const confHtml = validConf
+    ? `<span class="confidence ${confidence}" title="Belief settledness"><span class="dot"></span>${escHtml(confidence)}</span>`
+    : "";
+  const stripHtml = `\n<div class="belief-tags" aria-label="Domain tags and confidence">${tagsHtml}${confHtml}</div>`;
+  // Insert AFTER the existing chip strip so it sits between chip strip and page-purpose.
+  return articleHtml.replace(/<\/div>(\s*<p class="page-purpose")/, `</div>${stripHtml}$1`);
+}
+
+// TL;DR quotable assertion: a single-sentence agent-grabbable quote rendered
+// in a highlighted block right under the page-purpose. Source: the `quotable`
+// frontmatter field, OR the markdown `## TL;DR\n> {quote}` pattern. The agent
+// can extract this verbatim for inclusion in answers without rephrasing.
+function injectBeliefTldr(articleHtml, meta) {
+  const quotable = stripQuotes(String(meta.quotable || "").trim());
+  if (!quotable) return articleHtml;
+  const tldrHtml = `\n<div class="belief-tldr" aria-label="Quotable assertion"><span class="label">TL;DR</span><p class="quote">${inlineMd(quotable)}</p></div>`;
+  // Insert AFTER page-purpose if present, else after </h1>.
+  if (articleHtml.includes('class="page-purpose"')) {
+    return articleHtml.replace(/(<p class="page-purpose">[^<]*<\/p>)/, `$1${tldrHtml}`);
+  }
+  return articleHtml.replace(/<\/h1>/, `</h1>${tldrHtml}`);
+}
+
 // Pick "next" theme slug in NAV_ORDER, wrapping past root for variety.
 function siblingTheme(parentTheme) {
   const idx = NAV_ORDER.indexOf(parentTheme);
@@ -834,6 +888,8 @@ function buildBeliefPage(slug, src) {
   articleHtml = collapseEvidenceHtml(articleHtml);
   articleHtml = injectPagePurpose(articleHtml, m.oneLine);
   articleHtml = injectBeliefChips(articleHtml, meta);
+  articleHtml = injectBeliefTags(articleHtml, meta);
+  articleHtml = injectBeliefTldr(articleHtml, meta);
 
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme

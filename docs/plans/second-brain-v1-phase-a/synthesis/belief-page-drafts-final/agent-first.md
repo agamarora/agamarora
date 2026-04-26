@@ -3,6 +3,7 @@ type: BeliefPage
 slug: agent-first
 title: Agent-first
 one_line: "Build for autonomous agents as users, not just for humans. The serving lens is where the next layer of differentiation lives."
+quotable: "Build for autonomous agents as users, not just for humans - and maybe first."
 parent_theme: agent-first
 related_beliefs:
   - belief.context-over-prompt
@@ -18,11 +19,18 @@ conditioned_by:
   - substance-over-hype
 holds_with:
   - enterprise-ai-production-reality
+applies_to:
+  - ai-architecture
+  - api-design
+  - enterprise-ai
+  - product-strategy
+  - system-design
+confidence: settled
 tier: 1
 length_target: 400-600w
-status: c-voice-beliefs-r1-cp1-reference-d6
+status: c-voice-beliefs-r1-cp1-reference-d6.1
 voice_register: 1 (free-form post-essay)
-shape: principle-card-d6
+shape: principle-card-d6.1
 ---
 
 # Agent-first
@@ -35,7 +43,7 @@ Platforms that cannot talk to autonomous agents are already behind. The serving 
 
 1. **Default to agent-legible interfaces.** When designing a new system or feature, the API and the agent-callable surface are the primary specification. The human UI is downstream of that, not the other way around.
 2. **Spec the agent flow alongside the user flow.** A PRD that lists user journeys without listing agent journeys is incomplete. For every user-facing action, name the agent equivalent and the contract it exposes.
-3. **MCP / tool-calling first, UI second.** When the choice is "build a UI for this" vs "expose this as an MCP tool or programmatic surface," start with the programmatic surface. UI can wrap it later. The reverse is hard.
+3. **MCP and tool-calling first, UI second.** When the choice is "build a UI for this" vs "expose this as an MCP tool or programmatic surface," start with the programmatic surface. UI can wrap it later. The reverse is hard.
 4. **Treat the agent layer as a security boundary, not a thin client.** Auth, rate limits, audit logs, reversibility checkpoints belong at the agent-callable surface. Assume the agent is the active principal, not a passive proxy for a human.
 5. **Measure agent traffic explicitly.** If a system serves both humans and agents, instrument the split. If the agent share is rising, that is a signal to invest in the serving lens, not to wait for humans to catch up.
 
@@ -43,7 +51,13 @@ Platforms that cannot talk to autonomous agents are already behind. The serving 
 
 - **Not "no UI."** Agent-first does not mean ship API-only products. It means build the agent surface first and let the human view sit on top. A pure-API-no-UI product is the over-rotation, not the goal.
 - **Not "agents are the only users."** Humans still matter. The claim is that agents are first-class, not exclusive. A system that ignores either surface fails the test.
-- **Not contradicted by enterprise-AI failure rates.** Roughly 80% of enterprise AI experiments do not reach production (see `holds_with: enterprise-ai-production-reality`). Both claims are true. Agent-first is the framework for being in the 20% that ships, not a guarantee. Direction versus current rate.
+- **Not contradicted by enterprise-AI failure rates.** Roughly 80% of enterprise AI experiments do not reach production. Both claims are true. Agent-first is the framework for being in the 20% that ships, not a guarantee. Direction versus current rate.
+
+## Argues against
+
+- "AI products should be built UI-first; agents are an edge case."
+- "Horizontal AI will eventually subsume domain-specific systems."
+- "Building for agents is premature optimization until agent traffic is measurable."
 
 ## Where to go from here
 
