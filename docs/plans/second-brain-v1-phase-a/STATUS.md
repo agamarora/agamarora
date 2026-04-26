@@ -2,7 +2,36 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 19 — Phase A COMPLETE. Ready for Phase B (wiki HTML build).**
+Last updated: 2026-04-26 — **CHECKPOINT 20 — Phase B substantially shipped (B1-B5a). B5b/B6 + follow-ups (B7/B8) queued.**
+
+## CURRENT STATE (Phase B IN FLIGHT — 33 wiki HTML pages live, 2 sub-tasks queued)
+
+**Phase B summary — what shipped this session:**
+
+| Sub-task | Output | Status |
+|---|---|---|
+| B1 | `scripts/build-kg.mjs` + `wiki/kg.json` (177 nodes, 111 edges) | DONE |
+| B2 | `wiki/index.html` (theme grid landing) | DONE |
+| B3 | 12 wiki theme + root HTML pages (`wiki/<slug>/index.html`) | DONE |
+| B4 | 19 wiki belief HTML pages (`wiki/beliefs/<slug>/index.html`) | DONE |
+| B5a | `wiki/voice/` + `wiki/quotes/` meta pages | DONE |
+| B5b | `wiki/projects/` DAG + `wiki/graph/` vis-network viz | QUEUED |
+| B6 | Cross-link wiring + final QA (T2/T3 belief refs filtering, broken-link audit, STATUS to CP21) | QUEUED |
+| B7 | `build-kg.mjs` unit tests (boilable lake from /review) | QUEUED |
+| B8 | HTML stats from kg.json (drift fix from /review maintainability) | QUEUED |
+
+**Build pipeline shipped:** `npm run build` regenerates everything from synthesis sources. `scripts/build-kg.mjs --strict` parses `ontology-v1.md` -> `wiki/kg.json`. `scripts/build-wiki.mjs --strict` parses `wiki-page-drafts-final/*.md` + `belief-page-drafts-final/*.md` + `wiki-meta-drafts/*.md` -> 33 HTML pages. Both scripts hardened (atomic writes, ENOENT guards, --strict mode for CI). Netlify deploy command set to `npm run build`.
+
+**Quality gates run on B1+B2:**
+- `/review` 8.5/10: 0 critical, 11 informational, 8 auto-fixed (atomic write, ENOENT guard, cache-control, build wiring, lock-date constant, CSS dup, inline style, hardcoded counts, tier types, --strict)
+- `/design-review`: v2 contract PASS, AI slop A- (6 auto-fixes: heading hierarchy collision, responsive minmax floor, hero h1 max-width, magic min-height, hover shadow, h3 size clamp, gradient opacity)
+- `/qa` static: 1 site-wide favicon TODO (pre-existing across 5 v2 pages), 16 expected 404s resolved by B3+B5
+
+**B5b deferred reasoning:**
+- Projects DAG: needs derivation from `projects-tech-lineage.md` (~55KB) + decision on viz format (SVG manual vs vis-network)
+- Graph viz: per `docs/designs/wiki-graph-spec.md`, needs vis-network library either CDN-loaded (CSP allowlist update) or vendored inline (~200KB). Larger time investment.
+
+
 
 ## CURRENT STATE (Phase A DONE — all artifacts ready for HTML scaffolding)
 
