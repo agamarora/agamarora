@@ -183,7 +183,7 @@
       justify-content: flex-start;
       padding-top: var(--space-5);
     }
-    .page.keyboard-open .mark-wrap { display: none; }
+    .page.keyboard-open .aa-mark { display: none; }
     .page.has-response {
       justify-content: flex-start;
       padding-top: var(--space-6);
@@ -224,7 +224,7 @@
       min-height: 48px;
     }
     .terminal-input { font-size: 0.875rem; }
-    /* On mobile, keep .mark-wrap as fixed bottom-right (same as
+    /* On mobile, keep .aa-mark as fixed bottom-right (same as
        desktop + every other page). The .page.keyboard-open rule
        above hides it when the on-screen keyboard is up. */
   }
@@ -242,25 +242,32 @@
   @media (orientation: landscape) and (max-height: 500px) {
     .page { padding: var(--space-4) var(--space-5); }
     .response-zone { max-height: 40vh; }
-    .mark-wrap { display: none; }
+    .aa-mark { display: none; }
   }
 
-  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
-  .mark-wrap {
+  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load.
+     font-family on wrapper forces Patrick Hand fetch before SVG renders. */
+  .aa-mark {
     position: fixed;
     bottom: clamp(16px, 3vw, 32px);
     right: clamp(16px, 3vw, 32px);
     z-index: 50;
+    text-decoration: none;
+    line-height: 1;
     opacity: 0.7;
     transition: opacity 0.2s;
+    font-family: var(--mark);
   }
-  .mark-wrap:hover { opacity: 1; }
-  .mark-wrap svg {
+  .aa-mark:hover { opacity: 1; }
+  .aa-mark svg {
     width: clamp(44px, 5vw, 60px);
     height: auto;
     overflow: visible;
     display: block;
   }
+  .aa-mark svg text { font-family: var(--mark); }
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
 
   /* TERMINAL */
   .terminal-wrap { width: 100%; max-width: 640px; }
@@ -350,13 +357,13 @@
     </div>
   </div>
 
-  <div class="mark-wrap">
-    <svg id="aa-mark" width="72" height="36" viewBox="0 0 72 36" style="overflow:visible">
+  <a href="/" class="aa-mark" aria-label="agamarora.com">
+    <svg id="aa-mark" viewBox="0 0 72 36">
       <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
       <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
       <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
     </svg>
-  </div>
+  </a>
 </div>
 
 <script>

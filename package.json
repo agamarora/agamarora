@@ -5,6 +5,8 @@
   "scripts": {
     "build:kg": "node scripts/build-kg.mjs --strict",
     "build:wiki": "node scripts/build-wiki.mjs --strict",
+    "sync:chrome": "node scripts/sync-chrome.mjs",
+    "sync:chrome:check": "node scripts/sync-chrome.mjs --check",
     "build": "npm run build:kg && npm run build:wiki"
   },
   "dependencies": {

@@ -86,6 +86,8 @@ Every public page is a single standalone `index.html` with inline `<style>` and 
 
 Each page defines these CSS rules inline (comment-tagged `=== Shared v2 header ===` / `=== Shared aa. mark ===`) so edits stay local. The stroke-draw animation JS lives inline at the bottom of each page.
 
+**Single source of truth (`scripts/lib/chrome.mjs`):** the canonical strings for SVG sprite, header markup, aa-mark markup + CSS, design tokens, font-face, reset, focus-visible, and the stroke-draw IIFE. `scripts/build-wiki.mjs` imports from this module — every wiki page (36) regenerates from it. Hand pages currently duplicate the same strings inline (Phase 1 of DRY refactor); `scripts/sync-chrome.mjs` will rewrite marker-bounded blocks in hand pages from the same source once the markers are added (Phase 2). `npm run sync:chrome` rewrites; `npm run sync:chrome:check` exits non-zero if any page is out of sync (CI guard).
+
 ### Design tokens (inline in every v2 page)
 
 ```
