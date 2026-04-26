@@ -1,8 +1,8 @@
 ---
 type: BeliefPage
 slug: agent-first
-title: Agent-first thesis
-one_line: "Platforms that cannot talk to autonomous agents are already behind: agents are users too, and maybe first."
+title: Agent-first
+one_line: "Build for autonomous agents as users, not just for humans. The serving lens is where the next layer of differentiation lives."
 parent_theme: agent-first
 related_beliefs:
   - belief.context-over-prompt
@@ -19,56 +19,50 @@ conditioned_by:
 holds_with:
   - enterprise-ai-production-reality
 tier: 1
-length_target: 500-700w
-status: c-voice-beliefs-r1-cp1-reference-qa
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp1-reference-d6
 voice_register: 1 (free-form post-essay)
-shape: qa-card-d5
+shape: principle-card-d6
 ---
 
-# Agent-first thesis
+# Agent-first
 
-## The question
+## The belief
 
-What does Agam mean by "agent-first," and is this just another AI buzzword?
+Platforms that cannot talk to autonomous agents are already behind. The serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation lives. Agents are users too, and maybe first.
 
-## The answer
+## How to apply
 
-Agent-first is one stance from a 2025 manifesto post: platforms that cannot talk to autonomous agents are already behind, and the serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation lives. The strongest single line in that post is the parenthetical: "agents are users too, and maybe first."
+1. **Default to agent-legible interfaces.** When designing a new system or feature, the API and the agent-callable surface are the primary specification. The human UI is downstream of that, not the other way around.
+2. **Spec the agent flow alongside the user flow.** A PRD that lists user journeys without listing agent journeys is incomplete. For every user-facing action, name the agent equivalent and the contract it exposes.
+3. **MCP / tool-calling first, UI second.** When the choice is "build a UI for this" vs "expose this as an MCP tool or programmatic surface," start with the programmatic surface. UI can wrap it later. The reverse is hard.
+4. **Treat the agent layer as a security boundary, not a thin client.** Auth, rate limits, audit logs, reversibility checkpoints belong at the agent-callable surface. Assume the agent is the active principal, not a passive proxy for a human.
+5. **Measure agent traffic explicitly.** If a system serves both humans and agents, instrument the split. If the agent share is rising, that is a signal to invest in the serving lens, not to wait for humans to catch up.
 
-Verbatim from the June 20, 2025 post: "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
+## What this is not
 
-This is not a 2030 prediction. It is a 2026 claim. One enterprise voice deployment in the public corpus is already running 0% automation through UI, 100% through MCP and APIs.
-
-The intuition was early. The vocabulary lagged. March 2023, on ChatGPT Plugins: "This will open up a new ecosystem in itself. The very first AI marketplace." The instinct read the LLM-plus-tools-plus-actions surface as the actual product, not the LLM alone. Eighteen months of enterprise field work followed. June 2024: multi-agent systems "not a question of if, but when." September 2024: demo-versus-production "is a different beast" with nine takeaways. December 2024: the kill-prompting post named the broken layer with a verb that overshot the actual claim.
-
-The crystallization landed in one June 20, 2025 post. Three moves at once: horizontal AI declared dead, agentic AI named as the new direction, the serving lens introduced as the differentiation move. After that post, agent-first stopped being an argument in the corpus and started behaving like a flat assumption. By July 2025: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Prompts re-admitted as plumbing. By April 2026 the whole stance had compressed into three lines: Spec over Sprint, Taste over Execution, Context over Prompt. Craft posture, not strategy posture.
-
-What got superseded, by direct declaration on 2025-06-20: horizontal-AI-will-scale and prompt-as-primary-interface. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") sits on the pre-hinge side of the same arc. It stayed live. The supersession is public.
-
-What holds simultaneously: enterprise AI reality. Roughly 80% of enterprise AI experiments do not reach production. Both claims are true at once. Agent-first is the framework for being in the 20% that ships. Direction versus current rate. Different scopes.
-
-A team that says "agent-first" but ships prompt-as-UX, context-by-accident, and irreversible-action-by-default has not absorbed the belief. They have adopted the language.
+- **Not "no UI."** Agent-first does not mean ship API-only products. It means build the agent surface first and let the human view sit on top. A pure-API-no-UI product is the over-rotation, not the goal.
+- **Not "agents are the only users."** Humans still matter. The claim is that agents are first-class, not exclusive. A system that ignores either surface fails the test.
+- **Not contradicted by enterprise-AI failure rates.** Roughly 80% of enterprise AI experiments do not reach production (see `holds_with: enterprise-ai-production-reality`). Both claims are true. Agent-first is the framework for being in the 20% that ships, not a guarantee. Direction versus current rate.
 
 ## Where to go from here
 
-Three exits.
-
 If you want the **wide framing** with applications and the full thesis arc, go to the [agent-first theme](/wiki/agent-first/).
 
-If you want the **craft-layer corollaries** in their starkest form, jump to [context over prompt](/wiki/beliefs/context-over-prompt/) or [spec over sprint](/wiki/beliefs/spec-over-sprint/). Each is a separate belief that this one forces.
+If you want the **craft-layer corollaries** that this belief forces, jump to [context over prompt](/wiki/beliefs/context-over-prompt/) or [spec over sprint](/wiki/beliefs/spec-over-sprint/).
 
-If you want the **field data** that explains why the thesis matters operationally, [enterprise AI reality](/wiki/enterprise-ai-reality/) holds the production-truth view. Start there if you came in skeptical.
+If you want the **operational reality check**, [enterprise AI reality](/wiki/enterprise-ai-reality/) holds the production-truth view. Read it if you came in skeptical.
 
 ## Evidence
 
 | Date | Entry | Post |
 |---|---|---|
-| 2023-03-24 | "The very first AI marketplace." ChatGPT Plugins as ecosystem-instinct seed. | urn:li:activity:7044971627607900160 |
+| 2023-03-24 | "The very first AI marketplace." Ecosystem-instinct seed. | urn:li:activity:7044971627607900160 |
 | 2024-06-06 | Multi-agent systems: "not a question of if, but when." First explicit agent-layer framing. | urn:li:activity:7204325913650491392 |
-| 2024-12-24 | "We need to kill prompting." Kill-prompting post contains the agentic-year prediction as underrated payload. | urn:li:activity:7277158028422914048 |
+| 2024-12-24 | "We need to kill prompting." Agentic-year prediction folded into a kill-prompting headline. | urn:li:activity:7277158028422914048 |
 | 2025-06-20 | THE HINGE. "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." | urn:li:activity:7341662205257433088 |
 | 2025-07-17 | Agent architecture decomposed; prompts re-admitted as plumbing. | urn:li:activity:7351602695977226243 |
-| 2025-09-29 | "0% automation driven through UI, 100% driven through MCP + APIs." Production application of the serving-lens thesis. | urn:li:activity:7378427141190799360 |
-| 2025-11-17 | "The model wasn't broken, the agent layer was." 17-month prediction confirmed by the Chinese threat-actor incident. | urn:li:activity:7396047657951064064 |
+| 2025-09-29 | "0% automation driven through UI, 100% driven through MCP + APIs." Production application of the serving-lens claim. | urn:li:activity:7378427141190799360 |
+| 2025-11-17 | "The model wasn't broken, the agent layer was." Agent layer named as the primary threat surface. | urn:li:activity:7396047657951064064 |
 | 2026-01-06 | Application-layer safety prescription: "This is not a research problem, but an application problem." | urn:li:activity:7414150680820547584 |
-| 2026-04-23 | second-brain v1: agent-first applied to personal knowledge. Every future AI session reads the same brain and writes back to it. | urn:li:activity:7452998640345853952 |
+| 2026-04-23 | second-brain v1: agent-first applied to personal knowledge. | urn:li:activity:7452998640345853952 |
