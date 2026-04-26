@@ -1261,6 +1261,67 @@ function buildGraphPage() {
 
   const totalEntries = (kg.stats.posts || 0) + (kg.stats.comments || 0) + 220; // approximate corpus + uncurated
 
+  // === CP-2: per-theme node distribution from kg.json edges ===
+  // Count beliefs (contains-belief), projects+posts+tech (demonstrates / cites-post / etc.) per theme.
+  // We need ratios to scatter belief/project/tech/post nodes around their parent theme group.
+  const beliefByTheme = {};
+  const projectByTheme = {};
+  const postByTheme = {};
+  const techByTheme = {};
+  THEMES.forEach(t => {
+    beliefByTheme[t.id] = []; projectByTheme[t.id] = [];
+    postByTheme[t.id] = []; techByTheme[t.id] = [];
+  });
+  const beliefParent = {};
+  kg.edges.forEach(e => {
+    if (e.rel === 'contains-belief' && e.from.startsWith('theme.') && e.to.startsWith('belief.')) {
+      if (beliefByTheme[e.from]) {
+        beliefByTheme[e.from].push(e.to);
+        beliefParent[e.to] = e.from;
+      }
+    }
+  });
+  kg.edges.forEach(e => {
+    if (e.rel === 'demonstrates' && e.to.startsWith('theme.') && e.from.startsWith('project.')) {
+      if (projectByTheme[e.to]) projectByTheme[e.to].push(e.from);
+    }
+    if (e.rel === 'cites-post') {
+      // belief→post: assign post to belief's parent theme
+      const parent = beliefParent[e.from] || (e.from.startsWith('theme.') ? e.from : null);
+      if (parent && postByTheme[parent]) postByTheme[parent].push(e.to);
+    }
+  });
+  // Round-robin remaining projects + tech across themes (most aren't directly edge-linked)
+  const allProjects = kg.nodes.filter(n => n.type === 'Project').map(n => n.id);
+  const allTech = kg.nodes.filter(n => n.type === 'Tech').map(n => n.id);
+  const allPosts = kg.nodes.filter(n => n.type === 'Post').map(n => n.id);
+  const placedProjects = new Set(Object.values(projectByTheme).flat());
+  const placedPosts = new Set(Object.values(postByTheme).flat());
+  let rr = 0;
+  allProjects.forEach(pid => {
+    if (!placedProjects.has(pid)) {
+      projectByTheme[THEMES[rr % THEMES.length].id].push(pid);
+      rr++;
+    }
+  });
+  allTech.forEach(tid => {
+    techByTheme[THEMES[rr % THEMES.length].id].push(tid);
+    rr++;
+  });
+  allPosts.forEach(pid => {
+    if (!placedPosts.has(pid)) {
+      postByTheme[THEMES[rr % THEMES.length].id].push(pid);
+      rr++;
+    }
+  });
+  // Attach counts onto THEMES for JS
+  THEMES.forEach(t => {
+    t.beliefCount  = beliefByTheme[t.id].length;
+    t.projectCount = projectByTheme[t.id].length;
+    t.postCount    = postByTheme[t.id].length;
+    t.techCount    = techByTheme[t.id].length;
+  });
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1284,7 +1345,7 @@ function buildGraphPage() {
 <!--
   C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
-  CP-2 ⏳ deep-field: 227 kg nodes + 578 corpus stars + proximity mesh
+  CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ⏳ real cross-theme interlinkages from kg.json edges
   CP-4 ⏳ motion vocabulary: twinkle / Lissajous-drift / signal pulses
   CP-5 ⏳ big-bang single-origin entry + parallax bg layer
@@ -1361,6 +1422,10 @@ function buildGraphPage() {
   .genesis-core{cursor:pointer;transition:filter 0.2s;}
   .genesis-core:hover{filter:drop-shadow(0 0 16px rgba(229,165,75,0.95));}
 
+  .belief-node{cursor:pointer;transition:fill 0.15s,r 0.15s;}
+  .belief-node:hover{fill:var(--accent) !important;}
+  .deep-mesh-line{pointer-events:none;}
+
   @media (max-width: 768px){
     .legend-strip{display:none;}
     .help-strip{font-size:9px;left:64px;}
@@ -1385,8 +1450,10 @@ ${SHARED_AAMARK_HTML}
 
 <div class="legend-strip">
   <div><span class="swatch genesis"></span>genesis</div>
-  <div><span class="swatch gold"></span>theme</div>
-  <div style="font-size:9px;opacity:0.7;margin-top:4px;">cp-1 skeleton · cp-2-7 incoming</div>
+  <div><span class="swatch gold"></span>theme (${kg.stats.themes})</div>
+  <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
+  <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ ${totalEntries}+ corpus deep-field</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2 ✓ · cp-3-7 incoming</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1429,6 +1496,30 @@ ${AAMARK_SCRIPT}
     t.y = p.y;
   });
 
+  // === Z-order discipline ===
+  // deep-field group FIRST (renders beneath everything; populated at end of CP-2)
+  // genesis NEXT (center anchor, above deep-field)
+  // theme groups LAST (each contains belief-cluster sub-group rendered FIRST inside the
+  // group so beliefs/projects/posts/tech sit beneath the gold star within the cluster)
+  // CP-2 appends deep-field stars + mesh to the early-created group so DOM order = z-order.
+
+  // CP-2 deep-field rng + deepFieldGroup created BEFORE genesis so it sits at the back.
+  function mulberry32(seed){
+    return function(){
+      let t = seed += 0x6D2B79F5;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const deepFieldGroup = el('g', { id:'deep-field' });
+  const deepFieldPositions = [];
+  function deepStar(x, y, r, opacity){
+    const c = el('circle', { cx:x.toFixed(2), cy:y.toFixed(2), r:r.toFixed(2), fill:'rgba(232,228,223,'+opacity.toFixed(3)+')' }, deepFieldGroup);
+    deepFieldPositions.push({ x, y });
+    return c;
+  }
+
   // === Render: genesis at center ===
   // Halos (concentric, alpha cascade)
   [
@@ -1451,13 +1542,21 @@ ${AAMARK_SCRIPT}
   THEMES.forEach(t => {
     const g = el('g', { class:'theme-group', 'data-theme':t.id, transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')' });
     g.style.cursor = 'pointer';
-    g.addEventListener('click', () => { window.location.href = '/wiki/' + t.slug + '/'; });
+    g.addEventListener('click', (ev) => {
+      // Don't navigate if click landed on an inner belief node (it has its own handler)
+      if (ev.target.classList && ev.target.classList.contains('belief-node')) return;
+      window.location.href = '/wiki/' + t.slug + '/';
+    });
 
-    // Concentric halos
+    // Belief-cluster sub-group — created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
+    // render BENEATH the theme halos + star within this group.
+    el('g', { 'data-belief-cluster':t.id }, g);
+
+    // Concentric halos (drawn above belief cluster)
     el('circle', { cx:0, cy:0, r:18, fill:'rgba(229,165,75,0.07)' }, g);
     el('circle', { cx:0, cy:0, r:11, fill:'rgba(229,165,75,0.16)' }, g);
 
-    // The star
+    // The star (always on top within group)
     el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
 
     // Theme label — outside node, radial baseline, quadrant-aware anchor
@@ -1475,6 +1574,200 @@ ${AAMARK_SCRIPT}
     }, g).textContent = t.label;
   });
 
+  // === CP-2: Per-theme inner-cluster render ===
+  // Each theme group has a [data-belief-cluster] sub-group reserved during theme render
+  // (z-order: cluster sits BENEATH theme halos + star).
+  const beliefClusters = {};
+  THEMES.forEach((t) => {
+    beliefClusters[t.id] = svg.querySelector('g[data-theme="' + t.id + '"] g[data-belief-cluster="' + t.id + '"]');
+  });
+
+  const beliefByTheme = ${JSON.stringify(beliefByTheme)};
+  const projectByTheme = ${JSON.stringify(projectByTheme)};
+  const postByTheme = ${JSON.stringify(postByTheme)};
+  const techByTheme = ${JSON.stringify(techByTheme)};
+
+  // beliefId -> wiki page slug (for click-through)
+  // (only Tier-1 beliefs have pages; others are graph nodes only)
+  const beliefSlug = {};
+  ${(() => {
+    const beliefs = kg.nodes.filter(n => n.type === 'Belief');
+    return beliefs.map(b => `beliefSlug[${JSON.stringify(b.id)}] = ${JSON.stringify(String(b.tier) === '1' ? b.id.replace(/^belief\./,'') : null)};`).join('\n  ');
+  })()}
+
+  THEMES.forEach((t, ti) => {
+    const cluster = beliefClusters[t.id];
+    if (!cluster) return;
+    const rng = mulberry32(t.ang * 1000 + ti * 31 + 13);
+
+    // 1. Beliefs — irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
+    const beliefs = beliefByTheme[t.id] || [];
+    beliefs.forEach((bid, bi) => {
+      const baseA = (360 / Math.max(beliefs.length, 1)) * bi;
+      const jitterA = (rng() - 0.5) * 40;
+      const a = baseA + jitterA;
+      const radiiPool = [22, 28, 34, 40, 46];
+      const r = radiiPool[Math.floor(rng() * radiiPool.length)] + (rng() - 0.5) * 8;
+      const p = polar(0, 0, r, a);
+      const slug = beliefSlug[bid];
+      const node = el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:3.4,
+        fill:'rgba(232,228,223,0.55)',
+        class:'belief-node',
+        'data-id':bid,
+      }, cluster);
+      if (slug) {
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          window.location.href = '/wiki/beliefs/' + slug + '/';
+        });
+      }
+    });
+
+    // 2. Projects — placed slightly farther out, mid-bright
+    const projects = projectByTheme[t.id] || [];
+    projects.forEach((pid, pi) => {
+      const baseA = (360 / Math.max(projects.length, 1)) * pi + 18;
+      const a = baseA + (rng() - 0.5) * 40;
+      const r = 50 + rng() * 24;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(2.2 + rng()*0.6).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.42 + rng()*0.18).toFixed(3)+')',
+        'data-id':pid,
+      }, cluster);
+    });
+
+    // 3. Posts — small, dim, scattered in theme wedge
+    const posts = postByTheme[t.id] || [];
+    posts.forEach((pid, pi) => {
+      const a = (rng() - 0.5) * 70;
+      const r = 60 + rng() * 38;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(1.2 + rng()*0.5).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.25 + rng()*0.15).toFixed(3)+')',
+        'data-id':pid,
+      }, cluster);
+    });
+
+    // 4. Tech — smallest, dimmest, scattered in wedge
+    const tech = techByTheme[t.id] || [];
+    tech.forEach((tid, tii) => {
+      const a = (rng() - 0.5) * 90;
+      const r = 35 + rng() * 50;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(1.0 + rng()*0.4).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.18 + rng()*0.14).toFixed(3)+')',
+        'data-id':tid,
+      }, cluster);
+    });
+  });
+
+  // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
+  // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
+  // representing the raw corpus we synthesized from. Weak theme-clustering bias.
+  const dfRng = mulberry32(424242);
+
+  // 295 corpus posts (mid-density)
+  for (let i = 0; i < 295; i++){
+    const themeBias = dfRng() < 0.65;
+    let x, y;
+    if (themeBias){
+      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
+      const baseR = VB_MIN * t.radF;
+      const aOff = (dfRng() - 0.5) * 90;
+      const rFac = 0.5 + dfRng() * 0.85;
+      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
+      x = p.x; y = p.y;
+    } else {
+      x = 60 + dfRng() * (VB_W - 120);
+      y = 60 + dfRng() * (VB_H - 120);
+    }
+    const dx = x - CX, dy = y - CY;
+    if (Math.sqrt(dx*dx + dy*dy) < 55) continue;  // don't crowd the genesis
+    deepStar(x, y, 1.1 + dfRng() * 0.7, 0.20 + dfRng() * 0.20);
+  }
+
+  // 283 corpus comments (smaller, dimmer)
+  for (let i = 0; i < 283; i++){
+    let x, y;
+    if (dfRng() < 0.5){
+      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
+      const baseR = VB_MIN * t.radF;
+      const aOff = (dfRng() - 0.5) * 110;
+      const rFac = 0.45 + dfRng() * 0.95;
+      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
+      x = p.x; y = p.y;
+    } else {
+      x = 40 + dfRng() * (VB_W - 80);
+      y = 40 + dfRng() * (VB_H - 80);
+    }
+    const dx = x - CX, dy = y - CY;
+    if (Math.sqrt(dx*dx + dy*dy) < 45) continue;
+    deepStar(x, y, 0.7 + dfRng() * 0.6, 0.12 + dfRng() * 0.15);
+  }
+
+  // === CP-2: Proximity mesh — short hairlines between nearby corpus stars ===
+  // Synthesizes co-mention / post-comment relations as visual proxy.
+  // Real semantic edges from kg.json land at CP-3.
+  (function buildMesh(){
+    const MESH_RADIUS = 95;
+    const MAX_PER = 2;
+    const MAX_EDGES = 900;
+    const cellSize = MESH_RADIUS;
+    const cols = Math.ceil(VB_W / cellSize) + 2;
+    const rows = Math.ceil(VB_H / cellSize) + 2;
+    const grid = new Array(cols * rows).fill(null).map(() => []);
+    function cellIdx(x, y){
+      const cx = Math.floor(x / cellSize);
+      const cy = Math.floor(y / cellSize);
+      return { idx: cy * cols + cx, cx, cy };
+    }
+    deepFieldPositions.forEach((p, i) => {
+      const { idx } = cellIdx(p.x, p.y);
+      if (idx >= 0 && idx < grid.length) grid[idx].push(i);
+    });
+    const drawn = new Set();
+    let total = 0;
+    deepFieldPositions.forEach((p, i) => {
+      if (total >= MAX_EDGES) return;
+      const { cx, cy } = cellIdx(p.x, p.y);
+      const cands = [];
+      for (let oy = -1; oy <= 1; oy++){
+        for (let ox = -1; ox <= 1; ox++){
+          const cidx = (cy + oy) * cols + (cx + ox);
+          if (cidx < 0 || cidx >= grid.length) continue;
+          grid[cidx].forEach(j => {
+            if (j === i) return;
+            const q = deepFieldPositions[j];
+            const dx = q.x - p.x, dy = q.y - p.y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d > 0 && d <= MESH_RADIUS) cands.push({ j, d });
+          });
+        }
+      }
+      cands.sort((a, b) => a.d - b.d);
+      cands.slice(0, MAX_PER).forEach(({ j, d }) => {
+        const key = i < j ? i + '|' + j : j + '|' + i;
+        if (drawn.has(key)) return;
+        drawn.add(key);
+        const q = deepFieldPositions[j];
+        const op = (1 - d / MESH_RADIUS) * 0.10 + 0.025;
+        el('line', {
+          x1:p.x.toFixed(2), y1:p.y.toFixed(2),
+          x2:q.x.toFixed(2), y2:q.y.toFixed(2),
+          stroke:'rgba(232,228,223,'+op.toFixed(3)+')',
+          'stroke-width':'0.35',
+          class:'deep-mesh-line',
+        }, deepFieldGroup);
+        total++;
+      });
+    });
+  })();
+
 })();
 </script>
 
@@ -1488,7 +1781,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-1 skeleton]`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-2 deep-field]`);
   okCount++;
 }
 

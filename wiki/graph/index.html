@@ -21,7 +21,7 @@
 <!--
   C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
-  CP-2 ⏳ deep-field: 227 kg nodes + 578 corpus stars + proximity mesh
+  CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ⏳ real cross-theme interlinkages from kg.json edges
   CP-4 ⏳ motion vocabulary: twinkle / Lissajous-drift / signal pulses
   CP-5 ⏳ big-bang single-origin entry + parallax bg layer
@@ -98,6 +98,10 @@
   .genesis-core{cursor:pointer;transition:filter 0.2s;}
   .genesis-core:hover{filter:drop-shadow(0 0 16px rgba(229,165,75,0.95));}
 
+  .belief-node{cursor:pointer;transition:fill 0.15s,r 0.15s;}
+  .belief-node:hover{fill:var(--accent) !important;}
+  .deep-mesh-line{pointer-events:none;}
+
   @media (max-width: 768px){
     .legend-strip{display:none;}
     .help-strip{font-size:9px;left:64px;}
@@ -140,8 +144,10 @@
 
 <div class="legend-strip">
   <div><span class="swatch genesis"></span>genesis</div>
-  <div><span class="swatch gold"></span>theme</div>
-  <div style="font-size:9px;opacity:0.7;margin-top:4px;">cp-1 skeleton · cp-2-7 incoming</div>
+  <div><span class="swatch gold"></span>theme (12)</div>
+  <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
+  <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ 295+ corpus deep-field</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2 ✓ · cp-3-7 incoming</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -173,7 +179,7 @@
 
 (function(){
   // === Constellation CP-1: static genesis + 11 themes ===
-  const THEMES = [{"id":"theme.agent-first","slug":"agent-first","label":"agent-first","ang":18,"radF":0.27},{"id":"theme.ai-pm-skillset","slug":"ai-pm-skillset","label":"ai-pm skillset","ang":62,"radF":0.32},{"id":"theme.pm-taste","slug":"pm-taste","label":"pm taste","ang":98,"radF":0.25},{"id":"theme.enterprise-ai-reality","slug":"enterprise-ai-reality","label":"enterprise ai","ang":138,"radF":0.3},{"id":"theme.voice-ai-craft","slug":"voice-ai-craft","label":"voice ai craft","ang":168,"radF":0.27},{"id":"theme.second-brain","slug":"second-brain","label":"second brain","ang":202,"radF":0.29},{"id":"theme.spec-first-taste","slug":"spec-first-taste","label":"spec-first taste","ang":232,"radF":0.25},{"id":"theme.breadth-as-differentiation","slug":"breadth-as-differentiation","label":"breadth as edge","ang":260,"radF":0.31},{"id":"theme.linkedin-as-instrument","slug":"linkedin-as-instrument","label":"linkedin instrument","ang":288,"radF":0.24},{"id":"theme.career-reflection","slug":"career-reflection","label":"career reflection","ang":318,"radF":0.28},{"id":"theme.personal-projects-tinkering","slug":"personal-projects-tinkering","label":"personal projects","ang":348,"radF":0.32}];
+  const THEMES = [{"id":"theme.agent-first","slug":"agent-first","label":"agent-first","ang":18,"radF":0.27,"beliefCount":8,"projectCount":2,"postCount":21,"techCount":5},{"id":"theme.ai-pm-skillset","slug":"ai-pm-skillset","label":"ai-pm skillset","ang":62,"radF":0.32,"beliefCount":7,"projectCount":2,"postCount":12,"techCount":5},{"id":"theme.pm-taste","slug":"pm-taste","label":"pm taste","ang":98,"radF":0.25,"beliefCount":10,"projectCount":2,"postCount":3,"techCount":5},{"id":"theme.enterprise-ai-reality","slug":"enterprise-ai-reality","label":"enterprise ai","ang":138,"radF":0.3,"beliefCount":4,"projectCount":2,"postCount":5,"techCount":5},{"id":"theme.voice-ai-craft","slug":"voice-ai-craft","label":"voice ai craft","ang":168,"radF":0.27,"beliefCount":2,"projectCount":2,"postCount":3,"techCount":5},{"id":"theme.second-brain","slug":"second-brain","label":"second brain","ang":202,"radF":0.29,"beliefCount":5,"projectCount":2,"postCount":21,"techCount":5},{"id":"theme.spec-first-taste","slug":"spec-first-taste","label":"spec-first taste","ang":232,"radF":0.25,"beliefCount":4,"projectCount":2,"postCount":10,"techCount":5},{"id":"theme.breadth-as-differentiation","slug":"breadth-as-differentiation","label":"breadth as edge","ang":260,"radF":0.31,"beliefCount":2,"projectCount":2,"postCount":13,"techCount":5},{"id":"theme.linkedin-as-instrument","slug":"linkedin-as-instrument","label":"linkedin instrument","ang":288,"radF":0.24,"beliefCount":2,"projectCount":2,"postCount":6,"techCount":5},{"id":"theme.career-reflection","slug":"career-reflection","label":"career reflection","ang":318,"radF":0.28,"beliefCount":8,"projectCount":1,"postCount":16,"techCount":6},{"id":"theme.personal-projects-tinkering","slug":"personal-projects-tinkering","label":"personal projects","ang":348,"radF":0.32,"beliefCount":3,"projectCount":1,"postCount":1,"techCount":5}];
   const VB_W = 1600, VB_H = 900;
   const CX = VB_W / 2, CY = VB_H / 2;
   const VB_MIN = Math.min(VB_W, VB_H);
@@ -200,6 +206,30 @@
     t.y = p.y;
   });
 
+  // === Z-order discipline ===
+  // deep-field group FIRST (renders beneath everything; populated at end of CP-2)
+  // genesis NEXT (center anchor, above deep-field)
+  // theme groups LAST (each contains belief-cluster sub-group rendered FIRST inside the
+  // group so beliefs/projects/posts/tech sit beneath the gold star within the cluster)
+  // CP-2 appends deep-field stars + mesh to the early-created group so DOM order = z-order.
+
+  // CP-2 deep-field rng + deepFieldGroup created BEFORE genesis so it sits at the back.
+  function mulberry32(seed){
+    return function(){
+      let t = seed += 0x6D2B79F5;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const deepFieldGroup = el('g', { id:'deep-field' });
+  const deepFieldPositions = [];
+  function deepStar(x, y, r, opacity){
+    const c = el('circle', { cx:x.toFixed(2), cy:y.toFixed(2), r:r.toFixed(2), fill:'rgba(232,228,223,'+opacity.toFixed(3)+')' }, deepFieldGroup);
+    deepFieldPositions.push({ x, y });
+    return c;
+  }
+
   // === Render: genesis at center ===
   // Halos (concentric, alpha cascade)
   [
@@ -222,13 +252,21 @@
   THEMES.forEach(t => {
     const g = el('g', { class:'theme-group', 'data-theme':t.id, transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')' });
     g.style.cursor = 'pointer';
-    g.addEventListener('click', () => { window.location.href = '/wiki/' + t.slug + '/'; });
+    g.addEventListener('click', (ev) => {
+      // Don't navigate if click landed on an inner belief node (it has its own handler)
+      if (ev.target.classList && ev.target.classList.contains('belief-node')) return;
+      window.location.href = '/wiki/' + t.slug + '/';
+    });
 
-    // Concentric halos
+    // Belief-cluster sub-group — created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
+    // render BENEATH the theme halos + star within this group.
+    el('g', { 'data-belief-cluster':t.id }, g);
+
+    // Concentric halos (drawn above belief cluster)
     el('circle', { cx:0, cy:0, r:18, fill:'rgba(229,165,75,0.07)' }, g);
     el('circle', { cx:0, cy:0, r:11, fill:'rgba(229,165,75,0.16)' }, g);
 
-    // The star
+    // The star (always on top within group)
     el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
 
     // Theme label — outside node, radial baseline, quadrant-aware anchor
@@ -245,6 +283,260 @@
       class:'theme-label',
     }, g).textContent = t.label;
   });
+
+  // === CP-2: Per-theme inner-cluster render ===
+  // Each theme group has a [data-belief-cluster] sub-group reserved during theme render
+  // (z-order: cluster sits BENEATH theme halos + star).
+  const beliefClusters = {};
+  THEMES.forEach((t) => {
+    beliefClusters[t.id] = svg.querySelector('g[data-theme="' + t.id + '"] g[data-belief-cluster="' + t.id + '"]');
+  });
+
+  const beliefByTheme = {"theme.agent-first":["belief.agent-first","belief.agent-first-ecosystem-instinct","belief.application-layer-is-where-safety-lives","belief.reversibility-over-consequences","belief.agent-layer-is-threat-surface","belief.prompts-as-engineering-primitive","belief.context-over-prompt","belief.kill-prompting"],"theme.ai-pm-skillset":["belief.ai-pm-skillset-table-stakes","belief.ai-fluency-required","belief.learn-concepts-not-tools","belief.llm-as-primary-daily-tool","belief.its-not-the-model-its-the-problem","belief.tech-as-enabler","belief.design-thinking-as-speed-tool"],"theme.pm-taste":["belief.pm-is-99-should-we-1-can-we","belief.pm-is-featherless-hat","belief.pm-as-parenting","belief.anti-customization","belief.data-literacy-is-pm-core","belief.build-measure-learn","belief.idea-validation-3-pillars","belief.non-functional-reqs-are-dominant-failure-mode","belief.design-thinking-as-speed-tool","belief.strong-opinion-about-no-strong-opinions"],"theme.enterprise-ai-reality":["belief.enterprise-ai-production-reality","belief.moats-are-infra-talent-data","belief.data-readiness-is-pipeline-not-corpus","belief.mcp-as-enterprise-primitive"],"theme.voice-ai-craft":["belief.voice-as-enterprise-wedge","belief.enterprise-ai-production-reality"],"theme.second-brain":["belief.second-brain-is-context-layer","belief.self-instrumentation","belief.quantified-self-as-mindfulness","belief.llm-as-primary-daily-tool","belief.personal-website-is-present-tense"],"theme.spec-first-taste":["belief.spec-over-sprint","belief.taste-over-execution","belief.context-over-prompt","belief.anti-customization"],"theme.breadth-as-differentiation":["belief.breadth-as-differentiation","belief.breadth-needs-depth"],"theme.linkedin-as-instrument":["belief.linkedin-as-instrumental-platform","belief.strong-opinion-about-no-strong-opinions"],"theme.career-reflection":["belief.help-market-flourish","belief.ic-path-legitimacy","belief.learn-concepts-not-tools","belief.certifications-are-collectibles","belief.muscle-memory-over-novelty","belief.two-roles-ahead-framing","belief.never-be-smartest-in-room","belief.lead-yourself-first"],"theme.personal-projects-tinkering":["belief.ship-the-prototype","belief.personal-website-is-present-tense","belief.gaming-as-economic-intuition"]};
+  const projectByTheme = {"theme.agent-first":["project.agamarora-com-v2","project.flow-live"],"theme.ai-pm-skillset":["project.ai-resume","project.fareye-analyze"],"theme.pm-taste":["project.shararat-vapi","project.toggl-quantified-self"],"theme.enterprise-ai-reality":["project.claude-code-resource-monitor","project.chatgpt-pm-stack"],"theme.voice-ai-craft":["project.second-brain-v1","project.agamarora-com-v1"],"theme.second-brain":["project.flutter-dart-prototyping","project.enter-v3"],"theme.spec-first-taste":["project.crewai-agentic-system","project.enterprise-voice-ai-platform-internal"],"theme.breadth-as-differentiation":["project.llm-comparator","project.enterprise-mcp-platform-internal"],"theme.linkedin-as-instrument":["project.ollama-keyboard-shortcut","project.agamarora-com-voice-ai-case-study"],"theme.career-reflection":["project.pi-based-scripts"],"theme.personal-projects-tinkering":["project.v2-games"]};
+  const postByTheme = {"theme.agent-first":["post.urn-li-activity-7044971627607900160","post.urn-li-activity-7204325913650491392","post.urn-li-activity-7236941772336066560","post.urn-li-activity-7277158028422914048","post.urn-li-activity-7341662205257433088","post.urn-li-activity-7351602695977226243","post.urn-li-activity-7378427141190799360","post.urn-li-activity-7396047657951064064","post.urn-li-activity-7414150680820547584","post.urn-li-activity-7447981735901949952","post.urn-li-activity-7452998640345853952","post.urn-li-activity-7044971627607900160","post.urn-li-activity-7204325913650491392","post.urn-li-activity-7277158028422914048","post.urn-li-activity-7341662205257433088","post.urn-li-activity-7351602695977226243","post.urn-li-activity-7378427141190799360","post.urn-li-activity-7396047657951064064","post.urn-li-activity-7414150680820547584","post.urn-li-activity-7452998640345853952","post.urn-li-activity-6369983938248699904"],"theme.ai-pm-skillset":["post.urn-li-activity-6349574083381944321","post.urn-li-activity-6820970631484465152","post.urn-li-activity-7041317366437163008","post.urn-li-activity-7043263140091899904","post.urn-li-activity-7171171307559043072","post.urn-li-activity-7178931908863561728","post.urn-li-activity-7199797475379978240","post.urn-li-activity-7214487241681772545","post.urn-li-activity-7341662205257433088","post.urn-li-activity-7447981735901949952","post.urn-li-activity-7214622697397448704","post.urn-li-activity-6376849689375019008"],"theme.pm-taste":["post.urn-li-activity-7245035069900791808","post.urn-li-activity-7402319253036531712","post.urn-li-activity-7180039976464650241"],"theme.enterprise-ai-reality":["post.urn-li-activity-7237024800895889408","post.urn-li-activity-7341662205257433088","post.urn-li-activity-7378427141190799360","post.urn-li-activity-7402026484919205888","post.urn-li-activity-7218568028266340352"],"theme.voice-ai-craft":["post.urn-li-activity-7378427141190799360","post.urn-li-activity-7179449143407386624","post.urn-li-activity-7214487241681772545"],"theme.second-brain":["post.urn-li-activity-7036000000000000000","post.urn-li-activity-7041000000000000000","post.urn-li-activity-7062000000000000000","post.urn-li-activity-7180000000000000000","post.urn-li-activity-7202000000000000000","post.urn-li-activity-7204000000000000000","post.urn-li-activity-7220000000000000000","post.urn-li-activity-7318000000000000000","post.urn-li-activity-7047219999999999999","post.urn-li-activity-7100000000000000000","post.urn-li-activity-7200000000000000000","post.urn-li-activity-7447981735901949952","post.urn-li-activity-7452296800352305152","post.urn-li-activity-7452998640345853952","post.urn-li-activity-6405000000000000000","post.urn-li-activity-6636000000000000000","post.urn-li-activity-7041000000000000000","post.urn-li-activity-7180000000000000000","post.urn-li-activity-7199000000000000000","post.urn-li-activity-7202000000000000000","post.urn-li-activity-7318000000000000000"],"theme.spec-first-taste":["post.urn-li-activity-7402319253036531712","post.urn-li-activity-7034426809358114816","post.urn-li-activity-7207229692557348864","post.urn-li-activity-7277158028422914048","post.urn-li-activity-7351602695977226243","post.urn-li-activity-7447981735901949952","post.urn-li-activity-7452296800352305152","post.urn-li-activity-7452998640345853952","post.urn-li-activity-7402319253036531712","post.urn-li-activity-7402319253036531712"],"theme.breadth-as-differentiation":["post.urn-li-activity-6609782345678901248","post.urn-li-activity-6838000000000000000","post.urn-li-activity-7127000000000000000","post.urn-li-activity-7180000000000000000","post.urn-li-activity-7213000000000000000","post.urn-li-activity-6379000000000000000","post.urn-li-activity-6609782345678901248","post.urn-li-activity-7180000000000000000","post.urn-li-activity-7184000000000000000","post.urn-li-activity-7207000000000000000","post.urn-li-activity-7213000000000000000","post.urn-li-activity-7245000000000000000","post.urn-li-activity-7353000000000000000"],"theme.linkedin-as-instrument":["post.urn-li-activity-6226000000000000000","post.urn-li-activity-7162000000000000000","post.urn-li-activity-7162000000000000001","post.urn-li-activity-7173000000000000000","post.urn-li-activity-7213000000000000000","post.urn-li-activity-7263000000000000000"],"theme.career-reflection":["post.urn-li-activity-6314056957212876800","post.urn-li-activity-6423036084040630272","post.urn-li-activity-7133126861819117568","post.urn-li-activity-7162451080759459840","post.urn-li-activity-7211156691101327360","post.urn-li-activity-7263044949686824960","post.urn-li-activity-7410323391465062400","post.urn-li-activity-6859808635776897024","post.urn-li-activity-7083000000000000000","post.urn-li-activity-7214935682534957056","post.urn-li-activity-7396047657951064064","post.urn-li-activity-6510000000000000000","post.urn-li-activity-6609782345678901248","post.urn-li-activity-7171000000000000000","post.urn-li-activity-7211000000000000000","post.urn-li-activity-7475000000000000000"],"theme.personal-projects-tinkering":["post.urn-li-activity-6367924728723795968"]};
+  const techByTheme = {"theme.agent-first":["tech.c","tech.streamlit","tech.vapi","tech.linux-home-lab","tech.gpt-3-5"],"theme.ai-pm-skillset":["tech.java","tech.pyspark","tech.netlify","tech.github","tech.groq-hosted-fast-inference-models"],"theme.pm-taste":["tech.javascript-node-js","tech.pandas","tech.streamlit-share","tech.openai-api","tech.qwen-32b"],"theme.enterprise-ai-reality":["tech.dart","tech.numpy","tech.crewai","tech.anthropic-api","tech.mcp"],"theme.voice-ai-craft":["tech.solidity","tech.kaggle","tech.autogen","tech.llama3","tech.sse"],"theme.second-brain":["tech.sql","tech.databricks","tech.jupyter","tech.phi3","tech.rest-api-design"],"theme.spec-first-taste":["tech.flutter","tech.github-copilot","tech.toggl","tech.llama-8b","tech.agentic-orchestration-patterns"],"theme.breadth-as-differentiation":["tech.unity3d","tech.groq","tech.cursor","tech.llama-70b","tech.rag"],"theme.linkedin-as-instrument":["tech.reactjs","tech.ollama","tech.claude-code","tech.mixtral-8x7b","tech.tech-sanskrit-cultural-reference"],"theme.career-reflection":["tech.python","tech.nodejs","tech.litellm","tech.chatgpt-api-interface","tech.gemma-7b-2-9b","tech.not-programming-language"],"theme.personal-projects-tinkering":["tech.r","tech.spring-boot","tech.openrouter","tech.midjourney","tech.gpt-4"]};
+
+  // beliefId -> wiki page slug (for click-through)
+  // (only Tier-1 beliefs have pages; others are graph nodes only)
+  const beliefSlug = {};
+  beliefSlug["belief.substance-over-hype"] = "substance-over-hype";
+  beliefSlug["belief.agent-first"] = "agent-first";
+  beliefSlug["belief.context-over-prompt"] = "context-over-prompt";
+  beliefSlug["belief.spec-over-sprint"] = "spec-over-sprint";
+  beliefSlug["belief.taste-over-execution"] = "taste-over-execution";
+  beliefSlug["belief.anti-customization"] = "anti-customization";
+  beliefSlug["belief.pm-is-99-should-we-1-can-we"] = "pm-is-99-should-we-1-can-we";
+  beliefSlug["belief.ai-pm-skillset-table-stakes"] = "ai-pm-skillset-table-stakes";
+  beliefSlug["belief.learn-concepts-not-tools"] = "learn-concepts-not-tools";
+  beliefSlug["belief.llm-as-primary-daily-tool"] = "llm-as-primary-daily-tool";
+  beliefSlug["belief.enterprise-ai-production-reality"] = "enterprise-ai-production-reality";
+  beliefSlug["belief.second-brain-is-context-layer"] = "second-brain-is-context-layer";
+  beliefSlug["belief.self-instrumentation"] = "self-instrumentation";
+  beliefSlug["belief.help-market-flourish"] = "help-market-flourish";
+  beliefSlug["belief.ic-path-legitimacy"] = "ic-path-legitimacy";
+  beliefSlug["belief.linkedin-as-instrumental-platform"] = "linkedin-as-instrumental-platform";
+  beliefSlug["belief.ship-the-prototype"] = "ship-the-prototype";
+  beliefSlug["belief.breadth-as-differentiation"] = "breadth-as-differentiation";
+  beliefSlug["belief.breadth-needs-depth"] = "breadth-needs-depth";
+  beliefSlug["belief.agent-first-ecosystem-instinct"] = null;
+  beliefSlug["belief.application-layer-is-where-safety-lives"] = null;
+  beliefSlug["belief.reversibility-over-consequences"] = null;
+  beliefSlug["belief.agent-layer-is-threat-surface"] = null;
+  beliefSlug["belief.prompts-as-engineering-primitive"] = null;
+  beliefSlug["belief.kill-prompting"] = null;
+  beliefSlug["belief.ico-is-funding-not-product"] = null;
+  beliefSlug["belief.ai-fluency-required"] = null;
+  beliefSlug["belief.its-not-the-model-its-the-problem"] = null;
+  beliefSlug["belief.moats-are-infra-talent-data"] = null;
+  beliefSlug["belief.data-readiness-is-pipeline-not-corpus"] = null;
+  beliefSlug["belief.quantified-self-as-mindfulness"] = null;
+  beliefSlug["belief.personal-website-is-present-tense"] = null;
+  beliefSlug["belief.pm-is-featherless-hat"] = null;
+  beliefSlug["belief.pm-as-parenting"] = null;
+  beliefSlug["belief.data-literacy-is-pm-core"] = null;
+  beliefSlug["belief.build-measure-learn"] = null;
+  beliefSlug["belief.idea-validation-3-pillars"] = null;
+  beliefSlug["belief.non-functional-reqs-are-dominant-failure-mode"] = null;
+  beliefSlug["belief.design-thinking-as-speed-tool"] = null;
+  beliefSlug["belief.strong-opinion-about-no-strong-opinions"] = null;
+  beliefSlug["belief.certifications-are-collectibles"] = null;
+  beliefSlug["belief.muscle-memory-over-novelty"] = null;
+  beliefSlug["belief.two-roles-ahead-framing"] = null;
+  beliefSlug["belief.never-be-smartest-in-room"] = null;
+  beliefSlug["belief.ai-is-the-next-wave"] = null;
+  beliefSlug["belief.tech-as-enabler"] = null;
+  beliefSlug["belief.gaming-as-economic-intuition"] = null;
+  beliefSlug["belief.lead-yourself-first"] = null;
+  beliefSlug["belief.mcp-as-enterprise-primitive"] = null;
+  beliefSlug["belief.voice-as-enterprise-wedge"] = null;
+  beliefSlug["belief.silence-precedes-crystallization"] = null;
+  beliefSlug["belief.outcome-billing-over-hourly"] = null;
+  beliefSlug["belief.tinker-publicly"] = null;
+  beliefSlug["belief.named-citation-as-confidence-marker"] = null;
+  beliefSlug["belief.value-viability-usability-triad"] = null;
+  beliefSlug["belief.llm-as-voice-extension"] = null;
+  beliefSlug["belief.non-functional-reqs-are-55pct-of-failure"] = null;
+  beliefSlug["belief.dominate-dont-compete"] = null;
+  beliefSlug["belief.ideas-are-enough"] = null;
+  beliefSlug["belief.personal-website-is-future-tense"] = null;
+  beliefSlug["belief.horizontal-ai-will-scale"] = null;
+  beliefSlug["belief.prompt-engineering-as-skill"] = null;
+  beliefSlug["belief.ship-fast"] = null;
+  beliefSlug["belief.people-management-is-endgame"] = null;
+
+  THEMES.forEach((t, ti) => {
+    const cluster = beliefClusters[t.id];
+    if (!cluster) return;
+    const rng = mulberry32(t.ang * 1000 + ti * 31 + 13);
+
+    // 1. Beliefs — irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
+    const beliefs = beliefByTheme[t.id] || [];
+    beliefs.forEach((bid, bi) => {
+      const baseA = (360 / Math.max(beliefs.length, 1)) * bi;
+      const jitterA = (rng() - 0.5) * 40;
+      const a = baseA + jitterA;
+      const radiiPool = [22, 28, 34, 40, 46];
+      const r = radiiPool[Math.floor(rng() * radiiPool.length)] + (rng() - 0.5) * 8;
+      const p = polar(0, 0, r, a);
+      const slug = beliefSlug[bid];
+      const node = el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:3.4,
+        fill:'rgba(232,228,223,0.55)',
+        class:'belief-node',
+        'data-id':bid,
+      }, cluster);
+      if (slug) {
+        node.style.cursor = 'pointer';
+        node.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          window.location.href = '/wiki/beliefs/' + slug + '/';
+        });
+      }
+    });
+
+    // 2. Projects — placed slightly farther out, mid-bright
+    const projects = projectByTheme[t.id] || [];
+    projects.forEach((pid, pi) => {
+      const baseA = (360 / Math.max(projects.length, 1)) * pi + 18;
+      const a = baseA + (rng() - 0.5) * 40;
+      const r = 50 + rng() * 24;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(2.2 + rng()*0.6).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.42 + rng()*0.18).toFixed(3)+')',
+        'data-id':pid,
+      }, cluster);
+    });
+
+    // 3. Posts — small, dim, scattered in theme wedge
+    const posts = postByTheme[t.id] || [];
+    posts.forEach((pid, pi) => {
+      const a = (rng() - 0.5) * 70;
+      const r = 60 + rng() * 38;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(1.2 + rng()*0.5).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.25 + rng()*0.15).toFixed(3)+')',
+        'data-id':pid,
+      }, cluster);
+    });
+
+    // 4. Tech — smallest, dimmest, scattered in wedge
+    const tech = techByTheme[t.id] || [];
+    tech.forEach((tid, tii) => {
+      const a = (rng() - 0.5) * 90;
+      const r = 35 + rng() * 50;
+      const p = polar(0, 0, r, a);
+      el('circle', {
+        cx:p.x.toFixed(2), cy:p.y.toFixed(2), r:(1.0 + rng()*0.4).toFixed(2),
+        fill:'rgba(232,228,223,'+(0.18 + rng()*0.14).toFixed(3)+')',
+        'data-id':tid,
+      }, cluster);
+    });
+  });
+
+  // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
+  // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
+  // representing the raw corpus we synthesized from. Weak theme-clustering bias.
+  const dfRng = mulberry32(424242);
+
+  // 295 corpus posts (mid-density)
+  for (let i = 0; i < 295; i++){
+    const themeBias = dfRng() < 0.65;
+    let x, y;
+    if (themeBias){
+      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
+      const baseR = VB_MIN * t.radF;
+      const aOff = (dfRng() - 0.5) * 90;
+      const rFac = 0.5 + dfRng() * 0.85;
+      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
+      x = p.x; y = p.y;
+    } else {
+      x = 60 + dfRng() * (VB_W - 120);
+      y = 60 + dfRng() * (VB_H - 120);
+    }
+    const dx = x - CX, dy = y - CY;
+    if (Math.sqrt(dx*dx + dy*dy) < 55) continue;  // don't crowd the genesis
+    deepStar(x, y, 1.1 + dfRng() * 0.7, 0.20 + dfRng() * 0.20);
+  }
+
+  // 283 corpus comments (smaller, dimmer)
+  for (let i = 0; i < 283; i++){
+    let x, y;
+    if (dfRng() < 0.5){
+      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
+      const baseR = VB_MIN * t.radF;
+      const aOff = (dfRng() - 0.5) * 110;
+      const rFac = 0.45 + dfRng() * 0.95;
+      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
+      x = p.x; y = p.y;
+    } else {
+      x = 40 + dfRng() * (VB_W - 80);
+      y = 40 + dfRng() * (VB_H - 80);
+    }
+    const dx = x - CX, dy = y - CY;
+    if (Math.sqrt(dx*dx + dy*dy) < 45) continue;
+    deepStar(x, y, 0.7 + dfRng() * 0.6, 0.12 + dfRng() * 0.15);
+  }
+
+  // === CP-2: Proximity mesh — short hairlines between nearby corpus stars ===
+  // Synthesizes co-mention / post-comment relations as visual proxy.
+  // Real semantic edges from kg.json land at CP-3.
+  (function buildMesh(){
+    const MESH_RADIUS = 95;
+    const MAX_PER = 2;
+    const MAX_EDGES = 900;
+    const cellSize = MESH_RADIUS;
+    const cols = Math.ceil(VB_W / cellSize) + 2;
+    const rows = Math.ceil(VB_H / cellSize) + 2;
+    const grid = new Array(cols * rows).fill(null).map(() => []);
+    function cellIdx(x, y){
+      const cx = Math.floor(x / cellSize);
+      const cy = Math.floor(y / cellSize);
+      return { idx: cy * cols + cx, cx, cy };
+    }
+    deepFieldPositions.forEach((p, i) => {
+      const { idx } = cellIdx(p.x, p.y);
+      if (idx >= 0 && idx < grid.length) grid[idx].push(i);
+    });
+    const drawn = new Set();
+    let total = 0;
+    deepFieldPositions.forEach((p, i) => {
+      if (total >= MAX_EDGES) return;
+      const { cx, cy } = cellIdx(p.x, p.y);
+      const cands = [];
+      for (let oy = -1; oy <= 1; oy++){
+        for (let ox = -1; ox <= 1; ox++){
+          const cidx = (cy + oy) * cols + (cx + ox);
+          if (cidx < 0 || cidx >= grid.length) continue;
+          grid[cidx].forEach(j => {
+            if (j === i) return;
+            const q = deepFieldPositions[j];
+            const dx = q.x - p.x, dy = q.y - p.y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d > 0 && d <= MESH_RADIUS) cands.push({ j, d });
+          });
+        }
+      }
+      cands.sort((a, b) => a.d - b.d);
+      cands.slice(0, MAX_PER).forEach(({ j, d }) => {
+        const key = i < j ? i + '|' + j : j + '|' + i;
+        if (drawn.has(key)) return;
+        drawn.add(key);
+        const q = deepFieldPositions[j];
+        const op = (1 - d / MESH_RADIUS) * 0.10 + 0.025;
+        el('line', {
+          x1:p.x.toFixed(2), y1:p.y.toFixed(2),
+          x2:q.x.toFixed(2), y2:q.y.toFixed(2),
+          stroke:'rgba(232,228,223,'+op.toFixed(3)+')',
+          'stroke-width':'0.35',
+          class:'deep-mesh-line',
+        }, deepFieldGroup);
+        total++;
+      });
+    });
+  })();
 
 })();
 </script>
