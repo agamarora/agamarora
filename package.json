@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build:kg": "node scripts/build-kg.mjs --strict",
-    "build": "npm run build:kg"
+    "build:wiki": "node scripts/build-wiki.mjs --strict",
+    "build": "npm run build:kg && npm run build:wiki"
   },
   "dependencies": {
     "groq-sdk": "^1.1.2"

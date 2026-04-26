@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal projects  -  ship it or it doesn't exist - Agam Arora's wiki.</title>
+<meta name="description" content="Personal projects  -  ship it or it doesn't exist - one of twelve themes plus a root in agamarora.second-brain.">
+<meta name="theme-color" content="#0A0A0A">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://agamarora.com/wiki/personal-projects-tinkering/">
+<meta property="og:title" content="Personal projects  -  ship it or it doesn't exist - Agam Arora's wiki.">
+<meta property="og:description" content="Personal projects  -  ship it or it doesn't exist">
+<meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Agam Arora">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Personal projects  -  ship it or it doesn't exist - Agam Arora's wiki.">
+<meta name="twitter:description" content="Personal projects  -  ship it or it doesn't exist">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/lab.png">
+
+<link rel="canonical" href="https://agamarora.com/wiki/personal-projects-tinkering/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Personal projects  -  ship it or it doesn't exist",
+  "url": "https://agamarora.com/wiki/personal-projects-tinkering/",
+  "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
+  "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
+}
+</script>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="manifest" href="/site.webmanifest">
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+
+  .page{max-width:760px;margin:0 auto;padding:calc(clamp(52px,6vw,64px) + var(--space-8)) clamp(var(--space-6),5vw,var(--space-8)) calc(var(--space-9) + var(--space-7));}
+
+  .breadcrumb{font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.06em;margin-bottom:var(--space-6);}
+  .breadcrumb a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed var(--border-hover);transition:color 0.2s,border-color 0.2s;}
+  .breadcrumb a:hover{color:var(--accent);border-color:var(--accent);}
+  .breadcrumb .sep{margin:0 var(--space-3);opacity:0.5;}
+
+  article{font-size:1.04rem;}
+  article > p, article > ul, article > .md-table-wrap, article > hr { margin-bottom: var(--space-6); }
+  article h1{font-size:clamp(2.2rem,5vw,3rem);font-weight:700;letter-spacing:-0.025em;line-height:1.05;margin-bottom:var(--space-7);max-width:680px;}
+  article h2{font-size:clamp(1.5rem,2.4vw,1.85rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-top:var(--space-9);margin-bottom:var(--space-5);color:var(--text);}
+  article h2:first-of-type{margin-top:0;}
+  article h3{font-size:clamp(1.1rem,1.6vw,1.25rem);font-weight:600;letter-spacing:-0.01em;line-height:1.3;margin-top:var(--space-7);margin-bottom:var(--space-4);}
+  article p{font-size:1.04rem;line-height:1.7;color:var(--text);opacity:0.92;}
+  article p em{font-style:italic;opacity:0.85;}
+  article p strong{color:var(--text);font-weight:600;opacity:1;}
+  article p code,article li code{font-family:var(--mono);font-size:0.92em;background:var(--surface-2);border:1px solid var(--border);padding:1px 6px;border-radius:var(--radius-sm);color:var(--accent);}
+  article a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);transition:border-color 0.2s;}
+  article a:hover{border-color:var(--accent);}
+  article a.urn-link{font-family:var(--mono);font-size:0.85em;color:var(--text-dim);border-bottom:1px dashed var(--border-hover);}
+  article a.urn-link:hover{color:var(--accent);border-color:var(--accent);}
+  article hr{border:0;height:1px;background:var(--border);margin:var(--space-8) 0;}
+  article ul{padding-left:var(--space-6);}
+  article ul li{margin-bottom:var(--space-3);line-height:1.7;}
+
+  .md-table-wrap{overflow-x:auto;margin:var(--space-6) 0;border:1px solid var(--border);border-radius:var(--radius-md);}
+  .md-table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+  .md-table th,.md-table td{padding:var(--space-4) var(--space-5);text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+  .md-table th{background:var(--surface);color:var(--accent);font-family:var(--mono);font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;}
+  .md-table td{color:var(--text);opacity:0.88;}
+  .md-table tr:last-child td{border-bottom:0;}
+
+  .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
+  .theme-meta .tier{color:var(--accent);}
+
+  .theme-nav{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:var(--space-5);font-family:var(--mono);font-size:0.82rem;}
+  .theme-nav a{color:var(--text-dim);text-decoration:none;transition:color 0.2s;border:0;}
+  .theme-nav a:hover{color:var(--accent);}
+  .theme-nav .home{color:var(--text-dim);}
+
+  .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<main class="page">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Personal projects  -  ship it or it doesn't exist</span>
+  </nav>
+
+  <article role="main">
+<h1 id="personal-projects-ship-it-or-it-doesn-t-exist">Personal projects  -  ship it or it doesn't exist</h1>
+<p><em>Era: 2016 to 2026 · 12+ posts · 4 beliefs · 52-project lineage</em></p>
+<hr>
+<h2 id="core-belief">Core belief</h2>
+<p>Ideas are cheap. The prototype is the argument.</p>
+<p>This is not a principle held in the abstract. It is a conclusion from a specific moment: lockdown, 2020, no dev budget, a product idea that needed a mobile app to prove it. Rather than waiting for a team, he pulled up a Flutter/Dart course and built the capability himself. Three weeks later: &quot;No longer 'just an idea!' :)&quot;</p>
+<p>That phrase names a prior identity and walks away from it. The &quot;just an idea&quot; person pitches. The prototype person ships. The prototype is not a deliverable. It is the evidence.</p>
+<hr>
+<h2 id="how-it-formed">How it formed</h2>
+<p>The behavior predates the belief. The early habit formed through shipping that didn't pan out: projects that shipped, ideas that proved insufficient, companies that archived. The lesson: shipping is necessary but not sufficient. A product can ship and a company can still fail. That gap is where <code>belief.idea-validation-3-pillars</code> later grew, but it did not suppress the shipping habit. It supplemented it.</p>
+<p>The freelance years (2019-2020) compressed the constraint. No internal team, no budget, no external dev capacity. When lockdown removed even the theoretical option of hiring someone, Agam acquired the capability personally. The 2020-04-26 post: &quot;Tough times call for action more than anything. Wasn't able to invest into an app development team for an idea of mine. Pulled up this brilliant app development course on Introduction to Flutter development using Dart by Dr. Angela Yu and got it done with.&quot;</p>
+<p>Not a manifesto. A constraint turned into a capability. A workaround that became a habit.</p>
+<p>By 2023, the substrate had shifted: Python and Streamlit for personal-brand work. By 2024: local LLMs via Ollama, then CrewAI agentic orchestration, then Groq-powered comparators. By 2026: vanilla HTML, Claude Code, kg.json. The tools rotated; the pattern did not.</p>
+<hr>
+<h2 id="what-it-implies-the-52-project-pattern">What it implies: the 52-project pattern</h2>
+<p>The full project lineage is at <code>projects/index.html</code>: 52 projects, 41 lineage edges, 58 tech nodes across 10 years. What the DAG shows is not a portfolio. It is a practice.</p>
+<p>Pattern across every era: identify a gap, acquire what closes it, build the smallest thing that proves the point, post the link. Then move.</p>
+<h3 id="top-tier-projects-open-source-shipped-on-github">Top-tier projects (open-source, shipped, on GitHub)</h3>
+<p><strong>Shararat  -  Vapi Build Challenge (2025):</strong> Voice AI multi-agent personal project. Hackathon-shipped. Demonstrates ship-the-prototype and agent-first applied to a personal build outside the day job.</p>
+<p><strong>second-brain v1 (2026):</strong> wiki + kg.json + /enter v3. Plain markdown. Git. Open source. MIT. Free forever. Four months of private use before public launch, then one clean announcement. This is the page you are on.</p>
+<p><strong>luna-monitor / Claude Code Resource Monitor (2026):</strong> Open-source dev tool for tracking Claude Code resource usage. Shipped, on GitHub. Demonstrates help-market-flourish: built something useful, made it public immediately.</p>
+<p><strong>ai-resume (2025):</strong> Open-source AI-powered resume tool. Built on the same agamarora.com substrate. Demonstrates personal-website-is-present-tense and ship-the-prototype.</p>
+<p><strong>agamarora.com (2023-2026):</strong> The personal site itself. Python + Streamlit v1 (2023), then vanilla HTML/CSS/JS v2 (2024). &quot;How much time does it take to build your own personal website? It took me 12 years!&quot; Late arrival is still arrival. Open source. The site IS the belief made operational.</p>
+<h3 id="learning-tinkering-tier-category-not-foregrounded-individually">Learning-tinkering tier (category, not foregrounded individually)</h3>
+<p>These projects belong in the tinkering lineage but as a tier, not as individual featured builds: Flutter/Dart minis (2020, learning the framework), LLM comparator + CrewAI experiments (2024, learning multi-agent orchestration and LLMs), Pi-based Python scripts (various, hardware-flavored tinkering). Each closed a learning gap. None were trying to be products.</p>
+<h3 id="v2-games-career-chapter-not-this-page">V2 Games: career chapter, not this page</h3>
+<p>V2 Games India (2014-2016) is a career-stage entity, not a personal tinkering project. Co-founded startup, studio head role: analytics, some dev and QA, CEO and business work for the studio. It lives in <a href="/wiki/career-reflection/"><code>career-reflection</code></a>, not here. The gaming-as-economic-intuition signal travels with it.</p>
+<hr>
+<h2 id="the-loop">The loop</h2>
+<p>Build, post, teach, learn, build again. Posting is not distribution. It is the closing step that converts personal projects into reusable artifacts and feedback. The loop doesn't close until someone else can learn from it.</p>
+<p>The pattern holds across every era: the ollama keyboard-shortcut came with a tutorial video. The LLM comparator came with a Streamlit-share link. The second-brain v1 launch came with a paste-prompt in the post body. The top-tier projects are all open-source on GitHub. Not a coincidence: open-source IS the posting step for code. The same instinct that drives posting drives open-sourcing. (Cross-link: <a href="/wiki/career-reflection/"><code>career-reflection</code></a> for help-market-flourish with 2026 open-source evidence.)</p>
+<p>Not always simultaneous: the second-brain ran privately for four months before any public post. Personal-use notebooks were never posted. Day-job enterprise work is intentionally under-shared. The loop applies to personal builds. The boundary is real.</p>
+<p><code>belief.ship-the-prototype</code> (absorbs tinker-publicly per A3) is what this looks like when applied to personal/lab work and posted via <code>linkedin-as-instrument</code>.</p>
+<p>Cross-link: <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a>  -  where the build-post-teach-learn loop is analyzed as platform strategy.</p>
+<hr>
+<h2 id="tension-with-spec-first-taste">Tension with <code>spec-first-taste</code></h2>
+<p>In 2020: any prototype beats no prototype. Ship even when embarrassed. Reid Hoffman's &quot;if you're not embarrassed by the first version, you launched too late&quot; was borrowed authority.</p>
+<p>By 2026, the belief had been refined. <code>belief.spec-over-sprint</code> (2026-04-09): &quot;When you've specced every pixel, a generative tool gives you a worse version of what you already decided. Invest in the spec, not the iteration speed.&quot; Same verb (ship), tighter upstream constraint (spec first). 2020: artifact-existence beats idea-only. 2026: artifact-quality starts at the spec.</p>
+<p>This is a temporal evolution with a specific trigger: AI makes iteration near-zero-cost. Pre-LLM, the binding constraint was existence  -  ship the thing or the idea stays theoretical. Post-LLM, the binding constraint moved upstream to quality-of-spec, because the model amplifies whatever you put in front of it. The ship-fast belief is correctly listed as superseded in the ontology. The shipping cadence did not change. The preparation upstream of it did.</p>
+<p>What did not change: the shipping cadence. Between December 2025 and April 2026, three projects shipped (/buddy, second-brain v1 private, second-brain v1 public). The upstream discipline tightened; the downstream verb stayed.</p>
+<p>Cross-link: <a href="/wiki/spec-first-taste/"><code>spec-first-taste</code></a> for the builder trilogy (Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt) as refinement, not replacement.</p>
+<hr>
+<h2 id="evidence">Evidence</h2>
+<div class="md-table-wrap"><table class="md-table">
+<thead><tr><th>Date</th><th>Project / post</th><th>What it demonstrates</th></tr></thead>
+<tbody>
+<tr><td>2020-04-26</td><td>Flutter/Dart course: &quot;Off to creating&quot;</td><td>Capability acquisition as personal ship (learning-tinkering tier)</td></tr>
+<tr><td>2020-05-19</td><td>Flutter/Dart prototyping ready: &quot;No longer 'just an idea!'&quot;</td><td>Canonical inversion. Belief crystallizes.</td></tr>
+<tr><td>2021-03-26</td><td>Pi-day Jupyter/Kaggle notebook</td><td>Pattern holds at zero-stakes (learning-tinkering tier)</td></tr>
+<tr><td>2023-04-16</td><td>agamarora.com v1 (Python + Streamlit): &quot;It took me 12 years!&quot;</td><td>Personal-brand surface shipped; top-tier</td></tr>
+<tr><td>2024-06-05</td><td>Ollama + LLaMA3 keyboard-shortcut script + tutorial video</td><td>Self-effacing but the artifact and link are there (learning-tinkering tier)</td></tr>
+<tr><td>2024-06-28</td><td>&quot;Here are a few AI projects you can do over the weekend&quot; (Collab)</td><td>Belief becomes prescriptive teaching; loop closure via LinkedIn</td></tr>
+<tr><td>2024-07-24</td><td>CrewAI / Autogen / AutoGPT comparison, ran all three, posted findings</td><td>Opinion-with-receipts register (learning-tinkering tier)</td></tr>
+<tr><td>2024-09-17</td><td>Groq + Streamlit LLM comparator: &quot;open-source, links below&quot;</td><td>Open-sourced with distribution (learning-tinkering tier)</td></tr>
+<tr><td>2025 est.</td><td>Shararat: Vapi Build Challenge multi-agent voice experience</td><td>Hackathon ship; top-tier</td></tr>
+<tr><td>2025</td><td>ai-resume: open-source AI resume tool</td><td>Top-tier; open-source on GitHub</td></tr>
+<tr><td>2026-04-16</td><td>Claude Code /buddy + Brindle the duck</td><td>Small-stakes tinker posted</td></tr>
+<tr><td>2026-04</td><td>luna-monitor: Claude Code Resource Monitor</td><td>Top-tier; open-source on GitHub</td></tr>
+<tr><td>2026-04-23</td><td>second-brain v1: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot;</td><td>Top-tier. Latest-era register. The belief embodied.</td></tr>
+</tbody></table></div>
+<hr>
+<hr>
+<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
+  </article>
+
+  <nav class="theme-nav"><a href="/wiki/linkedin-as-instrument/">&larr; LinkedIn as instrument</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>
+</main>
+
+<script>(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  });
+})();</script>
+
+</body>
+</html>
