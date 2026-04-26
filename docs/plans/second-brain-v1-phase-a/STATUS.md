@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 22.6 — Phase C in flight. C-mech + C-struct shipped. C-voice-themes CP-1 (agent-first reference) DONE. CP-2 voice-ai-craft queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 22.7 — Phase C in flight. C-voice-themes CP-1 + CP-2 DONE (agent-first reference + voice-ai-craft). CP-3 breadth-as-differentiation queued.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-2: voice-ai-craft** via sonnet subagent. Per-theme cadence (no batching, user taste-call 2026-04-26). Reference page = agent-first.md (commit 7f68896). Plan deepened with §D1-narrative-binding + §D2-graph-UX-binding (commit 5a0e54f).
+**Current step:** Phase C / C-voice-themes / **CP-3: breadth-as-differentiation** via sonnet subagent. Per-theme cadence locked (one theme per checkpoint). Reference page = agent-first.md (commit 7f68896). Plan deepened with §D1-narrative-binding + §D2-graph-UX-binding (commit 5a0e54f). voice-ai-craft shipped (this commit).
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
