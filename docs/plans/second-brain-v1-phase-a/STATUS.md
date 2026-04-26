@@ -2,9 +2,9 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 20 — Phase B substantially shipped (B1-B5a). B5b/B6 + follow-ups (B7/B8) queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 21 — Phase B core build COMPLETE. 35 wiki pages live. Follow-ups B7/B8 queued.**
 
-## CURRENT STATE (Phase B IN FLIGHT — 33 wiki HTML pages live, 2 sub-tasks queued)
+## CURRENT STATE (Phase B core DONE — 35 wiki HTML pages live, all internal links resolve)
 
 **Phase B summary — what shipped this session:**
 
@@ -15,8 +15,8 @@ Last updated: 2026-04-26 — **CHECKPOINT 20 — Phase B substantially shipped (
 | B3 | 12 wiki theme + root HTML pages (`wiki/<slug>/index.html`) | DONE |
 | B4 | 19 wiki belief HTML pages (`wiki/beliefs/<slug>/index.html`) | DONE |
 | B5a | `wiki/voice/` + `wiki/quotes/` meta pages | DONE |
-| B5b | `wiki/projects/` DAG + `wiki/graph/` vis-network viz | QUEUED |
-| B6 | Cross-link wiring + final QA (T2/T3 belief refs filtering, broken-link audit, STATUS to CP21) | QUEUED |
+| B5b | `wiki/projects/` DAG + `wiki/graph/` vis-network viz | DONE |
+| B6 | Cross-link wiring (T2/T3 belief refs filtered to plain text) + link audit | DONE |
 | B7 | `build-kg.mjs` unit tests (boilable lake from /review) | QUEUED |
 | B8 | HTML stats from kg.json (drift fix from /review maintainability) | QUEUED |
 
@@ -27,9 +27,27 @@ Last updated: 2026-04-26 — **CHECKPOINT 20 — Phase B substantially shipped (
 - `/design-review`: v2 contract PASS, AI slop A- (6 auto-fixes: heading hierarchy collision, responsive minmax floor, hero h1 max-width, magic min-height, hover shadow, h3 size clamp, gradient opacity)
 - `/qa` static: 1 site-wide favicon TODO (pre-existing across 5 v2 pages), 16 expected 404s resolved by B3+B5
 
-**B5b deferred reasoning:**
-- Projects DAG: needs derivation from `projects-tech-lineage.md` (~55KB) + decision on viz format (SVG manual vs vis-network)
-- Graph viz: per `docs/designs/wiki-graph-spec.md`, needs vis-network library either CDN-loaded (CSP allowlist update) or vendored inline (~200KB). Larger time investment.
+**Page tree shipped:**
+- `/wiki/` (theme grid + meta-link cards)
+- `/wiki/root.substance-over-hype/` (root page)
+- `/wiki/<theme>/` x11 (theme pages)
+- `/wiki/beliefs/<slug>/` x19 (T1 belief sub-pages)
+- `/wiki/voice/` (how I write, from voice-spec §9)
+- `/wiki/quotes/` (curated signature lines)
+- `/wiki/projects/` (DAG view of 18 public projects, 14 lineage edges)
+- `/wiki/graph/` (vis-network force-directed viz of all 177 nodes / 111 edges, fetched from /wiki/kg.json client-side)
+
+**T2/T3 belief slugs:** rendered as plain `<code>` text in cross-link sections (graph nodes only, never had a wiki page). Filter applied at build-time via `HAS_PAGE` index of belief-page-drafts-final/ slugs.
+
+**Build pipeline:**
+- `npm run build:kg` -> `wiki/kg.json` (177 nodes, 111 edges, --strict mode)
+- `npm run build:wiki` -> 35 HTML pages (themes + beliefs + meta + projects + graph)
+- `npm run build` -> kg + wiki sequentially (set as Netlify deploy command)
+
+**Phase B follow-ups (still queued):**
+- B7 - build-kg.mjs unit tests (boilable lake, ~30min)
+- B8 - HTML stats from kg.json (drift fix; currently hardcoded in wiki/index.html)
+- v1 polish - per-page OG images, dedicated /wiki/ OG image, site-wide favicon path fix
 
 
 

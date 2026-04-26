@@ -88,19 +88,48 @@ const escHtml = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+// Slugs that have an actual wiki HTML page. Populated at startup from the
+// drafts dirs so cross-link expansion can filter out graph-only T2/T3 belief
+// refs (which are nodes in kg.json but never get their own page).
+let HAS_PAGE = { themes: new Set(), beliefs: new Set() };
+function refreshPageIndex() {
+  if (existsSync(THEME_DRAFTS_DIR)) {
+    HAS_PAGE.themes = new Set(
+      readdirSync(THEME_DRAFTS_DIR)
+        .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
+        .map((f) => basename(f, ".md"))
+    );
+  }
+  if (existsSync(BELIEF_DRAFTS_DIR)) {
+    HAS_PAGE.beliefs = new Set(
+      readdirSync(BELIEF_DRAFTS_DIR)
+        .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
+        .map((f) => basename(f, ".md"))
+    );
+  }
+}
+refreshPageIndex();
+
 function inlineMd(text) {
-  // Pre-pass: expand belief-page wiki shorthand into real markdown links so the
-  // standard [text](url) handler below can render them.
-  //   [wiki:beliefs:slug]      ->  [slug](/wiki/beliefs/slug/)
-  //   [wiki:root.foo]          ->  [foo](/wiki/root.foo/)
-  //   [wiki:slug]              ->  [slug](/wiki/slug/)
+  // Pre-pass: expand wiki shorthand into real markdown links so the standard
+  // [text](url) handler below can render them. Only expand if the target page
+  // actually exists. Otherwise render as plain code-styled text (graph-only
+  // node, no page).
+  //   [wiki:beliefs:slug]      ->  [slug](/wiki/beliefs/slug/) or `slug`
+  //   [wiki:slug]              ->  [slug](/wiki/slug/) or `slug`
   text = text.replace(
     /\[wiki:beliefs:([a-z0-9.\-]+)\]/g,
-    (_, slug) => `[${slug}](/wiki/beliefs/${slug}/)`
+    (_, slug) =>
+      HAS_PAGE.beliefs.has(slug)
+        ? `[${slug}](/wiki/beliefs/${slug}/)`
+        : `\`${slug}\``
   );
   text = text.replace(
     /\[wiki:([a-z0-9.\-]+)\](?!\()/g,
-    (_, slug) => `[${slug}](/wiki/${slug}/)`
+    (_, slug) =>
+      HAS_PAGE.themes.has(slug)
+        ? `[${slug}](/wiki/${slug}/)`
+        : `\`${slug}\``
   );
 
   // Code spans (so ** inside code doesn't get parsed)
