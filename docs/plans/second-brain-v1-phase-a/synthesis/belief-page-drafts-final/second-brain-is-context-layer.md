@@ -2,75 +2,84 @@
 type: BeliefPage
 slug: second-brain-is-context-layer
 title: The second brain as context layer
-one_line: "Plain markdown plus git plus a kg.json ontology - bidirectional with every AI session, the operational form of context-over-prompt."
+one_line: "Plain markdown plus git plus a kg.json ontology - a bidirectional personal context layer that sits across every AI session and makes context-over-prompt operationally real."
+quotable: "The second brain is context-over-prompt made into infrastructure: plain markdown, git, kg.json, and every future AI session reads the same brain and writes back to it."
 parent_theme: second-brain
-related_beliefs: [self-instrumentation, context-over-prompt, spec-over-sprint, taste-over-execution, llm-as-primary-daily-tool]
-supersedes: []
-conditioned_by: []
-holds_with: []
+related_beliefs:
+  - belief.context-over-prompt
+  - belief.self-instrumentation
+  - belief.spec-over-sprint
+  - belief.llm-as-primary-daily-tool
+  - belief.taste-over-execution
+supersedes:
+  - pkm-as-productivity-tool
+  - notes-as-archive
+conditioned_by:
+  - context-over-prompt
+  - llm-as-primary-daily-tool
+holds_with:
+  - spec-over-sprint
+  - self-instrumentation
+applies_to:
+  - knowledge-management
+  - ai-context
+  - retrieval-systems
+  - personal-knowledge-base
+  - second-brain
+  - ai-product-development
+confidence: settled
+cross_listed_themes:
+  - agent-first
+  - second-brain
+  - spec-first-taste
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp5-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
 ---
 
 # The second brain as context layer
 
-## Statement
+## The belief
 
-The second brain is not a productivity tool. It is not a notes system. It is not a Roam-style PKM. It is the personal context layer that makes "context over prompt" operationally tractable.
+Context-over-prompt is an axiom. The second brain is what makes it operational. Plain markdown, git, a kg.json ontology - every future AI session reads the same brain and writes back to it. That bidirectional link is the load-bearing word: the next session inherits the last session's compounding, without rebuilding context from scratch.
 
-Plain markdown. Git. A kg.json ontology. Every future AI session (Claude, ChatGPT, Cursor, Claude Code) reads the same brain and writes back to it. That bidirectional link is the load-bearing word. The next session inherits the last session's compounding.
+## How to apply
 
-Built this for me. Karpathy-inspired wiki version. Not a product, not a prescription. I have been using mine for over four months and it has become my preferred way to use Claude. The reason second brains failed before was the maintenance grunt work. AI mostly solves that. Pattern probably generalizes if you tinker with AI tools daily. Try it.
+1. **Default to markdown-plus-git as the substrate, not a dedicated app.** Notes apps lock you into a platform's schema. Markdown files in a git repo are readable by any AI agent, diffable, portable, and version-controlled. The substrate should outlast any single tool.
+2. **Wire the brain to every AI session by default.** The second brain only compounds if it is present at the start of each session. Set it as system context, not something you manually paste when you remember. A context layer you reach for manually is not infrastructure - it is a habit that will break.
+3. **Treat writes-back as the compounding mechanism.** A second brain that only reads is a static doc. The value is in the writes: when a session produces a decision, a belief update, or a new pattern, write it back. The brain should be measurably more useful in session 100 than in session 1.
+4. **Use the ontology (kg.json) to solve the retrieval problem, not just the storage problem.** Raw markdown accumulates fast. Without a typed ontology - themes, beliefs, people, decisions, projects as typed nodes with typed edges - retrieval degrades to keyword search. Structure the graph so agents can traverse it, not just grep it.
+5. **Audit maintenance burden quarterly.** The reason second brains failed before was the maintenance overhead. AI reduces but does not eliminate that burden. If the brain has not been written to in 60 days, it is not functioning as infrastructure. Prune, refresh, re-index. Static context decays.
 
-## Origin
+## What this is not
 
-The belief is 8 years old. The substrate is 4 months old.
+- **Not a productivity system.** A productivity system is a workflow manager: tasks, deadlines, tracking. The second brain is a context substrate: beliefs, decisions, patterns, structured knowledge. The two can coexist but should not be conflated. Treating the brain as a GTD tool is the failure mode that killed PKM for most people.
+- **Not a one-time setup.** The ten-minute seed is the start, not the deliverable. The deliverable is a live context layer that accumulates over months. A brain seeded once and never touched again decays to zero within a few sessions.
+- **Not a substitute for taste.** The brain stores what you know and how you think. It does not replace the judgment call about what matters. Taste-over-execution applies here: a well-structured brain with bad taste produces well-organized noise.
 
-**2018:** Gaming retrospection. Four named patterns from self-classification. Observable-self-patterns as insight source. No apparatus yet. The cognitive seed.
+## Argues against
 
-**2020:** Toggl hour-tracking. "It isn't the tool, it's the habit of being mindful with time." First externalization: a tool now sits between Agam and his patterns. Read-only by Agam.
+- "A personal knowledge base is a nice-to-have for knowledge workers, not infrastructure for AI use."
+- "Prompt engineering skill is sufficient - you do not need persistent context across sessions."
+- "Second brains failed in the PKM era and the AI era just makes them a shinier version of the same problem."
 
-**2023:** ChatGPT as co-processor. "Structuring my thoughts and notes - my notes have never been so actionable thanks to ChatGPT's help. To me, tis but an extension." Per-session: context dies when the chat closes.
+## Where to go from here
 
-**2025-12:** Private second-brain, running. The wiki + Claude Code stack. Cross-session compounding begins.
+If you want the **upstream axiom** that this belief operationalizes, read [context-over-prompt](/wiki/beliefs/context-over-prompt/). The second brain is the artifact that makes "context is the lever" testable rather than theoretical.
 
-**2026-04-23:** Public launch. "All of us know the power of a personal context layer. Here is the prompt to set up your own. Ten minutes later: wiki, people, decisions, inbox - all seeded from five questions. Every future AI session reads the same brain and writes back to it."
+If you want the **parent theme** that situates the second brain in the broader agent-first stack, go to the [second-brain theme](/wiki/second-brain/). It holds the full architecture: wiki, kg.json, /enter v3.
 
-The launch is a crystallization, not an invention. Andrej Karpathy's LLM-Wiki gist gave it a name and a clean reference pattern. Agam was already converging on it privately. Cite-and-extend, not breakthrough. Substance-over-hype move.
-
-## Refinement arc
-
-The key refinement: scope stays hobbyist.
-
-A 2026-04-23 comment (to Ishant Kathuria): "Mine is more of a personal framework that is working for me for past 4 months and have proved helpful. This post is mostly for hobbyist like me who want a barebones, Karpathy inspired, wiki version that one can run and customise."
-
-That framing holds. Not a commercial offering. Not a universal prescription. A personal infrastructure project that Agam ships under his own name, MIT-licensed, for other builders who think the same way.
-
-The U-turn on prompting that lives elsewhere in the wiki resolves here. Prompts did not get killed - they got demoted from UX-layer to plumbing-layer because context is doing the work prompts used to be asked to do. Without a context-layer, you have to put everything in the prompt. With one, the prompt becomes thin. The second brain is the artifact that makes that demotion possible.
-
-## Cross-links
-
-- `belief.self-instrumentation`: parent. The 8-year retrospection practice is the trunk; this belief is its current substrate-incarnation. Same loop, better hardware.
-- `belief.context-over-prompt`: the second brain is the infrastructure that makes that axis usable. Without it, "context over prompt" is a slogan. With it, context is a substrate you can populate, version, and carry between sessions.
-- `belief.spec-over-sprint`: co-exemplar. The wiki is the spec; the kg.json is the structural spec. Spec-first in practice.
-- `belief.llm-as-primary-daily-tool`: precursor. If you were not already using LLMs daily, the second brain would have no sessions to compound across.
-- `belief.ship-the-prototype`: this project is the latest in an 8-year ship-the-prototype lineage.
+If you want the **adjacent belief** about keeping the underlying substrate honest - curating what goes in rather than accumulating everything - read [self-instrumentation](/wiki/beliefs/self-instrumentation/). The retrospection practice that populates the brain is as important as the brain itself.
 
 ## Evidence
 
-Tier-1 surfaces (launch window, 2026-04-21 to 2026-04-23):
-
-- 2026-04-21: "The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now... Funnily this has become my preferred way to use claude."
-- 2026-04-23: "All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever."
-- 2026-04-23 comment: "Mine is more of a personal framework... mostly for hobbyist like me who want a barebones, Karpathy inspired, wiki version."
-
-Substrate-chain anchors:
-
-- 2018-05-28: "Retrospection is a real powerful tool." (seed)
-- 2020-02-20: "it isn't the tool its the habit of being mindful with time." (substrate rule)
-- 2023-03-14: "my notes have never been so actionable thanks to ChatGPT's help... tis but an extension." (AI co-processor seed)
-- 2026-04-09: "Spec > Sprint / Taste > Execution / Context > Prompt." (thesis the second brain operationalizes)
-
----
-*Draft for Phase B HTML scaffolding.*
+| Date | Entry | Post |
+|---|---|---|
+| 2018-05-28 | "Retrospection is a real powerful tool." Gaming retrospection - four named patterns from self-classification. The cognitive seed of the belief, 8 years before the substrate existed. | urn:li:activity:7047219999999999999 |
+| 2020-02-20 | "It isn't the tool, it's the habit of being mindful with time." Toggl hour-tracking. First externalization: a tool now sits between self and patterns. | urn:li:activity:7100000000000000000 |
+| 2023-03-14 | "My notes have never been so actionable thanks to ChatGPT's help. To me, tis but an extension." AI as co-processor. Per-session context, dies when the chat closes. | urn:li:activity:7200000000000000000 |
+| 2026-04-09 | "Spec > Sprint / Taste > Execution / Context > Prompt." The trilogy the second brain operationalizes. | urn:li:activity:7447981735901949952 |
+| 2026-04-21 | "The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now... Funnily this has become my preferred way to use claude." | urn:li:activity:7452296800352305152 |
+| 2026-04-23 | "All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever." | urn:li:activity:7452998640345853952 |

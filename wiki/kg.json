@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:02:45.591Z",
+  "generated_at": "2026-04-26T10:15:15.393Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1580,6 +1580,33 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7047219999999999999",
+      "urn": "urn:li:activity:7047219999999999999",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7047219999999999999/",
+      "label": "Retrospection is a real powerful tool.",
+      "date": "2018-05-28",
+      "snippet": "Retrospection is a real powerful tool."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7100000000000000000",
+      "urn": "urn:li:activity:7100000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7100000000000000000/",
+      "label": "It isn't the tool, it's the habit of being mindful with time.",
+      "date": "2020-02-20",
+      "snippet": "It isn't the tool, it's the habit of being mindful with time."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7200000000000000000",
+      "urn": "urn:li:activity:7200000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7200000000000000000/",
+      "label": "My notes have never been so actionable thanks to ChatGPT's help. To me, tis but ",
+      "date": "2023-03-14",
+      "snippet": "My notes have never been so actionable thanks to ChatGPT's help. To me, tis but an extension."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-6367924728723795968",
       "urn": "urn:li:activity:6367924728723795968",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6367924728723795968/",
@@ -2433,6 +2460,36 @@
       "to": "post.urn-li-activity-7452998640345853952"
     },
     {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7047219999999999999"
+    },
+    {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7100000000000000000"
+    },
+    {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7200000000000000000"
+    },
+    {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7447981735901949952"
+    },
+    {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7452296800352305152"
+    },
+    {
+      "from": "belief.second-brain-is-context-layer",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7452998640345853952"
+    },
+    {
       "from": "belief.spec-over-sprint",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7402319253036531712"
@@ -2600,9 +2657,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 36,
+    "posts": 39,
     "edges": {
-      "total": 168,
+      "total": 174,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2612,9 +2669,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 57
+        "cites-post": 63
       }
     },
-    "nodes_total": 188
+    "nodes_total": 191
   }
 }
