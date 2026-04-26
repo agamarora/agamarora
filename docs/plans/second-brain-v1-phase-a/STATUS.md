@@ -2,7 +2,7 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 28 — Phase C / C-voice-beliefs SHAPE LOCKED at D6.1 principle-card. CP-1 + CP-2 retrofitted. Subagent template saved. CP-3..CP-19 ready to fan out (17 remaining).**
+Last updated: 2026-04-26 — **CHECKPOINT 29 — Phase C / C-voice-beliefs COMPLETE (19/19 ✅). All belief pages reauthored as D6.1 principle-cards with chip strip + tag strip + TL;DR + numbered decision rules + boundaries + counter-positions. AEO/SEO Q&A gate folded in. Next: C-graph (D2 P2c constellation viz) + C-final.**
 
 ## RESUME POINT (read this first on a new session)
 
@@ -18,9 +18,21 @@ Last updated: 2026-04-26 — **CHECKPOINT 28 — Phase C / C-voice-beliefs SHAPE
 - Zero em-dashes, zero banned LLM-isms, zero triadic prose, zero biographical date framing in body (posts ONLY in Evidence table)
 - Mobile: chip strip stacks vertically, tag strip wraps confidence below tags, ol counter circles render as ::before pseudo-elements with mono accent number
 
-**CP-3 spec-over-sprint DONE 2026-04-26** (sonnet subagent, 512w body, all gates pass; manual fix: slug `belief.spec-over-sprint` → `spec-over-sprint` per other beliefs convention). Now CP-4 next.
+**ALL 19 CPs SHIPPED 2026-04-26** in D6.1 principle-card shape. Order: CP-1 agent-first (hand) → CP-2 context-over-prompt (hand) → CP-3 spec-over-sprint → CP-4 taste-over-execution → CP-5 second-brain-is-context-layer → CP-6 substance-over-hype → CP-7 enterprise-ai-production-reality → CP-8 ship-the-prototype → CP-9 pm-is-99-should-we-1-can-we → CP-10 ic-path-legitimacy → CP-11 help-market-flourish → CP-12 anti-customization → CP-13 ai-pm-skillset-table-stakes → CP-14 breadth-as-differentiation → CP-15 breadth-needs-depth → CP-16 learn-concepts-not-tools → CP-17 linkedin-as-instrumental-platform → CP-18 llm-as-primary-daily-tool → CP-19 self-instrumentation. CP-3..CP-19 fan-out via sonnet subagents using `prompts/c-voice-beliefs-d61-template.md` template. Per-CP cadence held: subagent → review → build → commit + push → next. Total 19 commits + final STATUS bump.
 
-**Next action on resume: CP-4 = sonnet subagent reauthor of belief.taste-over-execution.** Use template at `prompts/c-voice-beliefs-d61-template.md`, swap `{SLUG}=taste-over-execution` and `{REF_SLUG}=spec-over-sprint` (just-shipped trilogy partner, same parent theme). After subagent returns: run 11-point review checklist from template, then commit + push + STATUS bump → CP-5.
+**Per-page payload (every belief page now ships):**
+- Frontmatter: type, slug (bare), title, one_line, **quotable** (agent-grabbable verbatim assertion), parent_theme, related_beliefs, **supersedes**, **conditioned_by**, **holds_with**, **applies_to** (3-6 domain tags), **confidence** (settled / evolving / contested), tier, length_target, status, voice_register, shape
+- Auto-rendered blocks: chip strip (graph edges) + tag strip (domain + confidence dot) + TL;DR (gold-gradient quotable) + collapsed Evidence drawer
+- Body: ## The belief → ## How to apply (3-5 numbered decision rules) → ## What this is not (boundaries) → ## Argues against (3 counter-positions) → ## Where to go from here (3 named exits) → ## Evidence (table)
+- Length: 400-600w body
+- Voice: R1 declarative, zero em-dashes, zero biographical date framing in body, zero banned LLM-isms, zero triadic prose
+- Mobile: chip strip stacks vertically below 720px, tag strip wraps confidence below tags, ol counter circles render
+
+**Next action on resume: C-graph step.** Read `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §D2-graph-UX-binding for the locked 10 invariants. C-graph replaces the current vis-network force-layout at /wiki/graph/ with a hand-designed SVG constellation (P2c). 7 sub-checkpoints (CP-1 layout sketch + invariant checklist → CP-2 theme ring + scroll isolation + zoom-floor → CP-3 belief cluster expand/collapse + always-centered → CP-4 post chips + narrative tour → CP-5 mobile fallback list view → CP-6 keyboard accessibility + re-fit-on-resize → CP-7 final polish + /design-review with all 10 gates). Estimated 7-9hr.
+
+**After C-graph: C-final.** /design-review + /review on full wiki tree. STATUS to CHECKPOINT 30 = Phase C COMPLETE. Estimated 1-2hr.
+
+**After Phase C: Phase D entry.** /enter v3 + groqHandler upgrade + AI plumbing. AEO/SEO gate originally queued before Phase D is now folded into the belief-page work that just shipped (every belief page is the AEO surface), so Phase D entry no longer waits on a separate AEO pass.
 
 **CP order remaining (17 CPs):** CP-3 spec-over-sprint → CP-4 taste-over-execution → CP-5 second-brain-is-context-layer → CP-6 substance-over-hype → CP-7 enterprise-ai-production-reality → CP-8 ship-the-prototype → CP-9 pm-is-99-should-we-1-can-we → CP-10 ic-path-legitimacy → CP-11 help-market-flourish → CP-12 anti-customization → CP-13 ai-pm-skillset-table-stakes → CP-14 breadth-as-differentiation → CP-15 breadth-needs-depth → CP-16 learn-concepts-not-tools → CP-17 linkedin-as-instrumental-platform → CP-18 llm-as-primary-daily-tool → CP-19 self-instrumentation. ~5-6hr estimated, multi-session expected.
 
@@ -64,7 +76,7 @@ This is a HARD GATE per user directive 2026-04-26: must complete before AI plumb
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
 | C-voice-themes | IN FLIGHT (CP-1 of 12 done) | 12 theme pages reauthored in R1 voice + §D1-narrative-binding | Per-theme cadence (NOT batched per user taste-call 2026-04-26). CP-1 agent-first DONE 7f68896. CP-2 voice-ai-craft NEXT. Then breadth-as-differentiation, pm-taste, ai-pm-skillset, enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root last. Each = sonnet subagent reauthor → review against gates → build → commit + push → STATUS bump → milestone check. ~6-8hr total. |
-| C-voice-beliefs | IN FLIGHT (CP-2 of 19 done in D6.1 principle-card; shape locked 2026-04-26 after D5→D6→D6.1 iteration) | 19 beliefs reauthored as principle-cards per §D6.1 | Per-belief cadence. CP-1 agent-first reference D6.1 DONE. CP-2 context-over-prompt D6.1 DONE. Frontmatter complete (quotable + applies_to + confidence on CP-1+CP-2; CP-3..CP-19 add in subagent rewrite). build-wiki chip + tag + TL;DR + ol-counter + mobile fixes all live. Subagent template at prompts/c-voice-beliefs-d61-template.md. CP-3 spec-over-sprint NEXT. 17 remaining sub-CPs. ~5-6hr. AEO/SEO gate folds into this work. |
+| C-voice-beliefs | DONE 2026-04-26 (19/19 ✅) | 19 beliefs reauthored as D6.1 principle-cards. AEO/SEO surface in place. | n/a |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
 
