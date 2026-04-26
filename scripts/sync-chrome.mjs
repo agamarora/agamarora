@@ -4,11 +4,18 @@
 // Rewrites the chrome blocks in each hand-edited v2 page from the canonical
 // source in scripts/lib/chrome.mjs. Idempotent: running it twice yields no diff.
 //
-// Marker convention (HTML comments):
-//   <!-- chrome:preload -->  ...  <!-- /chrome:preload -->
-//   <!-- chrome:css -->      ...  <!-- /chrome:css -->
-//   <!-- chrome:dom -->      ...  <!-- /chrome:dom -->
-//   <!-- chrome:script -->   ...  <!-- /chrome:script -->
+// Marker convention:
+//   <!-- chrome:preload -->  ...  <!-- /chrome:preload -->   (head)
+//   /* chrome:css */         ...  /* /chrome:css */          (inside <style> — CSS comments,
+//                                                              NOT HTML comments — bare
+//                                                              `chrome:css` ident:ident
+//                                                              tokens otherwise corrupt the
+//                                                              CSS cascade)
+//   <!-- chrome:dom -->      ...  <!-- /chrome:dom -->       (body)
+//   <!-- chrome:sprite -->   ...  <!-- /chrome:sprite -->    (granular alt for dom)
+//   <!-- chrome:header -->   ...  <!-- /chrome:header -->    (granular alt for dom)
+//   <!-- chrome:aamark -->   ...  <!-- /chrome:aamark -->    (granular alt for dom)
+//   <!-- chrome:script -->   ...  <!-- /chrome:script -->    (body, before </body>)
 //
 // First-time install: each page MUST have these markers in place, wrapping the
 // existing chrome content (or empty content if migrating fresh). The script
@@ -51,9 +58,11 @@ const PAGES = [
 // Block specs: [marker name, canonical content, opening indent for the content].
 // The script preserves the indentation of the opening marker line and applies it
 // to each line of the canonical content.
+// `style` true = use CSS-comment markers /* */ (block lives inside <style>);
+// otherwise HTML comment markers <!-- --> (block lives in head or body).
 const BLOCKS = [
   { name: 'preload', body: SHARED_PRELOAD_HTML },
-  { name: 'css',     body: SHARED_CHROME_CSS },
+  { name: 'css',     body: SHARED_CHROME_CSS,                                                  style: true },
   // dom = combined sprite + header + aa-mark when they're contiguous (most pages).
   { name: 'dom',     body: `${SVG_SPRITE}\n\n${SHARED_HEADER_HTML}\n\n${SHARED_AAMARK_HTML}` },
   // Granular variants — for pages where chrome elements aren't contiguous in
@@ -73,8 +82,8 @@ function syncFile(absPath) {
   const missingMarkers = [];
 
   for (const block of BLOCKS) {
-    const open = `<!-- chrome:${block.name} -->`;
-    const close = `<!-- /chrome:${block.name} -->`;
+    const open  = block.style ? `/* chrome:${block.name} */`  : `<!-- chrome:${block.name} -->`;
+    const close = block.style ? `/* /chrome:${block.name} */` : `<!-- /chrome:${block.name} -->`;
     const idx = updated.indexOf(open);
     if (idx === -1) {
       missingMarkers.push(block.name);
