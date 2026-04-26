@@ -80,7 +80,7 @@ Every public page is a single standalone `index.html` with inline `<style>` and 
 
 ### Shared layout contract (every v2 page)
 
-- **Top-left: icon bar** (GitHub · LinkedIn · YouTube · CV · Home) — fluid `clamp(52px, 6vw, 64px)` header, social icons `clamp(1.15rem, 1.3vw, 1.5rem)`. CV is a JetBrains Mono text-icon (class `nav-icon`, `clamp(0.78rem, 0.95vw, 0.92rem)`, weight 500, uppercase, letter-spacing 0.04em) sized to fit the same 2em box as the SVG icons — keeps the bar subtle, no separators or text labels. Wiki and Lab are reachable from the landing page CTAs (Enter / Wiki / Lab), not the header.
+- **Top-left: icon bar** (GitHub · LinkedIn · YouTube · Resume · Home) — fluid `clamp(52px, 6vw, 64px)` header, all icons `clamp(1.15rem, 1.3vw, 1.5rem)`. All 5 entries are SVG sprites from the same Font Awesome 6 solid family (`i-github`, `i-linkedin`, `i-youtube`, `i-file-lines`, `i-house`) — single `currentColor` fill, identical sizing, identical hover. Wiki and Lab are reachable from the landing-page CTAs (Enter / Wiki / Lab), not the header.
 - **Bottom-right: aa. mark** — fixed position, `clamp(44px, 5vw, 60px)` wide, stroke-draw animation on load, opacity 0.7 → 1.0 on hover
 - **Content: centered or left-aligned column** — max-width varies per page (~720-880px)
 
