@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:50:57.048Z",
+  "generated_at": "2026-04-26T10:54:16.076Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1760,6 +1760,51 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-6226000000000000000",
+      "urn": "urn:li:activity:6226000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6226000000000000000/",
+      "label": "This is an experiment, based on a random Reddit post I'm told that a post with l",
+      "date": "2017-01-20",
+      "snippet": "This is an experiment, based on a random Reddit post I'm told that a post with likes + images will spread pretty far on due to LinkedIn's broken algorithm. Thanks!"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7162000000000000000",
+      "urn": "urn:li:activity:7162000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7162000000000000000/",
+      "label": "LinkedIn has a superior human feedback loop going on here... Funny, my perspecti",
+      "date": "2024-02-11",
+      "snippet": "LinkedIn has a superior human feedback loop going on here... Funny, my perspective on this yet my commitment to sharing my views every time I find a worthy enough question/article to contribute to."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7162000000000000001",
+      "urn": "urn:li:activity:7162000000000000001",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7162000000000000001/",
+      "label": "Contribute within the top 20% every 60 days. It's like a privilege bank account ",
+      "date": "2024-02-11",
+      "snippet": "Contribute within the top 20% every 60 days. It's like a privilege bank account with ever increasing Average Monthly Balance quotas."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7173000000000000000",
+      "urn": "urn:li:activity:7173000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7173000000000000000/",
+      "label": "Something has definitely changed. I couldn't point a finger at what. So ran a fe",
+      "date": "",
+      "snippet": "Something has definitely changed. I couldn't point a finger at what. So ran a few tests with the results below."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7263000000000000000",
+      "urn": "urn:li:activity:7263000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7263000000000000000/",
+      "label": "Certifications are collectibles that fuel our personal sense of achievement. The",
+      "date": "2024-11-15",
+      "snippet": "Certifications are collectibles that fuel our personal sense of achievement. They are in no shape or means a validation of what you can and cannot do."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7245035069900791808",
       "urn": "urn:li:activity:7245035069900791808",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245035069900791808/",
@@ -2784,6 +2829,36 @@
       "to": "post.urn-li-activity-7475000000000000000"
     },
     {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6226000000000000000"
+    },
+    {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7162000000000000000"
+    },
+    {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7162000000000000001"
+    },
+    {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7173000000000000000"
+    },
+    {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7213000000000000000"
+    },
+    {
+      "from": "belief.linkedin-as-instrumental-platform",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7263000000000000000"
+    },
+    {
       "from": "belief.pm-is-99-should-we-1-can-we",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7245035069900791808"
@@ -2991,9 +3066,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 60,
+    "posts": 65,
     "edges": {
-      "total": 203,
+      "total": 209,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -3003,9 +3078,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 92
+        "cites-post": 98
       }
     },
-    "nodes_total": 212
+    "nodes_total": 217
   }
 }
