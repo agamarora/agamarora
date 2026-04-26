@@ -1238,21 +1238,42 @@ function buildGraphPage() {
   }
   const kg = JSON.parse(readFileSync(kgPath, "utf8"));
 
-  // The viz fetches /wiki/kg.json client-side and renders with vis-network from CDN.
-  // CSP was updated in netlify.toml to allow unpkg + cdnjs script + style-src.
+  // === Constellation CP-1 — authored sky atlas skeleton ===
+  // Aesthetic + spec lives in DESIGN.md ## Constellation graph (locked 2026-04-26).
+  // CP-1 = static foundation: genesis + 11 hand-placed theme nodes. No motion, no edges,
+  // no deep-field, no big-bang yet. Those land at CP-2..CP-7.
+
+  // Theme positions: hand-tuned (angle°, radF). Genesis at center; 11 themes orbit.
+  // NOT a perfect circle — irregular radF gives organic distribution per memorable-thing.
+  const THEMES = [
+    { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'agent-first',         ang: 18,  radF: 0.27 },
+    { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'ai-pm skillset',      ang: 62,  radF: 0.32 },
+    { id: 'theme.pm-taste',                    slug: 'pm-taste',                    label: 'pm taste',            ang: 98,  radF: 0.25 },
+    { id: 'theme.enterprise-ai-reality',       slug: 'enterprise-ai-reality',       label: 'enterprise ai',       ang: 138, radF: 0.30 },
+    { id: 'theme.voice-ai-craft',              slug: 'voice-ai-craft',              label: 'voice ai craft',      ang: 168, radF: 0.27 },
+    { id: 'theme.second-brain',                slug: 'second-brain',                label: 'second brain',        ang: 202, radF: 0.29 },
+    { id: 'theme.spec-first-taste',            slug: 'spec-first-taste',            label: 'spec-first taste',    ang: 232, radF: 0.25 },
+    { id: 'theme.breadth-as-differentiation',  slug: 'breadth-as-differentiation',  label: 'breadth as edge',     ang: 260, radF: 0.31 },
+    { id: 'theme.linkedin-as-instrument',      slug: 'linkedin-as-instrument',      label: 'linkedin instrument', ang: 288, radF: 0.24 },
+    { id: 'theme.career-reflection',           slug: 'career-reflection',           label: 'career reflection',   ang: 318, radF: 0.28 },
+    { id: 'theme.personal-projects-tinkering', slug: 'personal-projects-tinkering', label: 'personal projects',   ang: 348, radF: 0.32 },
+  ];
+
+  const totalEntries = (kg.stats.posts || 0) + (kg.stats.comments || 0) + 220; // approximate corpus + uncurated
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <title>Graph - Agam Arora's wiki.</title>
-<meta name="description" content="Knowledge graph: ${kg.stats.nodes_total} nodes and ${kg.stats.edges.total} edges across themes, beliefs, projects, people, and tech.">
+<meta name="description" content="Authored constellation of ${kg.stats.nodes_total} graph nodes and ${kg.stats.edges.total} edges across 11 years of thinking. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/wiki/graph/">
 <meta property="og:title" content="Graph - Agam Arora's wiki.">
-<meta property="og:description" content="Knowledge graph: ${kg.stats.nodes_total} nodes and ${kg.stats.edges.total} edges.">
+<meta property="og:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
 <meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
 
 <link rel="canonical" href="https://agamarora.com/wiki/graph/">
@@ -1260,22 +1281,94 @@ function buildGraphPage() {
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="manifest" href="/site.webmanifest">
 
-<style>${SHARED_HEAD_STYLES}
-  .graph-page { max-width: 1200px; }
-  .graph-stats { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-5); }
-  .graph-stats strong { color: var(--accent); font-weight: 500; }
-  .graph-canvas { width: 100%; height: 70vh; min-height: 480px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); position: relative; overflow: hidden; }
-  .graph-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-family: var(--mono); font-size: 0.84rem; pointer-events: none; }
-  .graph-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); }
-  .graph-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: var(--space-3); vertical-align: middle; }
-  .graph-controls { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); font-family: var(--mono); font-size: 0.78rem; }
-  .graph-controls button { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer; font: inherit; transition: border-color 0.2s, color 0.2s; }
-  .graph-controls button:hover { border-color: var(--accent); color: var(--accent); }
-  .graph-controls button.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-  .graph-detail { margin-top: var(--space-5); padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); min-height: 80px; font-size: 0.95rem; }
-  .graph-detail .id { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); }
-  .graph-detail .empty { color: var(--text-dim); font-style: italic; opacity: 0.7; }
-  .graph-detail a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+<!--
+  C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
+  CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
+  CP-2 ⏳ deep-field: 227 kg nodes + 578 corpus stars + proximity mesh
+  CP-3 ⏳ real cross-theme interlinkages from kg.json edges
+  CP-4 ⏳ motion vocabulary: twinkle / Lissajous-drift / signal pulses
+  CP-5 ⏳ big-bang single-origin entry + parallax bg layer
+  CP-6 ⏳ pan/zoom/bounds + fullscreen + mobile responsive
+  CP-7 ⏳ keyboard a11y + /design-review against 13 §D2 invariants
+-->
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --bg-deep:#050810; --surface:#111111;
+    --border:#1E1E1E; --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;}
+  body{
+    background:radial-gradient(ellipse at 50% 50%, var(--bg-deep) 0%, var(--bg) 70%, #000 100%);
+    color:var(--text);font-family:var(--sans);position:relative;
+    -webkit-font-smoothing:antialiased;line-height:1.6;
+  }
+  body::before{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:0.025;mix-blend-mode:screen;
+  }
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:20;padding:0 clamp(1rem,3vw,1.5rem);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:15;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+
+  .help-strip{position:fixed;top:18px;left:80px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.4;letter-spacing:0.04em;}
+  .help-strip a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed rgba(232,228,223,0.15);transition:color 0.2s,border-color 0.2s;}
+  .help-strip a:hover{color:var(--accent);border-color:var(--accent);}
+  .caption{position:fixed;top:64px;right:24px;z-index:15;font-family:var(--mono);font-size:11px;color:var(--text);opacity:0.55;letter-spacing:0.04em;text-align:right;}
+  .subcaption{position:fixed;top:84px;right:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.4;letter-spacing:0.04em;text-align:right;}
+
+  .legend-strip{position:fixed;bottom:64px;left:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;line-height:1.7;}
+  .legend-strip .swatch{display:inline-block;border-radius:50%;vertical-align:middle;margin-right:6px;}
+  .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
+  .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
+
+  .spec-tag{position:fixed;bottom:22px;left:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.05em;}
+
+  /* Two-layer SVG: parallax bg (dim, future CP-5) + interactive constellation foreground */
+  svg.parallax-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;display:block;pointer-events:none;}
+  svg.canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:2;display:block;}
+
+  text{font-family:var(--sans);user-select:none;}
+  .theme-label{font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:0.07em;text-transform:lowercase;fill:rgba(232,228,223,0.62);}
+  .genesis-label{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:lowercase;fill:rgba(229,165,75,0.85);}
+  .genesis-sublabel{font-family:var(--mono);font-size:9px;fill:rgba(229,165,75,0.5);letter-spacing:0.06em;}
+
+  /* Genesis halo pulse — only motion in CP-1, signals "origin alive" */
+  @keyframes core-pulse{0%,100%{opacity:0.55;}50%{opacity:0.85;}}
+  .genesis-halo{animation:core-pulse 5s ease-in-out infinite;}
+
+  .theme-node{cursor:pointer;transition:filter 0.2s;}
+  .theme-node:hover{filter:drop-shadow(0 0 12px rgba(229,165,75,0.8));}
+  .theme-group:hover .theme-label{fill:var(--accent);}
+  .genesis-core{cursor:pointer;transition:filter 0.2s;}
+  .genesis-core:hover{filter:drop-shadow(0 0 16px rgba(229,165,75,0.95));}
+
+  @media (max-width: 768px){
+    .legend-strip{display:none;}
+    .help-strip{font-size:9px;left:64px;}
+    .caption{font-size:10px;}
+    .subcaption{font-size:9px;}
+    .aa-mark svg{width:38px;}
+    .spec-tag{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -1286,145 +1379,102 @@ ${SHARED_HEADER_HTML}
 
 ${SHARED_AAMARK_HTML}
 
-<main class="page graph-page">
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Graph</span>
-  </nav>
+<div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
+<div class="caption">11 years · ${totalEntries}+ entries · ${kg.stats.nodes_total} graph nodes · ${kg.stats.edges.total} edges</div>
+<div class="subcaption">${kg.stats.themes} themes · ${kg.stats.beliefs.tier_1 + kg.stats.beliefs.tier_2} beliefs · ${kg.stats.projects} projects · ${kg.stats.tech} tech · ${kg.stats.posts || 0} posts</div>
 
-  <h1 style="font-size:clamp(2rem,4.5vw,2.6rem);font-weight:700;letter-spacing:-0.025em;margin-bottom:var(--space-5);">Knowledge graph</h1>
-  <p style="color:var(--text);opacity:0.85;line-height:1.6;max-width:680px;margin-bottom:var(--space-6);">Click a node to focus. Drag to pan. Scroll to zoom. Click any theme or belief to navigate to its wiki page. Built from <a href="/wiki/kg.json" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);">kg.json</a> at deploy time.</p>
+<div class="legend-strip">
+  <div><span class="swatch genesis"></span>genesis</div>
+  <div><span class="swatch gold"></span>theme</div>
+  <div style="font-size:9px;opacity:0.7;margin-top:4px;">cp-1 skeleton · cp-2-7 incoming</div>
+</div>
 
-  <div class="graph-stats">
-    <span><strong>${kg.stats.nodes_total}</strong> nodes</span>
-    <span><strong>${kg.stats.edges.total}</strong> edges</span>
-    <span><strong>${kg.stats.themes}</strong> themes</span>
-    <span><strong>${kg.stats.beliefs.tier_1 + kg.stats.beliefs.tier_2}</strong> beliefs</span>
-    <span><strong>${kg.stats.projects}</strong> projects</span>
-    <span><strong>${kg.stats.posts || 0}</strong> posts</span>
-    <span><strong>${kg.stats.tech}</strong> tech</span>
-  </div>
+<!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
+<svg class="parallax-bg" id="parallax-bg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
 
-  <div class="graph-controls" role="toolbar" aria-label="Graph filters">
-    <button data-filter="all" class="active">All</button>
-    <button data-filter="Theme">Themes</button>
-    <button data-filter="Belief">Beliefs</button>
-    <button data-filter="Project">Projects</button>
-    <button data-filter="Post">Posts</button>
-    <button data-filter="Tech">Tech</button>
-  </div>
+<!-- LAYER 1: interactive constellation foreground -->
+<svg class="canvas" id="constellation" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Knowledge graph constellation: genesis at center, 11 themes orbiting"></svg>
 
-  <div class="graph-canvas" id="graph">
-    <div class="graph-loading" id="graph-loading">Loading graph (vis-network ~200KB from CDN)...</div>
-  </div>
+<div class="spec-tag">C-graph CP-1 · authored sky atlas (skeleton)</div>
 
-  <div class="graph-legend">
-    <span><span class="swatch" style="background:#E5A54B"></span>Theme (star)</span>
-    <span><span class="swatch" style="background:#7AB3D6"></span>Belief (dot)</span>
-    <span><span class="swatch" style="background:#A6D67A"></span>Project (box)</span>
-    <span><span class="swatch" style="background:#D67A9C"></span>Post (triangle)</span>
-    <span><span class="swatch" style="background:#9C7AD6"></span>Tech (square)</span>
-  </div>
-
-  <div class="graph-detail" id="graph-detail" aria-live="polite">
-    <p class="empty">Hover or click a node to see its details here.</p>
-  </div>
-
-  <nav class="theme-nav" style="margin-top:var(--space-9);"><a href="/wiki/projects/">&larr; Projects</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>
-</main>
-
-<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js" crossorigin="anonymous"></script>
 <script>
 ${AAMARK_SCRIPT}
 
-(async () => {
-  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Post: '#D67A9C', Tech: '#9C7AD6' };
-  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Post: 'triangle', Tech: 'square' };
+(function(){
+  // === Constellation CP-1: static genesis + 11 themes ===
+  const THEMES = ${JSON.stringify(THEMES)};
+  const VB_W = 1600, VB_H = 900;
+  const CX = VB_W / 2, CY = VB_H / 2;
+  const VB_MIN = Math.min(VB_W, VB_H);
 
-  let kg;
-  try {
-    const res = await fetch('/wiki/kg.json');
-    kg = await res.json();
-  } catch (e) {
-    document.getElementById('graph-loading').textContent = 'Failed to load kg.json. Try refresh.';
-    return;
+  function polar(cx, cy, r, deg){
+    const a = (deg - 90) * Math.PI / 180;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
   }
 
-  const wikiUrlFor = (n) => {
-    if (n.type === 'Theme') return n.wiki_url || ('/wiki/' + (n.slug || n.id.replace(/^theme\\./,'')) + '/');
-    if (n.type === 'Belief' && n.tier === '1') return '/wiki/beliefs/' + n.id.replace(/^belief\\./,'') + '/';
-    if (n.type === 'Post' && n.permalink) return n.permalink;
-    return null;
-  };
-
-  const allNodes = kg.nodes.map((n) => {
-    const isPost = n.type === 'Post';
-    const cleanLabel = (n.label || n.id).replace(/^belief\\.|^theme\\.|^project\\.|^tech\\.|^post\\./, '').slice(0, isPost ? 18 : 32);
-    return {
-      id: n.id,
-      label: isPost ? (n.date || cleanLabel) : cleanLabel,
-      title: isPost ? ((n.date || '') + ': ' + (n.snippet || n.urn || '')).slice(0, 200) : (n.label || n.id) + ' (' + n.type + ')',
-      color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
-      shape: SHAPES[n.type] || 'dot',
-      size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : isPost ? 6 : 8,
-      font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : isPost ? 9 : 11, face: 'JetBrains Mono' },
-      raw: n,
-    };
-  });
-  const allEdges = kg.edges.map((e, i) => ({
-    id: 'e' + i, from: e.from, to: e.to,
-    color: { color: e.rel === 'contains-belief' ? '#444' : e.rel === 'tension-with' ? '#E55A4B' : '#333', opacity: 0.6 },
-    arrows: e.bidirectional ? '' : 'to',
-    width: e.rel === 'contains-belief' || e.rel === 'tension-with' ? 1.5 : 1,
-  }));
-
-  if (typeof vis === 'undefined') {
-    document.getElementById('graph-loading').textContent = 'vis-network failed to load. Check your network.';
-    return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.getElementById('constellation');
+  function el(tag, attrs, parent){
+    const e = document.createElementNS(NS, tag);
+    if (attrs) for (const k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
   }
 
-  const nodes = new vis.DataSet(allNodes);
-  const edges = new vis.DataSet(allEdges);
-  const container = document.getElementById('graph');
-  document.getElementById('graph-loading').remove();
-  const network = new vis.Network(container, { nodes, edges }, {
-    physics: { stabilization: { iterations: 200 }, barnesHut: { gravitationalConstant: -8000, springLength: 120, avoidOverlap: 0.4 } },
-    interaction: { hover: true, tooltipDelay: 200, navigationButtons: false },
-    edges: { smooth: { type: 'continuous' } },
+  // Compute base positions for each theme
+  THEMES.forEach(t => {
+    const r = VB_MIN * t.radF;
+    const p = polar(CX, CY, r, t.ang);
+    t.x = p.x;
+    t.y = p.y;
   });
 
-  const detail = document.getElementById('graph-detail');
-  const renderDetail = (n) => {
-    const url = wikiUrlFor(n);
-    detail.innerHTML = '<div class="id">' + n.id + ' (' + n.type + ')</div>' +
-      '<p style="margin-top:8px;">' + (n.label || '').replace(/[<>]/g,'') + '</p>' +
-      (url ? '<p style="margin-top:8px;"><a href="' + url + '">Open page &rarr;</a></p>' : '<p style="margin-top:8px;opacity:0.6;font-style:italic;">Graph node only - no wiki page.</p>');
-  };
-  network.on('hoverNode', (p) => { const n = nodes.get(p.node); if (n) renderDetail(n.raw); });
-  network.on('click', (p) => {
-    if (p.nodes.length) {
-      const n = nodes.get(p.nodes[0]);
-      if (n) renderDetail(n.raw);
-    }
-  });
-  network.on('doubleClick', (p) => {
-    if (p.nodes.length) {
-      const n = nodes.get(p.nodes[0]);
-      const url = n && wikiUrlFor(n.raw);
-      if (url) window.location.href = url;
-    }
+  // === Render: genesis at center ===
+  // Halos (concentric, alpha cascade)
+  [
+    { r:50, fill:'rgba(229,165,75,0.035)' },
+    { r:36, fill:'rgba(229,165,75,0.06)'  },
+    { r:24, fill:'rgba(229,165,75,0.12)'  },
+    { r:16, fill:'rgba(229,165,75,0.22)'  },
+  ].forEach(h => el('circle', { cx:CX, cy:CY, r:h.r, fill:h.fill, class:'genesis-halo' }));
+
+  // Genesis core — clickable, navigates to wiki home
+  const genesisCore = el('circle', { cx:CX, cy:CY, r:11, fill:'#E5A54B', class:'genesis-core' });
+  genesisCore.style.cursor = 'pointer';
+  genesisCore.addEventListener('click', () => { window.location.href = '/wiki/root.substance-over-hype/'; });
+
+  // Genesis label + sublabel
+  el('text', { x:CX, y:CY + 32, 'text-anchor':'middle', class:'genesis-label' }).textContent = 'agam.arora';
+  el('text', { x:CX, y:CY + 50, 'text-anchor':'middle', class:'genesis-sublabel' }).textContent = '11 years · second brain';
+
+  // === Render: 11 theme nodes ===
+  THEMES.forEach(t => {
+    const g = el('g', { class:'theme-group', 'data-theme':t.id, transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')' });
+    g.style.cursor = 'pointer';
+    g.addEventListener('click', () => { window.location.href = '/wiki/' + t.slug + '/'; });
+
+    // Concentric halos
+    el('circle', { cx:0, cy:0, r:18, fill:'rgba(229,165,75,0.07)' }, g);
+    el('circle', { cx:0, cy:0, r:11, fill:'rgba(229,165,75,0.16)' }, g);
+
+    // The star
+    el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
+
+    // Theme label — outside node, radial baseline, quadrant-aware anchor
+    const labelP = polar(0, 0, 50, t.ang);
+    let anchor = 'middle', baseDx = 0, baseDy = 4;
+    if (t.ang > 12 && t.ang < 168){ anchor = 'start'; baseDx = 6; }
+    else if (t.ang > 192 && t.ang < 348){ anchor = 'end'; baseDx = -6; }
+    if (t.ang <= 12 || t.ang >= 348) baseDy = -10;
+    if (t.ang >= 168 && t.ang <= 192) baseDy = 16;
+    el('text', {
+      x: (labelP.x + baseDx).toFixed(2),
+      y: (labelP.y + baseDy).toFixed(2),
+      'text-anchor': anchor,
+      class:'theme-label',
+    }, g).textContent = t.label;
   });
 
-  document.querySelectorAll('.graph-controls button').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.graph-controls button').forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      const visible = f === 'all' ? allNodes.map((n) => n.id) : allNodes.filter((n) => n.raw.type === f).map((n) => n.id);
-      const visSet = new Set(visible);
-      nodes.update(allNodes.map((n) => ({ id: n.id, hidden: !visSet.has(n.id) })));
-      edges.update(allEdges.map((e) => ({ id: e.id, hidden: !(visSet.has(e.from) && visSet.has(e.to)) })));
-    });
-  });
 })();
 </script>
 
@@ -1438,7 +1488,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes)`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-1 skeleton]`);
   okCount++;
 }
 
