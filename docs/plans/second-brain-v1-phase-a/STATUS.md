@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 22.5 — Phase C in flight. C-mech + C-struct shipped. C-voice-themes queued. Plan locked at docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md.**
+Last updated: 2026-04-26 — **CHECKPOINT 22.6 — Phase C in flight. C-mech + C-struct shipped. C-voice-themes CP-1 (agent-first reference) DONE. CP-2 voice-ai-craft queued.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C, sub-task C-voice-themes (P1a full reauthor of 12 themes + root in R1 voice). Ready to start.
+**Current step:** Phase C / C-voice-themes / **CP-2: voice-ai-craft** via sonnet subagent. Per-theme cadence (no batching, user taste-call 2026-04-26). Reference page = agent-first.md (commit 7f68896). Plan deepened with §D1-narrative-binding + §D2-graph-UX-binding (commit 5a0e54f).
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
@@ -28,7 +28,7 @@ Last updated: 2026-04-26 — **CHECKPOINT 22.5 — Phase C in flight. C-mech + C
 |---|---|---|---|
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
-| C-voice-themes | QUEUED — start next | 12 themes + root reauthored in R1 voice + §D1-narrative-binding cold-reader contract folded in | 5 sub-CPs. CP-1 = hand-author agent-first as reference (BOTH voice + narrative); CP-2/3/4 = subagent batches of 4 with per-batch taste-call; CP-5 = root final. Cold-reader test gate per batch. /design-review after CP-5. ~5-6hr. |
+| C-voice-themes | IN FLIGHT (CP-1 of 12 done) | 12 theme pages reauthored in R1 voice + §D1-narrative-binding | Per-theme cadence (NOT batched per user taste-call 2026-04-26). CP-1 agent-first DONE 7f68896. CP-2 voice-ai-craft NEXT. Then breadth-as-differentiation, pm-taste, ai-pm-skillset, enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root last. Each = sonnet subagent reauthor → review against gates → build → commit + push → STATUS bump → milestone check. ~6-8hr total. |
 | C-voice-beliefs | QUEUED | 19 beliefs reauthored in R1 voice | 5 sub-CPs. ~5-6hr. |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
