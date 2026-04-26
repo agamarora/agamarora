@@ -15,3 +15,6 @@ node_modules
 # OS
 .DS_Store
 Thumbs.db
+
+# Obsidian local config (Phase A authoring tool)
+.obsidian/
