@@ -1347,7 +1347,7 @@ function buildGraphPage() {
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
   CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
-  CP-4 ⏳ motion vocabulary: twinkle / Lissajous-drift / signal pulses
+  CP-4 ✅ motion vocabulary: twinkle (CSS) + Lissajous theme drift + signal pulses (5 cadences) + cross-edge recompute per frame
   CP-5 ⏳ big-bang single-origin entry + parallax bg layer
   CP-6 ⏳ pan/zoom/bounds + fullscreen + mobile responsive
   CP-7 ⏳ keyboard a11y + /design-review against 13 §D2 invariants
@@ -1412,9 +1412,23 @@ function buildGraphPage() {
   .genesis-label{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:lowercase;fill:rgba(229,165,75,0.85);}
   .genesis-sublabel{font-family:var(--mono);font-size:9px;fill:rgba(229,165,75,0.5);letter-spacing:0.06em;}
 
-  /* Genesis halo pulse — only motion in CP-1, signals "origin alive" */
+  /* Genesis halo pulse — origin alive */
   @keyframes core-pulse{0%,100%{opacity:0.55;}50%{opacity:0.85;}}
   .genesis-halo{animation:core-pulse 5s ease-in-out infinite;}
+
+  /* CP-4 motion: twinkle on theme stars + dim corpus stars (CSS animation, GPU-accelerated) */
+  @keyframes star-twinkle{0%,100%{opacity:1;}50%{opacity:0.78;}}
+  .theme-node{animation:star-twinkle 4.5s ease-in-out infinite;}
+
+  /* Tension chord shimmer (subset of cross-edges with stroke-dasharray) */
+  @keyframes chord-shimmer{0%{stroke-dashoffset:0;}100%{stroke-dashoffset:-30;}}
+  .cross-edge[data-rel="tension-with"]{animation:chord-shimmer 22s linear infinite;}
+  .cross-edge[data-rel="superseded_by"]{animation:chord-shimmer 18s linear infinite;}
+  .cross-edge[data-rel="refined_by"]{animation:chord-shimmer 18s linear infinite;}
+
+  /* Signal pulse: gold dot traveling along edges */
+  .signal-pulse{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(229,165,75,0.85));pointer-events:none;}
+  .signal-pulse-white{fill:rgba(232,228,223,0.95);filter:drop-shadow(0 0 4px rgba(232,228,223,0.6));pointer-events:none;}
 
   .theme-node{cursor:pointer;transition:filter 0.2s;}
   .theme-node:hover{filter:drop-shadow(0 0 12px rgba(229,165,75,0.8));}
@@ -1453,7 +1467,7 @@ ${SHARED_AAMARK_HTML}
   <div><span class="swatch gold"></span>theme (${kg.stats.themes})</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
   <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ ${totalEntries}+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2+3 ✓ · cp-4-7 incoming</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2+3+4 ✓ · cp-5-7 incoming</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1835,6 +1849,185 @@ ${AAMARK_SCRIPT}
     });
   })();
 
+  // === CP-4: Lissajous theme drift + signal pulses ===
+  // Living-but-authored: theme groups drift in small irregular paths around their base
+  // position via per-theme Lissajous parameters. Belief/project/post/tech nodes drift WITH
+  // the theme (because they're inside the theme group transform). Cross-edges recompute
+  // per frame because their endpoints moved.
+
+  const themeDrift = THEMES.map((t, i) => {
+    const r = mulberry32(i * 131 + 17);
+    return {
+      ax: 6 + r() * 10,         // amplitude px x
+      ay: 5 + r() * 9,          // amplitude px y
+      fx: 0.10 + r() * 0.10,    // frequency hz x
+      fy: 0.07 + r() * 0.10,    // frequency hz y
+      px: r() * Math.PI * 2,    // phase x
+      py: r() * Math.PI * 2,    // phase y
+    };
+  });
+
+  // Pre-cache references to theme groups for animation loop
+  const themeGroupEls = THEMES.map(t => svg.querySelector('g.theme-group[data-theme="' + t.id + '"]'));
+
+  // Cache cross-edge paths + endpoint node ids for per-frame recompute
+  const crossEdgeRefs = Array.from(svg.querySelectorAll('path.cross-edge')).map(path => ({
+    path,
+    from: path.getAttribute('data-from'),
+    to: path.getAttribute('data-to'),
+  }));
+
+  // Track current theme world position (used by signal pulses + cross-edge recompute)
+  const themeCurPos = THEMES.map(t => ({ x: t.x, y: t.y }));
+
+  // Randomize twinkle delay per theme node (so they desync — feels like real stars)
+  document.querySelectorAll('.theme-node').forEach(e => {
+    e.style.animationDelay = '-' + (Math.random() * 4.5).toFixed(2) + 's';
+  });
+
+  let lastT = performance.now();
+  function frame(now){
+    const t = now / 1000;
+    lastT = now;
+
+    // Update theme positions + group transforms
+    THEMES.forEach((th, i) => {
+      const d = themeDrift[i];
+      const dx = Math.sin(t * d.fx * 2 * Math.PI + d.px) * d.ax;
+      const dy = Math.cos(t * d.fy * 2 * Math.PI + d.py) * d.ay;
+      const x = th.x + dx;
+      const y = th.y + dy;
+      themeCurPos[i].x = x;
+      themeCurPos[i].y = y;
+      const g = themeGroupEls[i];
+      if (g) g.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ')');
+    });
+
+    // Update theme position lookup map for cross-edge recompute (uses node-id keys)
+    THEMES.forEach((th, i) => {
+      nodeWorldPos[th.id] = { x: themeCurPos[i].x, y: themeCurPos[i].y };
+    });
+
+    // Recompute cross-edge paths (endpoints moved with theme drift)
+    // Note: belief/project/post/tech nodes inside theme groups drift WITH the theme since
+    // they're children of the theme group. But their world coords change. We update
+    // nodeWorldPos for them too: world = theme.cur + local.
+    // For simplicity + perf, only update edges anchored on theme nodes here.
+    // Edges to belief/project nodes use their local position offset from theme.
+    crossEdgeRefs.forEach(ref => {
+      const a = nodeWorldPos[ref.from];
+      const b = nodeWorldPos[ref.to];
+      if (!a || !b) return;
+      const mx = (a.x + b.x)/2 + (CX - (a.x + b.x)/2) * 0.45;
+      const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
+      ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
+    });
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Signal pulses — gold/white dots traveling along paths or straight lines, fade in/out
+  function pulseAlongLine(x1, y1, x2, y2, duration, color, radius){
+    const cls = color === 'gold' ? 'signal-pulse' : 'signal-pulse-white';
+    const pulse = el('circle', { cx:x1, cy:y1, r:radius || 2.4, class:cls, opacity:0 });
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min((now - start) / duration, 1);
+      const eased = t * t * (3 - 2 * t);
+      pulse.setAttribute('cx', x1 + (x2 - x1) * eased);
+      pulse.setAttribute('cy', y1 + (y2 - y1) * eased);
+      let op = 0;
+      if (t < 0.18) op = t / 0.18;
+      else if (t > 0.82) op = (1 - t) / 0.18;
+      else op = 1;
+      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.95 : 0.65));
+      if (t < 1) requestAnimationFrame(tick);
+      else pulse.remove();
+    }
+    requestAnimationFrame(tick);
+  }
+  function pulseAlongPath(pathEl, duration, color, radius){
+    if (!pathEl || !pathEl.getTotalLength) return;
+    let len;
+    try { len = pathEl.getTotalLength(); } catch(e){ return; }
+    if (!len || len < 10) return;
+    const cls = color === 'gold' ? 'signal-pulse' : 'signal-pulse-white';
+    const pulse = el('circle', { r:radius || 2.2, class:cls, opacity:0 });
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min((now - start) / duration, 1);
+      const eased = t * t * (3 - 2 * t);
+      try {
+        const pt = pathEl.getPointAtLength(eased * len);
+        pulse.setAttribute('cx', pt.x);
+        pulse.setAttribute('cy', pt.y);
+      } catch(e){ pulse.remove(); return; }
+      let op = 0;
+      if (t < 0.18) op = t / 0.18;
+      else if (t > 0.82) op = (1 - t) / 0.18;
+      else op = 1;
+      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.85 : 0.55));
+      if (t < 1) requestAnimationFrame(tick);
+      else pulse.remove();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Cadence 1: genesis → theme straight pulse (every 0.7-1.6s)
+  function fireRadial(){
+    const i = Math.floor(Math.random() * THEMES.length);
+    pulseAlongLine(CX, CY, themeCurPos[i].x, themeCurPos[i].y, 1000, 'gold', 2.4);
+    setTimeout(fireRadial, 700 + Math.random() * 900);
+  }
+  setTimeout(fireRadial, 800);
+
+  // Cadence 2: cross-edge pulse (every 0.6-1.5s) — fires along a real interlinkage
+  function fireCrossEdge(){
+    if (crossEdgeRefs.length){
+      const ref = crossEdgeRefs[Math.floor(Math.random() * crossEdgeRefs.length)];
+      pulseAlongPath(ref.path, 1300, 'white', 1.8);
+    }
+    setTimeout(fireCrossEdge, 600 + Math.random() * 900);
+  }
+  setTimeout(fireCrossEdge, 1200);
+
+  // Cadence 3: tension chord pulse (every 2.4-5s) — bigger, gold, big-event signals
+  function fireTension(){
+    const tensions = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'tension-with');
+    if (tensions.length){
+      const ref = tensions[Math.floor(Math.random() * tensions.length)];
+      pulseAlongPath(ref.path, 1700, 'gold', 2.0);
+    }
+    setTimeout(fireTension, 2400 + Math.random() * 2600);
+  }
+  setTimeout(fireTension, 2700);
+
+  // Cadence 4: supersedes/refines pulse (every 1.5-3.2s) — narrative arc signals
+  function fireNarrative(){
+    const narr = crossEdgeRefs.filter(r => {
+      const rel = r.path.getAttribute('data-rel');
+      return rel === 'superseded_by' || rel === 'refined_by';
+    });
+    if (narr.length){
+      const ref = narr[Math.floor(Math.random() * narr.length)];
+      pulseAlongPath(ref.path, 1500, 'gold', 2.6);
+    }
+    setTimeout(fireNarrative, 1500 + Math.random() * 1700);
+  }
+  setTimeout(fireNarrative, 1900);
+
+  // Cadence 5: builds_on lineage pulse (every 1.0-2.0s) — project chain firing
+  function fireLineage(){
+    const lin = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'builds_on');
+    if (lin.length){
+      const ref = lin[Math.floor(Math.random() * lin.length)];
+      pulseAlongPath(ref.path, 1200, 'white', 1.6);
+    }
+    setTimeout(fireLineage, 1000 + Math.random() * 1000);
+  }
+  setTimeout(fireLineage, 1600);
+
 })();
 </script>
 
@@ -1848,7 +2041,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-3 cross-edges]`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-4 motion]`);
   okCount++;
 }
 
