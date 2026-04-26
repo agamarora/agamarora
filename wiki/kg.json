@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:54:16.076Z",
+  "generated_at": "2026-04-26T10:57:11.220Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1805,6 +1805,69 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7036000000000000000",
+      "urn": "urn:li:activity:7036000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7036000000000000000/",
+      "label": "2023-03-01   ChatGPT asked to write its own testimonial about working with the a",
+      "date": "2023-03-01",
+      "snippet": "2023-03-01   ChatGPT asked to write its own testimonial about working with the author, then published as the post body."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7041000000000000000",
+      "urn": "urn:li:activity:7041000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7041000000000000000/",
+      "label": "My notes have never been so actionable thanks to ChatGPT's help.",
+      "date": "2023-03-14",
+      "snippet": "My notes have never been so actionable thanks to ChatGPT's help."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7062000000000000000",
+      "urn": "urn:li:activity:7062000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7062000000000000000/",
+      "label": "my LLM friend",
+      "date": "2023-05-10",
+      "snippet": "my LLM friend"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7202000000000000000",
+      "urn": "urn:li:activity:7202000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7202000000000000000/",
+      "label": "I have created a personal GPT wrapper for each subject that I am after. I tend t",
+      "date": "2024-05-31",
+      "snippet": "I have created a personal GPT wrapper for each subject that I am after. I tend to look up top programs, look at their curriculum and add that as a structure to my wrappers. This has replaced my podcast addiction with a more interactive version."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7204000000000000000",
+      "urn": "urn:li:activity:7204000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7204000000000000000/",
+      "label": "ChatGPT was down yesterday... this prompted me to be prepared for the times when",
+      "date": "2024-06-05",
+      "snippet": "ChatGPT was down yesterday... this prompted me to be prepared for the times when I have to be off-the-grid but with my trusty LLM peer."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7220000000000000000",
+      "urn": "urn:li:activity:7220000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7220000000000000000/",
+      "label": "It's AI that is helping me code. AI building AI is now.",
+      "date": "2024-07-19",
+      "snippet": "It's AI that is helping me code. AI building AI is now."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7318000000000000000",
+      "urn": "urn:li:activity:7318000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7318000000000000000/",
+      "label": "I have been using my second brain for over 4 months now. Funnily this has become",
+      "date": "2026-04-21",
+      "snippet": "I have been using my second brain for over 4 months now. Funnily this has become my preferred way to use claude."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7245035069900791808",
       "urn": "urn:li:activity:7245035069900791808",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245035069900791808/",
@@ -2859,6 +2922,46 @@
       "to": "post.urn-li-activity-7263000000000000000"
     },
     {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7036000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7041000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7062000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7180000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7202000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7204000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7220000000000000000"
+    },
+    {
+      "from": "belief.llm-as-primary-daily-tool",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7318000000000000000"
+    },
+    {
       "from": "belief.pm-is-99-should-we-1-can-we",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7245035069900791808"
@@ -3066,9 +3169,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 65,
+    "posts": 72,
     "edges": {
-      "total": 209,
+      "total": 217,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -3078,9 +3181,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 98
+        "cites-post": 106
       }
     },
-    "nodes_total": 217
+    "nodes_total": 224
   }
 }
