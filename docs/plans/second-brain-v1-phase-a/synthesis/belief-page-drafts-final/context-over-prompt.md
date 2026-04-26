@@ -3,6 +3,7 @@ type: BeliefPage
 slug: context-over-prompt
 title: Context over prompt
 one_line: "Upstream context curation beats downstream prompt composition - the lever, not the I/O seam."
+quotable: "Context > Prompt. Curating context is the real skill. Composing user-facing prompts is plumbing."
 parent_theme: agent-first
 related_beliefs:
   - belief.spec-over-sprint
@@ -18,50 +19,57 @@ conditioned_by:
   - substance-over-hype
 holds_with:
   - prompts-as-engineering-primitive
+applies_to:
+  - prompt-engineering
+  - retrieval-systems
+  - agent-design
+  - knowledge-management
+  - ai-debugging
+confidence: settled
 cross_listed_themes:
   - agent-first
   - spec-first-taste
   - second-brain
 tier: 1
-length_target: 500-700w
-status: c-voice-beliefs-r1-cp2-qa
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp2-d6.1
 voice_register: 1 (free-form post-essay)
-shape: qa-card-d5
+shape: principle-card-d6.1
 ---
 
 # Context over prompt
 
-## The question
+## The belief
 
-Is prompt engineering still a useful skill, or has context replaced it?
+Context is the lever. The prompt is the I/O seam. What you put in front of a model before a session begins - personal data, organizational data, prior conversation, structured knowledge - determines output quality more than the words you compose at the interface. User-facing prompt-as-skill is dead. Engineering-layer prompts (guardrails, tool-calling, output parsing, memory wiring) are alive. The verdict lands differently depending on which layer the question is about.
 
-## The answer
+## How to apply
 
-Both are true at different layers, and that is the whole point.
+1. **Audit context first when output is bad.** When an AI response disappoints, look at what was in the system prompt, the retrieval, the memory, before tweaking the user-facing prompt wording. Most "bad prompt" problems are bad-context problems wearing a prompt mask.
+2. **Invest in context infrastructure over prompt-craft training.** Hiring a prompt engineer to write user-facing copy is a 2023 investment. Hiring an engineer to build retrieval, memory, and structured-knowledge wiring is the 2026 move. The leverage is in the curation pipeline, not the seam.
+3. **Distinguish the layer when answering.** "Are prompts dead?" is the wrong shape of question. User-facing prompts as a skill: dead. Engineering-layer prompts inside agent harnesses: alive and load-bearing. Always name which layer the question is about before answering.
+4. **Evaluate AI systems by their context layer first.** A demo that looks magical because of careful prompt-craft will collapse on real free-form input. A demo backed by curated context, retrieval, and structured knowledge survives messy users. Look at the data flowing in before you grade the response.
+5. **Treat the second-brain as infrastructure, not an aphorism.** A personal context layer that sits across every AI session, written-back-to over time, is the unit of investment. Once it exists, every future session reads from it. A second-brain that has not been written to in three months is no longer a second-brain.
 
-Context beats prompt. What you put in front of a model before a session begins - personal data, organizational data, prior conversation, structured knowledge from a second-brain - determines output quality more than the words you compose at the interface. Verbatim from the April 9, 2026 post: "Spec > Sprint / Taste > Execution / Context > Prompt." One line of a three-line trilogy. All three follow the same shape: upstream curation beats downstream generation. Curating context is the real skill. Composing user-facing prompts is plumbing.
+## What this is not
 
-The corollary is precise. User-facing prompt-as-skill is dead. Engineering-layer prompts - guardrails, tool-calling, output parsing, memory wiring - are alive. The verdict lands differently depending on which layer the question is about.
+- **Not "prompts do not matter at all."** User-facing prompt-as-skill is dead. Engineering-layer prompts are alive. The full claim is layer-dependent. A response that says "prompts are dead" is wrong at the engineering layer.
+- **Not "any context beats any prompt."** Stale, noisy, or irrelevant context degrades output as much as a bad prompt. Context curation is the lever - the work is in the curation, not in the volume.
+- **Not a one-time setup.** Context is infrastructure that needs maintenance: pruning, refreshing, re-indexing, source-of-truth checks. Static context decays.
 
-The arc runs three years and resolves cleanly. It started in the other direction. February 2023: "As an expert in prompt engineering... step-by-step roadmap." Prompt engineering framed as a trainable craft with a curriculum. That is the position the arc supersedes. The earliest visible affirmative claim arrived in a June 2024 Collaborative Article item: "Start with context" as step two in a five-step prompt hygiene list. Embedded in a list, not yet the headline. In hindsight it is the seed.
+## Argues against
 
-Six months later: "We need to kill prompting." The December 2024 post overshot the verb. But buried in the body was the load-bearing sentence: "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models." The context claim was already present. It had not become the axiom yet.
-
-July 2025: prompts re-admitted as engineering plumbing. The apparent contradiction got named openly: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Then the explanation - prompts hold not at the user-interface layer, but inside agent architecture. Guardrails. Tool-calling. Output parsing. Plumbing, not magic incantation.
-
-With user-facing prompting removed from the determiner position, the question became: what fills that position? Context. The lock arrived April 9, 2026, in the Google Stitch post: "Context > Prompt." Three years from skill to dead-skill to plumbing to context-as-determinant, compressed to three words. April 23, 2026: the second-brain operationalized the belief. "All of us know the power of a personal context layer... every future AI session reads the same brain and writes back to it." Context is no longer the axiom. It is now infrastructure.
-
-Two beliefs hold simultaneously. Prompt-engineering-as-user-skill is superseded; prompts-as-engineering-primitive is alive. The two resolve as different claims about different layers, not contradictions. A response that says "prompts are dead" is wrong at the engineering layer. A response that says "prompts still matter" is wrong at the user-skill layer. The framing of "which layer" is the whole answer.
+- "Prompt engineering is a high-value 2026 skill worth a curriculum and certification."
+- "If your AI output is bad, rewrite the user-facing prompt."
+- "Context can be assembled at inference time without dedicated infrastructure."
 
 ## Where to go from here
 
-Three exits.
-
 If you want the **parent thesis** that this belief follows from, go to the [agent-first theme](/wiki/agent-first/). The serving lens argument is the reason context is the determining variable in the first place.
 
-If you want the **trilogy partners** that share the same upstream-beats-downstream shape, jump to [spec over sprint](/wiki/beliefs/spec-over-sprint/) or [taste over execution](/wiki/beliefs/taste-over-execution/). Each is a separate belief, same structural move in a different domain.
+If you want the **trilogy partners** that share the same upstream-beats-downstream shape, jump to [spec over sprint](/wiki/beliefs/spec-over-sprint/) or [taste over execution](/wiki/beliefs/taste-over-execution/).
 
-If you want the **operationalization** - what it looks like when this belief becomes infrastructure and not just an aphorism - [second-brain-is-context-layer](/wiki/beliefs/second-brain-is-context-layer/) holds it. The second-brain is context over prompt built into every future AI session.
+If you want the **operationalization** of this belief as actual infrastructure, [second-brain-is-context-layer](/wiki/beliefs/second-brain-is-context-layer/) holds it. The second-brain is context over prompt built into every future AI session.
 
 ## Evidence
 

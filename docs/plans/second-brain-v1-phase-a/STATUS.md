@@ -2,42 +2,25 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 27 — Phase C / C-voice-beliefs SHAPE PIVOT (D5 locked). CP-1 + CP-2 retrofitted to Q&A card + chip strip. Frontmatter backfilled across all 19 beliefs. build-wiki ships chip strip render.**
+Last updated: 2026-04-26 — **CHECKPOINT 28 — Phase C / C-voice-beliefs SHAPE LOCKED at D6.1 principle-card. CP-1 + CP-2 retrofitted. Subagent template saved. CP-3..CP-19 ready to fan out (17 remaining).**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / **C-voice-beliefs CP-2 DONE in new Q&A shape.** D5 decision (locked 2026-04-26): belief pages are not for human direct-landing. Real readers are /enter v3 agent retrieval, /llms.txt-fed external AI assistants (Claude/ChatGPT/Cursor), AEO/SEO answer-machines (Perplexity, Google AI Overviews, ChatGPT search). Optimize for retrieval + answer-extraction, not narrative deep-read.
+**Current step:** Phase C / **C-voice-beliefs CP-2 DONE in D6.1 principle-card shape.** Shape evolved within session: D5 (Q&A card) → D6 (principle-card with decision rules + boundaries) → **D6.1 LOCKED** (D6 + quotable + applies_to + confidence + Argues-against + ol counter + mobile fixes via /design-review).
 
-**Q&A card shape (per page):**
-- Frontmatter: parent_theme + related_beliefs + supersedes + conditioned_by + holds_with (last 3 are NEW, backfilled across all 19 in this checkpoint)
-- Auto-rendered chip strip under h1 (build-wiki injectBeliefChips): Theme · Supersedes · Conditions · Holds with — each item is either a clickable link to the existing page or a `dead chip` if the slug is a graph node without a page (T2/T3 belief or pre-supersession state)
-- page-purpose (the one_line) renders below chip strip, above the body
-- Body: `## The question` (1-2 sentences phrasing the natural-language question someone would ask an AI assistant about Agam) → `## The answer` (R1 voice, ~300-500w, folds claim + supersession arc + simultaneity edges) → `## Where to go from here` (3 named exits) → `## Evidence` (table)
-- Length target: 500-700w body
-- Voice: R1 declarative, colon rhythm, hyphen-with-spaces aside, no hedging, zero em-dashes
+**D6.1 binding contract** lives at `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §D6.1-belief-shape-binding. Subagent prompt template lives at `docs/plans/second-brain-v1-phase-a/prompts/c-voice-beliefs-d61-template.md`. Both are canonical. Read them before resuming.
 
-**AEO/SEO fold:** the queued AEO/SEO Q&A restructure pass (originally a separate gate before Phase D) is now folded into this work. Belief pages = primary AEO surface. Voice + quotes pages will get a lighter Q&A overlay later.
+**D6.1 shape summary:**
+- Frontmatter additions: `quotable`, `applies_to` (3-6 domain tags), `confidence` (settled|evolving|contested) - all rendered visibly
+- Auto-blocks: chip strip (graph edges) + tag strip (domain + confidence) + TL;DR (gold-gradient quotable) + collapsed Evidence drawer
+- Body: `## The belief` (declarative principle) → `## How to apply` (3-5 numbered decision rules with bold-imperative format) → `## What this is not` (2-3 boundary bullets) → `## Argues against` (3 quoted counter-positions) → `## Where to go from here` (3 named exits) → `## Evidence` (table, auto-collapsed)
+- Length: 400-600w body
+- Zero em-dashes, zero banned LLM-isms, zero triadic prose, zero biographical date framing in body (posts ONLY in Evidence table)
+- Mobile: chip strip stacks vertically, tag strip wraps confidence below tags, ol counter circles render as ::before pseudo-elements with mono accent number
 
-**What shipped this checkpoint:**
-1. PHASE-C-DESIGN-PLAN.md §D5-belief-shape-binding added (10 binding requirements)
-2. Frontmatter `supersedes` / `conditioned_by` / `holds_with` backfilled on all 19 beliefs (sonnet mechanical extraction from existing Cross-links sections)
-3. build-wiki.mjs adds `.belief-chips` CSS + `injectBeliefChips` function rendering chip strip under h1 (filters slugs to existing pages, dead-chip for graph-only nodes)
-4. CP-1 belief.agent-first retrofitted to Q&A shape (status: c-voice-beliefs-r1-cp1-reference-qa)
-5. CP-2 belief.context-over-prompt retrofitted to Q&A shape (status: c-voice-beliefs-r1-cp2-qa)
+**Next action on resume: CP-3 = sonnet subagent reauthor of belief.spec-over-sprint.** Use template at `prompts/c-voice-beliefs-d61-template.md`, swap `{SLUG}=spec-over-sprint` and `{REF_SLUG}=context-over-prompt` (closest sibling). After subagent returns: run 11-point review checklist from template, then commit + push + STATUS bump → CP-4.
 
-**Next action on resume: CP-3 = sonnet subagent reauthor of 1 belief page in Q&A shape.** Recommended next: `belief.spec-over-sprint` (trilogy partner of context-over-prompt). Use new prompt template per §D5 (key gates: chip strip frontmatter is already backfilled — subagent only needs to keep it; body must use `## The question` / `## The answer` / `## Where to go from here` / `## Evidence` shape; ~500-700w body; status field set to `c-voice-beliefs-r1-cp{N}-qa`). After subagent returns: manual review for triadic prose + em-dashes, then build → commit + push → STATUS bump.
-
-**Subagent gates per CP (binding):**
-1. Frontmatter status set to `c-voice-beliefs-r1-cp{N}`
-2. Length 600-800w
-3. Cold-reader open paragraph (no h2): names what page is, what reader gets, parent route
-4. Self-introducing h2s (no "Refinement arc" or "Cross-links" — those get stripped by build-wiki)
-5. "Where to go from here" section with 3 named exit paths
-6. Evidence table with date / entry / urn columns
-7. Zero em-dashes; only " - " (hyphen+spaces) for asides
-8. Zero banned LLM-isms (leverage/seamlessly/robustly/deeply/navigate/delve)
-9. No triadic prose lists ("X, Y, and Z" rhythm)
-10. Voice register 1 declarative throughout
+**CP order remaining (17 CPs):** CP-3 spec-over-sprint → CP-4 taste-over-execution → CP-5 second-brain-is-context-layer → CP-6 substance-over-hype → CP-7 enterprise-ai-production-reality → CP-8 ship-the-prototype → CP-9 pm-is-99-should-we-1-can-we → CP-10 ic-path-legitimacy → CP-11 help-market-flourish → CP-12 anti-customization → CP-13 ai-pm-skillset-table-stakes → CP-14 breadth-as-differentiation → CP-15 breadth-needs-depth → CP-16 learn-concepts-not-tools → CP-17 linkedin-as-instrumental-platform → CP-18 llm-as-primary-daily-tool → CP-19 self-instrumentation. ~5-6hr estimated, multi-session expected.
 
 Use git log b411685..HEAD for the full reauthor sequence.
 
@@ -79,7 +62,7 @@ This is a HARD GATE per user directive 2026-04-26: must complete before AI plumb
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
 | C-voice-themes | IN FLIGHT (CP-1 of 12 done) | 12 theme pages reauthored in R1 voice + §D1-narrative-binding | Per-theme cadence (NOT batched per user taste-call 2026-04-26). CP-1 agent-first DONE 7f68896. CP-2 voice-ai-craft NEXT. Then breadth-as-differentiation, pm-taste, ai-pm-skillset, enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root last. Each = sonnet subagent reauthor → review against gates → build → commit + push → STATUS bump → milestone check. ~6-8hr total. |
-| C-voice-beliefs | IN FLIGHT (CP-2 of 19 done in Q&A shape; D5 shape pivot 2026-04-26) | 19 beliefs reauthored in R1 voice as Q&A cards + chip strip per §D5 | Per-belief cadence. CP-1 agent-first reference Q&A DONE. CP-2 context-over-prompt Q&A DONE. Frontmatter (supersedes/conditioned_by/holds_with) backfilled on all 19. build-wiki chip strip live. CP-3 spec-over-sprint NEXT (sonnet subagent, new Q&A template). 17 remaining sub-CPs. ~5-6hr. AEO/SEO gate folds into this work. |
+| C-voice-beliefs | IN FLIGHT (CP-2 of 19 done in D6.1 principle-card; shape locked 2026-04-26 after D5→D6→D6.1 iteration) | 19 beliefs reauthored as principle-cards per §D6.1 | Per-belief cadence. CP-1 agent-first reference D6.1 DONE. CP-2 context-over-prompt D6.1 DONE. Frontmatter complete (quotable + applies_to + confidence on CP-1+CP-2; CP-3..CP-19 add in subagent rewrite). build-wiki chip + tag + TL;DR + ol-counter + mobile fixes all live. Subagent template at prompts/c-voice-beliefs-d61-template.md. CP-3 spec-over-sprint NEXT. 17 remaining sub-CPs. ~5-6hr. AEO/SEO gate folds into this work. |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
 

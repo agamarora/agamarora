@@ -139,7 +139,9 @@ User taste calls received:
 - **D2 - Graph viz target: P2c hand-designed constellation.** Drop the vis-network force layout entirely. Build a curated SVG constellation: 12 themes in a deliberate ring, click-to-expand belief clusters per theme, posts as small dots near parent. See §D2-graph-UX-binding below for the binding UX invariants (scroll isolation, always-centered, narrative entry, anti-drift floor, mobile fallback). ~6-8hr.
 - **D3 - Sequencing: mechanical → structural → voice → graph (plan default).** Multiple checkpoints per step. Multi-session persistence via STATUS.md. Frequent commits. Graph stays last per user taste-call 2026-04-26: voice work compounds quality on already-readable pages, but graph UX is a usability gate that bypasses voice value if visitors bounce. Despite that ordering logic, sequence stays mechanical → structural → voice → graph because voice batches will surface narrative patterns that the graph "tour" path needs to encode (graph entry tour cites pages by their cold-reader open lines).
 - **D4 - Frequent checkin cadence (binding 2026-04-26).** Every 2-4 page rewrites: stop, show user 1 sample page, take taste-call, apply learnings to remaining batches before continuing. /design-review after every C-step (not deferred to C-final). Self-eval lives in commit message: what optimized for, what tradeoffs.
-- **D5 - Belief page shape: Q&A card + auto-rendered chip strip (locked 2026-04-26 mid-CP-3 taste-call).** After CP-1 (hand-author belief.agent-first) and CP-2 (sonnet subagent belief.context-over-prompt) shipped, user surfaced fundamental question: belief pages are not for human-direct landing; they are for /enter v3 agent retrieval, /llms.txt-fed external AI assistants (Claude/ChatGPT/Cursor), and AEO/SEO answer-machines (Perplexity, Google AI Overviews, ChatGPT search). Reframe accordingly. See §D5-belief-shape-binding below for the full shape contract. Effective immediately: CP-1 and CP-2 retrofit to Q&A shape; CP-3..CP-19 fan out under new template; AEO/SEO Q&A restructure pass (currently queued as a separate gate before Phase D) folds into this work, killing one Phase-D blocker.
+- **D5 - Belief page shape: Q&A card + auto-rendered chip strip (locked 2026-04-26 mid-CP-3 taste-call).** After CP-1 (hand-author belief.agent-first) and CP-2 (sonnet subagent belief.context-over-prompt) shipped, user surfaced fundamental question: belief pages are not for human-direct landing; they are for /enter v3 agent retrieval, /llms.txt-fed external AI assistants (Claude/ChatGPT/Cursor), and AEO/SEO answer-machines (Perplexity, Google AI Overviews, ChatGPT search). Reframe accordingly. See §D5-belief-shape-binding below for the full shape contract. **SUPERSEDED by D6/D6.1 within the same session.**
+- **D6 - Belief page as operational building block (drafted 2026-04-26 mid-CP-3 taste-call after D5).** User feedback after D5 sample landed: "What does Agam think" framing was wrong. Beliefs are not biographical claims about a person; they are operational primitives that influence agent reasoning. Drop the question framing. Drop dated-post prose ("March 2023 post...", "June 20 manifesto") from body - move post references to evidence drawer only. Add operational sections: "How to apply" (decision rules) + "What this is not" (boundaries / failure modes). See §D5-belief-shape-binding below (now reads as D6 shape after this update; section name retained for git history continuity). **SUPERSEDED by D6.1 within the same session.**
+- **D6.1 - D6 plus more agent-grabbable bits + format polish (LOCKED 2026-04-26 post-/design-review).** Final shape. After D6 sample landed, user asked for more bits agents can extract structurally + better formatting consistency. Three additions: (a) `quotable:` frontmatter field rendered as a TL;DR gold-gradient block above body - single sentence agent drops verbatim into responses; (b) `applies_to:` domain tags rendered as a second strip under chip strip - agent matches user-query topic to tags for retrieval; (c) `confidence: settled|evolving|contested` marker rendered as a colored dot. New body section: `## Argues against` lists concrete positions the belief rejects. /design-review caught three mobile issues (chip strip wrap, tag strip confidence margin-left:auto break, page-purpose + TL;DR redundancy) - all fixed in commit 17806ab. See §D6.1-belief-shape-binding below for the full locked contract. Effective immediately: CP-1 retrofitted to D6.1 (commit 33c9cd3 + 7d310ce + 17806ab); CP-2 retrofit + CP-3..CP-19 fan-out commence under D6.1 template.
 
 ### §D1-narrative-binding — cold-reader contract for every reauthored page
 
@@ -214,6 +216,81 @@ Binding shape per belief page:
 10. **Retrofit CP-1 + CP-2.** Both already-shipped pages (belief.agent-first 0c50e5f, belief.context-over-prompt 253fcef) are rewritten to the new shape in the same retrofit commit. Retrofit cost: ~30min for both. Lower than re-running them as fresh CPs because the source content is already correct, only the structure changes.
 
 These are gates. Any belief page that ships without all three frontmatter fields, the chip strip render, and the Q&A body shape is not done.
+
+### §D6.1-belief-shape-binding — final locked contract (supersedes §D5-belief-shape-binding above)
+
+Belief pages are operational building blocks for agent reasoning. NOT biographical claims about a person. NOT historical artifacts of an evolving thinker. Optimize for retrieval + answer-extraction by agents (Reader 1: /enter v3; Reader 2: external AI assistants via /llms.txt; Reader 3: AEO/SEO answer-machines). Human direct-land is rare and incidental.
+
+**Locked frontmatter fields per page:**
+
+```yaml
+type: BeliefPage
+slug: <slug>
+title: <Title Case Belief Name>
+one_line: "<35-90 word description for OG meta + social share - NOT rendered visibly when quotable is present>"
+quotable: "<single-sentence verbatim assertion, agent drops this into responses without rephrasing>"
+parent_theme: <theme-slug>
+related_beliefs:
+  - belief.<slug>
+  - ...
+supersedes:
+  - <belief-slug-or-graph-node>
+conditioned_by:
+  - <belief-or-theme-slug>
+holds_with:
+  - <belief-slug>
+applies_to:
+  - <domain-tag-1>
+  - <domain-tag-2>
+  - ... (3-6 tags)
+confidence: settled  # settled | evolving | contested
+tier: 1
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp{N}-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
+```
+
+**Locked body sections (in this order):**
+
+1. `# <Title>` (h1)
+2. `## The belief` — 1-3 declarative sentences, principle form, active voice. State what the belief asserts as true. Do NOT use "Agam thinks" / "What does Agam think" / "Agam's view is" framing. The belief is a principle, not a biographical claim.
+3. `## How to apply` — 3-5 numbered decision rules. Format: bold-claim period explanation. Each rule starts with "When [trigger condition]" or an imperative verb ("Default to...", "Treat the X as Y", "Audit Z first"). Rules must be testable - an agent should be able to take the rule and apply it to a novel question without needing the source corpus.
+4. `## What this is not` — 2-3 bullets naming boundaries / failure modes / over-rotations. Format: bold-statement period explanation. Helps the agent know when this belief does NOT apply or when reaching for a different belief is correct.
+5. `## Argues against` — 3 bullets, each in quotation marks, naming concrete counter-positions the belief explicitly rejects. Lets the agent identify when user input invokes a counter-position and route to the appropriate rebuttal.
+6. `## Where to go from here` — 3 named exit paths in prose ("If you want X, go to Y..."). Cross-link to parent theme + 2 related beliefs minimum.
+7. `## Evidence` — markdown table with `| Date | Entry | Post |` columns. Auto-collapsed by build-wiki into a `<details>` drawer (closed by default for human reads, open-on-click for audit / agent grounding).
+
+**Locked body rules:**
+
+- **Length: 400-600 words** body prose (excluding frontmatter and Evidence table). Includes The belief + How to apply + What this is not + Argues against + Where to go from here.
+- **Voice: R1.** Declarative, colon rhythm, hyphen-with-spaces aside, short paragraphs, no hedging.
+- **Zero em-dashes (—).** Use ` - ` (hyphen+spaces) or colon or new sentence.
+- **Zero banned LLM-isms.** No "leverage" (verb), "seamlessly", "robustly", "deeply" (filler), "navigate" (metaphor), "delve", "groundbreaking", "transformative", "It's not just X, it's Y", hashtags, hedging ladders, conclusion-recap paragraphs.
+- **Zero triadic prose lists.** When listing three things, use a numbered or bulleted list, not "X, Y, and Z" rhythm in prose.
+- **Zero biographical date framing in body.** No "March 2023 post...", "the June 20, 2025 manifesto", "by April 2026". Posts live ONLY in the Evidence table (with dates in the Date column). The body uses verbatim quotes when essential for grounding but does not date them in narrative form.
+
+**Auto-rendered blocks (build-wiki injects, not manual):**
+
+- **Chip strip** under h1: Theme · Supersedes · Conditions · Holds with. Each chip is either a clickable link (page exists) or a dead chip (graph node, no page). Mobile: stacks vertically per group below 720px.
+- **Tag strip** below chip strip: Applies to: <tag chips> + confidence dot. Mobile: confidence wraps below tags.
+- **TL;DR block** below page-purpose (or replacing it when quotable is present): gold-gradient highlighted block with `TL;DR` label and the quotable quote. The agent extracts this verbatim.
+- **Page-purpose** is SKIPPED on belief pages with quotable. The one_line still drives OG/meta description for social shares - it just doesn't render in the body when TL;DR carries the visible job.
+- **Evidence table** is auto-wrapped in `<details>` with summary "Evidence (N dated rows - click to expand)".
+
+**Mobile gates (verified by /design-review on every CP):**
+
+1. Chip strip stacks each group vertically with label-above-chips below 720px viewport
+2. Tag strip confidence indicator wraps to its own line below tags below 720px
+3. Sep-dots between chip groups hidden on mobile
+4. TL;DR padding/font-size tuned for narrow viewports (slightly smaller)
+5. Numbered "How to apply" circles render as `::before` pseudo-element with mono accent number (not native `<ol>` markers)
+
+These gates are pass/fail. Any belief page that fails one is not done.
+
+**Subagent prompt template:**
+
+The CP-3..CP-19 sonnet subagent prompt template is saved at `prompts/c-voice-beliefs-d61-template.md` (see this file for the canonical text to copy-paste per CP, swapping only the slug + reference belief).
 
 ## Locked execution sequence
 
