@@ -2,11 +2,27 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 24 — Phase C / C-voice-themes COMPLETE (12/12 themes shipped). C-voice-beliefs queued (19 belief pages).**
+Last updated: 2026-04-26 — **CHECKPOINT 25 — Phase C / C-voice-beliefs CP-1 DONE (1/19). Reference belief.agent-first hand-authored.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / **C-voice-beliefs** queued. 12 theme pages all reauthored in R1 voice + §D1-narrative-binding cold-reader contract. All shipped 2026-04-26. Per-checkpoint cadence (one belief page per CP, same template as themes). 19 sub-CPs total. /design-review run on wiki tree 2026-04-26: gates pass (voice fidelity, cold-reader contract, visual hierarchy of new .page-purpose + .related-links blocks). FINDING-001 title format normalization queued as next mechanical step. Use git log b411685..HEAD for the full reauthor sequence.
+**Current step:** Phase C / **C-voice-beliefs CP-1 DONE.** belief.agent-first hand-authored from scratch in R1 voice + §D1-narrative-binding cold-reader contract. Status frontmatter: c-voice-beliefs-r1-cp1-reference. ~720 words, 5 sections (orientation open + The claim + How the belief formed + What it supersedes/conditions/holds-with + Where to go from here + Evidence). Build clean. page-purpose + related-links render correct. This page is now the binding pattern for CP-2 through CP-19 sonnet subagent reauthors of the remaining 18 beliefs.
+
+**Next action on resume: CP-2 = sonnet subagent reauthor of 1 belief page.** Recommended next: `belief.context-over-prompt` (referenced from agent-first reference, parent theme agent-first already done, tight craft-layer claim). Subagent prompt template: same shape as theme reauthors (commit history d7006ac forward), but pointed at `belief-page-drafts-final/<slug>.md` with the agent-first.md reference page as the binding pattern. After subagent returns: review against gates → npm run build → commit + push → STATUS bump → next CP.
+
+**Subagent gates per CP (binding):**
+1. Frontmatter status set to `c-voice-beliefs-r1-cp{N}`
+2. Length 600-800w
+3. Cold-reader open paragraph (no h2): names what page is, what reader gets, parent route
+4. Self-introducing h2s (no "Refinement arc" or "Cross-links" — those get stripped by build-wiki)
+5. "Where to go from here" section with 3 named exit paths
+6. Evidence table with date / entry / urn columns
+7. Zero em-dashes; only " - " (hyphen+spaces) for asides
+8. Zero banned LLM-isms (leverage/seamlessly/robustly/deeply/navigate/delve)
+9. No triadic prose lists ("X, Y, and Z" rhythm)
+10. Voice register 1 declarative throughout
+
+Use git log b411685..HEAD for the full reauthor sequence.
 
 ## AEO/SEO pass — BINDING GATE before Phase D
 
@@ -46,7 +62,7 @@ This is a HARD GATE per user directive 2026-04-26: must complete before AI plumb
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
 | C-voice-themes | IN FLIGHT (CP-1 of 12 done) | 12 theme pages reauthored in R1 voice + §D1-narrative-binding | Per-theme cadence (NOT batched per user taste-call 2026-04-26). CP-1 agent-first DONE 7f68896. CP-2 voice-ai-craft NEXT. Then breadth-as-differentiation, pm-taste, ai-pm-skillset, enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root last. Each = sonnet subagent reauthor → review against gates → build → commit + push → STATUS bump → milestone check. ~6-8hr total. |
-| C-voice-beliefs | QUEUED | 19 beliefs reauthored in R1 voice | 5 sub-CPs. ~5-6hr. |
+| C-voice-beliefs | IN FLIGHT (CP-1 of 19 done) | 19 beliefs reauthored in R1 voice + §D1-narrative-binding | Per-belief cadence. CP-1 agent-first reference DONE 2026-04-26 (hand-authored). CP-2 context-over-prompt NEXT (sonnet subagent). 18 remaining sub-CPs. ~6-8hr. |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
 

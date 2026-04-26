@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T05:20:26.027Z",
+  "generated_at": "2026-04-26T09:02:50.152Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1538,9 +1538,9 @@
       "id": "post.urn-li-activity-7179449143407386624",
       "urn": "urn:li:activity:7179449143407386624",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/",
-      "label": "The public corpus has one pre-platform voice mention: a March 2024 post observin",
-      "date": "",
-      "snippet": "The public corpus has one pre-platform voice mention: a March 2024 post observing that voice-as-input would help draftin"
+      "label": "2024-03-29 · `urn:li:activity:7179449143407386624`**",
+      "date": "2024-03-29",
+      "snippet": "2024-03-29 · `urn:li:activity:7179449143407386624`**"
     },
     {
       "type": "Post",
@@ -2335,12 +2335,12 @@
     {
       "from": "theme.voice-ai-craft",
       "rel": "cites-post",
-      "to": "post.urn-li-activity-7179449143407386624"
+      "to": "post.urn-li-activity-7378427141190799360"
     },
     {
       "from": "theme.voice-ai-craft",
       "rel": "cites-post",
-      "to": "post.urn-li-activity-7378427141190799360"
+      "to": "post.urn-li-activity-7179449143407386624"
     },
     {
       "from": "theme.voice-ai-craft",
@@ -2371,6 +2371,11 @@
       "from": "belief.agent-first",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7351602695977226243"
+    },
+    {
+      "from": "belief.agent-first",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7378427141190799360"
     },
     {
       "from": "belief.agent-first",
@@ -2597,7 +2602,7 @@
     "tech": 56,
     "posts": 36,
     "edges": {
-      "total": 167,
+      "total": 168,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2607,7 +2612,7 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 56
+        "cites-post": 57
       }
     },
     "nodes_total": 188

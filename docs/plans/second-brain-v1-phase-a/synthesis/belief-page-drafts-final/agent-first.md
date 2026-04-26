@@ -2,10 +2,9 @@
 type: BeliefPage
 slug: agent-first
 title: Agent-first thesis
-one_line: "Build for autonomous agents as users, not just for humans - the serving-lens differentiator after horizontal AI plateaus."
+one_line: "Platforms that cannot talk to autonomous agents are already behind: agents are users too, and maybe first."
 parent_theme: agent-first
 related_beliefs:
-  - belief.horizontal-ai-will-scale
   - belief.context-over-prompt
   - belief.spec-over-sprint
   - belief.application-layer-is-where-safety-lives
@@ -13,52 +12,67 @@ related_beliefs:
   - belief.agent-layer-is-threat-surface
   - belief.substance-over-hype
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 600-800w
+status: c-voice-beliefs-r1-cp1-reference
+voice_register: 1 (free-form post-essay)
 ---
 
 # Agent-first thesis
 
-## Statement
+This is the central belief that gives the [agent-first theme](/wiki/agent-first/) its name. It says: platforms that cannot talk to autonomous agents are already behind. The serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation lives. You are likely here from the parent theme and want the bare claim plus the supersession edges. Two minutes is enough.
 
-Start thinking agent-first. Not just from a building lens - from a serving lens. Platforms that cannot talk to autonomous agents are already behind. Horizontal AI does not scale: chatbots and copilots hit a wall without real domain depth. Agentic AI replaces the horizontal-monolith dream because depth is composable through tool-calling and orchestration. The serving lens is where differentiation lives - your APIs, your data surfaces, and your systems must be legible to autonomous agents calling on behalf of users. Your systems must serve agents too, and maybe first.
+## The claim
 
-## Origin
+Verbatim from the June 20, 2025 manifesto: "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
 
-The earliest seed appears in a March 2023 post on ChatGPT Plugins: "This will open up a new ecosystem in itself. The very first AI marketplace." At the time, Agam framed it in marketplace-economics terms carried from V2 Games - the LLM was not the revolution, the ecosystem around it was. The intuition was present two years before the full thesis arrived.
+The strongest single move in that post is the parenthetical. "(and maybe first)." Agents are users too, and maybe first. Not a 2030 prediction. A 2026 claim. One enterprise voice deployment in the corpus is already running 0% automation through UI, 100% through MCP and APIs.
 
-The field-data phase followed across 18 months of enterprise AI work. A June 2024 post on multi-agent systems called MAS "not a question of if, but when" while warning on cost and complexity. A September 2024 post converted demo-vs-production observations into nine takeaways without yet naming agents as the answer. A December 2024 post predicted "2025 will be the year of agentic systems" - but framed it through the prompting critique rather than the serving lens.
+Three things follow at the craft layer. Each is a separate belief in this graph, not a sub-claim of this one.
 
-The crystallization arrived in a single June 20, 2025 manifesto post. Three moves in one: (a) horizontal AI declared dead, (b) agentic AI declared the new direction, (c) the serving lens introduced as the differentiation move. All three appeared together for the first time. "Start thinking agent first. Not just from a building lens but from a serving lens. That will be the differentiation."
+- Prompts are plumbing, not user-facing UX. See [prompts as engineering primitive](/wiki/beliefs/prompts-as-engineering-primitive/).
+- Context is the lever, not the prompt. See [context over prompt](/wiki/beliefs/context-over-prompt/).
+- Reversibility comes before consequences. The application layer is where safety lives. See [application-layer-is-where-safety-lives](/wiki/beliefs/application-layer-is-where-safety-lives/).
 
-## Refinement arc
+A team that says "agent-first" but ships prompt-as-UX, context-by-accident, and irreversible-action-by-default has not absorbed the belief. They have adopted the language.
 
-The refinement arc for agent-first intersects with the prompts arc. The December 2024 "kill prompting" declaration was the last pre-manifesto post - correctly diagnosing that something was broken, using a headline that overshot the actual claim. The skill layer migrated; the verdict held.
+## How the belief formed
 
-By July 2025, a primer post decomposed agent architecture as three primitives: LLM inference and prompting, tools, and memory. Prompts were re-admitted as plumbing - guardrails, tool-calling, output parsing - not user-facing UX. The arc: prompt-engineering-as-skill (2023) assumed composing words was the primary determinant; kill-prompting (Dec 2024) correctly rejected that; prompts-as-engineering-primitive (Jul 2025) and context-over-prompt (Apr 2026) named what actually is. Tonal overshoot; diagnosis held.
+The intuition was early. The vocabulary lagged.
 
-Two November 2025 posts refined the safety boundary: a Chinese threat actor used Claude as an autonomous agent for a cyberattack. "The model wasn't broken, the agent layer was." This confirmed the prediction from a June 2024 MAS post - 17 months earlier - that the agent layer would become the primary threat surface. A January 2026 post added the authorization constraint: agents should be kept away from decision-making unless the decision can be evaluated programmatically. Bullish on deployment scope; cautious on decision authority. Both held simultaneously.
+March 2023: "This will open up a new ecosystem in itself. The very first AI marketplace." A ChatGPT Plugins post. The instinct read the LLM-plus-tools-plus-actions surface as the actual product, not the LLM alone. A marketplace-economics frame carried over from V2 Games - a database thinker's instinct applied to AI infrastructure.
 
-By April 2026, agent-first reached craft posture. The Spec > Sprint / Taste > Execution / Context > Prompt trilogy treats agent-building as a taste problem, not a strategy problem. The second-brain v1 launch is itself an agent-first artifact: plain markdown, open-source, built so Claude, ChatGPT, and Cursor can read the same knowledge layer.
+Eighteen months of enterprise field work followed. June 2024: multi-agent systems "not a question of if, but when." September 2024: demo-versus-production "is a different beast" with nine takeaways. December 2024: the kill-prompting post named the broken layer with a verb that overshot the actual claim.
 
-## Cross-links
+The crystallization landed in one June 20, 2025 post. Three moves at once: horizontal AI declared dead ("chatbots and copilots hit a wall without real domain depth"), agentic AI named as the new direction, the serving lens introduced as the differentiation move. After that post, agent-first stopped being an argument in the corpus and started behaving like a flat assumption. By July 2025 the prompts layer was re-admitted as plumbing: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." By April 2026 the whole stance had compressed into three lines: Spec over Sprint, Taste over Execution, Context over Prompt.
 
-- Parent theme: [wiki:agent-first](/wiki/agent-first)
-- Related beliefs: [wiki:beliefs:context-over-prompt], [wiki:beliefs:spec-over-sprint], [wiki:beliefs:application-layer-is-where-safety-lives], [wiki:beliefs:reversibility-over-consequences], [wiki:beliefs:agent-layer-is-threat-surface]
-- Supersedes: [wiki:beliefs:horizontal-ai-will-scale] (2025-06-20 direct declaration)
-- Conditioned by: [wiki:root.substance-over-hype] (agent-first is anti-hype applied to AI - same disposition that called blockchain a database innovation in 2018)
-- Tension: agent-first (bullish deployment) held simultaneously with reversibility-over-consequences (cautious authorization) - orchestration scope is not authorization scope
+## What it supersedes, what conditions it, what it holds with
+
+What got superseded, by direct declaration on 2025-06-20: horizontal-AI-will-scale, single-model-as-substrate, prompt-as-primary-interface. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") sits on the pre-hinge side of the same arc. It stayed live. The supersession is public.
+
+What conditions this belief: [substance over hype](/wiki/root.substance-over-hype/). Agent-first is the substance test applied to AI architecture - agents as substrate, not chatbots in a UX skin. Same disposition that called blockchain a database innovation in 2018.
+
+What holds simultaneously: [enterprise AI reality](/wiki/enterprise-ai-reality/). Roughly 80% of enterprise AI experiments do not reach production. Both claims are true at once. Agent-first is the framework for being in the 20% that ships. Direction versus current rate. Different scopes.
+
+## Where to go from here
+
+Three exits.
+
+If you want the **wide framing** with applications and the full thesis arc, go to the [agent-first theme](/wiki/agent-first/).
+
+If you want the **craft-layer corollaries** in their starkest form, jump to [context over prompt](/wiki/beliefs/context-over-prompt/) or [spec over sprint](/wiki/beliefs/spec-over-sprint/). Each is a separate belief that this one forces.
+
+If you want the **field data** that explains why the thesis matters operationally, [enterprise AI reality](/wiki/enterprise-ai-reality/) holds the production-truth view. Start there if you came in skeptical.
 
 ## Evidence
 
-- 2023-03-24 - "The very first AI marketplace" - ChatGPT Plugins ecosystem seed - urn:li:activity:7044971627607900160
-- 2024-06-06 - Multi-agent systems: "not a question of if, but when" - urn:li:activity:7204325913650491392
-- 2024-12-24 - "We need to kill prompting... While 2025 is the year of agentic systems" - urn:li:activity:7277158028422914048
-- 2025-06-20 - "Start thinking agent first. Not just from a building lens but from a serving lens. That will be the differentiation." - urn:li:activity:7341662205257433088
-- 2025-07-17 - Agent architecture decomposed; prompts re-admitted as plumbing - urn:li:activity:7351602695977226243
-- 2025-11-17 - "The model wasn't broken, the agent layer was" - Chinese threat actor incident - urn:li:activity:7396047657951064064
-- 2026-01-06 - "Agents should be kept away from decision making unless the decision can be evaluated programmatically... This is not a research problem, but an application problem" - urn:li:activity:7414150680820547584
-- 2026-04-23 - second-brain v1 launch: "every future AI session reads the same brain and writes back to it" - urn:li:activity:7452998640345853952
-
----
-*Draft for Phase B HTML scaffolding. Source: belief-deep-dives/agent-first.md.*
+| Date | Entry | Post |
+|---|---|---|
+| 2023-03-24 | "The very first AI marketplace." ChatGPT Plugins as ecosystem-instinct seed. | urn:li:activity:7044971627607900160 |
+| 2024-06-06 | Multi-agent systems: "not a question of if, but when." First explicit agent-layer framing. | urn:li:activity:7204325913650491392 |
+| 2024-12-24 | "We need to kill prompting." Kill-prompting post contains the agentic-year prediction as underrated payload. | urn:li:activity:7277158028422914048 |
+| 2025-06-20 | THE HINGE. "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation." | urn:li:activity:7341662205257433088 |
+| 2025-07-17 | Agent architecture decomposed; prompts re-admitted as plumbing. | urn:li:activity:7351602695977226243 |
+| 2025-09-29 | "0% automation driven through UI, 100% driven through MCP + APIs." Production application of the serving-lens thesis. | urn:li:activity:7378427141190799360 |
+| 2025-11-17 | "The model wasn't broken, the agent layer was." 17-month prediction confirmed by the Chinese threat-actor incident. | urn:li:activity:7396047657951064064 |
+| 2026-01-06 | Application-layer safety prescription: "This is not a research problem, but an application problem." | urn:li:activity:7414150680820547584 |
+| 2026-04-23 | second-brain v1: agent-first applied to personal knowledge. Every future AI session reads the same brain and writes back to it. | urn:li:activity:7452998640345853952 |
