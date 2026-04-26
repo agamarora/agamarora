@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:57:11.220Z",
+  "generated_at": "2026-04-26T11:00:07.623Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1904,6 +1904,33 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-6405000000000000000",
+      "urn": "urn:li:activity:6405000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6405000000000000000/",
+      "label": "Retrospection is a real powerful tool. Only after looking into my gaming behavio",
+      "date": "2018-05-28",
+      "snippet": "Retrospection is a real powerful tool. Only after looking into my gaming behavior and patterns I could realise my urge for gaming was never to indulge in virtual world but for the competitive element of it."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-6636000000000000000",
+      "urn": "urn:li:activity:6636000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6636000000000000000/",
+      "label": "Skill to acquire in 2020 - mindfulness. I have been using this tool, toggl.com t",
+      "date": "2020-02-20",
+      "snippet": "Skill to acquire in 2020 - mindfulness. I have been using this tool, toggl.com to track my working hours. And soon after I was tracking my personal chores over here. Lastly, it isn't the tool its the habit of being mindful with time."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7199000000000000000",
+      "urn": "urn:li:activity:7199000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7199000000000000000/",
+      "label": "I have a jupyter notebook where I try different models and a quick paper wirefra",
+      "date": "2024-05-24",
+      "snippet": "I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch and experience first hand."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-6367924728723795968",
       "urn": "urn:li:activity:6367924728723795968",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6367924728723795968/",
@@ -3002,6 +3029,41 @@
       "to": "post.urn-li-activity-7452998640345853952"
     },
     {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6405000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6636000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7041000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7180000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7199000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7202000000000000000"
+    },
+    {
+      "from": "belief.self-instrumentation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7318000000000000000"
+    },
+    {
       "from": "belief.spec-over-sprint",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7402319253036531712"
@@ -3169,9 +3231,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 72,
+    "posts": 75,
     "edges": {
-      "total": 217,
+      "total": 224,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -3181,9 +3243,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 106
+        "cites-post": 113
       }
     },
-    "nodes_total": 224
+    "nodes_total": 227
   }
 }
