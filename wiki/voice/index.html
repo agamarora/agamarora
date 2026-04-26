@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I write - Agam Arora's wiki.</title>
+<meta name="description" content="How I write - meta page in agamarora.second-brain.">
+<meta name="theme-color" content="#0A0A0A">
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://agamarora.com/wiki/voice/">
+<meta property="og:title" content="How I write - Agam Arora's wiki.">
+<meta property="og:description" content="How I write - meta page in agamarora.second-brain.">
+<meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Agam Arora">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How I write - Agam Arora's wiki.">
+<meta name="twitter:description" content="How I write - meta page in agamarora.second-brain.">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/lab.png">
+
+<link rel="canonical" href="https://agamarora.com/wiki/voice/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "headline": "How I write",
+  "url": "https://agamarora.com/wiki/voice/",
+  "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
+  "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
+}
+</script>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<link rel="manifest" href="/site.webmanifest">
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+
+  .page{max-width:760px;margin:0 auto;padding:calc(clamp(52px,6vw,64px) + var(--space-8)) clamp(var(--space-6),5vw,var(--space-8)) calc(var(--space-9) + var(--space-7));}
+
+  .breadcrumb{font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.06em;margin-bottom:var(--space-6);}
+  .breadcrumb a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed var(--border-hover);transition:color 0.2s,border-color 0.2s;}
+  .breadcrumb a:hover{color:var(--accent);border-color:var(--accent);}
+  .breadcrumb .sep{margin:0 var(--space-3);opacity:0.5;}
+
+  article{font-size:1.04rem;}
+  article > p, article > ul, article > .md-table-wrap, article > hr { margin-bottom: var(--space-6); }
+  article h1{font-size:clamp(2.2rem,5vw,3rem);font-weight:700;letter-spacing:-0.025em;line-height:1.05;margin-bottom:var(--space-7);max-width:680px;}
+  article h2{font-size:clamp(1.5rem,2.4vw,1.85rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-top:var(--space-9);margin-bottom:var(--space-5);color:var(--text);}
+  article h2:first-of-type{margin-top:0;}
+  article h3{font-size:clamp(1.1rem,1.6vw,1.25rem);font-weight:600;letter-spacing:-0.01em;line-height:1.3;margin-top:var(--space-7);margin-bottom:var(--space-4);}
+  article p{font-size:1.04rem;line-height:1.7;color:var(--text);opacity:0.92;}
+  article p em{font-style:italic;opacity:0.85;}
+  article p strong{color:var(--text);font-weight:600;opacity:1;}
+  article p code,article li code{font-family:var(--mono);font-size:0.92em;background:var(--surface-2);border:1px solid var(--border);padding:1px 6px;border-radius:var(--radius-sm);color:var(--accent);}
+  article a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);transition:border-color 0.2s;}
+  article a:hover{border-color:var(--accent);}
+  article a.urn-link{font-family:var(--mono);font-size:0.85em;color:var(--text-dim);border-bottom:1px dashed var(--border-hover);}
+  article a.urn-link:hover{color:var(--accent);border-color:var(--accent);}
+  article hr{border:0;height:1px;background:var(--border);margin:var(--space-8) 0;}
+  article ul{padding-left:var(--space-6);}
+  article ul li{margin-bottom:var(--space-3);line-height:1.7;}
+
+  .md-table-wrap{overflow-x:auto;margin:var(--space-6) 0;border:1px solid var(--border);border-radius:var(--radius-md);}
+  .md-table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+  .md-table th,.md-table td{padding:var(--space-4) var(--space-5);text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+  .md-table th{background:var(--surface);color:var(--accent);font-family:var(--mono);font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;}
+  .md-table td{color:var(--text);opacity:0.88;}
+  .md-table tr:last-child td{border-bottom:0;}
+
+  .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
+  .theme-meta .tier{color:var(--accent);}
+
+  .theme-nav{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:var(--space-5);font-family:var(--mono);font-size:0.82rem;}
+  .theme-nav a{color:var(--text-dim);text-decoration:none;transition:color 0.2s;border:0;}
+  .theme-nav a:hover{color:var(--accent);}
+  .theme-nav .home{color:var(--text-dim);}
+
+  .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<main class="page">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>How I write</span>
+  </nav>
+
+  <article role="main">
+<h1 id="how-i-write">How I write</h1>
+<h2 id="the-take">The take</h2>
+<p>I write when I have something to say.</p>
+<p>That's not a rule I set. It's what the data confirmed. I go quiet for months, then post ten times in September. The gaps are not gaps in thinking. They're heads-down time: enterprise voice AI, second-brain, the next experiment. When I surface, it's because something crystallized.</p>
+<p>The current voice has four modes.</p>
+<h2 id="the-four-modes">The four modes</h2>
+<p>The first is <strong>the take</strong>: a bold declarative opener, a structured body, a zinger close or a heart. <em>&quot;We need to kill prompting.&quot;</em> <em>&quot;The real threat is not that someone will copy you, but that no one is copying you.&quot;</em> Lead with the thesis. No warm-up.</p>
+<p>The second is <strong>the four-word reply</strong>: <em>&quot;Quit quitting.&quot;</em> / <em>&quot;It's an enhancement not a bug.&quot;</em> / <em>&quot;I am smiling because I am sad.&quot;</em> Comment-mode. Compressed. Sometimes in Hindi when the person is a friend.</p>
+<p>The third is <strong>the playbook</strong>: when someone I respect asks a how-do-I question, I hand over the full stack. No gatekeeping. The whole litellm + ollama + Groq playbook, bullet for bullet. I do not position in mentor-mode. I teach.</p>
+<p>The fourth is <strong>the framework drop</strong>: opener-thesis, three to five numbered items in <code>1/ </code> slash-format, optional aphorism close. This is how I answered 58 LinkedIn Collaborative Article prompts on PM and AI to earn Top Voice in both categories. Dense. Practitioner-voice. Numbers wherever possible.</p>
+<h2 id="what-i-do-not-do">What I do not do</h2>
+<ul><li>Hashtags. Zero since 2023.</li><li>Em-dashes. Practically never.</li><li><em>&quot;Thoughts?&quot;</em> as a closer.</li><li><em>&quot;In today's fast-paced world&quot;</em> as an opener.</li><li>Generic motivational sign-offs.</li><li><em>&quot;I am thrilled to announce...&quot;</em></li></ul>
+<h2 id="the-signatures">The signatures</h2>
+<p>The colon is my rhythm tool. <em>&quot;Context: ...&quot;</em>, <em>&quot;PS: ...&quot;</em>, <em>&quot;What I noticed: X&quot;</em>. About one colon every four sentences. The single most statistically significant punctuation pattern in twelve years of posts.</p>
+<p>The hyphen-with-spaces is my aside device. Plain hyphen with a space on each side. Not an em-dash. Not an en-dash. <em>&quot;AI has given rise to a lot of hobby programmers - like me.&quot;</em></p>
+<p>The <code>1/ </code> slash-format is my numbered-list signature. <em>&quot;1/ Clarity and specificity / 2/ Start with context / 3/ Structure and brevity.&quot;</em> Used in roughly 60% of my Collaborative Article entries.</p>
+<p>The PS appendix is for the thing I almost did not say. <em>&quot;PS: if you are wondering how I came up with a 66% increase?&quot;</em></p>
+<p>The heart is my closer when the post earned it. About 18% of my posts in the last two years end on a heart. Personal or reflective contexts only. Never on a take.</p>
+<h2 id="the-agent">The agent</h2>
+<p>This wiki is the source layer. The terminal at <a href="/enter">/enter</a> is the playback layer. The agent that responds there is calibrated to all of the above. It has a system prompt grounded in the voice spec, a list of banned LLM-isms it will not produce, and a list of real signatures it will use. It speaks for me in third person. It never claims to be me.</p>
+<p>When you talk to it, you are not talking to me. You are talking to the agent. It will tell you the difference if you ask.</p>
+  </article>
+
+  <nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>
+</main>
+
+<script>(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  });
+})();</script>
+
+</body>
+</html>

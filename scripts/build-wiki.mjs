@@ -26,6 +26,10 @@ const BELIEF_DRAFTS_DIR = join(
   ROOT,
   "docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final"
 );
+const META_DRAFTS_DIR = join(
+  ROOT,
+  "docs/plans/second-brain-v1-phase-a/synthesis/wiki-meta-drafts"
+);
 const OUT_DIR = join(ROOT, "wiki");
 
 // Update when source synthesis is re-locked. Surfaced in page footer for provenance.
@@ -44,6 +48,8 @@ for (const d of [THEME_DRAFTS_DIR, BELIEF_DRAFTS_DIR]) {
     process.exit(1);
   }
 }
+// META_DRAFTS_DIR is optional - skip silently if missing (ships voice + quotes
+// once those drafts are added; doesn't break themes/beliefs build).
 
 // ---------------------------------------------------------------------------
 // 1. Frontmatter parser (YAML-ish, just what the drafts use)
@@ -498,6 +504,23 @@ function buildThemePage(slug, src) {
   });
 }
 
+function buildMetaPage(slug, src) {
+  const { meta, body } = parseFrontmatter(src);
+  const m = pageMeta(meta, slug);
+  const articleHtml = blockMd(body.trim());
+  return pageWrap({
+    title: m.title,
+    description: `${m.title} - meta page in agamarora.second-brain.`,
+    canonical: `https://agamarora.com/wiki/${slug}/`,
+    schemaType: "WebPage",
+    breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
+  </nav>`,
+    articleHtml,
+    navHtml: `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>`,
+  });
+}
+
 function buildBeliefPage(slug, src) {
   const { meta, body } = parseFrontmatter(src);
   const m = pageMeta(meta, slug);
@@ -544,7 +567,12 @@ function processDir(dir, kind) {
       continue;
     }
     try {
-      const html = kind === "belief" ? buildBeliefPage(slug, src) : buildThemePage(slug, src);
+      const html =
+        kind === "belief"
+          ? buildBeliefPage(slug, src)
+          : kind === "meta"
+            ? buildMetaPage(slug, src)
+            : buildThemePage(slug, src);
       const outDir =
         kind === "belief" ? join(OUT_DIR, "beliefs", slug) : join(OUT_DIR, slug);
       mkdirSync(outDir, { recursive: true });
@@ -565,6 +593,7 @@ function processDir(dir, kind) {
 
 processDir(THEME_DRAFTS_DIR, "theme");
 processDir(BELIEF_DRAFTS_DIR, "belief");
+if (existsSync(META_DRAFTS_DIR)) processDir(META_DRAFTS_DIR, "meta");
 
 console.log(
   `[build-wiki] done. ${okCount} pages built${errCount ? `, ${errCount} failed` : ""}.`
