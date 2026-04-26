@@ -162,6 +162,22 @@ Before each commit in this execution sequence, self-critique:
 
 If any "no" → fix before committing. If any drift → write to `GAPS-vs-SPEC-AND-SYSTEM-ARCH.md` so it doesn't recur.
 
+### 3.1 gstack review gate (Phase B binding, added 2026-04-26)
+
+**Every coding milestone in Phase B (any task that ships HTML, JS, or CSS) MUST pass three gstack reviews before being marked complete:**
+
+1. **`/review`** — engineering review (correctness, architecture, security, edge cases).
+2. **`/design-review`** — visual / UX consistency vs site contract (v2 page contract, design tokens, header + aa.mark, typography).
+3. **`/qa`** — quality assurance pass (broken links, missing assets, console errors, mobile / a11y regressions).
+
+Sequence per milestone:
+1. Write the code, commit + push (so the reviewers see the actual state).
+2. Run the three gstack skills against the diff or the new files.
+3. Capture findings inline; resolve HIGH / MEDIUM issues before moving to the next milestone. LOW issues are tracked in TODO.md or as follow-ups.
+4. Mark the milestone complete only after fixes are committed.
+
+**Scope:** all Phase B tasks (B1-B6) and any Phase C / Phase D coding work. Not required for pure markdown / docs commits.
+
 ---
 
 ## 4. CoT + ReAct protocol (mandatory for every task)
