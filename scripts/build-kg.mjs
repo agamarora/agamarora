@@ -142,9 +142,9 @@ const addBelief = (r, tier) => {
     evidence: r.evidence || "",
   });
 };
-t1Rows.forEach((r) => addBelief(r, 1));
-t2Rows.forEach((r) => addBelief(r, 2));
-t3Rows.forEach((r) => addBelief(r, 3));
+t1Rows.forEach((r) => addBelief(r, "1"));
+t2Rows.forEach((r) => addBelief(r, "2"));
+t3Rows.forEach((r) => addBelief(r, "3"));
 
 // Dropped beliefs (kept as historical / retired ids)
 const droppedRows = tableUnder(/^### Beliefs DROPPED/i, src);
@@ -398,9 +398,9 @@ const themesSummary = themes.map((t) => {
 const stats = {
   themes: themes.length,
   beliefs: {
-    tier_1: beliefs.filter((b) => b.tier === 1).length,
-    tier_2: beliefs.filter((b) => b.tier === 2).length,
-    tier_3: beliefs.filter((b) => b.tier === 3).length,
+    tier_1: beliefs.filter((b) => b.tier === "1").length,
+    tier_2: beliefs.filter((b) => b.tier === "2").length,
+    tier_3: beliefs.filter((b) => b.tier === "3").length,
     dropped: beliefs.filter((b) => b.tier === "dropped").length,
     superseded: beliefs.filter((b) => b.tier === "superseded").length,
     total: beliefs.length,
@@ -445,4 +445,10 @@ console.log(
 console.log(`[build-kg]   edge relations: ${JSON.stringify(stats.edges.by_relation)}`);
 if (orphanEdges.length) {
   console.warn(`[build-kg] WARNING: ${orphanEdges.length} orphan edges (see above)`);
+  // Strict mode: --strict flag fails the build on orphan edges so CI catches
+  // ontology-vs-data drift instead of shipping a broken kg.json.
+  if (process.argv.includes("--strict")) {
+    console.error("[build-kg] FAIL (strict): orphan edges present");
+    process.exit(1);
+  }
 }

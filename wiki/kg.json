@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T03:36:50.106Z",
+  "generated_at": "2026-04-26T03:44:44.585Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -139,7 +139,7 @@
       "type": "Belief",
       "id": "belief.substance-over-hype",
       "label": "Reduce any hyped category to its substrate, then evaluate. 8-year through-line.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.root",
       "status": "confirmed (ROOT DISPOSITION)",
       "evidence": "3 rounds, 2018-03-06 to 2025-12-04"
@@ -148,7 +148,7 @@
       "type": "Belief",
       "id": "belief.agent-first",
       "label": "Start thinking agent-first — both building and serving lens. Platforms that cannot talk to autonomous agents are behind.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.agent-first",
       "status": "confirmed",
       "evidence": "11+ posts, 2023-03-24 to 2026-04-23"
@@ -157,7 +157,7 @@
       "type": "Belief",
       "id": "belief.context-over-prompt",
       "label": "Context > Prompt. Personal and organizational context is the lever; prompt string is the I/O seam.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.agent-first",
       "status": "confirmed",
       "evidence": "3 rounds, 2026-04-09"
@@ -166,7 +166,7 @@
       "type": "Belief",
       "id": "belief.spec-over-sprint",
       "label": "Spec > Sprint. When you have specced every pixel, a generative tool gives you a worse version of what you already decided.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.spec-first-taste",
       "status": "confirmed",
       "evidence": "3 rounds, 2026-04-09"
@@ -175,7 +175,7 @@
       "type": "Belief",
       "id": "belief.taste-over-execution",
       "label": "Taste > Execution. In an AI era that commoditizes execution, the bottleneck and differentiator is taste.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.spec-first-taste",
       "status": "confirmed",
       "evidence": "3 rounds, 2026-04-09"
@@ -184,7 +184,7 @@
       "type": "Belief",
       "id": "belief.anti-customization",
       "label": "Extremely opinionated against customization settings in enterprise products. Each one signals a design decision deferred to the user. Scope: enterprise (consumer untested).",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.pm-taste",
       "status": "confirmed",
       "evidence": "3 rounds, 2025-12-04"
@@ -193,7 +193,7 @@
       "type": "Belief",
       "id": "belief.pm-is-99-should-we-1-can-we",
       "label": "PM is the grind of answering 99 \"should we?\" to get to that 1 \"can we?\".",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.pm-taste",
       "status": "confirmed",
       "evidence": "5 rounds, 2022-06-03 anchor"
@@ -202,7 +202,7 @@
       "type": "Belief",
       "id": "belief.ai-pm-skillset-table-stakes",
       "label": "AI fluency is table stakes for PMs; relevant archetype is application-layer (using models to unlock growth), not foundation-layer. AI replaces the grunt; taste is irreducible.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.ai-pm-skillset",
       "status": "confirmed",
       "evidence": "4 rounds, 2023-03-14 anchor"
@@ -211,7 +211,7 @@
       "type": "Belief",
       "id": "belief.learn-concepts-not-tools",
       "label": "Strive to learn concepts, not tools. Frameworks endure; tools rotate.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.career-reflection",
       "status": "confirmed",
       "evidence": "4 rounds, 2019-12-04 anchor"
@@ -220,7 +220,7 @@
       "type": "Belief",
       "id": "belief.llm-as-primary-daily-tool",
       "label": "LLMs are a great tool. I use them daily more than any other tool in my stack. (Renamed from llm-as-voice-extension; reframed as factual daily-use claim, not \"extension of self.\")",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.ai-pm-skillset",
       "status": "confirmed",
       "evidence": "3 rounds, 2023-03-01 onwards"
@@ -229,7 +229,7 @@
       "type": "Belief",
       "id": "belief.enterprise-ai-production-reality",
       "label": "Roughly 80% of enterprise AI experiments don't reach production. The gap between demo and deployment is wider than vendors admit. (Frame retained; specific 10-to-2 number dropped at lock.)",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.enterprise-ai-reality",
       "status": "confirmed",
       "evidence": "5 rounds, 2024-09-04 anchor"
@@ -238,7 +238,7 @@
       "type": "Belief",
       "id": "belief.second-brain-is-context-layer",
       "label": "Personal context layer for AI sessions. Built this for me, hobbyist scope, Karpathy-inspired. Pattern probably generalizes for builders working with AI tools daily.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.second-brain",
       "status": "confirmed",
       "evidence": "4 rounds, 2026-04-23 canonical"
@@ -247,7 +247,7 @@
       "type": "Belief",
       "id": "belief.self-instrumentation",
       "label": "Retrospection is a real powerful tool. Observable patterns and personal apparatus as leverage.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.second-brain",
       "status": "confirmed",
       "evidence": "4 rounds, 2018-05-28 earliest"
@@ -256,7 +256,7 @@
       "type": "Belief",
       "id": "belief.help-market-flourish",
       "label": "Go increase the size of the pie if you want a bigger share. Collaborative-growth over zero-sum. **2026-04 live evidence: this repo (agamarora/agamarora) is open-source as a direct application of this principle.**",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.career-reflection",
       "status": "confirmed (live)",
       "evidence": "3 rounds, 2017-09-14 origin + 2026-04-26 repo-as-evidence"
@@ -265,7 +265,7 @@
       "type": "Belief",
       "id": "belief.ic-path-legitimacy",
       "label": "Individual Contributor path is a valid career arc. People management is critical but not for everyone. **2026 reframe: AI-era amplifies IC leverage — IC + AI agents = throughput closer to a small team than ever.**",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.career-reflection",
       "status": "confirmed",
       "evidence": "2 rounds, 2021-10-30 + 2026-04-26 reframe"
@@ -274,7 +274,7 @@
       "type": "Belief",
       "id": "belief.linkedin-as-instrumental-platform",
       "label": "LinkedIn is a platform to be gamed productively. Posting IS the thinking. The loop closes when others learn (build → post → teach → learn → build).",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.linkedin-as-instrument",
       "status": "confirmed",
       "evidence": "5 rounds, 2017-01-20 seed to 2024-07-04"
@@ -283,7 +283,7 @@
       "type": "Belief",
       "id": "belief.ship-the-prototype",
       "label": "Build to validate; don't just conceptualize. The prototype is the argument. (Absorbs former tinker-publicly belief as loop-closure framing per A3.)",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.personal-projects-tinkering",
       "status": "confirmed",
       "evidence": "5 rounds, 2020-05-19 canonical"
@@ -292,7 +292,7 @@
       "type": "Belief",
       "id": "belief.breadth-as-differentiation",
       "label": "Breadth of knowledge across domains is a professional differentiator.",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.breadth-as-differentiation",
       "status": "confirmed",
       "evidence": "R2 theme-level, 18+ posts E1-E4"
@@ -301,7 +301,7 @@
       "type": "Belief",
       "id": "belief.breadth-needs-depth",
       "label": "If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest. **Humanness-as-depth extension is Agam's synthesis (April 2024 EQ post predates September 2024 Mo Gawdat citation).**",
-      "tier": 1,
+      "tier": "1",
       "parent_theme": "theme.breadth-as-differentiation",
       "status": "confirmed",
       "evidence": "3 rounds, 2024-04-12 anchor + April 2024 EQ post"
@@ -310,7 +310,7 @@
       "type": "Belief",
       "id": "belief.agent-first-ecosystem-instinct",
       "label": "ChatGPT plugins were the first AI marketplace. Early 2023 seed of the serving-lens agent thesis.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2023-03-24"
@@ -319,7 +319,7 @@
       "type": "Belief",
       "id": "belief.application-layer-is-where-safety-lives",
       "label": "Agents should be kept away from decision-making unless evaluable programmatically; safety is an application problem.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2026-01-06 canonical"
@@ -328,7 +328,7 @@
       "type": "Belief",
       "id": "belief.reversibility-over-consequences",
       "label": "Decouple tokens from decisions; GIT-style reversibility at orchestration layer.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2026-01-06"
@@ -337,7 +337,7 @@
       "type": "Belief",
       "id": "belief.agent-layer-is-threat-surface",
       "label": "The model was not broken, the agent layer was; security vulnerabilities migrated from model weights to agent orchestration.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2024-06-06 + 2025-11-17"
@@ -346,7 +346,7 @@
       "type": "Belief",
       "id": "belief.prompts-as-engineering-primitive",
       "label": "Prompts are plumbing inside the agent: guardrails, tool-calling, output parsing. Not user-facing UX.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2025-07-17"
@@ -355,7 +355,7 @@
       "type": "Belief",
       "id": "belief.kill-prompting",
       "label": "We need to kill prompting. (Stance evolved per A1: prompting → context engineering → harness engineering. Verdict held; layer migrated.)",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.agent-first",
       "status": "",
       "evidence": "2024-12-24 + 2026 evolution"
@@ -364,7 +364,7 @@
       "type": "Belief",
       "id": "belief.ico-is-funding-not-product",
       "label": "ICO is a fundraising tool, not a product.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.root",
       "status": "",
       "evidence": "2018-02-15"
@@ -373,7 +373,7 @@
       "type": "Belief",
       "id": "belief.ai-fluency-required",
       "label": "Modern jobs will soon require AI tools as fluent as PowerPoint and Excel.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.ai-pm-skillset",
       "status": "",
       "evidence": "2023-03-19"
@@ -382,7 +382,7 @@
       "type": "Belief",
       "id": "belief.its-not-the-model-its-the-problem",
       "label": "Frame the business problem first; let model selection follow.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.ai-pm-skillset",
       "status": "",
       "evidence": "2021-07-14"
@@ -391,7 +391,7 @@
       "type": "Belief",
       "id": "belief.moats-are-infra-talent-data",
       "label": "The three durable enterprise AI moats are infrastructure, talent, and data. The model is not on the list.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.enterprise-ai-reality",
       "status": "",
       "evidence": "2024-12-04"
@@ -400,7 +400,7 @@
       "type": "Belief",
       "id": "belief.data-readiness-is-pipeline-not-corpus",
       "label": "AI-ready data means continuous collection and transformation systems, not just a large historical corpus.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.enterprise-ai-reality",
       "status": "",
       "evidence": "2024-06-07 Collab"
@@ -409,7 +409,7 @@
       "type": "Belief",
       "id": "belief.quantified-self-as-mindfulness",
       "label": "It isn't the tool, it's the habit of being mindful with time.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.second-brain",
       "status": "",
       "evidence": "2020-02-20"
@@ -418,7 +418,7 @@
       "type": "Belief",
       "id": "belief.personal-website-is-present-tense",
       "label": "You are a brand, and you should have your own nameplate. Ship it.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.personal-projects-tinkering",
       "status": "",
       "evidence": "2023-04-16"
@@ -427,7 +427,7 @@
       "type": "Belief",
       "id": "belief.pm-is-featherless-hat",
       "label": "Product management is a featherless hat — omnipresent yet indistinguishable if done properly.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2021-09-22"
@@ -436,7 +436,7 @@
       "type": "Belief",
       "id": "belief.pm-as-parenting",
       "label": "Building a product is like raising a child — make tough decisions, protect from distortion.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2021-07-12"
@@ -445,7 +445,7 @@
       "type": "Belief",
       "id": "belief.data-literacy-is-pm-core",
       "label": "Correlation is not causation. Measurement discipline as PM fundamental.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2022-05-17 umbrella anchor"
@@ -454,7 +454,7 @@
       "type": "Belief",
       "id": "belief.build-measure-learn",
       "label": "Lean Startup loop. Smallest feature set, measure, iterate.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2016-01-04 earliest"
@@ -463,7 +463,7 @@
       "type": "Belief",
       "id": "belief.idea-validation-3-pillars",
       "label": "Value, Consumers, Scalability — three-pillar validation frame.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2020-07-04"
@@ -472,7 +472,7 @@
       "type": "Belief",
       "id": "belief.non-functional-reqs-are-dominant-failure-mode",
       "label": "Non-functional requirements are not tick boxes but primary PM work. (Renamed from belief.non-functional-reqs-are-55pct-of-failure; 55% Standish citation dropped per E4.)",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2024-03-08 Collab anchor"
@@ -481,7 +481,7 @@
       "type": "Belief",
       "id": "belief.design-thinking-as-speed-tool",
       "label": "Design thinking is stakeholder alignment + diverse feedback, not UI/UX first. Jupyter notebook + paper wireframe as feedback loop.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "2024-05-24 Collab"
@@ -490,7 +490,7 @@
       "type": "Belief",
       "id": "belief.strong-opinion-about-no-strong-opinions",
       "label": "I have a very strong opinion about having no strong opinions. Paradox-as-voice. **Explicit named meta-belief on pm-taste page per A2 — licenses every other belief on that page.**",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.pm-taste",
       "status": "",
       "evidence": "3 rounds, 2021-12-12"
@@ -499,7 +499,7 @@
       "type": "Belief",
       "id": "belief.certifications-are-collectibles",
       "label": "Certifications fuel personal achievement but do not validate competence. Peer-voted badges acceptable; exam-gated certs rejected.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.career-reflection",
       "status": "",
       "evidence": "2024-11-15 canonical"
@@ -508,7 +508,7 @@
       "type": "Belief",
       "id": "belief.muscle-memory-over-novelty",
       "label": "Deliberate practice via repetition of frameworks (re-watch, re-read) over novelty.",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.career-reflection",
       "status": "",
       "evidence": "2025-12-26 Doshi anchor"
@@ -517,7 +517,7 @@
       "type": "Belief",
       "id": "belief.two-roles-ahead-framing",
       "label": "When picking your next role, optimize for the role after that. Routine career heuristic Agam deploys in mentoring. **Elevated from peripheral to named belief tier per F2.**",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.career-reflection",
       "status": "",
       "evidence": "FarEye-to-AIonOS transition + mentoring evidence"
@@ -526,7 +526,7 @@
       "type": "Belief",
       "id": "belief.never-be-smartest-in-room",
       "label": "Never be the smartest person in the room; if you feel you are, get more people in the room or change the room. **Demoted from co-root to standard belief per F4. Scope: team-joining heuristic.**",
-      "tier": 2,
+      "tier": "2",
       "parent_theme": "theme.career-reflection",
       "status": "",
       "evidence": "4 rounds, 2019-07-11"
@@ -535,7 +535,7 @@
       "type": "Belief",
       "id": "belief.ai-is-the-next-wave",
       "label": "theme.ai-pm-skillset origin node",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "peripheral (historical ancestor)",
       "evidence": ""
@@ -544,7 +544,7 @@
       "type": "Belief",
       "id": "belief.tech-as-enabler",
       "label": "theme.ai-pm-skillset historical note",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "peripheral (softened, not superseded)",
       "evidence": ""
@@ -553,7 +553,7 @@
       "type": "Belief",
       "id": "belief.gaming-as-economic-intuition",
       "label": "theme.personal-projects-tinkering historical context for V2 Games as career stage",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "peripheral",
       "evidence": ""
@@ -562,7 +562,7 @@
       "type": "Belief",
       "id": "belief.lead-yourself-first",
       "label": "theme.career-reflection historical",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "peripheral (E1)",
       "evidence": ""
@@ -571,7 +571,7 @@
       "type": "Belief",
       "id": "belief.mcp-as-enterprise-primitive",
       "label": "theme.enterprise-ai-reality ghost annotation",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "ghost (resume-grounded only, intentional under-share)",
       "evidence": ""
@@ -580,7 +580,7 @@
       "type": "Belief",
       "id": "belief.voice-as-enterprise-wedge",
       "label": "theme.voice-ai-craft ghost annotation",
-      "tier": 3,
+      "tier": "3",
       "parent_theme": null,
       "status": "ghost (intentional under-share per Decision 2)",
       "evidence": ""

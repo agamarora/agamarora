@@ -173,6 +173,13 @@
     max-width: 680px;
     line-height: 1.55;
   }
+  .wiki-hero p.lead a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    transition: border-color 0.2s;
+  }
+  .wiki-hero p.lead a:hover { border-color: var(--accent); }
   .wiki-hero .meta-bar {
     display: flex;
     gap: var(--space-5);
@@ -241,7 +248,8 @@
     gap: var(--space-5);
   }
   .theme-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -250,8 +258,6 @@
     color: inherit;
     transition: border-color 0.2s, transform 0.2s;
     min-height: 180px;
-    display: flex;
-    flex-direction: column;
   }
   .theme-card:hover {
     border-color: var(--border-hover);
@@ -371,13 +377,13 @@
 
   <section class="wiki-hero">
     <div class="eyebrow">agamarora.second-brain</div>
-    <h1>Twelve themes. <span class="accent">One root.</span></h1>
-    <p class="lead">Twelve years of writing distilled into beliefs, evidence, and tensions. Built for me. Readable by agents. The wiki is the source layer; <a href="/enter" style="color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim);">/enter</a> is the playback layer.</p>
+    <h1>Eleven themes. <span class="accent">One root.</span></h1>
+    <p class="lead">Twelve years of writing distilled into beliefs, evidence, and tensions. Built for me. Readable by agents. The wiki is the source layer; <a href="/enter">/enter</a> is the playback layer.</p>
     <div class="meta-bar">
-      <span><strong>13</strong> wiki themes</span>
-      <span><strong>50</strong> beliefs</span>
+      <span><strong>12</strong> wiki pages</span>
+      <span><strong>44</strong> beliefs</span>
       <span><strong>20</strong> projects</span>
-      <span><strong>180+</strong> edges</span>
+      <span><strong>111</strong> edges</span>
       <span><strong>v1</strong> locked 2026-04-26</span>
     </div>
   </section>
