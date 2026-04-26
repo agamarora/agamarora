@@ -1,0 +1,2210 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-04-26T03:36:50.106Z",
+  "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
+  "nodes": [
+    {
+      "type": "Theme",
+      "id": "theme.root.substance-over-hype",
+      "slug": "root.substance-over-hype",
+      "label": "The root disposition: substance over hype",
+      "tier": "root",
+      "one_line": "Reduce any hyped category to its substrate, then evaluate",
+      "length_target": "400-600w",
+      "voice_register": "Register 1 (provocation + quiet counterpoint)",
+      "wiki_url": "/wiki/root.substance-over-hype/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.agent-first",
+      "slug": "agent-first",
+      "label": "Agent-first thesis",
+      "tier": "theme",
+      "one_line": "Platforms that cannot talk to autonomous agents are already behind; the prompting skill layer migrated, the verdict held",
+      "length_target": "1200-1500w",
+      "voice_register": "Register 1 (manifesto-mode) + Register 4 (craft sub-sections)",
+      "wiki_url": "/wiki/agent-first/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.voice-ai-craft",
+      "slug": "voice-ai-craft",
+      "label": "Voice AI craft — cost, latency, scale",
+      "tier": "theme",
+      "one_line": "Voice AI is a distinct engineering discipline with its own constraints; the under-share is deliberate",
+      "length_target": "800-1200w",
+      "voice_register": "Register 4 (technical-practitioner numbered precision)",
+      "wiki_url": "/wiki/voice-ai-craft/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.breadth-as-differentiation",
+      "slug": "breadth-as-differentiation",
+      "label": "Breadth as differentiation",
+      "tier": "theme",
+      "one_line": "Breadth differentiates; depth is what makes it matter",
+      "length_target": "800-1200w",
+      "voice_register": "Register 1 (aphorism-then-unpack) + mentor tone in sub-sections",
+      "wiki_url": "/wiki/breadth-as-differentiation/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.pm-taste",
+      "slug": "pm-taste",
+      "label": "PM taste — craft, metaphors, and what a PM actually does",
+      "tier": "theme",
+      "one_line": "PM is taste of what to build, what experience, what value: invisible when done well, irreplaceable in the AI era",
+      "length_target": "1000-1500w",
+      "voice_register": "Register 1 (metaphor-builder stacked) + Register 4 (data-literacy, NFRs)",
+      "wiki_url": "/wiki/pm-taste/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.ai-pm-skillset",
+      "slug": "ai-pm-skillset",
+      "label": "What AI PM actually requires",
+      "tier": "theme",
+      "one_line": "LLMs are a primary daily tool; AI replaces the grunt; taste of what to build is irreducible PM work",
+      "length_target": "1000-1500w",
+      "voice_register": "Register 4 (practitioner-manifesto credentialed)",
+      "wiki_url": "/wiki/ai-pm-skillset/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.enterprise-ai-reality",
+      "slug": "enterprise-ai-reality",
+      "label": "Enterprise AI reality — ships vs demos",
+      "tier": "theme",
+      "one_line": "Roughly 80% of enterprise AI experiments don't reach production; the gap between demo and deployment is wider than vendors admit",
+      "length_target": "800-1200w",
+      "voice_register": "Register 4 (field-data authority) + Register 1 (aphorism for moats)",
+      "wiki_url": "/wiki/enterprise-ai-reality/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.second-brain",
+      "slug": "second-brain",
+      "label": "Second brain — structured knowledge for agents",
+      "tier": "theme",
+      "one_line": "Built this for me, hobbyist scope, Karpathy-inspired wiki version. Pattern probably generalizes if you tinker with AI tools daily",
+      "length_target": "1000-1500w",
+      "voice_register": "Register 1 (builder-reflection) + technical precision for architecture",
+      "wiki_url": "/wiki/second-brain/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.spec-first-taste",
+      "slug": "spec-first-taste",
+      "label": "Spec first, taste always — the builder trilogy",
+      "tier": "theme",
+      "one_line": "Spec > Sprint. Taste > Execution. Context > Prompt. Lived this since 2021. Named it in April 2026. Same disposition, sharper words",
+      "length_target": "900-1200w",
+      "voice_register": "Register 1 (builder-manifesto)",
+      "wiki_url": "/wiki/spec-first-taste/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.career-reflection",
+      "slug": "career-reflection",
+      "label": "Career reflection — IC path, learning, market lift",
+      "tier": "theme",
+      "one_line": "IC path is legitimate; AI-era amplifies IC leverage; learning compounds when you study concepts not tools; help the market flourish",
+      "length_target": "1000-1400w",
+      "voice_register": "Register 3 (mentor-mode) + autobiographical disclosures",
+      "wiki_url": "/wiki/career-reflection/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.linkedin-as-instrument",
+      "slug": "linkedin-as-instrument",
+      "label": "LinkedIn as instrument — the meta-platform game",
+      "tier": "theme",
+      "one_line": "LinkedIn is a platform to be gamed productively; posting IS the thinking; the loop closes when others learn",
+      "length_target": "800-1000w",
+      "voice_register": "Register 1 (meta-aware transparency)",
+      "wiki_url": "/wiki/linkedin-as-instrument/"
+    },
+    {
+      "type": "Theme",
+      "id": "theme.personal-projects-tinkering",
+      "slug": "personal-projects-tinkering",
+      "label": "Personal projects — ship it or it doesn't exist",
+      "tier": "theme",
+      "one_line": "Ideas are cheap; the prototype is the argument; the loop closes when posted (build → post → teach → learn → build)",
+      "length_target": "800-1200w",
+      "voice_register": "Register 1 (builder-pride low-boast high-show)",
+      "wiki_url": "/wiki/personal-projects-tinkering/"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.substance-over-hype",
+      "label": "Reduce any hyped category to its substrate, then evaluate. 8-year through-line.",
+      "tier": 1,
+      "parent_theme": "theme.root",
+      "status": "confirmed (ROOT DISPOSITION)",
+      "evidence": "3 rounds, 2018-03-06 to 2025-12-04"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.agent-first",
+      "label": "Start thinking agent-first — both building and serving lens. Platforms that cannot talk to autonomous agents are behind.",
+      "tier": 1,
+      "parent_theme": "theme.agent-first",
+      "status": "confirmed",
+      "evidence": "11+ posts, 2023-03-24 to 2026-04-23"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.context-over-prompt",
+      "label": "Context > Prompt. Personal and organizational context is the lever; prompt string is the I/O seam.",
+      "tier": 1,
+      "parent_theme": "theme.agent-first",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2026-04-09"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.spec-over-sprint",
+      "label": "Spec > Sprint. When you have specced every pixel, a generative tool gives you a worse version of what you already decided.",
+      "tier": 1,
+      "parent_theme": "theme.spec-first-taste",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2026-04-09"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.taste-over-execution",
+      "label": "Taste > Execution. In an AI era that commoditizes execution, the bottleneck and differentiator is taste.",
+      "tier": 1,
+      "parent_theme": "theme.spec-first-taste",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2026-04-09"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.anti-customization",
+      "label": "Extremely opinionated against customization settings in enterprise products. Each one signals a design decision deferred to the user. Scope: enterprise (consumer untested).",
+      "tier": 1,
+      "parent_theme": "theme.pm-taste",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2025-12-04"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.pm-is-99-should-we-1-can-we",
+      "label": "PM is the grind of answering 99 \"should we?\" to get to that 1 \"can we?\".",
+      "tier": 1,
+      "parent_theme": "theme.pm-taste",
+      "status": "confirmed",
+      "evidence": "5 rounds, 2022-06-03 anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ai-pm-skillset-table-stakes",
+      "label": "AI fluency is table stakes for PMs; relevant archetype is application-layer (using models to unlock growth), not foundation-layer. AI replaces the grunt; taste is irreducible.",
+      "tier": 1,
+      "parent_theme": "theme.ai-pm-skillset",
+      "status": "confirmed",
+      "evidence": "4 rounds, 2023-03-14 anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.learn-concepts-not-tools",
+      "label": "Strive to learn concepts, not tools. Frameworks endure; tools rotate.",
+      "tier": 1,
+      "parent_theme": "theme.career-reflection",
+      "status": "confirmed",
+      "evidence": "4 rounds, 2019-12-04 anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.llm-as-primary-daily-tool",
+      "label": "LLMs are a great tool. I use them daily more than any other tool in my stack. (Renamed from llm-as-voice-extension; reframed as factual daily-use claim, not \"extension of self.\")",
+      "tier": 1,
+      "parent_theme": "theme.ai-pm-skillset",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2023-03-01 onwards"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.enterprise-ai-production-reality",
+      "label": "Roughly 80% of enterprise AI experiments don't reach production. The gap between demo and deployment is wider than vendors admit. (Frame retained; specific 10-to-2 number dropped at lock.)",
+      "tier": 1,
+      "parent_theme": "theme.enterprise-ai-reality",
+      "status": "confirmed",
+      "evidence": "5 rounds, 2024-09-04 anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.second-brain-is-context-layer",
+      "label": "Personal context layer for AI sessions. Built this for me, hobbyist scope, Karpathy-inspired. Pattern probably generalizes for builders working with AI tools daily.",
+      "tier": 1,
+      "parent_theme": "theme.second-brain",
+      "status": "confirmed",
+      "evidence": "4 rounds, 2026-04-23 canonical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.self-instrumentation",
+      "label": "Retrospection is a real powerful tool. Observable patterns and personal apparatus as leverage.",
+      "tier": 1,
+      "parent_theme": "theme.second-brain",
+      "status": "confirmed",
+      "evidence": "4 rounds, 2018-05-28 earliest"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.help-market-flourish",
+      "label": "Go increase the size of the pie if you want a bigger share. Collaborative-growth over zero-sum. **2026-04 live evidence: this repo (agamarora/agamarora) is open-source as a direct application of this principle.**",
+      "tier": 1,
+      "parent_theme": "theme.career-reflection",
+      "status": "confirmed (live)",
+      "evidence": "3 rounds, 2017-09-14 origin + 2026-04-26 repo-as-evidence"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ic-path-legitimacy",
+      "label": "Individual Contributor path is a valid career arc. People management is critical but not for everyone. **2026 reframe: AI-era amplifies IC leverage — IC + AI agents = throughput closer to a small team than ever.**",
+      "tier": 1,
+      "parent_theme": "theme.career-reflection",
+      "status": "confirmed",
+      "evidence": "2 rounds, 2021-10-30 + 2026-04-26 reframe"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.linkedin-as-instrumental-platform",
+      "label": "LinkedIn is a platform to be gamed productively. Posting IS the thinking. The loop closes when others learn (build → post → teach → learn → build).",
+      "tier": 1,
+      "parent_theme": "theme.linkedin-as-instrument",
+      "status": "confirmed",
+      "evidence": "5 rounds, 2017-01-20 seed to 2024-07-04"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ship-the-prototype",
+      "label": "Build to validate; don't just conceptualize. The prototype is the argument. (Absorbs former tinker-publicly belief as loop-closure framing per A3.)",
+      "tier": 1,
+      "parent_theme": "theme.personal-projects-tinkering",
+      "status": "confirmed",
+      "evidence": "5 rounds, 2020-05-19 canonical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.breadth-as-differentiation",
+      "label": "Breadth of knowledge across domains is a professional differentiator.",
+      "tier": 1,
+      "parent_theme": "theme.breadth-as-differentiation",
+      "status": "confirmed",
+      "evidence": "R2 theme-level, 18+ posts E1-E4"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.breadth-needs-depth",
+      "label": "If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest. **Humanness-as-depth extension is Agam's synthesis (April 2024 EQ post predates September 2024 Mo Gawdat citation).**",
+      "tier": 1,
+      "parent_theme": "theme.breadth-as-differentiation",
+      "status": "confirmed",
+      "evidence": "3 rounds, 2024-04-12 anchor + April 2024 EQ post"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.agent-first-ecosystem-instinct",
+      "label": "ChatGPT plugins were the first AI marketplace. Early 2023 seed of the serving-lens agent thesis.",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2023-03-24"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.application-layer-is-where-safety-lives",
+      "label": "Agents should be kept away from decision-making unless evaluable programmatically; safety is an application problem.",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2026-01-06 canonical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.reversibility-over-consequences",
+      "label": "Decouple tokens from decisions; GIT-style reversibility at orchestration layer.",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2026-01-06"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.agent-layer-is-threat-surface",
+      "label": "The model was not broken, the agent layer was; security vulnerabilities migrated from model weights to agent orchestration.",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2024-06-06 + 2025-11-17"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.prompts-as-engineering-primitive",
+      "label": "Prompts are plumbing inside the agent: guardrails, tool-calling, output parsing. Not user-facing UX.",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2025-07-17"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.kill-prompting",
+      "label": "We need to kill prompting. (Stance evolved per A1: prompting → context engineering → harness engineering. Verdict held; layer migrated.)",
+      "tier": 2,
+      "parent_theme": "theme.agent-first",
+      "status": "",
+      "evidence": "2024-12-24 + 2026 evolution"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ico-is-funding-not-product",
+      "label": "ICO is a fundraising tool, not a product.",
+      "tier": 2,
+      "parent_theme": "theme.root",
+      "status": "",
+      "evidence": "2018-02-15"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ai-fluency-required",
+      "label": "Modern jobs will soon require AI tools as fluent as PowerPoint and Excel.",
+      "tier": 2,
+      "parent_theme": "theme.ai-pm-skillset",
+      "status": "",
+      "evidence": "2023-03-19"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.its-not-the-model-its-the-problem",
+      "label": "Frame the business problem first; let model selection follow.",
+      "tier": 2,
+      "parent_theme": "theme.ai-pm-skillset",
+      "status": "",
+      "evidence": "2021-07-14"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.moats-are-infra-talent-data",
+      "label": "The three durable enterprise AI moats are infrastructure, talent, and data. The model is not on the list.",
+      "tier": 2,
+      "parent_theme": "theme.enterprise-ai-reality",
+      "status": "",
+      "evidence": "2024-12-04"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.data-readiness-is-pipeline-not-corpus",
+      "label": "AI-ready data means continuous collection and transformation systems, not just a large historical corpus.",
+      "tier": 2,
+      "parent_theme": "theme.enterprise-ai-reality",
+      "status": "",
+      "evidence": "2024-06-07 Collab"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.quantified-self-as-mindfulness",
+      "label": "It isn't the tool, it's the habit of being mindful with time.",
+      "tier": 2,
+      "parent_theme": "theme.second-brain",
+      "status": "",
+      "evidence": "2020-02-20"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.personal-website-is-present-tense",
+      "label": "You are a brand, and you should have your own nameplate. Ship it.",
+      "tier": 2,
+      "parent_theme": "theme.personal-projects-tinkering",
+      "status": "",
+      "evidence": "2023-04-16"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.pm-is-featherless-hat",
+      "label": "Product management is a featherless hat — omnipresent yet indistinguishable if done properly.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2021-09-22"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.pm-as-parenting",
+      "label": "Building a product is like raising a child — make tough decisions, protect from distortion.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2021-07-12"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.data-literacy-is-pm-core",
+      "label": "Correlation is not causation. Measurement discipline as PM fundamental.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2022-05-17 umbrella anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.build-measure-learn",
+      "label": "Lean Startup loop. Smallest feature set, measure, iterate.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2016-01-04 earliest"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.idea-validation-3-pillars",
+      "label": "Value, Consumers, Scalability — three-pillar validation frame.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2020-07-04"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.non-functional-reqs-are-dominant-failure-mode",
+      "label": "Non-functional requirements are not tick boxes but primary PM work. (Renamed from belief.non-functional-reqs-are-55pct-of-failure; 55% Standish citation dropped per E4.)",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2024-03-08 Collab anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.design-thinking-as-speed-tool",
+      "label": "Design thinking is stakeholder alignment + diverse feedback, not UI/UX first. Jupyter notebook + paper wireframe as feedback loop.",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "2024-05-24 Collab"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.strong-opinion-about-no-strong-opinions",
+      "label": "I have a very strong opinion about having no strong opinions. Paradox-as-voice. **Explicit named meta-belief on pm-taste page per A2 — licenses every other belief on that page.**",
+      "tier": 2,
+      "parent_theme": "theme.pm-taste",
+      "status": "",
+      "evidence": "3 rounds, 2021-12-12"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.certifications-are-collectibles",
+      "label": "Certifications fuel personal achievement but do not validate competence. Peer-voted badges acceptable; exam-gated certs rejected.",
+      "tier": 2,
+      "parent_theme": "theme.career-reflection",
+      "status": "",
+      "evidence": "2024-11-15 canonical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.muscle-memory-over-novelty",
+      "label": "Deliberate practice via repetition of frameworks (re-watch, re-read) over novelty.",
+      "tier": 2,
+      "parent_theme": "theme.career-reflection",
+      "status": "",
+      "evidence": "2025-12-26 Doshi anchor"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.two-roles-ahead-framing",
+      "label": "When picking your next role, optimize for the role after that. Routine career heuristic Agam deploys in mentoring. **Elevated from peripheral to named belief tier per F2.**",
+      "tier": 2,
+      "parent_theme": "theme.career-reflection",
+      "status": "",
+      "evidence": "FarEye-to-AIonOS transition + mentoring evidence"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.never-be-smartest-in-room",
+      "label": "Never be the smartest person in the room; if you feel you are, get more people in the room or change the room. **Demoted from co-root to standard belief per F4. Scope: team-joining heuristic.**",
+      "tier": 2,
+      "parent_theme": "theme.career-reflection",
+      "status": "",
+      "evidence": "4 rounds, 2019-07-11"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ai-is-the-next-wave",
+      "label": "theme.ai-pm-skillset origin node",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "peripheral (historical ancestor)",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.tech-as-enabler",
+      "label": "theme.ai-pm-skillset historical note",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "peripheral (softened, not superseded)",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.gaming-as-economic-intuition",
+      "label": "theme.personal-projects-tinkering historical context for V2 Games as career stage",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "peripheral",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.lead-yourself-first",
+      "label": "theme.career-reflection historical",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "peripheral (E1)",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.mcp-as-enterprise-primitive",
+      "label": "theme.enterprise-ai-reality ghost annotation",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "ghost (resume-grounded only, intentional under-share)",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.voice-as-enterprise-wedge",
+      "label": "theme.voice-ai-craft ghost annotation",
+      "tier": 3,
+      "parent_theme": null,
+      "status": "ghost (intentional under-share per Decision 2)",
+      "evidence": ""
+    },
+    {
+      "type": "Belief",
+      "id": "belief.silence-precedes-crystallization",
+      "label": "R4 REFINE/DEMOTE: Decision 5 binding + weak evidence (2 positive, 7 counter-cases). Re-homed as wiki narrative footnote.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.outcome-billing-over-hourly",
+      "label": "R4 DEMOTE: single-surface, never restated in 12 years.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.tinker-publicly",
+      "label": "R4 MERGE → ship-the-prototype as loop-closure framing per A3. Slug retired.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.named-citation-as-confidence-marker",
+      "label": "External behavioral observation, not a belief Agam holds. Re-homed as style signal in voice-spec.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.value-viability-usability-triad",
+      "label": "R4 DEMOTE: single-surface, subsumed into idea-validation-3-pillars.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.llm-as-voice-extension",
+      "label": "RENAMED at lock to `belief.llm-as-primary-daily-tool` per B2. Old slug retired. Statement reframed (drop \"extension of self\" mysticism).",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.non-functional-reqs-are-55pct-of-failure",
+      "label": "RENAMED at lock to `belief.non-functional-reqs-are-dominant-failure-mode` per E4. Old slug retired. 55% Standish citation dropped.",
+      "tier": "dropped",
+      "status": "retired"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.dominate-dont-compete",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ideas-are-enough",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.personal-website-is-future-tense",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.horizontal-ai-will-scale",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.prompt-engineering-as-skill",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.ship-fast",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Belief",
+      "id": "belief.people-management-is-endgame",
+      "label": "(superseded)",
+      "tier": "superseded",
+      "status": "historical"
+    },
+    {
+      "type": "Project",
+      "id": "project.agamarora-com-v2",
+      "label": "agamarora.com (this site, open-source)",
+      "year": "2024-2026",
+      "status": "live",
+      "tech_stack": "HTML, CSS, JavaScript, Netlify",
+      "lineage_parent": "agamarora-com-v1",
+      "beliefs_evidenced": "personal-website-is-present-tense, spec-over-sprint, help-market-flourish",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.ai-resume",
+      "label": "AI Resume",
+      "year": "2025",
+      "status": "live",
+      "tech_stack": "HTML, CSS, JS, Netlify",
+      "lineage_parent": "agamarora-com-v2",
+      "beliefs_evidenced": "personal-website-is-present-tense, ship-the-prototype, agent-first",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.shararat-vapi",
+      "label": "Shararat — Vapi Build Challenge",
+      "year": "2025",
+      "status": "shipped",
+      "tech_stack": "Vapi, voice AI",
+      "lineage_parent": "(separate from day-job)",
+      "beliefs_evidenced": "ship-the-prototype, agent-first",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.claude-code-resource-monitor",
+      "label": "luna-monitor (Claude Code Resource Monitor)",
+      "year": "2026",
+      "status": "shipped, open-source",
+      "tech_stack": "Claude Code, system monitoring",
+      "lineage_parent": "ollama-keyboard-shortcut",
+      "beliefs_evidenced": "ship-the-prototype, help-market-flourish",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.second-brain-v1",
+      "label": "second-brain v1 — wiki + kg.json + /enter v3",
+      "year": "2026",
+      "status": "live",
+      "tech_stack": "Markdown, JSON, HTML, Netlify",
+      "lineage_parent": "chatgpt-pm-stack",
+      "beliefs_evidenced": "second-brain-is-context-layer, self-instrumentation, spec-over-sprint, help-market-flourish",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.flutter-dart-prototyping",
+      "label": "Flutter/Dart minis (learning)",
+      "year": "2020",
+      "status": "shipped",
+      "tech_stack": "Flutter, Dart",
+      "lineage_parent": "",
+      "beliefs_evidenced": "learn-concepts-not-tools, ship-the-prototype",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.crewai-agentic-system",
+      "label": "CrewAI / Autogen agentic experiment (learning)",
+      "year": "2024",
+      "status": "shipped",
+      "tech_stack": "CrewAI, Autogen, Groq",
+      "lineage_parent": "",
+      "beliefs_evidenced": "learn-concepts-not-tools, agent-first",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.llm-comparator",
+      "label": "Groq + Streamlit LLM comparator (learning)",
+      "year": "2024",
+      "status": "shipped",
+      "tech_stack": "Groq, Streamlit, Python",
+      "lineage_parent": "",
+      "beliefs_evidenced": "learn-concepts-not-tools, ship-the-prototype",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.ollama-keyboard-shortcut",
+      "label": "Local Ollama + LLaMA3 keyboard shortcut",
+      "year": "2024",
+      "status": "shipped",
+      "tech_stack": "Python, Ollama",
+      "lineage_parent": "",
+      "beliefs_evidenced": "llm-as-primary-daily-tool, agent-first",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.pi-based-scripts",
+      "label": "Pi-based Python scripts (hardware tinkering)",
+      "year": "various",
+      "status": "shipped",
+      "tech_stack": "Python, Raspberry Pi",
+      "lineage_parent": "",
+      "beliefs_evidenced": "self-instrumentation, ship-the-prototype",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.v2-games",
+      "label": "V2 Games India (co-founded startup, studio head)",
+      "year": "2014-2016",
+      "status": "co-founder + studio head (analytics, some dev/QA, CEO/business)",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "",
+      "surface": "",
+      "theme_home": "career-reflection (career chapter, not tinkering)",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.flow-live",
+      "label": "Flow.live blockchain pivot",
+      "year": "2018",
+      "status": "early-career role",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "",
+      "surface": "",
+      "theme_home": "career-reflection + root.substance-over-hype (ico-is-funding-not-product evidence)",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.fareye-analyze",
+      "label": "FarEye ANALYZE flagship data product",
+      "year": "2020-2024",
+      "status": "Lead PM",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "",
+      "surface": "",
+      "theme_home": "career-reflection (FarEye chapter)",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.toggl-quantified-self",
+      "label": "Personal Toggl quantified-self",
+      "year": "2020",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "quantified-self-as-mindfulness, self-instrumentation",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.chatgpt-pm-stack",
+      "label": "Personal ChatGPT-as-PM-copilot stack",
+      "year": "2023",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "llm-as-primary-daily-tool, ai-pm-skillset-table-stakes",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.agamarora-com-v1",
+      "label": "agamarora.com v1 (Streamlit, archived)",
+      "year": "2023",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "personal-website-is-present-tense, ship-the-prototype",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.enter-v3",
+      "label": "/enter v3 — immersive AI terminal",
+      "year": "2026 (April; 2023-05-10 prototype is lineage ancestor not project)",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "second-brain-is-context-layer, llm-as-primary-daily-tool, agent-first",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Project",
+      "id": "project.enterprise-voice-ai-platform-internal",
+      "label": "",
+      "year": "",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": true,
+      "generic_alias": "\"enterprise voice AI platform\""
+    },
+    {
+      "type": "Project",
+      "id": "project.enterprise-mcp-platform-internal",
+      "label": "",
+      "year": "",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "",
+      "surface": "",
+      "theme_home": "",
+      "internal_only": true,
+      "generic_alias": "\"MCP-first enterprise platform\""
+    },
+    {
+      "type": "Project",
+      "id": "project.agamarora-com-voice-ai-case-study",
+      "label": "agamarora.com /lab voice-AI production case study",
+      "year": "2025-2026",
+      "status": "",
+      "tech_stack": "",
+      "lineage_parent": "",
+      "beliefs_evidenced": "enterprise-ai-production-reality, voice-as-enterprise-wedge (ghost lifted via this case study)",
+      "surface": "/lab/voice-ai-production/ on agamarora.com",
+      "theme_home": "",
+      "internal_only": false,
+      "generic_alias": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.saayan-sarkar",
+      "label": "Saayan Sarkar",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27 Absolutdata retrospective)",
+      "beliefs_evidenced": "help-market-flourish"
+    },
+    {
+      "type": "Person",
+      "id": "person.shahbaz-singh",
+      "label": "Shahbaz Singh",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27)",
+      "beliefs_evidenced": "help-market-flourish"
+    },
+    {
+      "type": "Person",
+      "id": "person.vamsi-krishna-bhupasamudram",
+      "label": "Vamsi Krishna Bhupasamudram",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27)",
+      "beliefs_evidenced": "none"
+    },
+    {
+      "type": "Person",
+      "id": "person.manas-bhatt",
+      "label": "Manas Bhatt",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27)",
+      "beliefs_evidenced": "none"
+    },
+    {
+      "type": "Person",
+      "id": "person.praveen-yadav",
+      "label": "Praveen Yadav",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27)",
+      "beliefs_evidenced": "none"
+    },
+    {
+      "type": "Person",
+      "id": "person.manish-mittal",
+      "label": "Manish Mittal",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2021-09-27)",
+      "beliefs_evidenced": "none"
+    },
+    {
+      "type": "Person",
+      "id": "person.shravan-tickoo",
+      "label": "Shravan Tickoo",
+      "relation": "peer / colleague",
+      "surface": "post-mention (2024-03-28 Collab)",
+      "beliefs_evidenced": "ai-pm-skillset-table-stakes"
+    },
+    {
+      "type": "Person",
+      "id": "person.gautam-kushal-gaurav-fareye-founders",
+      "label": "Gautam / Kushal / Gaurav (FarEye founders)",
+      "relation": "mentor (professional)",
+      "surface": "post-mention (2024-05-19 farewell)",
+      "beliefs_evidenced": "help-market-flourish"
+    },
+    {
+      "type": "Person",
+      "id": "person.daniel-shapero",
+      "label": "Daniel Shapero",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2024-05-24)",
+      "beliefs_evidenced": "linkedin-as-instrumental-platform"
+    },
+    {
+      "type": "Person",
+      "id": "person.shreyas-doshi",
+      "label": "Shreyas Doshi",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2025-12-26)",
+      "beliefs_evidenced": "muscle-memory-over-novelty, learn-concepts-not-tools"
+    },
+    {
+      "type": "Person",
+      "id": "person.adam-conway",
+      "label": "Adam Conway",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2026-01-06)",
+      "beliefs_evidenced": "reversibility-over-consequences"
+    },
+    {
+      "type": "Person",
+      "id": "person.nate-b-jones",
+      "label": "Nate B Jones",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2026-01-06)",
+      "beliefs_evidenced": "reversibility-over-consequences"
+    },
+    {
+      "type": "Person",
+      "id": "person.mo-gawdat",
+      "label": "Mo Gawdat",
+      "relation": "public-thinker-cited (supporting voice, NOT source per C1)",
+      "surface": "post-mention (2024-09-25)",
+      "beliefs_evidenced": "breadth-needs-depth (Agam-led synthesis confirmed by Gawdat)"
+    },
+    {
+      "type": "Person",
+      "id": "person.marc-benioff",
+      "label": "Marc Benioff",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2024-12-10)",
+      "beliefs_evidenced": "agent-first"
+    },
+    {
+      "type": "Person",
+      "id": "person.seth-godin",
+      "label": "Seth Godin",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2024-12-09)",
+      "beliefs_evidenced": "agent-first"
+    },
+    {
+      "type": "Person",
+      "id": "person.grant-cardone",
+      "label": "Grant Cardone",
+      "relation": "public-thinker-cited (reaction post)",
+      "surface": "post-mention (2017-09-14)",
+      "beliefs_evidenced": "help-market-flourish (walk-back of dominate-dont-compete)"
+    },
+    {
+      "type": "Person",
+      "id": "person.andrej-karpathy",
+      "label": "Andrej Karpathy",
+      "relation": "public-thinker-cited",
+      "surface": "post-mention (2026-04-21)",
+      "beliefs_evidenced": "second-brain-is-context-layer"
+    },
+    {
+      "type": "Person",
+      "id": "person.milan-dhingra",
+      "label": "Milan Dhingra",
+      "relation": "peer",
+      "surface": "comment-mention + comment-reply thread",
+      "beliefs_evidenced": "linkedin-as-instrumental-platform"
+    },
+    {
+      "type": "Person",
+      "id": "person.irfan-warsi",
+      "label": "Irfan Warsi",
+      "relation": "peer (non-authorial re-share)",
+      "surface": "post-mention (2019-07-04 re-share)",
+      "beliefs_evidenced": "none"
+    },
+    {
+      "type": "Person",
+      "id": "person.rahul-nair",
+      "label": "Rahul Nair",
+      "relation": "peer (trusted)",
+      "surface": "comment — received full litellm/ollama/Groq/openrouter playbook (2026-03-31)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.swapnil-surname-unclear",
+      "label": "Swapnil (surname unclear)",
+      "relation": "peer (trusted)",
+      "surface": "comment — received voice-AI production stack details (2025-09-29)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.arnav-chakravarty",
+      "label": "Arnav Chakravarty",
+      "relation": "peer / friend",
+      "surface": "comment-thread (warm register, Hindi mode triggered)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.ishant-kathuria",
+      "label": "Ishant Kathuria",
+      "relation": "community peer",
+      "surface": "comment on second-brain launch (2026-04-23)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.fareye-colleagues-multiple",
+      "label": "FarEye colleagues (multiple)",
+      "relation": "colleagues",
+      "surface": "farewell post + comment threads (2024-05-19)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Person",
+      "id": "person.day-job-colleagues-multiple-anonymized-for-e3",
+      "label": "Day-job colleagues (multiple, anonymized for E3)",
+      "relation": "colleagues",
+      "surface": "comment threads (2024-2026)",
+      "beliefs_evidenced": ""
+    },
+    {
+      "type": "Tech",
+      "id": "tech.python",
+      "label": "Python",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.r",
+      "label": "R",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.c",
+      "label": "C#",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.java",
+      "label": "Java",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.javascript-node-js",
+      "label": "JavaScript/Node.js",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.dart",
+      "label": "Dart",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.solidity",
+      "label": "Solidity",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.sql",
+      "label": "SQL",
+      "category": "languages"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.flutter",
+      "label": "Flutter",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.unity3d",
+      "label": "Unity3D",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.reactjs",
+      "label": "ReactJS",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.nodejs",
+      "label": "NodeJS",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.spring-boot",
+      "label": "Spring Boot",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.streamlit",
+      "label": "Streamlit",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.pyspark",
+      "label": "PySpark",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.pandas",
+      "label": "Pandas",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.numpy",
+      "label": "NumPy",
+      "category": "frameworks"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.kaggle",
+      "label": "Kaggle",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.databricks",
+      "label": "Databricks",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.github-copilot",
+      "label": "GitHub Copilot",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.groq",
+      "label": "Groq",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.ollama",
+      "label": "Ollama",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.litellm",
+      "label": "LiteLLM",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.openrouter",
+      "label": "OpenRouter",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.vapi",
+      "label": "Vapi",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.netlify",
+      "label": "Netlify",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.streamlit-share",
+      "label": "Streamlit-share",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.crewai",
+      "label": "CrewAI",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.autogen",
+      "label": "Autogen",
+      "category": "platforms"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.jupyter",
+      "label": "Jupyter",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.toggl",
+      "label": "Toggl",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.cursor",
+      "label": "Cursor",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.claude-code",
+      "label": "Claude Code",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.chatgpt-api-interface",
+      "label": "ChatGPT (API + interface)",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.midjourney",
+      "label": "Midjourney",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.linux-home-lab",
+      "label": "Linux (home-lab)",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.github",
+      "label": "GitHub",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.openai-api",
+      "label": "OpenAI API",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.anthropic-api",
+      "label": "Anthropic API",
+      "category": "tools"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.llama3",
+      "label": "LLaMA3",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.phi3",
+      "label": "PHI3",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.llama-8b",
+      "label": "LLaMA-8B",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.llama-70b",
+      "label": "LLaMA-70B",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.mixtral-8x7b",
+      "label": "Mixtral 8x7B",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.gemma-7b-2-9b",
+      "label": "Gemma 7B/2-9B",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.gpt-4",
+      "label": "GPT-4",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.gpt-3-5",
+      "label": "GPT-3.5",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.groq-hosted-fast-inference-models",
+      "label": "Groq-hosted fast inference models",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.qwen-32b",
+      "label": "Qwen-32B",
+      "category": "models used"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.mcp",
+      "label": "MCP",
+      "category": "protocols / patterns"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.sse",
+      "label": "SSE",
+      "category": "protocols / patterns"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.rest-api-design",
+      "label": "REST API design",
+      "category": "protocols / patterns"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.agentic-orchestration-patterns",
+      "label": "agentic orchestration patterns",
+      "category": "protocols / patterns"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.rag",
+      "label": "RAG",
+      "category": "protocols / patterns"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.tech-sanskrit-cultural-reference",
+      "label": "`tech.sanskrit` (cultural reference",
+      "category": "excluded"
+    },
+    {
+      "type": "Tech",
+      "id": "tech.not-programming-language",
+      "label": "not programming language).",
+      "category": "excluded"
+    }
+  ],
+  "edges": [
+    {
+      "from": "project.flow-live",
+      "rel": "builds_on",
+      "to": "project.v2-games"
+    },
+    {
+      "from": "project.agamarora-com-v1",
+      "rel": "builds_on",
+      "to": "project.flutter-dart-prototyping"
+    },
+    {
+      "from": "project.agamarora-com-v2",
+      "rel": "builds_on",
+      "to": "project.agamarora-com-v1"
+    },
+    {
+      "from": "project.chatgpt-pm-stack",
+      "rel": "builds_on",
+      "to": "project.toggl-quantified-self"
+    },
+    {
+      "from": "project.ollama-keyboard-shortcut",
+      "rel": "builds_on",
+      "to": "project.chatgpt-pm-stack"
+    },
+    {
+      "from": "project.crewai-agentic-system",
+      "rel": "builds_on",
+      "to": "project.ollama-keyboard-shortcut"
+    },
+    {
+      "from": "project.llm-comparator",
+      "rel": "builds_on",
+      "to": "project.agamarora-com-v1"
+    },
+    {
+      "from": "project.enterprise-voice-ai-platform-internal",
+      "rel": "builds_on",
+      "to": "project.fareye-analyze"
+    },
+    {
+      "from": "project.enterprise-mcp-platform-internal",
+      "rel": "builds_on",
+      "to": "project.enterprise-voice-ai-platform-internal"
+    },
+    {
+      "from": "project.second-brain-v1",
+      "rel": "builds_on",
+      "to": "project.chatgpt-pm-stack"
+    },
+    {
+      "from": "project.enter-v3",
+      "rel": "builds_on",
+      "to": "project.chatgpt-pm-stack"
+    },
+    {
+      "from": "project.ai-resume",
+      "rel": "builds_on",
+      "to": "project.agamarora-com-v2"
+    },
+    {
+      "from": "project.shararat-vapi",
+      "rel": "builds_on",
+      "to": "project.enterprise-voice-ai-platform-internal"
+    },
+    {
+      "from": "project.claude-code-resource-monitor",
+      "rel": "builds_on",
+      "to": "project.ollama-keyboard-shortcut"
+    },
+    {
+      "from": "project.second-brain-v1",
+      "rel": "demonstrates",
+      "to": "belief.second-brain-is-context-layer"
+    },
+    {
+      "from": "project.second-brain-v1",
+      "rel": "demonstrates",
+      "to": "belief.spec-over-sprint"
+    },
+    {
+      "from": "project.second-brain-v1",
+      "rel": "demonstrates",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "project.agamarora-com-v2",
+      "rel": "demonstrates",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "project.claude-code-resource-monitor",
+      "rel": "demonstrates",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "project.ai-resume",
+      "rel": "demonstrates",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "project.enter-v3",
+      "rel": "demonstrates",
+      "to": "belief.agent-first"
+    },
+    {
+      "from": "project.enter-v3",
+      "rel": "demonstrates",
+      "to": "belief.llm-as-primary-daily-tool"
+    },
+    {
+      "from": "project.crewai-agentic-system",
+      "rel": "demonstrates",
+      "to": "belief.agent-first"
+    },
+    {
+      "from": "project.llm-comparator",
+      "rel": "demonstrates",
+      "to": "belief.ship-the-prototype"
+    },
+    {
+      "from": "project.agamarora-com-voice-ai-case-study",
+      "rel": "demonstrates",
+      "to": "belief.enterprise-ai-production-reality"
+    },
+    {
+      "from": "project.agamarora-com-voice-ai-case-study",
+      "rel": "demonstrates",
+      "to": "belief.voice-as-enterprise-wedge"
+    },
+    {
+      "from": "project.flow-live",
+      "rel": "demonstrates",
+      "to": "belief.ico-is-funding-not-product"
+    },
+    {
+      "from": "project.chatgpt-pm-stack",
+      "rel": "demonstrates",
+      "to": "belief.llm-as-primary-daily-tool"
+    },
+    {
+      "from": "belief.dominate-dont-compete",
+      "rel": "superseded_by",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "belief.ideas-are-enough",
+      "rel": "superseded_by",
+      "to": "belief.ship-the-prototype"
+    },
+    {
+      "from": "belief.horizontal-ai-will-scale",
+      "rel": "superseded_by",
+      "to": "belief.agent-first"
+    },
+    {
+      "from": "belief.prompt-engineering-as-skill",
+      "rel": "superseded_by",
+      "to": "belief.kill-prompting"
+    },
+    {
+      "from": "belief.kill-prompting",
+      "rel": "refined_by",
+      "to": "belief.prompts-as-engineering-primitive"
+    },
+    {
+      "from": "belief.ship-fast",
+      "rel": "superseded_by",
+      "to": "belief.spec-over-sprint"
+    },
+    {
+      "from": "belief.people-management-is-endgame",
+      "rel": "superseded_by",
+      "to": "belief.ic-path-legitimacy"
+    },
+    {
+      "from": "belief.personal-website-is-future-tense",
+      "rel": "superseded_by",
+      "to": "belief.personal-website-is-present-tense"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "tension-with",
+      "to": "theme.enterprise-ai-reality",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "tension-with",
+      "to": "theme.spec-first-taste",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.voice-ai-craft",
+      "rel": "tension-with",
+      "to": "theme.linkedin-as-instrument",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.breadth-as-differentiation",
+      "rel": "tension-with",
+      "to": "theme.career-reflection",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "tension-with",
+      "to": "theme.spec-first-taste",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "tension-with",
+      "to": "theme.linkedin-as-instrument",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "tension-with",
+      "to": "theme.agent-first",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "tension-with",
+      "to": "theme.ai-pm-skillset",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.spec-first-taste",
+      "rel": "tension-with",
+      "to": "theme.personal-projects-tinkering",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "tension-with",
+      "to": "theme.ai-pm-skillset",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.linkedin-as-instrument",
+      "rel": "tension-with",
+      "to": "theme.voice-ai-craft",
+      "bidirectional": true
+    },
+    {
+      "from": "theme.personal-projects-tinkering",
+      "rel": "tension-with",
+      "to": "theme.linkedin-as-instrument",
+      "bidirectional": true
+    },
+    {
+      "from": "achievement.linkedin-top-voice-pm",
+      "rel": "earned_through",
+      "to": "surface.collab-articles-pm"
+    },
+    {
+      "from": "achievement.linkedin-top-voice-ai",
+      "rel": "earned_through",
+      "to": "surface.collab-articles-ai"
+    },
+    {
+      "from": "achievement.linkedin-top-voice-pm",
+      "rel": "demonstrates",
+      "to": "belief.linkedin-as-instrumental-platform"
+    },
+    {
+      "from": "achievement.linkedin-top-voice-ai",
+      "rel": "demonstrates",
+      "to": "belief.linkedin-as-instrumental-platform"
+    },
+    {
+      "from": "achievement.linkedin-top-voice-pm",
+      "rel": "evidences",
+      "to": "belief.ai-pm-skillset-table-stakes"
+    },
+    {
+      "from": "achievement.linkedin-top-voice-ai",
+      "rel": "evidences",
+      "to": "belief.ai-pm-skillset-table-stakes"
+    },
+    {
+      "from": "theme.root.substance-over-hype",
+      "rel": "contains-belief",
+      "to": "belief.substance-over-hype"
+    },
+    {
+      "from": "theme.root.substance-over-hype",
+      "rel": "contains-belief",
+      "to": "belief.ico-is-funding-not-product"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.agent-first"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.agent-first-ecosystem-instinct"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.application-layer-is-where-safety-lives"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.reversibility-over-consequences"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.agent-layer-is-threat-surface"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.prompts-as-engineering-primitive"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.context-over-prompt"
+    },
+    {
+      "from": "theme.agent-first",
+      "rel": "contains-belief",
+      "to": "belief.kill-prompting"
+    },
+    {
+      "from": "theme.voice-ai-craft",
+      "rel": "contains-belief",
+      "to": "belief.voice-as-enterprise-wedge"
+    },
+    {
+      "from": "theme.voice-ai-craft",
+      "rel": "contains-belief",
+      "to": "belief.enterprise-ai-production-reality"
+    },
+    {
+      "from": "theme.breadth-as-differentiation",
+      "rel": "contains-belief",
+      "to": "belief.breadth-as-differentiation"
+    },
+    {
+      "from": "theme.breadth-as-differentiation",
+      "rel": "contains-belief",
+      "to": "belief.breadth-needs-depth"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.pm-is-99-should-we-1-can-we"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.pm-is-featherless-hat"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.pm-as-parenting"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.anti-customization"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.data-literacy-is-pm-core"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.build-measure-learn"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.idea-validation-3-pillars"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.non-functional-reqs-are-dominant-failure-mode"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.design-thinking-as-speed-tool"
+    },
+    {
+      "from": "theme.pm-taste",
+      "rel": "contains-belief",
+      "to": "belief.strong-opinion-about-no-strong-opinions"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.ai-pm-skillset-table-stakes"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.ai-fluency-required"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.learn-concepts-not-tools"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.llm-as-primary-daily-tool"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.its-not-the-model-its-the-problem"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.tech-as-enabler"
+    },
+    {
+      "from": "theme.ai-pm-skillset",
+      "rel": "contains-belief",
+      "to": "belief.design-thinking-as-speed-tool"
+    },
+    {
+      "from": "theme.enterprise-ai-reality",
+      "rel": "contains-belief",
+      "to": "belief.enterprise-ai-production-reality"
+    },
+    {
+      "from": "theme.enterprise-ai-reality",
+      "rel": "contains-belief",
+      "to": "belief.moats-are-infra-talent-data"
+    },
+    {
+      "from": "theme.enterprise-ai-reality",
+      "rel": "contains-belief",
+      "to": "belief.data-readiness-is-pipeline-not-corpus"
+    },
+    {
+      "from": "theme.enterprise-ai-reality",
+      "rel": "contains-belief",
+      "to": "belief.mcp-as-enterprise-primitive"
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "contains-belief",
+      "to": "belief.second-brain-is-context-layer"
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "contains-belief",
+      "to": "belief.self-instrumentation"
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "contains-belief",
+      "to": "belief.quantified-self-as-mindfulness"
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "contains-belief",
+      "to": "belief.llm-as-primary-daily-tool"
+    },
+    {
+      "from": "theme.second-brain",
+      "rel": "contains-belief",
+      "to": "belief.personal-website-is-present-tense"
+    },
+    {
+      "from": "theme.spec-first-taste",
+      "rel": "contains-belief",
+      "to": "belief.spec-over-sprint"
+    },
+    {
+      "from": "theme.spec-first-taste",
+      "rel": "contains-belief",
+      "to": "belief.taste-over-execution"
+    },
+    {
+      "from": "theme.spec-first-taste",
+      "rel": "contains-belief",
+      "to": "belief.context-over-prompt"
+    },
+    {
+      "from": "theme.spec-first-taste",
+      "rel": "contains-belief",
+      "to": "belief.anti-customization"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.help-market-flourish"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.ic-path-legitimacy"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.learn-concepts-not-tools"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.certifications-are-collectibles"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.muscle-memory-over-novelty"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.two-roles-ahead-framing"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.never-be-smartest-in-room"
+    },
+    {
+      "from": "theme.career-reflection",
+      "rel": "contains-belief",
+      "to": "belief.lead-yourself-first"
+    },
+    {
+      "from": "theme.linkedin-as-instrument",
+      "rel": "contains-belief",
+      "to": "belief.linkedin-as-instrumental-platform"
+    },
+    {
+      "from": "theme.linkedin-as-instrument",
+      "rel": "contains-belief",
+      "to": "belief.strong-opinion-about-no-strong-opinions"
+    },
+    {
+      "from": "theme.personal-projects-tinkering",
+      "rel": "contains-belief",
+      "to": "belief.ship-the-prototype"
+    },
+    {
+      "from": "theme.personal-projects-tinkering",
+      "rel": "contains-belief",
+      "to": "belief.personal-website-is-present-tense"
+    },
+    {
+      "from": "theme.personal-projects-tinkering",
+      "rel": "contains-belief",
+      "to": "belief.gaming-as-economic-intuition"
+    }
+  ],
+  "themes": [
+    {
+      "slug": "root.substance-over-hype",
+      "title": "The root disposition: substance over hype",
+      "wiki_url": "/wiki/root.substance-over-hype/",
+      "tier": "root",
+      "one_line": "Reduce any hyped category to its substrate, then evaluate",
+      "node_count": 3,
+      "edge_count": 2
+    },
+    {
+      "slug": "agent-first",
+      "title": "Agent-first thesis",
+      "wiki_url": "/wiki/agent-first/",
+      "tier": "theme",
+      "one_line": "Platforms that cannot talk to autonomous agents are already behind; the prompting skill layer migrated, the verdict held",
+      "node_count": 9,
+      "edge_count": 10
+    },
+    {
+      "slug": "voice-ai-craft",
+      "title": "Voice AI craft — cost, latency, scale",
+      "wiki_url": "/wiki/voice-ai-craft/",
+      "tier": "theme",
+      "one_line": "Voice AI is a distinct engineering discipline with its own constraints; the under-share is deliberate",
+      "node_count": 3,
+      "edge_count": 2
+    },
+    {
+      "slug": "breadth-as-differentiation",
+      "title": "Breadth as differentiation",
+      "wiki_url": "/wiki/breadth-as-differentiation/",
+      "tier": "theme",
+      "one_line": "Breadth differentiates; depth is what makes it matter",
+      "node_count": 3,
+      "edge_count": 2
+    },
+    {
+      "slug": "pm-taste",
+      "title": "PM taste — craft, metaphors, and what a PM actually does",
+      "wiki_url": "/wiki/pm-taste/",
+      "tier": "theme",
+      "one_line": "PM is taste of what to build, what experience, what value: invisible when done well, irreplaceable in the AI era",
+      "node_count": 11,
+      "edge_count": 10
+    },
+    {
+      "slug": "ai-pm-skillset",
+      "title": "What AI PM actually requires",
+      "wiki_url": "/wiki/ai-pm-skillset/",
+      "tier": "theme",
+      "one_line": "LLMs are a primary daily tool; AI replaces the grunt; taste of what to build is irreducible PM work",
+      "node_count": 8,
+      "edge_count": 9
+    },
+    {
+      "slug": "enterprise-ai-reality",
+      "title": "Enterprise AI reality — ships vs demos",
+      "wiki_url": "/wiki/enterprise-ai-reality/",
+      "tier": "theme",
+      "one_line": "Roughly 80% of enterprise AI experiments don't reach production; the gap between demo and deployment is wider than vendors admit",
+      "node_count": 5,
+      "edge_count": 5
+    },
+    {
+      "slug": "second-brain",
+      "title": "Second brain — structured knowledge for agents",
+      "wiki_url": "/wiki/second-brain/",
+      "tier": "theme",
+      "one_line": "Built this for me, hobbyist scope, Karpathy-inspired wiki version. Pattern probably generalizes if you tinker with AI tools daily",
+      "node_count": 6,
+      "edge_count": 6
+    },
+    {
+      "slug": "spec-first-taste",
+      "title": "Spec first, taste always — the builder trilogy",
+      "wiki_url": "/wiki/spec-first-taste/",
+      "tier": "theme",
+      "one_line": "Spec > Sprint. Taste > Execution. Context > Prompt. Lived this since 2021. Named it in April 2026. Same disposition, sharper words",
+      "node_count": 5,
+      "edge_count": 5
+    },
+    {
+      "slug": "career-reflection",
+      "title": "Career reflection — IC path, learning, market lift",
+      "wiki_url": "/wiki/career-reflection/",
+      "tier": "theme",
+      "one_line": "IC path is legitimate; AI-era amplifies IC leverage; learning compounds when you study concepts not tools; help the market flourish",
+      "node_count": 9,
+      "edge_count": 12
+    },
+    {
+      "slug": "linkedin-as-instrument",
+      "title": "LinkedIn as instrument — the meta-platform game",
+      "wiki_url": "/wiki/linkedin-as-instrument/",
+      "tier": "theme",
+      "one_line": "LinkedIn is a platform to be gamed productively; posting IS the thinking; the loop closes when others learn",
+      "node_count": 3,
+      "edge_count": 4
+    },
+    {
+      "slug": "personal-projects-tinkering",
+      "title": "Personal projects — ship it or it doesn't exist",
+      "wiki_url": "/wiki/personal-projects-tinkering/",
+      "tier": "theme",
+      "one_line": "Ideas are cheap; the prototype is the argument; the loop closes when posted (build → post → teach → learn → build)",
+      "node_count": 4,
+      "edge_count": 4
+    }
+  ],
+  "stats": {
+    "themes": 12,
+    "beliefs": {
+      "tier_1": 19,
+      "tier_2": 25,
+      "tier_3": 6,
+      "dropped": 7,
+      "superseded": 7,
+      "total": 64
+    },
+    "projects": 20,
+    "people": 25,
+    "tech": 56,
+    "edges": {
+      "total": 111,
+      "by_relation": {
+        "builds_on": 14,
+        "demonstrates": 16,
+        "superseded_by": 7,
+        "refined_by": 1,
+        "tension-with": 12,
+        "earned_through": 2,
+        "evidences": 2,
+        "contains-belief": 57
+      }
+    },
+    "nodes_total": 177
+  }
+}
