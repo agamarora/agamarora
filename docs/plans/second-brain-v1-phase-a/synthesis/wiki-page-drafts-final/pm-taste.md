@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: pm-taste
-title: PM taste
+title: PM taste  -  99% should-we, 1% can-we
 one_line: "PM as 99% discrimination: the cumulative weight of refused features, NFRs as primary work, and the featherless-hat invisibility of the craft."
 status: c-voice-r1-cp4
 length_target: 800-1200
@@ -19,8 +19,7 @@ beliefs:
   - belief.design-thinking-as-speed-tool  -  alignment not UI
 ---
 
-# PM taste
-
+# PM taste  -  99% should-we, 1% can-we
 This is one of twelve themes in the wiki. It covers what PM work actually is: not roadmaps, not meetings, not feature-shipping - but the discipline of discrimination at scale. You are likely here because you encountered the 99/1 ratio or the featherless-hat metaphor and want the full argument. This page sits between [spec-first-taste](/wiki/spec-first-taste/) and [AI PM skillset](/wiki/ai-pm-skillset/): the foundational craft dispositions that predate the AI turn, and that the AI turn only sharpened.
 
 One setup note: every belief here is held with conviction AND held provisionally. The meta-belief from 2021 - "I have a very strong opinion about having no strong opinions" - is the license. It explains why strong positions sit next to acknowledged scope limits.

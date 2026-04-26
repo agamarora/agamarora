@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: ai-pm-skillset
-title: What AI PM actually requires
+title: What AI PM actually requires  -  application-layer fluency, not model internals
 one_line: "The application-layer AI PM archetype: the fluency floor, the personal apparatus, the boundary with the model-builder track."
 status: c-voice-r1-cp5
 length_target: 1000-1500
@@ -16,8 +16,7 @@ beliefs:
   - belief.design-thinking-as-speed-tool (cross-link pm-taste)
 ---
 
-# What AI PM actually requires
-
+# What AI PM actually requires  -  application-layer fluency, not model internals
 This is one of twelve themes in the wiki. It holds a single positioning call that I have been making in public since March 2023: there are two kinds of AI PM, and they need different skill curves. You are likely here because you work in product and want to know what AI fluency actually requires at the application layer, or because [breadth as differentiation](/wiki/breadth-as-differentiation/) or [agent-first](/wiki/agent-first/) sent you here for the domain-specific depth argument. This page sits between those two themes: the belief that breadth plus AI fluency produces a working professional identity, and what that identity is built from at the craft layer.
 
 The thesis is short. The formation story is longer. Both are worth reading in order.

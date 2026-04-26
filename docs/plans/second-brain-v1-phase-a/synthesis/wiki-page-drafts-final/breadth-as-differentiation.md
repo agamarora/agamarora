@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: breadth-as-differentiation
-title: Breadth as differentiation
+title: Breadth as differentiation  -  with depth as the binding constraint
 one_line: "Cross-domain breadth is real leverage, and post-ChatGPT it needs a depth-axis or it commoditizes."
 status: c-voice-r1-cp3
 length_target: 800-1200
@@ -11,8 +11,7 @@ beliefs:
   - belief.breadth-needs-depth (own sub-page anchor  -  Human-GPT coinage, 2024-04-12; humanness-as-depth = Agam's synthesis, April 2024 EQ post predates September 2024 Mo Gawdat citation)
 ---
 
-# Breadth as differentiation
-
+# Breadth as differentiation  -  with depth as the binding constraint
 This is one of twelve themes in the wiki. It holds a belief that showed up in my work before I had a name for it: breadth across domains is a real professional differentiator, and post-ChatGPT it needs a depth-axis or it becomes the thing a chat interface already does better. You are likely here because you saw "Human-GPT" used as a failure mode somewhere and want the full argument, or because [agent-first](/wiki/agent-first/) sent you here looking for how the professional positioning thesis formed. This page sits between [career reflection](/wiki/career-reflection/) and [AI PM skillset](/wiki/ai-pm-skillset/) in the bigger frame: the WHY that links career-formation intuition to a concrete T-shape choice.
 
 Two things follow: the full arc of how the belief formed - from a 2018 operational call to a July 2025 existential claim - and what it demands in practice.

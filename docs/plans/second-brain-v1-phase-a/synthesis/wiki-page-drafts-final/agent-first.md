@@ -1,7 +1,7 @@
 ---
 type: Theme
 slug: agent-first
-title: Agent-first thesis
+title: Agent-first thesis  -  serving lens for autonomous agents
 one_line: "Agents are users too, and maybe first - the serving lens that matters once horizontal AI hits the depth wall."
 status: c-voice-r1-cp1-reference
 length_target: 800-1200
@@ -17,8 +17,7 @@ beliefs:
   - belief.kill-prompting  -  stance evolved (prompting -> context engineering -> harness engineering); verdict held, layer migrated
 ---
 
-# Agent-first thesis
-
+# Agent-first thesis  -  serving lens for autonomous agents
 This is one of twelve themes in the wiki. It names a stance that took two and a half years to crystallize: agents are users too, and the platforms that cannot serve them are already behind. You are likely here because you saw "agent-first" used as a noun and want the operational shape, or because you came in from [substance over hype](/wiki/root.substance-over-hype/) and want the strongest applied case.
 
 Three things follow, in the order they make sense to read: the thesis, how it formed, and the corollaries it forces at the craft layer.
