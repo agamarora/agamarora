@@ -99,6 +99,14 @@
   .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
   .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
 
+  /* Entry CTAs — graph as public landing path. Bottom-center, low priority,
+     does not crowd aa-mark (right) / legend-strip (left). */
+  .entry-ctas{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:10px;align-items:center;}
+  .entry-ctas a{font-family:var(--mono);font-size:11px;letter-spacing:0.05em;text-transform:lowercase;color:var(--text);background:rgba(10,10,10,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(232,228,223,0.2);border-radius:4px;padding:7px 14px;text-decoration:none;opacity:0.7;transition:opacity 0.2s,border-color 0.2s,color 0.2s;}
+  .entry-ctas a:hover{opacity:1;border-color:var(--accent);color:var(--accent);}
+  .entry-ctas a .arr{opacity:0.5;margin-left:6px;}
+  @media (max-width:480px){.entry-ctas{bottom:20px;gap:6px;}.entry-ctas a{font-size:10px;padding:6px 10px;letter-spacing:0.04em;}}
+
 
   /* Two-layer SVG: parallax bg (dim, future CP-5) + interactive constellation foreground */
   svg.parallax-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;display:block;pointer-events:none;}
@@ -161,8 +169,10 @@
     .fs-btn{font-size:10px;padding:5px 9px;}
   }
   @media (max-width: 480px){
-    /* Smallest devices: drop caption too, keep only icon-bar + aa. mark + fs-btn */
+    /* Smallest devices: drop caption + collapse fs-btn label */
     .caption{display:none;}
+    .fs-btn{font-size:0;padding:5px 8px;}
+    .fs-btn::before{content:"⛶";font-size:14px;}
   }
 </style>
 </head>
@@ -205,6 +215,11 @@
   <div><span class="swatch gold"></span>theme</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
 </div>
+
+<nav class="entry-ctas" aria-label="Wiki entry">
+  <a href="/wiki/">read the wiki<span class="arr">→</span></a>
+  <a href="/enter">talk to the agent<span class="arr">→</span></a>
+</nav>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
 <svg class="parallax-bg" id="parallax-bg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
