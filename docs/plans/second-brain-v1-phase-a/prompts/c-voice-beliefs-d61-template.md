@@ -28,6 +28,8 @@ Rewrite the file `C:/aa/agamarora/docs/plans/second-brain-v1-phase-a/synthesis/b
 
 Preserve: type, slug, title, parent_theme, related_beliefs, supersedes, conditioned_by, holds_with, cross_listed_themes (if present), tier, length_target.
 
+**Slug field is the bare slug, NOT prefixed with `belief.`.** Example: `slug: spec-over-sprint`, NOT `slug: belief.spec-over-sprint`. The `belief.` prefix only appears in the `related_beliefs:` list (where it disambiguates from other graph node types) and in evidence body text where the slug is referenced as a graph entity. This is a real fan-out gotcha - subagents have written the wrong form on first try; double-check.
+
 Update or add:
 - `one_line:` keep existing if good (35-90 chars, descriptive); refine if it uses banned phrasing
 - `quotable:` ADD - single sentence the agent can drop verbatim into responses without rephrasing. Active voice. Should restate the principle in its sharpest form. Example: "Context > Prompt. Curating context is the real skill."
