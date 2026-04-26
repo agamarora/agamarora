@@ -3,8 +3,8 @@ type: Theme
 slug: agent-first
 title: Agent-first thesis
 one_line: "Agents are users too, and maybe first - the serving lens that matters once horizontal AI hits the depth wall."
-status: draft-r9-polished
-length_target: 1200-1500
+status: c-voice-r1-cp1-reference
+length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.agent-first  -  Platforms that can't talk to autonomous agents are behind
@@ -19,67 +19,53 @@ beliefs:
 
 # Agent-first thesis
 
-*Era: 2023-03 to 2026-04 · 14+ posts · 8 beliefs*
+This is one of twelve themes in the wiki. It names a stance that took two and a half years to crystallize: agents are users too, and the platforms that cannot serve them are already behind. You are likely here because you saw "agent-first" used as a noun and want the operational shape, or because you came in from [substance over hype](/wiki/root.substance-over-hype/) and want the strongest applied case.
 
----
+Three things follow, in the order they make sense to read: the thesis, how it formed, and the corollaries it forces at the craft layer.
 
-## Core belief
+## The thesis
 
-Platforms and products that cannot talk to autonomous agents are already behind. Think serving-lens first: your APIs, your data surfaces, your system design must be legible to agents calling on behalf of users, not just to the users themselves. The building-lens question gets most of the attention. The serving-lens question is where the differentiation lives.
+Platforms that cannot talk to autonomous agents are already behind. Build serving-lens first: APIs, data surfaces, system design must be legible to agents calling on behalf of users, not just to the users themselves. The building lens gets most of the attention. The serving lens is where the differentiation lives.
 
-Prompts are plumbing, not UX. Context is the lever, not the prompt string. Agent deployment without reversibility constraints is not deployment: it is exposure. These three craft corollaries follow directly from the thesis.
+"(and maybe first)" is the strongest single claim in the manifesto: agents may be primary users before humans are. Not a futurist claim. A 2026 claim. Production traffic on enterprise voice systems is already 100% MCP + APIs, 0% UI - one example, but the shape generalizes.
 
----
+## How the thesis formed
 
-## How it formed
+The intuition arrived early. The vocabulary did not.
 
-The intuition arrived two and a half years before the manifesto.
+In March 2023, when OpenAI shipped ChatGPT Plugins, most observers saw a feature: "This will open up a new ecosystem in itself. The very first AI marketplace." LLM plus third-party tools plus actions was the revolution. The LLM alone was not.
 
-In March 2023, when OpenAI shipped ChatGPT Plugins, most observers saw a feature. Agam saw an ecosystem: "This will open up a new ecosystem in itself. The very first AI marketplace." (2023-03-24) LLM plus third-party tools plus actions was the revolution, not the LLM alone.
+The thesis hardened through eighteen months of demos, POCs, and boardroom slides. By June 2024, multi-agent systems were "not a question of if, but when." By September 2024: "building for a demo vs. building for production is a different beast." The observation was correct. The agentic frame was not yet there.
 
-The thesis hardened through 18 months of demos, POCs, and boardroom slides. By mid-2024, Multi-Agent Systems were "not a question of if, but when." By September 2024: "building for a demo vs. building for production is a different beast." The observation was correct. The agentic frame was not yet there.
+On June 20, 2025, three moves landed in one post. Horizontal AI declared dead - "chatbots and copilots are cool until they hit a wall without real domain depth." Agentic AI named as the new direction. And the serving lens introduced as the differentiation move: "Most importantly, start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
 
-On June 20, 2025, the thesis crystallized. Three moves in one post: horizontal AI declared dead ("chatbots and copilots are cool until they hit a wall without real domain depth"); agentic AI declared the new direction; and the serving lens introduced as the differentiation move. The key line: "Most importantly, start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation. If your platform can't talk to autonomous agents, you're not ready. Time for the new UX."
+What was superseded was explicit. Horizontal-AI-will-scale, single-model-as-substrate, prompt-as-primary-interface - all three dissolved at this boundary. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") represents the pre-hinge stance accurately. It stayed live. The arc is public.
 
-The "(and maybe first)" parenthetical is the strongest single claim: agents may be primary users before humans are.
+After the manifesto, agent-first became a flat assumption. By April 2026 it had become craft posture: "Context > Prompt." [Second-brain v1](/wiki/second-brain/) is agent-first applied to personal knowledge - every future AI session reads the same brain and writes back to it.
 
-What was superseded was explicit. Horizontal-AI-will-scale, single-model-as-substrate, prompt-as-primary-interface: all three dissolved at this boundary. The 2023-03-14 post ("I find myself using ChatGPT for just about everything") represents the pre-hinge stance accurately. It stayed live. The arc is public.
+## What the thesis forces at the craft layer
 
-After the manifesto, agent-first became a flat assumption. By April 2026 it had become craft posture: "Context > Prompt." The second-brain v1 is agent-first applied to personal knowledge: "every future AI session reads the same brain and writes back to it."
+If agents are primary users, the production engineering rebuilds around them. Three corollaries fall out. Each is a separate belief on this site.
 
----
+**Prompts are plumbing, not UX.** The interface to an agent is not the prompt string. It is the context surface, the tool catalog, the permission model. Building good prompts is a 2023 skill. Building good context is a 2025 skill. The December 2024 "kill prompting" post overstated the verb but got the diagnosis right: prompts as user-facing incantation are dead. Prompts as engineering primitive survived. The 2025-07-17 re-admission named the migration honestly: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Plumbing, not UX.
 
-## What it implies
+**Context is the lever, not the prompt.** Personal data, conversation history, structured knowledge - what you put in front of the model before the session begins decides output quality more than the words you compose at the seam. Curation beats composition. Three lines from April 9, 2026: Spec > Sprint, Taste > Execution, Context > Prompt. Same shape three times: the upstream work matters more than the downstream one. See [context over prompt](/wiki/beliefs/context-over-prompt/) for the full belief.
 
-**Building lens.** Agents are the new architectural substrate. Design every capability to be called by an orchestration layer. Agents decompose into three engineered surfaces: LLM inference plus prompting, tools, and memory. None are user-facing dials.
+**Reversibility over consequences.** Agent deployment without reversibility constraints is not deployment. It is exposure. The application layer is where safety lives - the November 2025 Chinese threat-actor incident with Claude landed a 17-month-old prediction on schedule: "The model wasn't broken, the agent layer was." The fix is checkpoints, programmatic evaluability, and GIT-style state at the orchestration layer. Software engineering primitives applied to a new surface.
 
-**Serving lens.** Every API, every data endpoint, every workflow must ask: can an agent parse it, act on it, and fail safely? Most teams optimize for human legibility. Agent legibility is the next constraint.
+A team that says "agent-first" but ships prompt-as-UX, context-by-accident, and irreversible-action-by-default has not absorbed the thesis. They have adopted the language.
 
-**Craft: prompts as plumbing, context as lever.** The December 2024 "kill prompting" post was a correct diagnosis with an overstated verb. What needed killing was prompts as user-facing incantation. What survived: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." (2025-07-17) Prompts enable guardrails, tool calling, output parsing, memory. The engineer ships them; the user never sees them.
+There is a counter-claim worth naming directly. [Enterprise AI reality](/wiki/enterprise-ai-reality/) holds a different field observation: roughly 80% of enterprise AI experiments do not reach production. Both claims are true at once. Agent-first IS the framework for being in the 20% that ships - serving-lens-first, reversibility in from the start, agent layer hardened. Direction vs current rate. Different scopes.
 
-Named waypoint: the 2024-12-24 kill-prompting post and the 2025-07-17 re-admission are both public, both still live. The arc is honest: overstated verb, correct diagnosis, stance evolved. Prompts-as-UX-layer died. Prompts-as-engineering-primitive survived. The skill layer migrated (prompting to context engineering to harness engineering); the verdict held. The arc is the evidence that the belief is held empirically, not as identity.
+## Where to go from here
 
-When the prompt is plumbing, the leverage moves upstream: to the context layer, the personal and organizational data and history that determines what the agent knows before it reasons. "Context > Prompt" (2026-04-09). The second-brain wiki and kg.json are the operational form: a durable context layer every agent session reads without being prompted.
+Three exits, depending on what you came for.
 
-**Safety: application-layer, not research-layer.** "This is not a research problem, but an application problem. I am glad we are stepping into solving these outside the realms of models now. No more waiting for the smarter model to solve my broken and intermittent workflow drifts." (2026-01-06)
+If you want the **central belief** in its starkest form, read [the agent-first belief page](/wiki/beliefs/agent-first/). The 2025 manifesto and the 2023 ecosystem instinct sit on the same surface there.
 
-The authorization test: can the decision be evaluated programmatically? If yes, the agent executes. If no, the agent surfaces the decision for a human. Reversibility is the mechanism: snapshots, checkpoints, evals, GIT-style version control at the orchestration layer. Software engineering primitives applied to a new surface.
+If you want the **craft layer** - the part where "agent-first" stops being a thesis and starts being a builder posture - jump to [context over prompt](/wiki/beliefs/context-over-prompt/) or [second brain](/wiki/second-brain/).
 
-The threat-surface corollary arrived November 2025 when a Chinese threat actor ran a full cyberattack using Anthropic's Claude as an autonomous agent. Agam had flagged orchestration-level risk 17 months earlier. The confirmation: "The model wasn't broken, the agent layer was." Diagnosis and prescription point the same direction: application layer is both where the threat lives and where the fix is built.
-
----
-
-## Tension with `enterprise-ai-reality`
-
-The enterprise-ai-reality theme holds a field observation: roughly 80% of enterprise AI experiments don't reach production. If agent-first is bullish on deployment and enterprise reality is cautious on production wins, is there a contradiction?
-
-No: different scopes. Enterprise-ai-reality is about what is currently happening. Deployments fail to reach production not because the architecture is wrong but because conditions are not met: data readiness, KPI definition, reversibility, non-functional requirements. Agent-first is a structural bet about where the architecture is going. The reconciliation: agent-first IS the framework for being among the projects that do ship. Serving-lens-first, reversibility in from the start, agent layer hardened: those are the production-grade projects.
-
-The tension with `reversibility-over-consequences` is structural and held, not resolved. Bullish on deployment. Bearish on decision authority without programmatic evaluability. The 2026-01-06 post holds both: "Not just guardrails, but checks and balances." Deployment scope and authorization scope are not the same dial.
-
-Cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/)  -  same field data, different analytical frame: direction vs current rate.
-
----
+If you want **adjacent themes**, [enterprise AI reality](/wiki/enterprise-ai-reality/) is the field-data lens, and the [knowledge graph](/wiki/graph/) shows all twelve themes and their cross-links at once.
 
 ## Evidence
 
@@ -96,17 +82,3 @@ Cross-link: [`enterprise-ai-reality`](/wiki/enterprise-ai-reality/)  -  same fie
 | 2026-01-06 | "This is not a research problem, but an application problem." Application-layer safety prescription: reversibility, checkpoints, programmatic evaluability. | urn:li:activity:7414150680820547584 |
 | 2026-04-09 | "Context > Prompt." Agent-first as craft posture: context is the lever, prompt is the downstream seam. | urn:li:activity:7447981735901949952 |
 | 2026-04-23 | "Every future AI session reads the same brain and writes back to it." Second-brain v1 as agent-first applied to personal knowledge. | urn:li:activity:7452998640345853952 |
-
----
-
-## Open question
-
-The manifesto says agents may be primary users. The reversibility belief says keep agents from decisions that cannot be evaluated programmatically. Both hold. The open question: at what decision-altitude does programmatic evaluability become tractable?
-
-GIT-style reversibility works for deterministic state transitions. Enterprise decisions involving customer NPS, legal exposure, or brand risk are harder to reduce to a check function. The gap between "reversibility as architectural primitive" and "reversibility that covers the full enterprise decision surface" is where application-layer safety work happens next.
-
-Agent-first is bullish on deployment. Whether the safety stack matures at the same rate as capability is the builder problem of 2026.
-
----
-
-*Polished: taste-pass decisions applied 2026-04-26.*
