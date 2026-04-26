@@ -164,6 +164,7 @@
     letter-spacing: -0.03em;
     line-height: 1.02;
     margin-bottom: var(--space-5);
+    max-width: 720px;
   }
   .wiki-hero h1 .accent { color: var(--accent); }
   .wiki-hero p.lead {
@@ -206,18 +207,19 @@
   /* Root card (prominent) */
   .root-card {
     display: block;
-    background: linear-gradient(135deg, rgba(229,165,75,0.06) 0%, var(--surface) 60%);
+    background: linear-gradient(135deg, rgba(229,165,75,0.10) 0%, var(--surface) 60%);
     border: 1px solid var(--accent-dim);
     border-radius: var(--radius-lg);
     padding: var(--space-7);
     margin-bottom: var(--space-8);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s, transform 0.2s;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   }
   .root-card:hover {
     border-color: var(--accent);
     transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.2);
   }
   .root-card .kicker {
     font-family: var(--mono);
@@ -227,7 +229,7 @@
     text-transform: uppercase;
     margin-bottom: var(--space-4);
   }
-  .root-card h2 {
+  .root-card h3 {
     font-size: clamp(1.4rem, 2.6vw, 1.9rem);
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -244,7 +246,7 @@
   /* Theme grid */
   .theme-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--space-5);
   }
   .theme-card {
@@ -256,15 +258,15 @@
     padding: var(--space-6);
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.2s, transform 0.2s;
-    min-height: 180px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   }
   .theme-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   }
   .theme-card h3 {
-    font-size: 1.05rem;
+    font-size: clamp(1.05rem, 1.4vw, 1.15rem);
     font-weight: 600;
     letter-spacing: -0.01em;
     margin-bottom: var(--space-4);
@@ -391,8 +393,8 @@
   <h2 class="section-h">Root disposition</h2>
   <a href="/wiki/root.substance-over-hype/" class="root-card">
     <div class="kicker">Root</div>
-    <h2>Substance over hype</h2>
-    <p>Reduce any hyped category to its substrate, then evaluate. The 8-year through-line from blockchain to anti-customization. The disposition that frames the other twelve.</p>
+    <h3>Substance over hype</h3>
+    <p>Reduce any hyped category to its substrate, then evaluate. The 8-year through-line from blockchain to anti-customization. The disposition that frames the other eleven.</p>
   </a>
 
   <h2 class="section-h">Themes</h2>
