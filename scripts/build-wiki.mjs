@@ -1348,7 +1348,7 @@ function buildGraphPage() {
   CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
   CP-4 ✅ motion vocabulary: twinkle (CSS) + Lissajous theme drift + signal pulses (5 cadences) + cross-edge recompute per frame
-  CP-5 ⏳ big-bang single-origin entry + parallax bg layer
+  CP-5 ✅ big-bang single-origin entry (1.8s easeOutQuint) + parallax bg w/ 220 stars + theme echo halos + lerp-based mouse/touch drift
   CP-6 ⏳ pan/zoom/bounds + fullscreen + mobile responsive
   CP-7 ⏳ keyboard a11y + /design-review against 13 §D2 invariants
 -->
@@ -1430,6 +1430,10 @@ function buildGraphPage() {
   .signal-pulse{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(229,165,75,0.85));pointer-events:none;}
   .signal-pulse-white{fill:rgba(232,228,223,0.95);filter:drop-shadow(0 0 4px rgba(232,228,223,0.6));pointer-events:none;}
 
+  /* Parallax bg star twinkle — slower, dimmer than foreground */
+  @keyframes bg-twinkle{0%,100%{opacity:var(--bg-base,0.15);}50%{opacity:calc(var(--bg-base,0.15) * 1.7);}}
+  .bg-star{animation:bg-twinkle 8s ease-in-out infinite;}
+
   .theme-node{cursor:pointer;transition:filter 0.2s;}
   .theme-node:hover{filter:drop-shadow(0 0 12px rgba(229,165,75,0.8));}
   .theme-group:hover .theme-label{fill:var(--accent);}
@@ -1467,7 +1471,7 @@ ${SHARED_AAMARK_HTML}
   <div><span class="swatch gold"></span>theme (${kg.stats.themes})</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
   <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ ${totalEntries}+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2+3+4 ✓ · cp-5-7 incoming</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..5 ✓ · cp-6-7 incoming</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1533,6 +1537,66 @@ ${AAMARK_SCRIPT}
     deepFieldPositions.push({ x, y });
     return c;
   }
+
+  // === CP-5: parallax bg layer population ===
+  // 220 dim background stars + faint gold echo halos at theme positions.
+  // Wrapped in bgRoot for entry-scale + bgGroup for parallax-translate (nested transforms).
+  const bgSvg = document.getElementById('parallax-bg');
+  const bgRoot = document.createElementNS(NS, 'g');
+  const bgGroup = document.createElementNS(NS, 'g');
+  bgRoot.appendChild(bgGroup);
+  bgSvg.appendChild(bgRoot);
+
+  const bgRng = mulberry32(7777);
+  for (let i = 0; i < 220; i++){
+    const x = bgRng() * VB_W;
+    const y = bgRng() * VB_H;
+    const r = 0.4 + bgRng() * 1.6;
+    const op = 0.06 + bgRng() * 0.18;
+    const star = document.createElementNS(NS, 'circle');
+    star.setAttribute('cx', x);
+    star.setAttribute('cy', y);
+    star.setAttribute('r', r);
+    star.setAttribute('fill', bgRng() < 0.85 ? 'rgba(232,228,223,'+op+')' : 'rgba(229,165,75,'+(op*0.9)+')');
+    star.setAttribute('class', 'bg-star');
+    star.style.setProperty('--bg-base', op);
+    star.style.animationDelay = '-' + (bgRng() * 8).toFixed(2) + 's';
+    bgGroup.appendChild(star);
+  }
+  // Faint echo halos at theme positions (offset to feel like "depth" reverb)
+  THEMES.forEach(t => {
+    const r = VB_MIN * t.radF;
+    const p = polar(CX, CY, r, t.ang);
+    const ex = p.x + 30, ey = p.y - 20;
+    const halo = document.createElementNS(NS, 'circle');
+    halo.setAttribute('cx', ex); halo.setAttribute('cy', ey);
+    halo.setAttribute('r', 14);
+    halo.setAttribute('fill', 'rgba(229,165,75,0.025)');
+    bgGroup.appendChild(halo);
+    const dot = document.createElementNS(NS, 'circle');
+    dot.setAttribute('cx', ex); dot.setAttribute('cy', ey);
+    dot.setAttribute('r', 3.5);
+    dot.setAttribute('fill', 'rgba(229,165,75,0.10)');
+    bgGroup.appendChild(dot);
+  });
+
+  // Parallax drift via mouse / touch — lerp-based, target offset ±18px in viewBox space.
+  let parallaxTargetX = 0, parallaxTargetY = 0, parallaxX = 0, parallaxY = 0;
+  const PARALLAX_STRENGTH = 18;
+  document.addEventListener('mousemove', (e) => {
+    const nx = (e.clientX / window.innerWidth) - 0.5;
+    const ny = (e.clientY / window.innerHeight) - 0.5;
+    parallaxTargetX = -nx * PARALLAX_STRENGTH;
+    parallaxTargetY = -ny * PARALLAX_STRENGTH;
+  });
+  document.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 0) return;
+    const t = e.touches[0];
+    const nx = (t.clientX / window.innerWidth) - 0.5;
+    const ny = (t.clientY / window.innerHeight) - 0.5;
+    parallaxTargetX = -nx * PARALLAX_STRENGTH;
+    parallaxTargetY = -ny * PARALLAX_STRENGTH;
+  }, { passive: true });
 
   // === Render: genesis at center ===
   // Halos (concentric, alpha cascade)
@@ -1885,10 +1949,165 @@ ${AAMARK_SCRIPT}
     e.style.animationDelay = '-' + (Math.random() * 4.5).toFixed(2) + 's';
   });
 
+  // === CP-5: Big-bang entry — single-origin radial expansion ===
+  // All elements start at scale ~0 around (CX, CY) with opacity 0. Over ENTRY_DURATION
+  // they expand outward to final state. Skippable on user input.
+  const ENTRY_DURATION = 1800;
+  const ENTRY_THEME_STAGGER = 16; // ms per theme — small + near-simultaneous
+  const entryStartTime = performance.now() + 250;
+  let entryComplete = false;
+
+  // Hash-shuffle theme entry delays so it doesn't read as clockwise sweep
+  THEMES.forEach((t, i) => {
+    const h = (Math.sin(i * 17.3 + 9.1) + 1) * 0.5;
+    t.entryDelay = h * ENTRY_THEME_STAGGER * THEMES.length;
+  });
+
+  function scaleAroundCenter(s){
+    return 'translate(' + CX + ' ' + CY + ') scale(' + s.toFixed(4) + ') translate(' + (-CX) + ' ' + (-CY) + ')';
+  }
+  function easeOutQuint(t){ return 1 - Math.pow(1 - t, 5); }
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
+  // Hide initial state — everything invisible except parallax bg + deep-field which scale from center
+  themeGroupEls.forEach(g => { if (g) g.style.opacity = '0'; });
+  crossEdgeRefs.forEach(ref => { ref.path.style.opacity = '0'; });
+  deepFieldGroup.setAttribute('transform', scaleAroundCenter(0.05));
+  deepFieldGroup.style.opacity = '0';
+  bgRoot.setAttribute('transform', scaleAroundCenter(0.05));
+  bgRoot.style.opacity = '0';
+
+  // Genesis halos + label fade in (genesis core itself stays visible — it IS the origin)
+  const genesisLabelEl = svg.querySelector('text.genesis-label');
+  const genesisSubEl = svg.querySelector('text.genesis-sublabel');
+  if (genesisLabelEl) { genesisLabelEl.style.opacity = '0'; genesisLabelEl.style.transition = 'opacity 1s ease-out 0.6s'; }
+  if (genesisSubEl) { genesisSubEl.style.opacity = '0'; genesisSubEl.style.transition = 'opacity 1s ease-out 0.8s'; }
+
+  // Shockwave element
+  const shockwave = el('circle', {
+    cx: CX, cy: CY, r: 0,
+    fill: 'none',
+    stroke: 'rgba(229,165,75,0.55)',
+    'stroke-width': '2',
+    opacity: '0',
+  });
+
+  // Skip handler
+  let bbSkipped = false;
+  function skipBigBang(){
+    bbSkipped = true;
+    themeGroupEls.forEach((g, i) => {
+      if (!g) return;
+      g.style.opacity = '1';
+      g.setAttribute('transform', 'translate(' + THEMES[i].x.toFixed(2) + ' ' + THEMES[i].y.toFixed(2) + ')');
+    });
+    crossEdgeRefs.forEach(ref => { ref.path.style.opacity = '1'; });
+    deepFieldGroup.setAttribute('transform', scaleAroundCenter(1));
+    deepFieldGroup.style.opacity = '1';
+    bgRoot.setAttribute('transform', scaleAroundCenter(1));
+    bgRoot.style.opacity = '0.85';
+    if (genesisLabelEl) genesisLabelEl.style.opacity = '1';
+    if (genesisSubEl) genesisSubEl.style.opacity = '1';
+  }
+  window.addEventListener('click', skipBigBang, { once: true });
+  window.addEventListener('keydown', skipBigBang, { once: true });
+  window.addEventListener('touchstart', skipBigBang, { once: true, passive: true });
+
   let lastT = performance.now();
   function frame(now){
     const t = now / 1000;
     lastT = now;
+
+    // === ENTRY PHASE ===
+    if (!entryComplete && !bbSkipped){
+      const sinceEntry = now - entryStartTime;
+
+      // Shockwave animates first
+      if (sinceEntry > 0){
+        if (!shockwave._fired){ shockwave._fired = true; shockwave._start = now; }
+        const swT = Math.min((now - shockwave._start) / 1700, 1);
+        const swEased = easeOutCubic(swT);
+        shockwave.setAttribute('r', (swEased * 1100).toFixed(1));
+        shockwave.setAttribute('stroke-width', (2 - swEased * 1.7).toFixed(2));
+        shockwave.style.opacity = (1 - swEased) * 0.7;
+      }
+
+      // Deep-field + parallax bg expand uniformly from center
+      const dfT = Math.max(0, Math.min(sinceEntry / ENTRY_DURATION, 1));
+      const dfEased = easeOutQuint(dfT);
+      const s = 0.05 + dfEased * 0.95;
+      deepFieldGroup.setAttribute('transform', scaleAroundCenter(s));
+      deepFieldGroup.style.opacity = dfEased.toFixed(3);
+      bgRoot.setAttribute('transform', scaleAroundCenter(s));
+      bgRoot.style.opacity = (dfEased * 0.85).toFixed(3);
+
+      // Per-theme entry: travel from (CX, CY) to base position
+      let allDone = true;
+      THEMES.forEach((th, i) => {
+        const themeStart = entryStartTime + th.entryDelay;
+        const themeT = Math.max(0, Math.min((now - themeStart) / ENTRY_DURATION, 1));
+        if (themeT < 1) allDone = false;
+        const eased = easeOutQuint(themeT);
+        const tx = CX + (th.x - CX) * eased;
+        const ty = CY + (th.y - CY) * eased;
+        const s = 0.05 + eased * 0.95;
+        const g = themeGroupEls[i];
+        if (g){
+          g.style.opacity = themeT > 0.05 ? Math.min(themeT * 2, 1).toFixed(3) : '0';
+          g.setAttribute('transform', 'translate(' + tx.toFixed(2) + ' ' + ty.toFixed(2) + ') scale(' + s.toFixed(3) + ')');
+        }
+        themeCurPos[i].x = tx;
+        themeCurPos[i].y = ty;
+      });
+      // Update node world map for cross-edges
+      THEMES.forEach((th, i) => { nodeWorldPos[th.id] = { x: themeCurPos[i].x, y: themeCurPos[i].y }; });
+
+      // Cross-edges fade in past 55% of entry
+      if (sinceEntry > ENTRY_DURATION * 0.55){
+        const fadeT = Math.min((sinceEntry - ENTRY_DURATION * 0.55) / 600, 1);
+        crossEdgeRefs.forEach(ref => { ref.path.style.opacity = fadeT; });
+      }
+      // Recompute edges so they track moving theme endpoints during entry
+      crossEdgeRefs.forEach(ref => {
+        const a = nodeWorldPos[ref.from];
+        const b = nodeWorldPos[ref.to];
+        if (!a || !b) return;
+        const mx = (a.x + b.x)/2 + (CX - (a.x + b.x)/2) * 0.45;
+        const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
+        ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
+      });
+
+      if (allDone && sinceEntry > ENTRY_DURATION * 1.1){
+        entryComplete = true;
+        // Lock final state
+        themeGroupEls.forEach((g, i) => {
+          if (g){
+            g.style.opacity = '1';
+            g.setAttribute('transform', 'translate(' + THEMES[i].x.toFixed(2) + ' ' + THEMES[i].y.toFixed(2) + ')');
+          }
+        });
+        crossEdgeRefs.forEach(ref => { ref.path.style.opacity = '1'; });
+        deepFieldGroup.setAttribute('transform', scaleAroundCenter(1));
+        deepFieldGroup.style.opacity = '1';
+        bgRoot.setAttribute('transform', scaleAroundCenter(1));
+        bgRoot.style.opacity = '0.85';
+      }
+
+      // Parallax drift active during entry too
+      parallaxX += (parallaxTargetX - parallaxX) * 0.06;
+      parallaxY += (parallaxTargetY - parallaxY) * 0.06;
+      bgGroup.setAttribute('transform', 'translate(' + parallaxX.toFixed(2) + ' ' + parallaxY.toFixed(2) + ')');
+
+      requestAnimationFrame(frame);
+      return;
+    }
+
+    // === DRIFT PHASE (post-entry) ===
+
+    // Parallax bg lerp
+    parallaxX += (parallaxTargetX - parallaxX) * 0.06;
+    parallaxY += (parallaxTargetY - parallaxY) * 0.06;
+    bgGroup.setAttribute('transform', 'translate(' + parallaxX.toFixed(2) + ' ' + parallaxY.toFixed(2) + ')');
 
     // Update theme positions + group transforms
     THEMES.forEach((th, i) => {
@@ -1903,17 +2122,10 @@ ${AAMARK_SCRIPT}
       if (g) g.setAttribute('transform', 'translate(' + x.toFixed(2) + ' ' + y.toFixed(2) + ')');
     });
 
-    // Update theme position lookup map for cross-edge recompute (uses node-id keys)
     THEMES.forEach((th, i) => {
       nodeWorldPos[th.id] = { x: themeCurPos[i].x, y: themeCurPos[i].y };
     });
 
-    // Recompute cross-edge paths (endpoints moved with theme drift)
-    // Note: belief/project/post/tech nodes inside theme groups drift WITH the theme since
-    // they're children of the theme group. But their world coords change. We update
-    // nodeWorldPos for them too: world = theme.cur + local.
-    // For simplicity + perf, only update edges anchored on theme nodes here.
-    // Edges to belief/project nodes use their local position offset from theme.
     crossEdgeRefs.forEach(ref => {
       const a = nodeWorldPos[ref.from];
       const b = nodeWorldPos[ref.to];
@@ -2041,7 +2253,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-4 motion]`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-5 big-bang]`);
   okCount++;
 }
 
