@@ -45,6 +45,10 @@ All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and
 - [x] ~~`/resume` on v2~~
 - [x] ~~`/enter` has shared v2 header + aa. mark~~
 
+## AEO/SEO pass (2026 architecture)
+
+- [ ] **Run AEO/SEO pass per `docs/aeo-seo-guidelines.md`** — full architecture guide for 2026 AI search optimization. Covers Person schema enrichment, AEO Q&A blocks, BLUF executive summaries on Lab PRFAQs, image alt text audit, `<pre><code>` wrap audit, TTFB benchmark, bot allowance verification, robots.txt audit, canonical tags audit, breadcrumbs + BreadcrumbList JSON-LD, internal link density, navigation interlinks. **Trigger: after major content work (currently C-voice-themes done, C-voice-beliefs queued) AND BEFORE Phase D (AI plumbing / `/enter` v3 / groqHandler upgrade).** Per Part 4 of the guide, run in 9-step order with commit per step.
+
 ## Open (Phase B follow-ups)
 
 - [ ] **Site-wide favicon 404** — every v2 page references `/favicon.ico` + `/favicon.png` at root, but the actual files live at `/assets/favicon.ico` + `/assets/favicon.png`. Pre-existing across all 5 v2 pages (lab, resume, enter, index, wiki). Fix in one commit per CLAUDE.md "update all v2 pages in one commit" by either (a) updating all 5 page paths to `/assets/favicon.*` or (b) adding root copies. Surfaced by /qa pass on Phase B Task 2.

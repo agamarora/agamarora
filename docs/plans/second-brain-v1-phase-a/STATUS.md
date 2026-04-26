@@ -6,7 +6,24 @@ Last updated: 2026-04-26 — **CHECKPOINT 24 — Phase C / C-voice-themes COMPLE
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / **C-voice-beliefs** queued. 12 theme pages all reauthored in R1 voice + §D1-narrative-binding cold-reader contract. All shipped 2026-04-26. Per-checkpoint cadence (one belief page per CP, same template as themes). 19 sub-CPs total. Plan recommends /design-review on the wiki tree before starting C-voice-beliefs to validate that the cold-reader contract actually reads cold to a fresh eye. Use git log b411685..HEAD for the full reauthor sequence.
+**Current step:** Phase C / **C-voice-beliefs** queued. 12 theme pages all reauthored in R1 voice + §D1-narrative-binding cold-reader contract. All shipped 2026-04-26. Per-checkpoint cadence (one belief page per CP, same template as themes). 19 sub-CPs total. /design-review run on wiki tree 2026-04-26: gates pass (voice fidelity, cold-reader contract, visual hierarchy of new .page-purpose + .related-links blocks). FINDING-001 title format normalization queued as next mechanical step. Use git log b411685..HEAD for the full reauthor sequence.
+
+## AEO/SEO pass — BINDING GATE before Phase D
+
+After C-voice-beliefs ships AND before Phase D (`/enter` v3 / groqHandler upgrade / AI plumbing), run the AEO/SEO architecture pass per `docs/aeo-seo-guidelines.md`. 9 steps in order, commit per step. Covers:
+1. Person schema enrichment on `/`
+2. `robots` meta directive update across v2 pages
+3. AEO Q&A restructure on `/wiki/voice/` + `/wiki/quotes/`
+4. BLUF executive summary on Lab project PRFAQ pages
+5. Image alt text audit
+6. `<pre><code>` wrap audit
+7. TTFB benchmark
+8. Bot allowance verification
+9. `/design-review` + `/review` post-AEO regression check
+
+Plus crawl audit checklist (Part 5 of doc): robots.txt audit, noindex tag scan, canonical tag audit, internal link density, breadcrumb + BreadcrumbList JSON-LD on Lab + Resume + Enter pages, nav link audit, 404 page check.
+
+This is a HARD GATE per user directive 2026-04-26: must complete before AI plumbing work begins.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
