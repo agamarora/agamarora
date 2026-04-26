@@ -2,14 +2,184 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 31 — Phase C / C-graph IMPLEMENTATION COMPLETE (CP-1..CP-7 ✅). All 7 sub-checkpoints shipped + pushed to main. wiki/graph/index.html now serves the authored sky atlas constellation per DESIGN.md ## Constellation graph spec: genesis core `agam.arora` at center + 11 themes hand-placed at organic (angle, radF) + 64 beliefs + 20 projects + 56 tech + 75 posts + 578 corpus deep-field stars + ~900 proximity mesh hairlines + ~50 real cross-theme interlinkage edges from kg.json + Lissajous theme drift + 5-cadence signal pulses + 1.8s big-bang single-origin entry + parallax bg w/ 220 stars + theme echo halos + mouse/touch parallax drift + cmd-wheel zoom + drag pan + pinch zoom + pan/zoom bounds + double-click recenter + fullscreen toggle + responsive mobile sizing + keyboard a11y (Tab/Enter/Esc) + layered hover visibility on real connections. vis-network + unpkg CDN stripped. Single self-contained HTML ~75KB. Next: C-final (/design-review + /review pass). After: Phase D entry.**
+Last updated: 2026-04-26 — **CHECKPOINT 31 — C-graph IMPLEMENTATION COMPLETE + design pass + text audit. Working tree clean. Pushed `4dbe07f`. Next: C-final (Phase C close) → AEO/SEO gate → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
+
+---
+
+## BASELINE 2026-04-26 (CHECKPOINT 31)
+
+### Where we are
+
+Phase A (synthesis) ✅ complete. Phase B (initial build) ✅ complete. Phase C (reauthor + graph viz) is 5 of 6 sub-tasks done. Only **C-final** remains within Phase C. After C-final: a binding **AEO/SEO gate**, then **Phase D** (/enter v3 + groqHandler upgrade), then **Phase E** (launch). Working tree clean. All commits pushed to `origin/main`.
+
+### What's live (https://agamarora.com)
+
+| Route | State |
+|---|---|
+| `/` | v1 landing — unchanged this session |
+| `/lab` + `/lab/<project>/` | v1 + PRFAQs unchanged this session |
+| `/resume` | v2 dark editorial unchanged this session |
+| `/enter` | v2 AI terminal — Phase D will rebuild as v3 |
+| `/wiki/` | theme grid landing, 12 theme cards |
+| `/wiki/<theme>/` × 11 + `/wiki/root.substance-over-hype/` | full reauthored R1 voice + §D1 narrative binding (C-voice-themes ✅) |
+| `/wiki/beliefs/` | landing index, 19 Tier-1 beliefs grouped by parent_theme |
+| `/wiki/beliefs/<slug>/` × 19 | D6.1 principle-card shape (chip strip + tag strip + TL;DR + 5 body sections + collapsed evidence drawer) |
+| `/wiki/voice/` | how I write — voice spec public version |
+| `/wiki/quotes/` | curated signature lines |
+| `/wiki/projects/` | DAG view of 18 public projects + 14 lineage edges |
+| `/wiki/graph/` | **NEW (this session): authored sky atlas constellation per DESIGN.md ## Constellation graph (vis-network stripped)** |
+| `/wiki/kg.json` | 227 nodes (12 theme + 64 belief + 20 project + 56 tech + 75 post) + 224 edges; updated each `npm run build` |
+| `/llms.txt` + `/site.json` + `/sitemap.xml` | up to date |
+
+### What's locked (do NOT relitigate)
+
+| Decision | Source | Status |
+|---|---|---|
+| D1 — voice approach: P1a Full reauthor in R1 + §D1 cold-reader contract | `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §"Decisions locked" | LOCKED 2026-04-26 |
+| D2 — graph viz: P2c hand-designed constellation, drop vis-network | same | LOCKED 2026-04-26 |
+| D3 — sequencing: mechanical → structural → voice → graph | same | LOCKED 2026-04-26 |
+| D6.1 — belief page shape: principle-card w/ chip strip + tag strip + TL;DR | PHASE-C-DESIGN-PLAN §D6.1-belief-shape-binding | LOCKED 2026-04-26 |
+| Constellation aesthetic spec | `DESIGN.md` ## Constellation graph (~250 lines, 13 §D2 invariants) | LOCKED 2026-04-26 |
+| Constellation visual contract | `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` (v6) | LOCKED 2026-04-26 |
+| AEO/SEO gate before Phase D | this file §"AEO/SEO pass" + `docs/aeo-seo-guidelines.md` | BINDING 2026-04-26 |
+| Multi-session persistence: STATUS + commit + push per milestone | this file | BINDING |
+| Subagent model: sonnet default, haiku for trivial, never opus | `CLAUDE.md` | HARD RULE |
+
+### Locked artifacts (paths)
+
+- `DESIGN.md` — site-wide design system + ## Constellation graph subsystem
+- `docs/plans/second-brain-v1.md` — canonical site spec
+- `docs/plans/enter-v3.md` — Phase D agent runtime spec (6 LOCKED sections)
+- `docs/plans/enter-v3-scenarios-v2.md` — 23 pinned scenarios for /enter v3 eval
+- `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` — locked Phase C plan
+- `docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md` — locked KG source (drives `wiki/kg.json`)
+- `docs/plans/second-brain-v1-phase-a/synthesis/voice-spec.md` — voice registers + banned LLM-isms
+- `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/_taste-pass-decisions.md` — 21 binding decisions
+- `docs/aeo-seo-guidelines.md` — AEO/SEO architecture
+- `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` — locked constellation visual contract
+- `~/.gstack/projects/agamarora-agamarora/corpus/` — private corpus (295 posts + 283 comments + extraction outputs)
+
+---
+
+## NEXT STEPS (specced from current position)
+
+### Step 1 — C-final (closes Phase C)
+
+**Effort:** 1-2 hr (single session)
+
+**Goal:** /design-review + /review pass against the full wiki tree (33 pages); apply any HIGH/MEDIUM fixes inline; STATUS bump to CHECKPOINT 32 = Phase C COMPLETE.
+
+**Sub-checkpoints:**
+1. **CP-1 — /design-review pass.** Run gstack `/design-review` on `/wiki/`, `/wiki/<theme>/` × 11 + root, `/wiki/beliefs/` + `/wiki/beliefs/<slug>/` × 19, `/wiki/voice/`, `/wiki/quotes/`, `/wiki/projects/`, `/wiki/graph/`. Fix any HIGH issues inline. Document MEDIUM issues for follow-up.
+2. **CP-2 — /review pass.** Run gstack `/review` on the build pipeline: `scripts/build-kg.mjs`, `scripts/build-wiki.mjs`. Fix any structural code issues (atomic-write guards, error handling, type drift, dead code). Defer non-blocking maintainability items to v2.
+3. **CP-3 — fix sweep.** Apply all critical fixes from CP-1 + CP-2. Build + commit per fix (small commits OK).
+4. **CP-4 — STATUS commit.** Bump CHECKPOINT 32 = Phase C COMPLETE. Update sub-task table. Push.
+
+**Gate to next step:** both /design-review + /review come back clean (or only INFORMATIONAL findings deferred to follow-up).
+
+### Step 2 — AEO/SEO gate (BINDING before Phase D)
+
+**Effort:** 2-3 hr (single or two sessions)
+
+**Why binding:** every wiki page is the AEO surface for "what does Agam think about X" queries from Perplexity / Google AI Overviews / ChatGPT search. AI plumbing in Phase D depends on these surfaces being indexed correctly.
+
+**Source:** `docs/aeo-seo-guidelines.md` (full doc, 9 architectural steps + crawl audit checklist).
+
+**Sub-checkpoints (commit per step):**
+1. **AEO-1 — Person schema enrichment** on `/`. JSON-LD with `@type:Person`, alumniOf, knowsAbout, sameAs.
+2. **AEO-2 — `robots` meta directive update** across all v2 pages. Confirm `index, follow` everywhere except `/moodboard` (noindex).
+3. **AEO-3 — AEO Q&A restructure on `/wiki/voice/` + `/wiki/quotes/`.** Lighter overlay (belief pages already shipped Q&A shape via D6.1).
+4. **AEO-4 — BLUF executive summary** on Lab project PRFAQ pages (`/lab/second-brain/`, `/lab/ai-resume/`).
+5. **AEO-5 — Image alt text audit.** Scan all images, ensure descriptive alt.
+6. **AEO-6 — `<pre><code>` wrap audit.** Code blocks properly wrapped for crawler parse.
+7. **AEO-7 — TTFB benchmark.** Lighthouse / WebPageTest reading. Document baseline.
+8. **AEO-8 — Bot allowance verification.** robots.txt + Netlify headers allow major AI crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.) for indexing while gating /enter agent calls.
+9. **AEO-9 — /design-review + /review post-AEO regression check.** Make sure AEO additions didn't break visual or structural quality.
+
+**Plus crawl audit checklist (Part 5 of doc):**
+- robots.txt audit
+- noindex tag scan
+- canonical tag audit
+- internal link density
+- breadcrumb + BreadcrumbList JSON-LD on Lab + Resume + Enter pages
+- nav link audit
+- 404 page check
+
+**Gate to next step:** all 9 steps committed + crawl audit clean.
+
+### Step 3 — Phase D (/enter v3 + groqHandler upgrade + AI plumbing)
+
+**Effort:** 4-6 hr (likely 2 sessions)
+
+**Source spec:** `docs/plans/enter-v3.md` (6 LOCKED sections) + `docs/plans/enter-v3-scenarios-v2.md` (23 scenarios) + `docs/plans/second-brain-v1.md` §6 /enter v3 spec + §7 abuse defense.
+
+**Sub-checkpoints (commit per step):**
+1. **D-1 — Classifier + tier routing.** `netlify/functions/groqHandler.mjs` upgrade: classify query (Groq 8B, 200 tokens, structured JSON) → route lookup/deflect/bio to 8B, synthesis to DeepSeek/Mixtral, fallback chain Groq → DeepSeek → Mixtral → Claude Haiku.
+2. **D-2 — System prompt v3.** Stable cache-breakpoint section (site.json + voice-calibration + few-shot + kg.json theme summary index from `netlify/functions/lib/kg-themes-summary.mjs`). Dynamic per-request (conversation history + retrieved wiki excerpts based on themes_likely).
+3. **D-3 — Wiki retrieval pipeline.** On synthesis intent, fetch full text of 1-3 wiki theme pages relevant to query, inject into dynamic prompt section. Caching: in-memory map per function instance (60s TTL).
+4. **D-4 — SSE streaming response.** Events: `trace` (one line at a time, 150ms client-side stagger), `token` (answer streaming), `card` (card array at end), `done`. Card schema with priority slot.
+5. **D-5 — Abuse defense Tier 0-2.** UA gate (return static kg.json excerpt for AI bots), input validation, duplicate-query cache, injection filter (existing sandwich defense kept), Upstash per-IP bucket (30 q/h sliding window), low-effort gate, per-query cost cap ($0.05), daily spend cap ($3), monthly cap ($30), feature flags (`WIKI_READ_ENABLED`, `CLAUDE_DISABLED`, `LLM_DISABLED`).
+6. **D-6 — Eval harness 23 scenarios.** Extend existing `eval-prompt.mjs` to run all 23 scenarios (T01-T12 + C01-C06 + M01-M02 + X01-X03) against production. Pass criteria: 23/23 for ship.
+7. **D-7 — `/enter` UI v3.** Update front-end SSE handler to render trace + tokens + cards. Test against eval scenarios live.
+8. **D-8 — Multi-key Groq rotation.** 3-4 GROQ_KEY_N env vars in Netlify. Round-robin per request. Cool-down 60s on 429.
+9. **D-9 — `/lab/second-brain/` live-demo section.** Add the live-demo block linking to the wiki + /enter v3 demo flow.
+
+**Gate to next step:** 23/23 eval pass on production.
+
+### Step 4 — Phase E (launch)
+
+**Effort:** 2-4 hr (single session, full launch sequence per spec §8).
+
+**Source:** `docs/plans/second-brain-v1.md` §8 Launch Sequence.
+
+**Sub-checkpoints:**
+1. Final repo check: `git status` clean on main.
+2. Smoke test on production /enter v3 (5 queries: lookup / synthesis / deflect / bio / agent-UA).
+3. Run full 23-scenario eval against production. 23/23 or abort + rollback.
+4. Push thesis post at `/writing/second-brain-live/` (Task #5 — needs draft pass before this point; flag if not yet drafted).
+5. Verify OG tags + sitemap + robots.txt updated.
+6. Publish thesis on Medium. Cross-post to LinkedIn long-form.
+7. Share in relevant channels (LinkedIn personal post, AI-PM Slack/Discord, Twitter).
+8. Monitor first 24h: Netlify logs, Upstash rate-limit hits, spend counter. Kill-switch ready.
+
+**Rollback plan:** revert commits on main → Netlify redeploys previous build → /enter v2 still works from last good commit.
+
+### Total remaining effort
+
+| Step | Effort | Sessions |
+|---|---|---|
+| C-final | 1-2 hr | 1 |
+| AEO/SEO gate | 2-3 hr | 1-2 |
+| Phase D | 4-6 hr | 2 |
+| Phase E | 2-4 hr | 1 |
+| **Total** | **9-15 hr** | **5-6 sessions** |
+
+### How to resume in a fresh session
+
+1. Read THIS BASELINE section first.
+2. Open `docs/plans/second-brain-v1.md` for the canonical spec.
+3. Open `docs/plans/enter-v3.md` for Phase D scope.
+4. Open `docs/aeo-seo-guidelines.md` for AEO/SEO gate.
+5. Open `DESIGN.md` ## Constellation graph for /wiki/graph/ implementation reference.
+6. Run `git log --oneline -20` to see recent work.
+7. Pick up at the first `QUEUED` row in the Phase C sub-task state table below.
+
+### Live URLs to verify after deploy
+
+- https://agamarora.com/ — landing
+- https://agamarora.com/wiki/ — theme grid
+- https://agamarora.com/wiki/graph/ — constellation (the artifact this session built)
+- https://agamarora.com/wiki/beliefs/ — belief landing index
+- https://agamarora.com/wiki/kg.json — graph data
+
+---
 
 ## RESUME POINT (read this first on a new session)
 
 **Current step:** Phase C / **C-graph design consultation COMPLETE 2026-04-26. Constellation aesthetic locked.** All decisions captured in `DESIGN.md` (## Constellation graph section, ~250 lines, binding spec). v6 preview at `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` is the visual contract. Next session resumes at C-graph CP-1.
 
 **C-graph design lock summary (2026-04-26):**
-- Memorable-thing: "Authored atlas of 11 years, AI-enabled scale, governed by taste"
+- Memorable-thing: "Authored atlas of the corpus, AI-enabled scale, governed by taste" (time-framing "n years" dropped 2026-04-26 per taste-call)
 - Aesthetic: Authored Sky Atlas (Stellarium / Quanta Map of Mathematics / d3-celestial references; anti-Obsidian/Logseq/Roam)
 - Genesis-centered: `agam.arora` golden anchor at canvas center (NOT "substance over hype" — root = the person)
 - 11 themes orbit at irregular `(angle, radF)` (NO perfect circle, NO straight radial axes — pizza/wheel-spokes forbidden)
@@ -23,7 +193,7 @@ Last updated: 2026-04-26 — **CHECKPOINT 31 — Phase C / C-graph IMPLEMENTATIO
 - Parallax atmosphere: 220 background stars + faint constellation echoes, lerp-drift on mouse/touch (echoes /enter keyboard pattern).
 - Mobile = first-class (NOT fallback): touch pan/zoom, viewport-responsive sizing, legend hidden < 768px, fullscreen toggle.
 - §D2-graph-UX-binding revised to 13 invariants (was 10). See DESIGN.md ## Constellation graph for full list.
-- Honest counts rule: caption matches drawn elements. Caption format: `11 years · 578 entries · 227 graph nodes · 224 edges`.
+- Honest counts rule: caption matches drawn elements. Caption format: `578+ entries · 227 graph nodes · 224 edges` (no time-framing).
 
 **Tweaks during build are expected** per user 2026-04-26. Preview captures principles; implementation reveals edge cases. Any tweak that changes a rule must update DESIGN.md.
 

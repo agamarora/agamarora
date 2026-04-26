@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <title>Graph - Agam Arora's wiki.</title>
-<meta name="description" content="Authored constellation of 227 graph nodes and 224 edges across 11 years of thinking. Genesis + 11 themes, organic placement, dark-only.">
+<meta name="description" content="Authored constellation of 227 graph nodes and 224 edges across the corpus. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
@@ -88,7 +88,7 @@
   .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;}
   .help-strip a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed rgba(232,228,223,0.15);transition:color 0.2s,border-color 0.2s;}
   .help-strip a:hover{color:var(--accent);border-color:var(--accent);}
-  /* Caption: real corpus scale below header on right side. The 11-years signal lives here. */
+  /* Caption: real corpus scale below header on right side. */
   .caption{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);right:24px;z-index:90;font-family:var(--mono);font-size:11px;color:var(--text);opacity:0.6;letter-spacing:0.04em;text-align:right;max-width:calc(100vw - 48px);}
 
   .legend-strip{position:fixed;bottom:84px;left:24px;z-index:50;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;line-height:1.7;}
@@ -191,7 +191,7 @@
 </a>
 
 <div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
-<div class="caption">11 years · 295+ entries · 227 graph nodes · 224 edges</div>
+<div class="caption">295+ entries · 227 graph nodes · 224 edges</div>
 
 <div class="legend-strip">
   <div><span class="swatch genesis"></span>genesis · agam.arora</div>
@@ -360,7 +360,7 @@
 
   // Genesis label + sublabel
   el('text', { x:CX, y:CY + 32, 'text-anchor':'middle', class:'genesis-label' }).textContent = 'agam.arora';
-  el('text', { x:CX, y:CY + 50, 'text-anchor':'middle', class:'genesis-sublabel' }).textContent = '11 years · second brain';
+  el('text', { x:CX, y:CY + 50, 'text-anchor':'middle', class:'genesis-sublabel' }).textContent = 'second brain';
 
   // === Render: 11 theme nodes ===
   THEMES.forEach((t, ti) => {

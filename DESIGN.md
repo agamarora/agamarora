@@ -59,7 +59,7 @@ Locked. Patrick Hand font. Stroke-draw animation (dashoffset transition, then fi
 
 **Status:** Locked 2026-04-26 via `/design-consultation` (gstack). Aesthetic + interaction spec for `/wiki/graph/` (replaces the existing vis-network force layout). Implementation lands at C-graph CP-1..CP-7 per `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §D2-graph-UX-binding (revised).
 
-**Memorable-thing (north-star):** "Authored atlas of 11 years, AI-enabled scale, governed by taste." Visitor reads: "they actually mapped 11 years of thinking — this is a true AI-native systems thinker — what this powers is unique."
+**Memorable-thing (north-star):** "Authored atlas of the corpus, AI-enabled scale, governed by taste." Visitor reads: "they actually mapped their public thinking — this is a true AI-native systems thinker — what this powers is unique." (Time-framing intentionally dropped 2026-04-26 per taste-call: "n years" is a soft brag that distracts from the authored-atlas signal; the work speaks for itself.)
 
 **Live preview:** `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` (locked v6 reference).
 
@@ -69,7 +69,7 @@ Locked. Patrick Hand font. Stroke-draw animation (dashoffset transition, then fi
 
 ### Geometry (organic, NOT geometric)
 
-- **Genesis at center.** A bright golden anchor labeled `agam.arora` (mono caps, letter-spacing 0.12em) with sublabel `11 years · second brain` (mono 9px, accent at 50%). Concentric soft halos at r=16/24/36/50 (alpha 0.22 → 0.035). Core radius 11px, gold `#E5A54B`.
+- **Genesis at center.** A bright golden anchor labeled `agam.arora` (mono caps, letter-spacing 0.12em) with sublabel `second brain` (mono 9px, accent at 50%). Concentric soft halos at r=16/24/36/50 (alpha 0.22 → 0.035). Core radius 11px, gold `#E5A54B`. NO time-framing in the genesis label or sublabel — it dilutes the authored-atlas signal.
 - **11 themes orbit the genesis** at irregular distances (radial fraction 0.24-0.32 of `min(viewport.w, viewport.h)`). NOT a perfect circle — each theme has a hand-tuned `(angle, radF)` pair so the constellation reads organic. Pizza/wheel-spokes are forbidden.
 - **Belief halos around each theme.** Each theme has a sub-cluster of belief nodes at jittered angles + jittered radii (radii pool: 22/28/34/40/46 px). Belief nodes drift slightly in angle + radius via per-node Lissajous parameters (amplitude 1.5-4 px, frequency 0.05-0.12 hz). Drift gives "living" feel; positions remain authored, not emergent.
 - **No visible scaffolding.** No guide rings, no straight radial axes, no concentric dashed circles. The galactic layout is sensed, not drawn.
@@ -89,13 +89,13 @@ Locked. Patrick Hand font. Stroke-draw animation (dashoffset transition, then fi
 - **Genesis label:** JetBrains Mono, 11px, letter-spacing 0.12em, lowercase-domain or proper noun, fill `rgba(229,165,75,0.85)`.
 - **Theme labels:** Satoshi 500, 11px, letter-spacing 0.07em, lowercase, fill `rgba(232,228,223,0.62)`. Active theme fills accent gold. Positioned outside the node on radial baseline (NOT on top of node) with quadrant-aware text-anchor (`start` / `end` / `middle`).
 - **Belief labels:** JetBrains Mono 9.5-10px, fill `rgba(232,228,223,0.7)`. Render only on the active or hovered theme cluster, NOT on every belief in every cluster.
-- **Caption strip (top-right):** JetBrains Mono 11px, fill primary text at 55%, content: real counts (e.g. `11 years · 578 entries · 227 graph nodes · 224 edges`). Honest counts only — never claim more than rendered.
+- **Caption strip (top-right):** JetBrains Mono 11px, fill primary text at 55%, content: real counts only (e.g. `578+ entries · 227 graph nodes · 224 edges`). Honest counts only — never claim more than rendered. NO time-framing ("n years") — let the corpus density speak.
 - **Sub-caption (top-right under caption):** JetBrains Mono 10px, fill text-dim at 40%, breakdown by node type.
 - **Help strip (top-left):** JetBrains Mono 10px, breadcrumb pattern `wiki › graph`.
 
 ### Density (corpus IS the visual flex)
 
-The viz must render the FULL corpus, not a curated subset. The 11-years-of-thinking signal dies if the canvas looks empty. Tier rendering:
+The viz must render the FULL corpus, not a curated subset. The authored-atlas signal dies if the canvas looks empty. Tier rendering:
 
 | Tier | Source | Count | Style | Behavior |
 |------|--------|-------|-------|----------|
@@ -185,7 +185,7 @@ Same lerp-based-drift discipline as `/enter` keyboard background. No 3D tilt —
 
 The caption MUST reflect what's actually drawn. If the canvas renders 144 visible elements but the caption says "227 nodes," the visualization is lying and the trust-via-density signal collapses. Always show:
 
-- Real corpus scale: `11 years · 578 entries · 227 graph nodes · 224 edges`
+- Real corpus scale: `578+ entries · 227 graph nodes · 224 edges`
 - Breakdown: `12 themes · 64 beliefs · 20 projects · 56 tech · 295 posts · 283 comments`
 - Update both whenever the underlying data shifts.
 

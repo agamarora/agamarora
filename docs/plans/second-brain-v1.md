@@ -15,7 +15,7 @@ Execution tracked in Tasks #2-18. Execute in order.
 
 ## 0. Executive Summary
 
-**What:** Structure Agam's 11 years of public thinking (54K-word LinkedIn corpus) into an agent-readable knowledge artifact. Three layers: human-readable wiki, machine-readable KG, thin agent (/enter v3) that retrieves + quotes + routes. Launch as agamarora second-brain v1 — the live demo for the `/lab/second-brain` PRFAQ.
+**What:** Structure Agam's public thinking (54K-word LinkedIn corpus) into an agent-readable knowledge artifact. Three layers: human-readable wiki, machine-readable KG, thin agent (/enter v3) that retrieves + quotes + routes. Launch as agamarora second-brain v1 — the live demo for the `/lab/second-brain` PRFAQ. (Note: time-framing like "n years of thinking" was dropped 2026-04-26 from public surfaces per taste-call — the work speaks for itself; tenure claims dilute signal.)
 
 **Why:** Scenarios blocker on /enter v3 is downstream of a larger gap — Agam's public thinking is unstructured. Every surface (agent, writing, thesis, talks) needs the same upstream structured synthesis. Build once, feed many.
 
