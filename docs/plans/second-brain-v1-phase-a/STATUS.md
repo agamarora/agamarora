@@ -2,11 +2,32 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 29 — Phase C / C-voice-beliefs COMPLETE (19/19 ✅). All belief pages reauthored as D6.1 principle-cards with chip strip + tag strip + TL;DR + numbered decision rules + boundaries + counter-positions. AEO/SEO Q&A gate folded in. Next: C-graph (D2 P2c constellation viz) + C-final.**
+Last updated: 2026-04-26 — **CHECKPOINT 30 — Phase C / C-graph DESIGN CONSULTATION COMPLETE. /design-consultation (gstack) ran v1→v6 iterative refinement. Constellation aesthetic + interaction spec LOCKED into DESIGN.md (## Constellation graph section). §D2-graph-UX-binding revised: 13 binding invariants (was 10). Locked v6 preview at `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html`. Next: C-graph CP-1 (SVG layout sketch + invariant checklist) → CP-7. After: C-final.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / **C-voice-beliefs CP-2 DONE in D6.1 principle-card shape.** Shape evolved within session: D5 (Q&A card) → D6 (principle-card with decision rules + boundaries) → **D6.1 LOCKED** (D6 + quotable + applies_to + confidence + Argues-against + ol counter + mobile fixes via /design-review).
+**Current step:** Phase C / **C-graph design consultation COMPLETE 2026-04-26. Constellation aesthetic locked.** All decisions captured in `DESIGN.md` (## Constellation graph section, ~250 lines, binding spec). v6 preview at `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` is the visual contract. Next session resumes at C-graph CP-1.
+
+**C-graph design lock summary (2026-04-26):**
+- Memorable-thing: "Authored atlas of 11 years, AI-enabled scale, governed by taste"
+- Aesthetic: Authored Sky Atlas (Stellarium / Quanta Map of Mathematics / d3-celestial references; anti-Obsidian/Logseq/Roam)
+- Genesis-centered: `agam.arora` golden anchor at canvas center (NOT "substance over hype" — root = the person)
+- 11 themes orbit at irregular `(angle, radF)` (NO perfect circle, NO straight radial axes — pizza/wheel-spokes forbidden)
+- Magnitude-coded radius hierarchy: genesis 11px > theme 8.5 > belief 4 > project 2.5 > tech 1.6 > post 1.4 > comment 0.9
+- Color: locked palette extension only (gold #E5A54B + warm-white #E8E4DF on near-black). NO new hues.
+- Typography: Satoshi (theme labels) + JetBrains Mono (genesis label, captions, belief labels) + Patrick Hand (aa. mark)
+- Density: ALL 578 corpus entries rendered as deep-field stars + ~900 proximity mesh hairlines. Corpus density IS the visual flex.
+- Connections: REAL semantic edges only (cross-theme belief↔belief, belief↔post, project↔project from kg.json). NO decorative tendrils. Layered visibility — most dim at rest, light up on hover.
+- Motion vocabulary: twinkle / Lissajous-drift / halo-pulse / chord-shimmer / selection-ring / signal-pulse (5 cadences). NO physics simulation.
+- Big-bang entry: single-origin radial expansion from `(CX,CY)` over 1.8s, easeOutQuint. Parallax bg + deep-field + theme groups all expand from same point.
+- Parallax atmosphere: 220 background stars + faint constellation echoes, lerp-drift on mouse/touch (echoes /enter keyboard pattern).
+- Mobile = first-class (NOT fallback): touch pan/zoom, viewport-responsive sizing, legend hidden < 768px, fullscreen toggle.
+- §D2-graph-UX-binding revised to 13 invariants (was 10). See DESIGN.md ## Constellation graph for full list.
+- Honest counts rule: caption matches drawn elements. Caption format: `11 years · 578 entries · 227 graph nodes · 224 edges`.
+
+**Tweaks during build are expected** per user 2026-04-26. Preview captures principles; implementation reveals edge cases. Any tweak that changes a rule must update DESIGN.md.
+
+**Prior step:** Phase C / **C-voice-beliefs CP-2 DONE in D6.1 principle-card shape.** Shape evolved within session: D5 (Q&A card) → D6 (principle-card with decision rules + boundaries) → **D6.1 LOCKED** (D6 + quotable + applies_to + confidence + Argues-against + ol counter + mobile fixes via /design-review).
 
 **D6.1 binding contract** lives at `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §D6.1-belief-shape-binding. Subagent prompt template lives at `docs/plans/second-brain-v1-phase-a/prompts/c-voice-beliefs-d61-template.md`. Both are canonical. Read them before resuming.
 
@@ -79,8 +100,9 @@ This is a HARD GATE per user directive 2026-04-26: must complete before AI plumb
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
 | C-voice-themes | IN FLIGHT (CP-1 of 12 done) | 12 theme pages reauthored in R1 voice + §D1-narrative-binding | Per-theme cadence (NOT batched per user taste-call 2026-04-26). CP-1 agent-first DONE 7f68896. CP-2 voice-ai-craft NEXT. Then breadth-as-differentiation, pm-taste, ai-pm-skillset, enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root last. Each = sonnet subagent reauthor → review against gates → build → commit + push → STATUS bump → milestone check. ~6-8hr total. |
 | C-voice-beliefs | DONE 2026-04-26 (19/19 ✅) | 19 beliefs reauthored as D6.1 principle-cards. AEO/SEO surface in place. | n/a |
-| C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
-| C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
+| C-graph design consultation | DONE 2026-04-26 ✅ | DESIGN.md ## Constellation graph (binding spec) + locked v6 preview at `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` + 13 §D2 invariants | Implementation work begins at CP-1. |
+| C-graph CP-1..CP-7 | QUEUED | hand-designed SVG constellation per DESIGN.md spec | 7 sub-CPs (CP-1 SVG layout + genesis + theme positions; CP-2 deep-field render + corpus integration + proximity mesh; CP-3 cross-theme interlinkages from kg.json; CP-4 motion vocabulary + signal pulses; CP-5 big-bang entry + parallax bg; CP-6 pan/zoom/bounds + fullscreen + mobile responsive; CP-7 keyboard a11y + /design-review w/ 13 gates). ~7-9hr. |
+| C-final | QUEUED | /design-review + /review pass + STATUS CP31 | ~1-2hr. |
 
 **Total remaining Phase C effort: ~17-25hr across multiple sessions.**
 
