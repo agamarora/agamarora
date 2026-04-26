@@ -18,6 +18,11 @@
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <link rel="manifest" href="/site.webmanifest">
 
+<!-- Preload Patrick Hand so the aa. mark stroke-draw measurement runs against the real font, not the cursive fallback (DESIGN.md ## aa. mark spec) -->
+<link rel="preload" as="font" type="font/woff2" href="/fonts/patrick-hand/patrick-hand-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/satoshi/Satoshi-Variable.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" crossorigin>
+
 <!--
   C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
@@ -71,10 +76,13 @@
   svg.canvas.panning{cursor:grabbing;}
   svg.canvas.zoomable{cursor:grab;}
 
-  /* aa. mark — z-index 50 to match all other v2 pages (DESIGN.md shared layout contract) */
-  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  /* aa. mark — z-index 50 to match all other v2 pages (DESIGN.md shared layout contract).
+     font-family on wrapper forces browser to fetch Patrick Hand before SVG renders,
+     so the stroke-draw measurement runs against real font, not cursive fallback. */
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
   .aa-mark:hover{opacity:1;}
   .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
 
   /* Help strip moved BELOW header zone (header is up to ~64px) so it stops getting hidden */
   .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;max-width:calc(100vw - 48px);}
