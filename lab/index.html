@@ -42,106 +42,49 @@
 
 <link rel="preload" as="image" href="/assets/lab/ai-resume-demo.v2.png" fetchpriority="high">
 
+<!-- chrome:preload -->
+<link rel="preload" as="font" href="/fonts/satoshi/Satoshi-Variable.woff2" type="font/woff2" crossorigin>
+<!-- /chrome:preload -->
+
 <style>
-  @font-face {
-    font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2');
-    font-weight: 300 900; font-display: swap; font-style: normal;
-  }
-  @font-face {
-    font-family: 'Satoshi';
-    src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2');
-    font-weight: 300 900; font-display: swap; font-style: italic;
-  }
-  @font-face {
-    font-family: 'JetBrains Mono';
-    src: url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2');
-    font-weight: 400 500; font-display: swap; font-style: normal;
-  }
-  @font-face {
-    font-family: 'Patrick Hand';
-    src: url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2');
-    font-weight: 400; font-display: swap; font-style: normal;
-  }
-
-  .icon { width: 1em; height: 1em; fill: currentColor; display: inline-block; vertical-align: -0.125em; flex-shrink: 0; }
-
+  <!-- chrome:css -->
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
   :root {
-    --bg: #0A0A0A;
-    --surface: #111111;
-    --surface-2: #161616;
-    --border: #1E1E1E;
-    --border-hover: #2A2A2A;
-    --text: #E8E4DF;
-    --text-dim: #7A7A7A;
-    --accent: #E5A54B;
-    --accent-dim: rgba(229, 165, 75, 0.12);
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --mark: 'Patrick Hand', cursive;
-    --space-3: 8px;
-    --space-4: 12px;
-    --space-5: 16px;
-    --space-6: 24px;
-    --space-7: 32px;
-    --space-8: 48px;
-    --space-9: 64px;
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.55;
-    min-height: 100dvh;
-  }
-  ::selection { background: var(--accent); color: var(--bg); }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
 
-  /* === Shared v2 header === fluid 52-64px, icons scale via clamp. */
-  header.site-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: clamp(52px, 6vw, 64px);
-    z-index: 100;
-    padding: 0 clamp(1rem, 3vw, 1.5rem);
-    background: var(--bg);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .icon-bar { display: inline-flex; align-items: center; }
-  .icon-bar a {
-    color: var(--text-dim);
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 2em; height: 2em;
-    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
-    transition: color 0.2s ease;
-    text-decoration: none;
-  }
-  .icon-bar a:hover { color: var(--accent); }
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
 
-  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load. */
-  .aa-mark {
-    position: fixed;
-    bottom: clamp(16px, 3vw, 32px);
-    right: clamp(16px, 3vw, 32px);
-    z-index: 50;
-    text-decoration: none;
-    line-height: 1;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .aa-mark:hover { opacity: 1; }
-  .aa-mark svg {
-    width: clamp(44px, 5vw, 60px);
-    height: auto;
-    overflow: visible;
-    display: block;
-  }
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
+
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
+  <!-- /chrome:css -->
+
+  /* Page-specific body extension (lab — slightly tighter line-height) */
+  body { line-height: 1.55; }
 
   /* Page shell */
   .page {
@@ -461,7 +404,7 @@
 <symbol id="i-download" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></symbol>
 </svg>
 
-<!-- Shared v2 header -->
+<!-- chrome:header -->
 <header class="site-header">
   <div class="icon-bar">
     <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
@@ -471,8 +414,9 @@
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
   </div>
 </header>
+<!-- /chrome:header -->
 
-<!-- Shared aa. mark -->
+<!-- chrome:aamark -->
 <a href="/" class="aa-mark" aria-label="agamarora.com">
   <svg id="aa-mark" viewBox="0 0 72 36">
     <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
@@ -480,6 +424,7 @@
     <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
   </svg>
 </a>
+<!-- /chrome:aamark -->
 
 <main class="page">
 
@@ -683,34 +628,27 @@
 
 </main>
 
-<script>
-// aa. mark stroke-draw
-(function() {
-  const s = document.getElementById('aa-stroke');
-  const f = document.getElementById('aa-fill');
-  const d = document.getElementById('dot-fill');
-  if (!s || !f || !d) return;
-  document.fonts.ready.then(() => {
-    const len = s.getComputedTextLength();
-    d.setAttribute('x', 4 + len - 2);
-    f.setAttribute('x', 4);
-    const dl = len * 2;
-    s.style.strokeDasharray = dl;
-    s.style.strokeDashoffset = dl;
-    s.style.opacity = '1';
+<!-- chrome:script -->
+<script>(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
     s.getBoundingClientRect();
-    s.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';
-    s.style.strokeDashoffset = '0';
-    s.addEventListener('transitionend', function h(e) {
-      if (e.propertyName !== 'stroke-dashoffset') return;
-      s.removeEventListener('transitionend', h);
-      f.style.transition = 'opacity 0.2s'; f.style.opacity = '1';
-      d.style.transition = 'opacity 0.2s'; d.style.opacity = '1';
-      s.style.transition = 'opacity 0.25s ease 0.05s'; s.style.opacity = '0';
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
     });
   });
-})();
+})();</script>
+<!-- /chrome:script -->
 
+<script>
 // Project card fade-in with stagger
 document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.project-card');

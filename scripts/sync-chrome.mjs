@@ -45,6 +45,7 @@ const PAGES = [
   'lab/product-shape/index.html',
   'lab/second-brain/index.html',
   'lab/voice-ai-production/index.html',
+  'wiki/index.html',
 ];
 
 // Block specs: [marker name, canonical content, opening indent for the content].
@@ -53,7 +54,14 @@ const PAGES = [
 const BLOCKS = [
   { name: 'preload', body: SHARED_PRELOAD_HTML },
   { name: 'css',     body: SHARED_CHROME_CSS },
+  // dom = combined sprite + header + aa-mark when they're contiguous (most pages).
   { name: 'dom',     body: `${SVG_SPRITE}\n\n${SHARED_HEADER_HTML}\n\n${SHARED_AAMARK_HTML}` },
+  // Granular variants — for pages where chrome elements aren't contiguous in
+  // DOM (e.g. /enter has a keyboard backdrop between header and aa-mark).
+  // Use these instead of chrome:dom when needed.
+  { name: 'sprite',  body: SVG_SPRITE },
+  { name: 'header',  body: SHARED_HEADER_HTML },
+  { name: 'aamark',  body: SHARED_AAMARK_HTML },
   { name: 'script',  body: `<script>${AAMARK_SCRIPT}</script>` },
 ];
 
@@ -77,18 +85,17 @@ function syncFile(absPath) {
       throw new Error(`${absPath}: opening marker ${open} found but no closing ${close}`);
     }
 
-    // Preserve the indent of the opening marker line.
+    // Body content is emitted verbatim. Markers should be placed at the same
+    // column as the canonical block expects (chrome.mjs CSS body starts with
+    // 2-space indent so place chrome:css markers at 2-space indent inside
+    // <style>; chrome:dom/script bodies are unindented so place those markers
+    // at column 0).
     const lineStart = updated.lastIndexOf('\n', idx) + 1;
     const indent = updated.slice(lineStart, idx).match(/^\s*/)[0];
 
-    const indentedBody = block.body
-      .split('\n')
-      .map((l) => (l.length ? indent + l.replace(/^  /, '') : l))
-      .join('\n');
-
     const before = updated.slice(0, idx + open.length);
     const after = updated.slice(closeIdx);
-    updated = `${before}\n${indentedBody}\n${indent}${after}`;
+    updated = `${before}\n${block.body}\n${indent}${after}`;
   }
 
   return { original, updated, missingMarkers };
