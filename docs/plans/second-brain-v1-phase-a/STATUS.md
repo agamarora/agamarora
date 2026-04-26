@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 23.0 — Phase C in flight. C-voice-themes 5/12 DONE. CP-6 enterprise-ai-reality queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 23.1 — Phase C in flight. C-voice-themes 6/12 DONE. CP-7 second-brain queued.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-6: enterprise-ai-reality** via sonnet subagent. Per-theme cadence. CP-5 ai-pm-skillset shipped clean (frontmatter rule held). 7 themes remaining: enterprise-ai-reality, second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root.
+**Current step:** Phase C / C-voice-themes / **CP-7: second-brain** via sonnet subagent. CP-6 enterprise-ai-reality shipped this commit. 6 themes remaining: second-brain, spec-first-taste, career-reflection, linkedin-as-instrument, personal-projects-tinkering, root.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state

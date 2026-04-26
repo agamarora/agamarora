@@ -3,7 +3,7 @@ type: Theme
 slug: enterprise-ai-reality
 title: Enterprise AI reality  -  ships vs demos
 one_line: "Why ~80% of enterprise AI experiments don't reach production, and which non-functional failure modes actually decide the outcome."
-status: draft-r9-polished
+status: c-voice-r1-cp6
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
@@ -16,53 +16,59 @@ beliefs:
 
 # Enterprise AI reality  -  ships vs demos
 
-*Era: 2024 to 2026 · 12+ posts + 4 Collab items · 4 beliefs*
+This is one of twelve themes in the wiki. It holds a field observation I have been making since 2024, built from demos, POCs, and boardroom slides: building for a demo and building for production are different beasts. You are likely here because the phrase "roughly 80% don't reach production" appeared somewhere on this site and you want the evidence and the failure taxonomy behind it, or because [agent-first](/wiki/agent-first/) sent you here for the production-rate context. This page sits between the optimism of the agent-first direction and the ground-level data on how fast enterprises actually get there.
 
----
+The thesis is blunt: enterprises are experimenting broadly, and correctly. They are benching most experiments, also correctly. The category is real. The deployment rate is brutal. Both facts are true simultaneously, and conflating them is the most expensive mistake an AI team can make.
 
-## Core belief
+## The observation: demo vs production
 
-Building for a demo and building for production are different beasts. Enterprises are experimenting broadly, and correctly, because the substrate is real. But they are benching most experiments, also correctly, because most attempts cannot clear the production bar. Roughly 80% of enterprise AI experiments don't reach production. The experiments that fail do not fail on model capability. They fail on non-functional requirements, data pipeline gaps, governance overhead, and time-to-value math. The category is transformative. The deployment rate is brutal. Both facts are true simultaneously, and conflating them is the most expensive mistake an enterprise AI team can make.
+Building for a demo and building for production are different beasts. That sentence is from September 4, 2024 - nine takeaways from building and demoing a considerable number of GenAI product concepts to potential enterprise customers. At that point I had been at the enterprise voice AI platform for sixty days.
 
----
+The nine takeaways were observation. The final sentence was a prediction: "Like any new tech, we are in the honeymoon period - everyone is trying everything until something clicks, and then the rush towards structure and methods begins."
 
-## How it formed
+By June 20, 2025, the prediction had closed. The honeymoon period was over. The post named the confirmed frame: 10 experiments yield 2 production-grade wins. Roughly 80% bench rate. Not a forecast anymore - a field number.
 
-The belief did not start as a thesis. It started as a taxonomy of failure modes, assembled piece by piece across the spring and summer of 2024.
+## What the failures look like
 
-In March 2024, Agam was grinding LinkedIn Collaborative Articles for the AI Top Voice badge. The surface forced compression of real expertise: non-functional requirements are the dominant failure mode in software production. Non-functional requirements (NFRs) are not tick boxes. They are the specification layer where most products fail. That Collab reply landed three months before any enterprise field data. Then, in June 2024, about four weeks before joining the enterprise voice AI platform: "A common trap that teams fall in is that data readiness does not just mean having a large historical corpus to train on but the systems to be able to continuously collect, process and update the training data. Without the right architecture around storage, transformation and insights mining moving forward is nigh impossible." Agam had the failure-mode taxonomy before he had the field data to validate it.
+The experiments that don't reach production don't fail on model capability. They fail on four things, enumerable in advance.
 
-The enterprise voice AI platform role started 2024-07-04. Sixty days later, on 2024-09-04, came the canonical anchor: nine takeaways from building and demoing a considerable number of GenAI product concepts to potential enterprise customers. "Building for a demo vs. building for production is a different beast." Enterprises are experimenting a lot but benching ideas even more. Time to value is king. Putting an AI stamp is no longer the north star. And the forecast at the close: "Like any new tech, we are in the honeymoon period - everyone is trying everything until something clicks, and then the rush towards structure and methods begins."
+**Non-functional requirements.** Performance, security, scalability, ease of use. These are not tick-box compliance items. They are the specification layer where most products fail. I named this in a LinkedIn Collaborative Article in March 2024, three months before joining the enterprise voice AI platform: non-functional requirements are the dominant failure mode in production. The field data confirmed the dispositional claim, not the other way around. An AI PM who specs NFRs before chasing features is applying production-reality discipline from the first document.
 
-The nine takeaways were observation. That final sentence was a prediction.
+**Data pipelines that were never built for continuity.** In June 2024, a month before the enterprise role started: "A common trap that teams fall in is that data readiness does not just mean having a large historical corpus to train on but the systems to be able to continuously collect, process and update the training data." An enterprise with a large historical corpus and no live pipeline is building on a decaying foundation. The relevant question is not "how much data do we have?" but "how quickly can that data be collected, processed, and updated?" That architecture is hard to replicate by spending money. It is the hardest moat.
 
-Three months later, on 2024-12-04, the field data distilled into competitive strategy: infrastructure, talent, data are the three durable AI moats. That post was the lift-out  -  the answer to what survives when 80% of experiments die.
+**Governance and compliance overhead.** This accelerates with scale, not with models. It bites hardest after the POC, when legal, security, and privacy requirements land on a prototype that was never designed to carry them.
 
-Nine months after the anchor, on 2025-06-20, Agam returned to confirm the pattern: "The shift from '10 experiments' to '2 production grade wins' is underway." The honeymoon-period prediction had closed. The durable frame: roughly 80% of enterprise AI experiments don't reach production. The same post opened toward agent-first territory: enterprises want agent onboarding, not agent building. Production reality and agent-first are not separate beliefs. They are the same observation at two different time points in the enterprise AI adoption cycle.
+**Time-to-value arithmetic that fails before real users arrive.** Putting an AI stamp is no longer the north star. Time to value is king. A POC that cannot show business-metric movement within a cycle does not reach production - not because the technology failed, but because the ROI case never closed.
 
----
+## Three moats that survive the 2/10 rate
 
-## What it implies
+In December 2024, the field data distilled into competitive strategy. Three assets survive when 80% of experiments die.
 
-Roughly 80% don't ship. Three implications follow.
+Infrastructure: compute and serving substrate that scales with agents, not just chatbots. The teams that treat infrastructure as a sprint-1 concern are the ones still using it in production two years later.
 
-**On failure mode:** the experiments that don't reach production don't fail on model capability. They fail on non-functional requirements (performance, security, scalability, ease of use), governance and compliance overhead, data pipelines that were never built for continuous collection, and time-to-value arithmetic that fails before the POC ever reaches a real user. Non-functional requirements are the dominant failure mode. The failures are predictable. The failure modes are enumerable. A PM who specs NFRs before chasing features is applying production-reality discipline from the first document. (Cross-link: [`voice-ai-craft`](/wiki/voice-ai-craft/) for a worked production example of these constraints at enterprise scale.)
+Talent: the small population of people who can build, fine-tune, and operate foundational AI systems. There are not many, and that scarcity compounds. One honest line from that post: "Having data is one thing; having AI-ready data is where the value lies."
 
-**On moats:** three durable assets survive the 2/10 rate. Infrastructure: compute and serving substrate that scales with agents, not just chatbots. Talent: the small population of people who can build, fine-tune, and operate foundational AI systems; there are not many, and that scarcity compounds. Data: not raw corpus volume but the architecture underneath it. "Having data is one thing; having AI-ready data is where the value lies." Data collection pipelines, transformation layers, continuous ingestion systems. Plant the seed today. What is NOT on the moats list: the model itself. Foundation-model capability runs on a rough 12-month commoditization cycle. GPT-4 cost went from $36 to $4 per million tokens in one year. A position built on "we have a great model" is a position that resets every release cycle.
+Data: not raw corpus volume but the architecture underneath it. Collection pipelines, transformation layers, continuous ingestion systems. Plant the seed today.
 
-**On data specifically:** data readiness is not a volume problem. An enterprise with a large historical corpus and no live pipeline is building on a decaying foundation. The relevant question is not "how much data do we have?" but "how quickly can that data be collected, processed, and updated?" Pipeline infrastructure is the hardest moat to replicate by spending money. That is why data ranks highest of the three.
+What is NOT on the moats list: the model itself. Foundation-model capability runs on a rough 12-month commoditization cycle. GPT-4 cost went from $36 to $4 per million tokens in one year. A position built on "we have a great model" is a position that resets every release cycle.
 
----
+## How this connects to agent-first
 
-## Tension with `agent-first`
+The [agent-first](/wiki/agent-first/) theme is optimistic about enterprise AI's direction. This theme is precise about its current deployment rate. They look like a contradiction. They are a scope difference.
 
-The agent-first theme is optimistic about enterprise AI's direction. This theme is cautious about its deployment rate. The 2025-06-20 post is where both stitched together.
+Production reality names the rate at which experiments clear the bar, today. Agent-first names the direction enterprises are consolidating toward, next. The same June 20, 2025 post carries both: "10 experiments yield 2 wins" and "horizontal AI does not scale, agentic AI is the new direction." Same post, same field data, different analytical frame.
 
-The resolution is scope-difference, not contradiction. Production reality names the rate at which experiments clear the production bar, today. Agent-first names the direction enterprises are consolidating toward, next. The same field data produces both: "10 experiments yield 2 wins" and "horizontal AI does not scale, agentic AI is the new direction." Skepticism about the rate is not pessimism about the destination. Agent-first IS the framework for being among the 2-of-10: serving-lens-first, reversibility in from the start, NFRs specified at PRD-time  -  those are what the production-grade projects do differently.
+The resolution matters practically: agent-first IS the framework for being among the 2-of-10 that ships. Serving-lens-first, reversibility built in from the start, NFRs specified at PRD-time - those are what the production-grade projects do differently. The skepticism about the rate is not pessimism about the destination. The destination is real. The path to it costs more than most teams budget.
 
-Cross-link: [`agent-first`](/wiki/agent-first/)  -  same 2025-06-20 post carries both claims. Different analytical frame: direction vs current rate.
+## Where to go from here
 
----
+Three exits, depending on what you came for.
+
+If you want the **craft layer** - what "non-functional requirements at PRD-time" actually looks like in a live production voice AI deployment - read [voice AI craft](/wiki/voice-ai-craft/). That page is the worked example: cloud vs on-prem trade-offs, MCP-first abstraction, business KPI ordered before tech KPI, all from a system running 4M+ calls per year.
+
+If you want the **direction** this field is heading next - the agent-first thesis and why the 20% that ships is converging on serving-lens-first architecture - read [agent-first](/wiki/agent-first/). The June 2025 post where both claims originate is there.
+
+If you want the **full belief graph** - all twelve themes and their cross-links laid out together - the [knowledge graph](/wiki/graph/) is the navigator.
 
 ## Evidence
 
@@ -77,13 +83,3 @@ Cross-link: [`agent-first`](/wiki/agent-first/)  -  same 2025-06-20 post carries
 | 2025-06-20 | Own-comment on post | McKinsey Seizing the Agentic AI Advantage (June 2025) cited as external validation within hours |
 | 2025-09-29 | Comment-thread reply | Field data: production enterprise voice AI stack (cloud LLMs, MCP-first API layer, business KPI ordered ahead of tech KPI); one worked example among many |
 | 2025-12-04 | Post (anti-customization) | Extension to PM craft: "six months of implementation, an implementation partner, hundreds of training documents"  -  the demo-vs-production gap at the PRD layer |
-
----
-
-## Open question
-
-Governance is now table stakes, the shift to structured platform investment is underway, and enterprises with real moats are compounding. The durable version of this belief is about the structure of failure rather than a specific rate. Roughly 80% bench rate is the frame; the precise number shifts as the cycle matures.
-
----
-
-*Polished: taste-pass decisions applied 2026-04-26.*
