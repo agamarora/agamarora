@@ -18,9 +18,13 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-const DRAFTS_DIR = join(
+const THEME_DRAFTS_DIR = join(
   ROOT,
   "docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final"
+);
+const BELIEF_DRAFTS_DIR = join(
+  ROOT,
+  "docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final"
 );
 const OUT_DIR = join(ROOT, "wiki");
 
@@ -31,12 +35,14 @@ const args = process.argv.slice(2);
 const ONLY = args.find((a) => a.startsWith("--only="))?.split("=")[1];
 const STRICT = args.includes("--strict");
 
-if (!existsSync(DRAFTS_DIR)) {
-  console.error(`[build-wiki] FATAL: drafts dir missing: ${DRAFTS_DIR}`);
-  console.error(
-    `[build-wiki]   Phase A synthesis output is required to build wiki pages. Re-pull the repo or restore from origin/main.`
-  );
-  process.exit(1);
+for (const d of [THEME_DRAFTS_DIR, BELIEF_DRAFTS_DIR]) {
+  if (!existsSync(d)) {
+    console.error(`[build-wiki] FATAL: drafts dir missing: ${d}`);
+    console.error(
+      `[build-wiki]   Phase A synthesis output is required to build wiki pages. Re-pull the repo or restore from origin/main.`
+    );
+    process.exit(1);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -77,7 +83,21 @@ const escHtml = (s) =>
     .replace(/"/g, "&quot;");
 
 function inlineMd(text) {
-  // Code spans first (so ** inside code doesn't get parsed)
+  // Pre-pass: expand belief-page wiki shorthand into real markdown links so the
+  // standard [text](url) handler below can render them.
+  //   [wiki:beliefs:slug]      ->  [slug](/wiki/beliefs/slug/)
+  //   [wiki:root.foo]          ->  [foo](/wiki/root.foo/)
+  //   [wiki:slug]              ->  [slug](/wiki/slug/)
+  text = text.replace(
+    /\[wiki:beliefs:([a-z0-9.\-]+)\]/g,
+    (_, slug) => `[${slug}](/wiki/beliefs/${slug}/)`
+  );
+  text = text.replace(
+    /\[wiki:([a-z0-9.\-]+)\](?!\()/g,
+    (_, slug) => `[${slug}](/wiki/${slug}/)`
+  );
+
+  // Code spans (so ** inside code doesn't get parsed)
   const codeSpans = [];
   text = text.replace(/`([^`]+)`/g, (_, c) => {
     codeSpans.push(c);
@@ -390,38 +410,31 @@ function themeNav(slug) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Build a single page
+// 6. Build a single page (theme + root, OR belief)
 // ---------------------------------------------------------------------------
-function buildPage(slug, src) {
-  const { meta, body } = parseFrontmatter(src);
-  const m = pageMeta(meta, slug);
-  const articleHtml = blockMd(body.trim());
-  const tierLabel = m.tier === "root" ? "root" : "theme";
-
-  const ogImage = "https://agamarora.com/assets/og/lab.png"; // TODO: per-theme OG (B-future)
-  const canonical = `https://agamarora.com/wiki/${slug}/`;
-
-  const html = `<!DOCTYPE html>
+function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, navHtml, schemaType }) {
+  const ogImage = "https://agamarora.com/assets/og/lab.png"; // TODO: per-page OG (B-future)
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${escHtml(m.title)} - Agam Arora's wiki.</title>
-<meta name="description" content="${escHtml(m.description)} - one of twelve themes plus a root in agamarora.second-brain.">
+<title>${escHtml(title)} - Agam Arora's wiki.</title>
+<meta name="description" content="${escHtml(description)}">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="${canonical}">
-<meta property="og:title" content="${escHtml(m.title)} - Agam Arora's wiki.">
-<meta property="og:description" content="${escHtml(m.description)}">
+<meta property="og:title" content="${escHtml(title)} - Agam Arora's wiki.">
+<meta property="og:description" content="${escHtml(description)}">
 <meta property="og:image" content="${ogImage}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${escHtml(m.title)} - Agam Arora's wiki.">
-<meta name="twitter:description" content="${escHtml(m.description)}">
+<meta name="twitter:title" content="${escHtml(title)} - Agam Arora's wiki.">
+<meta name="twitter:description" content="${escHtml(description)}">
 <meta name="twitter:image" content="${ogImage}">
 
 <link rel="canonical" href="${canonical}">
@@ -429,8 +442,8 @@ function buildPage(slug, src) {
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": ${JSON.stringify(m.title)},
+  "@type": "${schemaType}",
+  "headline": ${JSON.stringify(title)},
   "url": "${canonical}",
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
   "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
@@ -452,15 +465,13 @@ ${SHARED_HEADER_HTML}
 ${SHARED_AAMARK_HTML}
 
 <main class="page">
-  <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
-  </nav>
+  ${breadcrumbHtml}
 
   <article role="main">
 ${articleHtml}
   </article>
 
-  ${themeNav(slug)}
+  ${navHtml}
 </main>
 
 <script>${AAMARK_SCRIPT}</script>
@@ -468,47 +479,93 @@ ${articleHtml}
 </body>
 </html>
 `;
+}
 
-  return html;
+function buildThemePage(slug, src) {
+  const { meta, body } = parseFrontmatter(src);
+  const m = pageMeta(meta, slug);
+  const articleHtml = blockMd(body.trim());
+  return pageWrap({
+    title: m.title,
+    description: `${m.title} - one of twelve themes plus a root in agamarora.second-brain.`,
+    canonical: `https://agamarora.com/wiki/${slug}/`,
+    schemaType: "Article",
+    breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
+  </nav>`,
+    articleHtml,
+    navHtml: themeNav(slug),
+  });
+}
+
+function buildBeliefPage(slug, src) {
+  const { meta, body } = parseFrontmatter(src);
+  const m = pageMeta(meta, slug);
+  const articleHtml = blockMd(body.trim());
+  const parentTheme = (meta.parent_theme || "").trim();
+  const parentLink = parentTheme
+    ? `<a href="/wiki/${parentTheme}/">${NAV_TITLES[parentTheme] || parentTheme}</a><span class="sep">/</span>`
+    : "";
+  return pageWrap({
+    title: m.title,
+    description: `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
+    canonical: `https://agamarora.com/wiki/beliefs/${slug}/`,
+    schemaType: "Article",
+    breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/">beliefs</a><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
+  </nav>`,
+    articleHtml,
+    navHtml: parentTheme
+      ? `<nav class="theme-nav"><a href="/wiki/${parentTheme}/">&larr; ${NAV_TITLES[parentTheme] || parentTheme}</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>`
+      : `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>`,
+  });
 }
 
 // ---------------------------------------------------------------------------
 // 7. Main
 // ---------------------------------------------------------------------------
-const files = readdirSync(DRAFTS_DIR)
-  .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
-  .filter((f) => !ONLY || f === `${ONLY}.md`);
 
 let okCount = 0;
 let errCount = 0;
-for (const f of files) {
-  const slug = basename(f, ".md");
-  let src;
-  try {
-    src = readFileSync(join(DRAFTS_DIR, f), "utf8");
-  } catch (err) {
-    console.error(`[build-wiki] FAIL read ${slug}: ${err.code || ""} ${err.message}`);
-    errCount++;
-    if (STRICT) process.exit(1);
-    continue;
-  }
-  try {
-    const html = buildPage(slug, src);
-    const outDir = join(OUT_DIR, slug);
-    mkdirSync(outDir, { recursive: true });
-    // Atomic write: tmp + rename so a crash mid-write can't ship truncated HTML.
-    const out = join(outDir, "index.html");
-    const tmp = `${out}.tmp`;
-    writeFileSync(tmp, html);
-    renameSync(tmp, out);
-    console.log(`[build-wiki] ${slug} -> wiki/${slug}/index.html (${html.length} bytes)`);
-    okCount++;
-  } catch (err) {
-    console.error(`[build-wiki] FAIL ${slug}: ${err.message}`);
-    errCount++;
-    if (STRICT) process.exit(1);
+
+function processDir(dir, kind) {
+  const files = readdirSync(dir)
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
+    .filter((f) => !ONLY || f === `${ONLY}.md`);
+  for (const f of files) {
+    const slug = basename(f, ".md");
+    let src;
+    try {
+      src = readFileSync(join(dir, f), "utf8");
+    } catch (err) {
+      console.error(`[build-wiki] FAIL read ${kind}/${slug}: ${err.code || ""} ${err.message}`);
+      errCount++;
+      if (STRICT) process.exit(1);
+      continue;
+    }
+    try {
+      const html = kind === "belief" ? buildBeliefPage(slug, src) : buildThemePage(slug, src);
+      const outDir =
+        kind === "belief" ? join(OUT_DIR, "beliefs", slug) : join(OUT_DIR, slug);
+      mkdirSync(outDir, { recursive: true });
+      const out = join(outDir, "index.html");
+      const tmp = `${out}.tmp`;
+      writeFileSync(tmp, html);
+      renameSync(tmp, out);
+      const relPath = kind === "belief" ? `wiki/beliefs/${slug}/index.html` : `wiki/${slug}/index.html`;
+      console.log(`[build-wiki] ${kind} ${slug} -> ${relPath} (${html.length} bytes)`);
+      okCount++;
+    } catch (err) {
+      console.error(`[build-wiki] FAIL ${kind}/${slug}: ${err.message}`);
+      errCount++;
+      if (STRICT) process.exit(1);
+    }
   }
 }
+
+processDir(THEME_DRAFTS_DIR, "theme");
+processDir(BELIEF_DRAFTS_DIR, "belief");
+
 console.log(
   `[build-wiki] done. ${okCount} pages built${errCount ? `, ${errCount} failed` : ""}.`
 );
