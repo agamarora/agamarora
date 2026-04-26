@@ -17,60 +17,70 @@ cross_listed_themes:
   - second-brain
 tier: 1
 length_target: 400-800w
-status: draft-task-h
+status: c-voice-beliefs-r1-cp2
+voice_register: 1 (free-form post-essay)
 ---
 
 # Context over prompt
 
-## Statement
+This is the belief that says context is the lever, not the prompt. It lives inside the [agent-first theme](/wiki/agent-first/) and sits one step below the headline claim. If you landed here directly, you get the bare argument plus the three-year supersession arc behind it. Five minutes is enough.
 
-Context is the lever. The prompt is the I/O seam. The personal and organizational data, conversation history, and structured knowledge you put in front of a model before the session begins determines output quality more than the words you compose at the interface. "Context > Prompt" is one line of a three-line trilogy - the others are Spec > Sprint and Taste > Execution. All three follow the same shape: the upstream curation beats the downstream generation. Curating context is the real skill; composing prompts is plumbing.
+## The claim
 
-## Origin
+Context beats prompt. What you put in front of a model before a session begins - personal data, organizational data, prior conversation, structured knowledge from the second-brain - determines output quality more than the words you compose at the interface.
 
-The belief emerged from the end of the prompt-engineering arc. The earliest affirmative sign is a June 2024 Collaborative Article item listing five steps to elevate prompts. Item two was "Start with context." At the time, the item was embedded in a hygiene list, not yet the headline. In hindsight it is the earliest visible instance of the affirmative claim.
+Verbatim from the April 9, 2026 post: "Spec > Sprint / Taste > Execution / Context > Prompt."
 
-Six months later, a December 2024 post declared "We need to kill prompting." The headline overshot the diagnosis. But buried in the same post was the load-bearing sentence: "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models." The context claim was already present; it just had not become the axiom yet.
+One line of a three-line trilogy. The others are Spec over Sprint and Taste over Execution. All three follow the same shape: upstream curation beats downstream generation. Curating context is the real skill. Composing prompts is plumbing.
 
-By July 2025, prompts were re-admitted as engineering plumbing: guardrails, tool-calling, output parsing, memory wiring. The user-facing skill of composing perfect English sentences was dead. The engineering practice of wiring prompts inside agent harnesses was alive. With user-facing prompting removed from the determiner position, the question became: what fills that position? Context.
+The corollary is precise: user-facing prompt-as-skill is dead. Engineering-layer prompts - guardrails, tool-calling, output parsing, memory wiring - are alive. The verdict lands differently depending on which layer you are asking about.
 
-The lock arrived April 9, 2026, in the Google Stitch post: "Spec > Sprint / Taste > Execution / Context > Prompt." Three declarative lines. The three-year arc from skill to dead-skill to plumbing to context-as-determinant compressed to nine words.
+## How the belief formed
 
-## Refinement arc
+The arc runs three years and resolves cleanly.
 
-The full prompts arc runs across five posts over three years:
+It started in the other direction. February 2023: "As an expert in prompt engineering... step-by-step roadmap." Prompt engineering framed as a trainable craft with a curriculum. That is the position the arc supersedes.
 
-2023-02-23: "expert in prompt engineering" - prompt-as-trainable-craft, curriculum and roadmap. This is the position the arc supersedes.
+The earliest visible affirmative claim appeared in a June 2024 Collaborative Article item: "Start with context" as step two in a five-step prompt hygiene list. Embedded in a list, not yet the headline. In hindsight it is the seed.
 
-2024-06-14: "Start with context" appears as item two in a five-step hygiene list. Last instance of prompt-engineering-as-skill. Also the earliest visible affirmative claim.
+Six months later: "We need to kill prompting." The December 2024 post overshot the verb. But buried in the same body was the load-bearing sentence: "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models." The context claim was already present. It had not become the axiom yet.
 
-2024-12-24: "Kill prompting." Correct diagnosis, overshot verb. "Deeper context understanding" is already the affirmative claim in the body.
+July 2025: prompts re-admitted as engineering plumbing. Agam names his own apparent contradiction openly: "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Then explains why it still holds - not at the user interface layer, but inside agent architecture. Guardrails. Tool-calling. Output parsing. Plumbing, not magic incantation.
 
-2025-07-17: Prompts re-admitted as engineering plumbing. Agam names his own contradiction openly: "I hate the fact that reliance on the prompt is not reducing." Then explains why it still holds - not at the user-interface layer, but inside agent architecture.
+With user-facing prompting removed from the determiner position, the question became: what fills that position? Context.
 
-2026-04-09: "Context > Prompt" - the affirmative claim promoted to axiom. User-facing prompt-as-skill is gone. Engineering-layer prompts as harness wiring are alive. Context as the determinant of output quality is the live, current belief.
+The lock arrived April 9, 2026, in the Google Stitch post: "Context > Prompt." Three years from skill to dead-skill to plumbing to context-as-determinant, compressed to three words.
 
-The three layers resolve cleanly: user-facing prompt-as-skill is dead; prompts-as-engineering-primitive (plumbing inside the harness) is live; context-as-determinant is the promoted claim. This is evolution not reversal - the skill layer migrated, the verdict on prompt-as-magic-incantation held.
+April 23, 2026: the second-brain operationalized the belief. "All of us know the power of a personal context layer... every future AI session reads the same brain and writes back to it." Context is no longer the axiom. It is now infrastructure.
 
-## Cross-links
+## What it supersedes, what conditions it, what it holds with
 
-- Parent theme: [wiki:agent-first](/wiki/agent-first)
-- Cross-listed themes: [wiki:spec-first-taste](/wiki/spec-first-taste), [wiki:second-brain](/wiki/second-brain)
-- Trilogy partners: [wiki:beliefs:spec-over-sprint], [wiki:beliefs:taste-over-execution]
-- Operationalized by: [wiki:beliefs:second-brain-is-context-layer] - the second-brain IS the context layer that makes this belief infrastructure, not aphorism
-- Conditioned by: [wiki:beliefs:agent-first] - without agents as the primary users, context > prompt has no operating substrate
-- Conditioned by: [wiki:root.substance-over-hype] - context-over-prompt is anti-hype applied to AI craft; the move is the same shape as 2018 "blockchain is just a database"
-- Related: [wiki:beliefs:prompts-as-engineering-primitive] - the partner belief that lets context-over-prompt be true without kill-prompting being wrong
+What got superseded: prompt-engineering-as-user-skill. The 2023 roadmap post sits on the pre-hinge side of the arc. The supersession is public - it happened by declaration, not quietly.
+
+What this belief does NOT supersede: prompts as an engineering primitive. The July 2025 post holds simultaneously with this one. The two beliefs resolve as different claims about different layers, not contradictions.
+
+What conditions this belief: [agent-first](/wiki/agent-first/). Without agents as the primary users of AI systems, context over prompt has no operating substrate. The serving lens - what your system looks like to an agent calling on behalf of a user - is where the context layer lives. No agents, no reason the context layer is the determining variable.
+
+What holds simultaneously: [substance over hype](/wiki/root.substance-over-hype/). Context over prompt is the anti-hype application of this stance to AI craft. The move has the same shape as calling blockchain a database innovation in 2018. The lever is not where the marketing says it is.
+
+## Where to go from here
+
+Three exits.
+
+If you want the **parent thesis** that this belief follows from, go to the [agent-first theme](/wiki/agent-first/). The serving lens argument is the reason context is the determining variable in the first place.
+
+If you want the **trilogy partners** that share the same upstream-beats-downstream shape, jump to [spec over sprint](/wiki/beliefs/spec-over-sprint/) or [taste over execution](/wiki/beliefs/taste-over-execution/). Each is a separate belief, same structural move in a different domain.
+
+If you want the **operationalization** - what it looks like when this belief becomes infrastructure and not just an aphorism - [second-brain-is-context-layer](/wiki/beliefs/second-brain-is-context-layer/) holds it. The second-brain project is context over prompt built into every future AI session.
 
 ## Evidence
 
-- 2023-02-23 - "As an expert in prompt engineering... step-by-step roadmap" - prompt-as-skill, the ancestor to be superseded - urn:li:activity:7034426809358114816
-- 2024-06-14 - "Start with context" as item 2 in five-step prompt hygiene list - earliest visible affirmative claim - urn:li:activity:7207229692557348864
-- 2024-12-24 - "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models" - urn:li:activity:7277158028422914048
-- 2025-07-17 - Prompts re-admitted as plumbing: "still the magic sauce in most cases... prompts enable guardrails / prompts explain right tool calling" - urn:li:activity:7351602695977226243
-- 2026-04-09 - "Context > Prompt" - the lock, one line of the trilogy - urn:li:activity:7447981735901949952
-- 2026-04-21 - "10x more connections leading to richer more informed answers while also delivering 10-20K token saving each time a complex query is thrown at the second brain" - operationalization - urn:li:activity:7452296800352305152
-- 2026-04-23 - "All of us know the power of a personal context layer... every future AI session reads the same brain and writes back to it" - second-brain as context infrastructure - urn:li:activity:7452998640345853952
-
----
-*Draft for Phase B HTML scaffolding. Source: belief-deep-dives/context-over-prompt.md.*
+| Date | Entry | Post |
+|---|---|---|
+| 2023-02-23 | "As an expert in prompt engineering... step-by-step roadmap." Prompt-as-trainable-craft. The position this arc supersedes. | urn:li:activity:7034426809358114816 |
+| 2024-06-14 | "Start with context" as item two in a five-step prompt hygiene list. Last instance of prompt-engineering-as-skill. Also the earliest visible affirmative claim. | urn:li:activity:7207229692557348864 |
+| 2024-12-24 | "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models." Kill-prompting post. Correct diagnosis, overshot verb. | urn:li:activity:7277158028422914048 |
+| 2025-07-17 | Prompts re-admitted as plumbing. "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases." Engineering-layer prompts alive; user-facing skill dead. | urn:li:activity:7351602695977226243 |
+| 2026-04-09 | "Context > Prompt" - the lock. One line of the trilogy. Affirmative claim promoted to axiom. | urn:li:activity:7447981735901949952 |
+| 2026-04-21 | "10x more connections leading to richer more informed answers while also delivering 10-20K token saving each time a complex query is thrown at the second brain." Context curation as a measurable output variable. | urn:li:activity:7452296800352305152 |
+| 2026-04-23 | "All of us know the power of a personal context layer... every future AI session reads the same brain and writes back to it." Second-brain as context infrastructure. | urn:li:activity:7452998640345853952 |

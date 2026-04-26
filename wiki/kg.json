@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T09:02:50.152Z",
+  "generated_at": "2026-04-26T09:11:16.545Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1556,9 +1556,9 @@
       "id": "post.urn-li-activity-7034426809358114816",
       "urn": "urn:li:activity:7034426809358114816",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7034426809358114816/",
-      "label": "As an expert in prompt engineering... step-by-step roadmap",
+      "label": "As an expert in prompt engineering... step-by-step roadmap.",
       "date": "2023-02-23",
-      "snippet": "As an expert in prompt engineering... step-by-step roadmap"
+      "snippet": "As an expert in prompt engineering... step-by-step roadmap."
     },
     {
       "type": "Post",
@@ -1576,7 +1576,7 @@
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7452296800352305152/",
       "label": "10x more connections leading to richer more informed answers while also deliveri",
       "date": "2026-04-21",
-      "snippet": "10x more connections leading to richer more informed answers while also delivering 10-20K token saving each time a complex query is thrown at the second brain"
+      "snippet": "10x more connections leading to richer more informed answers while also delivering 10-20K token saving each time a complex query is thrown at the second brain."
     },
     {
       "type": "Post",
