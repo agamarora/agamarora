@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graph - Agam Arora's wiki.</title>
+<meta name="description" content="Knowledge graph: 177 nodes and 111 edges across themes, beliefs, projects, people, and tech.">
+<meta name="theme-color" content="#0A0A0A">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/wiki/graph/">
+<meta property="og:title" content="Graph - Agam Arora's wiki.">
+<meta property="og:description" content="Knowledge graph: 177 nodes and 111 edges.">
+<meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
+
+<link rel="canonical" href="https://agamarora.com/wiki/graph/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+
+  .page{max-width:760px;margin:0 auto;padding:calc(clamp(52px,6vw,64px) + var(--space-8)) clamp(var(--space-6),5vw,var(--space-8)) calc(var(--space-9) + var(--space-7));}
+
+  .breadcrumb{font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.06em;margin-bottom:var(--space-6);}
+  .breadcrumb a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed var(--border-hover);transition:color 0.2s,border-color 0.2s;}
+  .breadcrumb a:hover{color:var(--accent);border-color:var(--accent);}
+  .breadcrumb .sep{margin:0 var(--space-3);opacity:0.5;}
+
+  article{font-size:1.04rem;}
+  article > p, article > ul, article > .md-table-wrap, article > hr { margin-bottom: var(--space-6); }
+  article h1{font-size:clamp(2.2rem,5vw,3rem);font-weight:700;letter-spacing:-0.025em;line-height:1.05;margin-bottom:var(--space-7);max-width:680px;}
+  article h2{font-size:clamp(1.5rem,2.4vw,1.85rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-top:var(--space-9);margin-bottom:var(--space-5);color:var(--text);}
+  article h2:first-of-type{margin-top:0;}
+  article h3{font-size:clamp(1.1rem,1.6vw,1.25rem);font-weight:600;letter-spacing:-0.01em;line-height:1.3;margin-top:var(--space-7);margin-bottom:var(--space-4);}
+  article p{font-size:1.04rem;line-height:1.7;color:var(--text);opacity:0.92;}
+  article p em{font-style:italic;opacity:0.85;}
+  article p strong{color:var(--text);font-weight:600;opacity:1;}
+  article p code,article li code{font-family:var(--mono);font-size:0.92em;background:var(--surface-2);border:1px solid var(--border);padding:1px 6px;border-radius:var(--radius-sm);color:var(--accent);}
+  article a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);transition:border-color 0.2s;}
+  article a:hover{border-color:var(--accent);}
+  article a.urn-link{font-family:var(--mono);font-size:0.85em;color:var(--text-dim);border-bottom:1px dashed var(--border-hover);}
+  article a.urn-link:hover{color:var(--accent);border-color:var(--accent);}
+  article hr{border:0;height:1px;background:var(--border);margin:var(--space-8) 0;}
+  article ul{padding-left:var(--space-6);}
+  article ul li{margin-bottom:var(--space-3);line-height:1.7;}
+
+  .md-table-wrap{overflow-x:auto;margin:var(--space-6) 0;border:1px solid var(--border);border-radius:var(--radius-md);}
+  .md-table{width:100%;border-collapse:collapse;font-size:0.92rem;}
+  .md-table th,.md-table td{padding:var(--space-4) var(--space-5);text-align:left;border-bottom:1px solid var(--border);vertical-align:top;}
+  .md-table th{background:var(--surface);color:var(--accent);font-family:var(--mono);font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;}
+  .md-table td{color:var(--text);opacity:0.88;}
+  .md-table tr:last-child td{border-bottom:0;}
+
+  .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
+  .theme-meta .tier{color:var(--accent);}
+
+  .theme-nav{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:var(--space-5);font-family:var(--mono);font-size:0.82rem;}
+  .theme-nav a{color:var(--text-dim);text-decoration:none;transition:color 0.2s;border:0;}
+  .theme-nav a:hover{color:var(--accent);}
+  .theme-nav .home{color:var(--text-dim);}
+
+  .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  .graph-page { max-width: 1200px; }
+  .graph-stats { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-5); }
+  .graph-stats strong { color: var(--accent); font-weight: 500; }
+  .graph-canvas { width: 100%; height: 70vh; min-height: 480px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); position: relative; overflow: hidden; }
+  .graph-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-family: var(--mono); font-size: 0.84rem; pointer-events: none; }
+  .graph-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); }
+  .graph-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: var(--space-3); vertical-align: middle; }
+  .graph-controls { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); font-family: var(--mono); font-size: 0.78rem; }
+  .graph-controls button { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer; font: inherit; transition: border-color 0.2s, color 0.2s; }
+  .graph-controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .graph-controls button.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+  .graph-detail { margin-top: var(--space-5); padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); min-height: 80px; font-size: 0.95rem; }
+  .graph-detail .id { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); }
+  .graph-detail .empty { color: var(--text-dim); font-style: italic; opacity: 0.7; }
+  .graph-detail a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<main class="page graph-page">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Graph</span>
+  </nav>
+
+  <h1 style="font-size:clamp(2rem,4.5vw,2.6rem);font-weight:700;letter-spacing:-0.025em;margin-bottom:var(--space-5);">Knowledge graph</h1>
+  <p style="color:var(--text);opacity:0.85;line-height:1.6;max-width:680px;margin-bottom:var(--space-6);">Click a node to focus. Drag to pan. Scroll to zoom. Click any theme or belief to navigate to its wiki page. Built from <a href="/wiki/kg.json" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);">kg.json</a> at deploy time.</p>
+
+  <div class="graph-stats">
+    <span><strong>177</strong> nodes</span>
+    <span><strong>111</strong> edges</span>
+    <span><strong>12</strong> themes</span>
+    <span><strong>44</strong> beliefs</span>
+    <span><strong>20</strong> projects</span>
+    <span><strong>25</strong> people</span>
+    <span><strong>56</strong> tech</span>
+  </div>
+
+  <div class="graph-controls" role="toolbar" aria-label="Graph filters">
+    <button data-filter="all" class="active">All</button>
+    <button data-filter="Theme">Themes</button>
+    <button data-filter="Belief">Beliefs</button>
+    <button data-filter="Project">Projects</button>
+    <button data-filter="Person">People</button>
+    <button data-filter="Tech">Tech</button>
+  </div>
+
+  <div class="graph-canvas" id="graph">
+    <div class="graph-loading" id="graph-loading">Loading graph (vis-network ~200KB from CDN)...</div>
+  </div>
+
+  <div class="graph-legend">
+    <span><span class="swatch" style="background:#E5A54B"></span>Theme</span>
+    <span><span class="swatch" style="background:#7AB3D6"></span>Belief</span>
+    <span><span class="swatch" style="background:#A6D67A"></span>Project</span>
+    <span><span class="swatch" style="background:#D67A9C"></span>Person</span>
+    <span><span class="swatch" style="background:#9C7AD6"></span>Tech</span>
+  </div>
+
+  <div class="graph-detail" id="graph-detail" aria-live="polite">
+    <p class="empty">Hover or click a node to see its details here.</p>
+  </div>
+
+  <nav class="theme-nav" style="margin-top:var(--space-9);"><a href="/wiki/projects/">&larr; Projects</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>
+</main>
+
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js" crossorigin="anonymous"></script>
+<script>
+(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  });
+})();
+
+(async () => {
+  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Person: '#D67A9C', Tech: '#9C7AD6' };
+  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Person: 'diamond', Tech: 'square' };
+
+  let kg;
+  try {
+    const res = await fetch('/wiki/kg.json');
+    kg = await res.json();
+  } catch (e) {
+    document.getElementById('graph-loading').textContent = 'Failed to load kg.json. Try refresh.';
+    return;
+  }
+
+  const wikiUrlFor = (n) => {
+    if (n.type === 'Theme') return n.wiki_url || ('/wiki/' + (n.slug || n.id.replace(/^theme\./,'')) + '/');
+    if (n.type === 'Belief' && n.tier === '1') return '/wiki/beliefs/' + n.id.replace(/^belief\./,'') + '/';
+    return null;
+  };
+
+  const allNodes = kg.nodes.map((n) => ({
+    id: n.id,
+    label: (n.label || n.id).replace(/^belief\.|^theme\.|^project\.|^person\.|^tech\./, '').slice(0, 32),
+    title: (n.label || n.id) + ' (' + n.type + ')',
+    color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
+    shape: SHAPES[n.type] || 'dot',
+    size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : 8,
+    font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : 11, face: 'JetBrains Mono' },
+    raw: n,
+  }));
+  const allEdges = kg.edges.map((e, i) => ({
+    id: 'e' + i, from: e.from, to: e.to,
+    color: { color: e.rel === 'contains-belief' ? '#444' : e.rel === 'tension-with' ? '#E55A4B' : '#333', opacity: 0.6 },
+    arrows: e.bidirectional ? '' : 'to',
+    width: e.rel === 'contains-belief' || e.rel === 'tension-with' ? 1.5 : 1,
+  }));
+
+  if (typeof vis === 'undefined') {
+    document.getElementById('graph-loading').textContent = 'vis-network failed to load. Check your network.';
+    return;
+  }
+
+  const nodes = new vis.DataSet(allNodes);
+  const edges = new vis.DataSet(allEdges);
+  const container = document.getElementById('graph');
+  document.getElementById('graph-loading').remove();
+  const network = new vis.Network(container, { nodes, edges }, {
+    physics: { stabilization: { iterations: 200 }, barnesHut: { gravitationalConstant: -8000, springLength: 120, avoidOverlap: 0.4 } },
+    interaction: { hover: true, tooltipDelay: 200, navigationButtons: false },
+    edges: { smooth: { type: 'continuous' } },
+  });
+
+  const detail = document.getElementById('graph-detail');
+  const renderDetail = (n) => {
+    const url = wikiUrlFor(n);
+    detail.innerHTML = '<div class="id">' + n.id + ' (' + n.type + ')</div>' +
+      '<p style="margin-top:8px;">' + (n.label || '').replace(/[<>]/g,'') + '</p>' +
+      (url ? '<p style="margin-top:8px;"><a href="' + url + '">Open page &rarr;</a></p>' : '<p style="margin-top:8px;opacity:0.6;font-style:italic;">Graph node only - no wiki page.</p>');
+  };
+  network.on('hoverNode', (p) => { const n = nodes.get(p.node); if (n) renderDetail(n.raw); });
+  network.on('click', (p) => {
+    if (p.nodes.length) {
+      const n = nodes.get(p.nodes[0]);
+      if (n) renderDetail(n.raw);
+    }
+  });
+  network.on('doubleClick', (p) => {
+    if (p.nodes.length) {
+      const n = nodes.get(p.nodes[0]);
+      const url = n && wikiUrlFor(n.raw);
+      if (url) window.location.href = url;
+    }
+  });
+
+  document.querySelectorAll('.graph-controls button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.graph-controls button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      const visible = f === 'all' ? allNodes.map((n) => n.id) : allNodes.filter((n) => n.raw.type === f).map((n) => n.id);
+      const visSet = new Set(visible);
+      nodes.update(allNodes.map((n) => ({ id: n.id, hidden: !visSet.has(n.id) })));
+      edges.update(allEdges.map((e) => ({ id: e.id, hidden: !(visSet.has(e.from) && visSet.has(e.to)) })));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

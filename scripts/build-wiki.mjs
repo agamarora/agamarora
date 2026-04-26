@@ -595,6 +595,298 @@ processDir(THEME_DRAFTS_DIR, "theme");
 processDir(BELIEF_DRAFTS_DIR, "belief");
 if (existsSync(META_DRAFTS_DIR)) processDir(META_DRAFTS_DIR, "meta");
 
+// ---------------------------------------------------------------------------
+// 8. Generated pages from kg.json (projects DAG + graph viz)
+// ---------------------------------------------------------------------------
+function buildProjectsPage() {
+  const kgPath = join(OUT_DIR, "kg.json");
+  if (!existsSync(kgPath)) {
+    console.log(`[build-wiki] skipping projects page (kg.json missing - run build:kg first)`);
+    return;
+  }
+  const kg = JSON.parse(readFileSync(kgPath, "utf8"));
+  const projects = kg.nodes.filter((n) => n.type === "Project" && !n.internal_only);
+  const lineage = kg.edges.filter((e) => e.rel === "builds_on");
+  const childOf = new Map();
+  lineage.forEach((e) => childOf.set(e.from, e.to));
+  const labelOf = new Map(projects.map((p) => [p.id, p.label]));
+
+  // Group projects by year band (newest first); fall back to "various" / unknown
+  const byYear = projects.slice().sort((a, b) => {
+    const ay = (a.year || "").match(/(\d{4})/)?.[1] || "0";
+    const by = (b.year || "").match(/(\d{4})/)?.[1] || "0";
+    return by.localeCompare(ay);
+  });
+
+  const projectRows = byYear
+    .map((p) => {
+      const parent = childOf.get(p.id);
+      const parentLabel = parent ? labelOf.get(parent) || parent : null;
+      const tech = (p.tech_stack || p.tech || "").trim();
+      const beliefs = (p.beliefs_evidenced || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .slice(0, 4)
+        .join(", ");
+      return `<tr>
+<td><strong>${escHtml(p.label || p.id)}</strong></td>
+<td>${escHtml(p.year || "")}</td>
+<td>${escHtml(tech) || "<span style=\"opacity:0.5\">-</span>"}</td>
+<td>${parentLabel ? `builds on <em>${escHtml(parentLabel)}</em>` : "<span style=\"opacity:0.5\">root</span>"}</td>
+<td style="font-size:0.86em;opacity:0.78">${escHtml(beliefs)}</td>
+</tr>`;
+    })
+    .join("\n");
+
+  const articleHtml = `<h1 id="projects">Projects</h1>
+<p class="theme-meta"><span class="tier">DAG view</span> &middot; ${projects.length} projects &middot; ${lineage.length} lineage edges &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
+<p>Twelve years of building. Day-job work is intentionally generic here. Personal projects are the substrate of the ship-the-prototype belief: the prototype is the argument. Every learning project compounds into a top-tier project later.</p>
+<p>The lineage column shows the parent project that taught the technique or framework. Read it as a directed acyclic graph, newest at the top.</p>
+
+<div class="md-table-wrap"><table class="md-table">
+<thead><tr><th>Project</th><th>Year</th><th>Tech</th><th>Lineage</th><th>Beliefs evidenced</th></tr></thead>
+<tbody>
+${projectRows}
+</tbody></table></div>
+
+<hr>
+
+<p><em>Two day-job projects (internal voice-AI platform + MCP-first enterprise platform) are tracked in <a href="/wiki/kg.json">kg.json</a> as internal-only nodes. The wiki body uses generic phrasing per Decision E3.</em></p>
+`;
+
+  const html = pageWrap({
+    title: "Projects",
+    description: `${projects.length} projects across twelve years. DAG view of lineage and belief evidence in agamarora.second-brain.`,
+    canonical: "https://agamarora.com/wiki/projects/",
+    schemaType: "WebPage",
+    breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Projects</span>
+  </nav>`,
+    articleHtml,
+    navHtml: `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><a href="/wiki/graph/">Graph &rarr;</a></nav>`,
+  });
+
+  const outDir = join(OUT_DIR, "projects");
+  mkdirSync(outDir, { recursive: true });
+  const out = join(outDir, "index.html");
+  const tmp = `${out}.tmp`;
+  writeFileSync(tmp, html);
+  renameSync(tmp, out);
+  console.log(`[build-wiki] generated projects -> wiki/projects/index.html (${html.length} bytes)`);
+  okCount++;
+}
+
+buildProjectsPage();
+
+function buildGraphPage() {
+  const kgPath = join(OUT_DIR, "kg.json");
+  if (!existsSync(kgPath)) {
+    console.log(`[build-wiki] skipping graph page (kg.json missing - run build:kg first)`);
+    return;
+  }
+  const kg = JSON.parse(readFileSync(kgPath, "utf8"));
+
+  // The viz fetches /wiki/kg.json client-side and renders with vis-network from CDN.
+  // CSP was updated in netlify.toml to allow unpkg + cdnjs script + style-src.
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graph - Agam Arora's wiki.</title>
+<meta name="description" content="Knowledge graph: ${kg.stats.nodes_total} nodes and ${kg.stats.edges.total} edges across themes, beliefs, projects, people, and tech.">
+<meta name="theme-color" content="#0A0A0A">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/wiki/graph/">
+<meta property="og:title" content="Graph - Agam Arora's wiki.">
+<meta property="og:description" content="Knowledge graph: ${kg.stats.nodes_total} nodes and ${kg.stats.edges.total} edges.">
+<meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
+
+<link rel="canonical" href="https://agamarora.com/wiki/graph/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+
+<style>${SHARED_HEAD_STYLES}
+  .graph-page { max-width: 1200px; }
+  .graph-stats { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-5); }
+  .graph-stats strong { color: var(--accent); font-weight: 500; }
+  .graph-canvas { width: 100%; height: 70vh; min-height: 480px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); position: relative; overflow: hidden; }
+  .graph-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-family: var(--mono); font-size: 0.84rem; pointer-events: none; }
+  .graph-legend { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-top: var(--space-5); font-family: var(--mono); font-size: 0.74rem; color: var(--text-dim); }
+  .graph-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: var(--space-3); vertical-align: middle; }
+  .graph-controls { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); font-family: var(--mono); font-size: 0.78rem; }
+  .graph-controls button { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); cursor: pointer; font: inherit; transition: border-color 0.2s, color 0.2s; }
+  .graph-controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .graph-controls button.active { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+  .graph-detail { margin-top: var(--space-5); padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); min-height: 80px; font-size: 0.95rem; }
+  .graph-detail .id { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); }
+  .graph-detail .empty { color: var(--text-dim); font-style: italic; opacity: 0.7; }
+  .graph-detail a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-dim); }
+</style>
+</head>
+<body>
+
+${SVG_SPRITE}
+
+${SHARED_HEADER_HTML}
+
+${SHARED_AAMARK_HTML}
+
+<main class="page graph-page">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Graph</span>
+  </nav>
+
+  <h1 style="font-size:clamp(2rem,4.5vw,2.6rem);font-weight:700;letter-spacing:-0.025em;margin-bottom:var(--space-5);">Knowledge graph</h1>
+  <p style="color:var(--text);opacity:0.85;line-height:1.6;max-width:680px;margin-bottom:var(--space-6);">Click a node to focus. Drag to pan. Scroll to zoom. Click any theme or belief to navigate to its wiki page. Built from <a href="/wiki/kg.json" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);">kg.json</a> at deploy time.</p>
+
+  <div class="graph-stats">
+    <span><strong>${kg.stats.nodes_total}</strong> nodes</span>
+    <span><strong>${kg.stats.edges.total}</strong> edges</span>
+    <span><strong>${kg.stats.themes}</strong> themes</span>
+    <span><strong>${kg.stats.beliefs.tier_1 + kg.stats.beliefs.tier_2}</strong> beliefs</span>
+    <span><strong>${kg.stats.projects}</strong> projects</span>
+    <span><strong>${kg.stats.people}</strong> people</span>
+    <span><strong>${kg.stats.tech}</strong> tech</span>
+  </div>
+
+  <div class="graph-controls" role="toolbar" aria-label="Graph filters">
+    <button data-filter="all" class="active">All</button>
+    <button data-filter="Theme">Themes</button>
+    <button data-filter="Belief">Beliefs</button>
+    <button data-filter="Project">Projects</button>
+    <button data-filter="Person">People</button>
+    <button data-filter="Tech">Tech</button>
+  </div>
+
+  <div class="graph-canvas" id="graph">
+    <div class="graph-loading" id="graph-loading">Loading graph (vis-network ~200KB from CDN)...</div>
+  </div>
+
+  <div class="graph-legend">
+    <span><span class="swatch" style="background:#E5A54B"></span>Theme</span>
+    <span><span class="swatch" style="background:#7AB3D6"></span>Belief</span>
+    <span><span class="swatch" style="background:#A6D67A"></span>Project</span>
+    <span><span class="swatch" style="background:#D67A9C"></span>Person</span>
+    <span><span class="swatch" style="background:#9C7AD6"></span>Tech</span>
+  </div>
+
+  <div class="graph-detail" id="graph-detail" aria-live="polite">
+    <p class="empty">Hover or click a node to see its details here.</p>
+  </div>
+
+  <nav class="theme-nav" style="margin-top:var(--space-9);"><a href="/wiki/projects/">&larr; Projects</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>
+</main>
+
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js" crossorigin="anonymous"></script>
+<script>
+${AAMARK_SCRIPT}
+
+(async () => {
+  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Person: '#D67A9C', Tech: '#9C7AD6' };
+  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Person: 'diamond', Tech: 'square' };
+
+  let kg;
+  try {
+    const res = await fetch('/wiki/kg.json');
+    kg = await res.json();
+  } catch (e) {
+    document.getElementById('graph-loading').textContent = 'Failed to load kg.json. Try refresh.';
+    return;
+  }
+
+  const wikiUrlFor = (n) => {
+    if (n.type === 'Theme') return n.wiki_url || ('/wiki/' + (n.slug || n.id.replace(/^theme\\./,'')) + '/');
+    if (n.type === 'Belief' && n.tier === '1') return '/wiki/beliefs/' + n.id.replace(/^belief\\./,'') + '/';
+    return null;
+  };
+
+  const allNodes = kg.nodes.map((n) => ({
+    id: n.id,
+    label: (n.label || n.id).replace(/^belief\\.|^theme\\.|^project\\.|^person\\.|^tech\\./, '').slice(0, 32),
+    title: (n.label || n.id) + ' (' + n.type + ')',
+    color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
+    shape: SHAPES[n.type] || 'dot',
+    size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : 8,
+    font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : 11, face: 'JetBrains Mono' },
+    raw: n,
+  }));
+  const allEdges = kg.edges.map((e, i) => ({
+    id: 'e' + i, from: e.from, to: e.to,
+    color: { color: e.rel === 'contains-belief' ? '#444' : e.rel === 'tension-with' ? '#E55A4B' : '#333', opacity: 0.6 },
+    arrows: e.bidirectional ? '' : 'to',
+    width: e.rel === 'contains-belief' || e.rel === 'tension-with' ? 1.5 : 1,
+  }));
+
+  if (typeof vis === 'undefined') {
+    document.getElementById('graph-loading').textContent = 'vis-network failed to load. Check your network.';
+    return;
+  }
+
+  const nodes = new vis.DataSet(allNodes);
+  const edges = new vis.DataSet(allEdges);
+  const container = document.getElementById('graph');
+  document.getElementById('graph-loading').remove();
+  const network = new vis.Network(container, { nodes, edges }, {
+    physics: { stabilization: { iterations: 200 }, barnesHut: { gravitationalConstant: -8000, springLength: 120, avoidOverlap: 0.4 } },
+    interaction: { hover: true, tooltipDelay: 200, navigationButtons: false },
+    edges: { smooth: { type: 'continuous' } },
+  });
+
+  const detail = document.getElementById('graph-detail');
+  const renderDetail = (n) => {
+    const url = wikiUrlFor(n);
+    detail.innerHTML = '<div class="id">' + n.id + ' (' + n.type + ')</div>' +
+      '<p style="margin-top:8px;">' + (n.label || '').replace(/[<>]/g,'') + '</p>' +
+      (url ? '<p style="margin-top:8px;"><a href="' + url + '">Open page &rarr;</a></p>' : '<p style="margin-top:8px;opacity:0.6;font-style:italic;">Graph node only - no wiki page.</p>');
+  };
+  network.on('hoverNode', (p) => { const n = nodes.get(p.node); if (n) renderDetail(n.raw); });
+  network.on('click', (p) => {
+    if (p.nodes.length) {
+      const n = nodes.get(p.nodes[0]);
+      if (n) renderDetail(n.raw);
+    }
+  });
+  network.on('doubleClick', (p) => {
+    if (p.nodes.length) {
+      const n = nodes.get(p.nodes[0]);
+      const url = n && wikiUrlFor(n.raw);
+      if (url) window.location.href = url;
+    }
+  });
+
+  document.querySelectorAll('.graph-controls button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.graph-controls button').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      const visible = f === 'all' ? allNodes.map((n) => n.id) : allNodes.filter((n) => n.raw.type === f).map((n) => n.id);
+      const visSet = new Set(visible);
+      nodes.update(allNodes.map((n) => ({ id: n.id, hidden: !visSet.has(n.id) })));
+      edges.update(allEdges.map((e) => ({ id: e.id, hidden: !(visSet.has(e.from) && visSet.has(e.to)) })));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
+`;
+
+  const outDir = join(OUT_DIR, "graph");
+  mkdirSync(outDir, { recursive: true });
+  const out = join(outDir, "index.html");
+  const tmp = `${out}.tmp`;
+  writeFileSync(tmp, html);
+  renameSync(tmp, out);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes)`);
+  okCount++;
+}
+
+buildGraphPage();
+
 console.log(
   `[build-wiki] done. ${okCount} pages built${errCount ? `, ${errCount} failed` : ""}.`
 );
