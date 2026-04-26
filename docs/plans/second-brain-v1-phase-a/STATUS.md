@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 22.8 — Phase C in flight. C-voice-themes CP-1, CP-2, CP-3 DONE (agent-first ref / voice-ai-craft / breadth-as-differentiation). CP-4 pm-taste queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 22.9 — Phase C in flight. C-voice-themes 4/12 DONE (agent-first / voice-ai-craft / breadth-as-differentiation / pm-taste). CP-5 ai-pm-skillset queued.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-4: pm-taste** via sonnet subagent. Per-theme cadence (one theme / commit / push / STATUS / milestone). Reference page = agent-first.md. Subagent prompt template established (CP-2/CP-3 pattern: read voice-spec §1-§4 + §D1 + 2 reference pages + source draft, return reauthored content with explicit "no trailing drafting residue" gate). 9 themes remaining.
+**Current step:** Phase C / C-voice-themes / **CP-5: ai-pm-skillset** via sonnet subagent. Per-theme cadence. New subagent prompt rule (from CP-4 lesson): DO NOT modify frontmatter `title` or `length_target` — body h1 must match the original `title` field exactly. CP-4 had to be manually reverted. 8 themes remaining.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state

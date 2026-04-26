@@ -1,10 +1,10 @@
 ---
 type: Theme
 slug: pm-taste
-title: PM taste  -  craft, metaphors, and what a PM actually does
+title: PM taste
 one_line: "PM as 99% discrimination: the cumulative weight of refused features, NFRs as primary work, and the featherless-hat invisibility of the craft."
-status: draft-r9-polished
-length_target: 1000-1500
+status: c-voice-r1-cp4
+length_target: 800-1200
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.strong-opinion-about-no-strong-opinions  -  NAMED META-BELIEF (licenses every other belief on this page per A2; 2021-12-12 anchor)
@@ -19,117 +19,69 @@ beliefs:
   - belief.design-thinking-as-speed-tool  -  alignment not UI
 ---
 
-# PM taste  -  craft, metaphors, and what a PM actually does
+# PM taste
 
-*Era: 2021 - 2026 · 15+ posts · 10 beliefs*
+This is one of twelve themes in the wiki. It covers what PM work actually is: not roadmaps, not meetings, not feature-shipping - but the discipline of discrimination at scale. You are likely here because you encountered the 99/1 ratio or the featherless-hat metaphor and want the full argument. This page sits between [spec-first-taste](/wiki/spec-first-taste/) and [AI PM skillset](/wiki/ai-pm-skillset/): the foundational craft dispositions that predate the AI turn, and that the AI turn only sharpened.
 
----
+One setup note: every belief here is held with conviction AND held provisionally. The meta-belief from 2021 - "I have a very strong opinion about having no strong opinions" - is the license. It explains why strong positions sit next to acknowledged scope limits.
 
 ## The meta-belief
 
-Before the craft beliefs, one line from 2021-12-12: "I have a very strong opinion about having no strong opinions."
+On 2021-12-12, one sentence: "I have a very strong opinion about having no strong opinions."
 
-This is not a contradiction to explain away. It is the license for everything else on this page. The PM who has no strong opinions is a pushover who says yes to 99 of the 99 should-we questions. The PM who has only strong opinions is a tyrant who says no to all 99 and never gets to the 1. The productive space: strong opinions held hard, discarded faster when shown wrong. Conviction is real; it just has to earn its place. Read this page with that filter. Every belief below is held with conviction and held provisionally. The paradox is the voice.
+This is the frame. The PM who holds no opinions says yes to 99 of 99 feature requests. The PM with only rigid opinions calls stubbornness taste. The productive space: conviction held hard, discarded faster when evidence contradicts it. A PM without strong opinions is a pushover. One who cannot update them is a bottleneck. The ten beliefs on this page sit inside that tension. Each is held with conviction. Each has an acknowledged scope limit. Cross-listed in [linkedin-as-instrument](/wiki/linkedin-as-instrument/) as the disposition that licenses public takes on contested topics.
 
-Cross-listed in [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) as the disposition that licenses public posting.
+## What PM work actually is
 
-## Core belief
+Product management is not a role you see when it is done right.
 
-Product management is not a role you see when it's done right. It is 99% discrimination  -  answering "should we?" until the rare "can we?" earns disruption. The PM is omnipresent yet indistinguishable: a featherless hat. That invisibility is not a failure of positioning. It is the craft. Taste is what makes the discrimination good: knowing what to refuse before a PRD is written, reading data without mistaking correlation for causation, specifying NFRs as primary work not as a compliance checklist, and aligning stakeholders before touching a line of code. PM taste is the cumulative weight of these moves, repeated until they become reflex.
+The 2022-06-03 post put a ratio on it: "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'. That 1 is disruption. The rest, food." Every day is 99 should-we judgments. The rare can-we only materializes when the 99 were answered well. Say yes to 90 of the 99 and the pipeline fills with features that defer the one question worth asking.
 
----
+Ten weeks before that post, the output of those 99 decisions got a name: the featherless hat. From 2021-09-22: "Product management is a featherless hat that is omnipresent yet indistinguishable if done properly." A feathered hat announces itself. A featherless hat does the job without claiming the room. PM work touches story-level QA, PAT, business-requirement framing, stakeholder alignment. When it works, the product foregrounds engineers and designers. When it fails, every user notices. Two days after that post came the counterbalance: "I truly believe it's near impossible to hide your performance. If you're good at it, no amount of politics will hold you back." The artifact is invisible. The track record compounds.
 
-## How it formed
+Before the ratio and the hat, there was parenting. From 2021-07-12: "Building a product is like raising a child. You'll have to make tough decisions and piss people off at higher places to ensure least influence on your goal." Refusal as PM craft. Not creation. Not shipping. Three metaphors in a tight cluster - parenting (July 2021), featherless hat (September 2021), 99/1 ratio (June 2022) - each addressing the same thing at a different register. Parenting is the emotional posture. The hat is the output. The ratio is the cognitive work.
 
-### 2021: the metaphor-maker era
+## The data literacy layer
 
-The PM-craft metaphors arrive in a tight cluster in 2021, posted within months of each other at FarEye. Looking back, they stack. At the time each was its own post.
+The PM who cannot scope their data's explanatory power is doing astrology with better charts.
 
-The first is parenting (2021-07-12):
+The 2022-05-17 post - 78 reactions, highest-engagement craft post of that era - put it without commentary: "Just because you open an umbrella when it's raining does not mean it will rain whenever you open the umbrella. Not everything can be explained by your data. Identify what can be, and build accordingly." Data literacy is the discipline of knowing which questions data can answer - then building against that category. The PM who cannot draw that boundary will correlate their way into the wrong product. Some should-we judgments are answered with data. Others require taste. Knowing which is which is the craft.
 
-> "Building a product is like raising a child. You'll have to make tough decisions and piss people off at higher places to ensure least influence on your goal. You can't let your child be influenced by everything out there. Nor should you let your product be built around wants and whims."
+## The specification layer
 
-This is about refusal as PM craft. The parent protects a developing thing from the noise that would distort it. The PM does the same. Notice the active verbs: *make tough decisions*, *not let*. Not create. Not ship. Refuse.
+Non-functional requirements are where most products fail. Performance, scalability, security: not afterthoughts delegated to QA. The specification layer where the PM does the work that no one credits when it holds and everyone notices when it breaks.
 
-Ten weeks later, the second metaphor lands (2021-09-22):
+From a 2024-03-08 Collab Article: "Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards." NFR targets - latency thresholds, uptime requirements, security scope - are specified upfront, owned by the PM. Feature completeness is table stakes. When uptime holds, no one credits the PM. When it fails, every user notices. Featherless-hat work at the requirement layer. Invisible when right. Audible when wrong.
 
-> "Product management is a featherless hat that is omnipresent yet indistinguishable if done properly."
+Design thinking lives at this same layer - as a speed tool. From 2024-05-24: "Don't confuse design thinking with making UI/UX first. It is the process of aligning stakeholders and gathering diverse feedback." The paper wireframe and the model-comparison notebook are the same move: make something touchable before committing resources. The build-measure-learn loop is only worth running if the first build is aimed correctly.
 
-A feathered hat announces itself. A featherless hat does its job without claiming the room. PM work is omnipresent at integration-level: it touches story-level QA, PAT, business-requirement framing, stakeholder alignment. But when done properly, the output is a working product that foregrounds no individual contributor. Engineers ship code. Designers ship UI. PM ships integration  -  and integration disappears when it works. Two days later, Agam adds the counterbalance: "I truly believe it's near impossible to hide your performance. If you're good at it, no amount of politics will hold you back." The artifact is invisible; the track record compounds. The hat is featherless, not nonexistent.
+## Taste as a personal, costly commitment
 
-### 2022: quantification
+The anti-customization post from 2025-12-04 is the clearest first-person expression of PM taste as a held, costly stance.
 
-Metaphors compress a feeling. What they leave unanswered is: what, exactly, is the PM doing all day?
+"I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings."
 
-The 2022-06-03 post answers it in 37 words:
+The 2021-22 metaphors described PM work from the outside. This one describes it from the inside: a battle with the self. "Super customizable" sells in the meeting room. Taste refuses it anyway. Each customization setting is a design decision deferred to the user - a pre-paid mortgage on every future deployment. This is the 99/1 ratio made personal.
 
-> "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'. That 1 is disruption. The rest, food."
+One scope limit: enterprise-rooted. The economic argument - six months of implementation, an implementation partner, hundreds of training documents - is shaped by enterprise deployment cycles. The conviction has not been tested against consumer products where the cost structure differs.
 
-This is the metaphor-stack's cognitive layer. Featherless-hat explained the output (invisible). Parenting explained the emotional posture (protective refusal). 99/1 explains the cognitive work: discrimination at scale. The 99 should-we judgments are the grind that keeps the company fed. The 1 can-we is the rare disruption-grade opportunity that only materializes when the 99 were answered well.
+## The compound
 
-One month before, the umbrella post appears (2022-05-17, 78 reactions):
+All of these beliefs run the same direction.
 
-> "Just because you open an umbrella when it's raining does not mean it will rain whenever you open the umbrella. Not everything can be explained by your data. Identify what can be, and build accordingly."
+Refuse before you specify: the 2019 seed post, "Learn to say no. Learn when to say no. Learn who to say no to." Measure what the data can actually explain: the umbrella post. Treat NFRs as first-class work, not sprint-end QA. Align before building: the paper wireframe. Ship with conviction, not configurability: a product with no settings pane ships a PM's decided stance; 47 preference toggles ship a PM's inability to decide.
 
-Data literacy is not the belief that data explains everything. It is the discipline of knowing which questions data can answer and which ones it cannot  -  then building against the first category without letting the second category leak in. The 99 should-we judgments are answered with data AND taste. Neither alone is enough.
+Taste is the cumulative weight of these moves, repeated until they become reflex.
 
-### 2024: the craft layers deepen
+## Where to go from here
 
-Two beliefs crystallize during the LinkedIn Collab Articles badge-grind (late 2023 to early 2024), where Agam competed for Top Voice PM by writing at maximum technical compression.
+Three exits, depending on what you came for.
 
-On NFRs (2024-03-08):
+If you want the **builder-stance application** - how these discrimination instincts carry into working with AI tools - read [spec-first-taste](/wiki/spec-first-taste/). The April 2026 trilogy (Spec > Sprint / Taste > Execution / Context > Prompt) is the AI-era version of the same beliefs. Same taste, different surface.
 
-> "Non-functional requirements are not just tick boxes that a PM needs to go through but actively work towards."
+If you want the **craft in applied domain** - how PM taste maps onto the AI PM role specifically - read [AI PM skillset](/wiki/ai-pm-skillset/).
 
-Non-functional requirements are the dominant failure mode. Performance, scalability, security, ease of use: not afterthoughts delegated to QA. They are the specification layer where most products fail. Feature completeness is table stakes. When uptime holds and latency is invisible, no one credits the PM. When any fails, every user notices. This is featherless-hat work operating at the requirement layer. (`belief.non-functional-reqs-are-dominant-failure-mode`)
-
-On design thinking (2024-05-24):
-
-> "Don't confuse design thinking with making UI/UX first. It is the process of aligning stakeholders and gathering diverse feedback. In the context of AI, I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch and experience first hand."
-
-Design thinking in Agam's practice is not an aesthetic process. It is a speed tool. The faster you align stakeholders on a shared mental model, the faster you build the right thing. The paper wireframe and the model-comparison notebook are both the same move: make something touchable before committing. The belief is downstream of BML (build-measure-learn, 2016 origin)  -  iteration loops are most efficient when the first build is aimed correctly.
-
-### 2025: taste as declared craft-axis
-
-The anti-customization post (2025-12-04) is the clearest first-person expression of PM taste as a held, personal, costly commitment:
-
-> "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live."
-
-Note the shift in register from 2021-22. The earlier metaphors described PM work from the outside. This post describes it from the inside: a battle with the self. "Super customizable" is in scare quotes because that is what sells in the meeting room. The taste is the thing that refuses it anyway. Each customization setting in a PRD is a design decision deferred to the user  -  and a pre-paid mortgage on every future deployment. Anti-customization is the 99/1 ratio made personal: one of the 99 should-we questions answered with maximum conviction.
-
-Scope: this belief is enterprise-rooted. The economic argument (six months of implementation, an implementation partner, hundreds of training documents) is shaped by enterprise deployment cycles and foundation-model coupling. I have not tested this conviction against consumer products where the cost structure differs. (Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the enterprise scope framing.)
-
-### The meta-belief in practice
-
-The ten beliefs on this page are all held with conviction. The meta-belief at the top of the page explains why that is not a contradiction. "I have a very strong opinion about having no strong opinions." (2021-12-12) Conviction is real; it has to earn its place. Taste  -  knowing WHEN to hold firm and WHEN to update  -  is what makes the conviction productive rather than rigid.
-
----
-
-## What it implies in practice
-
-The metaphor-stack and the craft beliefs are not decorative. They point at specific behaviors:
-
-**Refuse before you specify.** The 2019 seed post stated it plainly: "Learn to say no. Learn when to say no. Learn who to say no to." The 99/1 ratio says the same thing with a ratio. If every feature request gets a yes, no disruption-grade work gets through.
-
-**Measure what the data can actually explain.** The umbrella aphorism is a one-line causal-inference primer. AARRR gives the base layer. Level-2 metrics give the drill-down. The PM who can't scope their data's explanatory power is doing astrology with better charts.
-
-**Treat NFRs as first-class work.** Verifiable non-functional metrics  -  latency targets, uptime requirements, security scope  -  are specified upfront, owned by the PM, and not delegated to QA at sprint end. The build-measure-learn loop is only worth running if the "measure" step captures the right signals.
-
-**Align before you build.** The paper wireframe is not a mockup. It is a shared-understanding artifact. The jupyter notebook is not output. It is model-selection evidence stakeholders can react to. Design thinking as a speed tool means: catch misalignment before it compounds.
-
-**Ship with conviction, not configurability.** Products with no settings pane ship a PM's decided stance. Products with 47 preference toggles ship a PM's inability to decide.
-
----
-
-## Tension with `spec-first-taste`
-
-There is an adjacent theme (spec-first-taste) that a reader of this page will likely notice the absence of. In April 2026, Agam crystallized a builder trilogy: Spec > Sprint / Taste > Execution / Context > Prompt. That trilogy is the builder-stance version of the same set of dispositions described here. PM-taste is about institution-fluency  -  what it means to do the PM role well across any company and era. Spec-first-taste is about the AI-era builder stance  -  how to work with generative tools without letting them degrade the spec you already locked.
-
-Same person. Different altitudes. PM-taste asks: "What should we build?" Spec-first-taste asks: "Now that we've decided, how do we build it without losing the decision to tool drift?" The cross-link runs both directions. The taste that refuses customization in a PRD (pm-taste) is the same taste that refuses letting an LLM re-decide typography tokens already locked (spec-first-taste). One belief, two applications.
-
-Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the builder trilogy as the AI-era application of the same discrimination work. And [`linkedin-as-instrument`](/wiki/linkedin-as-instrument/) where the strong-opinion-about-no-strong-opinions productive paradox cross-lists.
-
----
+If you want the **meta-belief in its own context** - the strong-opinion-about-no-strong-opinions productive paradox and why it licenses public posting - read [linkedin-as-instrument](/wiki/linkedin-as-instrument/). The 2021-12-12 anchor cross-lists there.
 
 ## Evidence
 
@@ -146,9 +98,3 @@ Cross-link: [`spec-first-taste`](/wiki/spec-first-taste/) for the builder trilog
 | 2024-03-08 | Collab Article | belief.non-functional-reqs-are-dominant-failure-mode | NFR as dominant failure mode; non-functional requirements as primary PM work (55% Standish stat dropped per E4) |
 | 2024-05-24 | Collab Article | belief.design-thinking-as-speed-tool | Jupyter notebook + paper wireframe as alignment apparatus |
 | 2025-12-04 | corpus post | belief.anti-customization | "Hard-fought battle with myself"  -  taste as personal craft-axis |
-
----
-
----
-
-*Polished: taste-pass decisions applied 2026-04-26.*
