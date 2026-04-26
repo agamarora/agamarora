@@ -547,23 +547,19 @@ function stripSections(body, titlesToStrip /* array of regex */) {
   return out.join("\n");
 }
 
-// Drop draft trace artifacts that don't help humans or agents:
-//   - `*Polished: taste-pass decisions applied 2026-04-26.*`
-//   - `*R6 draft - not final. Inputs to R7+R8.*`
-//   - `*Era: 2023-03 to 2026-04 · 14+ posts · 8 beliefs*`  (era / posts / beliefs meta line — keep simplified version)
-// Also drops trailing `---` separator just before the footer trace.
+// Drop only the OBVIOUSLY mechanical draft trace stamps. Inline references
+// like "(per taste-pass F1)", "Cluster 6", "R3a", "B1 resolution" require
+// smart re-authoring (the original sentence was structured around the
+// reference; deleting it leaves a half-claim). Those get fixed by editing
+// the source drafts in Agam's voice, NOT by render-strip. This function
+// only strips boilerplate that has zero claim content.
 function stripDraftTraces(body) {
-  let out = body
-    // Drop italic footer traces from R-round drafts
-    .replace(/^\*(Polished|Final R\d|R\d draft)[^*]*\*\s*$/gm, "")
-    .replace(/^\*Locked [^*]+\*\s*$/gm, "")
-    // Drop the era/posts/beliefs meta line after h1 (data is on the wiki home + projects DAG)
-    .replace(/^\*Era:[^*]+\*\s*$/gm, "")
-    // Trim consecutive blank lines
-    .replace(/\n{3,}/g, "\n\n");
-  // Drop trailing `---` lines that are now orphans after stripping the footer
-  out = out.replace(/(?:\n---+\s*)+\s*$/m, "\n");
-  return out;
+  return body
+    // Italic footer / locked / era stamps that wrap the whole line
+    .replace(/^\*(Polished|Final R\d+|R\d+\s+[^*]+|Locked\s[^*]+|Era:[^*]+)\*\s*$/gm, "")
+    // Trim consecutive blank lines + trailing orphan ---
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/(?:\n---+\s*)+\s*$/m, "\n");
 }
 
 // Wrap the rendered Evidence section in <details>/<summary> so it collapses

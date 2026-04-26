@@ -3,32 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Breadth as differentiation - Agam Arora's wiki.</title>
-<meta name="description" content="Breadth as differentiation - one of twelve themes plus a root in agamarora.second-brain.">
+<title>Spec first, taste always  -  the builder trilogy - Agam Arora's wiki.</title>
+<meta name="description" content="Spec first, taste always  -  the builder trilogy - one of twelve themes plus a root in agamarora.second-brain.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://agamarora.com/wiki/breadth-as-differentiation/">
-<meta property="og:title" content="Breadth as differentiation - Agam Arora's wiki.">
-<meta property="og:description" content="Breadth as differentiation - one of twelve themes plus a root in agamarora.second-brain.">
+<meta property="og:url" content="https://agamarora.com/wiki/spec-first-taste/">
+<meta property="og:title" content="Spec first, taste always  -  the builder trilogy - Agam Arora's wiki.">
+<meta property="og:description" content="Spec first, taste always  -  the builder trilogy - one of twelve themes plus a root in agamarora.second-brain.">
 <meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Breadth as differentiation - Agam Arora's wiki.">
-<meta name="twitter:description" content="Breadth as differentiation - one of twelve themes plus a root in agamarora.second-brain.">
+<meta name="twitter:title" content="Spec first, taste always  -  the builder trilogy - Agam Arora's wiki.">
+<meta name="twitter:description" content="Spec first, taste always  -  the builder trilogy - one of twelve themes plus a root in agamarora.second-brain.">
 <meta name="twitter:image" content="https://agamarora.com/assets/og/lab.png">
 
-<link rel="canonical" href="https://agamarora.com/wiki/breadth-as-differentiation/">
+<link rel="canonical" href="https://agamarora.com/wiki/spec-first-taste/">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Breadth as differentiation",
-  "url": "https://agamarora.com/wiki/breadth-as-differentiation/",
+  "headline": "Spec first, taste always  -  the builder trilogy",
+  "url": "https://agamarora.com/wiki/spec-first-taste/",
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
   "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
 }
@@ -152,54 +152,54 @@
 
 <main class="page">
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Breadth as differentiation</span>
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Spec first, taste always  -  the builder trilogy</span>
   </nav>
 
   <article role="main">
-<h1 id="breadth-as-differentiation">Breadth as differentiation</h1>
+<h1 id="spec-first-taste-always-the-builder-trilogy">Spec first, taste always  -  the builder trilogy</h1>
 <h2 id="core-belief">Core belief</h2>
-<p>Breadth of knowledge across domains is a genuine professional differentiator. The range is real: it speeds pattern recognition, builds empathy across teams, and creates connective tissue that specialists miss. But post-ChatGPT, that sentence needs a binding constraint. Breadth without a depth-axis has been commoditized. A generalist with no specialty is now, in Agam's phrase from April 2024, a Human-GPT: wide, available, useful to a point, but replicable by a chat interface. The full belief: breadth differentiates, and depth is what makes the breadth matter. Choose at least one niche. Invest. Pivot if it is wrong, but pivot quickly.</p>
+<p>Three lines. One post. April 9, 2026:</p>
+<p>&gt; Spec &gt; Sprint &gt; Taste &gt; Execution &gt; Context &gt; Prompt</p>
+<p>These are not three independent claims. They are three views of the same axiom across three layers: process, craft, and tooling. The composite statement: <strong>the load-bearing work has migrated from doing to deciding.</strong> In an era where AI commoditizes iteration, the constraint is no longer execution speed. It is taste  -  knowing what to build, what to ship, and what to refuse. When you have already specced every pixel, a generative tool gives you a worse version of what you already decided. The spec is the leverage. The model amplifies whatever you put in front of it.</p>
+<p>This is Agam's builder stance as of E4b. Not a PM methodology. A disposition.</p>
 <hr>
 <h2 id="how-it-formed">How it formed</h2>
-<p>The disposition existed before the label.</p>
-<p>In March 2018, Agam was running V2 Games and made a difficult call: he let an employee go for the second time. His own diagnosis of the situation was direct: &quot;She was mostly the office generalist with an occasional book keeping assignment.&quot; He gave her a path to step up into project management. She was not ready. The framing was operational, not theoretical. A generalist without a step up toward depth is a role-gap, not a role. That diagnosis is the seed. It predates ChatGPT by four years.</p>
-<p>By December 2019, the disposition took its first theoretical form. Agam wrote what became a frequently-cited post: &quot;There are three kind of people, a driver, mechanic and an engineer. A driver is someone who is adept in using a tool, a mechanic able to repair the tool and then an engineer who knows the tool inside-out and can create similar tools based on the concept. The world doesn't need more drivers. AI will make you redundant if not now but soon. Strive to learn concepts and not tools. Be a creater!&quot;</p>
-<p>The driver/mechanic/engineer ladder is the depth-axis in positive form: do not be the user of tools, be the conceiver of tools. The &quot;AI will make you redundant&quot; line predicts the Human-GPT critique by four years. Agam already saw that surface fluency would be commoditized. The label had not yet arrived, but the diagnosis had.</p>
-<p>The label arrived on April 12, 2024. By that date, Agam had won the LinkedIn Top Voice PM badge (February 2024) through a months-long Collab Articles competition that rewarded, in his own framing, maximum technical compression on PM topics. He had won a breadth-spanning game. Then he published this:</p>
-<p>&gt; &quot;If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest.&quot;</p>
-<p>Five moves in one post. First: name the failure mode (Human-GPT). Second: use ChatGPT itself as the evidence (it is &quot;a reminder of how overrated being a generalist is&quot;). Third: split depth into two valid axes (vertical = industry or domain expertise; horizontal = functional or specialization expertise). Fourth: permit pivots (&quot;as much as you want but quickly&quot;). Fifth: close with the substrate observation that even the technology exposing the Human-GPT problem is moving toward domain-specific models. The credential and the critique coexist: peer-voted breadth is not the same thing as ChatGPT-replicable breadth.</p>
-<p>Two months later, in a Collab Article on Tech PM, the operational application: &quot;You need deep technical understanding to succeed here. And yes, you can learn this without having a professional technical degree... You can't be done with the studies ever in this role.&quot; Going deep is the explicit phrase. The PM-as-breadth-role still demands depth through sustained technical learning.</p>
-<p>In July 2024, in a Collab piece on career positioning, Agam narrated how he applied the belief to his own move to AIonOS: inside-out (skills and interests) crossed with outside-in (market demand) produced the depth-pick. &quot;Inside-out: I am good at product management, data and software. I enjoy genAI's leaps in code gen and time saving capabilities. Outside-in: Demand for AI product managers, genAI wrappers and LLM based solutions.&quot; The belief became a working tool, not just a published stance.</p>
-<p>The frame kept widening. The April 2024 post already led with EQ as its first prescription: &quot;Focus on EQ. First principle thinking is nothing but EQ.&quot; Humanness-as-depth is my synthesis. The September 2024 Mo Gawdat citation (&quot;in the future, if you know how to use AI you will be efficient but if you know how to connect with humans you will be loved&quot;) confirms it from an independent voice. Mo Gawdat is a supporting voice, not the source. Knowledge becomes a utility; the depth that remains durable is being human: connection, emotional precision, imperfection-as-strength.</p>
-<p>By July 2025, that arc closed. &quot;We humans are built this way: to deeply feel, to be affected, and still have the resilience to bounce back. And no AI will ever take that away. This is both our greatest vulnerability and our greatest strength.&quot; The belief had moved from career-craft register to something close to an existential stance. The deepest niche is being irreducibly human.</p>
+<p>Lived this since 2021. Named it in April 2026. Same disposition, sharper words.</p>
+<p>The vocabulary arrived on April 9, 2026. The disposition predates it by five years.</p>
+<p><strong>2021-22: taste-work without taste-vocabulary.</strong> The PM metaphor stack  -  featherless hat (2021-09-22), 99/1 grind (2022-06-03), product-as-parenting (2021-07-12)  -  was doing taste-work under a different name. Looking back, these stack. At the time each was its own post. &quot;Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'&quot; The 99 should-we questions are discrimination work. Refusal work. Spec work. Five years before the explicit axiom, the PM job was already framed as 99% taste / 1% execution  -  just not named that way.</p>
+<p><strong>2024: field data from AIonOS.</strong> Building GenAI products for enterprise customers produced a clear signal: smaller implementations are sought after; time to value is king; plug and play is the dream. The enterprise-AI-production-reality thesis forms here. Anti-customization-adjacent observations, but the personal craft-axis hasn't locked.</p>
+<p><strong>2025-12-04: the hinge.</strong> &quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings.&quot; The shift from &quot;what enterprises want&quot; to &quot;what I am internally committed to&quot; signals E4b builder-phase voice. The corollary before the principle.</p>
+<p><strong>2026-04-09: crystallization.</strong> Tried Google Stitch. Dropped it in under 30 minutes. Not because it was bad  -  it generated a decent layout in seconds. But it could not hit locked design tokens: wrong fonts, wrong colors, approximate everything. The observation becomes the axiom: Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt.</p>
+<p><strong>2026-04-23: the thesis shipped.</strong> Second-brain launch: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; Eight words, four compressed refusals. The belief is not just declared  -  it is embodied in a shipped artifact.</p>
 <hr>
 <h2 id="what-it-implies">What it implies</h2>
-<p>Three operating commitments follow from this belief, held consistently across the 2018-2026 arc.</p>
-<p>First: choose a niche and invest. Breadth is not enough. Depth can be vertical (industry, domain) or horizontal (functional, specialization). The axis is a free variable; the choice is not. Agam's own choice was the intersection of product management and applied AI, realized through the Collab Article grind, the project lineage (Streamlit experiments, LLM comparator, agentic systems, second-brain), and the AIonOS application-layer PM role.</p>
-<p>Second: pivot if the niche is wrong, but pivot quickly. &quot;Every failed attempt is adding a layer of depth to you&quot; (2024-04-12, paraphrase). The demand is not to lock in forever. It is not to stand still in pure breadth pretending the niche choice is optional. The threshold for &quot;quickly&quot; is left deliberately open. The point: as soon as you know the niche is wrong, move. Not years of drift.</p>
-<p>Third: the depth-axis extends beyond technical expertise. The April 2024 prescription (Focus on EQ, choose your niche, pivot quickly) already led with EQ as its first point: &quot;First principle thinking is nothing but EQ.&quot; The 2024-2025 extension to humanness-as-depth is not a departure. It is the original belief at higher altitude. Breadth keeps you efficient; depth makes you loved.</p>
+<p>Three structural claims. One underlying disposition.</p>
+<p><strong>Spec &gt; Sprint:</strong> invest in the spec, not in iteration speed. Pre-LLM, iteration was scarce  -  speed was the binding constraint. Post-LLM, iteration is near-zero-cost. The model amplifies whatever you give it. An under-spec'd build gives you noise at speed. A well-spec'd build gives you your own vision back, faster. The rational response to cheap iteration is better preparation, not more iteration.</p>
+<p>This is a clean temporal evolution with a specific economics trigger: AI changed the cost structure of iteration. Pre-LLM, the binding constraint was existence  -  ship the thing or it isn't real. Post-LLM, the binding constraint moved upstream to quality-of-spec. Ship-fast (the 2020 belief) is correctly listed as superseded. The shipping cadence did not change. The preparation upstream of it did. (See: <a href="/wiki/personal-projects-tinkering/"><code>personal-projects-tinkering</code></a> for the evolution arc.)</p>
+<p><strong>Taste &gt; Execution:</strong> the skill AI cannot replace is discrimination. Knowing what is worth building. Knowing what to leave out  -  which is where most AI-era work now lives. Execution was always a craft; now it is also a commodity. The remaining differentiator is the judgment layer: what the builder brings to the spec before the AI is invoked.</p>
+<p><strong>Context &gt; Prompt:</strong> the lever for useful AI output is the context you have curated, not the prompt you compose at the I/O seam. A rich personal and organizational context layer  -  structured knowledge, historical decisions, domain priors  -  outperforms clever prompting every time. The second-brain is the operational form of this claim: a living wiki that every future AI session reads. Context beats prompt the same way spec beats sprint.</p>
+<p>The underlying disposition across all three: refuse the fast path. Let the AI sprint at an under-spec'd build and you get noise. Ship a feature without deciding what the product is and you accumulate debt. Craft a clever prompt without curating the context layer and you are optimizing the wrong variable. Agam's builder stance is the systematic refusal of those defaults.</p>
+<p>Anti-customization scope: the belief applies to enterprise AI deployments. Six-month implementation cycles, training documents, foundation-model coupling are all enterprise-shaped. The economic argument has not been fully tested against consumer products where the cost structure differs. (Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a> for the full anti-customization belief with enterprise scope note; <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a> for the production-reality context.)</p>
 <hr>
 <details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
-<thead><tr><th>Date</th><th>Surface</th><th>Form</th><th>Key content</th><th>Weight</th></tr></thead>
+<thead><tr><th>Date</th><th>Surface</th><th>Claim</th></tr></thead>
 <tbody>
-<tr><td>2018-03-15</td><td>Post (V2 era)</td><td>Operational anecdote</td><td>&quot;She was mostly the office generalist&quot; (generalist-as-liability frame)</td><td>seed</td></tr>
-<tr><td>2019-12-04</td><td>Post</td><td>Aspirational / predictive</td><td>Driver/mechanic/engineer ladder; &quot;AI will make you redundant&quot;; &quot;Strive to learn concepts not tools&quot;</td><td>strong</td></tr>
-<tr><td>2024-03-31</td><td>Collab Article</td><td>RWDA list</td><td>Depth-acquisition mechanism: &quot;Read, read and read / Write on the topic / Discuss with experts&quot;</td><td>medium</td></tr>
-<tr><td><strong>2024-04-12</strong></td><td><strong>Post</strong></td><td><strong>Crystallization</strong></td><td><strong>&quot;If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest.&quot;</strong></td><td><strong>canonical anchor</strong></td></tr>
-<tr><td>2024-06-14</td><td>Collab Article</td><td>Tech-PM playbook</td><td>&quot;You need deep technical understanding to succeed here... You can't be done with the studies ever in this role.&quot;</td><td>strong</td></tr>
-<tr><td>2024-07-17</td><td>Collab Article</td><td>Career method</td><td>Inside-out x outside-in self-narration; the AIonOS depth-pick</td><td>strong</td></tr>
-<tr><td>2024-09-25</td><td>Post</td><td>Supporting-voice citation</td><td>Mo Gawdat: knowledge as utility; humanness as durable depth; &quot;if you know how to connect with humans you will be loved&quot;  -  confirms April 2024 synthesis, not the source of it</td><td>strong</td></tr>
-<tr><td>2025-07-22</td><td>Post</td><td>Locus-of-control / existential</td><td>&quot;We humans are built this way: to deeply feel... This is both our greatest vulnerability and our greatest strength.&quot;</td><td>strong</td></tr>
+<tr><td>2021-09-22</td><td>Post</td><td>&quot;Product management is a featherless hat that is omnipresent yet indistinguishable if done properly.&quot; (taste-as-invisible-load-bearing)</td></tr>
+<tr><td>2022-06-03</td><td>Post</td><td>&quot;Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'.&quot; (99/1 as taste-in-practice, pre-vocabulary)</td></tr>
+<tr><td>2024-09-04</td><td>Post</td><td>9 takeaways from building GenAI products: &quot;Smaller implementations are sought after&quot; + &quot;Time to value is king&quot; (anti-customization empirical seed)</td></tr>
+<tr><td>2025-06-20</td><td>Post</td><td>&quot;Plug and play is the dream. No one wants to reinvent every time.&quot; (anti-customization named as enterprise signal)</td></tr>
+<tr><td>2025-12-04</td><td>Post</td><td>&quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings.&quot; (anti-customization as first-person craft-axis)</td></tr>
+<tr><td>2025-12-26</td><td>Post</td><td>Shreyas Doshi re-read commitment: &quot;To get this into my muscle memory.&quot; (taste as deliberate practice, not innate gift)</td></tr>
+<tr><td>2026-04-09</td><td>Post (canonical)</td><td>&quot;Tried and dropped Google Stitch in under 30 minutes... Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt&quot; (trilogy declaration)</td></tr>
+<tr><td>2026-04-23</td><td>Post</td><td>&quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; (second-brain launch as embodiment of the trilogy)</td></tr>
 </tbody></table></div>
-<p><strong>Post count:</strong> 8 distinct evidence items. 5 are original posts; 3 are Collab Article surfaces (Decision 3 compliant: treated as primary technical evidence). The Human-GPT label surfaces by name once (2024-04-12); the critique-pattern underlying it surfaces across 5+ items from 2018 forward.</p>
-<p>The parent belief (<code>belief.breadth-as-differentiation</code>) registers across 18 posts spanning E1 through E4: the T-shape disposition is a persistent signal, not a one-cycle idea.</p>
 </details><hr>
 <hr>
 <p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
-  <nav class="theme-nav"><a href="/wiki/voice-ai-craft/">&larr; Voice AI craft</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/pm-taste/">PM taste &rarr;</a></nav>
+  <nav class="theme-nav"><a href="/wiki/second-brain/">&larr; Second brain</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/career-reflection/">Career reflection &rarr;</a></nav>
 </main>
 
 <script>(function(){
