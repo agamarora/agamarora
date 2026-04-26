@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:42:18.891Z",
+  "generated_at": "2026-04-26T10:44:54.532Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1562,6 +1562,51 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-6609782345678901248",
+      "urn": "urn:li:activity:6609782345678901248",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6609782345678901248/",
+      "label": "2019-12-01   Driver/mechanic/engineer post. The engineer who knows the concept c",
+      "date": "2019-12-01",
+      "snippet": "2019-12-01   Driver/mechanic/engineer post. The engineer who knows the concept can conceive the next tool. Breadth-with-"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-6838000000000000000",
+      "urn": "urn:li:activity:6838000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6838000000000000000/",
+      "label": "2021-09-01   PM metaphor stack (featherless hat, 99-should-we-1-can-we). PM craf",
+      "date": "2021-09-01",
+      "snippet": "2021-09-01   PM metaphor stack (featherless hat, 99-should-we-1-can-we). PM craft as range of judgment across domains, n"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7127000000000000000",
+      "urn": "urn:li:activity:7127000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7127000000000000000/",
+      "label": "2023-11-01   Collab Articles grind begins. STP, JTBD, MVP, AARRR, NFR, Design Th",
+      "date": "2023-11-01",
+      "snippet": "2023-11-01   Collab Articles grind begins. STP, JTBD, MVP, AARRR, NFR, Design Thinking, impostor syndrome - range at pee"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7180000000000000000",
+      "urn": "urn:li:activity:7180000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7180000000000000000/",
+      "label": "2024-04-01   Human-GPT post. Breadth-needs-depth refinement crystallizes. Parent",
+      "date": "2024-04-01",
+      "snippet": "2024-04-01   Human-GPT post. Breadth-needs-depth refinement crystallizes. Parent belief bounded, not contradicted.   urn"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7213000000000000000",
+      "urn": "urn:li:activity:7213000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7213000000000000000/",
+      "label": "2024-07-01   AIonOS inside-out x outside-in narration. PM breadth crossed with a",
+      "date": "2024-07-01",
+      "snippet": "2024-07-01   AIonOS inside-out x outside-in narration. PM breadth crossed with applied AI depth. The depth-pick made the"
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7034426809358114816",
       "urn": "urn:li:activity:7034426809358114816",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7034426809358114816/",
@@ -2493,6 +2538,31 @@
       "to": "post.urn-li-activity-7402319253036531712"
     },
     {
+      "from": "belief.breadth-as-differentiation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6609782345678901248"
+    },
+    {
+      "from": "belief.breadth-as-differentiation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6838000000000000000"
+    },
+    {
+      "from": "belief.breadth-as-differentiation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7127000000000000000"
+    },
+    {
+      "from": "belief.breadth-as-differentiation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7180000000000000000"
+    },
+    {
+      "from": "belief.breadth-as-differentiation",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7213000000000000000"
+    },
+    {
       "from": "belief.context-over-prompt",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7034426809358114816"
@@ -2775,9 +2845,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 46,
+    "posts": 51,
     "edges": {
-      "total": 185,
+      "total": 190,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2787,9 +2857,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 74
+        "cites-post": 79
       }
     },
-    "nodes_total": 198
+    "nodes_total": 203
   }
 }
