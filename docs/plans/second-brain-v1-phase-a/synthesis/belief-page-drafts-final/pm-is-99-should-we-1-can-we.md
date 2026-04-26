@@ -1,82 +1,87 @@
 ---
 type: BeliefPage
-slug: belief.pm-is-99-should-we-1-can-we
-title: PM is 99 should-we questions to earn 1 can-we
-one_line: "PM as discriminator role - 99 'should we?' questions to earn one rare 'can we?' that disrupts."
+slug: pm-is-99-should-we-1-can-we
+title: PM is 99 Should-We Questions to Earn 1 Can-We
+one_line: "Product management is a discrimination function: 99 refusals and prioritizations to earn the one rare can-we that actually moves the company forward."
+quotable: "PM is the grind of answering 99 'should we?' to earn that 1 'can we?' - the rest is food."
 parent_theme: pm-taste
 related_beliefs:
-  - belief.strong-opinion-about-no-strong-opinions
   - belief.taste-over-execution
+  - belief.anti-customization
+  - belief.strong-opinion-about-no-strong-opinions
   - belief.pm-as-parenting
   - belief.pm-is-featherless-hat
-  - belief.anti-customization
   - belief.idea-validation-3-pillars
 supersedes: []
-conditioned_by: []
-holds_with: []
+conditioned_by:
+  - pm-taste
+holds_with:
+  - taste-over-execution
+  - anti-customization
+applies_to:
+  - product-management
+  - prd-writing
+  - scope-management
+  - prioritization
+  - ai-pm
+  - decision-making
+confidence: settled
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp9-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
 ---
 
-# PM is 99 should-we questions to earn 1 can-we
+# PM is 99 Should-We Questions to Earn 1 Can-We
 
-## Statement
+## The belief
 
-Product management is the grind of answering 99 questions of "should we do it?" to get to that 1 bonus question of "can we do it?". That 1 is disruption. The rest, food.
+Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline. The rare "can we do it?" is the bonus question that only arrives after 99 correct answers to "should we do it?" - and that 1 is disruption. The rest is food.
 
-The work is 99% selection, almost never creation. PM is a discriminator role by definition. Every "should we?" answered correctly keeps the company alive. The rare "can we?" answered correctly makes it grow.
+This is not a difficulty claim. It is an identity claim: the role is defined by refusal and prioritization at a ratio of 99 to 1.
 
-This is not a difficulty claim ("PM is hard") or a tactical tip. It is an identity claim. The belief names what the role IS: a discrimination function, running constantly, producing refusals and priorities at a rate of 99 to 1.
+## How to apply
 
-The meta-belief that licenses reading this seriously: "I have a very strong opinion about having no strong opinions." (2021-12-12). That paradox is the governing posture for everything on this page. Convictions held hard, discarded faster when shown wrong. See: `belief.strong-opinion-about-no-strong-opinions`.
+1. **Default to "should we?" before "can we?".** When a new feature request, direction change, or scope addition arrives, the first filter is not technical feasibility - it is strategic fit. Can the team build it is a question for engineers. Whether the team should build it is the PM's call, every time.
 
-## Origin
+2. **Treat every PRD session as a should-we audit.** The PRD is where scope fights happen on paper, not in production. Every item without a clear "should we?" answer becomes a sprint negotiation later. Settle it upstream: the hard-fought battle over customization settings belongs in the spec, not the sprint.
 
-The canonical statement comes from a single post dated 2022-06-03. Thirty-seven words including the punchline. It uses a colon, a period, no em-dashes. The inversion lands on the final clause: "The rest, food." Agam posted it once, declaratively, and let the line do the work. Aphorism-grade beliefs do not get repeated.
+3. **Count your refusals as output.** Saying no to a feature request, an edge-case story, a stakeholder ask - these are deliverables. An invisible deliverable is still a deliverable. A PM who says no correctly is invisible because the product simply works.
 
-It sits at the cognitive fulcrum of a five-year PM identity build. Looking back the metaphors stack. At the time each was its own post:
+4. **Audit the ratio.** When the ratio tips toward mostly can-we debates - feasibility reviews, effort estimates, engineering prioritization - the PM function has drifted into project management territory. The 99/1 split is a diagnostic: if you are spending less than 80% of your time on should-we questions, something has migrated the role.
 
-- 2021-07-12: PM as parenting. Tough decisions, protecting from distortion. Emotional axis.
-- 2021-09-22: PM as featherless hat. Omnipresent, indistinguishable when done right. Visibility axis.
-- 2022-06-03: 99/1 should-we. The cognitive axis. The one that quantifies the ratio.
-- 2025-11-25: CEO-analogy. At CEO altitude, "can we?" is delegated; "should we?" is the entire role.
+5. **At CEO altitude, should-we is the entire job.** When you reach altitude, the can-we questions are fully delegated. The should-we questions are what remain. PM is not a stepping stone to that posture - it is a smaller-scale version of it from day one.
 
-The 99/1 post is the turn in that sequence: from metaphor to quantification. Every metaphor before it describes the feel of the role. This one names the ratio.
+## What this is not
 
-## Refinement arc
+- **Not "avoid can-we questions entirely."** Feasibility is real. Technical risk is real. The claim is about ratio and primacy: should-we comes first, and the PM owns it. Can-we is often borrowed - from engineers, architects, data teams. Should-we is never borrowed.
+- **Not a complexity hierarchy.** The belief does not say should-we questions are harder than can-we questions. They are different in kind. The rare can-we earns its place precisely because 99 should-we calls cleared the runway for it.
+- **Not a formula for slow teams.** The 99/1 ratio describes work composition, not process overhead. Fast teams move fast because the PM answered the should-we questions before the sprint began - not because they skipped them.
 
-The belief has not been revised. It has accumulated evidence.
+## Argues against
 
-The Collab Article comments from 2024 are the operational case for the 2022 declaration. Five distinct examples of "should we?" judgment compressed to 60-180 words each:
+- "Ship fast and let the market tell you what to build - the product itself answers the should-we."
+- "Saying no too early kills innovation; keep the options open until you have data."
+- "The PM should be a facilitator who synthesizes team input, not a discriminator who filters it."
 
-- 2024-03-29: "The decision to kill is a strategic decision." Discontinue a product or legacy version as a first-class should-we judgment.
-- 2024-03-30: Disruption 4-signal checklist (macro factors, competitors, alternatives, cannibalization). Disruption-sensing as selection competence.
-- 2024-03-31: Chose Airtable over JIRA after a survey + user interviews of a 50-person team. Saved thousands of dollars by not blindly going with the default.
-- 2024-09-25: Three gates where scope creep is acceptable. Each gate is a should-we judgment made explicit.
-- 2024-03-23: Interview prep questions that probe the PM-company fit. Selecting the right company is itself a should-we exercise.
+## Where to go from here
 
-The 2025-12-04 anti-customization post is the purest late-corpus expression: "I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." That is a first-person 99/1 in the wild, with the emotional cost of the judgment made visible.
+If you want the **parent theme** that frames this belief, go to [pm-taste](/wiki/pm-taste/). The theme holds the broader case for why taste is the core PM competency.
 
-The 2026-04-09 "Spec > Sprint / Taste > Execution / Context > Prompt" trilogy gives the discrimination faculty a name: taste. The 99/1 belief and the taste-over-execution belief are non-redundant. 99/1 gives the ratio and the identity claim. Taste-over-execution gives the axiology. Together: "PM work is 99% should-we, and the should-we faculty outranks the can-we faculty." Neither alone is the full claim.
+If you want the **purest expression** applied to a specific decision class, go to [anti-customization](/wiki/beliefs/anti-customization/). Holding the line on customization is what a correctly-run 99/1 looks like in practice.
 
-## Cross-links
-
-- `belief.strong-opinion-about-no-strong-opinions`: the meta-belief licensing conviction across all pm-taste beliefs. The paradox that governs how to read this page.
-- `belief.taste-over-execution`: the natural conclusion of 99/1 four years later. Names what does the selecting.
-- `belief.pm-as-parenting`: the emotional partner. The 99 refusals carry parenting-grade emotional labor, not just analytic work.
-- `belief.pm-is-featherless-hat`: the visibility partner. Saying no leaves no artifact. The featherless hat is literally the 99 should-we judgments.
-- `belief.anti-customization`: the purest first-person expression of 99/1 in late voice. One specific should-we held with high conviction.
-- `belief.idea-validation-3-pillars`: distinct altitude. Value / Consumers / Scalability tells you HOW to answer should-we. The 99/1 belief says answering it is the role itself.
+If you want the **named faculty** that does the should-we filtering, go to [taste over execution](/wiki/beliefs/taste-over-execution/). The 99/1 belief names the ratio; taste-over-execution names what runs the filter.
 
 ## Evidence
 
-- 2022-06-03: canonical post. 49 reactions. Single declarative statement.
-- 2024-03-23 through 2024-09-25: five Collab Article responses (decision-to-kill, disruption checklist, Airtable save, interview-prep questions, scope-creep gates). Top 1-2% global signal in Product Management per LinkedIn Collaborative Articles.
-- 2025-12-04: anti-customization post. First-person 99/1 with emotional stakes named.
-- 2025-11-25: CEO-analogy post. At CEO altitude, "should we?" is the entire role.
-- 2021-07-12: parenting post. Earliest companion frame in the metaphor stack.
-- 2019-04-19: "Learn to say no. Learn when to say no. Learn who to say no to." The seed three years before the ratio.
-
----
-*Draft for Phase B HTML scaffolding.*
+| Date | Entry | Post |
+|---|---|---|
+| 2019-04-19 | "Learn to say no. Learn when to say no. Learn who to say no to." Seed statement: the refusal faculty, three years before the ratio. | linkedin-corpus, Cluster 6 |
+| 2021-07-12 | PM as parenting: tough decisions, protecting the product from distortion. Emotional axis companion to the cognitive 99/1. | linkedin-corpus, Cluster 6 |
+| 2022-06-03 | "PM is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'. That 1 is disruption. The rest, food." Canonical statement. 49 reactions. 37 words with the punchline. | linkedin-corpus, Cluster 6 |
+| 2024-03-23 | Interview prep questions that probe PM-company fit. Selecting the right company is itself a should-we exercise before the role begins. | linkedin-corpus, Cluster 6 |
+| 2024-03-29 | "The decision to kill is a strategic decision." Discontinuing a product as a first-class should-we judgment. | linkedin-corpus, Cluster 6 |
+| 2024-09-25 | Three gates where scope creep is acceptable. Each gate is a should-we judgment made explicit and bounded. | urn:li:activity:7245035069900791808 |
+| 2025-11-25 | CEO-analogy post: at CEO altitude, "can we?" is fully delegated; "should we?" is the entire role. Extension of the 99/1 identity claim upward. | linkedin-corpus, Cluster 6 |
+| 2025-12-04 | "I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." First-person 99/1 in the wild, with the emotional cost of a hard should-we call made visible. | urn:li:activity:7402319253036531712 |

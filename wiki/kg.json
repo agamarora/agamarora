@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:26:12.102Z",
+  "generated_at": "2026-04-26T10:29:18.487Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1598,6 +1598,15 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7245035069900791808",
+      "urn": "urn:li:activity:7245035069900791808",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245035069900791808/",
+      "label": "2024-09-25   Three gates where scope creep is acceptable. Each gate is a should-",
+      "date": "2024-09-25",
+      "snippet": "2024-09-25   Three gates where scope creep is acceptable. Each gate is a should-we judgment made explicit and bounded."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7047219999999999999",
       "urn": "urn:li:activity:7047219999999999999",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7047219999999999999/",
@@ -2498,6 +2507,16 @@
       "to": "post.urn-li-activity-7402026484919205888"
     },
     {
+      "from": "belief.pm-is-99-should-we-1-can-we",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7245035069900791808"
+    },
+    {
+      "from": "belief.pm-is-99-should-we-1-can-we",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7402319253036531712"
+    },
+    {
       "from": "belief.second-brain-is-context-layer",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7047219999999999999"
@@ -2695,9 +2714,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 41,
+    "posts": 42,
     "edges": {
-      "total": 178,
+      "total": 180,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2707,9 +2726,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 67
+        "cites-post": 69
       }
     },
-    "nodes_total": 193
+    "nodes_total": 194
   }
 }
