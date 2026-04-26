@@ -25,7 +25,7 @@
   CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
   CP-4 ✅ motion vocabulary: twinkle (CSS) + Lissajous theme drift + signal pulses (5 cadences) + cross-edge recompute per frame
   CP-5 ✅ big-bang single-origin entry (1.8s easeOutQuint) + parallax bg w/ 220 stars + theme echo halos + lerp-based mouse/touch drift
-  CP-6 ⏳ pan/zoom/bounds + fullscreen + mobile responsive
+  CP-6 ✅ pan/zoom (cmd-wheel + drag desktop, pinch touch) + bounds clamp + double-click recenter + fullscreen toggle + responsive mobile sizing
   CP-7 ⏳ keyboard a11y + /design-review against 13 §D2 invariants
 -->
 
@@ -57,10 +57,18 @@
   }
   ::selection{background:var(--accent);color:var(--bg);}
 
-  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:20;padding:0 clamp(1rem,3vw,1.5rem);display:flex;align-items:center;}
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:20;padding:0 clamp(1rem,3vw,1.5rem);display:flex;align-items:center;justify-content:space-between;}
   .icon-bar{display:inline-flex;align-items:center;}
   .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
+
+  .fs-btn{background:transparent;border:1px solid rgba(232,228,223,0.2);color:var(--text);font-family:var(--mono);font-size:11px;letter-spacing:0.05em;padding:6px 12px;border-radius:4px;cursor:pointer;opacity:0.6;transition:opacity 0.15s,border-color 0.15s,color 0.15s;}
+  .fs-btn:hover{opacity:1;border-color:var(--accent);color:var(--accent);}
+
+  /* Pan/zoom interactivity */
+  svg.canvas{touch-action:none;}
+  svg.canvas.panning{cursor:grabbing;}
+  svg.canvas.zoomable{cursor:grab;}
 
   .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:15;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
   .aa-mark:hover{opacity:1;}
@@ -146,6 +154,7 @@
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
   </div>
+  <button class="fs-btn" id="fs-btn" type="button" aria-label="Toggle fullscreen">⛶ fullscreen</button>
 </header>
 
 <a href="/" class="aa-mark" aria-label="agamarora.com">
@@ -156,7 +165,7 @@
   </svg>
 </a>
 
-<div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
+<div class="help-strip"><a href="/wiki/">wiki</a> › graph · <span style="opacity:0.7">cmd+wheel zoom · drag pan · dbl-click recenter</span></div>
 <div class="caption">11 years · 295+ entries · 227 graph nodes · 224 edges</div>
 <div class="subcaption">12 themes · 44 beliefs · 20 projects · 56 tech · 75 posts</div>
 
@@ -165,7 +174,7 @@
   <div><span class="swatch gold"></span>theme (12)</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
   <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ 295+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..5 ✓ · cp-6-7 incoming</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..6 ✓ · cp-7 final pass</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1005,6 +1014,158 @@
     setTimeout(fireLineage, 1000 + Math.random() * 1000);
   }
   setTimeout(fireLineage, 1600);
+
+  // === CP-6: Pan + zoom + bounds + double-click recenter + fullscreen ===
+  // Wheel ALONE = page scroll (never intercept). Cmd/Ctrl+wheel = zoom. Pinch on touch = zoom.
+  // Drag on background (not on a node) = pan. Double-click on background = recenter.
+  // Pan + zoom both clamped: zoom-out floor at full viewBox (anti-drift); pan can't push
+  // constellation beyond viewport bounds.
+  const DEFAULT_VB = { x: 0, y: 0, w: VB_W, h: VB_H };
+  let curVB = { ...DEFAULT_VB };
+  const ZOOM_MIN = 1.0;     // 1.0 = full canvas (zoom-out floor)
+  const ZOOM_MAX = 4.0;     // up to 4x zoom-in
+  let curZoom = 1.0;
+
+  function applyVB(){
+    svg.setAttribute('viewBox', curVB.x + ' ' + curVB.y + ' ' + curVB.w + ' ' + curVB.h);
+  }
+  function clampPan(){
+    // Bounds: viewBox cannot extend beyond a margin around the canvas
+    const margin = 100;
+    const minX = -margin;
+    const maxX = VB_W - curVB.w + margin;
+    const minY = -margin;
+    const maxY = VB_H - curVB.h + margin;
+    if (curVB.x < minX) curVB.x = minX;
+    if (curVB.x > maxX) curVB.x = maxX;
+    if (curVB.y < minY) curVB.y = minY;
+    if (curVB.y > maxY) curVB.y = maxY;
+  }
+  function setZoom(z, focusX, focusY){
+    const newZ = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, z));
+    if (newZ === curZoom) return;
+    // Compute viewBox-space focus point (normalized 0..1)
+    const fx = focusX / window.innerWidth;
+    const fy = focusY / window.innerHeight;
+    const oldW = curVB.w, oldH = curVB.h;
+    const newW = VB_W / newZ;
+    const newH = VB_H / newZ;
+    // Anchor zoom at focus point
+    curVB.x += (oldW - newW) * fx;
+    curVB.y += (oldH - newH) * fy;
+    curVB.w = newW;
+    curVB.h = newH;
+    curZoom = newZ;
+    clampPan();
+    applyVB();
+  }
+
+  // Mouse wheel zoom (cmd/ctrl modifier required so plain wheel scrolls page)
+  svg.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey && !e.metaKey) return; // plain wheel = page scroll
+    e.preventDefault();
+    const direction = e.deltaY < 0 ? 1.1 : 0.9;
+    setZoom(curZoom * direction, e.clientX, e.clientY);
+  }, { passive: false });
+
+  // Drag-to-pan
+  let panStart = null;
+  svg.addEventListener('mousedown', (e) => {
+    // Only pan on left mouse button + bg click (not on nodes)
+    if (e.button !== 0) return;
+    if (e.target.closest('.theme-group, .belief-node, .genesis-core, .fs-btn, a')) return;
+    panStart = { x: e.clientX, y: e.clientY, vbX: curVB.x, vbY: curVB.y };
+    svg.classList.add('panning');
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', (e) => {
+    if (!panStart) return;
+    const dx = (e.clientX - panStart.x) / window.innerWidth * curVB.w;
+    const dy = (e.clientY - panStart.y) / window.innerHeight * curVB.h;
+    curVB.x = panStart.vbX - dx;
+    curVB.y = panStart.vbY - dy;
+    clampPan();
+    applyVB();
+  });
+  document.addEventListener('mouseup', () => {
+    panStart = null;
+    svg.classList.remove('panning');
+  });
+
+  // Double-click background = recenter to default viewBox
+  svg.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.theme-group, .belief-node, .genesis-core, .fs-btn, a')) return;
+    e.preventDefault();
+    curVB = { ...DEFAULT_VB };
+    curZoom = 1.0;
+    applyVB();
+  });
+
+  // Touch: 1-finger drag = pan, 2-finger pinch = zoom
+  let touchPanStart = null;
+  let touchZoomStart = null;
+  svg.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1){
+      const t = e.touches[0];
+      if (e.target.closest('.theme-group, .belief-node, .genesis-core, .fs-btn, a')) return;
+      touchPanStart = { x: t.clientX, y: t.clientY, vbX: curVB.x, vbY: curVB.y };
+    } else if (e.touches.length === 2){
+      const a = e.touches[0], b = e.touches[1];
+      const dist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+      const cx = (a.clientX + b.clientX) / 2;
+      const cy = (a.clientY + b.clientY) / 2;
+      touchZoomStart = { dist, zoom: curZoom, cx, cy };
+      touchPanStart = null;
+    }
+  }, { passive: false });
+  svg.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1 && touchPanStart){
+      const t = e.touches[0];
+      const dx = (t.clientX - touchPanStart.x) / window.innerWidth * curVB.w;
+      const dy = (t.clientY - touchPanStart.y) / window.innerHeight * curVB.h;
+      curVB.x = touchPanStart.vbX - dx;
+      curVB.y = touchPanStart.vbY - dy;
+      clampPan();
+      applyVB();
+      e.preventDefault();
+    } else if (e.touches.length === 2 && touchZoomStart){
+      const a = e.touches[0], b = e.touches[1];
+      const dist = Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY);
+      const newZ = touchZoomStart.zoom * (dist / touchZoomStart.dist);
+      setZoom(newZ, touchZoomStart.cx, touchZoomStart.cy);
+      e.preventDefault();
+    }
+  }, { passive: false });
+  svg.addEventListener('touchend', () => {
+    touchPanStart = null;
+    touchZoomStart = null;
+  });
+
+  // Re-fit on resize: reset to default viewBox
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      curVB = { ...DEFAULT_VB };
+      curZoom = 1.0;
+      applyVB();
+    }, 200);
+  });
+
+  // Fullscreen toggle (browser native API)
+  const fsBtn = document.getElementById('fs-btn');
+  if (fsBtn){
+    fsBtn.addEventListener('click', async () => {
+      if (!document.fullscreenElement){
+        try { await document.documentElement.requestFullscreen(); } catch(e){}
+      } else {
+        try { await document.exitFullscreen(); } catch(e){}
+      }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      fsBtn.textContent = document.fullscreenElement ? '⛶ exit' : '⛶ fullscreen';
+    });
+  }
 
 })();
 </script>
