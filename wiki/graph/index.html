@@ -26,7 +26,7 @@
   CP-4 ✅ motion vocabulary: twinkle (CSS) + Lissajous theme drift + signal pulses (5 cadences) + cross-edge recompute per frame
   CP-5 ✅ big-bang single-origin entry (1.8s easeOutQuint) + parallax bg w/ 220 stars + theme echo halos + lerp-based mouse/touch drift
   CP-6 ✅ pan/zoom (cmd-wheel + drag desktop, pinch touch) + bounds clamp + double-click recenter + fullscreen toggle + responsive mobile sizing
-  CP-7 ⏳ keyboard a11y + /design-review against 13 §D2 invariants
+  CP-7 ✅ keyboard a11y (Tab cycles themes, Enter navigates, Esc home) + layered visibility on hover + 13-invariant verification
 -->
 
 <style>
@@ -128,6 +128,18 @@
   .belief-node:hover{fill:var(--accent) !important;}
   .deep-mesh-line{pointer-events:none;}
 
+  /* CP-7: keyboard focus rings */
+  .theme-group:focus, .genesis-core:focus, .belief-node:focus{outline:none;}
+  .theme-group:focus-visible .theme-node{stroke:var(--accent);stroke-width:2;}
+  .theme-group:focus-visible .theme-label{fill:var(--accent);}
+  .genesis-core:focus-visible{stroke:var(--accent);stroke-width:2;}
+  .belief-node:focus-visible{stroke:var(--accent);stroke-width:1.5;}
+
+  /* CP-7: layered visibility on theme hover/focus — connected cross-edges light up */
+  .cross-edge{transition:stroke 0.15s,stroke-width 0.15s,opacity 0.15s;}
+  .cross-edge.highlit{stroke:rgba(229,165,75,0.55) !important;stroke-width:1 !important;}
+  .cross-edge.dimmed{opacity:0.25 !important;}
+
   @media (max-width: 768px){
     .legend-strip{display:none;}
     .help-strip{font-size:9px;left:64px;}
@@ -174,7 +186,7 @@
   <div><span class="swatch gold"></span>theme (12)</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
   <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ 295+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..6 ✓ · cp-7 final pass</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..7 ✓ — c-graph complete</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -326,23 +338,40 @@
     { r:16, fill:'rgba(229,165,75,0.22)'  },
   ].forEach(h => el('circle', { cx:CX, cy:CY, r:h.r, fill:h.fill, class:'genesis-halo' }));
 
-  // Genesis core — clickable, navigates to wiki home
-  const genesisCore = el('circle', { cx:CX, cy:CY, r:11, fill:'#E5A54B', class:'genesis-core' });
+  // Genesis core — clickable + keyboard accessible, navigates to wiki home
+  const genesisCore = el('circle', {
+    cx:CX, cy:CY, r:11, fill:'#E5A54B', class:'genesis-core',
+    tabindex:'0', role:'button',
+    'aria-label':'agam.arora root — open wiki home',
+  });
   genesisCore.style.cursor = 'pointer';
   genesisCore.addEventListener('click', () => { window.location.href = '/wiki/root.substance-over-hype/'; });
+  genesisCore.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); window.location.href = '/wiki/root.substance-over-hype/'; }
+  });
 
   // Genesis label + sublabel
   el('text', { x:CX, y:CY + 32, 'text-anchor':'middle', class:'genesis-label' }).textContent = 'agam.arora';
   el('text', { x:CX, y:CY + 50, 'text-anchor':'middle', class:'genesis-sublabel' }).textContent = '11 years · second brain';
 
   // === Render: 11 theme nodes ===
-  THEMES.forEach(t => {
-    const g = el('g', { class:'theme-group', 'data-theme':t.id, transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')' });
+  THEMES.forEach((t, ti) => {
+    const g = el('g', {
+      class:'theme-group',
+      'data-theme':t.id,
+      transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')',
+      tabindex:'0',
+      role:'button',
+      'aria-label':'theme: ' + t.label + ' — open /wiki/' + t.slug + '/',
+    });
     g.style.cursor = 'pointer';
     g.addEventListener('click', (ev) => {
       // Don't navigate if click landed on an inner belief node (it has its own handler)
       if (ev.target.classList && ev.target.classList.contains('belief-node')) return;
       window.location.href = '/wiki/' + t.slug + '/';
+    });
+    g.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); window.location.href = '/wiki/' + t.slug + '/'; }
     });
 
     // Belief-cluster sub-group — created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
@@ -1166,6 +1195,44 @@
       fsBtn.textContent = document.fullscreenElement ? '⛶ exit' : '⛶ fullscreen';
     });
   }
+
+  // === CP-7: layered visibility on hover/focus ===
+  // When a theme is hovered/focused, its connected cross-edges light up; unrelated edges dim.
+  // Implements the "layered visibility" rule from DESIGN.md (most dim at rest, contextual ones
+  // light up on engagement — anti AI-slop "all edges visible all the time" pattern).
+  function highlightTheme(themeId){
+    crossEdgeRefs.forEach(ref => {
+      const isConnected = ref.from === themeId || ref.to === themeId;
+      ref.path.classList.toggle('highlit', isConnected);
+      ref.path.classList.toggle('dimmed', !isConnected);
+    });
+  }
+  function clearHighlight(){
+    crossEdgeRefs.forEach(ref => {
+      ref.path.classList.remove('highlit');
+      ref.path.classList.remove('dimmed');
+    });
+  }
+  document.querySelectorAll('g.theme-group').forEach(g => {
+    const tid = g.getAttribute('data-theme');
+    g.addEventListener('mouseenter', () => highlightTheme(tid));
+    g.addEventListener('mouseleave', clearHighlight);
+    g.addEventListener('focus', () => highlightTheme(tid));
+    g.addEventListener('blur', clearHighlight);
+  });
+
+  // === CP-7: keyboard global handlers ===
+  // Esc → /wiki/ home (return to wiki landing)
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){
+      // Prefer exiting fullscreen first if active
+      if (document.fullscreenElement){
+        document.exitFullscreen().catch(() => {});
+        return;
+      }
+      window.location.href = '/wiki/';
+    }
+  });
 
 })();
 </script>
