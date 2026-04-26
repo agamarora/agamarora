@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 23.3 — Phase C in flight. C-voice-themes 8/12 DONE. CP-9 career-reflection queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 23.4 — Phase C in flight. C-voice-themes 9/12 DONE. CP-10 linkedin-as-instrument queued.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-9: career-reflection** via sonnet subagent. 4 themes remaining: career-reflection, linkedin-as-instrument, personal-projects-tinkering, root.
+**Current step:** Phase C / C-voice-themes / **CP-10: linkedin-as-instrument** via sonnet subagent. 3 themes remaining: linkedin-as-instrument, personal-projects-tinkering, root.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
