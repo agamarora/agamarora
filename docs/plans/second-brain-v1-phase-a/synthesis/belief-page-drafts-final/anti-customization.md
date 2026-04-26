@@ -1,70 +1,82 @@
 ---
 type: BeliefPage
-slug: belief.anti-customization
+slug: anti-customization
 title: Anti-customization
-one_line: "Enterprise PRDs that overspec customization defer cost and break day-zero value. The PRD is where the contract gets set."
+one_line: "Every customization setting in a PRD is a deferred design decision that will cost six months, an implementation partner, and day-zero go-live."
+quotable: "Say no to customization in the PRD, even when you're fighting yourself to do it."
 parent_theme: pm-taste
 related_beliefs:
   - belief.taste-over-execution
   - belief.spec-over-sprint
   - belief.pm-is-99-should-we-1-can-we
   - belief.enterprise-ai-production-reality
-  - belief.non-functional-reqs-are-dominant-failure-mode
 supersedes: []
 conditioned_by: []
-holds_with: []
+holds_with:
+  - belief.spec-over-sprint
+  - belief.taste-over-execution
+applies_to:
+  - product-management
+  - prd-writing
+  - scope-management
+  - ai-product-development
+  - customization-tradeoffs
+  - product-strategy
+confidence: settled
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp12-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
 ---
 
 # Anti-customization
 
-## Statement
+## The belief
 
-Scope: enterprise AI deployments. This has not been tested against consumer products. The economic argument is enterprise-rooted.
+Every customization setting in a PRD is a deferred design decision. The moment a team writes "users can configure X," they have pushed a real product call into implementation, onboarding, and support - all places where it costs more and lands worse than if it had been decided at spec-time. Say no in the PRD, even when every room in the building is asking you to say yes.
 
-In enterprise software, every customization setting in a PRD is a deferred design decision. Today's "super customizable" product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live. The economic tail on that is long and almost always underestimated at spec-time. The PRD is where the contract gets set. Customization in the PRD is a self-inflicted wound.
+This is an enterprise-AI belief. The economics are rooted in deployment reality: "super customizable" products eventually require six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live. Time to value is the metric customization-tax always violates.
 
-The defeat language in the 2025-12-04 declaration is not rhetorical: "I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." Saying yes to customization is easier in every meeting room. Opinionatedness is needed precisely because the path of least PM resistance is to capitulate.
+## How to apply
 
-## Origin
+1. **Default to no customization in the first PRD draft.** When a feature is proposed as "configurable," ask what the opinionated default would be. Write that default into the spec. Do not yield to configurability as a conflict-resolution mechanism.
 
-This is an enterprise-AI-era belief. It does not predate the AIonOS enterprise-AI window.
+2. **Treat customization requests as latent disagreements about product direction.** When a team asks for a settings panel, two valid use cases have usually not been reconciled at the product level. Resolve the tension in the PRD, not in the implementation. The settings panel is the lazy resolution.
 
-Field observation first: the 2024-09-04 post on "9 takeaways" from demoing enterprise GenAI products to customers named symptoms before naming the cause: "Smaller implementations are sought after." "Time to value is king." "Building for a demo vs. building for production is a different beast." These are the metrics customization-tax violates. The variable was not yet named.
+3. **Audit the economic tail before approving any configuration setting.** For each proposed customization: estimate onboarding time, training-document overhead, and whether it blocks day-zero go-live. The cost is almost always underestimated at spec-time.
 
-By 2025-06-20, the negation was explicit in the agent-first manifesto: "Plug and play is the dream. No one wants to reinvent every time." Still framed as "what enterprises want" rather than "what I believe."
+4. **Hold the scope line when "plug and play" is the actual customer promise.** Enterprise AI buyers want go-live, not flexibility. "No one wants to reinvent every time." Every customization option is a direct tax on time-to-value. The spec should reflect what the customer actually wants, not what the sales team found easier to agree to.
 
-The shift to personal craft-axis came on 2025-12-04: the first post where Agam locates the disposition inside his own PM judgment rather than the market's preference. That is what makes the declaration different from the earlier field observations.
+5. **Ship the opinionated version first.** A tight scope shipped fully beats a flexible scope shipped partially. If the opinionated version proves wrong in the field, add configuration in v2 - based on real evidence. Anti-customization is pro-evidence, not anti-iteration.
 
-The belief arc: 2024-09-04 field observation to 2025-12-04 declaration is roughly 15 months. Not a long-arc belief like substance-over-hype (8-year through-line). Enterprise-AI era only.
+## What this is not
 
-## Refinement arc
+- **Not "never allow any configuration ever."** The belief is scoped to the PRD as the contract-setting moment. Configuration earned through field evidence - real user friction, real use-case divergence - is legitimate. The distinction is evidence-based configuration added later vs. spec-time configuration assumed preemptively.
+- **Not a consumer-product principle.** The economic argument is enterprise-rooted. Consumer products with self-serve onboarding face a different tradeoff. The belief targets enterprise AI deployments where implementation cost and onboarding time compound.
+- **Not "override stakeholder input."** The belief is about internal PM judgment: holding the scope line even when capitulating is the path of least resistance. Opinionatedness is needed precisely because the pressure to configure is always present and usually well-intentioned.
 
-No supersession. This belief fills a previously unstated gap in the PM-taste family. It refines the parent disposition (pm-taste) by specifying one concrete decision-rule: refuse customization in the PRD, even when fighting yourself.
+## Argues against
 
-The 2026-04-09 Spec > Sprint trilogy extends the same disposition from PRD-craft to tool-craft: locking design tokens before using a generative tool is anti-customization at the build layer. Same disposition applied one level up. Second-brain v1 (2026-04-23: "Plain markdown. Git. Open source. MIT. Free forever.") ships the belief as a product: no settings, preferences, themes, or plugins. These are post-declaration confirmations, not refinements of the core position.
+- "Make it configurable and let customers decide what they need."
+- "Customization is a competitive feature - it's what enterprise buyers ask for in the RFP."
+- "We can add defaults later; for now, give them the flexibility."
 
-One counter-evidence post exists: 2024-09-25 BIM post listed "Customization: Tailored to meet specific organizational requirements" as value point #1 while curating an external article. This falls in the interregnum when field data was pointing toward anti-customization but the position had not yet locked. It is not evidence Agam believed customization was a virtue; it is evidence the belief had not yet crystallized.
+## Where to go from here
 
-## Cross-links
+If you want the **parent theme** that holds this belief, go to [pm-taste](/wiki/pm-taste/). The theme frames why strong product opinions are a craft asset, not a negotiating posture.
 
-- Parent theme: wiki:pm-taste (primary)
-- Cross-theme: wiki:spec-first-taste (secondary)
-- Related beliefs: wiki:beliefs:belief.taste-over-execution
-- Related beliefs: wiki:beliefs:belief.spec-over-sprint
-- Related beliefs: wiki:beliefs:belief.pm-is-99-should-we-1-can-we
-- Related beliefs: wiki:beliefs:belief.enterprise-ai-production-reality
+If you want the **spec-layer version** of the same principle - why locking scope before iteration is correct when AI tools make iteration cheap - go to [spec over sprint](/wiki/beliefs/spec-over-sprint/). The binding constraint is how clearly you decided, not how fast you shipped.
+
+If you want the **decision-making frame** that governs when to say no - ninety-nine "should we?" questions must be settled before "can we?" is relevant - go to [pm is 99 should-we 1 can-we](/wiki/beliefs/pm-is-99-should-we-1-can-we/).
 
 ## Evidence
 
-- 2024-03-26 - "People are not paying for features. They are paying to solve their problems." (JTBD aphorism: features-as-wrong-unit) - linkedin-corpus
-- 2024-09-04 - "Smaller implementations are sought after." / "Time to value is king." / "Building for a demo vs. building for production is a different beast." (9-takeaways anchor, empirical seed) - linkedin-corpus
-- 2025-06-20 - "Plug and play is the dream. No one wants to reinvent every time." (agent-first manifesto, point 6 - clearest pre-cite) - linkedin-corpus
-- 2025-12-04 - "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live." - linkedin-corpus, urn:li:activity:7402319253036531712 (canonical declaration)
-- 2026-04-09 - "It couldn't hit my locked design tokens...wrong fonts, wrong colors, approximate everything." (Spec > Sprint: anti-customization extended to tool-craft layer) - linkedin-corpus, Cluster 16
-- 2026-04-23 - "Plain markdown. Git. Open source. MIT. Free forever." (second-brain v1: shipped product with no settings, preferences, or plugins) - project.second-brain-v1
-
----
-*Draft for Phase B HTML scaffolding.*
+| Date | Entry | Post |
+|---|---|---|
+| 2024-03-26 | "People are not paying for features. They are paying to solve their problems." JTBD aphorism: features as wrong unit. | linkedin-corpus |
+| 2024-09-04 | "Smaller implementations are sought after." / "Time to value is king." / "Building for a demo vs. building for production is a different beast." Empirical seed: the metrics customization-tax violates. | linkedin-corpus |
+| 2025-06-20 | "Plug and play is the dream. No one wants to reinvent every time." Agent-first manifesto, point 6: clearest pre-declaration. | linkedin-corpus |
+| 2025-12-04 | "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live." Canonical declaration. | linkedin-corpus, urn:li:activity:7402319253036531712 |
+| 2026-04-09 | "It couldn't hit my locked design tokens...wrong fonts, wrong colors, approximate everything." Anti-customization extended to tool-craft: lock the tokens, trust the spec. | linkedin-corpus, Cluster 16 |
+| 2026-04-23 | "Plain markdown. Git. Open source. MIT. Free forever." second-brain v1 shipped with no settings, preferences, themes, or plugins. Belief embodied as product. | project.second-brain-v1 |
