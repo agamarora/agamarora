@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:29:18.487Z",
+  "generated_at": "2026-04-26T10:32:53.196Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1598,6 +1598,33 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-6859808635776897024",
+      "urn": "urn:li:activity:6859808635776897024",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6859808635776897024/",
+      "label": "People management is a critical skill but it's not for everyone... Individuals w",
+      "date": "2021-10-30",
+      "snippet": "People management is a critical skill but it's not for everyone... Individuals who believe in pursuit of functional expertise can now have a home."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7083000000000000000",
+      "urn": "urn:li:activity:7083000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7083000000000000000/",
+      "label": "The lowest common denominator came out to be hours put in.",
+      "date": "",
+      "snippet": "The lowest common denominator came out to be hours put in."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7214935682534957056",
+      "urn": "urn:li:activity:7214935682534957056",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7214935682534957056/",
+      "label": "AI Product Manager",
+      "date": "2024-07-04",
+      "snippet": "AI Product Manager"
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7245035069900791808",
       "urn": "urn:li:activity:7245035069900791808",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245035069900791808/",
@@ -2507,6 +2534,26 @@
       "to": "post.urn-li-activity-7402026484919205888"
     },
     {
+      "from": "belief.ic-path-legitimacy",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6859808635776897024"
+    },
+    {
+      "from": "belief.ic-path-legitimacy",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7083000000000000000"
+    },
+    {
+      "from": "belief.ic-path-legitimacy",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7214935682534957056"
+    },
+    {
+      "from": "belief.ic-path-legitimacy",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7396047657951064064"
+    },
+    {
       "from": "belief.pm-is-99-should-we-1-can-we",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7245035069900791808"
@@ -2714,9 +2761,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 42,
+    "posts": 45,
     "edges": {
-      "total": 180,
+      "total": 184,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2726,9 +2773,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 69
+        "cites-post": 73
       }
     },
-    "nodes_total": 194
+    "nodes_total": 197
   }
 }
