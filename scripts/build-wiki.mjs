@@ -1409,19 +1409,17 @@ function buildGraphPage() {
   .aa-mark svg text{font-family:var(--mark);}
 
   /* Help strip moved BELOW header zone (header is up to ~64px) so it stops getting hidden */
-  .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;max-width:calc(100vw - 48px);}
+  .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;}
   .help-strip a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed rgba(232,228,223,0.15);transition:color 0.2s,border-color 0.2s;}
   .help-strip a:hover{color:var(--accent);border-color:var(--accent);}
-  /* Caption + sub-caption stack BELOW header on right side; positions computed off header height */
+  /* Caption: real corpus scale below header on right side. The 11-years signal lives here. */
   .caption{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);right:24px;z-index:90;font-family:var(--mono);font-size:11px;color:var(--text);opacity:0.6;letter-spacing:0.04em;text-align:right;max-width:calc(100vw - 48px);}
-  .subcaption{position:fixed;top:calc(clamp(52px,6vw,64px) + 32px);right:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.45;letter-spacing:0.04em;text-align:right;max-width:calc(100vw - 48px);}
 
   .legend-strip{position:fixed;bottom:84px;left:24px;z-index:50;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;line-height:1.7;}
   .legend-strip .swatch{display:inline-block;border-radius:50%;vertical-align:middle;margin-right:6px;}
   .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
   .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
 
-  .spec-tag{position:fixed;bottom:22px;left:24px;z-index:50;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.05em;}
 
   /* Two-layer SVG: parallax bg (dim, future CP-5) + interactive constellation foreground */
   svg.parallax-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;display:block;pointer-events:none;}
@@ -1479,10 +1477,8 @@ function buildGraphPage() {
   /* Mobile chrome: aggressive hide to prevent overlap. Only essentials remain. */
   @media (max-width: 768px){
     .legend-strip{display:none;}
-    .help-strip{display:none;}            /* hint not needed on touch */
+    .help-strip{display:none;}
     .caption{font-size:10px;}
-    .subcaption{display:none;}             /* breakdown hidden on narrow */
-    .spec-tag{display:none;}
     .fs-btn{font-size:10px;padding:5px 9px;}
   }
   @media (max-width: 480px){
@@ -1507,16 +1503,13 @@ ${SVG_SPRITE}
 
 ${SHARED_AAMARK_HTML}
 
-<div class="help-strip"><a href="/wiki/">wiki</a> › graph · <span style="opacity:0.7">cmd+wheel zoom · drag pan · dbl-click recenter</span></div>
+<div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
 <div class="caption">11 years · ${totalEntries}+ entries · ${kg.stats.nodes_total} graph nodes · ${kg.stats.edges.total} edges</div>
-<div class="subcaption">${kg.stats.themes} themes · ${kg.stats.beliefs.tier_1 + kg.stats.beliefs.tier_2} beliefs · ${kg.stats.projects} projects · ${kg.stats.tech} tech · ${kg.stats.posts || 0} posts</div>
 
 <div class="legend-strip">
-  <div><span class="swatch genesis"></span>genesis</div>
-  <div><span class="swatch gold"></span>theme (${kg.stats.themes})</div>
+  <div><span class="swatch genesis"></span>genesis · agam.arora</div>
+  <div><span class="swatch gold"></span>theme</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
-  <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ ${totalEntries}+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1..7 ✓ — c-graph complete</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1524,8 +1517,6 @@ ${SHARED_AAMARK_HTML}
 
 <!-- LAYER 1: interactive constellation foreground -->
 <svg class="canvas" id="constellation" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Knowledge graph constellation: genesis at center, 11 themes orbiting"></svg>
-
-<div class="spec-tag">C-graph CP-1 · authored sky atlas (skeleton)</div>
 
 <script>
 ${AAMARK_SCRIPT}
