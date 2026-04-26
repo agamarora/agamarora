@@ -89,6 +89,33 @@ At https://agamarora.com/enter there is an immersive AI terminal: a keyboard-bac
 
 ---
 
+## Wiki: second-brain v1
+
+The wiki at https://agamarora.com/wiki/ distills twelve years of writing into 12 themes plus a root disposition. Built for me first, structured to be readable by agents.
+
+The full machine-readable graph lives at https://agamarora.com/wiki/kg.json. ~190 nodes across themes, beliefs, projects, posts, and tech. ~167 edges across builds_on, demonstrates, superseded_by, refined_by, tension-with, contains-belief, cites-post, earned_through. Locked from the synthesis-of-record at docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md plus URN refs scanned from every wiki draft.
+
+Theme one-liners:
+
+- Substance over hype (root): reduce any hyped category to its substrate, then evaluate. Eight-year through-line from blockchain (2018) to anti-customization (2025).
+- Agent-first thesis: platforms that cannot talk to autonomous agents are already behind. The serving lens is the differentiation. Prompts are plumbing; context is the lever.
+- Voice AI craft: a distinct engineering discipline with its own constraints. Cost, latency, scale.
+- Breadth as differentiation: breadth differentiates, depth makes it matter. Humanness-as-depth is the AI-era axis.
+- PM taste: 99 percent should-we, 1 percent can-we. Strong opinion about not having strong opinions.
+- AI PM skillset: LLMs as primary daily tool. AI replaces grunt. Taste of what to build is irreducible PM work.
+- Enterprise AI reality: roughly 80 percent of enterprise AI experiments don't reach production. Demos are not deployments.
+- Second brain: personal context layer for AI sessions. Hobbyist scope, Karpathy-inspired wiki version.
+- Spec first, taste always: Spec greater than Sprint, Taste greater than Execution, Context greater than Prompt.
+- Career reflection: IC path is legitimate. AI-era amplifies IC leverage. Learn concepts, not tools. Help the market flourish.
+- LinkedIn as instrument: platform to be gamed productively. Posting IS the thinking.
+- Personal projects: ship it or it doesn't exist. The prototype is the argument.
+
+Belief sub-pages (19 Tier-1 beliefs) live at /wiki/beliefs/. Voice doc at /wiki/voice/. Quote library at /wiki/quotes/. Projects DAG at /wiki/projects/. Force-directed graph viz at /wiki/graph/.
+
+The agent at /enter is grounded in this wiki. It speaks for Agam in third person. It will tell you it's an agent, not Agam, if you ask.
+
+---
+
 ## Identity & contact
 
 - Full name: Agam Arora

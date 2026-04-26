@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -152,23 +164,14 @@
 <p>On September 14, 2017, Agam watched a Grant Cardone video that opened with &quot;Dominate, don't compete.&quot; His response was immediate: &quot;I was just awed by the presentation of it that I was like 'hell yeah, dominate'.&quot; Then, in the same post, he walked it back. Named the cost vectors explicitly: &quot;Domination comes at a cost. Morally, emotionally, financially or even plain aesthetics.&quot; Ended with the choice stated as a question that already contained the answer: &quot;Would you help the market flourish while you try to make your healthy share?&quot;</p>
 <p>This is the only post in the corpus where Agam publicly switches a posture in real time - seduction and walk-back visible in a single document.</p>
 <p>By July 12, 2018, the belief had crystallized into a mnemonic. At the V2-to-FarEye transition, Agam wrote: &quot;One of my favourite professors once said, go increase the size of the pie if you want a bigger share. That's the plan.&quot; Sourced to a teacher, not invented. The attribution is characteristic - citing the upstream voice rather than claiming the line.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The belief did not change in form after 2018. What changed is the register it appeared in.</p>
-<p>By February 2019, it generated concrete substitutions in a BD-context post: &quot;Value over revenue. Humans over resources. Trust over contracts.&quot; Three axes. The belief was now a frame that produced other beliefs, not just a market posture.</p>
-<p>By November 2023, in a Collab Article, the belief surfaced as advice to others: &quot;You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there.&quot; Same posture, six years on, mentor register.</p>
-<p>At the FarEye farewell in May 2024, the belief produced a register rather than a restatement. Agam left the company with: &quot;This rocket ship is still firing on all cylinders while I take my leave.&quot; He chose to be &quot;clapping on the side when you guys ring the bell.&quot; That is what help-market-flourish sounds like at exit moments - celebrate the field, take your healthy share of recognition by being the loudest person clapping for those still in it.</p>
-<p>No post between September 2017 and April 2026 reverts to conquest framing as Agam's own stance. The supersession is clean and durable.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.dominate-dont-compete</code> - the superseded pre-state. 2017-09-14 supersession date. Kept as a historical node so the inversion event has somewhere to point.</li><li><code>belief.never-be-smartest-in-room</code> - the epistemic-posture sibling. Help-market-flourish: don't try to be the biggest. Never-be-smartest: don't try to be the smartest. Both expand the room rather than rank within it.</li><li><code>belief.linkedin-as-instrumental-platform</code> - the belief sets the moral floor under LinkedIn use: instrumental but not extractive. The 2024-05-23 &quot;human connections matter&quot; post sits at the seam.</li><li><code>belief.ic-path-legitimacy</code> - the IC-vs-management choice carries the same posture: don't conquer the org chart, contribute on the path that matches your actual reach.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p><strong>Origin event (2017-09-14):</strong> &quot;Choose wisely, domination comes at a cost. Morally, emotionally, financially or even plain aesthetics.&quot; The only public real-time posture-flip in the corpus.</p>
 <p><strong>Canonical mnemonic (2018-07-12):</strong> &quot;Go increase the size of the pie if you want a bigger share. That's the plan.&quot; Used at the V2-to-FarEye career transition - a moment where conquest framing would be tempting.</p>
 <p><strong>BD register (2019-02-19):</strong> &quot;Value over revenue. Humans over resources. Trust over contracts. The time of win-win relationships is here.&quot; Belief generating axis-substitutions; operational form in a sales and business-development context.</p>
 <p><strong>Collab Article (2023-11-22):</strong> &quot;You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there.&quot; Advice-to-others register, six years after origin.</p>
 <p><strong>Farewell as register (2024-05-19):</strong> &quot;This rocket ship is still firing on all cylinders while I take my leave... I will be clapping on the side when you guys ring the bell.&quot; The belief producing the voice, not the words.</p>
 <p><strong>Live application (2026-04-26):</strong> This site (agamarora.com) and the second-brain v1 wiki are open-source. Repo: agamarora/agamarora. Same instinct - help others build. The most recent direct evidence that the belief is active, not archived.</p>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/career-reflection/">&larr; Career reflection</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -155,18 +167,9 @@
 <p>It sits at the cognitive fulcrum of a five-year PM identity build. Looking back the metaphors stack. At the time each was its own post:</p>
 <ul><li>2021-07-12: PM as parenting. Tough decisions, protecting from distortion. Emotional axis.</li><li>2021-09-22: PM as featherless hat. Omnipresent, indistinguishable when done right. Visibility axis.</li><li>2022-06-03: 99/1 should-we. The cognitive axis. The one that quantifies the ratio.</li><li>2025-11-25: CEO-analogy. At CEO altitude, &quot;can we?&quot; is delegated; &quot;should we?&quot; is the entire role.</li></ul>
 <p>The 99/1 post is the turn in that sequence: from metaphor to quantification. Every metaphor before it describes the feel of the role. This one names the ratio.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The belief has not been revised. It has accumulated evidence.</p>
-<p>The Collab Article comments from 2024 are the operational case for the 2022 declaration. Five distinct examples of &quot;should we?&quot; judgment compressed to 60-180 words each:</p>
-<ul><li>2024-03-29: &quot;The decision to kill is a strategic decision.&quot; Discontinue a product or legacy version as a first-class should-we judgment.</li><li>2024-03-30: Disruption 4-signal checklist (macro factors, competitors, alternatives, cannibalization). Disruption-sensing as selection competence.</li><li>2024-03-31: Chose Airtable over JIRA after a survey + user interviews of a 50-person team. Saved thousands of dollars by not blindly going with the default.</li><li>2024-09-25: Three gates where scope creep is acceptable. Each gate is a should-we judgment made explicit.</li><li>2024-03-23: Interview prep questions that probe the PM-company fit. Selecting the right company is itself a should-we exercise.</li></ul>
-<p>The 2025-12-04 anti-customization post is the purest late-corpus expression: &quot;I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings.&quot; That is a first-person 99/1 in the wild, with the emotional cost of the judgment made visible.</p>
-<p>The 2026-04-09 &quot;Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt&quot; trilogy gives the discrimination faculty a name: taste. The 99/1 belief and the taste-over-execution belief are non-redundant. 99/1 gives the ratio and the identity claim. Taste-over-execution gives the axiology. Together: &quot;PM work is 99% should-we, and the should-we faculty outranks the can-we faculty.&quot; Neither alone is the full claim.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.strong-opinion-about-no-strong-opinions</code>: the meta-belief licensing conviction across all pm-taste beliefs. The paradox that governs how to read this page.</li><li><code>belief.taste-over-execution</code>: the natural conclusion of 99/1 four years later. Names what does the selecting.</li><li><code>belief.pm-as-parenting</code>: the emotional partner. The 99 refusals carry parenting-grade emotional labor, not just analytic work.</li><li><code>belief.pm-is-featherless-hat</code>: the visibility partner. Saying no leaves no artifact. The featherless hat is literally the 99 should-we judgments.</li><li><code>belief.anti-customization</code>: the purest first-person expression of 99/1 in late voice. One specific should-we held with high conviction.</li><li><code>belief.idea-validation-3-pillars</code>: distinct altitude. Value / Consumers / Scalability tells you HOW to answer should-we. The 99/1 belief says answering it is the role itself.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (6 dated items - click to expand)</summary>
 <ul><li>2022-06-03: canonical post. 49 reactions. Single declarative statement.</li><li>2024-03-23 through 2024-09-25: five Collab Article responses (decision-to-kill, disruption checklist, Airtable save, interview-prep questions, scope-creep gates). Top 1-2% global signal in Product Management per LinkedIn Collaborative Articles.</li><li>2025-12-04: anti-customization post. First-person 99/1 with emotional stakes named.</li><li>2025-11-25: CEO-analogy post. At CEO altitude, &quot;should we?&quot; is the entire role.</li><li>2021-07-12: parenting post. Earliest companion frame in the metaphor stack.</li><li>2019-04-19: &quot;Learn to say no. Learn when to say no. Learn who to say no to.&quot; The seed three years before the ratio.</li></ul>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/pm-taste/">&larr; PM taste</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

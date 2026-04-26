@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Graph - Agam Arora's wiki.</title>
-<meta name="description" content="Knowledge graph: 177 nodes and 111 edges across themes, beliefs, projects, people, and tech.">
+<meta name="description" content="Knowledge graph: 190 nodes and 167 edges across themes, beliefs, projects, people, and tech.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/wiki/graph/">
 <meta property="og:title" content="Graph - Agam Arora's wiki.">
-<meta property="og:description" content="Knowledge graph: 177 nodes and 111 edges.">
+<meta property="og:description" content="Knowledge graph: 190 nodes and 167 edges.">
 <meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
 
 <link rel="canonical" href="https://agamarora.com/wiki/graph/">
@@ -90,6 +90,18 @@
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
 
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
+
   .graph-page { max-width: 1200px; }
   .graph-stats { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); margin-bottom: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-5); }
   .graph-stats strong { color: var(--accent); font-weight: 500; }
@@ -142,12 +154,12 @@
   <p style="color:var(--text);opacity:0.85;line-height:1.6;max-width:680px;margin-bottom:var(--space-6);">Click a node to focus. Drag to pan. Scroll to zoom. Click any theme or belief to navigate to its wiki page. Built from <a href="/wiki/kg.json" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim);">kg.json</a> at deploy time.</p>
 
   <div class="graph-stats">
-    <span><strong>177</strong> nodes</span>
-    <span><strong>111</strong> edges</span>
+    <span><strong>190</strong> nodes</span>
+    <span><strong>167</strong> edges</span>
     <span><strong>12</strong> themes</span>
     <span><strong>44</strong> beliefs</span>
     <span><strong>20</strong> projects</span>
-    <span><strong>25</strong> people</span>
+    <span><strong>38</strong> posts</span>
     <span><strong>56</strong> tech</span>
   </div>
 
@@ -156,7 +168,7 @@
     <button data-filter="Theme">Themes</button>
     <button data-filter="Belief">Beliefs</button>
     <button data-filter="Project">Projects</button>
-    <button data-filter="Person">People</button>
+    <button data-filter="Post">Posts</button>
     <button data-filter="Tech">Tech</button>
   </div>
 
@@ -165,11 +177,11 @@
   </div>
 
   <div class="graph-legend">
-    <span><span class="swatch" style="background:#E5A54B"></span>Theme</span>
-    <span><span class="swatch" style="background:#7AB3D6"></span>Belief</span>
-    <span><span class="swatch" style="background:#A6D67A"></span>Project</span>
-    <span><span class="swatch" style="background:#D67A9C"></span>Person</span>
-    <span><span class="swatch" style="background:#9C7AD6"></span>Tech</span>
+    <span><span class="swatch" style="background:#E5A54B"></span>Theme (star)</span>
+    <span><span class="swatch" style="background:#7AB3D6"></span>Belief (dot)</span>
+    <span><span class="swatch" style="background:#A6D67A"></span>Project (box)</span>
+    <span><span class="swatch" style="background:#D67A9C"></span>Post (triangle)</span>
+    <span><span class="swatch" style="background:#9C7AD6"></span>Tech (square)</span>
   </div>
 
   <div class="graph-detail" id="graph-detail" aria-live="polite">
@@ -200,8 +212,8 @@
 })();
 
 (async () => {
-  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Person: '#D67A9C', Tech: '#9C7AD6' };
-  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Person: 'diamond', Tech: 'square' };
+  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Post: '#D67A9C', Tech: '#9C7AD6' };
+  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Post: 'triangle', Tech: 'square' };
 
   let kg;
   try {
@@ -215,19 +227,24 @@
   const wikiUrlFor = (n) => {
     if (n.type === 'Theme') return n.wiki_url || ('/wiki/' + (n.slug || n.id.replace(/^theme\./,'')) + '/');
     if (n.type === 'Belief' && n.tier === '1') return '/wiki/beliefs/' + n.id.replace(/^belief\./,'') + '/';
+    if (n.type === 'Post' && n.permalink) return n.permalink;
     return null;
   };
 
-  const allNodes = kg.nodes.map((n) => ({
-    id: n.id,
-    label: (n.label || n.id).replace(/^belief\.|^theme\.|^project\.|^person\.|^tech\./, '').slice(0, 32),
-    title: (n.label || n.id) + ' (' + n.type + ')',
-    color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
-    shape: SHAPES[n.type] || 'dot',
-    size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : 8,
-    font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : 11, face: 'JetBrains Mono' },
-    raw: n,
-  }));
+  const allNodes = kg.nodes.map((n) => {
+    const isPost = n.type === 'Post';
+    const cleanLabel = (n.label || n.id).replace(/^belief\.|^theme\.|^project\.|^tech\.|^post\./, '').slice(0, isPost ? 18 : 32);
+    return {
+      id: n.id,
+      label: isPost ? (n.date || cleanLabel) : cleanLabel,
+      title: isPost ? ((n.date || '') + ': ' + (n.snippet || n.urn || '')).slice(0, 200) : (n.label || n.id) + ' (' + n.type + ')',
+      color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
+      shape: SHAPES[n.type] || 'dot',
+      size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : isPost ? 6 : 8,
+      font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : isPost ? 9 : 11, face: 'JetBrains Mono' },
+      raw: n,
+    };
+  });
   const allEdges = kg.edges.map((e, i) => ({
     id: 'e' + i, from: e.from, to: e.to,
     color: { color: e.rel === 'contains-belief' ? '#444' : e.rel === 'tension-with' ? '#E55A4B' : '#333', opacity: 0.6 },

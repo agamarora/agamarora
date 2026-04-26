@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -155,16 +167,9 @@
 <p>By 2025-06-20, the negation was explicit in the agent-first manifesto: &quot;Plug and play is the dream. No one wants to reinvent every time.&quot; Still framed as &quot;what enterprises want&quot; rather than &quot;what I believe.&quot;</p>
 <p>The shift to personal craft-axis came on 2025-12-04: the first post where Agam locates the disposition inside his own PM judgment rather than the market's preference. That is what makes the declaration different from the earlier field observations.</p>
 <p>The belief arc: 2024-09-04 field observation to 2025-12-04 declaration is roughly 15 months. Not a long-arc belief like substance-over-hype (8-year through-line). Enterprise-AI era only.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>No supersession. This belief fills a previously unstated gap in the PM-taste family. It refines the parent disposition (pm-taste) by specifying one concrete decision-rule: refuse customization in the PRD, even when fighting yourself.</p>
-<p>The 2026-04-09 Spec &gt; Sprint trilogy extends the same disposition from PRD-craft to tool-craft: locking design tokens before using a generative tool is anti-customization at the build layer. Same disposition applied one level up. Second-brain v1 (2026-04-23: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot;) ships the belief as a product: no settings, preferences, themes, or plugins. These are post-declaration confirmations, not refinements of the core position.</p>
-<p>One counter-evidence post exists: 2024-09-25 BIM post listed &quot;Customization: Tailored to meet specific organizational requirements&quot; as value point #1 while curating an external article. This falls in the interregnum when field data was pointing toward anti-customization but the position had not yet locked. It is not evidence Agam believed customization was a virtue; it is evidence the belief had not yet crystallized.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li>Parent theme: wiki:pm-taste (primary)</li><li>Cross-theme: wiki:spec-first-taste (secondary)</li><li>Related beliefs: wiki:beliefs:belief.taste-over-execution</li><li>Related beliefs: wiki:beliefs:belief.spec-over-sprint</li><li>Related beliefs: wiki:beliefs:belief.pm-is-99-should-we-1-can-we</li><li>Related beliefs: wiki:beliefs:belief.enterprise-ai-production-reality</li></ul>
-<h2 id="evidence">Evidence</h2>
-<ul><li>2024-03-26 - &quot;People are not paying for features. They are paying to solve their problems.&quot; (JTBD aphorism: features-as-wrong-unit) - linkedin-corpus</li><li>2024-09-04 - &quot;Smaller implementations are sought after.&quot; / &quot;Time to value is king.&quot; / &quot;Building for a demo vs. building for production is a different beast.&quot; (9-takeaways anchor, empirical seed) - linkedin-corpus</li><li>2025-06-20 - &quot;Plug and play is the dream. No one wants to reinvent every time.&quot; (agent-first manifesto, point 6 - clearest pre-cite) - linkedin-corpus</li><li>2025-12-04 - &quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live.&quot; - linkedin-corpus, <a href="https://www.linkedin.com/feed/update/urn:li:activity:7402319253036531712/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7402319253036531712</a> (canonical declaration)</li><li>2026-04-09 - &quot;It couldn't hit my locked design tokens...wrong fonts, wrong colors, approximate everything.&quot; (Spec &gt; Sprint: anti-customization extended to tool-craft layer) - linkedin-corpus, Cluster 16</li><li>2026-04-23 - &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; (second-brain v1: shipped product with no settings, preferences, or plugins) - project.second-brain-v1</li></ul>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<details class="evidence-block"><summary>Evidence (6 dated items - click to expand)</summary>
+<ul><li>2024-03-26 - &quot;People are not paying for features. They are paying to solve their problems.&quot; (JTBD aphorism: features-as-wrong-unit) - linkedin-corpus</li><li>2024-09-04 - &quot;Smaller implementations are sought after.&quot; / &quot;Time to value is king.&quot; / &quot;Building for a demo vs. building for production is a different beast.&quot; (9-takeaways anchor, empirical seed) - linkedin-corpus</li><li>2025-06-20 - &quot;Plug and play is the dream. No one wants to reinvent every time.&quot; (agent-first manifesto, point 6 - clearest pre-cite) - linkedin-corpus</li><li>2025-12-04 - &quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings. My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live.&quot; - linkedin-corpus, <a href="https://www.linkedin.com/feed/update/urn:li:activity:7402319253036531712/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a> (canonical declaration)</li><li>2026-04-09 - &quot;It couldn't hit my locked design tokens...wrong fonts, wrong colors, approximate everything.&quot; (Spec &gt; Sprint: anti-customization extended to tool-craft layer) - linkedin-corpus, Cluster 16</li><li>2026-04-23 - &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; (second-brain v1: shipped product with no settings, preferences, or plugins) - project.second-brain-v1</li></ul>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/pm-taste/">&larr; PM taste</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

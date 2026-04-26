@@ -17,6 +17,32 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 - [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
 - [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
 - [Talk to Agam's AI](https://agamarora.com/enter): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
+- [Wiki](https://agamarora.com/wiki/): second-brain wiki - twelve themes plus a root disposition. Twelve years of writing distilled into beliefs, evidence, and tensions. Built for me, readable by agents.
+
+## Wiki tree (machine-readable knowledge graph)
+
+The wiki is the source layer; /enter is the playback layer. Every theme page has core belief + how it formed + what it implies + tension + evidence sections. Every Tier-1 belief has its own sub-page with statement + origin + refinement arc + cross-links + evidence.
+
+- [Knowledge graph JSON](https://agamarora.com/wiki/kg.json): full graph as a single static asset. ~190 nodes (12 themes, 50 beliefs across tier 1-3, 20 projects, ~38 posts, 56 tech). ~167 edges across builds_on, demonstrates, superseded_by, refined_by, tension-with, contains-belief, cites-post, earned_through. Regenerated from synthesis/ontology-v1.md + draft URN refs at every deploy.
+- [Wiki home](https://agamarora.com/wiki/): theme grid + meta page links
+- [Root disposition: substance over hype](https://agamarora.com/wiki/root.substance-over-hype/): the 8-year through-line. Reduce any hyped category to its substrate, then evaluate.
+- [Agent-first thesis](https://agamarora.com/wiki/agent-first/): platforms that cannot talk to autonomous agents are already behind
+- [Voice AI craft](https://agamarora.com/wiki/voice-ai-craft/): cost, latency, scale - voice AI as distinct engineering discipline
+- [Breadth as differentiation](https://agamarora.com/wiki/breadth-as-differentiation/): breadth differentiates, depth makes it matter
+- [PM taste](https://agamarora.com/wiki/pm-taste/): 99% should-we, 1% can-we; strong opinion about not having strong opinions
+- [What AI PM requires](https://agamarora.com/wiki/ai-pm-skillset/): LLMs as primary daily tool, AI replaces grunt, taste irreducible
+- [Enterprise AI reality](https://agamarora.com/wiki/enterprise-ai-reality/): roughly 80% of enterprise AI experiments don't reach production
+- [Second brain](https://agamarora.com/wiki/second-brain/): personal context layer for AI sessions, hobbyist scope, Karpathy-inspired
+- [Spec first, taste always](https://agamarora.com/wiki/spec-first-taste/): Spec > Sprint, Taste > Execution, Context > Prompt
+- [Career reflection](https://agamarora.com/wiki/career-reflection/): IC path, AI-era leverage, learn concepts not tools, help market flourish
+- [LinkedIn as instrument](https://agamarora.com/wiki/linkedin-as-instrument/): platform to be gamed productively, posting IS the thinking
+- [Personal projects](https://agamarora.com/wiki/personal-projects-tinkering/): ship it or it doesn't exist; the prototype is the argument
+- [Voice doc](https://agamarora.com/wiki/voice/): how I write - banned LLM-isms, real signatures, four registers
+- [Quotes](https://agamarora.com/wiki/quotes/): curated signature lines from twelve years of posts
+- [Projects DAG](https://agamarora.com/wiki/projects/): 18 public projects with lineage edges
+- [Knowledge graph viz](https://agamarora.com/wiki/graph/): force-directed visualization of the full graph
+
+Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg.json for the full belief inventory.
 
 ## Canonical facts
 

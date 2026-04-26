@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="breadth-as-differentiation">Breadth as differentiation</h1>
-<p><em>Era: E1 2014 to 2026 · 18+ posts · 2 beliefs (parent + sub-page)</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Breadth of knowledge across domains is a genuine professional differentiator. The range is real: it speeds pattern recognition, builds empathy across teams, and creates connective tissue that specialists miss. But post-ChatGPT, that sentence needs a binding constraint. Breadth without a depth-axis has been commoditized. A generalist with no specialty is now, in Agam's phrase from April 2024, a Human-GPT: wide, available, useful to a point, but replicable by a chat interface. The full belief: breadth differentiates, and depth is what makes the breadth matter. Choose at least one niche. Invest. Pivot if it is wrong, but pivot quickly.</p>
 <hr>
@@ -169,14 +179,7 @@
 <p>Second: pivot if the niche is wrong, but pivot quickly. &quot;Every failed attempt is adding a layer of depth to you&quot; (2024-04-12, paraphrase). The demand is not to lock in forever. It is not to stand still in pure breadth pretending the niche choice is optional. The threshold for &quot;quickly&quot; is left deliberately open. The point: as soon as you know the niche is wrong, move. Not years of drift.</p>
 <p>Third: the depth-axis extends beyond technical expertise. The April 2024 prescription (Focus on EQ, choose your niche, pivot quickly) already led with EQ as its first point: &quot;First principle thinking is nothing but EQ.&quot; The 2024-2025 extension to humanness-as-depth is not a departure. It is the original belief at higher altitude. Breadth keeps you efficient; depth makes you loved.</p>
 <hr>
-<h2 id="tension-with-career-reflection">Tension with <code>career-reflection</code></h2>
-<p>Two wiki pages address related terrain. The tension is clean once the register difference is visible.</p>
-<p><code>breadth-as-differentiation</code> is the WHY: why hold breadth, why add depth, why the combination matters for professional positioning in the AI era. The Human-GPT framing sets the stakes.</p>
-<p><code>learn-concepts-not-tools</code> (a sub-page under <code>career-reflection</code>) is the HOW: once you have accepted the need for depth, how do you acquire it? The answer there is: learn concepts, not tools. Frameworks endure; tools rotate. Be the engineer who can conceive the tool, not the driver who uses it. The 2019-12-04 post is canonical for both beliefs. They share a single evidence anchor because they are the same disposition at two different question-levels: breadth-as-differentiation answers &quot;should I go deep?&quot; and learn-concepts-not-tools answers &quot;deep via what method?&quot;</p>
-<p>They refine each other. They do not contradict. A reader following the cross-link between them gets the complete picture: breadth is the terrain, depth is the demand, concepts are the vehicle.</p>
-<p>Cross-link: <a href="/wiki/career-reflection/"><code>career-reflection</code></a> for the learning method (learn-concepts-not-tools) and <a href="/wiki/ai-pm-skillset/"><code>ai-pm-skillset</code></a> for the T-shape domain choice and application-layer depth.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Form</th><th>Key content</th><th>Weight</th></tr></thead>
 <tbody>
@@ -191,9 +194,8 @@
 </tbody></table></div>
 <p><strong>Post count:</strong> 8 distinct evidence items. 5 are original posts; 3 are Collab Article surfaces (Decision 3 compliant: treated as primary technical evidence). The Human-GPT label surfaces by name once (2024-04-12); the critique-pattern underlying it surfaces across 5+ items from 2018 forward.</p>
 <p>The parent belief (<code>belief.breadth-as-differentiation</code>) registers across 18 posts spanning E1 through E4: the T-shape disposition is a persistent signal, not a one-cycle idea.</p>
+</details><hr>
 <hr>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/voice-ai-craft/">&larr; Voice AI craft</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/pm-taste/">PM taste &rarr;</a></nav>

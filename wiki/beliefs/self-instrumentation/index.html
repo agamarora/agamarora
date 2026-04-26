@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -155,21 +167,11 @@
 <p><strong>2023:</strong> ChatGPT as co-processor. &quot;Data analysis using Jupyter, Pandas, NumPy and SQL. Structuring my thoughts and notes - my notes have never been so actionable thanks to ChatGPT's help. To me, tis but an extension.&quot; The Jupyter notebook joins the apparatus.</p>
 <p><strong>2024:</strong> &quot;I have created a personal GPT wrapper for each subject that I am after. I tend to look up top programs, look at their curriculum and add that as a structure to my wrappers. This has replaced my podcast addiction with a more interactive version.&quot; Apparatus expands: open-source LLMs locally, ChatGPT Pro, Copilot, GPTs on the marketplace. Also: &quot;I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch.&quot; The apparatus is now PM-rigor infrastructure, not just personal.</p>
 <p><strong>2025-12 to 2026-04:</strong> Private second-brain running for four months before public launch. The apparatus reaches its current form: wiki plus kg.json plus Claude Code, cross-session compounding, every AI session reads the same brain and writes back to it.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The belief has never been superseded. Each era restates it at higher resolution.</p>
-<p>The apparatus changes: manual observation in 2018, Toggl in 2020, Jupyter in 2023, GPT wrappers in 2024, second brain in 2026. The disposition stays constant: look at your own patterns, name them, externalize them into something that synthesizes them back.</p>
-<p>Linked projects by era, from the tech lineage tracker:</p>
-<ul><li><code>project.toggl-quantified-self</code> (2020)</li><li><code>project.chatgpt-pm-stack</code> (2023)</li><li><code>project.second-brain-personal-4mo</code> (2025-12)</li><li><code>project.second-brain-v1</code> (2026-04)</li></ul>
-<p>Each is a substrate upgrade. Not a pivot. The arc shows the thesis was held for eight years across four cognitive substrates.</p>
-<p>One R4 finding worth naming: the belief and <code>belief.ship-the-prototype</code> are co-instantiated throughout. Every piece of apparatus was built for self (self-instrumentation), then published with code (ship-the-prototype). 2023-04 agamarora.com on GitHub. 2024-09 LLM comparator open-sourced on Streamlit Share. 2026-04-23 second brain: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; Agam doesn't separate &quot;things I instrument&quot; from &quot;things I ship.&quot; The inward axis and the outward axis run together.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.second-brain-is-context-layer</code>: the current substrate of this belief. Self-instrumentation is the trunk; second-brain-is-context-layer is its 2026 incarnation.</li><li><code>belief.ship-the-prototype</code>: co-instantiated. Every apparatus built for self was also shipped publicly. Inward (self-instrumentation) and outward (shipping) are not sequential - they are parallel.</li><li><code>belief.context-over-prompt</code>: the second brain is context-over-prompt applied to self. &quot;Every future AI session reads the same brain&quot; is self-instrumentation made machine-readable.</li><li><code>belief.llm-as-primary-daily-tool</code>: the 2024 apparatus runs on LLMs. Without daily LLM use, the 2024 and 2026 substrates would not exist.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (6 dated items - click to expand)</summary>
 <p>Strongest single surfaces by era:</p>
 <ul><li>2018-05-28: &quot;Retrospection is a real powerful tool.&quot; (cognitive seed)</li><li>2020-02-20: &quot;it isn't the tool its the habit of being mindful with time.&quot; (the maxim)</li><li>2024-05-31: &quot;I have created a personal GPT wrapper for each subject that I am after. This has replaced my podcast addiction with a more interactive version.&quot; (strongest single self-instrumentation quote)</li><li>2024-05-24: &quot;I have a jupyter notebook where I try different models and a quick paper wireframe.&quot; (canonical apparatus inventory)</li><li>2024-03-31: &quot;My AI stack includes: open-source LLMs locally / ChatGPT pro / GitHub Copilot. I have a few GPTs on the marketplace: data analytics helper, writing helper, PRD summarizer.&quot;</li><li>2026-04-23: &quot;All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it.&quot;</li></ul>
 <p>Total on-corpus surfaces: 26. Date span: 2018-05-28 to 2026-04-23. Eight years exactly. One of the highest provenance counts in the corpus by surface count and the longest by date span. Never superseded.</p>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/second-brain/">&larr; Second brain</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

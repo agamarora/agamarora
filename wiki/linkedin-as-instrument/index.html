@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="linkedin-as-instrument-the-meta-platform-game">LinkedIn as instrument  -  the meta-platform game</h1>
-<p><em>Era: 2017 to 2026 · 12+ posts · 3 beliefs + 2 achievements</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>LinkedIn is a platform to be gamed productively. Learn the mechanics, play the game inside the rules, stay honest about what the rules are. Posting is thinking out loud. Badge competitions are quota mechanics you grind. The network is leverage you accumulate. Everything on the surface is fair to use; nothing about the surface is the point.</p>
 <p>The stance is older than the AI thesis by six years. It formed when Agam was a 25-year-old founder running an escape-room venture, and it held through a decade of accumulating a 16k+ connection network and two Community Top Voice badges. The platform changed; the stance did not.</p>
@@ -172,15 +182,7 @@
 <p>Third: building and posting are one loop, not two. Build, post, teach, learn, build again. Posting is the closing step that converts personal projects into reusable artifacts and feedback. The tinker-publicly pattern across eight years: Flutter/Dart tool built during lockdown and posted publicly; an LLM comparator open-sourced on Streamlit; the ollama keyboard-shortcut tutorial with a video (&quot;I am not a youtuber so bear with my subpar video editing skills&quot;). Each artifact exits privately into public. The loop doesn't close until someone else can learn from it. Posting is not distribution. It is part of how the build completes.</p>
 <p>This is the same instinct as open-sourcing personal projects. agamarora.com, second-brain v1, luna-monitor, ai-resume: all open-source. The help-market-flourish belief and the tinker-publicly loop are the same movement at different altitudes. (Cross-link: <a href="/wiki/career-reflection/"><code>career-reflection</code></a> for help-market-flourish with 2026 open-source evidence.)</p>
 <hr>
-<h2 id="tension-with-pm-taste-and-voice-ai-craft">Tension with <code>pm-taste</code> and <code>voice-ai-craft</code></h2>
-<p>Two tensions sit on this page. Both are productive paradoxes: held, not resolved.</p>
-<p>The first is with <code>pm-taste</code>. The post that diagnoses the LinkedIn feedback loop IS a LinkedIn post. Agam critiques the PM-influencer economy in a 2024-04-01 post: &quot;There are more senior PMs selling services to aspiring PMs than in any other job function.&quot; He wrote that while holding two Community Top Voice badges. He grinds badge quotas while writing that badge competition is an aspiration trap. The meta-awareness is not hypocrisy; it is the register. The belief cross-listed here, <code>belief.strong-opinion-about-no-strong-opinions</code>, is the meta-belief that licenses every conviction on this page: strong opinions held hard, discarded faster when shown wrong. The paradox licenses the posting; the posting is where the opinions get tested. (Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a> where this meta-belief lives as primary home.)</p>
-<p>The distinction Agam maintains: competition-driven recognition earned through demonstrated-quality content is not monetized standing. He earned the badges. He did not then sell templates, ebooks, or courses built on that standing. The instrumental stance stops where the transaction starts.</p>
-<p>The second tension is with <code>voice-ai-craft</code>. LinkedIn-as-instrument holds that posting IS the thinking  -  that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).</p>
-<p>Both are true: posting is thinking-out-loud when the topic is safe to think out loud about. When the topic carries disclosure risk (live enterprise platform, customer NPS, production stack specifics), the practice shifts to private. The paradox names something real about professional voice: you can only think publicly about what you can afford to publish. The voice-ai-craft under-share is not a contradiction of the linkedin-as-instrument thesis; it is the constraint that defines its boundary condition.</p>
-<p>Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a> for the strong-opinion paradox, and <a href="/wiki/voice-ai-craft/"><code>voice-ai-craft</code></a> for the principled under-share as boundary condition of this theme.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (11 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Source</th><th>What it shows</th></tr></thead>
 <tbody>
@@ -196,12 +198,7 @@
 <tr><td>2024-11-15</td><td>Post <code>7263044949686824960</code></td><td>Certifications-are-collectibles: peer-voted competition output accepted; paid exam-gated credentials rejected</td></tr>
 </tbody></table></div>
 <p>Collab Articles (58 items, 2023-11 to 2024-09) are the underlying practice base. Both badge categories earned through content in areas Agam already held strong views on. The quota forced expression of what was already there.</p>
-<hr>
-<h2 id="open-question">Open question</h2>
-<p>The meta-paradox has not resolved and probably should not. Agam writes publicly about the mechanics of public writing. He holds Top Voice badges while critiquing what Top Voice incentivises. He diagnoses the aspiration trap from inside it.</p>
-<p>The 2025-2026 window shifted to agent-first and spec-first content, using LinkedIn as a medium for those threads without making LinkedIn their subject. Whether that shift is permanent or temporary is a question the corpus does not answer.</p>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
+</details><hr>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/career-reflection/">&larr; Career reflection</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/personal-projects-tinkering/">Personal projects &rarr;</a></nav>

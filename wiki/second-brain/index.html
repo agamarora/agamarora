@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="second-brain-structured-knowledge-for-agents">Second brain  -  structured knowledge for agents</h1>
-<p><em>Era: 2018 to 2026 · 14+ posts · 5 beliefs</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Built this for me. Karpathy-inspired wiki version. Not a product, not a prescription.</p>
 <p>Every future AI session reads the same brain and writes back to it. The second-brain is not a productivity tool. It is not a notes app, a Roam replacement, or a knowledge-management system. It is the substrate: plain markdown, git, a kg.json ontology. Any AI session (Claude, ChatGPT, Cursor, Claude Code) reads from it and writes back to it, so the next session inherits everything the last session learned. The belief is that this compounding is the lever. Context &gt; Prompt. The second-brain is what makes that operationally true, not just a slogan.</p>
@@ -169,12 +179,7 @@
 <p>The &quot;why it failed before&quot; framing matters here. Most second-brain attempts broke on maintenance: keeping a personal knowledge system updated and cross-linked was itself a job. AI mostly solves that. The grunt work of categorizing and surfacing connections is automatable. Human judgment is upstream (what to include) and downstream (calibration, voice). The middle layer, which was the failure mode, is now handled.</p>
 <p>The belief slug is <code>llm-as-primary-daily-tool</code>  -  factual daily-use claim. LLMs are a great tool; I use them daily more than any other tool in my stack. This is entirely separate from voice-AI products; see the <a href="/wiki/voice-ai-craft/"><code>voice-ai-craft</code></a> theme for that.</p>
 <hr>
-<h2 id="tension-with-ai-pm-skillset">Tension with <code>ai-pm-skillset</code></h2>
-<p>The belief <code>belief.llm-as-primary-daily-tool</code> lives in both themes. As an operational claim, it belongs under ai-pm-skillset: how Agam uses AI in daily workflow, from note-structuring to code-debugging to brainstorming. As an architectural claim, it belongs here: the LLM as the cognitive substrate that makes the context layer meaningful.</p>
-<p>Primary home: ai-pm-skillset (the operational framing). Cross-listed here as the precursor belief in the substrate chain. The second-brain page closes the chain. Four-step lineage: self-instrumentation (2018) to quantified-self-as-mindfulness (2020) to llm-as-primary-daily-tool (2023) to second-brain-is-context-layer (2026).</p>
-<p>Cross-link: <a href="/wiki/ai-pm-skillset/"><code>ai-pm-skillset</code></a> for the operational framing, and <a href="/wiki/spec-first-taste/"><code>spec-first-taste</code></a> where the &quot;Context &gt; Prompt&quot; axiom this theme operationalizes was declared.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p><strong>2018-05-28  -  gaming retrospection.</strong> V2 Games self-classification: four named patterns extracted from gaming behavior through deliberate retrospection. The cognitive seed: observable-self-patterns as insight source. No apparatus yet, but the practice is in place.</p>
 <p><strong>2020-02-20  -  Toggl + mindfulness-as-skill.</strong> First externalization: a tool now mediates between Agam and his patterns. The it-isn't-the-tool maxim. &quot;I have been using toggl.com to track my working hours. And soon after I was tracking my personal chores over here.&quot; Read-only by Agam; no synthesis, no cross-session compounding. But the habit is formed.</p>
 <p><strong>2023-03-14  -  &quot;tis but an extension.&quot;</strong> The canonical anchor. Six concrete use cases. &quot;Structuring my thoughts and notes  -  my notes have never been so actionable thanks to ChatGPT's help.&quot; Cognitive perimeter expands to include the LLM. The second-brain seed: but context still dies when the window closes.</p>
@@ -184,9 +189,8 @@
 <p><strong>2026-04-09  -  Context &gt; Prompt trilogy.</strong> &quot;Spec &gt; Sprint. Taste &gt; Execution. Context &gt; Prompt.&quot; The thesis post that the second-brain operationalizes. Twelve days before the public launch.</p>
 <p><strong>2026-04-21  -  second-brain announcement.</strong> &quot;The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now and it has become my preferred way to use Claude.&quot;</p>
 <p><strong>2026-04-23  -  canonical launch.</strong> Paste-prompt, setup guide, public artifact. &quot;All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever.&quot; Karpathy's LLM Wiki gist cited and credited; substance-over-hype move throughout.</p>
+</details><hr>
 <hr>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/enterprise-ai-reality/">&larr; Enterprise AI reality</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/spec-first-taste/">Spec first, taste always &rarr;</a></nav>

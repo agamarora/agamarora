@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -154,20 +166,9 @@
 <p>The belief crystallized in a three-week window in early 2023. The manifesto post (2023-03-14) lists six concrete uses: data analysis with Jupyter, Pandas, SQL, marketing copy, structuring thoughts and notes, building a personal website, PRD refinement, brainstorming, home-lab setup. The post closes: &quot;To me, tis but an extension.&quot; That is the original framing.</p>
 <p>Five days later (2023-03-19): &quot;Modern jobs will soon require us to be as fluent in AI tools like Midjourney, ChatGPT, and others, as we are in traditional software.&quot; The PowerPoint and Excel analogy makes table stakes intuitive without requiring the phrase.</p>
 <p>The archetype split arrived on 2024-03-28 in a Collab Article response: &quot;1/ AI PMs working on improving the AI models (part of openai, anthropic etc) / 2/ AI PMs using existing AI models to unlock growth for their product. I feel the second one would have higher demand given that we are still figuring out all use cases.&quot; Application-layer from this date forward.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The belief matured through several substrate shifts. Each shift changed what fluency consists of; none changed the disposition.</p>
-<p>2023-03-14: chat-LLM fluency. Data analysis, writing, structuring. Six concrete surfaces.</p>
-<p>2024 Collab Article grind (top 1-2% globally in both AI and Product Management): &quot;Being technical is not about knowing a technology but using the technology. Play with APIs when you are bored.&quot; Applied-not-studied. Table-stakes means hands-on, not certified.</p>
-<p>2024-07-04: AI Product Manager as job title at an enterprise voice AI platform. Considerable GenAI product concepts built and demoed to enterprise customers. Fluency is now industrial-scale.</p>
-<p>2025-06-20: agent-first manifesto. Agam no longer argues for AI fluency; he assumes it and reasons from the next layer up. Table-stakes is the floor on which agent-first thinking stands.</p>
-<p>2026-04-09: &quot;Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt.&quot; Differentiation is no longer &quot;are you using the tools&quot; but &quot;do you have the taste to spec what the tools should do.&quot; AI tools handle the grunt. Taste is what remains irreducibly PM.</p>
-<p>2026 reframe: AI is inside execution. Outsource the grunt. Taste of what to build is outside AI's reach. The 2023 line held because it named where taste lives.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.llm-as-primary-daily-tool</code>: the operational daily-use sibling. Table-stakes is the positional claim; llm-as-primary-daily-tool is the operational one.</li><li><code>belief.ai-fluency-required</code>: the discipline-level population form of the same disposition. &quot;Modern jobs will soon require...&quot; is the industry claim; the manifesto is the practitioner claim.</li><li><code>belief.taste-over-execution</code>: the axiology that explains WHY the 2023 line still holds. Taste is the irreducible PM job.</li><li><code>belief.pm-is-99-should-we-1-can-we</code>: cross-link. AI replaces grunt; taste is the 99 should-we faculty. Both beliefs reinforce the same PM identity.</li><li><code>belief.its-not-the-model-its-the-problem</code>: compatible parent. Frame the business problem first; let model selection follow.</li><li><code>belief.learn-concepts-not-tools</code>: fluency is concept-and-application fluency, not credential fluency.</li><li><code>belief.breadth-needs-depth</code>: AI fluency raises the floor; depth does the differentiating.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (9 dated items - click to expand)</summary>
 <ul><li>2023-03-14: canonical manifesto post (ChatGPT for everything except PM).</li><li>2023-03-19: PowerPoint and Excel analogy post.</li><li>2024-03-06: Collab Article - &quot;being technical is not about knowing a technology but using the technology.&quot;</li><li>2024-03-28: Collab Article - archetype split (foundation-layer vs application-layer).</li><li>2024-06-14: Collab Article - tech-PM leverage math, deep technical understanding without a degree.</li><li>2024-07-04: Top AI badge announcement + AI Product Manager job title.</li><li>2024-09-04: &quot;built a considerable number of GenAI-based product concepts... demo'd to enterprise customers.&quot;</li><li>2025-06-20: agent-first manifesto. Fluency assumed; next abstraction layer up.</li><li>2026-04-09: Spec &gt; Sprint trilogy. AI handles the grunt; taste is the irreducible PM job.</li></ul>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/ai-pm-skillset/">&larr; AI PM skillset</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

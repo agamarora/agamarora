@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="agent-first-thesis">Agent-first thesis</h1>
-<p><em>Era: 2023-03 to 2026-04 · 14+ posts · 8 beliefs</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Platforms and products that cannot talk to autonomous agents are already behind. Think serving-lens first: your APIs, your data surfaces, your system design must be legible to agents calling on behalf of users, not just to the users themselves. The building-lens question gets most of the attention. The serving-lens question is where the differentiation lives.</p>
 <p>Prompts are plumbing, not UX. Context is the lever, not the prompt string. Agent deployment without reversibility constraints is not deployment: it is exposure. These three craft corollaries follow directly from the thesis.</p>
@@ -170,35 +180,23 @@
 <p>The authorization test: can the decision be evaluated programmatically? If yes, the agent executes. If no, the agent surfaces the decision for a human. Reversibility is the mechanism: snapshots, checkpoints, evals, GIT-style version control at the orchestration layer. Software engineering primitives applied to a new surface.</p>
 <p>The threat-surface corollary arrived November 2025 when a Chinese threat actor ran a full cyberattack using Anthropic's Claude as an autonomous agent. Agam had flagged orchestration-level risk 17 months earlier. The confirmation: &quot;The model wasn't broken, the agent layer was.&quot; Diagnosis and prescription point the same direction: application layer is both where the threat lives and where the fix is built.</p>
 <hr>
-<h2 id="tension-with-enterprise-ai-reality">Tension with <code>enterprise-ai-reality</code></h2>
-<p>The enterprise-ai-reality theme holds a field observation: roughly 80% of enterprise AI experiments don't reach production. If agent-first is bullish on deployment and enterprise reality is cautious on production wins, is there a contradiction?</p>
-<p>No: different scopes. Enterprise-ai-reality is about what is currently happening. Deployments fail to reach production not because the architecture is wrong but because conditions are not met: data readiness, KPI definition, reversibility, non-functional requirements. Agent-first is a structural bet about where the architecture is going. The reconciliation: agent-first IS the framework for being among the projects that do ship. Serving-lens-first, reversibility in from the start, agent layer hardened: those are the production-grade projects.</p>
-<p>The tension with <code>reversibility-over-consequences</code> is structural and held, not resolved. Bullish on deployment. Bearish on decision authority without programmatic evaluability. The 2026-01-06 post holds both: &quot;Not just guardrails, but checks and balances.&quot; Deployment scope and authorization scope are not the same dial.</p>
-<p>Cross-link: <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a>  -  same field data, different analytical frame: direction vs current rate.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (12 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Entry</th><th>Post</th></tr></thead>
 <tbody>
-<tr><td>2023-03-24</td><td>&quot;The very first AI marketplace.&quot; ChatGPT Plugins as ecosystem-instinct seed.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7044971627607900160/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7044971627607900160</a></td></tr>
-<tr><td>2024-06-06</td><td>&quot;Not a question of if, but when.&quot; Multi-Agent Systems as inevitable direction. First explicit agent-layer framing.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7204325913650491392/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7204325913650491392</a></td></tr>
-<tr><td>2024-09-04</td><td>&quot;Building for a demo vs. building for production is a different beast.&quot; Field data that feeds the manifesto.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7236941772336066560/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7236941772336066560</a></td></tr>
-<tr><td>2024-12-24</td><td>&quot;2025 is the year of agentic systems.&quot; Kill-prompting post contains the agentic-year prediction as underrated payload.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7277158028422914048/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7277158028422914048</a></td></tr>
-<tr><td>2025-06-20</td><td>&quot;Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation.&quot; THE HINGE.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7341662205257433088/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7341662205257433088</a></td></tr>
-<tr><td>2025-07-17</td><td>&quot;While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases.&quot; Prompts re-admitted as engineering plumbing. Agent-first presupposed as flat premise.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7351602695977226243/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7351602695977226243</a></td></tr>
-<tr><td>2025-09-29</td><td>&quot;0% automation driven through UI, 100% driven through MCP + APIs.&quot; Production deployment: one application of the serving-lens thesis at enterprise scale.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7378427141190799360</a></td></tr>
-<tr><td>2025-11-17</td><td>&quot;The model wasn't broken, the agent layer was.&quot; 17-month prediction confirmed by Chinese threat-actor incident.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7396047657951064064/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7396047657951064064</a></td></tr>
-<tr><td>2026-01-06</td><td>&quot;This is not a research problem, but an application problem.&quot; Application-layer safety prescription: reversibility, checkpoints, programmatic evaluability.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7414150680820547584/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7414150680820547584</a></td></tr>
-<tr><td>2026-04-09</td><td>&quot;Context &gt; Prompt.&quot; Agent-first as craft posture: context is the lever, prompt is the downstream seam.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7447981735901949952/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7447981735901949952</a></td></tr>
-<tr><td>2026-04-23</td><td>&quot;Every future AI session reads the same brain and writes back to it.&quot; Second-brain v1 as agent-first applied to personal knowledge.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7452998640345853952/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7452998640345853952</a></td></tr>
+<tr><td>2023-03-24</td><td>&quot;The very first AI marketplace.&quot; ChatGPT Plugins as ecosystem-instinct seed.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7044971627607900160/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2024-06-06</td><td>&quot;Not a question of if, but when.&quot; Multi-Agent Systems as inevitable direction. First explicit agent-layer framing.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7204325913650491392/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2024-09-04</td><td>&quot;Building for a demo vs. building for production is a different beast.&quot; Field data that feeds the manifesto.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7236941772336066560/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2024-12-24</td><td>&quot;2025 is the year of agentic systems.&quot; Kill-prompting post contains the agentic-year prediction as underrated payload.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7277158028422914048/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2025-06-20</td><td>&quot;Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation.&quot; THE HINGE.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7341662205257433088/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2025-07-17</td><td>&quot;While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases.&quot; Prompts re-admitted as engineering plumbing. Agent-first presupposed as flat premise.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7351602695977226243/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2025-09-29</td><td>&quot;0% automation driven through UI, 100% driven through MCP + APIs.&quot; Production deployment: one application of the serving-lens thesis at enterprise scale.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2025-11-17</td><td>&quot;The model wasn't broken, the agent layer was.&quot; 17-month prediction confirmed by Chinese threat-actor incident.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7396047657951064064/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2026-01-06</td><td>&quot;This is not a research problem, but an application problem.&quot; Application-layer safety prescription: reversibility, checkpoints, programmatic evaluability.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7414150680820547584/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2026-04-09</td><td>&quot;Context &gt; Prompt.&quot; Agent-first as craft posture: context is the lever, prompt is the downstream seam.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7447981735901949952/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
+<tr><td>2026-04-23</td><td>&quot;Every future AI session reads the same brain and writes back to it.&quot; Second-brain v1 as agent-first applied to personal knowledge.</td><td><a href="https://www.linkedin.com/feed/update/urn:li:activity:7452998640345853952/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></td></tr>
 </tbody></table></div>
-<hr>
-<h2 id="open-question">Open question</h2>
-<p>The manifesto says agents may be primary users. The reversibility belief says keep agents from decisions that cannot be evaluated programmatically. Both hold. The open question: at what decision-altitude does programmatic evaluability become tractable?</p>
-<p>GIT-style reversibility works for deterministic state transitions. Enterprise decisions involving customer NPS, legal exposure, or brand risk are harder to reduce to a check function. The gap between &quot;reversibility as architectural primitive&quot; and &quot;reversibility that covers the full enterprise decision surface&quot; is where application-layer safety work happens next.</p>
-<p>Agent-first is bullish on deployment. Whether the safety stack matures at the same rate as capability is the builder problem of 2026.</p>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
+</details><hr>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/root.substance-over-hype/">&larr; Substance over hype</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/voice-ai-craft/">Voice AI craft &rarr;</a></nav>

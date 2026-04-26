@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -152,22 +164,14 @@
 <p>The breadth disposition is visible from early career. The V2 Games era (2014-2016) had Agam across analytics, development, QA, and business simultaneously. The Aroma era (2017-2019) extended into marketing strategy, including STP. The FarEye era (2020-2024) covered logistics tech, data product management, and AI tooling in parallel. No single-discipline arc in the career record.</p>
 <p>The first theoretical framing arrived December 2019, in the driver/mechanic/engineer post: the engineer who knows a tool's concept can conceive the next one. Breadth is not just range of exposure; it is range of conceptual pattern-matching. This is the aspirational version before the Human-GPT critique arrived to sharpen it.</p>
 <p>Across 18+ posts from E1 through E4, the breadth disposition shows up as a persistent signal, not a one-cycle idea. The T-shape was the working posture before it was the named belief.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The parent belief held steady while the binding constraint arrived.</p>
-<p>Between 2019 and 2024, the question of what makes breadth durable sharpened. The Collab Articles grind (November 2023 to July 2024) was itself a breadth-demonstration: Agam wrote on STP, JTBD, MVP, AARRR, NFR, Design Thinking, impostor syndrome, interview prep, career framing, and AI PM archetypes - all at peer-voted competition quality. The badge outcome (top 1-2% globally in PM and AI) showed that breadth expressed with framework-depth wins even on surfaces that reward range.</p>
-<p>April 2024 introduced the Human-GPT critique. Breadth without depth became the named failure mode. The parent belief did not change; it was bounded. See <code>belief.breadth-needs-depth</code> for the full arc.</p>
-<p>The AIonOS move in July 2024 was the breadth-and-depth pairing in action: product management breadth crossed with applied AI depth at the application layer. Inside-out (skills: PM, data, software; interests: AI tooling) times outside-in (market demand: AI PMs, LLM-based solutions). The intersection was the role.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.breadth-needs-depth</code> - the sub-page refinement. Breadth differentiates; depth is what makes it matter. The two beliefs read together form the complete claim for <code>theme.breadth-as-differentiation</code>.</li><li><code>belief.learn-concepts-not-tools</code> - breadth-as-differentiation answers &quot;should I go deep?&quot;; learn-concepts-not-tools answers &quot;deep via what method?&quot;. They are different question-levels on the same disposition. Cross-listed under <code>career-reflection</code> and <code>ai-pm-skillset</code>.</li><li><code>belief.never-be-smartest-in-room</code> - the humility-counterweight to depth-investment. Own a niche; stay humble about it. Breadth keeps you in many rooms; never-be-smartest keeps you learning in all of them.</li><li><code>belief.ic-path-legitimacy</code> - the career-shape consequence. IC-path growth is functional-expertise depth beneath PM breadth.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p>The breadth disposition registers across 18+ posts from E1 through E4 - a persistent signal across the career arc, not a single thesis post. Key instances:</p>
 <p><strong>December 2019:</strong> Driver/mechanic/engineer post. Breadth-with-concept-depth is the aspirational form. &quot;Be a creater&quot; is the T-shape imperative in three words.</p>
 <p><strong>2021-2022:</strong> PM metaphor stack (featherless hat, 99-should-we-1-can-we, pm-as-parenting). All three assert PM as craft requiring range of judgment across domains, not narrow specialization.</p>
 <p><strong>2023-11 to 2024-07:</strong> Collab Articles across 11+ PM fundamentals topics. Range demonstrated at peer-voted competition quality. Two Top Voice badges (PM and AI, top 1-2% globally) - peer-validated breadth expressed with framework compression.</p>
 <p><strong>April 2024:</strong> Human-GPT post. The breadth-needs-depth refinement crystallizes. Parent belief bounded, not contradicted.</p>
 <p><strong>July 2024:</strong> AIonOS inside-out x outside-in self-narration. Breadth (PM, data, software) crossed with depth (applied AI, application-layer PM). The depth-pick made the breadth legible.</p>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/breadth-as-differentiation/">&larr; Breadth as differentiation</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

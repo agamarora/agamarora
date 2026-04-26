@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="spec-first-taste-always-the-builder-trilogy">Spec first, taste always  -  the builder trilogy</h1>
-<p><em>Era: E4b 2025-26 · 6+ posts · 4 beliefs</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Three lines. One post. April 9, 2026:</p>
 <p>&gt; Spec &gt; Sprint &gt; Taste &gt; Execution &gt; Context &gt; Prompt</p>
@@ -171,15 +181,7 @@
 <p>The underlying disposition across all three: refuse the fast path. Let the AI sprint at an under-spec'd build and you get noise. Ship a feature without deciding what the product is and you accumulate debt. Craft a clever prompt without curating the context layer and you are optimizing the wrong variable. Agam's builder stance is the systematic refusal of those defaults.</p>
 <p>Anti-customization scope: the belief applies to enterprise AI deployments. Six-month implementation cycles, training documents, foundation-model coupling are all enterprise-shaped. The economic argument has not been fully tested against consumer products where the cost structure differs. (Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a> for the full anti-customization belief with enterprise scope note; <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a> for the production-reality context.)</p>
 <hr>
-<h2 id="tension-with-pm-taste-and-personal-projects-tinkering">Tension with <code>pm-taste</code> and <code>personal-projects-tinkering</code></h2>
-<p>Same person. Same disposition. Different altitude.</p>
-<p><code>pm-taste</code> addresses what a PM does institutionally  -  the metaphor stack (featherless hat, 99/1, parenting), the grind of the role, anti-customization applied to PRDs. Mostly timeless. Audience: &quot;how does Agam think about what a PM actually does?&quot;</p>
-<p><code>spec-first-taste</code> addresses what a builder does with AI tools in 2026  -  the trilogy as a composite axiom for working with generative AI at the bench level. Temporally anchored. Audience: &quot;how does Agam approach building with AI?&quot;</p>
-<p>The 99/1 grind from 2022 is the slow-building form of &quot;Taste &gt; Execution&quot;  -  both say the discrimination work is the work. Anti-customization cross-links both pages: it lives on pm-taste as the strongest personal-craft-axis declaration, and it is cited on spec-first-taste as the most concrete on-record example of the disposition. Same disposition, two entry-point audiences.</p>
-<p><code>personal-projects-tinkering</code> is the complement: ship-the-prototype is preparation before shipping, not refusal to ship. The spec-first-taste evolution refined the 2020 ship-fast identity by moving the binding constraint upstream. The shipping verb stayed; the preparation upstream of it changed.</p>
-<p>Cross-link: <a href="/wiki/pm-taste/"><code>pm-taste</code></a>  -  same disposition, institutional altitude. <a href="/wiki/personal-projects-tinkering/"><code>personal-projects-tinkering</code></a>  -  the ship-fast belief that this one evolved from.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Claim</th></tr></thead>
 <tbody>
@@ -192,9 +194,8 @@
 <tr><td>2026-04-09</td><td>Post (canonical)</td><td>&quot;Tried and dropped Google Stitch in under 30 minutes... Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt&quot; (trilogy declaration)</td></tr>
 <tr><td>2026-04-23</td><td>Post</td><td>&quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; (second-brain launch as embodiment of the trilogy)</td></tr>
 </tbody></table></div>
+</details><hr>
 <hr>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/second-brain/">&larr; Second brain</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/career-reflection/">Career reflection &rarr;</a></nav>

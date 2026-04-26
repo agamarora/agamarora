@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -152,20 +164,9 @@
 <h2 id="origin">Origin</h2>
 <p>The first evidence is a March 2023 post where ChatGPT-3 was asked to write its own testimonial about working with Agam, then published as the post body. A move that telegraphed the belief before it got named. Two weeks later (2023-03-14), the manifesto post listed six concrete daily surfaces: data analysis with Jupyter and Pandas and SQL, PRD refinement, brainstorming, Linux home-lab setup, home network security, note-structuring. The note-structuring line is the seed that eventually becomes the second-brain: &quot;My notes have never been so actionable thanks to ChatGPT's help.&quot;</p>
 <p>By May 2023, &quot;my LLM friend&quot; entered the vocabulary with no scare-quotes. The framing had stabilized within two months of the March anchor.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The tools in the stack changed. The daily-use fact did not.</p>
-<p>2024-Q1-Q3: the stack hardened into a multi-substrate configuration. Open-source LLMs deployed locally, ChatGPT Pro, GitHub Copilot, Bing AI with integrated browsing, plus several custom GPT wrappers built for specific personal use cases: a data analytics helper, a writing helper, a PRD summarizer. The stack was configured around personal workflows, not generic use cases.</p>
-<p>2024-06-05: &quot;ChatGPT was down yesterday... this prompted me to be prepared for the times when I have to be off-the-grid but with my trusty LLM peer.&quot; When the primary goes down, download ollama and bind LLAMA3 and PHI3 to a keyboard shortcut. Continuous LLM access is non-negotiable; the specific substrate is interchangeable.</p>
-<p>2024-05-31: &quot;I have created a personal GPT wrapper for each subject that I am after. I tend to look up top programs, look at their curriculum and add that as a structure to my wrappers. This has replaced my podcast addiction with a more interactive version.&quot; One concrete, specific displacement of a prior habit. Not a feature; a shift in how learning works day to day.</p>
-<p>2024-07-19: &quot;It's AI that is helping me code. AI building AI is now.&quot; Recursion: LLM extends the person, person extends the LLM into the next build.</p>
-<p>2025-2026: Claude Code as the primary coding and build partner. The second-brain project itself (2026-04-21/23) is the current live artifact. &quot;Funnily this has become my preferred way to use claude.&quot; The second-brain is downstream of this belief: it exists because the daily-use volume made a persistent context layer worth building.</p>
-<p>Note in the Refinement arc: the old slug was <code>belief.llm-as-voice-extension</code>. That name was misleading on two counts: &quot;voice&quot; suggested voice-AI products (separate domain, see <code>voice-ai-craft</code>), and &quot;extension&quot; implied a cognitive-substrate framing the actual belief does not carry. Slug renamed and statement reframed at ontology lock 2026-04-26.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.ai-pm-skillset-table-stakes</code>: the positional sibling. Table-stakes says &quot;AI fluency is non-negotiable for PMs.&quot; This belief says &quot;here is what non-negotiable daily use looks like.&quot;</li><li><code>belief.second-brain-is-context-layer</code>: the downstream belief. Second-brain is what happens when daily LLM use volume makes a persistent context layer worth building. This belief is the precursor.</li><li><code>belief.self-instrumentation</code>: the older trunk this belief grows from. Self-instrumentation (2018-05-28) named observable-pattern-as-leverage. The LLM is the post-2023 substrate that makes self-instrumentation more tractable.</li><li><code>belief.ai-fluency-required</code>: the population-form claim (modern jobs require AI fluency as much as PowerPoint). This belief is the practitioner-form: here is what that fluency looks like day to day.</li><li><code>belief.ship-the-prototype</code>: operational dependency. Build velocity in 2025-26 depends on Claude Code as the daily partner. Ship-the-prototype is only executable at current speed because of this belief in practice.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (9 dated items - click to expand)</summary>
 <ul><li>2023-03-01: ChatGPT writes its own testimonial. Performative seed.</li><li>2023-03-14: six concrete daily-use surfaces named. &quot;My notes have never been so actionable thanks to ChatGPT's help.&quot;</li><li>2023-05-10: &quot;my LLM friend&quot; - casual register, no scare-quotes.</li><li>2024-03-31: Collab Article - full stack listed: open-source local LLMs, ChatGPT Pro, Copilot, Bing AI, personal custom GPT wrappers.</li><li>2024-05-31: Collab Article - per-subject GPT wrappers replaced podcast habit.</li><li>2024-06-05: &quot;trusty LLM peer&quot; - local fallback when primary goes down. (44 reactions)</li><li>2024-07-19: Collab Article - &quot;AI building AI is now.&quot;</li><li>2026-04-21: &quot;I have been using my second brain for over 4 months now. Funnily this has become my preferred way to use claude.&quot;</li><li>2026-04-23: &quot;every future AI session reads the same brain and writes back to it.&quot; The persistent daily-use artifact is live.</li></ul>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/ai-pm-skillset/">&larr; AI PM skillset</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

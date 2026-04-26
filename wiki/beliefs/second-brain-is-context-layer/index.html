@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -157,20 +169,12 @@
 <p><strong>2025-12:</strong> Private second-brain, running. The wiki + Claude Code stack. Cross-session compounding begins.</p>
 <p><strong>2026-04-23:</strong> Public launch. &quot;All of us know the power of a personal context layer. Here is the prompt to set up your own. Ten minutes later: wiki, people, decisions, inbox - all seeded from five questions. Every future AI session reads the same brain and writes back to it.&quot;</p>
 <p>The launch is a crystallization, not an invention. Andrej Karpathy's LLM-Wiki gist gave it a name and a clean reference pattern. Agam was already converging on it privately. Cite-and-extend, not breakthrough. Substance-over-hype move.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The key refinement: scope stays hobbyist.</p>
-<p>A 2026-04-23 comment (to Ishant Kathuria): &quot;Mine is more of a personal framework that is working for me for past 4 months and have proved helpful. This post is mostly for hobbyist like me who want a barebones, Karpathy inspired, wiki version that one can run and customise.&quot;</p>
-<p>That framing holds. Not a commercial offering. Not a universal prescription. A personal infrastructure project that Agam ships under his own name, MIT-licensed, for other builders who think the same way.</p>
-<p>The U-turn on prompting that lives elsewhere in the wiki resolves here. Prompts did not get killed - they got demoted from UX-layer to plumbing-layer because context is doing the work prompts used to be asked to do. Without a context-layer, you have to put everything in the prompt. With one, the prompt becomes thin. The second brain is the artifact that makes that demotion possible.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.self-instrumentation</code>: parent. The 8-year retrospection practice is the trunk; this belief is its current substrate-incarnation. Same loop, better hardware.</li><li><code>belief.context-over-prompt</code>: the second brain is the infrastructure that makes that axis usable. Without it, &quot;context over prompt&quot; is a slogan. With it, context is a substrate you can populate, version, and carry between sessions.</li><li><code>belief.spec-over-sprint</code>: co-exemplar. The wiki is the spec; the kg.json is the structural spec. Spec-first in practice.</li><li><code>belief.llm-as-primary-daily-tool</code>: precursor. If you were not already using LLMs daily, the second brain would have no sessions to compound across.</li><li><code>belief.ship-the-prototype</code>: this project is the latest in an 8-year ship-the-prototype lineage.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (7 dated items - click to expand)</summary>
 <p>Tier-1 surfaces (launch window, 2026-04-21 to 2026-04-23):</p>
 <ul><li>2026-04-21: &quot;The reason why second brains failed for most people was the effort of maintaining it. But with AI this grunt work is mostly solved. I have been using my second brain for over 4 months now... Funnily this has become my preferred way to use claude.&quot;</li><li>2026-04-23: &quot;All of us know the power of a personal context layer. Every future AI session reads the same brain and writes back to it. Plain markdown. Git. Open source. MIT. Free forever.&quot;</li><li>2026-04-23 comment: &quot;Mine is more of a personal framework... mostly for hobbyist like me who want a barebones, Karpathy inspired, wiki version.&quot;</li></ul>
 <p>Substrate-chain anchors:</p>
 <ul><li>2018-05-28: &quot;Retrospection is a real powerful tool.&quot; (seed)</li><li>2020-02-20: &quot;it isn't the tool its the habit of being mindful with time.&quot; (substrate rule)</li><li>2023-03-14: &quot;my notes have never been so actionable thanks to ChatGPT's help... tis but an extension.&quot; (AI co-processor seed)</li><li>2026-04-09: &quot;Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt.&quot; (thesis the second brain operationalizes)</li></ul>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/second-brain/">&larr; Second brain</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

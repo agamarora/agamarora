@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="enterprise-ai-reality-ships-vs-demos">Enterprise AI reality  -  ships vs demos</h1>
-<p><em>Era: 2024 to 2026 · 12+ posts + 4 Collab items · 4 beliefs</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Building for a demo and building for production are different beasts. Enterprises are experimenting broadly, and correctly, because the substrate is real. But they are benching most experiments, also correctly, because most attempts cannot clear the production bar. Roughly 80% of enterprise AI experiments don't reach production. The experiments that fail do not fail on model capability. They fail on non-functional requirements, data pipeline gaps, governance overhead, and time-to-value math. The category is transformative. The deployment rate is brutal. Both facts are true simultaneously, and conflating them is the most expensive mistake an enterprise AI team can make.</p>
 <hr>
@@ -164,12 +174,7 @@
 <p><strong>On moats:</strong> three durable assets survive the 2/10 rate. Infrastructure: compute and serving substrate that scales with agents, not just chatbots. Talent: the small population of people who can build, fine-tune, and operate foundational AI systems; there are not many, and that scarcity compounds. Data: not raw corpus volume but the architecture underneath it. &quot;Having data is one thing; having AI-ready data is where the value lies.&quot; Data collection pipelines, transformation layers, continuous ingestion systems. Plant the seed today. What is NOT on the moats list: the model itself. Foundation-model capability runs on a rough 12-month commoditization cycle. GPT-4 cost went from $36 to $4 per million tokens in one year. A position built on &quot;we have a great model&quot; is a position that resets every release cycle.</p>
 <p><strong>On data specifically:</strong> data readiness is not a volume problem. An enterprise with a large historical corpus and no live pipeline is building on a decaying foundation. The relevant question is not &quot;how much data do we have?&quot; but &quot;how quickly can that data be collected, processed, and updated?&quot; Pipeline infrastructure is the hardest moat to replicate by spending money. That is why data ranks highest of the three.</p>
 <hr>
-<h2 id="tension-with-agent-first">Tension with <code>agent-first</code></h2>
-<p>The agent-first theme is optimistic about enterprise AI's direction. This theme is cautious about its deployment rate. The 2025-06-20 post is where both stitched together.</p>
-<p>The resolution is scope-difference, not contradiction. Production reality names the rate at which experiments clear the production bar, today. Agent-first names the direction enterprises are consolidating toward, next. The same field data produces both: &quot;10 experiments yield 2 wins&quot; and &quot;horizontal AI does not scale, agentic AI is the new direction.&quot; Skepticism about the rate is not pessimism about the destination. Agent-first IS the framework for being among the 2-of-10: serving-lens-first, reversibility in from the start, NFRs specified at PRD-time  -  those are what the production-grade projects do differently.</p>
-<p>Cross-link: <a href="/wiki/agent-first/"><code>agent-first</code></a>  -  same 2025-06-20 post carries both claims. Different analytical frame: direction vs current rate.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (10 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>What it shows</th></tr></thead>
 <tbody>
@@ -183,11 +188,7 @@
 <tr><td>2025-09-29</td><td>Comment-thread reply</td><td>Field data: production enterprise voice AI stack (cloud LLMs, MCP-first API layer, business KPI ordered ahead of tech KPI); one worked example among many</td></tr>
 <tr><td>2025-12-04</td><td>Post (anti-customization)</td><td>Extension to PM craft: &quot;six months of implementation, an implementation partner, hundreds of training documents&quot;  -  the demo-vs-production gap at the PRD layer</td></tr>
 </tbody></table></div>
-<hr>
-<h2 id="open-question">Open question</h2>
-<p>Governance is now table stakes, the shift to structured platform investment is underway, and enterprises with real moats are compounding. The durable version of this belief is about the structure of failure rather than a specific rate. Roughly 80% bench rate is the frame; the precise number shifts as the cycle matures.</p>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
+</details><hr>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/ai-pm-skillset/">&larr; AI PM skillset</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/second-brain/">Second brain &rarr;</a></nav>

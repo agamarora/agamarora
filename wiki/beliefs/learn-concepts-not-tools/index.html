@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -153,22 +165,13 @@
 <p>December 4, 2019. Agam was going through online courses on digital marketing and noticed the emphasis on marketing tools versus marketing concepts. The driver/mechanic/engineer analogy emerged from that observation. The canonical formulation: &quot;Strive to learn concepts and not tools. Be a creater!&quot;</p>
 <p>The &quot;AI will make you redundant if not now but soon&quot; line is part of the same post. Written in 2019 - three years before ChatGPT's public release. The observation was not a prediction made in hindsight.</p>
 <p>Nine months earlier, March 2019, the seed was already visible: &quot;I still remember clearly my professor at business school writing the big bold words on the white board.&quot; STP as an example of framework endurance. The concept-grounding-via-named-source pattern appears here first - the same pattern that later produces Greene, Kahneman, and Doshi citations.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The belief deepened and became more operational across four rounds of evidence.</p>
-<p>The Collab Articles grind (November 2023 to July 2024) is where the belief became systematic. Across 11 PM-fundamentals items, Agam reached for named frameworks as the answer architecture: STP for marketing basics, JTBD for customer insight, MVP for stakeholder management, AARRR for growth metrics, STAR for structured framing, NFR for production risk, V/V/U for AI product validation. Not casual flourishes. Framework citations were the answer itself.</p>
-<p>The 2024-03-06 &quot;play with APIs when you are bored&quot; piece compressed the same point: &quot;Being technical is not about knowing a technology but using the technology.&quot; Concept-application over tool-knowledge in 16 words.</p>
-<p>By December 2025, the Shreyas Doshi muscle-memory piece added a practice-cadence layer: &quot;To get this into my muscle memory.&quot; The belief moved from declarative (&quot;learn concepts&quot;) to operational (&quot;re-engage the same concepts deliberately until they are instinct&quot;). That is the sibling belief <code>belief.muscle-memory-over-novelty</code> in the learning loop.</p>
-<p>The AI-era pressure strengthened rather than superseded this belief. When ChatGPT arrived and commoditized surface-level breadth, the response was not &quot;abandon frameworks for tools&quot; but &quot;the frameworks matter more now.&quot; A Human-GPT can surface any tool. An engineer-grade practitioner can conceive the next one.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.ai-pm-skillset-table-stakes</code> - cross-listed under <code>theme.ai-pm-skillset</code>. &quot;Play with APIs when you are bored&quot; evidences both: be fluent in AI tools as concept-extraction substrate, not as tool-mastery.</li><li><code>belief.breadth-needs-depth</code> - depth via concepts, not certifications. Concepts-not-tools is the mechanism for acquiring depth; breadth-needs-depth is the demand for it. Both strengthen under AI pressure.</li><li><code>belief.muscle-memory-over-novelty</code> - the practice-cadence refinement. Concepts-not-tools is triage (what to study); muscle-memory-over-novelty is cadence (how to study it). Different altitudes of the same learning loop.</li><li><code>belief.certifications-are-collectibles</code> - exam gates test tool-recall; peer-voted badges test concept-fluency in operation. Same anti-credential disposition applied to credentialing surface.</li><li><code>belief.ic-path-legitimacy</code> - IC-path growth is depth in concepts and functional expertise. Both beliefs treat depth as the growth direction.</li><li><code>belief.never-be-smartest-in-room</code> - upstream in the learning loop. Never-be-smartest generates the learning diet; learn-concepts-not-tools specifies what to extract: frameworks and principles, not tools.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p><strong>Canonical post (2019-12-04):</strong> &quot;There are three kind of people, a driver, mechanic and an engineer. A driver is someone who is adept in using a tool, a mechanic able to repair the tool and then an engineer who knows the tool inside-out and can create similar tools based on the concept. The world doesn't need more drivers. AI will make you redundant if not now but soon. Strive to learn concepts and not tools. Be a creater!&quot;</p>
 <p><strong>Framework track (2023-11 to 2024-07, 15+ Collab Article instances):</strong> STP, JTBD, MVP, AARRR, STAR, NFR, V/V/U, RWDA, Design Thinking - deployed as the answer architecture on peer-voted competition surfaces. Top 1-2% in PM and AI globally: peer-validated stamps on framework-fluency in operation.</p>
 <p><strong>&quot;Play with APIs when you are bored&quot; (2024-03-06):</strong> &quot;Being technical is not about knowing a technology but using the technology.&quot; Concept-application over tool-knowledge in 16 words.</p>
 <p><strong>Mastery (Robert Greene) Collab piece (2024-06-25):</strong> &quot;The lowest common denominator came out to be hours put in. Practicing being a PM is akin to being a critical user.&quot; Concept-grounding via named thinker - the same pattern as STP cited to a professor.</p>
 <p><strong>Muscle-memory commitment (2025-12-26):</strong> &quot;To get this into my muscle memory.&quot; Framework-citations plus deliberate repetition. The belief at maturity.</p>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/career-reflection/">&larr; Career reflection</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

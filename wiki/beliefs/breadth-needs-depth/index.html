@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -157,15 +169,7 @@
 <p>&gt; &quot;If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest.&quot;</p>
 <p>Five moves in one post: name the failure mode, use ChatGPT itself as evidence, split depth into two valid axes (vertical = industry or domain; horizontal = functional or specialization), permit pivots (&quot;as much as you want but quickly&quot;), close with the substrate observation that even the technology exposing the Human-GPT problem is moving toward domain-specific models.</p>
 <p>Five months after winning the LinkedIn Top Voice PM badge, Agam published a critique of breadth-without-depth. The credential and the critique coexist: peer-voted breadth expressed with framework compression is not the same as ChatGPT-replicable surface-level breadth.</p>
-<h2 id="refinement-arc">Refinement arc</h2>
-<p>The humanness-as-depth synthesis is Agam's own. It began in the April 2024 post itself, not in any external citation. That post led with: &quot;Focus on EQ. First principle thinking is nothing but EQ.&quot; EQ as depth-axis, established April 12, 2024.</p>
-<p>In September 2024, Agam endorsed Mo Gawdat's frame: &quot;In the future, if you know how to use AI you will be efficient but if you know how to connect with humans you will be loved.&quot; Mo Gawdat is a supporting voice that confirms the April 2024 synthesis. He is not its source.</p>
-<p>By July 2025: &quot;We humans are built this way: to deeply feel, to be affected, and still have the resilience to bounce back. And no AI will ever take that away. This is both our greatest vulnerability and our greatest strength.&quot; The career-craft belief had moved to an existential register. The deepest niche is being irreducibly human.</p>
-<p>Breadth keeps you efficient. Depth makes you loved.</p>
-<p>One internal note: the April 2024 post closes with &quot;There is nothing wrong with being a GPT.&quot; Agam refused to declare breadth itself a failure mode. The belief is breadth-needs-depth, not breadth-is-failure.</p>
-<h2 id="cross-links">Cross-links</h2>
-<ul><li><code>belief.breadth-as-differentiation</code> - the parent thesis. This belief adds the binding constraint: breadth without depth is commoditized. Parent is not contradicted; it gains a floor.</li><li><code>belief.learn-concepts-not-tools</code> - shares the 2019-12-04 evidence anchor. Concepts-not-tools is the mechanism by which depth is acquired; breadth-needs-depth is the demand for it.</li><li><code>belief.never-be-smartest-in-room</code> - the humility-counterweight. Breadth-needs-depth says invest in depth; never-be-smartest says that depth still does not make you the room's expert. T-shape with epistemic humility.</li><li><code>belief.ai-pm-skillset-table-stakes</code> - the AIonOS inside-out x outside-in move is the depth-pick narrated. The Human-GPT critique made the choice mandatory; the career move applied it.</li><li><code>belief.taste-over-execution</code> and <code>belief.spec-over-sprint</code> - taste IS depth at the craft layer. Generic execution-speed without taste-depth produces Human-GPT-grade output.</li></ul>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (9 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Key content</th><th>Weight</th></tr></thead>
 <tbody>
@@ -179,8 +183,7 @@
 <tr><td>2025-07-22</td><td>Post</td><td>&quot;This is both our greatest vulnerability and our greatest strength.&quot;</td><td>strong</td></tr>
 </tbody></table></div>
 <p>8 distinct evidence items across 7 years. Human-GPT label by name once (2024-04-12); the critique-pattern across 5+ items from 2018 forward.</p>
-<hr>
-<p><em>Draft for Phase B HTML scaffolding.</em></p>
+<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/breadth-as-differentiation/">&larr; Breadth as differentiation</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

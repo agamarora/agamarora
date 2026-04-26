@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="pm-taste-craft-metaphors-and-what-a-pm-actually-does">PM taste  -  craft, metaphors, and what a PM actually does</h1>
-<p><em>Era: 2021 - 2026 · 15+ posts · 10 beliefs</em></p>
-<hr>
 <h2 id="the-meta-belief">The meta-belief</h2>
 <p>Before the craft beliefs, one line from 2021-12-12: &quot;I have a very strong opinion about having no strong opinions.&quot;</p>
 <p>This is not a contradiction to explain away. It is the license for everything else on this page. The PM who has no strong opinions is a pushover who says yes to 99 of the 99 should-we questions. The PM who has only strong opinions is a tyrant who says no to all 99 and never gets to the 1. The productive space: strong opinions held hard, discarded faster when shown wrong. Conviction is real; it just has to earn its place. Read this page with that filter. Every belief below is held with conviction and held provisionally. The paradox is the voice.</p>
@@ -195,12 +205,7 @@
 <p><strong>Align before you build.</strong> The paper wireframe is not a mockup. It is a shared-understanding artifact. The jupyter notebook is not output. It is model-selection evidence stakeholders can react to. Design thinking as a speed tool means: catch misalignment before it compounds.</p>
 <p><strong>Ship with conviction, not configurability.</strong> Products with no settings pane ship a PM's decided stance. Products with 47 preference toggles ship a PM's inability to decide.</p>
 <hr>
-<h2 id="tension-with-spec-first-taste">Tension with <code>spec-first-taste</code></h2>
-<p>There is an adjacent theme (spec-first-taste) that a reader of this page will likely notice the absence of. In April 2026, Agam crystallized a builder trilogy: Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt. That trilogy is the builder-stance version of the same set of dispositions described here. PM-taste is about institution-fluency  -  what it means to do the PM role well across any company and era. Spec-first-taste is about the AI-era builder stance  -  how to work with generative tools without letting them degrade the spec you already locked.</p>
-<p>Same person. Different altitudes. PM-taste asks: &quot;What should we build?&quot; Spec-first-taste asks: &quot;Now that we've decided, how do we build it without losing the decision to tool drift?&quot; The cross-link runs both directions. The taste that refuses customization in a PRD (pm-taste) is the same taste that refuses letting an LLM re-decide typography tokens already locked (spec-first-taste). One belief, two applications.</p>
-<p>Cross-link: <a href="/wiki/spec-first-taste/"><code>spec-first-taste</code></a> for the builder trilogy as the AI-era application of the same discrimination work. And <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a> where the strong-opinion-about-no-strong-opinions productive paradox cross-lists.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (12 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Surface</th><th>Belief evidenced</th><th>Notes</th></tr></thead>
 <tbody>
@@ -216,9 +221,8 @@
 <tr><td>2024-05-24</td><td>Collab Article</td><td>belief.design-thinking-as-speed-tool</td><td>Jupyter notebook + paper wireframe as alignment apparatus</td></tr>
 <tr><td>2025-12-04</td><td>corpus post</td><td>belief.anti-customization</td><td>&quot;Hard-fought battle with myself&quot;  -  taste as personal craft-axis</td></tr>
 </tbody></table></div>
+</details><hr>
 <hr>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/breadth-as-differentiation/">&larr; Breadth as differentiation</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/ai-pm-skillset/">AI PM skillset &rarr;</a></nav>

@@ -219,28 +219,13 @@ projectTables.forEach((tbl) => {
 });
 
 // ---------------------------------------------------------------------------
-// 4. People
+// 4. People - INTENTIONALLY EXCLUDED from kg.json (per Agam call 2026-04-26)
 // ---------------------------------------------------------------------------
-const peopleTables = allTablesUnder(/^## People/i, src);
+// People nodes were stripped from the public knowledge graph because tracking
+// people-as-graph-nodes is not the value the wiki is meant to deliver. Beliefs,
+// projects, themes, and tech form the graph that matters. The People section
+// in ontology-v1.md remains as historical synthesis context but is not parsed.
 const people = [];
-const seenPeopleIds = new Set();
-peopleTables.forEach((tbl) => {
-  tbl.forEach((r) => {
-    const name = (r.name || "").trim();
-    if (!name || /^\[/.test(name)) return; // skip placeholder rows
-    const id = `person.${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
-    if (seenPeopleIds.has(id)) return;
-    seenPeopleIds.add(id);
-    people.push({
-      type: "Person",
-      id,
-      label: name,
-      relation: r.relation || "",
-      surface: r["interaction surface"] || "",
-      beliefs_evidenced: r["beliefs evidenced"] || "",
-    });
-  });
-});
 
 // ---------------------------------------------------------------------------
 // 5. Tech (categorized text under ## Tech)
@@ -353,9 +338,75 @@ if (themeAssignSection) {
 }
 
 // ---------------------------------------------------------------------------
+// 6.5 Post nodes from evidence URNs in wiki + belief drafts
+// ---------------------------------------------------------------------------
+// Phase B + C call: posts are first-class graph nodes. Each urn:li:activity:NNN
+// reference in any wiki theme draft or belief draft becomes a Post node, edged
+// to the theme (theme.<slug> -[cites-post]-> post.<urn>) and/or the belief
+// (belief.<slug> -[cites-post]-> post.<urn>). This wires evidence into the
+// graph viz instead of burying it inside table rows.
+import { readdirSync as _readdirSync, statSync } from "node:fs";
+
+const THEME_DRAFTS = join(ROOT, "docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final");
+const BELIEF_DRAFTS = join(ROOT, "docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final");
+
+const posts = new Map(); // id -> { id, type, label, urn, dates: Set, snippet }
+const postEdges = [];
+
+function scanDraftsForUrns(dir, parentKind /* 'theme' | 'belief' */) {
+  let files;
+  try { files = _readdirSync(dir); } catch { return; }
+  for (const f of files) {
+    if (!f.endsWith(".md") || f.startsWith("_")) continue;
+    const slug = f.replace(/\.md$/, "");
+    const parentId = parentKind === "theme" ? `theme.${slug}` : `belief.${slug}`;
+    let text;
+    try { text = readFileSync(join(dir, f), "utf8"); } catch { continue; }
+    const seenInThisFile = new Set();
+    // Pattern: urn:li:activity:DIGITS (with optional surrounding context).
+    // Capture the line containing the URN to derive a date + 1-line snippet.
+    for (const line of text.split("\n")) {
+      const urnMatch = line.match(/urn:li:activity:(\d+)/);
+      if (!urnMatch) continue;
+      const urn = `urn:li:activity:${urnMatch[1]}`;
+      if (seenInThisFile.has(urn)) continue;
+      seenInThisFile.add(urn);
+      const id = `post.${urn.replace(/:/g, "-")}`;
+      // Date: first ISO date on the line, e.g. 2024-12-24
+      const dateMatch = line.match(/(\d{4}-\d{2}-\d{2})/);
+      const date = dateMatch ? dateMatch[1] : "";
+      // Snippet: first quoted phrase on the line, fall back to leading text
+      const quote = line.match(/"([^"]+)"/) || line.match(/“([^”]+)”/);
+      const snippet = quote ? quote[1] : line.replace(/\|/g, " ").replace(/^[\s\-|*]+/, "").slice(0, 120).trim();
+      if (!posts.has(id)) {
+        posts.set(id, {
+          type: "Post",
+          id,
+          urn,
+          permalink: `https://www.linkedin.com/feed/update/${urn}/`,
+          label: snippet.slice(0, 80) || `Post ${urn}`,
+          date,
+          snippet,
+        });
+      } else {
+        // Earliest date wins (rare conflict); accumulate snippet length
+        const p = posts.get(id);
+        if (date && (!p.date || date < p.date)) p.date = date;
+      }
+      postEdges.push({ from: parentId, rel: "cites-post", to: id });
+    }
+  }
+}
+
+scanDraftsForUrns(THEME_DRAFTS, "theme");
+scanDraftsForUrns(BELIEF_DRAFTS, "belief");
+
+// ---------------------------------------------------------------------------
 // 7. Validate
 // ---------------------------------------------------------------------------
-const allNodes = [...themes, ...beliefs, ...projects, ...people, ...tech];
+const postsArr = Array.from(posts.values());
+edges.push(...postEdges);
+const allNodes = [...themes, ...beliefs, ...projects, ...tech, ...postsArr];
 const nodeIds = new Set(allNodes.map((n) => n.id));
 // Extra slugs that exist as ontology references but aren't in our parsed nodes
 const knownExternalIds = new Set([
@@ -419,8 +470,8 @@ const stats = {
     total: beliefs.length,
   },
   projects: projects.length,
-  people: people.length,
   tech: tech.length,
+  posts: postsArr.length,
   edges: {
     total: edges.length,
     by_relation: edges.reduce((acc, e) => {
@@ -457,7 +508,7 @@ console.log(
   `[build-kg]   themes: ${stats.themes}, beliefs: ${stats.beliefs.total} (T1=${stats.beliefs.tier_1} T2=${stats.beliefs.tier_2} T3=${stats.beliefs.tier_3} dropped=${stats.beliefs.dropped} superseded=${stats.beliefs.superseded})`
 );
 console.log(
-  `[build-kg]   projects: ${stats.projects}, people: ${stats.people}, tech: ${stats.tech}`
+  `[build-kg]   projects: ${stats.projects}, tech: ${stats.tech}, posts: ${stats.posts || 0}`
 );
 console.log(`[build-kg]   edge relations: ${JSON.stringify(stats.edges.by_relation)}`);
 if (orphanEdges.length) {

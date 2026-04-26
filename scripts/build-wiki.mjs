@@ -159,11 +159,12 @@ function inlineMd(text) {
   // Restore code spans
   text = text.replace(/CODE(\d+)/g, (_, i) => `<code>${escHtml(codeSpans[+i])}</code>`);
 
-  // Bare urn:li:activity:NNN -> LinkedIn permalink (when not already a link)
+  // Bare urn:li:activity:NNN -> LinkedIn permalink labelled "view post"
+  // (the raw URN id is noise for both humans and agents; the link is what matters).
   text = text.replace(
     /(^|[\s>])(urn:li:activity:(\d+))/g,
     (_, pre, full, id) =>
-      `${pre}<a href="https://www.linkedin.com/feed/update/${full}/" target="_blank" rel="noopener" class="urn-link">${full}</a>`
+      `${pre}<a href="https://www.linkedin.com/feed/update/${full}/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a>`
   );
 
   return text;
@@ -355,6 +356,18 @@ const SHARED_HEAD_STYLES = `
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 `;
 
 const SVG_SPRITE = `<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -516,10 +529,72 @@ ${articleHtml}
 `;
 }
 
+// Strip whole sections from markdown body. Sections start at `## Title` and
+// run until the next `## ` (any level-2 heading) or EOF.
+function stripSections(body, titlesToStrip /* array of regex */) {
+  const lines = body.split("\n");
+  const out = [];
+  let dropping = false;
+  for (const l of lines) {
+    const h2 = l.match(/^##\s+(.+?)\s*$/);
+    if (h2) {
+      const title = h2[1];
+      dropping = titlesToStrip.some((re) => re.test(title));
+      if (dropping) continue;
+    }
+    if (!dropping) out.push(l);
+  }
+  return out.join("\n");
+}
+
+// Drop draft trace artifacts that don't help humans or agents:
+//   - `*Polished: taste-pass decisions applied 2026-04-26.*`
+//   - `*R6 draft - not final. Inputs to R7+R8.*`
+//   - `*Era: 2023-03 to 2026-04 · 14+ posts · 8 beliefs*`  (era / posts / beliefs meta line — keep simplified version)
+// Also drops trailing `---` separator just before the footer trace.
+function stripDraftTraces(body) {
+  let out = body
+    // Drop italic footer traces from R-round drafts
+    .replace(/^\*(Polished|Final R\d|R\d draft)[^*]*\*\s*$/gm, "")
+    .replace(/^\*Locked [^*]+\*\s*$/gm, "")
+    // Drop the era/posts/beliefs meta line after h1 (data is on the wiki home + projects DAG)
+    .replace(/^\*Era:[^*]+\*\s*$/gm, "")
+    // Trim consecutive blank lines
+    .replace(/\n{3,}/g, "\n\n");
+  // Drop trailing `---` lines that are now orphans after stripping the footer
+  out = out.replace(/(?:\n---+\s*)+\s*$/m, "\n");
+  return out;
+}
+
+// Wrap the rendered Evidence section in <details>/<summary> so it collapses
+// by default. Operates on the HTML output of blockMd. Looks for <h2 ...>Evidence</h2>
+// and wraps from there until the next <h2>, <hr>, or end of article.
+function collapseEvidenceHtml(html) {
+  // Match the evidence h2 plus everything until the next h2/hr or end
+  const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
+  return html.replace(pattern, (_, heading, body) => {
+    return `<details class="evidence-block"><summary>Evidence (${(body.match(/<tr>/g) || body.match(/<li>/g) || []).length} dated ${body.includes('<table') ? 'rows' : 'items'} - click to expand)</summary>${body}</details>`;
+  });
+}
+
+// Sections we drop from human-rendered theme pages. These are agent-retrieval
+// source content kept in the markdown drafts; the agent fetches them via
+// kg.json, but human readers do not need to wade through them.
+const STRIP_THEME = [/^Tension with/i, /^Open question/i, /^Open Q/i];
+// Sections we drop from human-rendered belief sub-pages.
+const STRIP_BELIEF = [/^Refinement arc/i, /^Cross-links?/i];
+
 function buildThemePage(slug, src) {
   const { meta, body } = parseFrontmatter(src);
   const m = pageMeta(meta, slug);
-  const articleHtml = blockMd(body.trim());
+  // Lightweight strip: drop draft traces + Tension + Open Question sections.
+  // Then collapse Evidence in the rendered HTML so the page reads as a clean
+  // narrative (Core belief + How it formed + What it implies) with evidence
+  // available on click.
+  let trimmed = stripDraftTraces(body.trim());
+  trimmed = stripSections(trimmed, STRIP_THEME);
+  let articleHtml = blockMd(trimmed.trim());
+  articleHtml = collapseEvidenceHtml(articleHtml);
   return pageWrap({
     title: m.title,
     description: `${m.title} - one of twelve themes plus a root in agamarora.second-brain.`,
@@ -553,7 +628,12 @@ function buildMetaPage(slug, src) {
 function buildBeliefPage(slug, src) {
   const { meta, body } = parseFrontmatter(src);
   const m = pageMeta(meta, slug);
-  const articleHtml = blockMd(body.trim());
+  // Same lightweight strip applied to belief sub-pages: drop Refinement arc +
+  // Cross-links sections, drop draft traces, collapse Evidence.
+  let trimmed = stripDraftTraces(body.trim());
+  trimmed = stripSections(trimmed, STRIP_BELIEF);
+  let articleHtml = blockMd(trimmed.trim());
+  articleHtml = collapseEvidenceHtml(articleHtml);
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme
     ? `<a href="/wiki/${parentTheme}/">${NAV_TITLES[parentTheme] || parentTheme}</a><span class="sep">/</span>`
@@ -777,7 +857,7 @@ ${SHARED_AAMARK_HTML}
     <span><strong>${kg.stats.themes}</strong> themes</span>
     <span><strong>${kg.stats.beliefs.tier_1 + kg.stats.beliefs.tier_2}</strong> beliefs</span>
     <span><strong>${kg.stats.projects}</strong> projects</span>
-    <span><strong>${kg.stats.people}</strong> people</span>
+    <span><strong>${kg.stats.posts || 0}</strong> posts</span>
     <span><strong>${kg.stats.tech}</strong> tech</span>
   </div>
 
@@ -786,7 +866,7 @@ ${SHARED_AAMARK_HTML}
     <button data-filter="Theme">Themes</button>
     <button data-filter="Belief">Beliefs</button>
     <button data-filter="Project">Projects</button>
-    <button data-filter="Person">People</button>
+    <button data-filter="Post">Posts</button>
     <button data-filter="Tech">Tech</button>
   </div>
 
@@ -795,11 +875,11 @@ ${SHARED_AAMARK_HTML}
   </div>
 
   <div class="graph-legend">
-    <span><span class="swatch" style="background:#E5A54B"></span>Theme</span>
-    <span><span class="swatch" style="background:#7AB3D6"></span>Belief</span>
-    <span><span class="swatch" style="background:#A6D67A"></span>Project</span>
-    <span><span class="swatch" style="background:#D67A9C"></span>Person</span>
-    <span><span class="swatch" style="background:#9C7AD6"></span>Tech</span>
+    <span><span class="swatch" style="background:#E5A54B"></span>Theme (star)</span>
+    <span><span class="swatch" style="background:#7AB3D6"></span>Belief (dot)</span>
+    <span><span class="swatch" style="background:#A6D67A"></span>Project (box)</span>
+    <span><span class="swatch" style="background:#D67A9C"></span>Post (triangle)</span>
+    <span><span class="swatch" style="background:#9C7AD6"></span>Tech (square)</span>
   </div>
 
   <div class="graph-detail" id="graph-detail" aria-live="polite">
@@ -814,8 +894,8 @@ ${SHARED_AAMARK_HTML}
 ${AAMARK_SCRIPT}
 
 (async () => {
-  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Person: '#D67A9C', Tech: '#9C7AD6' };
-  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Person: 'diamond', Tech: 'square' };
+  const COLORS = { Theme: '#E5A54B', Belief: '#7AB3D6', Project: '#A6D67A', Post: '#D67A9C', Tech: '#9C7AD6' };
+  const SHAPES = { Theme: 'star', Belief: 'dot', Project: 'box', Post: 'triangle', Tech: 'square' };
 
   let kg;
   try {
@@ -829,19 +909,24 @@ ${AAMARK_SCRIPT}
   const wikiUrlFor = (n) => {
     if (n.type === 'Theme') return n.wiki_url || ('/wiki/' + (n.slug || n.id.replace(/^theme\\./,'')) + '/');
     if (n.type === 'Belief' && n.tier === '1') return '/wiki/beliefs/' + n.id.replace(/^belief\\./,'') + '/';
+    if (n.type === 'Post' && n.permalink) return n.permalink;
     return null;
   };
 
-  const allNodes = kg.nodes.map((n) => ({
-    id: n.id,
-    label: (n.label || n.id).replace(/^belief\\.|^theme\\.|^project\\.|^person\\.|^tech\\./, '').slice(0, 32),
-    title: (n.label || n.id) + ' (' + n.type + ')',
-    color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
-    shape: SHAPES[n.type] || 'dot',
-    size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : 8,
-    font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : 11, face: 'JetBrains Mono' },
-    raw: n,
-  }));
+  const allNodes = kg.nodes.map((n) => {
+    const isPost = n.type === 'Post';
+    const cleanLabel = (n.label || n.id).replace(/^belief\\.|^theme\\.|^project\\.|^tech\\.|^post\\./, '').slice(0, isPost ? 18 : 32);
+    return {
+      id: n.id,
+      label: isPost ? (n.date || cleanLabel) : cleanLabel,
+      title: isPost ? ((n.date || '') + ': ' + (n.snippet || n.urn || '')).slice(0, 200) : (n.label || n.id) + ' (' + n.type + ')',
+      color: { background: COLORS[n.type] || '#666', border: COLORS[n.type] || '#666' },
+      shape: SHAPES[n.type] || 'dot',
+      size: n.type === 'Theme' ? 18 : n.type === 'Belief' && n.tier === '1' ? 12 : isPost ? 6 : 8,
+      font: { color: '#E8E4DF', size: n.type === 'Theme' ? 14 : isPost ? 9 : 11, face: 'JetBrains Mono' },
+      raw: n,
+    };
+  });
   const allEdges = kg.edges.map((e, i) => ({
     id: 'e' + i, from: e.from, to: e.to,
     color: { color: e.rel === 'contains-belief' ? '#444' : e.rel === 'tension-with' ? '#E55A4B' : '#333', opacity: 0.6 },

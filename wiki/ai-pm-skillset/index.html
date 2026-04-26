@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="what-ai-pm-actually-requires">What AI PM actually requires</h1>
-<p><em>Era: 2017 to 2026 · 18+ posts · 8 beliefs (incl. cross-links)</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>There are two kinds of AI PM. The first builds the models: the researchers and engineers at OpenAI, Anthropic, and Google DeepMind whose job is improving the underlying substrate. The second uses the models to unlock growth: the application-layer practitioners who take what the labs ship and turn it into working products. These are different disciplines with different skill curves, different success metrics, different identities.</p>
 <p>AI fluency is now table stakes for both, but what that fluency consists of differs sharply. For the application-layer PM, it is not about knowing model internals. It is about being as comfortable with AI tools as you are with PowerPoint and Excel, framing the business problem before reaching for any model, learning the underlying concepts so the tools you pick up do not become anchors when the tools change, and building a personal apparatus that compounds over time. That is the AI PM archetype that matters for the large majority of practitioners. That is the one I occupy by choice.</p>
@@ -169,11 +179,7 @@
 <p><strong>Learn concepts, not tools.</strong> Frameworks endure; tools rotate. The PM who learned &quot;how transformers trade off context window against latency&quot; retains their edge across model generations. The PM who learned &quot;how to write GPT-3.5 prompts&quot; churns with every release. This belief has its own page in the career-reflection theme; it cross-links here as the learning habit that makes AI-PM identity durable. (See: <a href="/wiki/career-reflection/"><code>career-reflection</code></a>.)</p>
 <p><strong>Build a personal apparatus.</strong> The design-thinking Collab response names the AI-specific implementation: &quot;I have a jupyter notebook where I try different models and a quick paper wireframe to put the flow and tech into tangibles that stakeholders can touch.&quot; Design thinking is not a UI/UX first exercise. It is the stakeholder-alignment and feedback-gathering loop, with AI scaffolding the iteration speed. The apparatus is the belief made operational. (Cross-link: <code>belief.design-thinking-as-speed-tool</code> in <a href="/wiki/pm-taste/"><code>PM taste</code></a>.)</p>
 <hr>
-<h2 id="tension-with-second-brain-and-agent-first">Tension with <code>second-brain</code> and <code>agent-first</code></h2>
-<p>The belief <code>belief.llm-as-primary-daily-tool</code> sits at the intersection of this theme and the second-brain theme. LLMs are a great tool: used daily, more than any other tool in the stack. That is the operative 2026 claim. The operational framing (how LLMs embed into daily workflow: note-structuring, brainstorming, writing, spec-drafting) lives here as primary home. The second-brain page cross-lists it as the precursor in the substrate chain (self-instrumentation to quantified-self-as-mindfulness to llm-as-primary-daily-tool to second-brain-is-context-layer). (See: <a href="/wiki/second-brain/"><code>second-brain</code></a>.)</p>
-<p>A subtler tension sits between this theme and agent-first. Agent-first, by 2026, has become a builder posture  -  spec, context, craft at the bench level. Application-layer AI-PM positions Agam in archetype 2 (using models, not building them). Both hold simultaneously: &quot;application-layer&quot; was always defined relative to foundation-layer (do you improve the model?), not relative to how hands-on the building is. The same field data from 2026 produces both: the archetype-2 AI-PM identity AND the builder-trilogy framing. (See: <a href="/wiki/agent-first/"><code>agent-first</code></a>.)</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p>1. <strong>2017-12-21 · post</strong>  -  &quot;Decision Management and ML platforms. The two hottest and profitable AI technologies right now.&quot; Origin node. <code>belief.ai-is-the-next-wave</code> ancestor. [urn:li:activity:6349574083381944321]</p>
 <p>2. <strong>2021-07-14 · post</strong>  -  &quot;It's not about the model it's about the problem.&quot; Pre-ChatGPT PM-craft frame. <code>belief.its-not-the-model-its-the-problem</code>. [urn:li:activity:6820970631484465152]</p>
 <p>3. <strong>2023-03-14 · post</strong>  -  &quot;I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit... To me, tis but an extension.&quot; Manifesto post. THE crystallization moment. Six concrete use cases. <code>belief.ai-pm-skillset-table-stakes</code> anchor. [urn:li:activity:7041317366437163008]</p>
@@ -184,11 +190,10 @@
 <p>8. <strong>2024-07-04 · post</strong>  -  &quot;I think I'll flaunt the Top AI badge for sometime since I have joined AIONOS as an AI Product Manager.&quot; Top Voice AI badge + AIonOS join. Fluency claim becomes operational title. [urn:li:activity:7214487...]</p>
 <p>9. <strong>2025-06-20 · post</strong>  -  &quot;start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation.&quot; Agent-first manifesto. AI-PM table-stakes assumed floor; new differentiation moves up the stack. [urn:li:activity:7341662...]</p>
 <p>10. <strong>2026-04-09 · post</strong>  -  &quot;When you have already spent hours speccing every pixel... a generative tool gives you a worse version of what you have already decided. Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt.&quot; The trilogy. Application-layer AI-PM has matured to spec-and-taste craft. [urn:li:activity:7447981735901949952]</p>
-<hr>
+</details><hr>
 <h2 id="cross-link-ic-path-in-the-ai-era">Cross-link: IC path in the AI era</h2>
 <p>The AI-era reframe extends to the IC path itself. IC paths matter more in 2026 than before. An individual contributor with AI agents can produce significantly more than before. The throughput of an IC plus AI is closer to a small team than ever. This makes the application-layer AI-PM identity not just a job-type choice but a leverage multiplier. (See: <a href="/wiki/career-reflection/"><code>career-reflection</code></a> for the IC-path legitimacy belief and its AI-era amplification.)</p>
 <hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/pm-taste/">&larr; PM taste</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/enterprise-ai-reality/">Enterprise AI reality &rarr;</a></nav>

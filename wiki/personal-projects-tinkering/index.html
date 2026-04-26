@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="personal-projects-ship-it-or-it-doesn-t-exist">Personal projects  -  ship it or it doesn't exist</h1>
-<p><em>Era: 2016 to 2026 · 12+ posts · 4 beliefs · 52-project lineage</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Ideas are cheap. The prototype is the argument.</p>
 <p>This is not a principle held in the abstract. It is a conclusion from a specific moment: lockdown, 2020, no dev budget, a product idea that needed a mobile app to prove it. Rather than waiting for a team, he pulled up a Flutter/Dart course and built the capability himself. Three weeks later: &quot;No longer 'just an idea!' :)&quot;</p>
@@ -179,14 +189,7 @@
 <p><code>belief.ship-the-prototype</code> (absorbs tinker-publicly per A3) is what this looks like when applied to personal/lab work and posted via <code>linkedin-as-instrument</code>.</p>
 <p>Cross-link: <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a>  -  where the build-post-teach-learn loop is analyzed as platform strategy.</p>
 <hr>
-<h2 id="tension-with-spec-first-taste">Tension with <code>spec-first-taste</code></h2>
-<p>In 2020: any prototype beats no prototype. Ship even when embarrassed. Reid Hoffman's &quot;if you're not embarrassed by the first version, you launched too late&quot; was borrowed authority.</p>
-<p>By 2026, the belief had been refined. <code>belief.spec-over-sprint</code> (2026-04-09): &quot;When you've specced every pixel, a generative tool gives you a worse version of what you already decided. Invest in the spec, not the iteration speed.&quot; Same verb (ship), tighter upstream constraint (spec first). 2020: artifact-existence beats idea-only. 2026: artifact-quality starts at the spec.</p>
-<p>This is a temporal evolution with a specific trigger: AI makes iteration near-zero-cost. Pre-LLM, the binding constraint was existence  -  ship the thing or the idea stays theoretical. Post-LLM, the binding constraint moved upstream to quality-of-spec, because the model amplifies whatever you put in front of it. The ship-fast belief is correctly listed as superseded in the ontology. The shipping cadence did not change. The preparation upstream of it did.</p>
-<p>What did not change: the shipping cadence. Between December 2025 and April 2026, three projects shipped (/buddy, second-brain v1 private, second-brain v1 public). The upstream discipline tightened; the downstream verb stayed.</p>
-<p>Cross-link: <a href="/wiki/spec-first-taste/"><code>spec-first-taste</code></a> for the builder trilogy (Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt) as refinement, not replacement.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (14 dated rows - click to expand)</summary>
 <div class="md-table-wrap"><table class="md-table">
 <thead><tr><th>Date</th><th>Project / post</th><th>What it demonstrates</th></tr></thead>
 <tbody>
@@ -204,9 +207,8 @@
 <tr><td>2026-04</td><td>luna-monitor: Claude Code Resource Monitor</td><td>Top-tier; open-source on GitHub</td></tr>
 <tr><td>2026-04-23</td><td>second-brain v1: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot;</td><td>Top-tier. Latest-era register. The belief embodied.</td></tr>
 </tbody></table></div>
+</details><hr>
 <hr>
-<hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/linkedin-as-instrument/">&larr; LinkedIn as instrument</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>

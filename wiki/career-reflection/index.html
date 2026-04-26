@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="career-reflection-ic-path-learning-compound-interest-collaborative-growth">Career reflection  -  IC path, learning compound interest, collaborative growth</h1>
-<p><em>Era: 2014 - 2026 · 18+ posts · 8 beliefs</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Go increase the size of the pie if you want a bigger share. That line came from a professor. Agam wrote it into a public post in 2018 and has not needed to revise it since.</p>
 <p>The core posture here is collaborative-growth over zero-sum conquest: build careers, markets, and knowledge on the axis of expansion, not extraction. Its corollary at the learning level is that concepts compound but tools expire, and that functional expertise is a legitimate career home rather than a way-station to someone else's definition of success. Three beliefs anchor the theme: how you relate to markets and peers (help-market-flourish), what you choose to learn (learn-concepts-not-tools), and which career shape you are actually playing for (ic-path-legitimacy). They arrived at different points across an eleven-year arc, each one superseding an earlier default.</p>
@@ -184,30 +194,23 @@
 <p><strong>On market posture:</strong> Help-market-flourish produces a register, not just a rule. The FarEye farewell post in 2024: &quot;This rocket ship is still firing on all cylinders while I take my leave.&quot; The BD triplet from 2019: &quot;Value over revenue. Humans over resources. Trust over contracts.&quot; The Collaborative Articles giving-frame: &quot;You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there.&quot; When Agam makes a career move, changes a role, or gives advice to peers, the framing is expansion of the field, not extraction from it.</p>
 <p>The most recent live application of this belief: agamarora.com, second-brain v1, luna-monitor, and ai-resume are all open-source as of 2026-04-26. Repo: <code>agamarora/agamarora</code>. Not a coincidence. The same instinct that produced the Cardone walk-back in 2017 is the same instinct that publishes personal builds as open source in 2026. (Cross-link: <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a> for public posting as the same instinct; <a href="/wiki/personal-projects-tinkering/"><code>personal-projects-tinkering</code></a> for loop closure by sharing.)</p>
 <hr>
-<h2 id="tension-with-ai-pm-skillset">Tension with <code>ai-pm-skillset</code></h2>
-<p>The <code>learn-concepts-not-tools</code> belief sits at an unusual position in the wiki architecture: it is a standalone sub-page under career-reflection, but it is cross-linked to <code>ai-pm-skillset</code> as the learning habit that makes application-layer AI-PM possible.</p>
-<p>The distinction is intentional. Career-reflection is where the belief originated (2019, Aroma-era reflective, drawing on five years of founder experience) and where its identity-level force lives: this is how Agam thinks about professional survival across a lifetime, not just PM craft. The ai-pm-skillset cross-link surfaces the operational implication: to be an effective AI PM at the application layer, you need the underlying concepts (data literacy, product frameworks, AI architecture vocabulary), not the tool-of-the-month. The parent is career-reflection. The application is ai-pm-skillset.</p>
-<p><code>belief.never-be-smartest-in-room</code> lives on this page as a standard belief (team-joining heuristic scope, not a root disposition). Never-be-smartest says: seek rooms with people smarter than you. Learn-concepts-not-tools says: in those rooms, extract frameworks, not tool names. Muscle-memory-over-novelty says: re-engage those frameworks until they operate at instinct level. Three beliefs, one learning loop.</p>
-<p>Cross-link: <a href="/wiki/ai-pm-skillset/"><code>ai-pm-skillset</code></a> for the learning method as applied AI-PM practice, and <a href="/wiki/breadth-as-differentiation/"><code>breadth-as-differentiation</code></a> for the WHY of going deep.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
-<p>1. <strong>2017-09-14</strong>  -  help-market-flourish origin event: Cardone video, seduction, public walk-back. &quot;Or would you help the market flourish while you try to make your healthy share?&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:6314056957212876800/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:6314056957212876800</a></code></p>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
+<p>1. <strong>2017-09-14</strong>  -  help-market-flourish origin event: Cardone video, seduction, public walk-back. &quot;Or would you help the market flourish while you try to make your healthy share?&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:6314056957212876800/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
 <p>2. <strong>2017-12-22</strong>  -  lead-yourself-first: &quot;being a leader is not about motivating your team, but yourself.&quot; E1 compact heuristic.</p>
-<p>3. <strong>2018-07-12</strong>  -  help-market-flourish crystallized: &quot;Go increase the size of the pie if you want a bigger share.&quot; V2-to-FarEye transition. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:6423036084040630272/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:6423036084040630272</a></code></p>
+<p>3. <strong>2018-07-12</strong>  -  help-market-flourish crystallized: &quot;Go increase the size of the pie if you want a bigger share.&quot; V2-to-FarEye transition. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:6423036084040630272/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
 <p>4. <strong>2019-03-02</strong>  -  STP as framework-endurance evidence: &quot;after five years of working on and off projects... if there is one thing I believe in is the power of the basic model.&quot; (absorbed into learn-concepts)</p>
 <p>5. <strong>2019-12-04</strong>  -  learn-concepts-not-tools canonical: driver/mechanic/engineer analogy. &quot;The world doesn't need more drivers. AI will make you redundant if not now but soon. Strive to learn concepts and not tools. Be a creater!&quot;</p>
 <p>6. <strong>2021-10-30</strong>  -  ic-path-legitimacy supersession: family-default named and broken publicly. &quot;People management is a critical skill but it's not for everyone.&quot;</p>
-<p>7. <strong>2023-11-22</strong>  -  help-market-flourish in giving-register (Collab Article): &quot;You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7133126861819117568/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7133126861819117568</a></code></p>
-<p>8. <strong>2024-02-11</strong>  -  certifications-are-collectibles setup: Top Voice PM earned, immediately diagnosed. &quot;This kind of feedback... is more valuable than any badge.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7162451080759459840/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7162451080759459840</a></code></p>
-<p>9. <strong>2024-06-25</strong>  -  ic-path maintenance via Mastery-by-Greene (Collab): &quot;I wouldn't trade it for anything.&quot; &quot;The lowest common denominator came out to be hours put in. And this is something you can't skim on.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7211156691101327360/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7211156691101327360</a></code></p>
-<p>10. <strong>2024-11-15</strong>  -  certifications-are-collectibles canonical: &quot;They are in no shape or means a validation of what you can and cannot do.&quot; Steve Jobs anchor. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7263044949686824960/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7263044949686824960</a></code></p>
+<p>7. <strong>2023-11-22</strong>  -  help-market-flourish in giving-register (Collab Article): &quot;You should not go out to take. Instead evaluate are you giving enough and things should start flowing from there.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7133126861819117568/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
+<p>8. <strong>2024-02-11</strong>  -  certifications-are-collectibles setup: Top Voice PM earned, immediately diagnosed. &quot;This kind of feedback... is more valuable than any badge.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7162451080759459840/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
+<p>9. <strong>2024-06-25</strong>  -  ic-path maintenance via Mastery-by-Greene (Collab): &quot;I wouldn't trade it for anything.&quot; &quot;The lowest common denominator came out to be hours put in. And this is something you can't skim on.&quot; <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7211156691101327360/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
+<p>10. <strong>2024-11-15</strong>  -  certifications-are-collectibles canonical: &quot;They are in no shape or means a validation of what you can and cannot do.&quot; Steve Jobs anchor. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7263044949686824960/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
 <p>11. <strong>2025-11-25</strong>  -  ic-path at altitude: &quot;Growth as a product manager is moving from 'we are building the best product' to 'we are building a profitable and valuable business'.&quot; Altitude-of-thinking, not altitude-of-org-chart.</p>
-<p>12. <strong>2025-12-26</strong>  -  muscle-memory-over-novelty canonical: &quot;To get this into my muscle memory... Use this man's writing/talks as not just one-offs, but commit to them.&quot; Doshi re-watch prescription. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7410323391465062400/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7410323391465062400</a></code></p>
-<hr>
+<p>12. <strong>2025-12-26</strong>  -  muscle-memory-over-novelty canonical: &quot;To get this into my muscle memory... Use this man's writing/talks as not just one-offs, but commit to them.&quot; Doshi re-watch prescription. <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7410323391465062400/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></p>
+</details><hr>
 <h2 id="v2-games-career-chapter-not-personal-tinkering">V2 Games: career chapter, not personal tinkering</h2>
 <p>V2 Games India (2014-2016) is a career-stage chapter, not a personal tinkering project. Co-founded startup, studio head role: analytics, some dev and QA, CEO and business work for the studio. The gaming-as-economic-intuition signal comes from here. It belongs in this career arc, not in the personal-projects-tinkering page. (Cross-reference: <a href="/wiki/personal-projects-tinkering/"><code>personal-projects-tinkering</code></a> foregrounds the open-source personal builds from 2020 onward.)</p>
 <hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/spec-first-taste/">&larr; Spec first, taste always</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/linkedin-as-instrument/">LinkedIn as instrument &rarr;</a></nav>

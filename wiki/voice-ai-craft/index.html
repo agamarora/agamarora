@@ -110,6 +110,18 @@
   .theme-nav .home{color:var(--text-dim);}
 
   .footer-note{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);text-align:center;margin-top:var(--space-7);opacity:0.7;font-style:normal;}
+
+  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
+  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
+  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
+  details.evidence-block > summary::-webkit-details-marker { display: none; }
+  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
+  details.evidence-block[open] > summary::before { content: '- '; }
+  details.evidence-block > summary:hover { color: var(--text); }
+  details.evidence-block > * { padding: 0 var(--space-5); }
+  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
+  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
+  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
 </style>
 </head>
 <body>
@@ -145,8 +157,6 @@
 
   <article role="main">
 <h1 id="voice-ai-craft-cost-latency-scale">Voice AI craft  -  cost, latency, scale</h1>
-<p><em>Era: 2024 to 2026 · 2 corpus posts + 1 production-stack comment · 1 ghost belief + cross-link to enterprise-ai-reality</em></p>
-<hr>
 <h2 id="core-belief">Core belief</h2>
 <p>Voice AI is not a chatbot with audio on top. The engineering constraints are different: latency budgets measured in milliseconds, not seconds; cost structures priced per minute of call, not per token batch; state management that must survive a mid-sentence network hiccup. A production voice system that handles 4M+ calls per year is solving a different set of problems than a demo that impresses a boardroom. The discipline is real. The corpus is intentionally light on it.</p>
 <p>The under-share is deliberate. Publishing craft specifics from a live enterprise voice AI platform carries disclosure risk. So what appears publicly is sparse: a passing mention in March 2024, a direct answer to a production-stack survey in September 2025, and a production case study on agamarora.com /lab. The absence on LinkedIn is not ignorance. It is restraint. The agamarora.com surface is the independent public record.</p>
@@ -154,9 +164,9 @@
 <hr>
 <h2 id="how-it-formed">How it formed</h2>
 <p>The belief formed on the job, not on LinkedIn.</p>
-<p>The public corpus has one pre-platform voice mention: a March 2024 post observing that voice-as-input would help drafting LinkedIn Collaborative Article responses (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7179449143407386624</a></code>). It is a product-feature observation, not hands-on experimentation. It establishes that voice-as-interface was on the radar early in E4, but carries no production learning.</p>
+<p>The public corpus has one pre-platform voice mention: a March 2024 post observing that voice-as-input would help drafting LinkedIn Collaborative Article responses (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code>). It is a product-feature observation, not hands-on experimentation. It establishes that voice-as-interface was on the radar early in E4, but carries no production learning.</p>
 <p>The craft knowledge accumulated during the enterprise voice AI platform role starting July 2024, in a period with no corresponding LinkedIn post cadence on the topic. That is the field-data window: building, demoing, shipping at enterprise scale, and not writing about it publicly. When a direct production-stack survey asked in September 2025, the reply was specific:</p>
-<p>&gt; &quot;Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric  -  business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls).&quot; &gt;  -  2025-09-29 comment-thread reply (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7378427141190799360</a></code>)</p>
+<p>&gt; &quot;Productionised use case: Voice AI with extensive tool calling, state management, human handover and enterprise integrations. 1. 100% cloud LLMs (self-deployment was costly short term with additional staffing and infra requirements). Plan was to pivot long term. 2. 0% automation driven through UI, 100% driven through MCP + APIs. 3. North star metric  -  business metric (% of cases handled with neutral to positive customer NPS). Tech KPI to optimise for us was achieve a certain blended cost per minute + certain TTFT for the whole voice pipeline (inc API calls).&quot; &gt;  -  2025-09-29 comment-thread reply (<code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code>)</p>
 <p>That reply contains more voice-AI engineering specificity than all prior public LinkedIn output combined. Three principles come out of it cleanly.</p>
 <hr>
 <h2 id="what-it-implies">What it implies</h2>
@@ -172,25 +182,17 @@
 <p>Browser automation in a production voice pipeline adds a fragile layer: DOM changes break it, CAPTCHA handling becomes a dependency, headless browser infrastructure adds cost and failure surface. MCP as the abstraction layer keeps the tool-calling surface clean and auditable. When something breaks in a voice call flow that spans tool calls, you want the failure to be in a place you control and can observe. Browser automation is neither.</p>
 <p>The implication generalizes beyond voice: in any agentic system at production scale, the choice of integration layer is a reliability decision, not just a capability decision. See <a href="/wiki/agent-first/"><code>agent-first</code></a> for the broader pattern.</p>
 <hr>
-<h2 id="tension-with-linkedin-as-instrument">Tension with <code>linkedin-as-instrument</code></h2>
-<p>The productive paradox sitting at the core of this page is not between voice AI and any adjacent technical belief. It is between voice-ai-craft and <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a>.</p>
-<p>LinkedIn-as-instrument holds that posting IS the thinking  -  that writing sharpens the thought, that distribution is a byproduct of the practice. Voice-ai-craft is the counterexample: the largest single professional contribution (4M+ calls/year, enterprise deployments, two-plus years of production work) generates almost no LinkedIn output. The under-share is intentional (Decision 2, binding).</p>
-<p>Both are true: posting is thinking-out-loud when the topic is safe to think out loud about. When the topic carries disclosure risk (live enterprise platform, customer NPS, production stack specifics), the practice shifts to private. The paradox names something real about professional voice: you can only think publicly about what you can afford to publish. The voice-ai-craft under-share is not a contradiction of the linkedin-as-instrument thesis; it is the constraint that defines its boundary condition.</p>
-<p>The 2025-09-29 reply shows the private-to-public pattern at its most concentrated: two-plus years of production work, one field-data comment when a direct question landed on a survey thread. The framing in the corpus is correct: &quot;The absence is not ignorance. It is restraint.&quot;</p>
-<p>Secondary cross-link: <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a>  -  where the production voice AI reply appears as a worked example in the evidence section.</p>
-<hr>
-<h2 id="evidence">Evidence</h2>
+<details class="evidence-block"><summary>Evidence (0 dated items - click to expand)</summary>
 <p>The corpus surface for this theme is intentionally sparse. Decision 2 (interim-taste-calls) names the under-share as deliberate. What exists:</p>
-<p><strong>2024-03-29 · <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7179449143407386624</a></code></strong> Voice-based LLM experimentation for drafting LinkedIn Collaborative Article responses. Hobbyist context, not enterprise. Establishes voice-as-interface on the radar in early E4. No production learning carried here.</p>
-<p><strong>2024-07-04 · <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7214487241681772545/" target="_blank" rel="noopener" class="urn-link">urn:li:activity:7214487241681772545</a></code></strong> Enterprise voice AI platform role announced. Names the role (&quot;AI Product Manager&quot;) and context. No craft specifics. Background evidence that the production voice work begins here.</p>
+<p><strong>2024-03-29 · <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7179449143407386624/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></strong> Voice-based LLM experimentation for drafting LinkedIn Collaborative Article responses. Hobbyist context, not enterprise. Establishes voice-as-interface on the radar in early E4. No production learning carried here.</p>
+<p><strong>2024-07-04 · <code><a href="https://www.linkedin.com/feed/update/urn:li:activity:7214487241681772545/" target="_blank" rel="noopener" class="urn-link">view post &rarr;</a></code></strong> Enterprise voice AI platform role announced. Names the role (&quot;AI Product Manager&quot;) and context. No craft specifics. Background evidence that the production voice work begins here.</p>
 <p><strong>2025-2026 · agamarora.com /lab voice-AI production case study</strong> Public case study on the personal site: production voice AI deployment, engineering principles, independent of the LinkedIn corpus. This is the primary non-LinkedIn public surface for voice-AI craft evidence. (<code>project.agamarora-com-voice-ai-case-study</code>)</p>
 <p><strong>2025-09-29 · comment URN tail <code>7378427141190799360</code></strong> Production-stack reply to an agentic-production survey. The highest-density craft evidence in the corpus: cloud vs on-prem trade-off, MCP vs browser automation choice, business KPI ordering (NPS % of cases handled) before tech KPIs (blended cost per minute, TTFT). This item is the source for all three principles named in &quot;What it implies&quot; above.</p>
 <p>Per Decision 2: voice-AI is one example of the production-reality described in <code>theme.enterprise-ai-reality</code>. The 2025-09-29 reply appears there as a worked example in the evidence section. Cross-link: <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a>.</p>
-<hr>
+</details><hr>
 <p>Structural note: this page is confirmed as a peer wiki theme (not satellite to enterprise-ai-reality) per E1. The agamarora.com /lab voice-AI case study is the public evidence anchor that sustains peer status independent of the thin LinkedIn corpus.</p>
 <p>Primary tension cross-link: <a href="/wiki/linkedin-as-instrument/"><code>linkedin-as-instrument</code></a>  -  productive paradox: under-share on LinkedIn vs richer public surface on agamarora.com case study. Secondary cross-link: <a href="/wiki/enterprise-ai-reality/"><code>enterprise-ai-reality</code></a>  -  production AI realities exemplified.</p>
 <hr>
-<p><em>Polished: taste-pass decisions applied 2026-04-26.</em></p>
   </article>
 
   <nav class="theme-nav"><a href="/wiki/agent-first/">&larr; Agent-first</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/breadth-as-differentiation/">Breadth as differentiation &rarr;</a></nav>
