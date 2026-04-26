@@ -1,64 +1,74 @@
 ---
 type: BeliefPage
 slug: enterprise-ai-production-reality
-title: Enterprise AI reality: demos are not deployments
-one_line: "~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model."
+title: Enterprise AI production reality
+one_line: "~80% of enterprise AI experiments don't ship. The gap between a working demo and a working deployment is wider than vendors admit and more boring than analysts cover."
+quotable: "Demos are not deployments. The failure modes are non-functional, data-pipeline, and governance - not model quality."
 parent_theme: enterprise-ai-reality
-related_beliefs: [substance-over-hype, anti-customization, moats-are-infra-talent-data, non-functional-reqs-are-dominant-failure-mode, agent-first, spec-over-sprint]
+related_beliefs:
+  - belief.substance-over-hype
+  - belief.anti-customization
+  - belief.agent-first
+  - belief.spec-over-sprint
 supersedes: []
 conditioned_by:
   - substance-over-hype
-holds_with: []
+holds_with:
+  - agent-first
+applies_to:
+  - enterprise-ai
+  - production-deployment
+  - ai-product-development
+  - demo-vs-production
+  - ai-evaluation
+  - agent-design
+confidence: settled
 tier: 1
-length_target: 400-800w
-status: draft-task-h
+length_target: 400-600w
+status: c-voice-beliefs-r1-cp7-d6.1
+voice_register: 1 (free-form post-essay)
+shape: principle-card-d6.1
 ---
 
-# Enterprise AI reality: demos are not deployments
+# Enterprise AI production reality
 
-## Statement
+## The belief
 
-Building for a demo versus building for production is a different beast.
+Roughly 80% of enterprise AI experiments do not reach production. The failures are not model-quality failures. They are non-functional-requirement failures, data-pipeline failures, and governance failures. The gap between a working demo and a working deployment is wider than vendors admit. It is more boring than analysts cover. It is consistently fatal to most attempts.
 
-Roughly 80% of enterprise AI experiments don't reach production. The failures are not model-quality failures. They are non-functional-requirement failures, data-pipeline failures, governance failures, and time-to-value failures. Enterprises are experimenting a lot and benching ideas even more. The gap between a working demo and a working deployment is wider than vendors admit, more boring than analysts cover, and consistently fatal to most attempts.
+## How to apply
 
-The category is genuinely transformative. The deployment rate is genuinely brutal. Both are true simultaneously. The substrate passes the test; most implementations don't clear the production bar.
+1. **Default to production criteria before demo criteria.** When scoping an AI initiative, write down the non-functional requirements - latency, uptime, audit trail, data residency, access control - before writing the feature list. If the NFRs kill the concept, they should kill it early, not after six months of demos.
+2. **Treat data readiness as a pipeline problem, not a corpus problem.** Having a large historical dataset is not readiness. Production requires a continuous data pipeline: ingest, transform, refresh. Audit whether that pipeline exists. The corpus size is secondary.
+3. **Name the governance gate at kickoff.** Governance - ethics review, security sign-off, compliance gate - is not a post-launch checklist item. In enterprise contexts, it is load-bearing. If governance approval is uncertain, that uncertainty is the primary project risk, not the model choice.
+4. **Measure time-to-value in weeks, not quarters.** Enterprises that cannot show a production-grade win within a defined window bench the idea. Scope the first production use case to fit that window. A narrow win beats a broad demo.
+5. **When the honeymoon period ends, have a production case ready.** The category moves from broad experimentation to a small number of production-grade wins. Companies that arrive at that inflection with only demos get cut. Companies with one real deployment get to expand it.
 
-## Origin
+## What this is not
 
-This belief is empirical, not theoretical. It crystallized from field experience building and demoing a considerable number of GenAI-based product concepts to potential enterprise customers - not from reading analyst reports.
+- **Not a case against enterprise AI.** The category is real and the substrate works. The 80% fail rate is a deployment-discipline problem, not a technology problem. Both things are true simultaneously: the models pass the test; most implementations do not clear the production bar.
+- **Not a model-quality argument.** Swapping to a better model does not fix a broken data pipeline, a missing governance sign-off, or a time-to-value misalignment. If the model is the reason for failure, that is a rare case. Default to auditing the non-model layers first.
+- **Not a reason to skip experimentation.** Experimentation is necessary. The belief is about what the experiment needs to prove: not "does it demo well" but "what would this need to look like in production, and can we get there?"
 
-**Spring 2024 (seed phase, pre-field-data):** Three failure-mode frames surfaced in written Collab Article content: non-functional requirements as the dominant failure mode; data readiness as pipeline, not corpus ("having a large historical corpus to train on" is not readiness - the systems to collect, process and update data are); hype as a production-management variable that sets unrealistic expectations before the first sprint.
+## Argues against
 
-**Fall 2024 (crystallization - 60 days into a senior enterprise AI role):** Nine field-data takeaways published from building and demoing a considerable number of GenAI product concepts to potential enterprise customers. Core trio: building for demo vs production is a different beast; ethics and security concerns reign supreme; enterprises are experimenting a lot but benching ideas even more. Closing frame: "Like any new tech, we are in the honeymoon period - everyone is trying everything until something clicks, and then the rush towards structure and methods begins." That was a forecast.
+- "The model isn't good enough yet - that's why our AI projects haven't shipped."
+- "Enterprises just need to experiment more broadly before committing to production."
+- "If the demo works, production is mostly an engineering effort that follows naturally."
 
-## Refinement arc
+## Where to go from here
 
-**Q4 2024 - distillation:** The nine takeaways compressed into three moats. An AI company needs to build one or all of the following to survive: AI Infrastructure, AI Talent, AI-Ready Data. "Having data is one thing; having AI-ready data is where the value lies. Think about building data collection and preparation pipelines for the future."
+If you want the **disposition this belief sits inside**, go to [substance over hype](/wiki/beliefs/substance-over-hype/). Production-reality is that disposition applied to the enterprise AI category specifically.
 
-**Q2 2025 (nine months later, same field-data instrument re-deployed):** The honeymoon-period prediction confirmed. "The period of experimentation is gone: the shift from broad experimentation to a small number of production-grade wins is underway. Governance is now table stakes. Enterprises want agent onboarding, not agent building. Your systems must serve agents too."
+If you want the **PRD-layer extension** - what this means when writing a spec for a B2B AI product - go to [anti-customization](/wiki/beliefs/anti-customization/). The six-months-of-implementation problem is the demo-vs-production gap restated as a refusal in the spec.
 
-This is when the roughly-80% frame became durable. Not a specific ratio with precision to pin down - a directional frame that holds across cohorts. The durable claim is the gap, not the exact number.
-
-**Late 2025 - PM-craft extension:** Production-reality applied at the PRD layer. Customization is the B2B SaaS hype-word that consistently destroys time-to-value. "My brain is wired to jump to the long-term horizon where today's 'super customizable' product eventually requires six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live." The six-months-of-implementation line is the demo-vs-production gap restated as a refusal in the spec.
-
-## Cross-links
-
-- `belief.substance-over-hype`: parent disposition. Production-reality is substance-over-hype applied to the enterprise AI category specifically. The same disposition that named the blockchain hype in 2018 grades enterprise AI deployment rates in 2024.
-- `belief.anti-customization`: refines production-reality at PRD-layer. The time-to-value frame from the nine takeaways and the six-months-of-implementation line are the same observation from two angles.
-- `belief.non-functional-reqs-are-dominant-failure-mode`: specific failure mode within production-reality. NFRs are not a checklist item - they are the primary failure surface.
-- `belief.agent-first`: derivative. Points 6-8 of the 2025 confirmation post are the agent-first thesis statement; points 1-5 are the production-reality restate.
-- `belief.spec-over-sprint`: if the gap between demo and production is fatal, then speccing before generating is the discipline that closes the gap.
+If you want the **forward-looking frame** - what being in the 20% that ships actually requires - go to [agent-first](/wiki/beliefs/agent-first/). Points 6-8 of the 2025 enterprise field-data confirmation post are the agent-first thesis; the production-reality restate is points 1-5. Both beliefs hold simultaneously.
 
 ## Evidence
 
-Five-round provenance (R2, R3a, R3b, R3d, R3e). 12 surfaces across 22 months.
-
-- Spring 2024 (Collab Articles): NFR failure mode named, data-readiness-as-pipeline, anti-hype-as-PM-craft.
-- 2024-09-04 (canonical anchor): "I have built a considerable number of GenAI-based product concepts... had the chance to demo many of them to potential enterprise customers." Nine takeaways. Honeymoon-period forecast.
-- 2025-06-20 (nine-month confirmation): "The GenAI paradox is real: Heavy investments. Low returns." Closes the 2024 forecast. Roughly-80% frame established as the durable claim.
-- 2025-09-29 (field reply, highest-density single item): Business KPI before tech KPI. Cloud-vs-on-prem trade-offs. MCP as abstraction layer. One production case among many.
-- 2025-12-04: "Six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live."
-
----
-*Draft for Phase B HTML scaffolding.*
+| Date | Entry | Post |
+|---|---|---|
+| 2024-09-04 | "I have built a considerable number of GenAI-based product concepts... had the chance to demo many of them to potential enterprise customers." Nine takeaways published. Honeymoon-period forecast. Core trio: building for demo vs production is a different beast; ethics and security concerns reign supreme; enterprises are experimenting a lot but benching ideas even more. | urn:li:activity:7237024800895889408 |
+| 2025-06-20 | "The GenAI paradox is real: Heavy investments. Low returns." Nine-month confirmation closes the 2024 forecast. Roughly-80% frame established as the durable claim. Governance is now table stakes. "Enterprises want agent onboarding, not agent building." | urn:li:activity:7341662205257433088 |
+| 2025-09-29 | Field reply at highest single-item density: business KPI before tech KPI; cloud-vs-on-prem trade-offs; MCP as abstraction layer; one production case among many. | urn:li:activity:7378427141190799360 |
+| 2025-12-04 | "Six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live." Demo-vs-production gap restated as a refusal in the spec. | urn:li:activity:7402026484919205888 |

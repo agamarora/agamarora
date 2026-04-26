@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:18:56.096Z",
+  "generated_at": "2026-04-26T10:22:54.046Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1580,6 +1580,24 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7237024800895889408",
+      "urn": "urn:li:activity:7237024800895889408",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7237024800895889408/",
+      "label": "I have built a considerable number of GenAI-based product concepts... had the ch",
+      "date": "2024-09-04",
+      "snippet": "I have built a considerable number of GenAI-based product concepts... had the chance to demo many of them to potential enterprise customers."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7402026484919205888",
+      "urn": "urn:li:activity:7402026484919205888",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7402026484919205888/",
+      "label": "Six months of implementation, an implementation partner, hundreds of training do",
+      "date": "2025-12-04",
+      "snippet": "Six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7047219999999999999",
       "urn": "urn:li:activity:7047219999999999999",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7047219999999999999/",
@@ -2460,6 +2478,26 @@
       "to": "post.urn-li-activity-7452998640345853952"
     },
     {
+      "from": "belief.enterprise-ai-production-reality",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7237024800895889408"
+    },
+    {
+      "from": "belief.enterprise-ai-production-reality",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7341662205257433088"
+    },
+    {
+      "from": "belief.enterprise-ai-production-reality",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7378427141190799360"
+    },
+    {
+      "from": "belief.enterprise-ai-production-reality",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7402026484919205888"
+    },
+    {
       "from": "belief.second-brain-is-context-layer",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7047219999999999999"
@@ -2657,9 +2695,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 39,
+    "posts": 41,
     "edges": {
-      "total": 174,
+      "total": 178,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2669,9 +2707,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 63
+        "cites-post": 67
       }
     },
-    "nodes_total": 191
+    "nodes_total": 193
   }
 }
