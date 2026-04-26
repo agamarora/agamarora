@@ -12,6 +12,9 @@ node_modules
 .claude/
 .context/
 
+# /design-review session artifacts (screenshots, audit reports — local only)
+.gstack-design-audit/
+
 # OS
 .DS_Store
 Thumbs.db

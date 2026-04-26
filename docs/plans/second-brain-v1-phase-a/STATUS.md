@@ -28,7 +28,9 @@ Last updated: 2026-04-26 — **CHECKPOINT 29 — Phase C / C-voice-beliefs COMPL
 - Voice: R1 declarative, zero em-dashes, zero biographical date framing in body, zero banned LLM-isms, zero triadic prose
 - Mobile: chip strip stacks vertically below 720px, tag strip wraps confidence below tags, ol counter circles render
 
-**Next action on resume: C-graph step.** Read `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` §D2-graph-UX-binding for the locked 10 invariants. C-graph replaces the current vis-network force-layout at /wiki/graph/ with a hand-designed SVG constellation (P2c). 7 sub-checkpoints (CP-1 layout sketch + invariant checklist → CP-2 theme ring + scroll isolation + zoom-floor → CP-3 belief cluster expand/collapse + always-centered → CP-4 post chips + narrative tour → CP-5 mobile fallback list view → CP-6 keyboard accessibility + re-fit-on-resize → CP-7 final polish + /design-review with all 10 gates). Estimated 7-9hr.
+**Next action on resume: C-graph step, beginning with /design-consultation skill (gstack).** User taste-call 2026-04-26 post-C-voice-beliefs: "do C-graph with proper design consultation." Means: do NOT jump straight into the §D2-graph-UX-binding implementation gates. Open the work with a structured /design-consultation pass first to research the visual landscape, propose constellation aesthetic options, generate font/color/motion previews, and lock the design system before any SVG / JS gets written. THEN the §D2 10 invariants become implementation gates rather than design gates.
+
+After /design-consultation: §D2-graph-UX-binding 7 sub-checkpoints (CP-1 layout sketch + invariant checklist → CP-2 theme ring + scroll isolation + zoom-floor → CP-3 belief cluster expand/collapse + always-centered → CP-4 post chips + narrative tour → CP-5 mobile fallback list view → CP-6 keyboard accessibility + re-fit-on-resize → CP-7 final polish + /design-review with all 10 gates). Estimated 7-9hr post-consultation.
 
 **After C-graph: C-final.** /design-review + /review on full wiki tree. STATUS to CHECKPOINT 30 = Phase C COMPLETE. Estimated 1-2hr.
 
