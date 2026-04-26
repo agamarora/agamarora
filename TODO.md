@@ -45,6 +45,13 @@ All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and
 - [x] ~~`/resume` on v2~~
 - [x] ~~`/enter` has shared v2 header + aa. mark~~
 
+## Open (Phase B follow-ups)
+
+- [ ] **Site-wide favicon 404** — every v2 page references `/favicon.ico` + `/favicon.png` at root, but the actual files live at `/assets/favicon.ico` + `/assets/favicon.png`. Pre-existing across all 5 v2 pages (lab, resume, enter, index, wiki). Fix in one commit per CLAUDE.md "update all v2 pages in one commit" by either (a) updating all 5 page paths to `/assets/favicon.*` or (b) adding root copies. Surfaced by /qa pass on Phase B Task 2.
+- [ ] **`/wiki/` OG image** — `wiki/index.html` currently reuses `/assets/og/lab.png`. Create `/assets/og/wiki.png` (1200x630) for dedicated social share preview. Same gap as the closed /lab issue when it shipped.
+- [ ] **HTML stats drift from kg.json** — `wiki/index.html` hardcodes counts (12 pages, 44 beliefs, 20 projects, 111 edges). Will drift when ontology v2 lands. Wire build-kg.mjs to patch the HTML, or inline-fetch kg.json on page load. Tracked as B8.
+- [ ] **`scripts/build-kg.mjs` unit tests** — 6 boilable-lake test gaps (orphan-edge --strict, tableUnder branches, allTablesUnder EOF, cleanSlug, edge regex parsers, addBelief dedup). Refactor helpers to scripts/kg-parse.mjs for testability. Tracked as B7.
+
 ## Future
 
 - [x] ~~`/moodboard` robots noindex~~ — added 2026-04-22 on both `/moodboard/index.html` and `/moodboard/aa-mark.html`; also blocked in `robots.txt`
