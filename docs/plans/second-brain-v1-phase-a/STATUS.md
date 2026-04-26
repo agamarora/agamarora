@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 23.6 — Phase C in flight. C-voice-themes 11/12 DONE. CP-12 root queued (final theme).**
+Last updated: 2026-04-26 — **CHECKPOINT 24 — Phase C / C-voice-themes COMPLETE (12/12 themes shipped). C-voice-beliefs queued (19 belief pages).**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-12: root.substance-over-hype** via sonnet subagent. Last theme. After CP-12 ships: C-voice-themes complete, move to C-voice-beliefs (19 belief pages, same per-checkpoint cadence).
+**Current step:** Phase C / **C-voice-beliefs** queued. 12 theme pages all reauthored in R1 voice + §D1-narrative-binding cold-reader contract. All shipped 2026-04-26. Per-checkpoint cadence (one belief page per CP, same template as themes). 19 sub-CPs total. Plan recommends /design-review on the wiki tree before starting C-voice-beliefs to validate that the cold-reader contract actually reads cold to a fresh eye. Use git log b411685..HEAD for the full reauthor sequence.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
