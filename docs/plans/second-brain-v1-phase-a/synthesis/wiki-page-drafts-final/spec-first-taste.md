@@ -2,6 +2,7 @@
 type: Theme
 slug: spec-first-taste
 title: Spec first, taste always  -  the builder trilogy
+one_line: "The April 2026 trilogy that names the builder stance: spec > sprint, taste > execution, context > prompt."
 status: draft-r9-polished
 length_target: 900-1200
 voice_register: 1 (free-form post-essay)

@@ -24,6 +24,7 @@
     "quotes": { "slug": "wiki-quotes", "path": "/wiki/quotes/", "title": "Quote library — signature lines", "type": "wiki-meta" },
     "graph": { "slug": "wiki-graph", "path": "/wiki/graph/", "title": "Knowledge graph visualization", "type": "wiki-meta" },
     "projects_dag": { "slug": "wiki-projects", "path": "/wiki/projects/", "title": "Project + tech lineage DAG", "type": "wiki-meta" },
+    "beliefs_index": { "slug": "wiki-beliefs", "path": "/wiki/beliefs/", "title": "Beliefs index — 19 Tier-1 beliefs grouped by theme", "type": "wiki-meta" },
     "themes": [
       { "slug": "root.substance-over-hype", "path": "/wiki/root.substance-over-hype/", "title": "Substance over hype — the root disposition", "tier": "root", "type": "wiki-theme" },
       { "slug": "agent-first", "path": "/wiki/agent-first/", "title": "Agent-first thesis", "tier": "theme", "type": "wiki-theme" },

@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.llm-as-primary-daily-tool
 title: LLMs are the primary daily tool in the stack
+one_line: "LLMs top the daily-use stack across code, writing, data, learning. Factual observation, not extended-self mysticism."
 parent_theme: ai-pm-skillset
 related_beliefs:
   - belief.ai-pm-skillset-table-stakes

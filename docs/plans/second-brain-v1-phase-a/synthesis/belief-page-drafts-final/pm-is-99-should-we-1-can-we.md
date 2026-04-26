@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.pm-is-99-should-we-1-can-we
 title: PM is 99 should-we questions to earn 1 can-we
+one_line: "PM as discriminator role - 99 'should we?' questions to earn one rare 'can we?' that disrupts."
 parent_theme: pm-taste
 related_beliefs:
   - belief.strong-opinion-about-no-strong-opinions

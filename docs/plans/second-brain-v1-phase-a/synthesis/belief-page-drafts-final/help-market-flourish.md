@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.help-market-flourish
 title: Help the market flourish
+one_line: "Market-posture: increase the size of the pie before fighting for share. Collaborative growth over zero-sum conquest."
 parent_theme: career-reflection
 related_beliefs:
   - belief.never-be-smartest-in-room

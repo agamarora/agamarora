@@ -2,6 +2,7 @@
 type: Theme
 slug: linkedin-as-instrument
 title: LinkedIn as instrument  -  the meta-platform game
+one_line: "The platform as a deliberate instrument: mechanics, network, posting cadence, an honest game played inside the rules."
 status: draft-r9-polished
 length_target: 800-1000
 voice_register: 1 (free-form post-essay)

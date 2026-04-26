@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.ai-pm-skillset-table-stakes
 title: AI fluency is table stakes for PMs, not a differentiator
+one_line: "AI fluency is buy-in for application-layer PMs, not a flex - three load-bearing parts that define the floor."
 parent_theme: ai-pm-skillset
 related_beliefs:
   - belief.llm-as-primary-daily-tool

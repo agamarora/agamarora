@@ -2,6 +2,7 @@
 type: Theme
 slug: agent-first
 title: Agent-first thesis
+one_line: "Agents are users too, and maybe first - the serving lens that matters once horizontal AI hits the depth wall."
 status: draft-r9-polished
 length_target: 1200-1500
 voice_register: 1 (free-form post-essay)

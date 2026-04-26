@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: ship-the-prototype
 title: Ship the prototype
+one_line: "Ideas are cheap. The prototype is the position - 'no longer just an idea' as the inversion marker."
 parent_theme: personal-projects-tinkering
 related_beliefs: [self-instrumentation, second-brain-is-context-layer, spec-over-sprint, taste-over-execution, linkedin-as-instrumental-platform, substance-over-hype]
 tier: 1

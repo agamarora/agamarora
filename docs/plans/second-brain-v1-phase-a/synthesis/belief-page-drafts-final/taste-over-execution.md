@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.taste-over-execution
 title: Taste over Execution
+one_line: "AI commoditizes execution. Taste - knowing what to build and what to refuse - is the irreducible PM skill."
 parent_theme: spec-first-taste
 related_beliefs:
   - belief.spec-over-sprint

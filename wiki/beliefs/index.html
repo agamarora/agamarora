@@ -3,32 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enterprise AI reality: demos are not deployments - Agam Arora's wiki.</title>
-<meta name="description" content="~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model.">
+<title>Beliefs - Agam Arora's wiki.</title>
+<meta name="description" content="Index of 19 Tier-1 beliefs grouped by parent theme in agamarora.second-brain.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://agamarora.com/wiki/beliefs/enterprise-ai-production-reality/">
-<meta property="og:title" content="Enterprise AI reality: demos are not deployments - Agam Arora's wiki.">
-<meta property="og:description" content="~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model.">
+<meta property="og:url" content="https://agamarora.com/wiki/beliefs/">
+<meta property="og:title" content="Beliefs - Agam Arora's wiki.">
+<meta property="og:description" content="Index of 19 Tier-1 beliefs grouped by parent theme in agamarora.second-brain.">
 <meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Enterprise AI reality: demos are not deployments - Agam Arora's wiki.">
-<meta name="twitter:description" content="~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model.">
+<meta name="twitter:title" content="Beliefs - Agam Arora's wiki.">
+<meta name="twitter:description" content="Index of 19 Tier-1 beliefs grouped by parent theme in agamarora.second-brain.">
 <meta name="twitter:image" content="https://agamarora.com/assets/og/lab.png">
 
-<link rel="canonical" href="https://agamarora.com/wiki/beliefs/enterprise-ai-production-reality/">
+<link rel="canonical" href="https://agamarora.com/wiki/beliefs/">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Enterprise AI reality: demos are not deployments",
-  "url": "https://agamarora.com/wiki/beliefs/enterprise-ai-production-reality/",
+  "@type": "WebPage",
+  "headline": "Beliefs",
+  "url": "https://agamarora.com/wiki/beliefs/",
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
   "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
 }
@@ -138,6 +138,18 @@
   details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
   details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
   details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
+
+  .belief-card-list { list-style: none; padding: 0; margin: 0 0 var(--space-7) 0; display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+  .belief-card-list li { padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); transition: border-color 0.2s; }
+  .belief-card-list li:hover { border-color: var(--border-hover); }
+  .belief-card-link { color: var(--text); text-decoration: none; border: 0 !important; display: inline-block; margin-bottom: var(--space-3); }
+  .belief-card-link strong { color: var(--text); font-weight: 600; font-size: 1.04rem; transition: color 0.2s; }
+  .belief-card-list li:hover .belief-card-link strong { color: var(--accent); }
+  .belief-card-desc { font-size: 0.92rem !important; line-height: 1.55 !important; color: var(--text-dim) !important; margin: 0 !important; opacity: 0.95 !important; }
+  article > h2 { scroll-margin-top: calc(clamp(52px,6vw,64px) + var(--space-5)); }
+  article > h2 a { color: var(--text); text-decoration: none; border: 0; transition: color 0.2s; }
+  article > h2 a:hover { color: var(--accent); }
+
 </style>
 </head>
 <body>
@@ -168,31 +180,137 @@
 
 <main class="page">
   <nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/beliefs/">beliefs</a><span class="sep">/</span><a href="/wiki/enterprise-ai-reality/">Enterprise AI reality</a><span class="sep">/</span><span>Enterprise AI reality: demos are not deployments</span>
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Beliefs</span>
   </nav>
 
   <article role="main">
-<h1 id="enterprise-ai-reality-demos-are-not-deployments">Enterprise AI reality: demos are not deployments</h1>
-<p class="page-purpose">~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model.</p>
-<h2 id="statement">Statement</h2>
-<p>Building for a demo versus building for production is a different beast.</p>
-<p>Roughly 80% of enterprise AI experiments don't reach production. The failures are not model-quality failures. They are non-functional-requirement failures, data-pipeline failures, governance failures, and time-to-value failures. Enterprises are experimenting a lot and benching ideas even more. The gap between a working demo and a working deployment is wider than vendors admit, more boring than analysts cover, and consistently fatal to most attempts.</p>
-<p>The category is genuinely transformative. The deployment rate is genuinely brutal. Both are true simultaneously. The substrate passes the test; most implementations don't clear the production bar.</p>
-<h2 id="origin">Origin</h2>
-<p>This belief is empirical, not theoretical. It crystallized from field experience building and demoing a considerable number of GenAI-based product concepts to potential enterprise customers - not from reading analyst reports.</p>
-<p><strong>Spring 2024 (seed phase, pre-field-data):</strong> Three failure-mode frames surfaced in written Collab Article content: non-functional requirements as the dominant failure mode; data readiness as pipeline, not corpus (&quot;having a large historical corpus to train on&quot; is not readiness - the systems to collect, process and update data are); hype as a production-management variable that sets unrealistic expectations before the first sprint.</p>
-<p><strong>Fall 2024 (crystallization - 60 days into a senior enterprise AI role):</strong> Nine field-data takeaways published from building and demoing a considerable number of GenAI product concepts to potential enterprise customers. Core trio: building for demo vs production is a different beast; ethics and security concerns reign supreme; enterprises are experimenting a lot but benching ideas even more. Closing frame: &quot;Like any new tech, we are in the honeymoon period - everyone is trying everything until something clicks, and then the rush towards structure and methods begins.&quot; That was a forecast.</p>
-<details class="evidence-block"><summary>Evidence (5 dated items - click to expand)</summary>
-<p>Five-round provenance (R2, R3a, R3b, R3d, R3e). 12 surfaces across 22 months.</p>
-<ul><li>Spring 2024 (Collab Articles): NFR failure mode named, data-readiness-as-pipeline, anti-hype-as-PM-craft.</li><li>2024-09-04 (canonical anchor): &quot;I have built a considerable number of GenAI-based product concepts... had the chance to demo many of them to potential enterprise customers.&quot; Nine takeaways. Honeymoon-period forecast.</li><li>2025-06-20 (nine-month confirmation): &quot;The GenAI paradox is real: Heavy investments. Low returns.&quot; Closes the 2024 forecast. Roughly-80% frame established as the durable claim.</li><li>2025-09-29 (field reply, highest-density single item): Business KPI before tech KPI. Cloud-vs-on-prem trade-offs. MCP as abstraction layer. One production case among many.</li><li>2025-12-04: &quot;Six months of implementation, an implementation partner, hundreds of training documents, and a roadmap item just to enable a true day-zero go-live.&quot;</li></ul>
-<p><em>Draft for Phase B HTML scaffolding.</em></p></details>
-<aside class="related-links" aria-label="Related pages">
-    <h2>Related</h2>
-    <ul><li><span class="kind">theme</span><a href="/wiki/enterprise-ai-reality/">Enterprise AI reality</a></li><li><span class="kind">belief</span><a href="/wiki/beliefs/substance-over-hype/">substance-over-hype</a></li><li><span class="kind">belief</span><a href="/wiki/beliefs/anti-customization/">anti-customization</a></li><li><span class="kind">belief</span><a href="/wiki/beliefs/agent-first/">agent-first</a></li><li><span class="kind">belief</span><a href="/wiki/beliefs/spec-over-sprint/">spec-over-sprint</a></li><li><span class="kind">theme</span><a href="/wiki/second-brain/">Second brain</a></li><li><span class="kind">index</span><a href="/wiki/beliefs/">All beliefs</a></li></ul>
-  </aside>
+<h1 id="beliefs">Beliefs</h1>
+<p class="page-purpose">19 Tier-1 beliefs grouped by their parent theme. Each one has a sub-page with origin, evidence, and current state. The full graph (themes + Tier-2 / Tier-3 beliefs + projects + posts) lives in the knowledge graph.</p>
+<p class="theme-meta"><span class="tier">19 beliefs</span> &middot; 11 parent themes &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
+
+<h2 id="root.substance-over-hype"><a href="/wiki/root.substance-over-hype/">Substance over hype</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/substance-over-hype/" class="belief-card-link"><strong>Substance over hype</strong></a>
+            <p class="belief-card-desc">The root anchor: name what's actually new at the substrate, refuse the rebrand - tested across four hype cycles in eight years.</p>
+          </li>
+</ul>
+
+<h2 id="agent-first"><a href="/wiki/agent-first/">Agent-first</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/agent-first/" class="belief-card-link"><strong>Agent-first thesis</strong></a>
+            <p class="belief-card-desc">Build for autonomous agents as users, not just for humans - the serving-lens differentiator after horizontal AI plateaus.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/context-over-prompt/" class="belief-card-link"><strong>Context over prompt</strong></a>
+            <p class="belief-card-desc">Upstream context curation beats downstream prompt composition - the lever, not the I/O seam.</p>
+          </li>
+</ul>
+
+<h2 id="breadth-as-differentiation"><a href="/wiki/breadth-as-differentiation/">Breadth as differentiation</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/breadth-as-differentiation/" class="belief-card-link"><strong>Breadth as differentiation</strong></a>
+            <p class="belief-card-desc">Cross-domain range is a genuine PM differentiator - the parent thesis the depth-axis refinement builds on.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/breadth-needs-depth/" class="belief-card-link"><strong>Breadth needs depth</strong></a>
+            <p class="belief-card-desc">Post-ChatGPT, breadth without depth is Human-GPT - pick a niche and invest, axis is free, the choice is not.</p>
+          </li>
+</ul>
+
+<h2 id="pm-taste"><a href="/wiki/pm-taste/">PM taste</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/anti-customization/" class="belief-card-link"><strong>Anti-customization</strong></a>
+            <p class="belief-card-desc">Enterprise PRDs that overspec customization defer cost and break day-zero value. The PRD is where the contract gets set.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/pm-is-99-should-we-1-can-we/" class="belief-card-link"><strong>PM is 99 should-we questions to earn 1 can-we</strong></a>
+            <p class="belief-card-desc">PM as discriminator role - 99 'should we?' questions to earn one rare 'can we?' that disrupts.</p>
+          </li>
+</ul>
+
+<h2 id="ai-pm-skillset"><a href="/wiki/ai-pm-skillset/">AI PM skillset</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/ai-pm-skillset-table-stakes/" class="belief-card-link"><strong>AI fluency is table stakes for PMs, not a differentiator</strong></a>
+            <p class="belief-card-desc">AI fluency is buy-in for application-layer PMs, not a flex - three load-bearing parts that define the floor.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/llm-as-primary-daily-tool/" class="belief-card-link"><strong>LLMs are the primary daily tool in the stack</strong></a>
+            <p class="belief-card-desc">LLMs top the daily-use stack across code, writing, data, learning. Factual observation, not extended-self mysticism.</p>
+          </li>
+</ul>
+
+<h2 id="enterprise-ai-reality"><a href="/wiki/enterprise-ai-reality/">Enterprise AI reality</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/enterprise-ai-production-reality/" class="belief-card-link"><strong>Enterprise AI reality: demos are not deployments</strong></a>
+            <p class="belief-card-desc">~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model.</p>
+          </li>
+</ul>
+
+<h2 id="second-brain"><a href="/wiki/second-brain/">Second brain</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/self-instrumentation/" class="belief-card-link"><strong>Self-instrumentation as leverage</strong></a>
+            <p class="belief-card-desc">Debug yourself with data - same loop on better hardware since 2018, the second brain as the current substrate.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/second-brain-is-context-layer/" class="belief-card-link"><strong>The second brain as context layer</strong></a>
+            <p class="belief-card-desc">Plain markdown plus git plus a kg.json ontology - bidirectional with every AI session, the operational form of context-over-prompt.</p>
+          </li>
+</ul>
+
+<h2 id="spec-first-taste"><a href="/wiki/spec-first-taste/">Spec first, taste always</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/spec-over-sprint/" class="belief-card-link"><strong>Spec over Sprint</strong></a>
+            <p class="belief-card-desc">When AI makes iteration nearly free, the binding constraint is spec quality - the model amplifies whatever you put in front of it.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/taste-over-execution/" class="belief-card-link"><strong>Taste over Execution</strong></a>
+            <p class="belief-card-desc">AI commoditizes execution. Taste - knowing what to build and what to refuse - is the irreducible PM skill.</p>
+          </li>
+</ul>
+
+<h2 id="career-reflection"><a href="/wiki/career-reflection/">Career reflection</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/help-market-flourish/" class="belief-card-link"><strong>Help the market flourish</strong></a>
+            <p class="belief-card-desc">Market-posture: increase the size of the pie before fighting for share. Collaborative growth over zero-sum conquest.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/ic-path-legitimacy/" class="belief-card-link"><strong>IC path as legitimate endgame</strong></a>
+            <p class="belief-card-desc">The Individual Contributor track is a destination, not a way-station - and AI augments IC reach more than management.</p>
+          </li>
+<li>
+            <a href="/wiki/beliefs/learn-concepts-not-tools/" class="belief-card-link"><strong>Learn concepts, not tools</strong></a>
+            <p class="belief-card-desc">Frameworks endure, tools rotate. Learn STP / JTBD / MVP / AARRR, not the SaaS-of-the-month.</p>
+          </li>
+</ul>
+
+<h2 id="linkedin-as-instrument"><a href="/wiki/linkedin-as-instrument/">LinkedIn as instrument</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/linkedin-as-instrumental-platform/" class="belief-card-link"><strong>LinkedIn as instrumental platform</strong></a>
+            <p class="belief-card-desc">Posting closes the build-teach-learn loop - LinkedIn as instrument, not stage.</p>
+          </li>
+</ul>
+
+<h2 id="personal-projects-tinkering"><a href="/wiki/personal-projects-tinkering/">Personal projects</a></h2>
+<ul class="belief-card-list">
+<li>
+            <a href="/wiki/beliefs/ship-the-prototype/" class="belief-card-link"><strong>Ship the prototype</strong></a>
+            <p class="belief-card-desc">Ideas are cheap. The prototype is the position - 'no longer just an idea' as the inversion marker.</p>
+          </li>
+</ul>
+
   </article>
 
-  <nav class="theme-nav"><a href="/wiki/enterprise-ai-reality/">&larr; Enterprise AI reality</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>
+  <nav class="theme-nav"><a href="/wiki/">&larr; wiki home</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/graph/">Graph &rarr;</a></nav>
 </main>
 
 <script>(function(){

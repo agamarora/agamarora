@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.breadth-needs-depth
 title: Breadth needs depth
+one_line: "Post-ChatGPT, breadth without depth is Human-GPT - pick a niche and invest, axis is free, the choice is not."
 parent_theme: breadth-as-differentiation
 related_beliefs:
   - belief.breadth-as-differentiation

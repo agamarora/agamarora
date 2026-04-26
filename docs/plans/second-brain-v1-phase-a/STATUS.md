@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 22 — Phase C in flight. C-mech batch shipped. C-struct queued. Plan locked at docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md.**
+Last updated: 2026-04-26 — **CHECKPOINT 22.5 — Phase C in flight. C-mech + C-struct shipped. C-voice-themes queued. Plan locked at docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md.**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C, sub-task C-struct (page-purpose hooks + cross-link footers + /wiki/beliefs/ landing index). Ready to start.
+**Current step:** Phase C, sub-task C-voice-themes (P1a full reauthor of 12 themes + root in R1 voice). Ready to start.
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
@@ -27,8 +27,8 @@ Last updated: 2026-04-26 — **CHECKPOINT 22 — Phase C in flight. C-mech batch
 | Sub-task | Status | Output landed | Resume hint |
 |---|---|---|---|
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
-| C-struct | QUEUED — start next | one-line hook above h1; 4-6 cross-links footer; /wiki/beliefs/ landing | Sub-CPs: hooks → footers → beliefs index. ~1-2hr. |
-| C-voice-themes | QUEUED | 12 themes + root reauthored in R1 voice | 5 sub-CPs. CP-1 = hand-author agent-first as reference; CP-2/3/4 = subagent batches of 4; CP-5 = root final. ~4-5hr. |
+| C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
+| C-voice-themes | QUEUED — start next | 12 themes + root reauthored in R1 voice | 5 sub-CPs. CP-1 = hand-author agent-first as reference; CP-2/3/4 = subagent batches of 4; CP-5 = root final. ~4-5hr. |
 | C-voice-beliefs | QUEUED | 19 beliefs reauthored in R1 voice | 5 sub-CPs. ~5-6hr. |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |

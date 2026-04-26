@@ -2,6 +2,7 @@
 type: Theme
 slug: second-brain
 title: Second brain  -  structured knowledge for agents
+one_line: "The personal context layer that makes 'context over prompt' operationally tractable - plain markdown, git, kg.json, bidirectional with every AI session."
 status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 1 (free-form post-essay)

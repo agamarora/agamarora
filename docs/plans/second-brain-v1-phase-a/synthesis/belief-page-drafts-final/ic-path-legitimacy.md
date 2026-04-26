@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.ic-path-legitimacy
 title: IC path as legitimate endgame
+one_line: "The Individual Contributor track is a destination, not a way-station - and AI augments IC reach more than management."
 parent_theme: career-reflection
 related_beliefs:
   - belief.help-market-flourish

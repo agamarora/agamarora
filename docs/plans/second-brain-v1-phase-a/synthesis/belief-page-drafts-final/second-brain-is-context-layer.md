@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: second-brain-is-context-layer
 title: The second brain as context layer
+one_line: "Plain markdown plus git plus a kg.json ontology - bidirectional with every AI session, the operational form of context-over-prompt."
 parent_theme: second-brain
 related_beliefs: [self-instrumentation, context-over-prompt, spec-over-sprint, taste-over-execution, llm-as-primary-daily-tool]
 tier: 1

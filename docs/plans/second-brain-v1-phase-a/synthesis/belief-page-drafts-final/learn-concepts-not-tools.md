@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.learn-concepts-not-tools
 title: Learn concepts, not tools
+one_line: "Frameworks endure, tools rotate. Learn STP / JTBD / MVP / AARRR, not the SaaS-of-the-month."
 parent_theme: career-reflection
 related_beliefs:
   - belief.ai-pm-skillset-table-stakes

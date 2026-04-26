@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: substance-over-hype
 title: Substance over hype
+one_line: "The root anchor: name what's actually new at the substrate, refuse the rebrand - tested across four hype cycles in eight years."
 parent_theme: root.substance-over-hype
 related_beliefs:
   - belief.ico-is-funding-not-product

@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.breadth-as-differentiation
 title: Breadth as differentiation
+one_line: "Cross-domain range is a genuine PM differentiator - the parent thesis the depth-axis refinement builds on."
 parent_theme: breadth-as-differentiation
 related_beliefs:
   - belief.breadth-needs-depth

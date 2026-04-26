@@ -2,6 +2,7 @@
 type: Theme
 slug: pm-taste
 title: PM taste  -  craft, metaphors, and what a PM actually does
+one_line: "PM as 99% discrimination: the cumulative weight of refused features, NFRs as primary work, and the featherless-hat invisibility of the craft."
 status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 1 (free-form post-essay)

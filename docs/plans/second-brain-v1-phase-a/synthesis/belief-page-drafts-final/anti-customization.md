@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.anti-customization
 title: Anti-customization
+one_line: "Enterprise PRDs that overspec customization defer cost and break day-zero value. The PRD is where the contract gets set."
 parent_theme: pm-taste
 related_beliefs:
   - belief.taste-over-execution

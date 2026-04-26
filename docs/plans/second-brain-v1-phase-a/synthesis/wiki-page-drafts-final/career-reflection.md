@@ -2,6 +2,7 @@
 type: Theme
 slug: career-reflection
 title: Career reflection  -  IC path, learning compound interest, collaborative growth
+one_line: "Three career-shape decisions across eleven years: collaborative-growth posture, concept-over-tool learning, the IC path as a destination."
 status: draft-r9-polished
 length_target: 1000-1400
 voice_register: 1 (free-form post-essay)

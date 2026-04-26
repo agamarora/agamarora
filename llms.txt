@@ -41,6 +41,7 @@ The wiki is the source layer; /enter is the playback layer. Every theme page has
 - [Quotes](https://agamarora.com/wiki/quotes/): curated signature lines from twelve years of posts
 - [Projects DAG](https://agamarora.com/wiki/projects/): 18 public projects with lineage edges
 - [Knowledge graph viz](https://agamarora.com/wiki/graph/): force-directed visualization of the full graph
+- [Beliefs index](https://agamarora.com/wiki/beliefs/): all 19 Tier-1 beliefs grouped by parent theme; each links to its sub-page
 
 Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg.json for the full belief inventory.
 

@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: agent-first
 title: Agent-first thesis
+one_line: "Build for autonomous agents as users, not just for humans - the serving-lens differentiator after horizontal AI plateaus."
 parent_theme: agent-first
 related_beliefs:
   - belief.horizontal-ai-will-scale

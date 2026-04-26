@@ -2,6 +2,7 @@
 type: Theme
 slug: enterprise-ai-reality
 title: Enterprise AI reality  -  ships vs demos
+one_line: "Why ~80% of enterprise AI experiments don't reach production, and which non-functional failure modes actually decide the outcome."
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)

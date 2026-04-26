@@ -2,6 +2,7 @@
 type: Theme
 slug: ai-pm-skillset
 title: What AI PM actually requires
+one_line: "The application-layer AI PM archetype: the fluency floor, the personal apparatus, the boundary with the model-builder track."
 status: draft-r9-polished
 length_target: 1000-1500
 voice_register: 4 (structured-prompt-response, Collab Articles surface)

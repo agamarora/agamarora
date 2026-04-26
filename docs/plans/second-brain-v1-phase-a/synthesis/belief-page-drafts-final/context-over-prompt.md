@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: context-over-prompt
 title: Context over prompt
+one_line: "Upstream context curation beats downstream prompt composition - the lever, not the I/O seam."
 parent_theme: agent-first
 related_beliefs:
   - belief.spec-over-sprint

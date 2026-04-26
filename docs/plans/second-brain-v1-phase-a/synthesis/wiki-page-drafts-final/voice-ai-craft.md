@@ -2,6 +2,7 @@
 type: Theme
 slug: voice-ai-craft
 title: Voice AI craft  -  cost, latency, scale
+one_line: "Production voice AI is a different beast from chatbots: latency, cost, and state at 4M+ calls per year - the public surface is intentionally light."
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 4 (technical-practitioner numbered precision)

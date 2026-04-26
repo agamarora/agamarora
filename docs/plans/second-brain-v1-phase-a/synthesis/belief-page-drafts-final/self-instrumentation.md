@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: self-instrumentation
 title: Self-instrumentation as leverage
+one_line: "Debug yourself with data - same loop on better hardware since 2018, the second brain as the current substrate."
 parent_theme: second-brain
 related_beliefs: [second-brain-is-context-layer, ship-the-prototype, context-over-prompt, llm-as-primary-daily-tool]
 tier: 1

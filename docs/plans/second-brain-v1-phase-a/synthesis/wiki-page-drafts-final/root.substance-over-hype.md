@@ -3,6 +3,7 @@ type: Root
 tier: root
 slug: root.substance-over-hype
 title: The root disposition  -  substance over hype
+one_line: "The root disposition that anchors every theme: name the substrate, refuse the rebrand, evaluate at the layer below the label."
 status: draft-r9-polished
 length_target: 400-600
 voice_register: 1 (free-form post-essay)

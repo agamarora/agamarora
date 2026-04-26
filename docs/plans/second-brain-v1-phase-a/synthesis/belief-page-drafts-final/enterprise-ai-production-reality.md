@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: enterprise-ai-production-reality
 title: Enterprise AI reality: demos are not deployments
+one_line: "~80% of enterprise AI experiments don't ship. Failures are non-functional, data-pipeline, governance, time-to-value - not model."
 parent_theme: enterprise-ai-reality
 related_beliefs: [substance-over-hype, anti-customization, moats-are-infra-talent-data, non-functional-reqs-are-dominant-failure-mode, agent-first, spec-over-sprint]
 tier: 1

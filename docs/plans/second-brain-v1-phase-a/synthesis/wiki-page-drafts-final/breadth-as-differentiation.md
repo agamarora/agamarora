@@ -2,6 +2,7 @@
 type: Theme
 slug: breadth-as-differentiation
 title: Breadth as differentiation
+one_line: "Cross-domain breadth is real leverage, and post-ChatGPT it needs a depth-axis or it commoditizes."
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)

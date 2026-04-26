@@ -2,6 +2,7 @@
 type: Theme
 slug: personal-projects-tinkering
 title: Personal projects  -  ship it or it doesn't exist
+one_line: "Twelve years of side-builds as the substrate of taste - the prototype is the argument, not the pitch."
 status: draft-r9-polished
 length_target: 800-1200
 voice_register: 1 (free-form post-essay)

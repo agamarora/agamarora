@@ -2,6 +2,7 @@
 type: BeliefPage
 slug: belief.spec-over-sprint
 title: Spec over Sprint
+one_line: "When AI makes iteration nearly free, the binding constraint is spec quality - the model amplifies whatever you put in front of it."
 parent_theme: spec-first-taste
 related_beliefs:
   - belief.taste-over-execution

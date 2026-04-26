@@ -280,16 +280,21 @@ function blockMd(body) {
 // ---------------------------------------------------------------------------
 // 4. Per-page metadata defaults from frontmatter
 // ---------------------------------------------------------------------------
+function stripQuotes(s) {
+  return (s || "").replace(/^["']|["']$/g, "").trim();
+}
+
 function pageMeta(meta, slug, fallbackTitle) {
   // Voice rule: no em-dashes. Keep titles as-authored (compound hyphens stay,
   // spaced-hyphen separator stays as " - ", never converted to em-dash).
-  const title = (meta.title || fallbackTitle || slug).replace(/^["']|["']$/g, "").trim();
+  const title = stripQuotes(meta.title || fallbackTitle || slug);
   return {
     title,
     type: meta.type || "Theme",
     tier: meta.tier || "theme",
     slug: meta.slug || slug,
     description: title,
+    oneLine: stripQuotes(meta.one_line || ""),
   };
 }
 
@@ -361,6 +366,18 @@ const SHARED_HEAD_STYLES = `
 
   .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
   .theme-meta .tier{color:var(--accent);}
+
+  /* Page-purpose hook: one-line "what is this for?" rendered directly under h1. */
+  .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
+
+  /* Related cross-links footer: rendered above theme-nav. */
+  .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
+  .related-links h2{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;font-weight:500;margin:0 0 var(--space-5) 0;}
+  .related-links ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:var(--space-3) var(--space-5);}
+  .related-links li{font-size:0.94rem;line-height:1.5;}
+  .related-links li a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s,border-color 0.2s;}
+  .related-links li a:hover{color:var(--accent);border-color:var(--accent);}
+  .related-links li .kind{font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);letter-spacing:0.06em;margin-right:var(--space-3);}
 
   .theme-nav{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:var(--space-5);font-family:var(--mono);font-size:0.82rem;}
   .theme-nav a{color:var(--text-dim);text-decoration:none;transition:color 0.2s;border:0;}
@@ -458,6 +475,49 @@ const NAV_TITLES = {
   "linkedin-as-instrument": "LinkedIn as instrument",
   "personal-projects-tinkering": "Personal projects",
 };
+
+// Normalize a list-or-inline-array YAML field into a clean array of strings.
+// Handles three frontmatter shapes:
+//   foo:\n  - item-a\n  - item-b               -> ["item-a", "item-b"]   (parser path)
+//   foo: [item-a, item-b, item-c]              -> string, split here
+//   foo: item-a (single value)                 -> ["item-a"]
+function normList(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.map((s) => s.trim()).filter(Boolean);
+  const s = String(val).trim();
+  if (s.startsWith("[") && s.endsWith("]")) {
+    return s.slice(1, -1).split(",").map((x) => x.trim()).filter(Boolean);
+  }
+  return s ? [s] : [];
+}
+
+// "belief.agent-first  -  description prose" -> { slug: "agent-first", desc: "description prose" }
+// "belief.agent-first" -> { slug: "agent-first", desc: "" }
+function parseBeliefRef(raw) {
+  const txt = String(raw).trim();
+  // Strip parenthetical annotations like "(ghost belief; intentional ...)"
+  const split = txt.split(/\s+-\s+/);
+  const head = split[0].trim();
+  const desc = (split[1] || "").trim().replace(/\s*\(.*?\)\s*$/, "");
+  const slug = head.replace(/^belief\./, "").replace(/\s*\(.*$/, "").trim();
+  return { slug, desc };
+}
+
+// Render "Related" cross-link footer. Returns "" if no links resolve.
+function renderRelated(items) {
+  const valid = items.filter((it) => it && it.href && it.label);
+  if (valid.length === 0) return "";
+  const lis = valid
+    .map(
+      (it) =>
+        `<li><span class="kind">${escHtml(it.kind || "")}</span><a href="${it.href}">${escHtml(it.label)}</a></li>`
+    )
+    .join("");
+  return `<aside class="related-links" aria-label="Related pages">
+    <h2>Related</h2>
+    <ul>${lis}</ul>
+  </aside>`;
+}
 
 function themeNav(slug) {
   const idx = NAV_ORDER.indexOf(slug);
@@ -602,6 +662,22 @@ const STRIP_THEME = [/^Tension with/i, /^Open question/i, /^Open Q/i];
 // Sections we drop from human-rendered belief sub-pages.
 const STRIP_BELIEF = [/^Refinement arc/i, /^Cross-links?/i];
 
+function injectPagePurpose(articleHtml, oneLine) {
+  if (!oneLine) return articleHtml;
+  const purpose = `\n<p class="page-purpose">${inlineMd(oneLine)}</p>`;
+  // Place after first </h1>
+  return articleHtml.replace(/<\/h1>/, `</h1>${purpose}`);
+}
+
+// Pick "next" theme slug in NAV_ORDER, wrapping past root for variety.
+function siblingTheme(parentTheme) {
+  const idx = NAV_ORDER.indexOf(parentTheme);
+  if (idx === -1) return null;
+  // Prefer the next theme; if at end, wrap back to first non-root theme.
+  const next = idx < NAV_ORDER.length - 1 ? NAV_ORDER[idx + 1] : NAV_ORDER[1];
+  return next === parentTheme ? null : next;
+}
+
 function buildThemePage(slug, src) {
   const { meta, body } = parseFrontmatter(src);
   const m = pageMeta(meta, slug);
@@ -613,15 +689,55 @@ function buildThemePage(slug, src) {
   trimmed = stripSections(trimmed, STRIP_THEME);
   let articleHtml = blockMd(trimmed.trim());
   articleHtml = collapseEvidenceHtml(articleHtml);
+  articleHtml = injectPagePurpose(articleHtml, m.oneLine);
+
+  // Build Related footer for themes:
+  //   - root link (unless this IS root)
+  //   - up to 4 child T1 beliefs from frontmatter `beliefs:` list (filtered to existing belief pages)
+  //   - 1 sibling theme (next in NAV_ORDER)
+  const related = [];
+  const isRoot = m.tier === "root" || slug.startsWith("root.");
+  if (!isRoot) {
+    related.push({
+      kind: "root",
+      label: "Substance over hype",
+      href: "/wiki/root.substance-over-hype/",
+    });
+  }
+  const beliefRefs = normList(meta.beliefs).map(parseBeliefRef);
+  let beliefCount = 0;
+  for (const ref of beliefRefs) {
+    if (HAS_PAGE.beliefs.has(ref.slug) && beliefCount < 4) {
+      related.push({
+        kind: "belief",
+        label: ref.slug,
+        href: `/wiki/beliefs/${ref.slug}/`,
+      });
+      beliefCount++;
+    }
+  }
+  const sib = siblingTheme(slug);
+  if (sib && HAS_PAGE.themes.has(sib)) {
+    related.push({
+      kind: "theme",
+      label: NAV_TITLES[sib] || sib,
+      href: `/wiki/${sib}/`,
+    });
+  }
+  // Always offer the wiki home + graph as escape routes for wider browsing.
+  related.push({ kind: "graph", label: "Knowledge graph", href: "/wiki/graph/" });
+
+  const relatedHtml = renderRelated(related);
+
   return pageWrap({
     title: m.title,
-    description: `${m.title} - one of twelve themes plus a root in agamarora.second-brain.`,
+    description: m.oneLine || `${m.title} - one of twelve themes plus a root in agamarora.second-brain.`,
     canonical: `https://agamarora.com/wiki/${slug}/`,
     schemaType: "Article",
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
   </nav>`,
-    articleHtml,
+    articleHtml: articleHtml + (relatedHtml ? `\n${relatedHtml}` : ""),
     navHtml: themeNav(slug),
   });
 }
@@ -652,24 +768,63 @@ function buildBeliefPage(slug, src) {
   trimmed = stripSections(trimmed, STRIP_BELIEF);
   let articleHtml = blockMd(trimmed.trim());
   articleHtml = collapseEvidenceHtml(articleHtml);
+  articleHtml = injectPagePurpose(articleHtml, m.oneLine);
+
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme
     ? `<a href="/wiki/${parentTheme}/">${NAV_TITLES[parentTheme] || parentTheme}</a><span class="sep">/</span>`
     : "";
+
+  // Build Related footer for beliefs:
+  //   - parent theme (if any)
+  //   - up to 4 related_beliefs filtered to existing belief pages
+  //   - 1 sibling theme (next of parent in NAV_ORDER) for breadth
+  const related = [];
+  if (parentTheme && HAS_PAGE.themes.has(parentTheme)) {
+    related.push({
+      kind: "theme",
+      label: NAV_TITLES[parentTheme] || parentTheme,
+      href: `/wiki/${parentTheme}/`,
+    });
+  }
+  const refs = normList(meta.related_beliefs);
+  let count = 0;
+  for (const r of refs) {
+    const beliefSlug = String(r).replace(/^belief\./, "").trim();
+    if (HAS_PAGE.beliefs.has(beliefSlug) && beliefSlug !== slug && count < 4) {
+      related.push({
+        kind: "belief",
+        label: beliefSlug,
+        href: `/wiki/beliefs/${beliefSlug}/`,
+      });
+      count++;
+    }
+  }
+  const sib = parentTheme ? siblingTheme(parentTheme) : null;
+  if (sib && HAS_PAGE.themes.has(sib)) {
+    related.push({
+      kind: "theme",
+      label: NAV_TITLES[sib] || sib,
+      href: `/wiki/${sib}/`,
+    });
+  }
+  related.push({ kind: "index", label: "All beliefs", href: "/wiki/beliefs/" });
+
+  const relatedHtml = renderRelated(related);
+
   return pageWrap({
     title: m.title,
-    description: `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
+    description: m.oneLine || `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
     canonical: `https://agamarora.com/wiki/beliefs/${slug}/`,
     schemaType: "Article",
-    // 'beliefs' renders as a non-clickable span until /wiki/beliefs/ landing
-    // ships in C-struct. Linking it to /wiki/ silently was misleading.
+    // 'beliefs' links to /wiki/beliefs/ landing index (built in same C-struct pass).
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
-    <a href="/wiki/">wiki</a><span class="sep">/</span><span>beliefs</span><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
+    <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/beliefs/">beliefs</a><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
   </nav>`,
-    articleHtml,
+    articleHtml: articleHtml + (relatedHtml ? `\n${relatedHtml}` : ""),
     navHtml: parentTheme
-      ? `<nav class="theme-nav"><a href="/wiki/${parentTheme}/">&larr; ${NAV_TITLES[parentTheme] || parentTheme}</a><a href="/wiki/" class="home">wiki home</a><span></span></nav>`
-      : `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>`,
+      ? `<nav class="theme-nav"><a href="/wiki/${parentTheme}/">&larr; ${NAV_TITLES[parentTheme] || parentTheme}</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>`
+      : `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>`,
   });
 }
 
@@ -807,6 +962,115 @@ ${projectRows}
 }
 
 buildProjectsPage();
+
+// /wiki/beliefs/ landing index: 19 T1 beliefs grouped by parent_theme.
+function buildBeliefsIndex() {
+  // Read all belief drafts -> { slug, title, parent_theme, oneLine }
+  const beliefs = [];
+  const files = readdirSync(BELIEF_DRAFTS_DIR)
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"));
+  for (const f of files) {
+    const slug = basename(f, ".md");
+    const src = readFileSync(join(BELIEF_DRAFTS_DIR, f), "utf8");
+    const { meta } = parseFrontmatter(src);
+    beliefs.push({
+      slug,
+      title: stripQuotes(meta.title || slug),
+      parent_theme: (meta.parent_theme || "").trim(),
+      oneLine: stripQuotes(meta.one_line || ""),
+      tier: (meta.tier || "1").toString(),
+    });
+  }
+
+  // Group by parent_theme in NAV_ORDER. Themes with zero T1 belief pages are skipped.
+  const groups = NAV_ORDER.map((theme) => ({
+    theme,
+    title: NAV_TITLES[theme] || theme,
+    items: beliefs
+      .filter((b) => b.parent_theme === theme)
+      .sort((a, b) => a.title.localeCompare(b.title)),
+  })).filter((g) => g.items.length > 0);
+
+  // Catch any orphans (parent_theme not in NAV_ORDER)
+  const orphans = beliefs.filter((b) => !NAV_ORDER.includes(b.parent_theme));
+  if (orphans.length) {
+    groups.push({
+      theme: "_orphan",
+      title: "Other",
+      items: orphans.sort((a, b) => a.title.localeCompare(b.title)),
+    });
+  }
+
+  const total = beliefs.length;
+
+  const groupBlocks = groups
+    .map((g) => {
+      const themeHref =
+        g.theme === "_orphan" ? null : `/wiki/${g.theme}/`;
+      const headingHtml = themeHref
+        ? `<h2 id="${g.theme}"><a href="${themeHref}">${escHtml(g.title)}</a></h2>`
+        : `<h2 id="other">${escHtml(g.title)}</h2>`;
+      const items = g.items
+        .map(
+          (b) => `<li>
+            <a href="/wiki/beliefs/${b.slug}/" class="belief-card-link"><strong>${escHtml(b.title)}</strong></a>
+            ${b.oneLine ? `<p class="belief-card-desc">${inlineMd(b.oneLine)}</p>` : ""}
+          </li>`
+        )
+        .join("\n");
+      return `${headingHtml}
+<ul class="belief-card-list">
+${items}
+</ul>`;
+    })
+    .join("\n\n");
+
+  const articleHtml = `<h1 id="beliefs">Beliefs</h1>
+<p class="page-purpose">${escHtml(`${total} Tier-1 beliefs grouped by their parent theme. Each one has a sub-page with origin, evidence, and current state. The full graph (themes + Tier-2 / Tier-3 beliefs + projects + posts) lives in the knowledge graph.`)}</p>
+<p class="theme-meta"><span class="tier">${total} beliefs</span> &middot; ${groups.filter((g) => g.theme !== "_orphan").length} parent themes &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
+
+${groupBlocks}
+`;
+
+  // Per-page CSS for belief cards lives on the index only.
+  const extraCss = `
+  .belief-card-list { list-style: none; padding: 0; margin: 0 0 var(--space-7) 0; display: grid; grid-template-columns: 1fr; gap: var(--space-5); }
+  .belief-card-list li { padding: var(--space-5); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); transition: border-color 0.2s; }
+  .belief-card-list li:hover { border-color: var(--border-hover); }
+  .belief-card-link { color: var(--text); text-decoration: none; border: 0 !important; display: inline-block; margin-bottom: var(--space-3); }
+  .belief-card-link strong { color: var(--text); font-weight: 600; font-size: 1.04rem; transition: color 0.2s; }
+  .belief-card-list li:hover .belief-card-link strong { color: var(--accent); }
+  .belief-card-desc { font-size: 0.92rem !important; line-height: 1.55 !important; color: var(--text-dim) !important; margin: 0 !important; opacity: 0.95 !important; }
+  article > h2 { scroll-margin-top: calc(clamp(52px,6vw,64px) + var(--space-5)); }
+  article > h2 a { color: var(--text); text-decoration: none; border: 0; transition: color 0.2s; }
+  article > h2 a:hover { color: var(--accent); }
+`;
+
+  // Inline the extra CSS into the page-level <style> by post-processing the wrap.
+  const html = pageWrap({
+    title: "Beliefs",
+    description: `Index of ${total} Tier-1 beliefs grouped by parent theme in agamarora.second-brain.`,
+    canonical: "https://agamarora.com/wiki/beliefs/",
+    schemaType: "WebPage",
+    breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/wiki/">wiki</a><span class="sep">/</span><span>Beliefs</span>
+  </nav>`,
+    articleHtml,
+    navHtml: `<nav class="theme-nav"><a href="/wiki/">&larr; wiki home</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/graph/">Graph &rarr;</a></nav>`,
+  }).replace(/<\/style>\n<\/head>/, `${extraCss}\n</style>\n</head>`);
+
+  const outDir = join(OUT_DIR, "beliefs");
+  mkdirSync(outDir, { recursive: true });
+  const out = join(outDir, "index.html");
+  const tmp = `${out}.tmp`;
+  writeFileSync(tmp, html);
+  renameSync(tmp, out);
+  console.log(`[build-wiki] generated beliefs index -> wiki/beliefs/index.html (${html.length} bytes)`);
+  okCount++;
+}
+
+buildBeliefsIndex();
+
 
 function buildGraphPage() {
   const kgPath = join(OUT_DIR, "kg.json");
