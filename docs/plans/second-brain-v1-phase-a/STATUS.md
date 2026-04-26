@@ -2,9 +2,40 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 21 — Phase B core build COMPLETE. 35 wiki pages live. Follow-ups B7/B8 queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 22 — Phase C in flight. C-mech batch shipped. C-struct queued. Plan locked at docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md.**
 
-## CURRENT STATE (Phase B core DONE — 35 wiki HTML pages live, all internal links resolve)
+## RESUME POINT (read this first on a new session)
+
+**Current step:** Phase C, sub-task C-struct (page-purpose hooks + cross-link footers + /wiki/beliefs/ landing index). Ready to start.
+
+**Read in this order to fully resume:**
+1. **THIS FILE** — round + step state
+2. `docs/plans/second-brain-v1-phase-c/PHASE-C-DESIGN-PLAN.md` — locked Phase C plan with D1/D2/D3 decisions + 6-step sequence (C-mech / C-struct / C-voice-themes / C-voice-beliefs / C-graph / C-final)
+3. `docs/plans/second-brain-v1-phase-a/synthesis/voice-spec.md` §1-§4 — voice register + signatures + banned LLM-isms (calibration source for C-voice-themes + C-voice-beliefs)
+4. `docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md` — locked KG source (already drives kg.json + theme one-liners)
+5. `docs/plans/second-brain-v1.md` — canonical site spec
+6. `docs/plans/enter-v3.md` — agent runtime spec (Phase D scope, not Phase C)
+
+**Locked Phase C decisions (DO NOT relitigate, see PHASE-C-DESIGN-PLAN §"Decisions locked"):**
+- D1 = P1a Full reauthor in R1 voice (themes + beliefs from scratch)
+- D2 = P2c hand-designed constellation viz (drop vis-network)
+- D3 = sequencing 1: mechanical → structural → voice → graph
+- Multi-session persistence binding: STATUS.md + commit-after-every-step + push-after-every-commit
+
+**Phase C sub-task state (2026-04-26):**
+
+| Sub-task | Status | Output landed | Resume hint |
+|---|---|---|---|
+| C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
+| C-struct | QUEUED — start next | one-line hook above h1; 4-6 cross-links footer; /wiki/beliefs/ landing | Sub-CPs: hooks → footers → beliefs index. ~1-2hr. |
+| C-voice-themes | QUEUED | 12 themes + root reauthored in R1 voice | 5 sub-CPs. CP-1 = hand-author agent-first as reference; CP-2/3/4 = subagent batches of 4; CP-5 = root final. ~4-5hr. |
+| C-voice-beliefs | QUEUED | 19 beliefs reauthored in R1 voice | 5 sub-CPs. ~5-6hr. |
+| C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
+| C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
+
+**Total remaining Phase C effort: ~17-25hr across multiple sessions.**
+
+## CURRENT STATE (snapshot at CP22)
 
 **Phase B summary — what shipped this session:**
 
