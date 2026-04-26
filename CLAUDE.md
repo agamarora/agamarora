@@ -80,7 +80,7 @@ Every public page is a single standalone `index.html` with inline `<style>` and 
 
 ### Shared layout contract (every v2 page)
 
-- **Top-left: icon bar** (GitHub, LinkedIn, YouTube, Home) — fluid `clamp(52px, 6vw, 64px)` header, `clamp(1.15rem, 1.3vw, 1.5rem)` font
+- **Top-left: icon + nav bar** (GitHub · LinkedIn · YouTube · | · CV · Wiki · Lab · Home) — fluid `clamp(52px, 6vw, 64px)` header. Social icons `clamp(1.15rem, 1.3vw, 1.5rem)`. Text labels (CV/Wiki/Lab) use class `nav-label`: JetBrains Mono uppercase `clamp(0.66rem, 0.78vw, 0.78rem)`, letter-spacing 0.14em. Vertical 1px separator (class `sep`) between social cluster and nav cluster. Mobile (<480px) shrinks to 0.6rem labels + tighter spacing.
 - **Bottom-right: aa. mark** — fixed position, `clamp(44px, 5vw, 60px)` wide, stroke-draw animation on load, opacity 0.7 → 1.0 on hover
 - **Content: centered or left-aligned column** — max-width varies per page (~720-880px)
 
