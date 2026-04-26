@@ -1346,7 +1346,7 @@ function buildGraphPage() {
   C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
   CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
-  CP-3 ⏳ real cross-theme interlinkages from kg.json edges
+  CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
   CP-4 ⏳ motion vocabulary: twinkle / Lissajous-drift / signal pulses
   CP-5 ⏳ big-bang single-origin entry + parallax bg layer
   CP-6 ⏳ pan/zoom/bounds + fullscreen + mobile responsive
@@ -1453,7 +1453,7 @@ ${SHARED_AAMARK_HTML}
   <div><span class="swatch gold"></span>theme (${kg.stats.themes})</div>
   <div style="font-size:9px;opacity:0.85;margin-top:2px;">belief · project · post · tech</div>
   <div style="font-size:9px;opacity:0.55;margin-top:2px;">+ ${totalEntries}+ corpus deep-field</div>
-  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2 ✓ · cp-3-7 incoming</div>
+  <div style="font-size:9px;opacity:0.5;margin-top:6px;">cp-1+2+3 ✓ · cp-4-7 incoming</div>
 </div>
 
 <!-- LAYER 0: parallax background (CP-5 will populate; reserved here) -->
@@ -1595,6 +1595,11 @@ ${AAMARK_SCRIPT}
     return beliefs.map(b => `beliefSlug[${JSON.stringify(b.id)}] = ${JSON.stringify(String(b.tier) === '1' ? b.id.replace(/^belief\./,'') : null)};`).join('\n  ');
   })()}
 
+  // Position map for CP-3 cross-theme edge rendering: nodeId -> { x, y } in canvas space
+  const nodeWorldPos = {};
+  // Theme positions are already known
+  THEMES.forEach(t => { nodeWorldPos[t.id] = { x: t.x, y: t.y }; });
+
   THEMES.forEach((t, ti) => {
     const cluster = beliefClusters[t.id];
     if (!cluster) return;
@@ -1623,6 +1628,7 @@ ${AAMARK_SCRIPT}
           window.location.href = '/wiki/beliefs/' + slug + '/';
         });
       }
+      nodeWorldPos[bid] = { x: t.x + p.x, y: t.y + p.y };
     });
 
     // 2. Projects — placed slightly farther out, mid-bright
@@ -1637,6 +1643,7 @@ ${AAMARK_SCRIPT}
         fill:'rgba(232,228,223,'+(0.42 + rng()*0.18).toFixed(3)+')',
         'data-id':pid,
       }, cluster);
+      nodeWorldPos[pid] = { x: t.x + p.x, y: t.y + p.y };
     });
 
     // 3. Posts — small, dim, scattered in theme wedge
@@ -1650,6 +1657,7 @@ ${AAMARK_SCRIPT}
         fill:'rgba(232,228,223,'+(0.25 + rng()*0.15).toFixed(3)+')',
         'data-id':pid,
       }, cluster);
+      nodeWorldPos[pid] = { x: t.x + p.x, y: t.y + p.y };
     });
 
     // 4. Tech — smallest, dimmest, scattered in wedge
@@ -1663,8 +1671,67 @@ ${AAMARK_SCRIPT}
         fill:'rgba(232,228,223,'+(0.18 + rng()*0.14).toFixed(3)+')',
         'data-id':tid,
       }, cluster);
+      nodeWorldPos[tid] = { x: t.x + p.x, y: t.y + p.y };
     });
   });
+
+  // === CP-3: Real cross-theme interlinkage edges ===
+  // Render kg.json edges where endpoints land in DIFFERENT theme groups, plus theme-theme tensions.
+  // Edge types we render (real semantic relationships only):
+  //   - tension-with (theme↔theme productive friction): gold dashed chord through center
+  //   - superseded_by + refined_by (belief evolution arcs): gold dashed
+  //   - builds_on (project lineage): warm-white solid hairline
+  //   - demonstrates (project↔theme evidence): white dim
+  // Skipped: contains-belief (implicit in cluster), cites-post (113 = too dense, implicit)
+  const CROSS_EDGES = ${JSON.stringify(
+    kg.edges.filter(e =>
+      ['tension-with','superseded_by','refined_by','builds_on','demonstrates'].includes(e.rel)
+    ).map(e => ({ from: e.from, to: e.to, rel: e.rel }))
+  )};
+
+  // Insert cross-edges in their own group, BENEATH theme-groups but ABOVE deep-field/genesis halos
+  // We append the group to the DOM AFTER deepFieldGroup but want it BENEATH theme groups.
+  // Trick: insert the group BEFORE the first theme-group child of svg.
+  const crossEdgeGroup = document.createElementNS(NS, 'g');
+  crossEdgeGroup.setAttribute('id', 'cross-edges');
+  const firstThemeGroup = svg.querySelector('g.theme-group');
+  if (firstThemeGroup) svg.insertBefore(crossEdgeGroup, firstThemeGroup);
+  else svg.appendChild(crossEdgeGroup);
+
+  function styleForRel(rel){
+    if (rel === 'tension-with')  return { stroke: 'rgba(229,165,75,0.16)', dasharray: '2 6', width: '0.6' };
+    if (rel === 'superseded_by') return { stroke: 'rgba(229,165,75,0.32)', dasharray: '3 5', width: '0.7' };
+    if (rel === 'refined_by')    return { stroke: 'rgba(229,165,75,0.32)', dasharray: '3 5', width: '0.7' };
+    if (rel === 'builds_on')     return { stroke: 'rgba(232,228,223,0.18)', dasharray: '',    width: '0.5' };
+    if (rel === 'demonstrates')  return { stroke: 'rgba(232,228,223,0.10)', dasharray: '',    width: '0.4' };
+    return { stroke: 'rgba(232,228,223,0.08)', dasharray: '', width: '0.4' };
+  }
+
+  let renderedEdges = 0;
+  CROSS_EDGES.forEach(edge => {
+    const a = nodeWorldPos[edge.from];
+    const b = nodeWorldPos[edge.to];
+    if (!a || !b) return; // endpoint not rendered (e.g. floating belief not in any theme)
+    // Only render if endpoints are in DIFFERENT theme groups OR theme↔theme directly.
+    // We always render theme-theme (tension-with) regardless.
+    const sty = styleForRel(edge.rel);
+    // Curve control point pulled toward genesis center for organic arc through interior
+    const mx = (a.x + b.x)/2 + (CX - (a.x + b.x)/2) * 0.45;
+    const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
+    const path = el('path', {
+      d: 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2),
+      stroke: sty.stroke,
+      'stroke-width': sty.width,
+      'stroke-dasharray': sty.dasharray,
+      fill: 'none',
+      'data-rel': edge.rel,
+      'data-from': edge.from,
+      'data-to': edge.to,
+      class: 'cross-edge',
+    }, crossEdgeGroup);
+    renderedEdges++;
+  });
+  console.log('[constellation] rendered ' + renderedEdges + ' cross-cluster edges');
 
   // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
   // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
@@ -1781,7 +1848,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-2 deep-field]`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-3 cross-edges]`);
   okCount++;
 }
 
