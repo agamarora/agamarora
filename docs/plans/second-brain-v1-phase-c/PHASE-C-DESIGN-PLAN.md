@@ -135,9 +135,45 @@ Per user feedback this session:
 
 User taste calls received:
 
-- **D1 - Voice approach: P1a Full reauthor in R1 voice.** Each draft rewritten from scratch in Agam's actual voice (declarative thesis, colon rhythm, hyphen-with-spaces aside, short paragraphs, no hedging). Drop analytical scaffolding entirely. Re-use synthesis evidence to ground claims, don't show the work. Highest fidelity. Effort: ~10-12hr via subagent fan-out across multiple sessions.
-- **D2 - Graph viz target: P2c hand-designed constellation.** Drop the vis-network force layout entirely. Build a curated SVG constellation: 12 themes in a deliberate ring, click-to-expand belief clusters per theme, posts as small dots near parent. Always-centered, scroll-friendly, visually appealing. ~6-8hr.
-- **D3 - Sequencing: mechanical → structural → voice → graph (plan default).** Multiple checkpoints per step. Multi-session persistence via STATUS.md. Frequent commits.
+- **D1 - Voice approach: P1a Full reauthor in R1 voice + narrative restructure (folded together, one pass).** Each draft rewritten from scratch in Agam's actual voice (declarative thesis, colon rhythm, hyphen-with-spaces aside, short paragraphs, no hedging). Drop analytical scaffolding entirely. AND each rewritten page must work for a cold reader (lone human OR lone agent landing with no whole-corpus context). See §D1-narrative-binding below for the cold-reader contract. Re-use synthesis evidence to ground claims, don't show the work. Highest fidelity. Effort: ~10-12hr via subagent fan-out across multiple sessions.
+- **D2 - Graph viz target: P2c hand-designed constellation.** Drop the vis-network force layout entirely. Build a curated SVG constellation: 12 themes in a deliberate ring, click-to-expand belief clusters per theme, posts as small dots near parent. See §D2-graph-UX-binding below for the binding UX invariants (scroll isolation, always-centered, narrative entry, anti-drift floor, mobile fallback). ~6-8hr.
+- **D3 - Sequencing: mechanical → structural → voice → graph (plan default).** Multiple checkpoints per step. Multi-session persistence via STATUS.md. Frequent commits. Graph stays last per user taste-call 2026-04-26: voice work compounds quality on already-readable pages, but graph UX is a usability gate that bypasses voice value if visitors bounce. Despite that ordering logic, sequence stays mechanical → structural → voice → graph because voice batches will surface narrative patterns that the graph "tour" path needs to encode (graph entry tour cites pages by their cold-reader open lines).
+- **D4 - Frequent checkin cadence (binding 2026-04-26).** Every 2-4 page rewrites: stop, show user 1 sample page, take taste-call, apply learnings to remaining batches before continuing. /design-review after every C-step (not deferred to C-final). Self-eval lives in commit message: what optimized for, what tradeoffs.
+
+### §D1-narrative-binding — cold-reader contract for every reauthored page
+
+Every theme + belief page must serve a reader who lands with NO prior context — no familiarity with the wiki, the corpus, or Agam's positioning. Same page also must serve an autonomous agent that lands via /llms.txt or /wiki/kg.json without traversing peers.
+
+Binding requirements per page:
+
+1. **Orientation block (open).** First 2-3 sentences orient: "This is X. You are reading it because Y. It sits between Z and W in the bigger frame." Cold reader knows what they're holding within 10 seconds. Agent extracts purpose without inferring from h2 structure. The one_line frontmatter hook (added in C-struct) is a tagline, not a substitute for this block.
+2. **Self-introducing h2s.** Every section's first sentence introduces the section without assuming the prior section was read. A reader landing via direct deep-link to `#how-it-formed` should know what "it" is from sentence one.
+3. **Explicit exit paths (close).** Every page closes with 3 named navigation paths: "If you came here for [X], read [page]. If you want [evidence], jump to [section]. If you want [related theme], go to [link]." Not just a Related sidebar (already shipped in C-struct). A prose-level handoff that names the reader's likely intent and routes them.
+4. **Standalone essence.** Each page must say what it's about without depending on the parent or sibling pages. The wiki is a graph, not a book — readers do not arrive in NAV_ORDER sequence. Every node is an entry point.
+5. **Both surfaces.** Human reads the prose; agent reads the prose AND extracts structure. So the prose must be both a narrative for humans and a parseable claim sequence for an agent. Bullet-heavy or table-heavy pages fail the human read; prose-only pages can fail the agent read. Mix is intentional.
+
+Voice register (R1, declarative thesis + colon rhythm + hyphen asides + short paragraphs + no hedging) is the voice. The cold-reader contract is the structure. Subagents apply both per page.
+
+**Reference-page-first protocol:** Before any subagent fan-out, hand-author 2 reference pages from scratch (1 theme = agent-first, 1 belief = agent-first / belief variant). These are binding contracts the subagents pattern-match against. Reference pages also become the subagent prompt examples.
+
+**Per-batch taste-call:** After each subagent batch (4 pages), stop. Show 1 batch sample. Take taste-call. Apply learnings to next batch.
+
+### §D2-graph-UX-binding — invariants for C-graph (P2c constellation)
+
+The graph viz is a user-experience problem first, technology second. The current /wiki/graph/ vis-network layout fails on UX (scroll-jacking, easy drift-out, no orientation, no narrative path). C-graph replaces it with a hand-designed SVG constellation. Binding invariants — these are not features, they are pass/fail gates:
+
+1. **Scroll isolation.** Wheel scroll on the graph canvas = page scroll, never zoom. Zoom = pinch on touch, OR modifier-key + wheel (cmd/ctrl) on desktop. The user must never lose the page-scroll affordance by accidentally hovering the graph.
+2. **Always-centered.** At any zoom level, double-click on background re-fits view to "all 12 themes visible". Single recovery action. No buried "reset view" button.
+3. **Anti-drift floor.** Zoom-out has a floor that clamps at "all 12 themes visible". Cannot zoom out further. Pan also has bounds: cannot drag the constellation off-screen. The graph cannot become irrecoverable.
+4. **Default state = oriented, not raw.** Page first-paint shows 12 themes prominent + collapsed belief clusters per theme + posts hidden. Not the full 188-node soup. User toggles in beliefs / projects / posts as chips.
+5. **Narrative entry tour.** First load runs a 1.5-2s scripted tour: a path lights up in sequence (e.g. root → agent-first → context-over-prompt → second-brain → /lab project), then settles into the interactive default state. Cold visitor lands oriented, not lost. Tour can be skipped by any input.
+6. **Click-through to wiki.** Every theme + belief node click navigates to its `/wiki/<slug>/` or `/wiki/beliefs/<slug>/` page. The graph is a navigator, not a destination.
+7. **Mobile fallback.** Below 768px, no force/SVG. Render a flat list grouped by theme (similar to /wiki/beliefs/ landing). Force layouts are unusable on small screens with this node count.
+8. **Keyboard accessible.** Tab cycles theme nodes in NAV_ORDER. Enter on a focused node opens its wiki page. Esc returns to wiki home. Without this the page is a screen-reader dead zone.
+9. **No external CDN runtime dep.** Drop unpkg/vis-network. Constellation is hand-rolled SVG + ~200 lines of inline JS. No SRI hash needed. No CSP allowance for unpkg.
+10. **Re-fit-on-resize.** Window resize triggers re-fit, not stale viewBox.
+
+These invariants are gates. Any C-graph implementation that fails one is not done. /design-review run on C-graph must verify all ten with a manual UX test on desktop (incl. touchpad) + mobile viewport + screen-reader-emulator.
 
 ## Locked execution sequence
 
@@ -145,12 +181,12 @@ User taste calls received:
 |---|---|---|---|---|
 | **C-mech** | All mechanical fixes from /review + /design-review in one batch | 30-45 min | None (single batch) | All counts match, breadcrumb resolves or non-clickable, blockquotes semantic, manifest links present, 404 center fixed, llms.txt clean of banned LLM-isms |
 | **C-struct** | Page-purpose layer (one-line hook under h1, cross-link footers, /wiki/beliefs/ landing index) | 1-2 hr | CP-1 hooks added; CP-2 footers added; CP-3 beliefs index | Every page has hook + 4-6 cross-links. Belief breadcrumb resolves to a real index page. |
-| **C-voice-themes** | Full reauthor of 12 theme + 1 root pages in R1 voice via subagent fan-out | 4-5 hr | CP-1 reference pass on agent-first by hand; CP-2 batch of 4 (subagent); CP-3 batch of 4; CP-4 batch of 4; CP-5 final root | Each batch reviewed against voice-spec before merge. Voice fidelity gate B+ minimum. |
-| **C-voice-beliefs** | Full reauthor of 19 belief pages | 5-6 hr | CP-1 reference belief by hand; CP-2 through CP-5 batches of 4-5 | Voice fidelity gate B+ minimum. |
-| **C-graph** | P2c hand-designed constellation viz | 6-8 hr | CP-1 SVG layout sketch; CP-2 theme ring + click handlers; CP-3 belief cluster expand/collapse; CP-4 post dot rendering; CP-5 mobile fallback list view; CP-6 final polish + a11y | Manual UX test desktop + mobile. Always-centered. No scroll capture. Looks intentional, not auto-laid. |
+| **C-voice-themes** | Full reauthor of 12 theme + 1 root pages in R1 voice via subagent fan-out, with §D1-narrative-binding cold-reader contract folded in | 5-6 hr | CP-1 reference pass on agent-first BY HAND (theme + voice + narrative all in one); CP-2 batch of 4 (subagent, pattern-match on CP-1); CP-3 batch of 4; CP-4 batch of 4; CP-5 final root. After EACH batch: stop, show user sample, take taste-call, apply learnings. | Each batch reviewed against voice-spec + §D1-narrative-binding before merge. Voice fidelity gate B+ minimum. Cold-reader test: a fresh subagent given only the rewritten page (no other corpus context) can summarize what the page is for + name 3 exit paths. /design-review run after CP-5. |
+| **C-voice-beliefs** | Full reauthor of 19 belief pages with §D1-narrative-binding folded in | 6-7 hr | CP-1 reference belief BY HAND; CP-2 through CP-5 batches of 4-5 with per-batch taste-call. After each batch: cold-reader test on 1 sample. | Voice fidelity gate B+ minimum. Cold-reader test pass on every batch sample. /design-review run after CP-5. |
+| **C-graph** | P2c hand-designed constellation viz, gated by §D2-graph-UX-binding 10 invariants | 7-9 hr | CP-1 SVG layout sketch + invariant checklist; CP-2 theme ring + scroll isolation + zoom-floor; CP-3 belief cluster expand/collapse + always-centered double-click; CP-4 post chips + narrative tour; CP-5 mobile fallback list view; CP-6 keyboard accessibility + re-fit-on-resize; CP-7 final polish + /design-review with all 10 gates | Manual UX test desktop touchpad + mobile viewport + screen-reader-emulator. All 10 §D2 invariants pass. No external CDN. Tour fires on first load. |
 | **C-final** | /design-review + /review on full wiki, STATUS update CHECKPOINT 23 (Phase C complete) | 1-2 hr | CP-1 design-review pass; CP-2 review pass; CP-3 fixes; CP-4 STATUS commit | Both gates clean. Phase D entry conditions met. |
 
-**Total: ~17-25hr.** Will span multiple sessions. STATUS.md tracks current step + sub-checkpoint after every commit so any new session can resume immediately.
+**Total: ~20-28hr** (revised up from 17-25hr to account for §D1-narrative-binding folded into voice + §D2 expanded gate count). Will span multiple sessions. STATUS.md tracks current step + sub-checkpoint after every commit so any new session can resume immediately.
 
 ## Multi-session persistence binding
 

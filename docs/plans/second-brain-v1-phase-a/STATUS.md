@@ -28,7 +28,7 @@ Last updated: 2026-04-26 — **CHECKPOINT 22.5 — Phase C in flight. C-mech + C
 |---|---|---|---|
 | C-mech | DONE (commit 9bf371f) | 44 files: count fixes / blockquote / breadcrumb span / manifest links / 404 center / leverage strip / URN repair / build-kg URN guard | n/a |
 | C-struct | DONE (CP22.5) | one_line frontmatter on 31 drafts; build-wiki renders `<p class="page-purpose">` under h1; 4-7 cross-link footer (parent root + child beliefs + sibling theme + escape route); /wiki/beliefs/ landing groups 19 T1 beliefs by parent_theme; belief breadcrumb 'beliefs' now links to landing; landing added to /wiki/ meta-links + llms.txt + site.json + sitemap.xml | n/a |
-| C-voice-themes | QUEUED — start next | 12 themes + root reauthored in R1 voice | 5 sub-CPs. CP-1 = hand-author agent-first as reference; CP-2/3/4 = subagent batches of 4; CP-5 = root final. ~4-5hr. |
+| C-voice-themes | QUEUED — start next | 12 themes + root reauthored in R1 voice + §D1-narrative-binding cold-reader contract folded in | 5 sub-CPs. CP-1 = hand-author agent-first as reference (BOTH voice + narrative); CP-2/3/4 = subagent batches of 4 with per-batch taste-call; CP-5 = root final. Cold-reader test gate per batch. /design-review after CP-5. ~5-6hr. |
 | C-voice-beliefs | QUEUED | 19 beliefs reauthored in R1 voice | 5 sub-CPs. ~5-6hr. |
 | C-graph | QUEUED | hand-designed SVG constellation | 6 sub-CPs. ~6-8hr. |
 | C-final | QUEUED | /design-review + /review pass + STATUS CP23 | ~1-2hr. |
