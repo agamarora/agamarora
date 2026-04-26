@@ -91,8 +91,11 @@
   article a.urn-link{font-family:var(--mono);font-size:0.85em;color:var(--text-dim);border-bottom:1px dashed var(--border-hover);}
   article a.urn-link:hover{color:var(--accent);border-color:var(--accent);}
   article hr{border:0;height:1px;background:var(--border);margin:var(--space-8) 0;}
-  article ul{padding-left:var(--space-6);}
-  article ul li{margin-bottom:var(--space-3);line-height:1.7;}
+  article ul,article ol{padding-left:var(--space-6);margin-bottom:var(--space-6);}
+  article ul li,article ol li{margin-bottom:var(--space-4);line-height:1.7;padding-left:var(--space-3);}
+  article ol{counter-reset:item;list-style:none;padding-left:0;}
+  article ol > li{counter-increment:item;position:relative;padding-left:calc(var(--space-7) + var(--space-3));margin-bottom:var(--space-5);}
+  article ol > li::before{content:counter(item);position:absolute;left:0;top:0;width:var(--space-7);height:var(--space-7);display:inline-flex;align-items:center;justify-content:center;background:var(--surface-2);border:1px solid var(--border);border-radius:50%;font-family:var(--mono);font-size:0.78rem;color:var(--accent);font-weight:500;}
 
   .md-table-wrap{overflow-x:auto;margin:var(--space-6) 0;border:1px solid var(--border);border-radius:var(--radius-md);}
   .md-table{width:100%;border-collapse:collapse;font-size:0.92rem;}
@@ -202,7 +205,7 @@
 <h2 id="statement">Statement</h2>
 <p>AI fluency is now table stakes for PMs. Table stakes in the literal poker sense: not a flex, not a differentiator, a non-negotiable buy-in. The relevant archetype of AI PM is the application-layer one, using existing models to unlock growth, not building the models.</p>
 <p>Three load-bearing parts:</p>
-<p>1. Discipline-level: PMs need to be as fluent in AI tools as they are in PowerPoint and Excel. 2. Practitioner-level: &quot;As a product manager, I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit.&quot; AI as cognitive scaffolding around PM craft, not a replacement for it. 3. Archetype split: there are two kinds of AI PMs. Foundation-layer PMs work at labs improving the models. Application-layer PMs use existing models to unlock growth. The application layer has higher demand, more open use-cases, and is where the craft of PM taste actually applies.</p>
+<ol><li>Discipline-level: PMs need to be as fluent in AI tools as they are in PowerPoint and Excel.</li><li>Practitioner-level: &quot;As a product manager, I find myself using ChatGPT for just about everything except product management - and it feels like the perfect fit.&quot; AI as cognitive scaffolding around PM craft, not a replacement for it.</li><li>Archetype split: there are two kinds of AI PMs. Foundation-layer PMs work at labs improving the models. Application-layer PMs use existing models to unlock growth. The application layer has higher demand, more open use-cases, and is where the craft of PM taste actually applies.</li></ol>
 <p>The second point still holds in 2026. AI tools are inside execution: thinking-as-execution, writing, coding, PRDs. AI does not replace taste. Taste of what to build, what experience, what value is the irreducible PM job. The 2023-03-14 line named where taste lives, and taste has not moved.</p>
 <h2 id="origin">Origin</h2>
 <p>The belief crystallized in a three-week window in early 2023. The manifesto post (2023-03-14) lists six concrete uses: data analysis with Jupyter, Pandas, SQL, marketing copy, structuring thoughts and notes, building a personal website, PRD refinement, brainstorming, home-lab setup. The post closes: &quot;To me, tis but an extension.&quot; That is the original framing.</p>
