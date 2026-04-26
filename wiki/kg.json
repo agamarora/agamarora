@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:47:34.284Z",
+  "generated_at": "2026-04-26T10:50:57.048Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1724,6 +1724,42 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-6510000000000000000",
+      "urn": "urn:li:activity:6510000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6510000000000000000/",
+      "label": "I still remember clearly my professor at business school writing the big bold wo",
+      "date": "",
+      "snippet": "I still remember clearly my professor at business school writing the big bold words on the white board."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7171000000000000000",
+      "urn": "urn:li:activity:7171000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7171000000000000000/",
+      "label": "Being technical is not about knowing a technology but using the technology.",
+      "date": "2024-03-06",
+      "snippet": "Being technical is not about knowing a technology but using the technology."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7211000000000000000",
+      "urn": "urn:li:activity:7211000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7211000000000000000/",
+      "label": "The lowest common denominator came out to be hours put in.",
+      "date": "2024-06-25",
+      "snippet": "The lowest common denominator came out to be hours put in."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7475000000000000000",
+      "urn": "urn:li:activity:7475000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7475000000000000000/",
+      "label": "To get this into my muscle memory.",
+      "date": "2025-12-26",
+      "snippet": "To get this into my muscle memory."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7245035069900791808",
       "urn": "urn:li:activity:7245035069900791808",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245035069900791808/",
@@ -2723,6 +2759,31 @@
       "to": "post.urn-li-activity-7396047657951064064"
     },
     {
+      "from": "belief.learn-concepts-not-tools",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6510000000000000000"
+    },
+    {
+      "from": "belief.learn-concepts-not-tools",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6609782345678901248"
+    },
+    {
+      "from": "belief.learn-concepts-not-tools",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7171000000000000000"
+    },
+    {
+      "from": "belief.learn-concepts-not-tools",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7211000000000000000"
+    },
+    {
+      "from": "belief.learn-concepts-not-tools",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7475000000000000000"
+    },
+    {
       "from": "belief.pm-is-99-should-we-1-can-we",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7245035069900791808"
@@ -2930,9 +2991,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 56,
+    "posts": 60,
     "edges": {
-      "total": 198,
+      "total": 203,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2942,9 +3003,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 87
+        "cites-post": 92
       }
     },
-    "nodes_total": 208
+    "nodes_total": 212
   }
 }
