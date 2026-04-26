@@ -57,7 +57,8 @@
   }
   ::selection{background:var(--accent);color:var(--bg);}
 
-  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:20;padding:0 clamp(1rem,3vw,1.5rem);display:flex;align-items:center;justify-content:space-between;}
+  /* Header — z-index 100 to match all other v2 pages (DESIGN.md shared layout contract) */
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;justify-content:space-between;}
   .icon-bar{display:inline-flex;align-items:center;}
   .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
@@ -70,22 +71,25 @@
   svg.canvas.panning{cursor:grabbing;}
   svg.canvas.zoomable{cursor:grab;}
 
-  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:15;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
+  /* aa. mark — z-index 50 to match all other v2 pages (DESIGN.md shared layout contract) */
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;}
   .aa-mark:hover{opacity:1;}
   .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
 
-  .help-strip{position:fixed;top:18px;left:80px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.4;letter-spacing:0.04em;}
+  /* Help strip moved BELOW header zone (header is up to ~64px) so it stops getting hidden */
+  .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;max-width:calc(100vw - 48px);}
   .help-strip a{color:var(--text-dim);text-decoration:none;border-bottom:1px dashed rgba(232,228,223,0.15);transition:color 0.2s,border-color 0.2s;}
   .help-strip a:hover{color:var(--accent);border-color:var(--accent);}
-  .caption{position:fixed;top:64px;right:24px;z-index:15;font-family:var(--mono);font-size:11px;color:var(--text);opacity:0.55;letter-spacing:0.04em;text-align:right;}
-  .subcaption{position:fixed;top:84px;right:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.4;letter-spacing:0.04em;text-align:right;}
+  /* Caption + sub-caption stack BELOW header on right side; positions computed off header height */
+  .caption{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);right:24px;z-index:90;font-family:var(--mono);font-size:11px;color:var(--text);opacity:0.6;letter-spacing:0.04em;text-align:right;max-width:calc(100vw - 48px);}
+  .subcaption{position:fixed;top:calc(clamp(52px,6vw,64px) + 32px);right:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.45;letter-spacing:0.04em;text-align:right;max-width:calc(100vw - 48px);}
 
-  .legend-strip{position:fixed;bottom:64px;left:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;line-height:1.7;}
+  .legend-strip{position:fixed;bottom:84px;left:24px;z-index:50;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;line-height:1.7;}
   .legend-strip .swatch{display:inline-block;border-radius:50%;vertical-align:middle;margin-right:6px;}
   .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
   .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
 
-  .spec-tag{position:fixed;bottom:22px;left:24px;z-index:15;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.05em;}
+  .spec-tag{position:fixed;bottom:22px;left:24px;z-index:50;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.05em;}
 
   /* Two-layer SVG: parallax bg (dim, future CP-5) + interactive constellation foreground */
   svg.parallax-bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:1;display:block;pointer-events:none;}
@@ -140,13 +144,18 @@
   .cross-edge.highlit{stroke:rgba(229,165,75,0.55) !important;stroke-width:1 !important;}
   .cross-edge.dimmed{opacity:0.25 !important;}
 
+  /* Mobile chrome: aggressive hide to prevent overlap. Only essentials remain. */
   @media (max-width: 768px){
     .legend-strip{display:none;}
-    .help-strip{font-size:9px;left:64px;}
+    .help-strip{display:none;}            /* hint not needed on touch */
     .caption{font-size:10px;}
-    .subcaption{font-size:9px;}
-    .aa-mark svg{width:38px;}
+    .subcaption{display:none;}             /* breakdown hidden on narrow */
     .spec-tag{display:none;}
+    .fs-btn{font-size:10px;padding:5px 9px;}
+  }
+  @media (max-width: 480px){
+    /* Smallest devices: drop caption too, keep only icon-bar + aa. mark + fs-btn */
+    .caption{display:none;}
   }
 </style>
 </head>
@@ -1170,7 +1179,19 @@
     touchZoomStart = null;
   });
 
-  // Re-fit on resize: reset to default viewBox
+  // Re-fit on resize: reset to default viewBox + adjust aspect strategy
+  function applyAspectStrategy(){
+    const w = window.innerWidth, h = window.innerHeight;
+    const viewportAR = w / h;
+    const canvasAR = VB_W / VB_H;
+    // On portrait or very narrow viewports, use 'slice' so canvas fills the screen
+    // (corners crop slightly but no letterbox). 'meet' on landscape desktop preserves
+    // the full constellation w/ minor side margins.
+    const useSlice = viewportAR < canvasAR * 0.85;
+    svg.setAttribute('preserveAspectRatio', useSlice ? 'xMidYMid slice' : 'xMidYMid meet');
+    bgSvg.setAttribute('preserveAspectRatio', useSlice ? 'xMidYMid slice' : 'xMidYMid slice');
+  }
+  applyAspectStrategy();
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -1178,6 +1199,7 @@
       curVB = { ...DEFAULT_VB };
       curZoom = 1.0;
       applyVB();
+      applyAspectStrategy();
     }, 200);
   });
 
