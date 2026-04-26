@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:44:54.532Z",
+  "generated_at": "2026-04-26T10:47:34.284Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1593,7 +1593,7 @@
       "urn": "urn:li:activity:7180000000000000000",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7180000000000000000/",
       "label": "2024-04-01   Human-GPT post. Breadth-needs-depth refinement crystallizes. Parent",
-      "date": "2024-04-01",
+      "date": "2024-03-31",
       "snippet": "2024-04-01   Human-GPT post. Breadth-needs-depth refinement crystallizes. Parent belief bounded, not contradicted.   urn"
     },
     {
@@ -1604,6 +1604,51 @@
       "label": "2024-07-01   AIonOS inside-out x outside-in narration. PM breadth crossed with a",
       "date": "2024-07-01",
       "snippet": "2024-07-01   AIonOS inside-out x outside-in narration. PM breadth crossed with applied AI depth. The depth-pick made the"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-6379000000000000000",
+      "urn": "urn:li:activity:6379000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6379000000000000000/",
+      "label": "She was mostly the office generalist",
+      "date": "2018-03-15",
+      "snippet": "She was mostly the office generalist"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7184000000000000000",
+      "urn": "urn:li:activity:7184000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7184000000000000000/",
+      "label": "If your breadth has no depth, you are what one could call a Human-GPT. Choose yo",
+      "date": "2024-04-12",
+      "snippet": "If your breadth has no depth, you are what one could call a Human-GPT. Choose your niche and invest."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7207000000000000000",
+      "urn": "urn:li:activity:7207000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7207000000000000000/",
+      "label": "You can't be done with the studies ever in this role.",
+      "date": "2024-06-14",
+      "snippet": "You can't be done with the studies ever in this role."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7245000000000000000",
+      "urn": "urn:li:activity:7245000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7245000000000000000/",
+      "label": "if you know how to connect with humans you will be loved.",
+      "date": "2024-09-25",
+      "snippet": "if you know how to connect with humans you will be loved."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7353000000000000000",
+      "urn": "urn:li:activity:7353000000000000000",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7353000000000000000/",
+      "label": "We humans are built this way: to deeply feel, to be affected, and still have the",
+      "date": "2025-07-22",
+      "snippet": "We humans are built this way: to deeply feel, to be affected, and still have the resilience to bounce back. And no AI will ever take that away."
     },
     {
       "type": "Post",
@@ -2563,6 +2608,46 @@
       "to": "post.urn-li-activity-7213000000000000000"
     },
     {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6379000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-6609782345678901248"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7180000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7184000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7207000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7213000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7245000000000000000"
+    },
+    {
+      "from": "belief.breadth-needs-depth",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7353000000000000000"
+    },
+    {
       "from": "belief.context-over-prompt",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7034426809358114816"
@@ -2845,9 +2930,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 51,
+    "posts": 56,
     "edges": {
-      "total": 190,
+      "total": 198,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2857,9 +2942,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 79
+        "cites-post": 87
       }
     },
-    "nodes_total": 203
+    "nodes_total": 208
   }
 }
