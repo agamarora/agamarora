@@ -1,4 +1,11 @@
 {
+  "name": "agamarora-com",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:kg": "node scripts/build-kg.mjs --strict",
+    "build": "npm run build:kg"
+  },
   "dependencies": {
     "groq-sdk": "^1.1.2"
   }

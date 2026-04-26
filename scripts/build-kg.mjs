@@ -13,7 +13,7 @@
 // at netlify/functions/lib/kg-themes-summary.mjs for now. Phase D may add
 // regeneration here once the wire-up settles.
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -22,7 +22,20 @@ const ROOT = join(__dirname, "..");
 const ONTOLOGY = join(ROOT, "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md");
 const OUT = join(ROOT, "wiki/kg.json");
 
-const src = readFileSync(ONTOLOGY, "utf8");
+// Update when ontology is re-locked. Stamped into kg.json `source` field.
+const ONTOLOGY_LOCK_DATE = "2026-04-26";
+
+let src;
+try {
+  src = readFileSync(ONTOLOGY, "utf8");
+} catch (err) {
+  console.error(`[build-kg] FATAL: cannot read ontology at ${ONTOLOGY}`);
+  console.error(`[build-kg]   ${err.code || ""} ${err.message}`);
+  console.error(
+    `[build-kg]   Phase A synthesis may be missing on this clone. Re-pull the repo or restore from origin/main.`
+  );
+  process.exit(1);
+}
 
 // Helpers
 const splitRow = (line) =>
@@ -424,15 +437,19 @@ const stats = {
 const kg = {
   version: "1.0",
   generated_at: new Date().toISOString(),
-  source: "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
+  source: `docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked ${ONTOLOGY_LOCK_DATE})`,
   nodes: allNodes,
   edges,
   themes: themesSummary,
   stats,
 };
 
+// Atomic write: tmp + rename so a SIGKILL or disk-full mid-write can't leave
+// wiki/kg.json half-written and unparseable for downstream consumers.
 mkdirSync(dirname(OUT), { recursive: true });
-writeFileSync(OUT, JSON.stringify(kg, null, 2) + "\n");
+const TMP = `${OUT}.tmp`;
+writeFileSync(TMP, JSON.stringify(kg, null, 2) + "\n");
+renameSync(TMP, OUT);
 
 console.log(`[build-kg] wrote ${OUT}`);
 console.log(`[build-kg] ${stats.nodes_total} nodes, ${stats.edges.total} edges`);
