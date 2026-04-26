@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26T10:38:00.910Z",
+  "generated_at": "2026-04-26T10:42:18.891Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1544,6 +1544,15 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7214622697397448704",
+      "urn": "urn:li:activity:7214622697397448704",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7214622697397448704/",
+      "label": "built a considerable number of GenAI-based product concepts... demo'd to enterpr",
+      "date": "2024-07-04",
+      "snippet": "built a considerable number of GenAI-based product concepts... demo'd to enterprise customers."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7402319253036531712",
       "urn": "urn:li:activity:7402319253036531712",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7402319253036531712/",
@@ -2474,6 +2483,11 @@
       "to": "post.urn-li-activity-7452998640345853952"
     },
     {
+      "from": "belief.ai-pm-skillset-table-stakes",
+      "rel": "cites-post",
+      "to": "post.urn-li-activity-7214622697397448704"
+    },
+    {
       "from": "belief.anti-customization",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7402319253036531712"
@@ -2761,9 +2775,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 45,
+    "posts": 46,
     "edges": {
-      "total": 184,
+      "total": 185,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -2773,9 +2787,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 73
+        "cites-post": 74
       }
     },
-    "nodes_total": 197
+    "nodes_total": 198
   }
 }
