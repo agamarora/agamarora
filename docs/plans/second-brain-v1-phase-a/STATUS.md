@@ -2,11 +2,11 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 23.5 — Phase C in flight. C-voice-themes 10/12 DONE. CP-11 personal-projects-tinkering queued.**
+Last updated: 2026-04-26 — **CHECKPOINT 23.6 — Phase C in flight. C-voice-themes 11/12 DONE. CP-12 root queued (final theme).**
 
 ## RESUME POINT (read this first on a new session)
 
-**Current step:** Phase C / C-voice-themes / **CP-11: personal-projects-tinkering** via sonnet subagent. 2 themes remaining: personal-projects-tinkering, root.
+**Current step:** Phase C / C-voice-themes / **CP-12: root.substance-over-hype** via sonnet subagent. Last theme. After CP-12 ships: C-voice-themes complete, move to C-voice-beliefs (19 belief pages, same per-checkpoint cadence).
 
 **Read in this order to fully resume:**
 1. **THIS FILE** — round + step state
