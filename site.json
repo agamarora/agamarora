@@ -45,8 +45,8 @@
   ],
   "externals": [
     { "slug": "github", "url": "https://github.com/agamarora", "title": "GitHub profile", "icon": "fa-github" },
-    { "slug": "linkedin", "url": "https://linkedin.com/in/agam-arora", "title": "LinkedIn", "icon": "fa-linkedin" },
-    { "slug": "youtube", "url": "https://youtube.com/@agamarora", "title": "YouTube", "icon": "fa-youtube" },
+    { "slug": "linkedin", "url": "https://linkedin.com/in/agamarora", "title": "LinkedIn", "icon": "fa-linkedin" },
+    { "slug": "youtube", "url": "https://www.youtube.com/@agam_arora", "title": "YouTube", "icon": "fa-youtube" },
     { "slug": "shararat-code", "url": "https://github.com/agamarora/shararat-ai", "title": "Shararat — voice AI source on GitHub", "icon": "fa-github" }
   ],
   "actions": [

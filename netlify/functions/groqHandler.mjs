@@ -342,7 +342,7 @@ function buildDynamicContext({ routeDecision, wikiExtracts, edges }) {
     parts.push(`## CONTACT CONTEXT (user asked how to reach Agam)
 Channels available, surface as cards:
 - book-call (priority): https://calendly.com/agamarora/chat — 15-min intro chat
-- linkedin: https://linkedin.com/in/agam-arora
+- linkedin: https://linkedin.com/in/agamarora
 - github: https://github.com/agamarora
 
 Compose a one-line answer naming the fastest path (book-call) plus the alternates. Do NOT deflect — this is a legitimate inquiry. Cards: book-call as priority:true, then linkedin + github as supporting. Do NOT mention email — it is not an available channel.`);

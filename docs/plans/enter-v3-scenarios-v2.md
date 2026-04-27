@@ -798,7 +798,7 @@ OR (variants for variety):
   ],
   "external_links": {
     "github": "https://github.com/agamarora",
-    "linkedin": "https://linkedin.com/in/agam-arora",
+    "linkedin": "https://linkedin.com/in/agamarora",
     "resume": "https://agamarora.com/resume"
   },
   "kg_full": "https://agamarora.com/wiki/kg.json"

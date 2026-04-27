@@ -117,8 +117,8 @@ First-person agent, never speaks AS Agam.
 | Slug | URL | Title |
 |------|-----|-------|
 | `github` | `https://github.com/agamarora` | GitHub profile |
-| `linkedin` | `https://linkedin.com/in/agam-arora` | LinkedIn |
-| `youtube` | `https://youtube.com/@agamarora` (placeholder — confirm) | YouTube |
+| `linkedin` | `https://linkedin.com/in/agamarora` | LinkedIn |
+| `youtube` | `https://www.youtube.com/@agam_arora` (placeholder — confirm) | YouTube |
 | `shararat-code` | `https://github.com/agamarora/shararat-ai` | Shararat voice AI source + README |
 
 **Actions:**
