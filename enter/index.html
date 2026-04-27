@@ -691,11 +691,17 @@
       text-overflow:ellipsis;
     }
     .card .card-desc { display:none; }
-    .card .card-arrow {
-      margin-top:0;
+    /* Hide explicit link text on mobile — title + chevron is enough hint. */
+    .card .card-arrow { display:none; }
+    .card::after {
+      content:"›";
+      font-family:var(--mono);
+      font-size:1rem;
+      color:var(--text-dim);
       flex-shrink:0;
-      font-size:0.72rem;
+      margin-left:auto;
     }
+    .card:hover::after { color:var(--accent); }
     .card.priority { border-left-width:2px; }
     .card:hover { transform:none; }
 
