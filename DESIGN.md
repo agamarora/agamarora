@@ -18,7 +18,7 @@ All tokens are defined in the moodboard (`moodboard/index.html :root`).
 | `--surface` | #111111 | Cards, elevated surfaces |
 | `--border` | #1E1E1E | Dividers, subtle borders |
 | `--text` | #E8E4DF | Primary text |
-| `--text-dim` | #7A7A7A | Secondary text, labels |
+| `--text-dim` | #8a8a8a | Secondary text, labels (bumped from #7A7A7A 2026-04-27 to clear WCAG 2.1 AA 4.5:1 against `--surface`) |
 | `--accent` | #E5A54B | Gold. Links, highlights, the "." in aa. |
 | `--accent-dim` | rgba(229,165,75,0.12) | Hover states, subtle backgrounds |
 

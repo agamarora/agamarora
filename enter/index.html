@@ -31,7 +31,7 @@
   :root {
     --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
     --border:#1E1E1E; --border-hover:#2A2A2A;
-    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --text:#E8E4DF; --text-dim:#8a8a8a;
     --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
     --mono:'JetBrains Mono',monospace;
     --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -420,15 +420,19 @@
     color:var(--text);
     line-height:1.3;
   }
+  /* WCAG 2.1 AA: bumped desc 0.82rem -> 0.875rem (14px floor) and arrow
+     0.74rem -> 0.8rem (12.8px, above 12px absolute min). Combined with
+     --text-dim token bump (#7A7A7A -> #8a8a8a in chrome.mjs) the card
+     secondary text now passes 4.5:1 contrast on --surface. */
   .card .card-desc {
     font-family:var(--sans);
-    font-size:0.82rem;
+    font-size:0.875rem;
     color:var(--text-dim);
-    line-height:1.4;
+    line-height:1.45;
   }
   .card .card-arrow {
     font-family:var(--mono);
-    font-size:0.74rem;
+    font-size:0.8rem;
     color:var(--text-dim);
     margin-top:auto;
     text-align:right;
@@ -597,6 +601,10 @@
        once. No per-keystroke jitter, no input bar drifting through cards. */
     html, body {
       height:var(--vv-height, 100dvh);
+      /* SHARED_RESET_CSS sets body min-height:100dvh which overrode the
+         vv-height lock when the soft keyboard opened (min-height > height
+         wins). Reset min-height to 0 so the lock holds. */
+      min-height:0;
       overflow:hidden;
     }
     body {
