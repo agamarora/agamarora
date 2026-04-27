@@ -221,6 +221,31 @@
 <!-- LAYER 1: interactive constellation foreground -->
 <svg class="canvas" id="constellation" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Knowledge graph constellation: genesis at center, 11 themes orbiting"></svg>
 
+<!-- AEO-11 / M2: noscript fallback. AI crawlers without JS execution
+     (and any user with JS disabled) get a text-equivalent of the constellation:
+     genesis brand label + the 11 themes as an HTML link list. Bots with JS
+     execute the big-bang animation and index the rendered graph. -->
+<noscript>
+  <section class="graph-noscript" aria-label="Knowledge graph text equivalent">
+    <h2>agam.arora &mdash; second brain</h2>
+    <p>Authored constellation of 227 nodes and 224 edges. The interactive graph requires JavaScript; the eleven themes orbiting the genesis are listed below.</p>
+    <ul>
+      <li><a href="/wiki/agent-first/">agent-first</a></li>
+      <li><a href="/wiki/ai-pm-skillset/">ai-pm skillset</a></li>
+      <li><a href="/wiki/pm-taste/">pm taste</a></li>
+      <li><a href="/wiki/enterprise-ai-reality/">enterprise ai</a></li>
+      <li><a href="/wiki/voice-ai-craft/">voice ai craft</a></li>
+      <li><a href="/wiki/second-brain/">second brain</a></li>
+      <li><a href="/wiki/spec-first-taste/">spec-first taste</a></li>
+      <li><a href="/wiki/breadth-as-differentiation/">breadth as edge</a></li>
+      <li><a href="/wiki/linkedin-as-instrument/">linkedin instrument</a></li>
+      <li><a href="/wiki/career-reflection/">career reflection</a></li>
+      <li><a href="/wiki/personal-projects-tinkering/">personal projects</a></li>
+    </ul>
+    <p><a href="/wiki/">Back to wiki home</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
+  </section>
+</noscript>
+
 <script>
 (function(){
   const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');

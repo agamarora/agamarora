@@ -1546,6 +1546,21 @@ ${SHARED_AAMARK_HTML}
 <!-- LAYER 1: interactive constellation foreground -->
 <svg class="canvas" id="constellation" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Knowledge graph constellation: genesis at center, 11 themes orbiting"></svg>
 
+<!-- AEO-11 / M2: noscript fallback. AI crawlers without JS execution
+     (and any user with JS disabled) get a text-equivalent of the constellation:
+     genesis brand label + the 11 themes as an HTML link list. Bots with JS
+     execute the big-bang animation and index the rendered graph. -->
+<noscript>
+  <section class="graph-noscript" aria-label="Knowledge graph text equivalent">
+    <h2>agam.arora &mdash; second brain</h2>
+    <p>Authored constellation of ${kg.stats.nodes_total} nodes and ${kg.stats.edges.total} edges. The interactive graph requires JavaScript; the eleven themes orbiting the genesis are listed below.</p>
+    <ul>
+${THEMES.map(t => `      <li><a href="/wiki/${t.slug}/">${escHtml(t.label)}</a></li>`).join('\n')}
+    </ul>
+    <p><a href="/wiki/">Back to wiki home</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
+  </section>
+</noscript>
+
 <script>
 ${AAMARK_SCRIPT}
 
