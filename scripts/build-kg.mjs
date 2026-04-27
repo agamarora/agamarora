@@ -345,7 +345,7 @@ if (themeAssignSection) {
 // to the theme (theme.<slug> -[cites-post]-> post.<urn>) and/or the belief
 // (belief.<slug> -[cites-post]-> post.<urn>). This wires evidence into the
 // graph viz instead of burying it inside table rows.
-import { readdirSync as _readdirSync, statSync } from "node:fs";
+import { readdirSync as _readdirSync } from "node:fs";
 
 const THEME_DRAFTS = join(ROOT, "docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final");
 const BELIEF_DRAFTS = join(ROOT, "docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final");

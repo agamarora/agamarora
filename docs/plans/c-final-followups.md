@@ -3,6 +3,8 @@
 **Source:** /design-review on https://agamarora.com/wiki/ tree, 2026-04-27.
 **Phase C declared COMPLETE** at CHECKPOINT 32 — these are non-blocking polish items deferred to v2.
 
+**Update 2026-04-27 (post-CHECKPOINT 32):** M1 + M3 + M5 + LOW#1 (statSync dead import) shipped immediately after CP-32. Remaining items still deferred per labels.
+
 Pages audited (archetypes covering 33-page tree via shared build template):
 `/wiki/`, `/wiki/agent-first/`, `/wiki/beliefs/`, `/wiki/beliefs/agent-first/`, `/wiki/voice/`, `/wiki/quotes/`, `/wiki/projects/`, `/wiki/graph/`, `/wiki/root.substance-over-hype/`. Mobile + desktop. Zero console errors across all.
 
@@ -10,7 +12,7 @@ Pages audited (archetypes covering 33-page tree via shared build template):
 
 ## MEDIUM (defer to v2)
 
-### M1. Header icon touch targets below 44px
+### M1. Header icon touch targets below 44px ✅ DONE 2026-04-27
 **Where:** all v2 pages — 5 SVG icons in top-left chrome (GitHub, LinkedIn, YouTube, Resume, Home).
 **Measured:** 37×37px. Apple HIG / Material minimum is 44×44.
 **Risk:** mobile tap miss on adjacent icons. 7px short.
@@ -27,7 +29,7 @@ Pages audited (archetypes covering 33-page tree via shared build template):
 - (c) Inline first-paint SVG in HTML (genesis + 11 themes only), hydrate the rest via JS.
 **Effort:** ~30-60 min depending on option. (a) preferred per locked design intent.
 
-### M3. /wiki/ landing — `<h4>` directly under `<h2>` in Meta pages section
+### M3. /wiki/ landing — `<h4>` directly under `<h2>` in Meta pages section ✅ DONE 2026-04-27
 **Where:** `wiki/index.html` line ~420. `<h2 class="section-h">Meta pages</h2>` → 5× `<h4>Beliefs|Graph|Projects DAG|Voice|Quotes</h4>` cards.
 **Measured:** heading sequence skips H3 in Meta pages section only (themes section uses H3 cards correctly).
 **Risk:** SR users encounter heading-level skip. WCAG discouraged but not strictly forbidden.
@@ -45,7 +47,7 @@ Pages audited (archetypes covering 33-page tree via shared build template):
 
 ## MEDIUM — from /review pass on build pipeline (2026-04-27)
 
-### M5. `kg.json` parse has no try/catch in `build-wiki.mjs`
+### M5. `kg.json` parse has no try/catch in `build-wiki.mjs` ✅ DONE 2026-04-27
 **Where:** `scripts/build-wiki.mjs:991, 1181` — `JSON.parse(readFileSync(kgPath))`.
 **Risk:** if `wiki/kg.json` is malformed (manual edit, non-atomic write from a future tool), build-wiki crashes after some pages are written, leaving the tree partially rebuilt. build-kg already writes atomically so corruption is rare today.
 **Fix:** hoist parse to top of `main`, wrap in try/catch with clear error + `process.exit(1)` before any pages are written. Most worth doing before Phase D since Phase D will add another consumer of kg.json.
@@ -65,7 +67,7 @@ Pages audited (archetypes covering 33-page tree via shared build template):
 
 ## LOW — from /review pass
 
-- `scripts/build-kg.mjs:348` — `statSync` imported but never used. Dead import.
+- `scripts/build-kg.mjs:348` — `statSync` imported but never used. Dead import. ✅ DONE 2026-04-27
 - `scripts/build-kg.mjs:215` — `(r["internal-only"] || "").toLowerCase() === "yes" ? true : false` — redundant ternary (already boolean).
 - `scripts/build-wiki.mjs:938-976` — `processDir` per-file failures only enforced via `--strict`. Default builds report success even if N pages failed. Acceptable; CI uses `--strict`.
 - `netlify/functions/groqHandler.mjs:155` — `input.slice(0, 200)` runs *after* injection-detection on the longer trimmed string. Safe direction.

@@ -988,7 +988,13 @@ function buildProjectsPage() {
     console.log(`[build-wiki] skipping projects page (kg.json missing - run build:kg first)`);
     return;
   }
-  const kg = JSON.parse(readFileSync(kgPath, "utf8"));
+  let kg;
+  try {
+    kg = JSON.parse(readFileSync(kgPath, "utf8"));
+  } catch (e) {
+    console.error(`[build-wiki] FATAL: ${kgPath} is malformed JSON. Run 'npm run build:kg' to regenerate. Underlying error: ${e.message}`);
+    process.exit(1);
+  }
   const projects = kg.nodes.filter((n) => n.type === "Project" && !n.internal_only);
   const lineage = kg.edges.filter((e) => e.rel === "builds_on");
   const childOf = new Map();
@@ -1178,7 +1184,13 @@ function buildGraphPage() {
     console.log(`[build-wiki] skipping graph page (kg.json missing - run build:kg first)`);
     return;
   }
-  const kg = JSON.parse(readFileSync(kgPath, "utf8"));
+  let kg;
+  try {
+    kg = JSON.parse(readFileSync(kgPath, "utf8"));
+  } catch (e) {
+    console.error(`[build-wiki] FATAL: ${kgPath} is malformed JSON. Run 'npm run build:kg' to regenerate. Underlying error: ${e.message}`);
+    process.exit(1);
+  }
 
   // === Constellation CP-1 — authored sky atlas skeleton ===
   // Aesthetic + spec lives in DESIGN.md ## Constellation graph (locked 2026-04-26).

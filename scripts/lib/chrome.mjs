@@ -49,7 +49,7 @@ export const SHARED_ICON_CSS = `  .icon { width:1em; height:1em; fill:currentCol
 // Header + icon-bar styling.
 export const SHARED_HEADER_CSS = `  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
   .icon-bar{display:inline-flex;align-items:center;}
-  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}`;
 
 // aa. mark — fixed bottom-right brand. font-family on wrapper forces Patrick Hand
