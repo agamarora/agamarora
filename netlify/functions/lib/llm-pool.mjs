@@ -215,10 +215,18 @@ async function callMistral({ key, model, messages, stream, jsonMode, temperature
   return mistralStreamToTextIter(res);
 }
 
+// CRITICAL FIX: track consecutive malformed lines. After 3 in a row,
+// abort + throw so the caller can fail over to the next provider.
+// Previously swallowed malformed lines silently — this caused silent
+// mid-stream provider errors with no fallback.
+// Per sequential-hugging-mango.md critical gap (lib/llm-pool.mjs:142-167).
+const MISTRAL_MALFORMED_ABORT_THRESHOLD = 3;
+
 async function* mistralStreamToTextIter(res) {
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buf = '';
+  let consecutiveMalformed = 0;
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
@@ -233,8 +241,17 @@ async function* mistralStreamToTextIter(res) {
       try {
         const obj = JSON.parse(payload);
         const delta = obj?.choices?.[0]?.delta?.content || '';
+        consecutiveMalformed = 0; // reset on successful parse
         if (delta) yield delta;
-      } catch { /* swallow malformed line */ }
+      } catch {
+        consecutiveMalformed++;
+        if (consecutiveMalformed >= MISTRAL_MALFORMED_ABORT_THRESHOLD) {
+          const err = new Error(`mistral_malformed_sse: ${consecutiveMalformed} consecutive malformed lines`);
+          err.kind = 'mistral_malformed_sse';
+          console.warn('[llm-pool] mistral_malformed_sse abort after', consecutiveMalformed, 'lines');
+          throw err;
+        }
+      }
     }
   }
 }
@@ -403,6 +420,108 @@ function staticFallbackStream() {
       controller.close();
     },
   });
+}
+
+// ---- Public: synthesis JSON path (non-streaming) --------------------------
+//
+// New method per CQ-2. Returns full structured JSON object non-streaming.
+// Used by groqHandler.mjs for D-arch-3: handler inspects answer.length
+// BEFORE opening SSE stream (synthesis confidence retry, Decision 18).
+//
+// Returns:
+//   { json: { trace, answer, cards }, providerKeyId, modelUsed, wallClockMs }
+//
+// On full pool exhaustion, returns staticFallbackJson().
+export async function invokeSynthesisJson({ messages, temperature = 0.7, maxTokens = 800 }) {
+  const start = typeof performance !== 'undefined' ? Math.round(performance.now()) : Date.now();
+
+  const groqOrder = rotated(GROQ_KEYS, groqCursor);
+  groqCursor = (groqCursor + 1) % Math.max(1, GROQ_KEYS.length);
+  const mistralOrder = rotated(MISTRAL_KEYS, mistralCursor);
+  mistralCursor = (mistralCursor + 1) % Math.max(1, MISTRAL_KEYS.length);
+
+  const attempts = [];
+  for (const k of groqOrder) {
+    for (const m of GROQ_SYNTH_MODELS) {
+      attempts.push({ provider: 'groq', key: k, model: m });
+    }
+  }
+  for (const k of mistralOrder) {
+    attempts.push({ provider: 'mistral', key: k, model: MISTRAL_SYNTH_MODEL });
+  }
+
+  for (const a of attempts) {
+    if (await isCooled(a.provider, a.key.id)) continue;
+    try {
+      let text;
+      if (a.provider === 'groq') {
+        text = await callGroq({
+          key: a.key.key, model: a.model, messages,
+          stream: false, jsonMode: true, temperature, maxTokens, timeoutMs: 8000,
+        });
+      } else {
+        text = await callMistral({
+          key: a.key.key, model: a.model, messages,
+          stream: false, jsonMode: true, temperature, maxTokens, timeoutMs: 8000,
+        });
+      }
+
+      const wallClockMs = (typeof performance !== 'undefined' ? Math.round(performance.now()) : Date.now()) - start;
+
+      // Parse JSON from model response
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch {
+        // Model returned non-JSON — log and try next provider
+        console.warn('[llm-pool] invokeSynthesisJson: non-JSON response from', a.provider, a.model, 'len=', text?.length);
+        continue;
+      }
+
+      // Validate basic shape
+      if (typeof json?.answer !== 'string') {
+        console.warn('[llm-pool] invokeSynthesisJson: missing answer field from', a.provider, a.model);
+        continue;
+      }
+
+      return {
+        json,
+        providerKeyId: `${a.provider}:${a.key.env}`,
+        modelUsed: a.model,
+        wallClockMs,
+      };
+    } catch (err) {
+      const norm = normalizeError(err);
+      if (norm.kind === 'rate_limit') {
+        await markCooled(a.provider, a.key.id, norm.retryAfterMs);
+        continue;
+      }
+      console.warn('[llm-pool] invokeSynthesisJson error', a.provider, a.model, err?.message);
+      continue;
+    }
+  }
+
+  // Full pool exhausted
+  const wallClockMs = (typeof performance !== 'undefined' ? Math.round(performance.now()) : Date.now()) - start;
+  return staticFallbackJson(wallClockMs);
+}
+
+function staticFallbackJson(wallClockMs = 0) {
+  return {
+    json: {
+      trace: [
+        { verb: 'parsed', args: 'intent(lookup)' },
+        { verb: 'composed', args: 'response()' },
+      ],
+      answer: "Service is busy right now. The wiki at /wiki/ has the answer to most questions.",
+      cards: [
+        { slug: 'lab', type: 'page', priority: true },
+      ],
+    },
+    providerKeyId: 'static',
+    modelUsed: 'static',
+    wallClockMs,
+  };
 }
 
 // ---- Diagnostics ----------------------------------------------------------
