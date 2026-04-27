@@ -2111,8 +2111,10 @@ ${AAMARK_SCRIPT}
   // they expand outward to final state. Skippable on user input.
   const ENTRY_DURATION = 1800;
   const ENTRY_THEME_STAGGER = 16; // ms per theme — small + near-simultaneous
+  const DRIFT_FADE = 1500; // ms ramp-in for ambient drift amplitudes after entry
   const entryStartTime = performance.now() + 250;
   let entryComplete = false;
+  let driftStartTime = null; // captured on first drift frame; gates the amplitude ramp
 
   // Hash-shuffle theme entry delays so it doesn't read as clockwise sweep
   THEMES.forEach((t, i) => {
@@ -2206,6 +2208,11 @@ ${AAMARK_SCRIPT}
       bgRoot.setAttribute('transform', scaleAroundCenter(s));
       bgRoot.style.opacity = (dfEased * 0.85).toFixed(3);
 
+      // Cross-edges fade in with deep-field (per-frame, replaces former 0→1 snap
+      // at entry-complete which produced a visible jerk). Ramps from 0 to full
+      // alongside deep-field/bg so the seam between entry and drift disappears.
+      crossEdgeRefs.forEach(ref => { ref.path.style.opacity = dfEased.toFixed(3); });
+
       // Per-theme entry: travel from (CX, CY) to base position
       let allDone = true;
       THEMES.forEach((th, i) => {
@@ -2292,11 +2299,20 @@ ${AAMARK_SCRIPT}
     parallaxY += (parallaxTargetY - parallaxY) * 0.06;
     bgGroup.setAttribute('transform', 'translate(' + parallaxX.toFixed(2) + ' ' + parallaxY.toFixed(2) + ')');
 
+    // Drift amplitude ramp-in: themes were at rest at end of entry. The Lissajous
+    // sin/cos terms have arbitrary phase (px/py per theme), so without a ramp
+    // the displacement jumps from 0 to a non-zero value on the first drift frame
+    // — the visible "jerk" between big-bang end and ambient drift. Smoothstep
+    // 0→1 over DRIFT_FADE ms kills the seam.
+    if (driftStartTime === null) driftStartTime = now;
+    const driftFadeT = Math.min((now - driftStartTime) / DRIFT_FADE, 1);
+    const driftFade = driftFadeT * driftFadeT * (3 - 2 * driftFadeT); // smoothstep
+
     // Update theme positions + group transforms
     THEMES.forEach((th, i) => {
       const d = themeDrift[i];
-      const dx = Math.sin(t * d.fx * 2 * Math.PI + d.px) * d.ax;
-      const dy = Math.cos(t * d.fy * 2 * Math.PI + d.py) * d.ay;
+      const dx = Math.sin(t * d.fx * 2 * Math.PI + d.px) * d.ax * driftFade;
+      const dy = Math.cos(t * d.fy * 2 * Math.PI + d.py) * d.ay * driftFade;
       const x = th.x + dx;
       const y = th.y + dy;
       themeCurPos[i].x = x;
