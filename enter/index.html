@@ -1439,7 +1439,21 @@ function generateFallbackCards(prompt, answer) {
   const p = prompt.toLowerCase();
   const cards = [];
 
-  if (p.match(/hire|recruit|available|opportunit|contact|reach|connect|get in touch|message|talk to|chat with|linkedin|book.*(call|chat|meeting)/)) {
+  // Specific-channel asks — surface that channel as the priority card.
+  // Order matters: most specific first.
+  if (p.match(/\byoutube\b|\byt\b|\bvideos?\b|channel/)) {
+    cards.push({ title:'YouTube channel', desc:"Talks, demos, and project walkthroughs.", url:'https://www.youtube.com/@agam_arora', type:'external', icon:'ic-link', priority:true });
+    cards.push({ title:'See his LinkedIn', desc:"Posts, articles, and work history.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
+    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
+  } else if (p.match(/\bgithub\b|\bgh\b|\brepo\b|\bcode\b|open\s*source/)) {
+    cards.push({ title:'GitHub profile', desc:"Open source projects, experiments, and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github', priority:true });
+    cards.push({ title:'Browse the lab', desc:"Curated project pages with demos and writeups.", url:'/lab', icon:'ic-flask' });
+    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
+  } else if (p.match(/\blinkedin\b|\bli\b/)) {
+    cards.push({ title:'See his LinkedIn', desc:"Full work history, posts, and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link', priority:true });
+    cards.push({ title:'Book a 15-min chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' });
+    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
+  } else if (p.match(/hire|recruit|available|opportunit|contact|reach|connect|get in touch|message|talk to|chat with|book.*(call|chat|meeting)/)) {
     cards.push({ title:'Book a 15-min chat', desc:"Not searching but always reads a good message. Fastest path in.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar', priority:true });
     cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
     cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
