@@ -19,8 +19,18 @@ These amendments override or refine the implementation hints in §"Architecture"
 - **SSE:** **single LLM call** with structured output `{trace, answer, cards}`. Server emits SSE events with the existing client-side stagger animation per §5. **No reconnect protocol** — disconnect = client offers manual retry. Server **buffers first 50 chars** before flushing tokens for clean mid-stream provider failover.
 - **Wiki retrieval:** plain-text section content bundled at build time into `netlify/functions/lib/wiki-extracts.json`. Function imports at module init. No HTTP fetch, no LRU cache, no race dedup.
 - **Abuse defense:** Tier 0 + Tier 1 only (Tier 2 spend caps DROPPED). Browser-side throttle 1 q / 2s soft. Per-IP server bucket 60 q/h sliding + burst 5/10s. Two Upstash projects (primary + backup) + module-memory fallback.
-- **Eval gate:** 23/23 scenarios on Groq path. Mistral path NOT tested in eval (risk noted for prod monitoring).
-- **Test runner:** `node --test` builtin. New `npm test` script.
+- **Eval gate:** 23 + 3-4 multi-turn scenarios on Groq path, driven through real `/enter` UI in headed gstack browser per `phase-d-dev-workflow.md`. Visual asserts per scenario (screenshot, DOM dump, trace lines visible, exactly 1 priority card with gold stripe, no banned LLM-isms in rendered text, mobile breakpoint OK). Mistral path NOT tested in eval (risk noted for prod monitoring).
+- **Test runner:** `node --test` builtin for unit tests. eval-prompt.mjs drives gstack browser for end-to-end.
+
+## CEO scope expansion amendments (2026-04-27, post D-1)
+
+Source: `~/.gstack/projects/agamarora-agamarora/ceo-plans/2026-04-27-phase-d-expansion.md` (EXPANSION mode taste-pass, 6/6 accepted). Decisions 13-15 in `phase-d-decisions-2026-04-27.md`.
+
+- **Visual contract:** Variant A (CONSOLE) baseline + cherry-pick Variant D's gold pill-chip trace compression. Variant B + D's artifact-canvas pane skipped (Phase 1.5+ if earns place). Locked HTML mockup ships at `enter/v3-mockup.html` BEFORE D-7 implementation.
+- **KG edges at runtime:** synthesis intent retrieves edges from `wiki-kg-edges.json` (subset of `kg.json`: `supersedes`, `contradicts`, `builds_on`, `tension-with` edges, ~5-10KB) and injects 5-10 relevant edges (~500 tokens) into DYNAMIC prompt section. Trace verb `→ pulled edges(agent-first→supersedes, 6) 8ms ✓` reflects real retrieval.
+- **Trace becomes honest:** §5 latency numbers and args are NO LONGER seeded random. Server-side logging of actual theme slugs retrieved, char counts, real wall-clock ms. Few-shot examples in stable system prompt show real-shape trace lines so model emits them with real values from logs.
+- **Synthesis confidence retry:** if `intent === 'synthesis'` AND `answer.length < 80`, fire ONE expand continuation in same handler. Absorbed in 50-char SSE buffer window so user sees no extra latency. ~20 LOC bounded path.
+- **Empty state warm-up sequence:** D-7 implements full §6 spec (6-step transition: warm dims → opening message fades → default cards stagger → trace appears) plus `agent.agam · ready` status bar pulsing dot + 5-string rotating placeholder hints (200ms fade).
 
 ---
 

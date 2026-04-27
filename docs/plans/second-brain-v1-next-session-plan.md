@@ -18,6 +18,8 @@ Auto mode: yes. Caveman mode: yes (fragments OK; code/commits stay normal). Suba
 
 **Dev + eval workflow LOCKED 2026-04-27:** all `/enter` work uses `docs/plans/phase-d-dev-workflow.md`. netlify dev (port 8888) + gstack browser headed + drive real `/enter` UI for every change AND every eval scenario. No function-only smoke as the sole signal — D-1 shipped a streaming hang that only end-to-end UI testing surfaced.
 
+**CEO scope expansion LOCKED 2026-04-27 (post D-1):** /plan-ceo-review surfaced two gaps — UI plan undershot the variant exploration; KG was a publishing artifact not agent memory at runtime. EXPANSION mode taste-pass: 6/6 proposals accepted. New tasks D-7a (variant land + mockup), D-3a (KG edge runtime injection), D-9a (synthesis confidence retry). D-4 + D-6 + D-7 scopes raised. CEO plan: `~/.gstack/projects/agamarora-agamarora/ceo-plans/2026-04-27-phase-d-expansion.md`. Total CC time delta: +3-4hr Phase D. **Decisions 13-15** appended below to `phase-d-decisions-2026-04-27.md`.
+
 ---
 
 ## Resume context
@@ -90,13 +92,16 @@ Pick the first QUEUED row. Mark DONE after commit + push. Bump CHECKPOINT in STA
 | 13b | Graph hover/spokes refinement + sitemap refresh + build-clobber lesson | ✅ DONE | — | CP-33b |
 | 13c | Phase D decisions taste-pass + spec amendments | ✅ DONE | — | CP-33c |
 | 14a | **D-0 — wiki extracts build script (NEW)** | ✅ DONE (71fc6ed) | — | (under CP-34) |
-| 14 | D-1 — LLM pool + classifier + pre-route + provider routing | ✅ DONE (pending push) | — | |
+| 14 | D-1 — LLM pool + classifier + pre-route + provider routing | ✅ DONE (2b82f9d, fix 45fc06b) | — | |
+| 14b | **D-7a — variant land + locked visual mockup at `enter/v3-mockup.html` (NEW per CEO review 2026-04-27)** | QUEUED — DO FIRST | 45 min | blocks D-7 |
 | 15 | D-2 — system prompt v3 with cache breakpoint | QUEUED | 30 min | |
-| 16 | D-3 — wiki extracts integration (bundled, no fetch) | QUEUED | 15 min | |
-| 17 | D-4 — SSE encoder + 1-call structured output | QUEUED | 45 min | |
+| 15a | **D-3a — KG edge bundle build + retrieval injection (NEW per CEO review)** | QUEUED | 60 min | precedes D-3 |
+| 16 | D-3 — wiki extracts integration (now incl. edges from 15a) | QUEUED | 15 min | |
+| 17 | D-4 — SSE encoder + 1-call structured output + **real trace from logs** | QUEUED | 60 min | scope-up per CEO P4 |
 | 18 | D-5 — abuse defense Tier 0-1 (Tier 2 dropped) | QUEUED | 60-75 min | |
-| 19 | D-6 — eval harness 23 scenarios (Groq-only gate) | QUEUED | 60 min | |
-| 20 | D-7 — `/enter` UI v3 SSE + browser throttle + retry banner | QUEUED | 60 min | |
+| 19 | D-6 — eval harness 23 + **3-4 multi-turn + visual asserts in headed gstack browser** | QUEUED | 90 min | scope-up per CEO P6 |
+| 20 | D-7 — `/enter` UI v3 — **full visual contract from D-7a mockup** + SSE handlers + throttle + retry banner | QUEUED | 120 min | scope-up per CEO P1 |
+| 20a | **D-9a — synthesis confidence retry (NEW per CEO review, bounded 1 retry)** | QUEUED | 30 min | precedes D-9 |
 | 21 | ~~D-8 multi-key Groq rotation~~ — DROPPED, folded into D-1 | DROPPED | — | |
 | 22 | D-9 — `/lab/second-brain/` live-demo section | QUEUED | 30 min | bump to CP-34 (Phase D ready) |
 | 23 | E — launch sequence | QUEUED | 2-4 hr | bump to CP-35 = LAUNCHED |

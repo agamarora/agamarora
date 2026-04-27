@@ -344,8 +344,14 @@ Shared aa. mark (bottom-right)
    - STABLE (cacheable): persona + voice spec + trace verbs + card schema + site.json
                        + KG_THEMES_SUMMARY + 5-10 few-shot examples
    - DYNAMIC: conversation (last 6 turns) + retrieved wiki extracts (1-3 themes)
+                                          + retrieved KG edges (synthesis intent only:
+                                            5-10 supersedes/contradicts/builds_on/tension-with edges
+                                            from bundled wiki-kg-edges.json, ~500 tokens)
                                           + current query
    Wiki extracts come from bundled wiki-extracts.json (no HTTP fetch).
+   KG edges come from bundled wiki-kg-edges.json (built by scripts/build-wiki-extracts.mjs).
+   This is the runtime KG traversal added per CEO review 2026-04-27 — closes the
+   "KG as publishing artifact only" gap.
 
 7. Single LLM call via lib/llm-pool.mjs invoke() — JSON mode, structured output:
    { trace: [{verb, args, latencyMs}], answer: string, cards: [{slug, type, priority?}] }

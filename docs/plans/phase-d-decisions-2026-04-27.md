@@ -40,6 +40,25 @@
 - D7 picked B over recommended A → eval cost bounded but Mistral fidelity unverified.
 - All other decisions match the engineering recommendation.
 
+## CEO review extension — Decisions 13-15 (2026-04-27, post D-1)
+
+| # | Decision | Choice | Notes |
+|---|---|---|---|
+| 13 | KG edges at runtime | A — emit `wiki-kg-edges.json` bundle + inject on synthesis intent | Closes biggest agentic-reality gap below tool-calling; ~5-10KB additional bundle; trace verb `pulled supersedes edges` becomes real |
+| 14 | Variant land for /enter v3 UI | A — Variant A (CONSOLE) baseline + cherry-pick Variant D's gold pill-chip trace compression | Skips Variant B (too editorial) and Variant D's full artifact-canvas pane (Phase 1.5+ if it earns its place) |
+| 15 | Synthesis confidence retry | A — bounded 1 retry when synthesis answer < 80 chars | Bounds visible failure mode; not a full agent loop; absorbed in 50-char SSE buffer window so user sees no extra latency |
+
+**CEO plan reference:** `~/.gstack/projects/agamarora-agamarora/ceo-plans/2026-04-27-phase-d-expansion.md`
+
+These three decisions add NEW tasks to Phase D:
+- **D-7a** (Task 14b) — variant land + locked visual mockup (blocks D-7)
+- **D-3a** (Task 15a) — KG edge bundle + retrieval injection (precedes D-3)
+- **D-9a** (Task 20a) — synthesis confidence retry
+
+Plus scope-up of existing tasks: D-4 trace honest, D-6 multi-turn + visual asserts, D-7 full visual contract.
+
+Total CC time delta: +3-4hr over original Phase D estimate.
+
 ---
 
 ## How to use this doc
