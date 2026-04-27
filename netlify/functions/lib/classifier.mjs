@@ -22,6 +22,11 @@ import { THEME_SLUGS, filterValidSlugs } from './themes-enum.mjs';
 // ---- preRoute ------------------------------------------------------------
 
 const GREETING_RE = /^(hi|hey|hello|sup|yo|test|hola|namaste|good (morning|afternoon|evening))[\s!.?]*$/i;
+// Conversational / social prompts that look long enough to bypass the
+// 3-word short-circuit but are still chatter, not questions. These should
+// route to lookup with empty themes so the LLM replies conversationally
+// instead of being classified as deflect/off-topic.
+const CONVERSATIONAL_RE = /^(say (hi|hello)|at least say (hi|hello)|talk to me|are you (there|alive|real)|you (there|tell me|alive)|let'?s chat|anyone (there|here)|hello back|what'?s up|what do you (think|do)|how('?s| is) it going|anything\??$|nothing\??$)/i;
 const DEFLECT_RES = [
   /your\s+(family|wife|girlfriend|kids|children|parents)/i,
   /(political|politics|religion|religious|caste)/i,
@@ -57,7 +62,7 @@ export function preRoute(message) {
   if (typeof message !== 'string') return null;
   const trimmed = message.trim();
 
-  if (!trimmed || GREETING_RE.test(trimmed) || trimmed.split(/\s+/).length <= 3) {
+  if (!trimmed || GREETING_RE.test(trimmed) || CONVERSATIONAL_RE.test(trimmed) || trimmed.split(/\s+/).length <= 3) {
     return {
       type: 'lookup',
       confidence: 1,
@@ -109,9 +114,11 @@ export function preRoute(message) {
 const CLASSIFIER_SYSTEM = `You classify a user query against a fixed set of routing options. Return JSON only.
 
 Routing options:
-  type: "lookup"     — bio/role/credentials/dates/numbers/single facts
+  type: "lookup"     — bio/role/credentials/dates/numbers/single facts; ALSO greetings, small talk, vague/conversational prompts ("you tell me", "say hi", "talk to me", "what's up", "are you there", "hello back").
   type: "synthesis"  — opinion, belief, theme, multi-source synthesis
-  type: "deflect"    — personal life, politics, religion, off-topic
+  type: "deflect"    — ONLY: family/relationship details not on the resume, salary specifics, home address, politics, religion, future predictions, or genuinely off-topic noise (sports scores, recipes, etc.)
+
+GREETINGS AND CONVERSATIONAL PROMPTS ARE NEVER DEFLECT. "hello", "say hi", "you there", "talk to me", "hey", "you tell me", "what do you think", "let's chat", "anything", "anyone there" → type:"lookup", themes_likely:[]. The agent will reply conversationally.
 
 CONTACT queries are NOT deflect. "how do I reach him", "can I connect", "email", "linkedin", "book a call", "hire him", "work with him" → type:"synthesis" with themes_likely:["contact"]. The agent has the channel list and will surface the right cards. Only deflect personal life, politics, religion, or genuinely off-topic noise.
 

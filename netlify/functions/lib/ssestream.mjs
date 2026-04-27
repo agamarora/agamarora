@@ -154,8 +154,8 @@ function resolveTimingKey(verb, args) {
 export function buildDeflectStream(text) {
   return new ReadableStream({
     start(controller) {
-      controller.enqueue(sseEvent('trace', { verb: 'parsed', args: 'intent(off-topic)', ms: 1, pill_ms: 600 }));
-      controller.enqueue(sseEvent('trace', { verb: 'deflected', args: 'personal', ms: 1, pill_ms: 600 }));
+      controller.enqueue(sseEvent('trace', { verb: 'parsed', args: 'intent(off-topic)', ms: syntheticDisplayMs(), pill_ms: 600 }));
+      controller.enqueue(sseEvent('trace', { verb: 'deflected', args: 'personal', ms: syntheticDisplayMs(), pill_ms: 600 }));
       const chunks = tokenChunks(text);
       for (const chunk of chunks) {
         controller.enqueue(sseEvent('token', { text: chunk }));
