@@ -19,7 +19,7 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 **Phase A pivot 2026-04-24:** Original spec §12 required Agam full-read. Pivoted because synthesizer = source author (Agam wrote the corpus, doesn't need to "learn" it). Replaced with Task #2a (CC subagent fan-out, autonomous, 1-2hr) + Task #2b (Agam taste-pass, 60-90min, irreplaceable). See spec §12 revised + architecture doc §1.
 
-**Next session pickup (READ THIS):** Open `docs/plans/second-brain-v1-phase-a/STATUS.md` first. It's the git-tracked single source of truth for Phase A round-by-round state, updated + pushed after every milestone. Tells you exactly which round to spawn next, what binding taste-calls to apply, and how to resume across machines/sessions.
+**Next session pickup (READ THIS):** Open `docs/plans/BASELINE-2026-04-26.md` first — the "Session update 2026-04-27" section at the top tells you exactly what's live, what shipped most recently (DRY chrome refactor, italics fix, lab perf, QA pass), and which task to pick up next. For Phase A history, see `docs/plans/second-brain-v1-phase-a/STATUS.md` (also git-tracked, single source of truth for synthesis round-by-round state).
 
 
 ## Subagent model policy (HARD RULE)
