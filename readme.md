@@ -27,12 +27,14 @@ Right now I'm building enterprise AI at [AIonOS](https://aionos.io), multi-agent
 
 ### This website
 
-- **[agamarora.com](https://agamarora.com)**, Built in public. Vanilla HTML/CSS/JS, Satoshi + JetBrains Mono, Groq-powered AI terminal. No framework, no build step. [Enter the terminal](https://agamarora.com/enter).
+- **[agamarora.com](https://agamarora.com)**, Built in public. Vanilla HTML/CSS/JS, Satoshi + JetBrains Mono, Groq + Mistral-powered AI terminal. No framework, no build step.
+- **[/enter](https://agamarora.com/enter)**, second-brain v1 — an agent that reads my own writing and answers questions about me. Twelve themes of authored content, a knowledge graph of 227 nodes and 224 edges, retrieval-injected synthesis, and a structured SSE trace so visitors can watch the agent classify, pull, and compose in real time. Two-tier provider pool (Groq → Mistral) with three keys each, one-call structured JSON output, sub-second confidence retry that fires before the first SSE flush, abuse defense (UA gate, atomic rate-limit, unicode injection filter), and a single dynamic prompt that ships with cache-friendly ordering. Built end-to-end in roughly 24 hours with Claude Code.
+- **[/wiki/graph](https://agamarora.com/wiki/graph)**, the constellation view. The whole second brain as an interactive star map: themes orbit a center node, beliefs cluster around their themes, and cross-edges trace tensions, refinements, and relationships across the corpus. Click a star to read; press play to watch big-bang.
 
 ## Links
 
 - [agamarora.com](https://agamarora.com)
-- [LinkedIn](https://linkedin.com/in/agamarora)
+- [LinkedIn](https://linkedin.com/in/agam-arora)
 - [Resume](resume.md)
 
 ---
