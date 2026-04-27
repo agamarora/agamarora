@@ -10,6 +10,10 @@ source: voice-spec.md §9 + §3 signatures + §2 banned LLM-isms
 
 # How I write
 
+## What does Agam Arora's voice sound like?
+
+Four modes, one disposition. **The take** — bold declarative opener, structured body, zinger close. **The four-word reply** — Hindi or English compressed comment. **The playbook** — when someone I respect asks how, I hand over the full stack with no gatekeeping. **The framework drop** — thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.
+
 ## The take
 
 I write when I have something to say.

@@ -12,6 +12,10 @@ source: voice-spec.md §3 signatures + voice-samples.md verbatim
 
 *Signature lines from twelve years of posts. Curated, not exhaustive. Each line is verbatim. The dates anchor the era.*
 
+## What are Agam Arora's signature lines?
+
+Twelve years of LinkedIn posts compressed to roughly seventy verbatim lines. Each one anchors a date and an era. The manifesto theses lead the page — *"We need to kill prompting,"* *"Context > Prompt. Spec > Sprint. Taste > Execution,"* *"The model wasn't broken, the agent layer was."* Then anti-hype, PM craft, the AI PM lines from 2023 that still hold, enterprise reality, career and learning, aphorisms, closers. The agent at /enter quotes them verbatim when the question warrants it.
+
 ## Theses (the manifesto lines)
 
 > **We need to kill prompting.** Most of you are wasting your time getting prompt frameworks. (2024-12-24)
