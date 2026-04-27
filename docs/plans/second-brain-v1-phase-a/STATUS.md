@@ -2,7 +2,7 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-26 — **CHECKPOINT 31 — C-graph IMPLEMENTATION COMPLETE + design pass + text audit. Working tree clean. Pushed `4dbe07f`. Next: C-final (Phase C close) → AEO/SEO gate → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
+Last updated: 2026-04-27 — **CHECKPOINT 32 — Phase C COMPLETE. C-final /design-review + /review passes done (0 HIGH, 0 CRITICAL, MEDIUM in `docs/plans/c-final-followups.md`). Working tree clean. Commits `d48f8ad` (CP-1) + `2abf584` (CP-2). Next: AEO/SEO gate (BINDING before Phase D) → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
 
 ---
 
@@ -10,7 +10,7 @@ Last updated: 2026-04-26 — **CHECKPOINT 31 — C-graph IMPLEMENTATION COMPLETE
 
 ### Where we are
 
-Phase A (synthesis) ✅ complete. Phase B (initial build) ✅ complete. Phase C (reauthor + graph viz) is 5 of 6 sub-tasks done. Only **C-final** remains within Phase C. After C-final: a binding **AEO/SEO gate**, then **Phase D** (/enter v3 + groqHandler upgrade), then **Phase E** (launch). Working tree clean. All commits pushed to `origin/main`.
+Phase A (synthesis) ✅ complete. Phase B (initial build) ✅ complete. Phase C (reauthor + graph viz + final review) ✅ COMPLETE 2026-04-27 at CHECKPOINT 32. Next: a binding **AEO/SEO gate**, then **Phase D** (/enter v3 + groqHandler upgrade), then **Phase E** (launch). Working tree clean. All commits pushed to `origin/main`.
 
 ### What's live (https://agamarora.com)
 
@@ -272,7 +272,7 @@ This is a HARD GATE per user directive 2026-04-26: must complete before AI plumb
 | C-voice-beliefs | DONE 2026-04-26 (19/19 ✅) | 19 beliefs reauthored as D6.1 principle-cards. AEO/SEO surface in place. | n/a |
 | C-graph design consultation | DONE 2026-04-26 ✅ | DESIGN.md ## Constellation graph (binding spec) + locked v6 preview at `~/.gstack/projects/agamarora-agamarora/designs/c-graph-20260426/preview.html` + 13 §D2 invariants | Implementation work begins at CP-1. |
 | C-graph CP-1..CP-7 | DONE 2026-04-26 ✅ | wiki/graph/index.html constellation viz fully implemented per DESIGN.md ## Constellation graph spec. CP-1 skeleton + CP-2 deep-field (227 kg nodes + 578 corpus stars + proximity mesh) + CP-3 cross-theme interlinkages + CP-4 motion (twinkle / Lissajous / signal pulses) + CP-5 big-bang entry + parallax bg + CP-6 pan/zoom/fullscreen/mobile + CP-7 a11y + layered visibility on hover. | ~75KB single self-contained HTML, no external CDN. |
-| C-final | QUEUED | /design-review + /review pass + STATUS CP31 | ~1-2hr. |
+| C-final | DONE 2026-04-27 ✅ | /design-review (CP-1 `d48f8ad`): 0 HIGH, 4 MEDIUM, 3 POLISH across 9 wiki archetypes. /review (CP-2 `2abf584`): 0 CRITICAL, 3 MEDIUM, 5 LOW on build pipeline. `npm run build` verified. STATUS CP-32 bump (CP-3). | MEDIUM/POLISH items in `docs/plans/c-final-followups.md`. Local reports in `~/.gstack/projects/agamarora-agamarora/reviews/`. |
 
 **Total remaining Phase C effort: ~17-25hr across multiple sessions.**
 
