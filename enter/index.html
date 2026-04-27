@@ -609,11 +609,17 @@
      rows (graph/lab/resume), no wordmark/tagline/warm-trace, fixed
      rounded input bar at bottom. */
   @media (max-width:760px) {
+    /* Tighter scroll cushion than desktop. Desktop bar ~144px tall;
+       mobile bar ~64px. Keeping 240px on mobile means scrollIntoView
+       can't push the last cards above the input bar on a short vv,
+       so they hide behind it. 96px = input bar + breathing room. */
+    html { scroll-padding-bottom:96px; }
+
     main.terminal {
       max-width:none;
       padding:calc(clamp(52px,6vw,64px) + var(--space-4))
               var(--space-5)
-              calc(80px + env(safe-area-inset-bottom, 0px) + var(--space-5));
+              calc(96px + env(safe-area-inset-bottom, 0px));
       gap:var(--space-6);
       min-height:100dvh;
     }
