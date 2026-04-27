@@ -390,12 +390,7 @@
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
-    /* Asymmetric padding: more breath at the top so cards feel composed
-       rather than wrapped. Top --space-6 (24px), sides + bottom --space-5
-       (16px). Constant top padding matters because the card title is
-       single-line clamped (see .card .card-title); without title overflow
-       eating into the breath, the top is the most predictable surface. */
-    padding:var(--space-6) var(--space-5) var(--space-5);
+    padding:var(--space-5);
     text-decoration:none;
     color:var(--text);
     display:flex;
@@ -419,32 +414,18 @@
     opacity:0.9;
   }
   .card.priority .card-icon { opacity:1; }
-  /* Title and description are length-clamped so every card is the same
-     height regardless of copy length. Without this, longer descs pushed
-     the arrow row down and uneven heights read as broken layout. */
   .card .card-title {
     font-family:var(--sans);
     font-size:0.95rem;
     font-weight:600;
     color:var(--text);
     line-height:1.3;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
   }
   .card .card-desc {
     font-family:var(--sans);
     font-size:0.82rem;
     color:var(--text-dim);
     line-height:1.4;
-    /* Exactly 2 lines, ellipsis on overflow. min-height pins the slot
-       so cards with shorter descs still allocate the same vertical
-       space — uniform card height. */
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-    min-height:calc(0.82rem * 1.4 * 2);
   }
   .card .card-arrow {
     font-family:var(--mono);
@@ -839,13 +820,13 @@
       <a class="card priority" href="/wiki/graph" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-route"/></svg>
         <div class="card-title">Explore the constellation</div>
-        <div class="card-desc">His knowledge atlas as a graph: 10 themes, edges between beliefs, projects, evidence. Best way in.</div>
+        <div class="card-desc">His knowledge atlas as a graph. Best way in.</div>
         <div class="card-arrow">&rarr; /wiki/graph</div>
       </a>
       <a class="card" href="/lab" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
         <div class="card-title">Browse his lab</div>
-        <div class="card-desc">Four projects across voice, RAG, agentic systems, and open-source tooling. Agent-first thesis throughout.</div>
+        <div class="card-desc">Four projects. Voice, RAG, agentic, open-source.</div>
         <div class="card-arrow">&rarr; /lab</div>
       </a>
       <a class="card" id="rotation-card" href="/resume" role="listitem">
@@ -1763,16 +1744,16 @@ startHintRotation();
   if (!slot) return;
   const pool = [
     { href:'/resume', icon:'#ic-user', title:'See his background',
-      desc:'12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.',
+      desc:'12 years, 6 companies, 5 industries.',
       arrow:'&rarr; /resume', external:false },
     { href:'https://linkedin.com/in/agam-arora', icon:'#ic-link', title:'See his LinkedIn',
-      desc:'Full work history and endorsements. The long form of the resume.',
+      desc:'Long form of the resume.',
       arrow:'&#8599; linkedin', external:true },
     { href:'https://github.com/agamarora', icon:'#ic-code', title:'See his GitHub',
-      desc:'Open-source builds, weekend experiments, the AI resume template, this site.',
+      desc:'Open-source builds and weekend experiments.',
       arrow:'&#8599; github', external:true },
     { href:'https://calendly.com/agamarora/chat', icon:'#ic-calendar', title:'Book a 15-min chat',
-      desc:'Not searching but always reads a good message. Fastest path in.',
+      desc:'Fastest path to a real conversation.',
       arrow:'&#8599; calendly', external:true },
   ];
   const pick = pool[Math.floor(Math.random() * pool.length)];
