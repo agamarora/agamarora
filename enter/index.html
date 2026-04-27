@@ -379,43 +379,53 @@
   }
   .empty-state .cards.show { opacity:1; transform:translateY(0); }
 
+  /* Card aesthetics — editorial-dark per DESIGN.md.
+     - Border-radius dropped from --radius-lg (12px, bubbly) to --radius-md
+       (8px, editorial). Aligns with DESIGN.md AI-slop rule #5.
+     - No left-border accent stripe (DESIGN.md AI-slop rule #8 forbids).
+     - No gold glow box-shadow (decorative shadow, off-aesthetic).
+     - Priority card differentiates via title color + accent border-color
+       on full perimeter at 0.4 opacity, NOT a stripe or glow.
+     - Title weight 500 (Satoshi medium) not 600 (SaaS-bold). */
   .card {
     flex:0 0 280px;
     scroll-snap-align:start;
     background:var(--surface);
     border:1px solid var(--border);
-    border-radius:var(--radius-lg);
+    border-radius:var(--radius-md);
     padding:var(--space-5);
     text-decoration:none;
     color:var(--text);
     display:flex;
     flex-direction:column;
     gap:var(--space-3);
-    transition:border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    transition:border-color 0.2s, transform 0.2s;
     position:relative;
     overflow:hidden;
   }
-  .card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+  .card:hover { border-color:var(--border-hover); transform:translateY(-1px); }
   .card.priority {
-    border-left:3px solid var(--accent);
-    box-shadow:0 0 24px rgba(229,165,75,0.08);
+    border-color:rgba(229,165,75,0.4);
   }
-  .card.priority:hover { box-shadow:0 0 36px rgba(229,165,75,0.16); }
+  .card.priority:hover {
+    border-color:rgba(229,165,75,0.7);
+  }
   .card .card-icon {
-    width:26px; height:26px;
+    width:22px; height:22px;
     color:var(--accent);
     fill:currentColor;
     margin-bottom:var(--space-2);
-    opacity:0.9;
+    opacity:0.85;
   }
   .card.priority .card-icon { opacity:1; }
   .card .card-title {
     font-family:var(--sans);
     font-size:0.95rem;
-    font-weight:600;
+    font-weight:500;
     color:var(--text);
     line-height:1.3;
   }
+  .card.priority .card-title { color:var(--accent); }
   .card .card-desc {
     font-family:var(--sans);
     font-size:0.82rem;
@@ -583,10 +593,29 @@
      Mobile breakpoint < 760px
      ========================================================= */
   @media (max-width:760px) {
+    /* MOBILE LAYOUT MODEL.
+       Lock html + body to the visual viewport so the page never scrolls
+       past the soft keyboard. main.terminal becomes the scroll container;
+       the input bar is a flex child (NOT position:fixed) so it always sits
+       flush above the keyboard without needing visualViewport offset math.
+       The visualViewport listener writes --vv-height as the keyboard
+       opens / closes; the html lock picks it up and the layout reflows
+       once. No per-keystroke jitter, no input bar drifting through cards. */
+    html, body {
+      height:var(--vv-height, 100dvh);
+      overflow:hidden;
+    }
+    body {
+      display:flex;
+      flex-direction:column;
+    }
     main.terminal {
-      padding:calc(clamp(52px,6vw,64px) + var(--space-5))
+      flex:1 1 auto;
+      min-height:0;
+      overflow-y:auto;
+      padding:calc(clamp(52px,6vw,64px) + var(--space-4))
               var(--space-5)
-              calc(var(--space-9) + 120px);
+              var(--space-5);
       gap:var(--space-6);
     }
     .status-bar { font-size:0.7rem; }
@@ -641,14 +670,46 @@
       flex-shrink:0;
       font-size:0.7rem;
     }
-    .card.priority { border-left-width:2px; }
+    /* Priority differentiation on mobile is the title-accent color,
+       same as desktop. No left-border stripe (DESIGN.md AI-slop rule). */
     .card:hover { transform:none; } /* no lift on touch — looks janky on tap */
-    .input-bar { padding:var(--space-4) var(--space-5) calc(var(--space-5) + 4px); }
+    /* Input bar joins the flex flow on mobile — no longer position:fixed.
+       Sits as the last flex child of body, always at the visual-viewport
+       bottom because body height = vv-height. */
+    .input-bar {
+      position:static;
+      flex-shrink:0;
+      padding:var(--space-4) var(--space-5) calc(var(--space-4) + 4px);
+      transition:none;
+    }
     .input-bar .input-wrap { padding:var(--space-3) var(--space-4); }
     .input-bar .prompt, .input-bar input { font-size:0.88rem; }
-    /* aa-mark: raise above input bar on mobile */
-    .aa-mark { bottom:calc(72px + 12px); right:12px; }
-    .aa-mark svg { width:36px; }
+    /* aa-mark hidden on mobile — its visual job is brand-anchor on a
+       full page; on a vv-locked layout it competes with the input bar
+       for the bottom-right anchor. Brand still present in wordmark. */
+    .aa-mark { display:none; }
+    /* Empty-state mobile tightening. min-height:50vh + center justify
+       worked on desktop where there was room for breathing; on a 360px
+       phone with keyboard open it pushed everything off screen. Stack
+       from top, smaller wordmark with a stronger floor (40px reads as
+       brand mark, 32px reads as a typo), warm-trace hidden (status-bar
+       at top already says "agent.agam · ready" — redundant). */
+    .empty-state {
+      min-height:auto;
+      justify-content:flex-start;
+      gap:var(--space-5);
+    }
+    .empty-state .wordmark {
+      font-size:clamp(2.5rem, 11vw, 4rem);
+      margin:var(--space-3) 0 0;
+    }
+    .empty-state .tagline {
+      font-size:0.85rem;
+      margin-top:0;
+    }
+    .empty-state .warm-trace { display:none; }
+    .empty-state .opening { font-size:1rem; }
+    .empty-state .cards { width:100%; }
     /* hide keyboard bg on mobile */
     .kb-scene { display:none; }
     .kb-fade {
@@ -1346,8 +1407,12 @@ function generateFallbackTrace(prompt, turnId) {
 }
 
 function generateFallbackCards(prompt, answer) {
-  // Generate contextually relevant cards from answer content
-  const p = (prompt + ' ' + answer).toLowerCase();
+  // Generate contextually relevant cards from PROMPT content only.
+  // Earlier we joined prompt + answer, but that surfaced voice/shararat
+  // cards on every reply because the canonical bio mentions "voice AI
+  // platform / 4M calls" in nearly every answer. Cards should reflect
+  // what the user asked about, not what the answer happened to namedrop.
+  const p = prompt.toLowerCase();
   const cards = [];
 
   if (p.match(/hire|recruit|available|opportunit/)) {
@@ -1712,51 +1777,29 @@ startHintRotation();
 // Don't auto-focus on mobile — triggers soft keyboard unexpectedly
 if (!isMobile()) inputEl.focus();
 
-// Mobile soft-keyboard handling.
+// Mobile soft-keyboard handling — vv-lock model.
 //
-// Problem: position:fixed; bottom:0 sticks to the LAYOUT viewport. When the
-// soft keyboard opens, the layout viewport is unchanged but the VISUAL
-// viewport shrinks — the input bar gets pushed off screen, hidden behind
-// the keyboard. iOS Safari + Android Chrome both behave this way.
-//
-// Fix: use visualViewport to compute the gap between layout-bottom and
-// visual-bottom, expose it as --vv-offset, and translate the input bar
-// up by that amount via bottom: var(--vv-offset). Also expose --vv-height
-// for any layout that wants to size to the visible viewport.
-//
-// The chat conversation is allowed to scroll naturally; auto-scrollIntoView
-// uses scroll-padding-bottom which stacks on top of the offset on mobile
-// so the latest turn stays visible above the keyboard.
+// CSS locks html/body height to var(--vv-height, 100dvh) on mobile. When
+// the soft keyboard opens, visualViewport.height shrinks; we mirror it
+// into --vv-height and the layout reflows once. main.terminal is the
+// scroll container; the input bar is the last flex child of body and
+// always sits at the visual-viewport bottom — no position:fixed, no
+// per-keystroke offset jitter, no scrollIntoView gymnastics.
 if (isMobile() && window.visualViewport) {
   const vv = window.visualViewport;
-  // Snap-threshold: ignore deltas under 60px. Android Chrome triggers
-  // visualViewport.resize on every keystroke (suggestion bar + IME
-  // micro-shifts), and animating the input bar around on each press
-  // looked like a bug. 60px is bigger than any chrome change but smaller
-  // than a real keyboard open / close. Only state transitions move the
-  // bar.
-  let lastOffset = 0;
   function onViewportChange() {
-    const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-    if (Math.abs(offset - lastOffset) < 60) return;
-    lastOffset = offset;
-    document.documentElement.style.setProperty('--vv-offset', offset + 'px');
     document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
-    // When keyboard opens / closes, scroll the latest turn into view so
-    // the streamed answer stays visible. Empty-state is NOT scrolled —
-    // auto-scrolling pushed the wordmark above the fold.
-    if (offset > 0) {
-      requestAnimationFrame(() => {
-        const last = document.querySelector('.turn:last-of-type');
-        if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
-      });
-    }
+    // After keyboard opens, scroll latest turn into view in the
+    // main.terminal container. Empty-state stays at top.
+    requestAnimationFrame(() => {
+      const last = document.querySelector('.turn:last-of-type');
+      if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
+    });
   }
   vv.addEventListener('resize', onViewportChange);
-  // Force a recalc on focus / blur so the bar tracks the keyboard even
-  // if the resize event already fired before the threshold check.
-  inputEl.addEventListener('focus', () => { lastOffset = -1; onViewportChange(); });
-  inputEl.addEventListener('blur', () => { lastOffset = -1; setTimeout(onViewportChange, 100); });
+  // iOS Safari sometimes misses the first resize on initial keyboard
+  // open; orientationchange + window.resize cover that case.
+  window.addEventListener('orientationchange', onViewportChange);
   onViewportChange();
 }
 

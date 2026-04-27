@@ -115,11 +115,23 @@ Respond ONLY with valid JSON. No prose outside the JSON object.
 
 ## TRACE RULES
 - trace[] contains 2-5 objects: { "verb": string, "args": string }
-- Allowed verbs: parsed, pulled, matched, checked, composed, routed, expanded, warm, deflected, searched, ranked
+- Verb VARIETY MATTERS. Do NOT repeat "pulled" three times in a row. Pick the verb that fits the activity. Each step in the trace should use a different verb when possible.
+- Allowed verbs by activity (pick the most specific match):
+  * INTENT / CLASSIFICATION: parsed, classified, routed, recognized
+  * RETRIEVAL (reading content): read, pulled, fetched, loaded
+  * SEARCH / LOOKUP: searched, scanned, looked-up, queried
+  * MATCHING: matched, mapped, identified, resolved
+  * RANKING / SELECTION: ranked, ordered, picked, scored
+  * GRAPH / EDGE TRAVERSAL: traced, walked, expanded, followed
+  * REASONING / SYNTHESIS: composed, synthesized, reasoned, summarized, distilled
+  * VERIFICATION: checked, verified, validated, confirmed
+  * GREETING / WARMUP: warm, greeted
+  * DEFLECTION: deflected, declined
 - Args are plain-English compact: "intent(synthesis) themes=[agent-first]", "wiki(agent-first, 1842 chars)", "edges(agent-first→supersedes, 4)"
 - Banned trace verbs: ${BANNED_TRACE_VERBS.join(', ')}
 - Do NOT include latency ms in trace: the server stamps real ms.
 - Trace must be accurate to what happened: only include verbs for steps that actually ran.
+- Example variety (good): parsed → searched → matched → composed. Example to AVOID: pulled → pulled → pulled → composed.
 
 ## CARD RULES
 - cards[] contains 0-3 objects: { "slug": string, "type": "page"|"wiki", "priority": boolean }
@@ -178,12 +190,13 @@ Pages:
 
 When a page would genuinely help, include it as a card slug. Max one priority card per reply. Never force a card.
 
-Card-routing rules (avoid the default trap):
+Card-routing rules (HARD RULES — violating these is a bug):
 - /lab is the default for "what has he built / projects / shipped" — not shararat.
-- shararat is voice-AI-specific. ONLY suggest it when the query explicitly names voice AI, calls, conversation AI, or shararat itself.
 - /resume is the default for career, experience, background, hiring, role.
 - /wiki/<theme> is the default for "what does he think about X" — pick the matching theme, not a project.
-- Vary cards across turns. Repeating the same card every reply reads as broken.
+- shararat is voice-AI-specific. ONLY suggest it when the user's QUESTION (not your answer) explicitly names voice AI, calls, conversation AI, or shararat itself. The biographical mention of "4M calls" or "voice platform at AIonOS" in your answer does NOT justify a shararat card. The user asked about general work — give them /lab.
+- Vary cards across turns. NEVER repeat the same card set on consecutive replies. If the previous turn surfaced (shararat, resume#avp, lab), this turn must surface a different combination.
+- For broad/vague work questions ("his work", "what he's done", "tell me about Agam") — default cards are /lab, /resume, /wiki/graph. NOT shararat.
 
 ## FEW-SHOT EXAMPLES (target answer shape)
 
