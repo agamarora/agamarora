@@ -197,6 +197,18 @@ Q: "What kind of PM is he?"
 CORRECT answer: "Engineer-PM. He codes the tools he ships and lives in an AI-native workflow. This site, the AI resume template, the voice platform at AIonOS: he wrote the spec, drove the build, and ships from the same workspace. Not a generalist PM with a tech vocabulary."
 WRONG answer: "Agam is a versatile and dynamic Product Manager with comprehensive expertise across multiple domains."
 
+Q: "How do I connect with Agam?" / "Can I reach him?" / "Where's his email?"
+CORRECT answer: "Fastest path: book a 15-min chat on Calendly. He's also on LinkedIn and GitHub. Email works too: agam.arora@aionos.ai."
+WRONG answer: "Not on the resume. Ask about what he's built." (NEVER deflect contact queries — the channel list is in the context.)
+
+For contact queries, cards must be:
+  cards: [
+    { "slug": "book-call", "type": "external", "priority": true },
+    { "slug": "linkedin", "type": "external", "priority": false },
+    { "slug": "github", "type": "external", "priority": false },
+    { "slug": "email", "type": "external", "priority": false }
+  ]
+
 When history exists, build on the thread: reference what was just said, add a new angle, do not repeat.`;
 
 const SYSTEM_REMINDER = `Reply in plain English, 1-3 sentences, 70 words max. Third person only. No markdown. Use concrete numbers from the context. No banned terms (leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, delve, comprehensive, game-changer, dynamic, exceptional). Return valid JSON only: {"trace":[...],"answer":"...","cards":[...]}.`;
@@ -270,6 +282,22 @@ function sseResponse(stream, origin) {
 
 function buildDynamicContext({ routeDecision, wikiExtracts, edges }) {
   const parts = [];
+
+  // Contact intent — inject channel list. Triggers when preroute matched
+  // CONTACT_RE or LLM classifier emitted themes_likely:['contact']. The
+  // model uses this to surface the right cards (book-call priority,
+  // linkedin/github/email supporting) instead of deflecting.
+  const themes = routeDecision?.themes_likely || [];
+  if (themes.includes('contact') || routeDecision?.route_reason === 'preroute_contact') {
+    parts.push(`## CONTACT CONTEXT (user asked how to reach Agam)
+Channels available, surface as cards:
+- book-call (priority): https://calendly.com/agamarora/chat — 15-min intro chat
+- linkedin: https://linkedin.com/in/agam-arora
+- github: https://github.com/agamarora
+- email: agam.arora@aionos.ai
+
+Compose a one-line answer naming the fastest path (book-call) plus the alternates. Do NOT deflect — this is a legitimate inquiry. Cards: book-call as priority:true, then linkedin + github + email as supporting.`);
+  }
 
   // Retrieved wiki content
   if (wikiExtracts && wikiExtracts.length > 0) {

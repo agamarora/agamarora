@@ -280,6 +280,29 @@
     font-feature-settings:"tnum";
     white-space:nowrap;
   }
+  /* Immediate-feedback placeholder pill: shown the moment user hits submit.
+     Removed when first real trace event arrives. Three-dot loader pulses
+     to signal "the agent is working". Without this there's a 200-600ms
+     gap between submit and first visible activity. */
+  .trace-line.trace-thinking { opacity:1; transform:none; animation:none; }
+  .trace-line.trace-thinking .verb,
+  .trace-line.trace-thinking .verb .arg { color:var(--text-dim); font-style:italic; }
+  .trace-line.trace-thinking .verb .arrow { color:var(--accent); }
+  .thinking-dots { display:inline-flex; gap:3px; align-items:center; }
+  .thinking-dots span {
+    width:4px; height:4px; border-radius:50%;
+    background:var(--accent); opacity:0.4;
+    animation:thinking-dot 1.2s ease-in-out infinite;
+  }
+  .thinking-dots span:nth-child(2) { animation-delay:0.18s; }
+  .thinking-dots span:nth-child(3) { animation-delay:0.36s; }
+  @keyframes thinking-dot {
+    0%, 60%, 100% { opacity:0.25; transform:scale(0.85); }
+    30% { opacity:1; transform:scale(1.1); }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .thinking-dots span { animation:none; opacity:0.6; }
+  }
   .trace-line .latency .check { color:#7fbf7f; margin-left:4px; }
   /* Spinner for in-progress trace lines (Decision 17) */
   .trace-line .latency .spinner {
@@ -1068,10 +1091,12 @@ function escHtml(str) {
 // Map Lane A card slug → URL (slug is e.g. 'lab', 'resume', 'wiki/agent-first', 'calendly')
 function slugToUrl(slug) {
   if (!slug) return '#';
-  if (slug === 'calendly') return 'https://calendly.com/agamarora/chat';
-  if (slug === 'linkedin') return 'https://linkedin.com/in/agamarora';
+  // Calendly: both 'calendly' (legacy) and 'book-call' (canonical per site.json) map here
+  if (slug === 'calendly' || slug === 'book-call') return 'https://calendly.com/agamarora/chat';
+  if (slug === 'linkedin') return 'https://linkedin.com/in/agam-arora';
   if (slug === 'github') return 'https://github.com/agamarora';
   if (slug === 'shararat') return 'https://github.com/agamarora/shararat-ai';
+  if (slug === 'email') return 'mailto:agam.arora@aionos.ai';
   if (slug === 'resume-pdf') return '/assets/artefacts/2026_Agam%20Arora.pdf';
   // Internal slugs: /lab, /resume, /wiki/..., /lab/second-brain/, etc.
   return '/' + slug.replace(/^\//, '');
@@ -1084,9 +1109,11 @@ function slugToTitle(slug) {
     'lab': 'Browse his lab',
     'resume': 'See his background',
     'calendly': 'Book a 15-min chat',
-    'linkedin': 'See his LinkedIn',
+    'book-call': 'Book a 15-min chat',
+    'linkedin': 'Connect on LinkedIn',
     'github': 'See his GitHub',
-    'shararat': 'Try Shararat live',
+    'email': 'Email Agam',
+    'shararat': 'Shararat on GitHub',
     'resume-pdf': 'Download resume PDF',
     'lab/second-brain': 'second-brain PRFAQ',
     'lab/ai-resume': 'AI Resume template',
@@ -1185,6 +1212,30 @@ function addTraceLine(turnId, verb, arg, realLatencyMs, scheduleDelay) {
   traceEl.appendChild(line);
   scheduleTraceLine(line, realLatencyMs, scheduleDelay);
   scrollToActiveTail(turnId);
+}
+
+// Immediate-feedback placeholder. Inserted on submit; removed when the first
+// real SSE trace event arrives (or when the answer ends without trace events).
+// Closes the perceptual gap between submit and first real trace line.
+function addThinkingPlaceholder(turnId) {
+  const traceEl = document.getElementById(`trace-${turnId}`);
+  if (!traceEl) return;
+  const line = document.createElement('div');
+  line.className = 'trace-line trace-thinking';
+  line.id = `thinking-${turnId}`;
+  line.innerHTML = `
+    <span class="verb">
+      <span class="arrow">&rarr;</span>thinking <span class="arg">classifying intent…</span>
+    </span>
+    <span class="latency"><span class="thinking-dots"><span></span><span></span><span></span></span></span>
+  `;
+  traceEl.appendChild(line);
+  scrollToActiveTail(turnId);
+}
+
+function removeThinkingPlaceholder(turnId) {
+  const el = document.getElementById(`thinking-${turnId}`);
+  if (el) el.remove();
 }
 
 // Scroll the active turn's tail into view. Called after each render step so
@@ -1332,6 +1383,12 @@ async function submitQuery(prompt, history, isRetry) {
   // Create turn in DOM
   const turnId = createTurn(prompt);
 
+  // Immediate-feedback placeholder pill so user sees activity in the moment
+  // between submit and first SSE trace event. Removed when the first real
+  // trace lands. Without this, there's a perceptible 200-600ms gap of
+  // visible nothing while the function spins up + classifies.
+  addThinkingPlaceholder(turnId);
+
   // Start trace lines for in-progress state
   let traceAnimTime = 0;
 
@@ -1429,6 +1486,9 @@ async function submitQuery(prompt, history, isRetry) {
       // ---- Lane A v3 typed events ----
       if (t === 'trace') {
         isV3 = true;
+        // First real trace event — drop the immediate-feedback placeholder
+        // so the trace area is clean before the real lines schedule in.
+        removeThinkingPlaceholder(turnId);
         const verb = parsed.verb || '';
         const args = parsed.args || '';
         const realMs = typeof parsed.ms === 'number' ? parsed.ms : (parsed.pill_ms || 500);
@@ -1464,7 +1524,9 @@ async function submitQuery(prompt, history, isRetry) {
 
       if (t === 'done') {
         isV3 = true;
-        // done sentinel — stream will end
+        // done sentinel — stream will end. Drop the thinking placeholder
+        // in case no trace events arrived (cached fast-path responses).
+        removeThinkingPlaceholder(turnId);
         return;
       }
 
@@ -1539,6 +1601,7 @@ async function submitQuery(prompt, history, isRetry) {
 
   } catch (err) {
     currentAbortController = null;
+    removeThinkingPlaceholder(turnId);
     const msg = err.name === 'AbortError'
       ? 'Took too long to respond. Hit retry or ask again.'
       : `Connection issue: ${err.message || 'unknown error'}`;

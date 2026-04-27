@@ -29,6 +29,12 @@ const DEFLECT_RES = [
   /home\s+address/i,
   /salary\s+(of|details)/i,
 ];
+// Contact / reach / hire intent. The LLM classifier was returning 'deflect'
+// for "where can I connect with agam" because the available types are
+// lookup/synthesis/deflect and 'how to reach' didn't fit any cleanly.
+// Pre-route catches it before LLM and routes to a synthesis path with a
+// 'contact' marker so groqHandler can inject the channel list.
+const CONTACT_RE = /(connect|contact|reach|email|message|dm|talk to|chat with|book.*(call|chat|time|meeting)|calendly|linkedin|hire|collaborate|work\s+(with|together)|get in touch|mail|gmail)/i;
 
 // Direct theme keyword → synthesis with extracted slug.
 // Matched against `message`; first hit wins.
@@ -71,6 +77,19 @@ export function preRoute(message) {
     }
   }
 
+  // Contact intent: route as synthesis with the special marker theme 'contact'.
+  // groqHandler reads this marker and injects channel info (LinkedIn, GitHub,
+  // email, calendar) into the dynamic context. NOT deflect — this is a
+  // legitimate inquiry the agent should answer concretely.
+  if (CONTACT_RE.test(trimmed)) {
+    return {
+      type: 'synthesis',
+      confidence: 0.9,
+      themes_likely: ['contact'],
+      route_reason: 'preroute_contact',
+    };
+  }
+
   for (const [re, slug] of KEYWORD_TO_SLUG) {
     if (re.test(trimmed)) {
       return {
@@ -94,8 +113,11 @@ Routing options:
   type: "synthesis"  — opinion, belief, theme, multi-source synthesis
   type: "deflect"    — personal life, politics, religion, off-topic
 
-themes_likely[] — zero or more slugs from this closed set (drop slugs not in set):
+CONTACT queries are NOT deflect. "how do I reach him", "can I connect", "email", "linkedin", "book a call", "hire him", "work with him" → type:"synthesis" with themes_likely:["contact"]. The agent has the channel list and will surface the right cards. Only deflect personal life, politics, religion, or genuinely off-topic noise.
+
+themes_likely[] — zero or more slugs from this set (drop slugs not in set):
 ${THEME_SLUGS.map(s => `  - ${s}`).join('\n')}
+  - contact     (special marker for connect/reach/hire queries)
 
 Output exactly: {"type": "...", "confidence": 0..1, "themes_likely": ["..."]}
 Do not include any other keys, prose, or markdown. Return JSON only.`;
