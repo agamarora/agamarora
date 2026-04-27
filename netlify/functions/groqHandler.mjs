@@ -1,10 +1,29 @@
-import Groq from "groq-sdk";
+// groqHandler.mjs
+//
+// Orchestration only. All LLM logic in lib/llm-pool.mjs.
+//
+// FLOW
+//   request
+//     → corsHeaders + method check
+//     → input validation (length, history shape)
+//     → injection filter
+//     → route() = preRoute() ?? classify()    [logged, used by D-3+ retrieval]
+//     → build messages (resume system prompt — D-2 will replace with v3 stable section)
+//     → pool.invokeSynthesis() → ReadableStream of UTF-8 text chunks
+//     → wrap as SSE in v2 shape: data: {"text": "..."}\n\n + [DONE]
+//
+// v2 SSE response shape preserved for /enter v2 compatibility. D-7 (UI v3)
+// will switch to trace/token/card SSE events; D-4 changes the LLM call to
+// structured-output JSON (1-call shape).
+//
+// Per docs/plans/second-brain-v1-next-session-plan.md Task 14 (D-1)
+// + phase-d-decisions-2026-04-27.md Decisions 1, 4, 5, 9, 11.
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-  maxRetries: 0,
-  timeout: 3140,
-});
+import { invokeSynthesis } from './lib/llm-pool.mjs';
+import { route } from './lib/classifier.mjs';
+import { ALLOWED_ORIGINS, MAX_INPUT_LENGTH, MAX_HISTORY_TURNS, MAX_HISTORY_CHARS, MAX_COMPLETION_TOKENS } from './lib/constants.mjs';
+
+// ---- v2 system prompt (kept for D-1; D-2 replaces with v3 stable section) -
 
 const SYSTEM_PROMPT = `You are the voice of agamarora.com. You answer questions about Agam Arora for recruiters, engineers, and curious visitors. Generate your own answers from the ground truth below — the voice samples at the end are tone calibration, not a lookup table. If the question is vague or broad ("tell me about him", "describe Agam", "who is he"), give a confident bio in 1 to 3 sentences. Never fall back to a greeting template once the conversation is past hello.
 
@@ -55,17 +74,19 @@ PAGES YOU CAN POINT TO
 - /resume — full resume
 - /lab — open source projects and experiments
 - /lab/ai-resume — the open source AI resume template he built
+- /wiki — authored knowledge atlas (12 themes)
+- /wiki/graph — constellation graph view of the wiki
 - https://github.com/agamarora — GitHub
 - https://shararat.agamarora.com — Shararat Voice AI demo
 When a page would genuinely help, drop ONE plain reference at the end: "More on /resume." or "Full list on /lab." Max one per reply, never forced.
 
 HOW TO ANSWER
-1. Greetings only ("hi", "hey", "hello", "sup", "yo", "what's up") — reply with ONE short greeting line, not a bio. After the first greeting, treat follow-ups normally.
-2. "Agam", "agam", "him", "he", "the guy", "Mr Arora" — all refer to the same person. Case doesn't matter.
+1. Greetings only ("hi", "hey", "hello", "sup", "yo", "what's up") — reply with ONE short greeting line, not a bio.
+2. "Agam", "agam", "him", "he", "the guy", "Mr Arora" — all refer to the same person.
 3. For factual questions (dates, roles, numbers, companies, degrees) — just state the fact plainly.
-4. For vague asks ("tell me about him", "who is he", "describe Agam", "tell me about agam") — give current role, years of experience, and one memorable fact. Do NOT return a greeting.
-5. Synthesize across the resume. "When was he in logistics?" = FarEye, Dec 2020 to May 2024. "How many AIonOS stints?" = two.
-6. Generic concept questions ("what are multi-agent systems?", "what is RAG?") — one short line on the concept, then how Agam has actually used or shipped it. No textbook answers.
+4. For vague asks ("tell me about him", "who is he") — give current role, years of experience, and one memorable fact.
+5. Synthesize across the resume. "When was he in logistics?" = FarEye, Dec 2020 to May 2024.
+6. Generic concept questions — one short line on the concept, then how Agam has used or shipped it.
 7. Opinions grounded in the resume (taste, shipping, AI-native tooling) are fair. Don't invent beliefs he hasn't shown.
 
 WHEN TO DEFLECT
@@ -84,41 +105,27 @@ VOICE CALIBRATION (these are tone samples, NOT an answer key)
 
 When history exists, connect to the thread: reference what was just said, add a new angle, don't repeat.`;
 
-const SYSTEM_REMINDER = `Reply in normal sentence case, 1 to 3 sentences, under 70 words. Third person only — never "I", "I'm", "I'll", "I've", "me", or "my" when referring to yourself. Never use: leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, delve, comprehensive, game-changer, dynamic, proven track record, exceptional, significant impact. If the question is vague like "tell me about him" or "who is he", give a confident bio — do NOT fall back to a greeting. Build on prior messages. Ground every fact in the resume. If a page link genuinely helps, drop one plain reference at the end.`;
+const SYSTEM_REMINDER = `Reply in normal sentence case, 1 to 3 sentences, under 70 words. Third person only — never "I", "I'm", "I'll", "I've", "me", or "my" when referring to yourself. Never use: leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, delve, comprehensive, game-changer, dynamic, proven track record, exceptional, significant impact. If the question is vague like "tell me about him" or "who is he", give a confident bio. Build on prior messages. Ground every fact in the resume.`;
 
-const MAX_INPUT_LENGTH = 200;
-const MAX_COMPLETION_TOKENS = 160;
-
-const MODELS = [
-  "llama-3.1-8b-instant",
-  "qwen/qwen3-32b",
-  "openai/gpt-oss-20b",
-  "llama-3.3-70b-versatile",
-];
-
-const ALLOWED_ORIGINS = new Set([
-  "https://agamarora.com",
-  "https://www.agamarora.com",
-]);
+// ---- CORS + helpers -------------------------------------------------------
 
 function isOriginAllowed(origin) {
   if (ALLOWED_ORIGINS.has(origin)) return true;
-  try { return new URL(origin).hostname === "localhost"; }
-  catch { return false; }
+  try { return new URL(origin).hostname === 'localhost'; } catch { return false; }
 }
 
 function corsHeaders(origin) {
   return {
-    "Access-Control-Allow-Origin": isOriginAllowed(origin) ? origin : "",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "POST",
+    'Access-Control-Allow-Origin': isOriginAllowed(origin) ? origin : '',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST',
   };
 }
 
 function json(data, status, origin) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "Content-Type": "application/json", ...corsHeaders(origin) },
+    headers: { 'Content-Type': 'application/json', ...corsHeaders(origin) },
   });
 }
 
@@ -134,134 +141,156 @@ const INJECTION_PATTERNS = [
 ];
 
 function isInjectionAttempt(input) {
-  return INJECTION_PATTERNS.some((p) => p.test(input));
+  return INJECTION_PATTERNS.some(p => p.test(input));
 }
 
-export default async function (request) {
-  const origin = request.headers.get("origin") || "";
+function clampHistory(rawHistory) {
+  const arr = Array.isArray(rawHistory) ? rawHistory.slice(-MAX_HISTORY_TURNS) : [];
+  let total = 0;
+  const out = [];
+  for (const msg of arr) {
+    if (msg?.role !== 'user' && msg?.role !== 'assistant') continue;
+    let content = String(msg.content || '').slice(0, MAX_INPUT_LENGTH);
+    if (msg.role === 'user' && isInjectionAttempt(content)) continue;
+    if (total + content.length > MAX_HISTORY_CHARS) {
+      content = content.slice(0, MAX_HISTORY_CHARS - total);
+    }
+    if (!content) continue;
+    out.push({ role: msg.role, content });
+    total += content.length;
+    if (total >= MAX_HISTORY_CHARS) break;
+  }
+  return out;
+}
 
-  if (request.method === "OPTIONS") {
+// Wrap raw text ReadableStream into v2 SSE shape.
+// Input: ReadableStream<Uint8Array> emitting decoded text chunks.
+// Output: ReadableStream<Uint8Array> emitting `data: {"text": "..."}\n\n` lines + [DONE].
+function toV2Sse(textStream) {
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
+  const reader = textStream.getReader();
+  let totalChars = 0;
+  return new ReadableStream({
+    async pull(controller) {
+      try {
+        const { value, done } = await reader.read();
+        if (done) {
+          if (totalChars === 0) {
+            const fb = "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: fb })}\n\n`));
+          }
+          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+          controller.close();
+          return;
+        }
+        const text = decoder.decode(value, { stream: true });
+        if (text) {
+          totalChars += text.length;
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+        }
+      } catch (err) {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: err?.message || 'stream_error' })}\n\n`));
+        controller.close();
+      }
+    },
+    cancel() {
+      reader.cancel();
+    },
+  });
+}
+
+// ---- Handler --------------------------------------------------------------
+
+export default async function (request) {
+  const origin = request.headers.get('origin') || '';
+
+  if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: corsHeaders(origin) });
   }
-  if (request.method !== "POST") {
-    return json({ error: "Method not allowed" }, 405, origin);
+  if (request.method !== 'POST') {
+    return json({ error: 'Method not allowed' }, 405, origin);
   }
 
   try {
     const body = await request.json();
-    let input = (body.prompt || "").trim();
+    let input = String(body.prompt || '').trim();
 
-    if (!input) return json({ error: "Empty input" }, 400, origin);
+    if (!input) return json({ error: 'Empty input' }, 400, origin);
     if (input.length > MAX_INPUT_LENGTH) input = input.slice(0, MAX_INPUT_LENGTH);
 
     if (isInjectionAttempt(input)) {
       return json({ result: "Nice try. I don't break that easily." }, 200, origin);
     }
 
-    const messages = [{ role: "system", content: SYSTEM_PROMPT }];
-    const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
-    for (const msg of history) {
-      if (msg.role === "user" || msg.role === "assistant") {
-        const content = String(msg.content || "").slice(0, MAX_INPUT_LENGTH);
-        if (content && (msg.role === "assistant" || !isInjectionAttempt(content))) {
-          messages.push({ role: msg.role, content });
-        }
-      }
+    // Route classification (logged; used by D-3+ for retrieval routing).
+    let routeDecision;
+    try {
+      routeDecision = await route(input);
+    } catch (err) {
+      console.warn('[handler] route error', err?.message || err);
+      routeDecision = { type: 'lookup', confidence: 0, themes_likely: [], route_reason: 'route_threw' };
+    }
+    console.log('[route]', JSON.stringify({
+      type: routeDecision.type,
+      reason: routeDecision.route_reason,
+      themes: routeDecision.themes_likely,
+      conf: routeDecision.confidence,
+    }));
+
+    // Deflect short-circuit (preserves v2 behavior shape).
+    if (routeDecision.type === 'deflect') {
+      const text = "Not on the resume. Ask about what he's built.";
+      const enc = new TextEncoder();
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(enc.encode(`data: ${JSON.stringify({ text })}\n\n`));
+          controller.enqueue(enc.encode('data: [DONE]\n\n'));
+          controller.close();
+        },
+      });
+      return new Response(stream, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          ...corsHeaders(origin),
+        },
+      });
     }
 
-    messages.push({ role: "user", content: input });
-    messages.push({ role: "system", content: SYSTEM_REMINDER });
+    // Build messages (D-2 will swap SYSTEM_PROMPT for v3 stable + dynamic structure).
+    const history = clampHistory(body.history);
+    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
+    for (const msg of history) messages.push(msg);
+    messages.push({ role: 'user', content: input });
+    messages.push({ role: 'system', content: SYSTEM_REMINDER });
 
-    let lastError;
-    for (const model of MODELS) {
-      try {
-        const stream = await groq.chat.completions.create({
-          model,
-          max_completion_tokens: MAX_COMPLETION_TOKENS,
-          temperature: 0.7,
-          messages,
-          stream: true,
-        });
+    const { stream: textStream, getMeta } = await invokeSynthesis({
+      messages,
+      temperature: 0.7,
+      maxTokens: MAX_COMPLETION_TOKENS,
+    });
+    const sse = toV2Sse(textStream);
 
-        const readable = new ReadableStream({
-          async start(controller) {
-            let inThinkBlock = false;
-            let totalChars = 0;
-            try {
-              for await (const chunk of stream) {
-                let content = chunk.choices[0]?.delta?.content || "";
-                if (content.includes("<think>")) inThinkBlock = true;
-                if (inThinkBlock) {
-                  if (content.includes("</think>")) {
-                    content = content.split("</think>").pop();
-                    inThinkBlock = false;
-                  } else {
-                    continue;
-                  }
-                }
-                if (content) {
-                  totalChars += content.length;
-                  controller.enqueue(
-                    new TextEncoder().encode(`data: ${JSON.stringify({ text: content })}\n\n`)
-                  );
-                }
-              }
-              // Empty response guard — if the model produced nothing usable,
-              // emit a graceful fallback so the client never sees silence.
-              if (totalChars === 0) {
-                const fallback =
-                  "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
-                controller.enqueue(
-                  new TextEncoder().encode(`data: ${JSON.stringify({ text: fallback })}\n\n`)
-                );
-              }
-              controller.enqueue(new TextEncoder().encode("data: [DONE]\n\n"));
-              controller.close();
-            } catch (err) {
-              controller.enqueue(
-                new TextEncoder().encode(`data: ${JSON.stringify({ error: err.message })}\n\n`)
-              );
-              controller.close();
-            }
-          },
-        });
+    // Meta logged on response open (best-effort).
+    queueMicrotask(() => {
+      const m = getMeta();
+      console.log('[provider]', JSON.stringify({ ...m, route: routeDecision.type }));
+    });
 
-        return new Response(readable, {
-          status: 200,
-          headers: {
-            "Content-Type": "text/event-stream",
-            "Cache-Control": "no-cache",
-            "Connection": "keep-alive",
-            ...corsHeaders(origin),
-          },
-        });
-
-      } catch (err) {
-        lastError = err;
-        if (err instanceof Groq.RateLimitError) {
-          console.error(`${model}: rate limited`);
-          continue;
-        }
-        if (err instanceof Groq.APIConnectionTimeoutError) {
-          console.error(`${model}: timed out`);
-          continue;
-        }
-        console.error(`${model}: ${err.constructor.name} — ${err.message}`);
-        break;
-      }
-    }
-
-    if (lastError instanceof Groq.RateLimitError) {
-      return json(
-        { error: "Traffic spike — all models rate limited. Give it 30 seconds and try again." },
-        429,
-        origin
-      );
-    }
-    return json({ error: "Something went wrong reaching the model. Try again." }, 500, origin);
-
+    return new Response(sse, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        ...corsHeaders(origin),
+      },
+    });
   } catch (error) {
-    console.error("Handler error:", error.message);
-    return json({ error: "Something went wrong. Try again." }, 500, origin);
+    console.error('Handler error:', error?.message || error);
+    return json({ error: 'Something went wrong. Try again.' }, 500, origin);
   }
 }

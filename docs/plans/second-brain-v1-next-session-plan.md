@@ -87,8 +87,8 @@ Pick the first QUEUED row. Mark DONE after commit + push. Bump CHECKPOINT in STA
 | 4-13 | **AEO/SEO gate — 14 tasks (Person schema, robots, Q&A, BLUF, alt text, pre/code, TTFB, bots, FAQPage+HowTo, view-source, comparison tables, evidence outbound, regression sweep, crawl audit)** | ✅ DONE | — | CP-33 |
 | 13b | Graph hover/spokes refinement + sitemap refresh + build-clobber lesson | ✅ DONE | — | CP-33b |
 | 13c | Phase D decisions taste-pass + spec amendments | ✅ DONE | — | CP-33c |
-| 14a | **D-0 — wiki extracts build script (NEW)** | QUEUED | 30 min | (under CP-34) |
-| 14 | D-1 — LLM pool + classifier + pre-route + provider routing | QUEUED | 75-90 min | |
+| 14a | **D-0 — wiki extracts build script (NEW)** | ✅ DONE (71fc6ed) | — | (under CP-34) |
+| 14 | D-1 — LLM pool + classifier + pre-route + provider routing | ✅ DONE (pending push) | — | |
 | 15 | D-2 — system prompt v3 with cache breakpoint | QUEUED | 30 min | |
 | 16 | D-3 — wiki extracts integration (bundled, no fetch) | QUEUED | 15 min | |
 | 17 | D-4 — SSE encoder + 1-call structured output | QUEUED | 45 min | |
