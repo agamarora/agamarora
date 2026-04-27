@@ -46,7 +46,7 @@
 
   header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
   .icon-bar{display:inline-flex;align-items:center;}
-  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
 
   .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
@@ -110,29 +110,9 @@
     padding: clamp(28px, 5vw, 64px);
   }
 
-  /* Header CSS (canonical from chrome:css above; selectors duplicated here are
-     overrides or extensions specific to /enter). === Shared v2 header === fluid 52-64px. */
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: clamp(52px, 6vw, 64px);
-    z-index: 100;
-    padding: 0 clamp(1rem, 3vw, 1.5rem);
-    background: var(--bg);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .icon-bar { display: inline-flex; align-items: center; }
-  .icon-bar a {
-    color: var(--text-dim);
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 2em; height: 2em;
-    font-size: clamp(1.15rem, 1.3vw, 1.5rem);
-    transition: color 0.2s ease;
-    text-decoration: none;
-  }
-  .icon-bar a:hover { color: var(--accent); }
+  /* Header + icon-bar rules now live entirely in chrome:css block above
+     (scripts/lib/chrome.mjs — single source of truth). Per-page overrides
+     go here only if /enter actually needs to differ. */
 
   /* Hero, "Hi, I'm Agam.", lives below the fixed header. */
   .hero {
@@ -245,26 +225,6 @@
     .aa-mark { display: none; }
   }
 
-  /* === Shared aa. mark === fixed bottom-right, stroke-draw on load.
-     font-family on wrapper forces Patrick Hand fetch before SVG renders. */
-  .aa-mark {
-    position: fixed;
-    bottom: clamp(16px, 3vw, 32px);
-    right: clamp(16px, 3vw, 32px);
-    z-index: 50;
-    text-decoration: none;
-    line-height: 1;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    font-family: var(--mark);
-  }
-  .aa-mark:hover { opacity: 1; }
-  .aa-mark svg {
-    width: clamp(44px, 5vw, 60px);
-    height: auto;
-    overflow: visible;
-    display: block;
-  }
   .aa-mark svg text { font-family: var(--mark); }
   .icon-bar a:focus-visible,
   .aa-mark:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }

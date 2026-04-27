@@ -42,32 +42,50 @@
   @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
   .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
   :root {
-    --bg:#0A0A0A; --bg-deep:#050810; --surface:#111111;
-    --border:#1E1E1E; --text:#E8E4DF; --text-dim:#7A7A7A;
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
     --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
-    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --mono:'JetBrains Mono',monospace;
     --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
     --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
+
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
+
+  /* Graph-specific overrides on top of the shared chrome.
+     Single source of truth for fonts, tokens, reset, header, icon-bar, aa-mark
+     lives in scripts/lib/chrome.mjs. Everything below is graph-only. */
+  :root { --bg-deep:#050810; }
   html,body{width:100%;height:100%;overflow:hidden;}
   body{
     background:radial-gradient(ellipse at 50% 50%, var(--bg-deep) 0%, var(--bg) 70%, #000 100%);
-    color:var(--text);font-family:var(--sans);position:relative;
-    -webkit-font-smoothing:antialiased;line-height:1.6;
+    position:relative;
   }
   body::before{
     content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
     opacity:0.025;mix-blend-mode:screen;
   }
-  ::selection{background:var(--accent);color:var(--bg);}
-
-  /* Header — z-index 100 to match all other v2 pages (DESIGN.md shared layout contract) */
-  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;justify-content:space-between;}
-  .icon-bar{display:inline-flex;align-items:center;}
-  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;font-size:clamp(1.15rem,1.3vw,1.5rem);transition:color 0.2s;text-decoration:none;}
-  .icon-bar a:hover{color:var(--accent);}
+  /* Override: graph header has fullscreen button on the right, needs space-between. */
+  header.site-header{justify-content:space-between;}
 
   .fs-btn{background:transparent;border:1px solid rgba(232,228,223,0.2);color:var(--text);font-family:var(--mono);font-size:11px;letter-spacing:0.05em;padding:6px 12px;border-radius:4px;cursor:pointer;opacity:0.6;transition:opacity 0.15s,border-color 0.15s,color 0.15s;}
   .fs-btn:hover{opacity:1;border-color:var(--accent);color:var(--accent);}
@@ -76,14 +94,6 @@
   svg.canvas{touch-action:none;}
   svg.canvas.panning{cursor:grabbing;}
   svg.canvas.zoomable{cursor:grab;}
-
-  /* aa. mark — z-index 50 to match all other v2 pages (DESIGN.md shared layout contract).
-     font-family on wrapper forces browser to fetch Patrick Hand before SVG renders,
-     so the stroke-draw measurement runs against real font, not cursive fallback. */
-  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
-  .aa-mark:hover{opacity:1;}
-  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
-  .aa-mark svg text{font-family:var(--mark);}
 
   /* Help strip moved BELOW header zone (header is up to ~64px) so it stops getting hidden */
   .help-strip{position:fixed;top:calc(clamp(52px,6vw,64px) + 12px);left:24px;z-index:90;font-family:var(--mono);font-size:10px;color:var(--text-dim);opacity:0.5;letter-spacing:0.04em;}
