@@ -558,12 +558,16 @@
   /* =========================================================
      A11y
      ========================================================= */
-  .icon-bar a:focus-visible,
-  .input-bar input:focus-visible {
+  .icon-bar a:focus-visible {
     outline:2px solid var(--accent);
     outline-offset:3px;
     border-radius:var(--radius-sm);
   }
+  /* Input itself has no focus outline — the wrapper's :focus-within border
+     (line 423) is the visual focus signal. Doubling them produced a jarring
+     bright inner outline that clipped to the input's content box. */
+  .input-bar input:focus,
+  .input-bar input:focus-visible { outline:none; }
   .conn-banner button:focus-visible {
     outline:2px solid var(--accent);
     outline-offset:3px;
@@ -1094,8 +1098,11 @@ function createTurn(query) {
     <div class="cards" id="cards-${turnCount}" role="list"></div>
   `;
   conversationEl.appendChild(article);
-  // Scroll into view gently
-  setTimeout(() => article.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  // Scroll the new turn into view at the BOTTOM (above the fixed input bar).
+  // block:'end' leaves the question + emerging trace visible just above the
+  // input bar; block:'nearest' often did nothing because the element was
+  // already partially in view.
+  setTimeout(() => article.scrollIntoView({ behavior: 'smooth', block: 'end' }), 50);
   return turnCount;
 }
 
@@ -1114,6 +1121,20 @@ function addTraceLine(turnId, verb, arg, realLatencyMs, scheduleDelay) {
   `;
   traceEl.appendChild(line);
   scheduleTraceLine(line, realLatencyMs, scheduleDelay);
+  scrollToActiveTail(turnId);
+}
+
+// Scroll the active turn's tail into view. Called after each render step so
+// the user always sees the newest content as it lands. block:'end' aligns the
+// article bottom to the viewport bottom, leaving room above for the fixed
+// input bar (which is positioned outside the scroll container).
+function scrollToActiveTail(turnId) {
+  const article = document.getElementById(`turn-${turnId}`);
+  if (!article) return;
+  // rAF defers to after paint so getBoundingClientRect reflects newly added DOM.
+  requestAnimationFrame(() => {
+    article.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  });
 }
 
 function showAnswer(turnId, text, delayMs) {
@@ -1128,6 +1149,7 @@ function showAnswer(turnId, text, delayMs) {
       el.innerHTML = `<p>${escHtml(text.trim())}</p>`;
     }
     el.classList.add('show');
+    scrollToActiveTail(turnId);
   }, delayMs);
 }
 
@@ -1137,6 +1159,7 @@ function showCards(turnId, cards, delayMs) {
     if (!el || !cards || !cards.length) return;
     el.innerHTML = cards.map(buildCard).join('');
     el.classList.add('show');
+    scrollToActiveTail(turnId);
   }, delayMs);
 }
 
