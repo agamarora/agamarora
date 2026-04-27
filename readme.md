@@ -1,40 +1,33 @@
-# [Agam Arora](https://agamarora.com) | [![Netlify Status](https://api.netlify.com/api/v1/badges/ba314c8a-98a5-4e91-ae2e-4df7754b15bf/deploy-status)](https://app.netlify.com/sites/agamarora/deploys)
+# [Agam Arora](https://agamarora.com)
 
-## AI Product Manager | 1x Entrepreneur
+### AI Product Manager. Engineer-PM. Builder.
 
 ![Banner](/assets/agamarora_banner.png)
 
 ---
 
-12 years building things across analytics, gaming, retail, logistics, and AI.
+I build AI products. Twelve years across analytics, gaming, retail, logistics, and AI. The shorthand: PM by title, engineer by training, builder by habit. I write the spec, prototype the thing, and ship from the same workspace.
 
-I care about taste and craft in product. I code my own prototypes. I think the best products come from people who can hold both the user's problem and the technical constraint in their head at the same time.
+Currently AVP, AI Product Management at **[AIonOS](https://aionos.io)** — scaling a multi-channel customer experience platform that handles four million voice calls a year at half the cost of the alternatives. Before that I rebuilt a data platform 10x at **[FarEye](https://fareye.com)**, ran a game studio that won Indie Game of the Year 2017, and helped startups raise more than $500K.
 
-Right now I'm building enterprise AI at [AIonOS](https://aionos.io), multi-agent systems, voice AI, and AI copilots. Before that I scaled a data platform 10x at [FarEye](https://fareye.com), co-founded a game studio ([V2 Games](https://www.linkedin.com/company/v2-games/)) that won Indie Game of the Year 2017, and helped startups raise $500K+.
-
-## What I'm building
-
-### Open source & side projects
-
-- **[second-brain](https://github.com/agamarora/second-brain)**, Your AI forgets you every session. That's not a bug in Claude or ChatGPT, it's a missing file in your repo. This template gives you one. Paste a prompt into Claude Code, answer 5 questions, drop a few real artifacts. Ten minutes later you have a git repo holding your wiki, your people, your decisions, and an inbox, all cross-linked, provenance-marked, and written by the same AI you already use. Plain markdown. MIT. Free. [PRFAQ](https://agamarora.com/lab/second-brain/) · [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) · [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/).
-- **[AI Resume](https://github.com/agamarora/ai-resume)**, Open source template that turns your static resume into a recruiter-facing chat. Paste one prompt into Claude Code; a setup wizard drafts a tight system prompt, runs 12 behavioral evals across two Llama models, and deploys to Netlify. About 30 minutes, $0/month. [Live demo](https://ai-resume-demo.netlify.app) · [Read the PRFAQ](https://agamarora.com/lab/ai-resume/).
-- **[Shararat Voice AI](https://github.com/agamarora/shararat-ai)**, Playful two-agent voice experience built for the Vapi Build Challenge. Angel and Dan debate your choices in real time. Exploring multi-agent interactions and creative prompting. [Watch the demo](https://www.youtube.com/watch?v=ZS2T_5x1on0).
-- **[Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor)** (`luna-monitor`), Terminal dashboard written in Rust that shows your Claude Code 5-hour / 7-day usage, pace, ETA to cap, and system telemetry (CPU, GPU, memory, disks, temps) in one window. A tiny embedded proxy reads Anthropic's rate-limit headers live, the numbers are real, never scraped.
-
-### Day job
-
-- **Enterprise AI at [AIonOS](https://aionos.io)**, RAG, agentic systems, and voice AI handling 4M+ calls per year at half the cost of the status quo.
-
-### This website
-
-- **[agamarora.com](https://agamarora.com)**, Built in public. Vanilla HTML/CSS/JS, Satoshi + JetBrains Mono, Groq + Mistral-powered AI terminal. No framework, no build step.
-- **[/enter](https://agamarora.com/enter)**, second-brain v1 — an agent that reads my own writing and answers questions about me. Twelve themes of authored content, a knowledge graph of 227 nodes and 224 edges, retrieval-injected synthesis, and a structured SSE trace so visitors can watch the agent classify, pull, and compose in real time. Two-tier provider pool (Groq → Mistral) with three keys each, one-call structured JSON output, sub-second confidence retry that fires before the first SSE flush, abuse defense (UA gate, atomic rate-limit, unicode injection filter), and a single dynamic prompt that ships with cache-friendly ordering. Built end-to-end in roughly 24 hours with Claude Code. **Mobile-native redesign (Apr 2026):** dropped the desktop wordmark + tagline on phones, replaced with a one-line greeting and three pill-row entry points (constellation, lab, resume). Single-mechanism viewport handling via `visualViewport` JS so the input bar pins to the keyboard top on iOS Safari + Android Chrome without floating mid-screen.
-- **[/wiki/graph](https://agamarora.com/wiki/graph)**, the constellation view. The whole second brain as an interactive star map: themes orbit a center node, beliefs cluster around their themes, and cross-edges trace tensions, refinements, and relationships across the corpus. Click a star to read; press play to watch big-bang.
-
-## Links
-
-- [agamarora.com](https://agamarora.com)
-- [LinkedIn](https://linkedin.com/in/agam-arora)
-- [Resume](resume.md)
+I care about taste and craft. The best products come from people who hold the user's problem and the technical constraint in their head at the same time.
 
 ---
+
+## Selected work
+
+**[agamarora.com](https://agamarora.com)** &middot; The site you're reading this from. Vanilla HTML, CSS, and JS. No framework, no build step. Includes a live AI agent at [/enter](https://agamarora.com/enter) that answers questions about my work, grounded in a knowledge atlas you can also browse as a [constellation graph](https://agamarora.com/wiki/graph).
+
+**[second-brain](https://github.com/agamarora/second-brain)** &middot; Your AI forgets you every session. This template gives it a memory: a git repo holding your wiki, decisions, and people, written by the same AI you already use. Plain markdown. MIT. [PRFAQ](https://agamarora.com/lab/second-brain/) &middot; [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) &middot; [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/).
+
+**[AI Resume](https://github.com/agamarora/ai-resume)** &middot; Open-source template that turns a static resume into a recruiter-facing chat. One prompt into Claude Code, thirty minutes, deployed to Netlify. [Live demo](https://ai-resume-demo.netlify.app) &middot; [PRFAQ](https://agamarora.com/lab/ai-resume/).
+
+**[Shararat Voice AI](https://github.com/agamarora/shararat-ai)** &middot; A two-agent voice experience built for the Vapi Build Challenge. Angel and Dan debate your choices in real time. [Demo](https://www.youtube.com/watch?v=ZS2T_5x1on0).
+
+**[Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor)** &middot; A terminal dashboard in Rust that reads Anthropic's rate-limit headers and shows your Claude Code usage, pace, and system telemetry in one window.
+
+---
+
+## How to reach me
+
+[agamarora.com](https://agamarora.com) &nbsp;·&nbsp; [LinkedIn](https://linkedin.com/in/agamarora) &nbsp;·&nbsp; [Resume](resume.md) &nbsp;·&nbsp; [Book 15 minutes](https://calendly.com/agamarora/chat)
