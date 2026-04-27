@@ -708,14 +708,13 @@
        bottom:0 == above-keyboard. Safe-area-inset for iPhone home
        indicator. */
     .input-bar {
+      /* Tight bottom: 4px CSS-px of breathing room. iOS adds the
+         home-indicator safe-area on top automatically. Android in
+         browser-tab mode reports safe-area = 0, so the 4px is the
+         only gap there — intentional, user wants it flush. */
       padding:var(--space-3) var(--space-4)
-              calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+              calc(4px + env(safe-area-inset-bottom, 0px));
       background:var(--bg);
-      /* Soften keyboard open/close: when interactive-widget shrinks
-         the layout viewport, position:fixed bottom:0 jumps in steps.
-         A short transform transition on the bar smooths the visual
-         hand-off. Bottom + padding aren't transitionable cross-device
-         here — transform is. */
       transition:transform 0.18s ease-out;
       will-change:transform;
     }
