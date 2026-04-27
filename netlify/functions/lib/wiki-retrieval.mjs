@@ -16,7 +16,10 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Renamed from __dirname to avoid collision with esbuild's auto-injected
+// __dirname when Netlify Functions bundles ESM source. The collision throws
+// "Identifier '__dirname' has already been declared" at module load.
+const __thisDir = dirname(fileURLToPath(import.meta.url));
 
 // Feature flag: set WIKI_READ_ENABLED=0 to disable both extracts + edges retrieval.
 // Useful for testing the fallback path or disabling retrieval without code changes.
