@@ -166,8 +166,8 @@
 
   /* CP-7: layered visibility on theme hover/focus — connected cross-edges light up */
   .cross-edge{transition:stroke 0.15s,stroke-width 0.15s,opacity 0.15s;}
-  .cross-edge.highlit{stroke:rgba(229,165,75,0.55) !important;stroke-width:1 !important;}
-  .cross-edge.dimmed{opacity:0.25 !important;}
+  .cross-edge.highlit{stroke:rgba(229,165,75,0.32) !important;stroke-width:0.8 !important;stroke-dasharray:2 4 !important;}
+  .cross-edge.dimmed{opacity:0.12 !important;}
 
   /* Mobile chrome: aggressive hide to prevent overlap. Only essentials remain. */
   @media (max-width: 768px){
@@ -1301,20 +1301,12 @@
   }
 
   // === CP-7: layered visibility on hover/focus ===
-  // When a theme is hovered/focused, its connected cross-edges light up; unrelated edges dim.
-  // "Connected" means: edge endpoint is the theme itself OR any belief/project/post/tech that
-  // belongs to that theme (via nodeOffsets). Implements the "layered visibility" rule from
-  // DESIGN.md — most dim at rest, contextual ones light up on engagement (anti AI-slop
-  // "all edges visible all the time" pattern). Fixed 2026-04-27: previously only matched
-  // direct theme↔theme endpoints, dropped belief/project/post connections.
-  function isEndpointInTheme(nodeId, themeId){
-    if (nodeId === themeId) return true;
-    const off = nodeOffsets[nodeId];
-    return off && off.themeId === themeId;
-  }
+  // Only edges where the theme NODE itself is an endpoint light up. Belief/project/post
+  // children are NOT included — hovering a theme should not light up unrelated belief↔belief
+  // chords across the canvas. Subtle dotted highlit style (see .cross-edge.highlit CSS).
   function highlightTheme(themeId){
     crossEdgeRefs.forEach(ref => {
-      const isConnected = isEndpointInTheme(ref.from, themeId) || isEndpointInTheme(ref.to, themeId);
+      const isConnected = ref.from === themeId || ref.to === themeId;
       ref.path.classList.toggle('highlit', isConnected);
       ref.path.classList.toggle('dimmed', !isConnected);
     });
