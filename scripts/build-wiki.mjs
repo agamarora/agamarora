@@ -435,6 +435,8 @@ ${SHARED_CHROME_CSS}
   details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
   details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
   details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
+  details.evidence-block a.evidence-link { color: var(--text-dim); font-family: var(--mono); font-size: 0.74rem; text-decoration: none; border-bottom: 1px dotted var(--border); transition: color 0.2s, border-color 0.2s; word-break: break-all; }
+  details.evidence-block a.evidence-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 `;
 
 // SVG_SPRITE, SHARED_HEADER_HTML, SHARED_AAMARK_HTML, AAMARK_SCRIPT now imported
@@ -649,9 +651,26 @@ function stripDraftTraces(body) {
 // Wrap the rendered Evidence section in <details>/<summary> so it collapses
 // by default. Operates on the HTML output of blockMd. Looks for <h2 ...>Evidence</h2>
 // and wraps from there until the next <h2>, <hr>, or end of article.
+// AEO-14: Linkify LinkedIn URN strings (`urn:li:activity:NNNN...`) inside the
+// Evidence body so each cited fact carries an outbound link to the source post.
+// AEO research (OneFunder thesis): unique facts cited verbatim with a link beat
+// paraphrasable paragraphs. Pattern only fires inside <td> cells to avoid mangling
+// any incidental URN mention in surrounding prose.
+function linkifyLinkedInUrns(body) {
+  return body.replace(/(<td[^>]*>)([\s\S]*?)(<\/td>)/g, (_, open, cell, close) => {
+    const linked = cell.replace(
+      /(urn:li:activity:(\d+))/g,
+      (m, full, id) =>
+        `<a href="https://www.linkedin.com/feed/update/${full}/" target="_blank" rel="noopener" class="evidence-link">${full}</a>`
+    );
+    return open + linked + close;
+  });
+}
+
 function collapseEvidenceHtml(html) {
   const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
   return html.replace(pattern, (_, heading, body) => {
+    body = linkifyLinkedInUrns(body);
     // Count data rows only - <tbody> contents for tables, <li> count for bullets.
     // Avoids the off-by-one from including <thead><tr>.
     const tbodyMatch = body.match(/<tbody>([\s\S]*?)<\/tbody>/);
