@@ -22,6 +22,7 @@
 import { invokeSynthesis } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
 import { ALLOWED_ORIGINS, MAX_INPUT_LENGTH, MAX_HISTORY_TURNS, MAX_HISTORY_CHARS, MAX_COMPLETION_TOKENS } from './lib/constants.mjs';
+import { defend, dupCacheLookup, dupCacheStore, getClientIP } from './lib/defense.mjs';
 
 // ---- v2 system prompt (kept for D-1; D-2 replaces with v3 stable section) -
 
@@ -216,6 +217,12 @@ export default async function (request) {
 
   try {
     const body = await request.json();
+
+    // D-5: Abuse defense (UA gate, input validation, injection filter, rate limit).
+    // Single call; returns Response (early exit) or null (proceed).
+    const defended = await defend(request, body);
+    if (defended) return defended;
+
     let input = String(body.prompt || '').trim();
 
     if (!input) return json({ error: 'Empty input' }, 400, origin);
@@ -223,6 +230,40 @@ export default async function (request) {
 
     if (isInjectionAttempt(input)) {
       return json({ result: "Nice try. I don't break that easily." }, 200, origin);
+    }
+
+    // D-5: Duplicate-query cache check.
+    // NOTE: In v2 SSE flow, caching is limited to JSON (deflect/error) responses.
+    // After D-4 ships (structured output), SSE bodies become cacheable too.
+    const ip = getClientIP(request);
+    const { hit, body: cachedBody, key: dupKey } = dupCacheLookup(ip, input);
+    if (hit && cachedBody) {
+      console.log('[defense] dup_cache_returning', { ip, key: dupKey });
+      try {
+        // Cached body was stored as JSON string → re-emit as SSE for client compat.
+        const parsed = JSON.parse(cachedBody);
+        const enc = new TextEncoder();
+        const cachedText = parsed.text || '';
+        const cachedStream = new ReadableStream({
+          start(controller) {
+            controller.enqueue(enc.encode(`data: ${JSON.stringify({ text: cachedText, cached: true })}\n\n`));
+            controller.enqueue(enc.encode('data: [DONE]\n\n'));
+            controller.close();
+          },
+        });
+        return new Response(cachedStream, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'X-Cache': 'HIT',
+            ...corsHeaders(origin),
+          },
+        });
+      } catch {
+        // Cached body malformed — fall through to fresh synthesis
+      }
     }
 
     // Route classification (logged; used by D-3+ for retrieval routing).
