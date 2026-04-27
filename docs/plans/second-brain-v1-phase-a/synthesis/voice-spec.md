@@ -295,3 +295,104 @@ Questions R8 surfaced that cannot be resolved from the corpus. Verbatim.
 6. **Voice-AI coverage threshold.** Decision 2 says voice-AI is intentionally under-shared. The agent is told to position voice-AI as "one example among many." But Agam's day job IS voice-AI at production scale (4M+ calls/year). If a user directly asks "tell me about Agam's voice-AI work," how deep should the agent go before the intentional-under-share rule kicks in? Or does Decision 2 apply only to unprompted identity-framing, not to direct questions?
 
 7. **Register 4 vs Register 3 boundary.** The spec distinguishes: Register 4 (bullets, 40-210 words, prompt-driven) vs Register 3 (prose, 200-500 words, peer-ask-driven). But some mentor-mode responses also use numbered bullets (the Voice-AI stack to Swapnil has numbered items). Is the real boundary "prose-first" (R3) vs "bullets-first" (R4), or is it the prompt type (personal-ask vs structured-Q&A)?
+
+---
+
+## 11. /enter v3 user-facing answer voice (LIVE AGENT RULES) — locked 2026-04-27
+
+**Why this section:** §1-10 above govern Agam's authentic voice. This section governs what the LIVE AGENT does when a recruiter, engineer, or curious visitor types into `/enter`. The audience is NOT Agam's LinkedIn followers. It's a stranger who landed on agamarora.com and wants to understand who Agam is + what he thinks. The voice samples in §1-10 are tone calibration, but the agent must TRANSLATE the corpus into plain-English answers, not paraphrase the corpus's insider language.
+
+Locked 2026-04-27 via user feedback during /enter v3 mockup review.
+
+### 11.1 Plain English over insider terms
+
+A sentence like *"Agam named it as a thesis on June 20, 2025: start thinking agent-first, not just from a building lens but from a serving lens"* — **rejected by user as opaque.** Reasons:
+
+- "thesis" — meaningless to a recruiter who doesn't know there's a thesis
+- "June 20, 2025" — date drops without context; user has no idea why this date matters
+- "agent-first" — used as if defined; visitor doesn't know what agent-first means
+- "building lens" / "serving lens" — internal jargon from the manifesto post; visitor reads it and bounces
+
+Replacement that lands:
+
+> *"AI agents now read websites and call APIs the same way humans use apps. Most products only design for the human visitor. Agam thinks that's already obsolete — you have to design for the agent too, or sometimes design for the agent first."*
+>
+> *"His own products show it: at AIonOS, all enterprise voice traffic now runs through APIs, not a UI."*
+
+Notice what changed:
+- "thesis" → silent (the agent shows the thesis, doesn't name the genre)
+- Date dropped (the visitor doesn't need to know June 20)
+- "agent-first" defined the first time it's used, in plain English
+- "building lens / serving lens" cut entirely
+- Concrete proof added: "at AIonOS, all enterprise voice traffic now runs through APIs"
+
+**The rule: the visitor must understand the answer with zero prior knowledge of Agam's posting history. If a term is in the corpus but isn't self-explanatory, either define it inline or cut it. The wiki is where the insider terms live; the agent translates.**
+
+### 11.2 Banned terms in user-facing answers
+
+Beyond §6 banned LLM-isms, the agent answer prose MUST NOT use these without inline definition:
+
+- thesis, manifesto, doctrine, framework, philosophy (when it's just an opinion)
+- lens (building lens, serving lens, X-lens) — vague; replace with concrete behavior
+- hinge, pivot point, inflection (when it's just "he changed his mind")
+- corpus, ontology, atlas (insider terms for the wiki itself)
+- supersedes, contradicts, builds-on (KG edge types — translate to "replaces", "disagrees with", "extends")
+- synthesis, retrieval, classification, edges (function-internal terms)
+
+**If the agent must use one of these (e.g., the question literally asks about the manifesto), define it inline first: "the manifesto — his June 2025 LinkedIn post that said..."**
+
+### 11.3 Show concrete evidence, not abstract claims
+
+Bad: *"He has a strong agent-first thesis."*
+Bad: *"He has been building for production-grade AI."*
+
+Good: *"At AIonOS, all enterprise voice traffic runs through APIs, not a UI. 4 million calls a year. He built the platform."*
+Good: *"He's shipped 15+ AI POCs at AIonOS in his first year — voice, RAG, agentic systems."*
+
+Concrete numbers + named products beat abstract claims. If the wiki extract has the number, the answer must use it.
+
+### 11.4 Card copy (priority + alternates)
+
+Card title = action verb the visitor should take. NOT a label.
+
+Bad titles (label-shaped):
+- "Agent-first thesis"
+- "Second-brain v1"
+- "Voice AI craft"
+
+Good titles (action-shaped):
+- "Read the full take"
+- "See it built"
+- "Adjacent: voice AI"
+
+Card description = plain language about WHAT the visitor gets if they click. NOT a self-referential summary. Include a concrete number or proof when available.
+
+### 11.5 Date framing
+
+Don't drop dates without context. Either:
+- (a) Frame the date: "back in 2023" / "last June" / "two years ago" — relative, human-scale
+- (b) Cut the date entirely if it's not load-bearing
+
+Never: "as a thesis on June 20, 2025: start thinking agent-first" — date is naked, makes the visitor wonder what's special about June 20.
+
+### 11.6 Word ceiling
+
+70 words max per answer (existing v2 rule, preserved). 1-3 sentences when possible.
+
+The plain-English translation must fit in 70 words AND cover: what Agam thinks, why it matters in concrete terms, and one piece of evidence. Tight is the constraint; insider jargon makes it impossible.
+
+### 11.7 D-2 system prompt enforcement
+
+D-2 (Task 15) implements §11 in the stable system prompt:
+- Few-shot examples MUST show plain-English translations of theme content (not paraphrases of wiki prose)
+- Banned terms list in §11.2 added to the existing banned LLM-isms (leveraging, innovative, etc.)
+- Card schema few-shot shows action-titled cards, not label cards
+- Voice calibration sample: "AI agents now read websites and call APIs the same way humans use apps. Most products only design for the human visitor. He thinks that's already obsolete." — this is the target shape, NOT "Platforms that cannot serve autonomous agents are already behind."
+
+### 11.8 D-6 eval enforcement
+
+23-scenario eval per Task 19 must add assertions per scenario:
+- No banned §11.2 terms in answer prose (auto-grep)
+- Concrete number or named product in answer for synthesis scenarios (auto-check)
+- Card titles match action-verb shape (regex: starts with verb stem like "Read", "See", "Browse", "Talk to", "Open", "Get the")
+- Card descriptions don't repeat the title (string difference > 60%)

@@ -172,11 +172,21 @@
     transform:translateY(4px);
     animation:trace-in 0.32s cubic-bezier(0.25,0.1,0.25,1) forwards;
   }
-  .trace-line:nth-child(1) { animation-delay:0ms; }
-  .trace-line:nth-child(2) { animation-delay:150ms; }
-  .trace-line:nth-child(3) { animation-delay:300ms; }
-  .trace-line:nth-child(4) { animation-delay:450ms; }
-  .trace-line:nth-child(5) { animation-delay:600ms; }
+  /* Stagger derived from REAL backend latencies (not a frozen interval).
+     Each pill carries data-latency in markup; JS computes appearance time
+     as cumulative-prior + max(latency, MIN_READ_BUFFER).
+
+     MIN_READ_BUFFER = 500ms ensures fast retrievals (6ms, 8ms) still get
+     read time. Slow steps (e.g. 800ms classifier) display in real time.
+
+     In D-7 live implementation: same logic, latencies come from real SSE
+     trace events. No frozen interval. Per user feedback 2026-04-27:
+     "should be dynamic based on what time we are showing... slow it down
+     so user can read." */
+  .trace-line { animation:none; opacity:0; transform:translateY(4px); }
+  .trace-line.show {
+    animation:trace-in 0.32s cubic-bezier(0.25,0.1,0.25,1) forwards;
+  }
   @keyframes trace-in {
     to { opacity:1; transform:translateY(0); }
   }
@@ -199,14 +209,23 @@
   .trace-line .latency .check { color:#7fbf7f; margin-left:6px; }
 
   /* =========================================================
-     Answer prose
+     Answer prose — reveals AFTER trace pills cascade
+     User feedback 2026-04-27: flow is question → trace pills →
+     answer → cards (sequential reveal, not all at once).
+     Timing driven by JS — answer-show + cards-show classes
+     fire after the last pill animates.
      ========================================================= */
   .answer {
     font-size:1.04rem;
     line-height:1.65;
     color:var(--text);
     max-width:680px;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity 0.4s cubic-bezier(0.25,0.1,0.25,1),
+               transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
   }
+  .answer.show { opacity:1; transform:translateY(0); }
   .answer p { margin-bottom:var(--space-4); }
   .answer p:last-child { margin-bottom:0; }
   .answer a {
@@ -231,7 +250,12 @@
     padding-left:clamp(var(--space-5),5vw,var(--space-7));
     padding-right:clamp(var(--space-5),5vw,var(--space-7));
     scrollbar-width:none;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity 0.4s cubic-bezier(0.25,0.1,0.25,1),
+               transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
   }
+  .cards.show { opacity:1; transform:translateY(0); }
   .cards::-webkit-scrollbar { display:none; }
   .card {
     flex:0 0 280px;
@@ -258,10 +282,15 @@
     box-shadow:0 0 36px rgba(229,165,75,0.16);
   }
   .card .card-icon {
-    width:24px;height:24px;
+    width:26px;height:26px;
     color:var(--accent);
+    fill:currentColor;
     margin-bottom:var(--space-2);
+    opacity:0.9;
   }
+  .card.priority .card-icon { opacity:1; }
+  /* Header SVG icons inherit fill same way */
+  .icon-bar svg { fill:currentColor; }
   .card .card-title {
     font-family:var(--sans);
     font-size:0.95rem;
@@ -489,8 +518,19 @@
   <symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
   <symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
   <symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0z"/></symbol>
-  <symbol id="i-bullhorn" viewBox="0 0 512 512"><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.4-.4 425.4 8.7L381.7 52.5C337 97.2 276.3 122.3 213.1 122.3L192 122.3l-32 0-64 0c-35.3 0-64 28.7-64 64l0 64c0 35.3 28.7 64 64 64l11.5 0L57 466.2c-3.9 11.7-2 24.6 5.4 34.6S81.5 517 94 517l32 0c10.4 0 20-5 26-13.4L188.8 408l24.3 0c63.2 0 123.9 25.1 168.6 69.8l43.7 43.7c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6l0-448zM413.7 90.3l0 363.4-3.4-3.4c-50.6-50.6-119.1-79.5-190.9-83.8L160 281.8 160 162.6l59.4 0c71.8-4.3 140.3-33.2 190.9-83.8l3.4-3.4z"/></symbol>
-  <symbol id="i-spark" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM215.5 96.3c-3.6-1.4-7.7-1.4-11.3 0L93.4 138.4 51.3 27.6C49.9 24 46.1 21 42.1 21S34.3 24 32.9 27.6L0 96 25.3 174.2c2.5 7.5 8.4 13.4 15.9 15.9L122.4 215 96 312l78 26 26 78 26-78 78-26-26.4-97.4c2.5-7.5 8.4-13.4 15.9-15.9L375 174.2 400 96 367.1 27.6C365.7 24 361.9 21 357.9 21s-7.8 3-9.2 6.6L306.6 138.4 215.5 96.3z"/></symbol>
+  <!-- Semantic card icons. ALL render in gold (var(--accent)) per
+       spec §4 + user feedback 2026-04-27 (black on dark = poor contrast,
+       icons must mean something). One icon per card-type:
+         book-open  → wiki theme page
+         flask      → lab project
+         link       → external action
+         user       → resume / bio
+         arrow-right → routing card -->
+  <symbol id="ic-book" viewBox="0 0 576 512"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.4 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 96.4 448 144 448c33.7 0 64 12.5 87.2 25.5c2.4 1.4 5 2.5 7.7 3.5c.4 .2 .9 .3 1.4 .4l0 0 .1 0 1 .3 0 0 4.7 1.4 0 0c1.2 .4 2.3 .6 3.5 .6zm56.9-15.5c0 11.4 11.7 19.3 22.4 15.5c1.2 0 2.3-.2 3.5-.6l0 0 4.7-1.4 .9-.3 .1 0 1.4-.4c2.7-.9 5.3-2.1 7.7-3.5c23.2-13 53.5-25.5 87.2-25.5c47.6 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5L576 83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.4 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11l0 377.4z"/></symbol>
+  <symbol id="ic-flask" viewBox="0 0 448 512"><path d="M288 0L160 0 128 0C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 481 31 512 69.4 512l309.2 0c38.4 0 69.4-31 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32L288 0zM192 196.8L192 64l64 0 0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320l-171 0L173 263.9c12.4-20.2 19-43.4 19-67.1z"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></symbol>
+  <symbol id="ic-user" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 512 512"><path d="M256 0L416 0c17.7 0 32 14.3 32 32l0 64-26.7 0c-17.8 0-34.9-7-47.5-19.7l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L256 48l0-48zM416 192l0-64-32 0c-26.5 0-51.9-10.5-70.7-29.3l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L160 70.6 160 224l256 0 0-32zM160 256l0 80c0 17.7 14.3 32 32 32l192 0 32 0 0 64c0 17.7-14.3 32-32 32l-160 0c-17.7 0-32-14.3-32-32l0-176z"/></symbol>
 </svg>
 
 <header class="site-header">
@@ -534,28 +574,28 @@
       </div>
 
       <div class="trace" id="trace-1" role="region" aria-label="Agent trace">
-        <div class="trace-line">
+        <div class="trace-line" data-latency="312">
           <span class="verb">
             <span class="arrow">&rarr;</span>classified
             <span class="arg">intent=synthesis themes=[agent-first] conf=0.85</span>
           </span>
           <span class="latency">312ms<span class="check">&check;</span></span>
         </div>
-        <div class="trace-line">
+        <div class="trace-line" data-latency="6">
           <span class="verb">
             <span class="arrow">&rarr;</span>pulled
             <span class="arg">wiki(agent-first, 1842 chars)</span>
           </span>
           <span class="latency">6ms<span class="check">&check;</span></span>
         </div>
-        <div class="trace-line">
+        <div class="trace-line" data-latency="8">
           <span class="verb">
             <span class="arrow">&rarr;</span>pulled
             <span class="arg">edges(agent-first&rarr;supersedes, 6)</span>
           </span>
           <span class="latency">8ms<span class="check">&check;</span></span>
         </div>
-        <div class="trace-line">
+        <div class="trace-line" data-latency="421">
           <span class="verb">
             <span class="arrow">&rarr;</span>composed
             <span class="arg">answer + 3 cards</span>
@@ -565,27 +605,27 @@
       </div>
 
       <div class="answer">
-        <p>Agents are users too, and maybe first. Platforms that cannot serve autonomous agents calling on behalf of humans are already behind. The serving lens is where the differentiation lives.</p>
-        <p>Agam named it as a thesis on June 20, 2025: <a href="/wiki/agent-first/">start thinking agent-first</a>, not just from a building lens but from a serving lens.</p>
+        <p>AI agents now read websites and call APIs the same way humans use apps. Most products only design for the human visitor. Agam thinks that's already obsolete — you have to design for the agent too, or sometimes design for the agent first.</p>
+        <p>His own products show it: at AIonOS, all enterprise voice traffic now runs through APIs, not a UI. <a href="/wiki/agent-first/">More on the agent-first wiki page</a>.</p>
       </div>
 
       <div class="cards" role="list">
         <a class="card priority" href="/wiki/agent-first/" role="listitem">
-          <svg class="card-icon" aria-hidden="true"><use href="#i-spark"/></svg>
-          <div class="card-title">Agent-first thesis</div>
-          <div class="card-desc">Wiki theme. 7 beliefs, 22 edges. The serving lens manifesto with full evidence drawer.</div>
+          <svg class="card-icon" aria-hidden="true"><use href="#ic-book"/></svg>
+          <div class="card-title">Read the full take</div>
+          <div class="card-desc">Wiki page on agent-first. Why he started saying it, what the AIonOS production traffic actually looks like, and where it's headed.</div>
           <div class="card-arrow">&rarr; /wiki/agent-first/</div>
         </a>
         <a class="card" href="/lab/second-brain/" role="listitem">
-          <svg class="card-icon" aria-hidden="true"><use href="#i-spark"/></svg>
-          <div class="card-title">Second-brain v1</div>
-          <div class="card-desc">Lab project. Agent-first applied to personal knowledge graph.</div>
+          <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
+          <div class="card-title">See it built</div>
+          <div class="card-desc">Second-brain — his own knowledge made readable for AI agents. Open source, live on this site.</div>
           <div class="card-arrow">&rarr; /lab/second-brain/</div>
         </a>
         <a class="card" href="/wiki/voice-ai-craft/" role="listitem">
-          <svg class="card-icon" aria-hidden="true"><use href="#i-bullhorn"/></svg>
-          <div class="card-title">Voice AI craft</div>
-          <div class="card-desc">Adjacent theme. 100% MCP+APIs in production at AIonOS.</div>
+          <svg class="card-icon" aria-hidden="true"><use href="#ic-route"/></svg>
+          <div class="card-title">Adjacent: voice AI</div>
+          <div class="card-desc">The 4M-call-a-year voice platform where agent-first stopped being theory.</div>
           <div class="card-arrow">&rarr; /wiki/voice-ai-craft/</div>
         </a>
       </div>
@@ -685,6 +725,34 @@
   // "verb mix" contract. In live D-7, this fires on every query.
   setTimeout(demoStatusCycle, 800);
   startHintRotation();
+
+  // =====================================================
+  // TRACE PILL SCHEDULER — dynamic timing per real backend ms
+  // =====================================================
+  // Each pill carries data-latency = real backend ms.
+  // Show order: pill N appears at sum-of-prior-latencies + read buffer.
+  // Read buffer = max(latency, MIN_READ_BUFFER) — ensures fast pills
+  // (6ms, 8ms) still pause long enough to be readable.
+  // In D-7 wiring: same scheduler consumes SSE trace events as they
+  // arrive, but min buffer enforces UX legibility.
+  const MIN_READ_BUFFER_MS = 600;  // tune by feel — 500-800ms range
+  const trace = document.getElementById('trace-1');
+  const answer = document.querySelector('.answer');
+  const cards = document.querySelector('.cards');
+  if (trace) {
+    const pills = Array.from(trace.querySelectorAll('.trace-line'));
+    let cumulative = 100;  // initial 100ms warm-up before first pill
+    pills.forEach((pill) => {
+      const realLatency = parseInt(pill.getAttribute('data-latency') || '0', 10);
+      const wait = Math.max(realLatency, MIN_READ_BUFFER_MS);
+      cumulative += wait;
+      setTimeout(() => pill.classList.add('show'), cumulative);
+    });
+    // Answer reveals 350ms after last pill animates in
+    setTimeout(() => answer && answer.classList.add('show'), cumulative + 350);
+    // Cards reveal 450ms after answer
+    setTimeout(() => cards && cards.classList.add('show'), cumulative + 800);
+  }
 
   // Throttle demo (browser-side rate limit per D-1 Tier 1: 1 q / 2s)
   const inputBar = document.getElementById('input-bar');
