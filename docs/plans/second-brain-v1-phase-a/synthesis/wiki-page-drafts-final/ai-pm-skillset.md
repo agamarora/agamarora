@@ -41,6 +41,21 @@ The crystallization happened March 14, 2023: "As a product manager, I find mysel
 
 The 2023 framing still holds in 2026. What changed: the craft differentiation moved upstream. By April 2026, the Spec > Sprint trilogy named the new surface: not whether you use AI tools, but whether you have the taste to spec what they should do. The belief matured from "you need to use these tools" to "your craft must operate above the layer these tools occupy."
 
+## AI PM vs traditional PM - what changes
+
+| Dimension | Traditional PM | AI PM |
+|---|---|---|
+| Primary unit of work | Feature spec, user story | Spec + eval harness + dataset for the spec to verify against |
+| Stakeholder mode | Wireframes, mocks, walkthroughs | Working demos, paper-prototyped flows wired to live model APIs |
+| Technical depth required | Optional - useful but not core | Table stakes - must read papers, run notebooks, wire APIs |
+| Daily LLM use | Maybe | The primary tool. Drafting, scoping, code review, eval analysis |
+| Failure surface | Bad specs ship; iteration recovers | Bad specs scale instantly through the model; iteration cycle is the spec itself |
+| What discriminates great vs average | Discrimination at scale - what to refuse | Same, plus: can you spec what an agent should do without ambiguity |
+| Career horizon | One layer deep on AI fluency | Two layers deep on the next problem class (RAG → agents → data infra → evals) |
+| Cert vs craft | Certifications carry signal | Applied fluency only - certifications are collectibles |
+
+The traditional-PM craft does not get replaced. It gets extended. The discrimination muscle is identical; the surface it operates on is wider.
+
 ## What the floor requires in practice
 
 **Frame the problem first.** "It's not the model, it's the problem" is a constraint on where to spend attention. Application-layer PMs who chase model upgrades are optimizing the wrong variable. The unlock is almost always in the problem framing, the context layer, the integration with existing workflows.

@@ -249,6 +249,18 @@
 <p><strong>2025-12-04: the hinge.</strong> &quot;I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings.&quot; The shift from what enterprises want to what I am internally committed to. The corollary before the principle.</p>
 <p><strong>2026-04-09: crystallization.</strong> Google Stitch. Thirty minutes. Wrong fonts, wrong colors, approximate everything. Spec &gt; Sprint / Taste &gt; Execution / Context &gt; Prompt.</p>
 <p><strong>2026-04-23: the thesis shipped.</strong> Second-brain launch: &quot;Plain markdown. Git. Open source. MIT. Free forever.&quot; Eight words, four compressed refusals. The belief embodied in a shipped artifact.</p>
+<h2 id="spec-first-vs-sprint-first-what-changes">Spec-first vs sprint-first - what changes</h2>
+<div class="md-table-wrap"><table class="md-table">
+<thead><tr><th>Dimension</th><th>Sprint-first (the 2020 default)</th><th>Spec-first (the post-LLM stance)</th></tr></thead>
+<tbody>
+<tr><td>What gets the most time</td><td>Iteration cycles, ship-fast tempo</td><td>Spec authoring, schema design, eval harness</td></tr>
+<tr><td>Failure mode</td><td>Drift between intent and shipped behavior</td><td>Slow start - over-spec'ing things that should be cheap to iterate</td></tr>
+<tr><td>Where leverage lives</td><td>Engineering velocity</td><td>Clarity of the input contract</td></tr>
+<tr><td>Best fit</td><td>Pre-LLM products with high build cost</td><td>Post-LLM products where iteration is near-free</td></tr>
+<tr><td>Taste check</td><td>&quot;Does it ship?&quot;</td><td>&quot;Will the model amplify a clear spec into the right outcome?&quot;</td></tr>
+<tr><td>Code:spec ratio</td><td>High - thousands of LOC per spec line</td><td>Low - dozens of LOC per spec line, the rest is prompts + evals</td></tr>
+</tbody></table></div>
+<p>The shipping cadence does not have to change. The preparation upstream of it does. Cheap iteration rewards better preparation, not more iteration.</p>
 <h2 id="what-it-means-for-how-i-build">What it means for how I build</h2>
 <p>The rational response to cheap iteration is not more iteration. It is better preparation.</p>
 <p>Ship-fast - my 2020 identity - is correctly listed as superseded. The shipping cadence did not change. The preparation upstream of it did. The spec is the leverage. The model amplifies whatever you put in front of it.</p>

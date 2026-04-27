@@ -244,6 +244,20 @@
 <p>On June 20, 2025, three moves landed in one post. Horizontal AI declared dead - &quot;chatbots and copilots are cool until they hit a wall without real domain depth.&quot; Agentic AI named as the new direction. And the serving lens introduced as the differentiation move: &quot;Most importantly, start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation.&quot;</p>
 <p>What was superseded was explicit. Horizontal-AI-will-scale, single-model-as-substrate, prompt-as-primary-interface - all three dissolved at this boundary. The 2023-03-14 post (&quot;I find myself using ChatGPT for just about everything&quot;) represents the pre-hinge stance accurately. It stayed live. The arc is public.</p>
 <p>After the manifesto, agent-first became a flat assumption. By April 2026 it had become craft posture: &quot;Context &gt; Prompt.&quot; <a href="/wiki/second-brain/">Second-brain v1</a> is agent-first applied to personal knowledge - every future AI session reads the same brain and writes back to it.</p>
+<h2 id="agent-first-vs-human-first-what-changes">Agent-first vs human-first - what changes</h2>
+<div class="md-table-wrap"><table class="md-table">
+<thead><tr><th>Dimension</th><th>Human-first (default)</th><th>Agent-first</th></tr></thead>
+<tbody>
+<tr><td>Primary user</td><td>Human in a UI</td><td>Autonomous agent calling on behalf of a human</td></tr>
+<tr><td>Interface</td><td>Web UI, mobile app, dashboard</td><td>API surface, MCP tool catalog, structured data</td></tr>
+<tr><td>Latency budget</td><td>Hundreds of ms acceptable</td><td>Sub-second per call, agents chain dozens</td></tr>
+<tr><td>Authentication</td><td>OAuth + session cookies</td><td>Scoped API keys, OAuth-for-agents, tool permissions</td></tr>
+<tr><td>Failure surface</td><td>Confusing message - human retries</td><td>Stale tool catalog, ambiguous schema - agent loops or stops</td></tr>
+<tr><td>Observability</td><td>Session replay, click heatmaps</td><td>Tool-call traces, eval harnesses, action ledgers</td></tr>
+<tr><td>Documentation</td><td>Onboarding docs, video tours</td><td>OpenAPI specs, llms.txt, MCP descriptors</td></tr>
+<tr><td>Default state</td><td>Read by default, write on click</td><td>Read by default, write only with reversibility constraints</td></tr>
+</tbody></table></div>
+<p>Both lenses can coexist on the same product. The shift is which one drives the architecture decisions when they conflict. By April 2026, production traffic on enterprise voice systems is already 100% MCP + APIs, 0% UI - one example, but the shape generalizes.</p>
 <h2 id="what-the-thesis-forces-at-the-craft-layer">What the thesis forces at the craft layer</h2>
 <p>If agents are primary users, the production engineering rebuilds around them. Three corollaries fall out. Each is a separate belief on this site.</p>
 <p><strong>Prompts are plumbing, not UX.</strong> The interface to an agent is not the prompt string. It is the context surface, the tool catalog, the permission model. Building good prompts is a 2023 skill. Building good context is a 2025 skill. The December 2024 &quot;kill prompting&quot; post overstated the verb but got the diagnosis right: prompts as user-facing incantation are dead. Prompts as engineering primitive survived. The 2025-07-17 re-admission named the migration honestly: &quot;While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases.&quot; Plumbing, not UX.</p>

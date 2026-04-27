@@ -51,6 +51,19 @@ Lived this since 2021. Named it in April 2026. Same disposition, sharper words.
 
 **2026-04-23: the thesis shipped.** Second-brain launch: "Plain markdown. Git. Open source. MIT. Free forever." Eight words, four compressed refusals. The belief embodied in a shipped artifact.
 
+## Spec-first vs sprint-first - what changes
+
+| Dimension | Sprint-first (the 2020 default) | Spec-first (the post-LLM stance) |
+|---|---|---|
+| What gets the most time | Iteration cycles, ship-fast tempo | Spec authoring, schema design, eval harness |
+| Failure mode | Drift between intent and shipped behavior | Slow start - over-spec'ing things that should be cheap to iterate |
+| Where leverage lives | Engineering velocity | Clarity of the input contract |
+| Best fit | Pre-LLM products with high build cost | Post-LLM products where iteration is near-free |
+| Taste check | "Does it ship?" | "Will the model amplify a clear spec into the right outcome?" |
+| Code:spec ratio | High - thousands of LOC per spec line | Low - dozens of LOC per spec line, the rest is prompts + evals |
+
+The shipping cadence does not have to change. The preparation upstream of it does. Cheap iteration rewards better preparation, not more iteration.
+
 ## What it means for how I build
 
 The rational response to cheap iteration is not more iteration. It is better preparation.

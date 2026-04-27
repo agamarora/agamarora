@@ -42,6 +42,21 @@ What was superseded was explicit. Horizontal-AI-will-scale, single-model-as-subs
 
 After the manifesto, agent-first became a flat assumption. By April 2026 it had become craft posture: "Context > Prompt." [Second-brain v1](/wiki/second-brain/) is agent-first applied to personal knowledge - every future AI session reads the same brain and writes back to it.
 
+## Agent-first vs human-first - what changes
+
+| Dimension | Human-first (default) | Agent-first |
+|---|---|---|
+| Primary user | Human in a UI | Autonomous agent calling on behalf of a human |
+| Interface | Web UI, mobile app, dashboard | API surface, MCP tool catalog, structured data |
+| Latency budget | Hundreds of ms acceptable | Sub-second per call, agents chain dozens |
+| Authentication | OAuth + session cookies | Scoped API keys, OAuth-for-agents, tool permissions |
+| Failure surface | Confusing message - human retries | Stale tool catalog, ambiguous schema - agent loops or stops |
+| Observability | Session replay, click heatmaps | Tool-call traces, eval harnesses, action ledgers |
+| Documentation | Onboarding docs, video tours | OpenAPI specs, llms.txt, MCP descriptors |
+| Default state | Read by default, write on click | Read by default, write only with reversibility constraints |
+
+Both lenses can coexist on the same product. The shift is which one drives the architecture decisions when they conflict. By April 2026, production traffic on enterprise voice systems is already 100% MCP + APIs, 0% UI - one example, but the shape generalizes.
+
 ## What the thesis forces at the craft layer
 
 If agents are primary users, the production engineering rebuilds around them. Three corollaries fall out. Each is a separate belief on this site.
