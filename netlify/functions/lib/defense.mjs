@@ -88,9 +88,10 @@ const INJECTION_PATTERNS = [
   /act\s+as\s+(a|an|if)/i,
   /you\s+are\s+now\s+(a|an)/i,
   /roleplay\s+as/i,
-  // Extended: role-based newline injection
+  // Extended: role-based newline injection (multiline + line-start without newline)
   /\n\s*(system|user|assistant)\s*:/i,
   /\\n\s*(system|user|assistant)\s*:/i,
+  /^(system|user|assistant)\s*:/im,
   // Extended: bidi override characters
   /[‪-‮⁦-⁩‏‎]/,
   // Extended: base64-encoded injection attempt (heuristic: long base64 string)
@@ -101,10 +102,45 @@ const INJECTION_PATTERNS = [
   /disregard\s+(all\s+)?(previous|prior|above|your)\s+(instructions|rules|constraints)/i,
   /override\s+(safety|content|system)\s+(filter|policy|rules)/i,
   /new\s+(instructions?|directives?|rules?)\s*:/i,
+  // Extended: "forget" variant
+  /forget\s+(all|previous|your|prior)\s+(instructions?|rules?|prompts?)/i,
 ];
 
+// Normalize input before pattern matching to defeat homoglyph + ZWSP injection.
+// NFKC collapses some lookalike characters. We also apply a manual homoglyph
+// substitution map for characters NFKC does not unify (e.g. dotless-i U+0131).
+// Zero-width / invisible chars are replaced with a space (not stripped) so
+// word-boundary patterns like \s+ still match after ZWSP removal.
+
+// Homoglyph map: common lookalikes → ASCII equivalent
+// Keep minimal — only characters that directly bypass injection patterns.
+const HOMOGLYPH_MAP = {
+  'ı': 'i', // dotless i (Turkish) — bypasses "ignore"
+  'ẚ': 'a', // latin small letter a with right half ring
+  'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a',
+  'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
+  'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
+  'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+  'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u',
+};
+const HOMOGLYPH_RE = new RegExp(`[${Object.keys(HOMOGLYPH_MAP).join('')}]`, 'g');
+
+// Zero-width + invisible Unicode characters that attackers insert to split keywords.
+// Replace with space so \s+ patterns still match after removal.
+// Using RegExp constructor with explicit unicode escapes to avoid embedding raw control chars.
+// U+200B ZWSP, U+200C ZWNJ, U+200D ZWJ, U+FEFF BOM, U+00AD soft-hyphen, U+2060 word-joiner
+const INVISIBLE_RE = new RegExp('[\u200b\u200c\u200d\ufeff\u00ad\u2060\u180e\u2062\u2063\u2064]', 'g'); // ZWSP/ZWNJ/ZWJ/BOM/soft-hyphen/word-joiner and invisible math ops
+
+function normalizeInput(input) {
+  return input
+    .normalize('NFKC')
+    .replace(HOMOGLYPH_RE, ch => HOMOGLYPH_MAP[ch] || ch)
+    .replace(INVISIBLE_RE, ' ');
+}
+
 export function isInjectionAttempt(input) {
-  return INJECTION_PATTERNS.some(p => p.test(input));
+  const normalized = normalizeInput(input);
+  return INJECTION_PATTERNS.some(p => p.test(normalized));
 }
 
 // ---- Tier 1: Duplicate-query LRU cache -------------------------------------
@@ -168,6 +204,7 @@ export const __dupCache = { get: cacheGet, set: cacheSet, map: dupCache };
 // Burst: in-process Map { ip → [timestamps] }. Evict old timestamps on each
 // check. 5 requests within 10s = 429.
 
+const BURST_MAP_MAX = 10_000; // cap in-process map to prevent unbounded growth
 const burstMap = new Map(); // ip -> number[] (timestamps)
 
 function checkBurst(ip) {
@@ -182,19 +219,24 @@ function checkBurst(ip) {
     return { allowed: false, retryAfterMs: Math.max(0, retryAfterMs) };
   }
   timestamps.push(now);
+  // Evict oldest entry if map is at cap (Map preserves insertion order)
+  if (!burstMap.has(ip) && burstMap.size >= BURST_MAP_MAX) {
+    burstMap.delete(burstMap.keys().next().value);
+  }
   burstMap.set(ip, timestamps);
   return { allowed: true };
 }
 
 async function checkHourly(ip) {
-  // ratelimit:{ip}:hour stores count. INCR + EXPIRE on first hit.
+  // ratelimit:{ip}:hour stores count. Atomic Lua: INCR + EXPIRE only on first touch.
+  // Using Lua EVAL ensures no window where key has no TTL (permanent lockout prevented).
   const key = `ratelimit:${ip}:hour`;
   try {
-    const count = await upstashCall(['INCR', key]);
-    if (count === 1) {
-      // First request this window — set TTL (best-effort, fire and forget)
-      upstashCall(['EXPIRE', key, '3600']).catch(() => {});
-    }
+    const count = await upstashCall(['EVAL', `
+local v = redis.call('INCR', KEYS[1])
+if v == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end
+return v
+`, '1', key, '3600']);
     if (typeof count === 'number' && count > RATE_LIMIT_PER_HOUR) {
       return { allowed: false, retryAfterMs: 60_000 };
     }
