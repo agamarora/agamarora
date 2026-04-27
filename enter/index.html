@@ -601,6 +601,14 @@
      three pill rows (graph/lab/resume), no wordmark, no tagline,
      no warm-trace, no opening copy. */
   @media (max-width:760px) {
+    html {
+      /* Desktop sets scroll-padding-bottom:240px to keep streamed content
+         above the fixed input bar. On mobile the input bar is a static
+         flex child, not fixed — so that padding instead causes the browser
+         to slide the layout up ~240px when the input is focused. Result:
+         input "floats" mid-screen with a tall empty gap below it. Reset. */
+      scroll-padding-bottom:0;
+    }
     html, body {
       height:var(--vh, 100dvh);
       min-height:0;
@@ -1434,10 +1442,10 @@ function generateFallbackCards(prompt, answer) {
   const p = prompt.toLowerCase();
   const cards = [];
 
-  if (p.match(/hire|recruit|available|opportunit/)) {
+  if (p.match(/hire|recruit|available|opportunit|contact|reach|connect|get in touch|message|talk to|chat with|linkedin|book.*(call|chat|meeting)/)) {
     cards.push({ title:'Book a 15-min chat', desc:"Not searching but always reads a good message. Fastest path in.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar', priority:true });
     cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agam-arora', type:'external', icon:'ic-link' });
-    cards.push({ title:'Download resume PDF', desc:"Latest resume, updated Nov 2025.", url:'/assets/artefacts/2026_Agam%20Arora.pdf', type:'action', icon:'ic-download' });
+    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
   } else if (p.match(/\bvoice\b|\bspeech\b|\bshararat\b|conversation ai|voice ai|4m calls|million calls/)) {
     cards.push({ title:'Shararat on GitHub', desc:"Voice AI multi-agent demo. Code + README.", url:'https://github.com/agamarora/shararat-ai', type:'external', icon:'ic-github', priority:true });
     cards.push({ title:'See his current role', desc:"AVP AI Products at AIonOS since Nov 2025.", url:'/resume#avp', icon:'ic-user' });
@@ -1806,16 +1814,8 @@ if (isMobile() && window.visualViewport) {
   const vv = window.visualViewport;
   const updateVH = () => {
     document.documentElement.style.setProperty('--vh', vv.height + 'px');
-    // Pin layout viewport to top — Android Chrome auto-scrolls the layout
-    // viewport when an input is focused (to bring it into view) which makes
-    // the bottom-pinned input bar "float" mid-screen relative to the
-    // keyboard. Forcing scrollTo(0,0) keeps the layout aligned with the
-    // visual viewport. Carried over from old /enter (commit 2fd49eb).
-    window.scrollTo(0, 0);
   };
   vv.addEventListener('resize', updateVH);
-  vv.addEventListener('scroll', () => window.scrollTo(0, 0));
-  window.addEventListener('scroll', () => window.scrollTo(0, 0), { passive:true });
   updateVH();
 }
 
