@@ -2,7 +2,7 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-27 — **CHECKPOINT 32 — Phase C COMPLETE. C-final /design-review + /review passes done (0 HIGH, 0 CRITICAL, MEDIUM in `docs/plans/c-final-followups.md`). Working tree clean. Commits `d48f8ad` (CP-1) + `2abf584` (CP-2). Next: AEO/SEO gate (BINDING before Phase D) → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
+Last updated: 2026-04-27 — **CHECKPOINT 33 — AEO/SEO gate CLEARED. 14 tasks shipped across 4 batches: Person schema enrichment, robots+bot allowlist (15 AI crawlers), Q&A overlay, BLUF, FAQPage on 19 belief pages, HowTo on Lab pages, view-source audit + noscript graph fallback (M2 fold), 120 LinkedIn outbound links, 3 comparison tables, DRY chrome enforcement. AEO-13 (post-deploy AI search QA) runs 7-14d after Phase D ships. Working tree clean. Final audit: `docs/plans/aeo-gate-final-audit-2026-04-27.md`. Next: `/plan-eng-review` on Phase D plan → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
 
 ---
 
