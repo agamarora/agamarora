@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>/enter v3 — locked visual mockup (D-7 reference)</title>
+<meta name="description" content="Static visual reference for /enter v3 implementation. Variant A baseline + D pill-chip cherry-pick. Locked 2026-04-27 via /plan-design-review.">
+
+<!--
+  /enter v3 — LOCKED VISUAL MOCKUP
+
+  This file is the binding visual reference for D-7 implementation.
+  Locked 2026-04-27 via /plan-design-review (gstack) on the 4 variants
+  at ~/.gstack/projects/agamarora-agamarora/designs/enter-v3-20260424/.
+
+  Decisions captured here:
+  - Variant A (CONSOLE) full-width single-column baseline
+  - Trace lines: A-style mono content + gold pill border enclosure (per
+    AskUserQuestion 2026-04-27 — "A-style mono + gold pill enclosure")
+  - Status bar verb cycles with current trace verb (per AskUserQuestion
+    2026-04-27 — "mix of verbs.. not one permanent verb"). Vocab from
+    spec §1+§5: ready, routing, classifying, pulling, expanding,
+    composing, replied. Banned: thinking, considering, analyzing,
+    reasoning, pondering.
+  - Empty-state warm-up sequence (spec §6): warm dims → opening message
+    fades → default cards stagger → trace appears
+  - 5-string rotating placeholder (200ms fade)
+  - Card row with priority gold-stripe + glow per spec §4
+  - Mobile responsive at 760px breakpoint per spec §6
+
+  D-7 implementation:
+  - Reads CSS from this file as binding spec
+  - Replaces enter/index.html with these treatments
+  - Wires SSE events (trace, token, card, done) to this DOM
+  - Adds browser-side throttle (1q/2s) + retry banner (D-1 lib)
+
+  This file does NOT call the function. It's a static demo of the
+  visual contract. JS animates the empty-state warm-up and the
+  status-verb cycle for visual verification only.
+-->
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --accent-pill:rgba(229,165,75,0.25);
+    --accent-glow:rgba(229,165,75,0.45);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-2:6px; --space-3:8px; --space-4:12px; --space-5:16px;
+    --space-6:24px; --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);
+       -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;
+       overflow-x:hidden;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  /* =========================================================
+     v2 chrome (header icon-bar + aa. mark) — unchanged from v2
+     ========================================================= */
+  header.site-header{position:fixed;top:0;left:0;right:0;
+    height:clamp(52px,6vw,64px);z-index:100;
+    padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);
+    display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;gap:0;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;
+    justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;
+    font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;
+    text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+  .icon-bar svg{width:1em;height:1em;fill:currentColor;}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);
+    right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;
+    line-height:1;opacity:0.7;transition:opacity 0.2s;
+    font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;
+    overflow:visible;display:block;}
+
+  /* =========================================================
+     /enter v3 — main layout
+     ========================================================= */
+  main.terminal {
+    max-width:880px;
+    margin:0 auto;
+    padding:calc(clamp(52px,6vw,64px) + var(--space-7))
+            clamp(var(--space-5),5vw,var(--space-7))
+            calc(var(--space-9) + 80px);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+  }
+
+  /* =========================================================
+     Status bar — `agent.agam · <verb>` with pulsing dot
+     Verb cycles with current backend operation per spec §1.
+     ========================================================= */
+  .status-bar {
+    display:flex;
+    align-items:center;
+    gap:var(--space-3);
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+    letter-spacing:0.06em;
+  }
+  .status-bar .dot {
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 6px var(--accent-glow);
+    animation:status-pulse 2s ease-in-out infinite;
+  }
+  @keyframes status-pulse {
+    0%,100% { opacity:0.55; box-shadow:0 0 4px rgba(229,165,75,0.30); }
+    50%     { opacity:1.00; box-shadow:0 0 10px var(--accent-glow); }
+  }
+  .status-bar .label {
+    color:var(--text);
+    font-weight:500;
+  }
+  .status-bar .verb {
+    color:var(--accent);
+    text-transform:lowercase;
+    font-feature-settings:"tnum";
+    transition:opacity 0.18s;
+  }
+  /* Idle state tones the dot down (no working operation in flight) */
+  .status-bar.idle .dot { animation:status-pulse-idle 4s ease-in-out infinite; }
+  @keyframes status-pulse-idle {
+    0%,100% { opacity:0.45; box-shadow:0 0 3px rgba(229,165,75,0.15); }
+    50%     { opacity:0.80; box-shadow:0 0 6px rgba(229,165,75,0.30); }
+  }
+
+  /* =========================================================
+     Trace block — A-style mono content + gold pill enclosure
+     ========================================================= */
+  .trace {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-3);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:var(--space-5) 0;
+  }
+  .trace-line {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-4);
+    font-family:var(--mono);
+    font-size:0.78rem;
+    line-height:1.4;
+    color:var(--text-dim);
+    border:1px solid var(--accent-pill);
+    border-radius:var(--radius-pill);
+    padding:5px 14px;
+    background:rgba(229,165,75,0.04);
+    opacity:0;
+    transform:translateY(4px);
+    animation:trace-in 0.32s cubic-bezier(0.25,0.1,0.25,1) forwards;
+  }
+  .trace-line:nth-child(1) { animation-delay:0ms; }
+  .trace-line:nth-child(2) { animation-delay:150ms; }
+  .trace-line:nth-child(3) { animation-delay:300ms; }
+  .trace-line:nth-child(4) { animation-delay:450ms; }
+  .trace-line:nth-child(5) { animation-delay:600ms; }
+  @keyframes trace-in {
+    to { opacity:1; transform:translateY(0); }
+  }
+  .trace-line .verb {
+    color:var(--text);
+    flex:1 1 0;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .trace-line .verb .arrow { color:var(--accent); margin-right:8px; }
+  .trace-line .verb .arg { color:var(--text-dim); }
+  .trace-line .latency {
+    flex-shrink:0;
+    color:var(--text-dim);
+    font-size:0.72rem;
+    font-feature-settings:"tnum";
+  }
+  .trace-line .latency .check { color:#7fbf7f; margin-left:6px; }
+
+  /* =========================================================
+     Answer prose
+     ========================================================= */
+  .answer {
+    font-size:1.04rem;
+    line-height:1.65;
+    color:var(--text);
+    max-width:680px;
+  }
+  .answer p { margin-bottom:var(--space-4); }
+  .answer p:last-child { margin-bottom:0; }
+  .answer a {
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid var(--accent-dim);
+  }
+  .answer a:hover { border-bottom-color:var(--accent); }
+
+  /* =========================================================
+     Card row — horizontal scroll desktop / vertical stack mobile
+     Priority card = 3px gold left-stripe + soft glow
+     ========================================================= */
+  .cards {
+    display:flex;
+    gap:var(--space-4);
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding:var(--space-2) 0 var(--space-3);
+    margin:0 calc(-1 * clamp(var(--space-5),5vw,var(--space-7)));
+    padding-left:clamp(var(--space-5),5vw,var(--space-7));
+    padding-right:clamp(var(--space-5),5vw,var(--space-7));
+    scrollbar-width:none;
+  }
+  .cards::-webkit-scrollbar { display:none; }
+  .card {
+    flex:0 0 280px;
+    scroll-snap-align:start;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:var(--space-5);
+    text-decoration:none;
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-3);
+    transition:border-color 0.2s, transform 0.2s;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+  .card.priority {
+    border-left:3px solid var(--accent);
+    box-shadow:0 0 24px rgba(229,165,75,0.08);
+  }
+  .card.priority:hover {
+    box-shadow:0 0 36px rgba(229,165,75,0.16);
+  }
+  .card .card-icon {
+    width:24px;height:24px;
+    color:var(--accent);
+    margin-bottom:var(--space-2);
+  }
+  .card .card-title {
+    font-family:var(--sans);
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--text);
+    line-height:1.3;
+  }
+  .card .card-desc {
+    font-family:var(--sans);
+    font-size:0.82rem;
+    color:var(--text-dim);
+    line-height:1.4;
+  }
+  .card .card-arrow {
+    font-family:var(--mono);
+    font-size:0.74rem;
+    color:var(--text-dim);
+    margin-top:auto;
+    text-align:right;
+  }
+  .card:hover .card-arrow { color:var(--accent); }
+
+  /* =========================================================
+     Empty state (page zero state, before any query)
+     ========================================================= */
+  .empty-state {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+    min-height:50vh;
+    justify-content:center;
+  }
+  .empty-state .opening {
+    font-family:var(--sans);
+    font-size:1.15rem;
+    line-height:1.5;
+    color:var(--text);
+    max-width:560px;
+    opacity:0;
+    animation:fade-in 0.6s ease 0.4s forwards;
+  }
+  .empty-state .opening .dim { color:var(--text-dim); }
+  @keyframes fade-in { to { opacity:1; } }
+
+  /* =========================================================
+     Conversation pane — scrolls vertically
+     ========================================================= */
+  .conversation {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+  }
+  .turn {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-5);
+  }
+  .turn .user-query {
+    font-family:var(--mono);
+    font-size:0.85rem;
+    color:var(--text-dim);
+    padding-bottom:var(--space-3);
+    border-bottom:1px dashed var(--border);
+  }
+  .turn .user-query .prompt-prefix {
+    color:var(--accent);
+    margin-right:8px;
+  }
+
+  /* =========================================================
+     Bottom input — sticky fixed bar
+     ========================================================= */
+  .input-bar {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:linear-gradient(to top, var(--bg) 70%, rgba(10,10,10,0));
+    padding:var(--space-5) clamp(var(--space-5),5vw,var(--space-7))
+            calc(var(--space-7) + 8px);
+    z-index:60;
+  }
+  .input-bar .input-wrap {
+    max-width:880px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:var(--space-4);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:var(--space-4) var(--space-5);
+    transition:border-color 0.2s;
+  }
+  .input-bar .input-wrap:focus-within { border-color:var(--accent-pill); }
+  .input-bar .prompt {
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--accent);
+    user-select:none;
+  }
+  .input-bar input {
+    flex:1 1 0;
+    background:transparent;
+    border:0;
+    outline:none;
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:0.95rem;
+    line-height:1.5;
+  }
+  .input-bar input::placeholder {
+    color:var(--text-dim);
+    transition:opacity 0.2s;
+  }
+  /* Throttle countdown state (D-1 abuse defense Tier 1) */
+  .input-bar.throttled .input-wrap { opacity:0.5; pointer-events:none; }
+  .input-bar .throttle-hint {
+    max-width:880px;
+    margin:8px auto 0;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--text-dim);
+    text-align:right;
+    height:1em;
+    opacity:0;
+    transition:opacity 0.2s;
+  }
+  .input-bar.throttled .throttle-hint { opacity:1; }
+
+  /* =========================================================
+     Connection-lost banner (D-7 retry affordance)
+     ========================================================= */
+  .conn-banner {
+    display:none;
+    position:fixed;
+    top:calc(clamp(52px,6vw,64px) + 12px);
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(170,75,75,0.12);
+    border:1px solid rgba(170,75,75,0.4);
+    color:#e8a4a4;
+    font-family:var(--mono);
+    font-size:0.78rem;
+    padding:var(--space-3) var(--space-5);
+    border-radius:var(--radius-md);
+    z-index:80;
+    gap:var(--space-4);
+    align-items:center;
+  }
+  .conn-banner.show { display:flex; }
+  .conn-banner button {
+    background:transparent;
+    border:1px solid rgba(170,75,75,0.6);
+    color:#e8a4a4;
+    font-family:var(--mono);
+    font-size:0.74rem;
+    padding:4px 10px;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+  }
+
+  /* =========================================================
+     Mobile breakpoint < 760px
+     ========================================================= */
+  @media (max-width: 760px) {
+    main.terminal {
+      padding:calc(clamp(52px,6vw,64px) + var(--space-5))
+              var(--space-5)
+              calc(var(--space-9) + 120px);  /* leave room for fixed input bar */
+      gap:var(--space-6);
+    }
+    .status-bar { font-size:0.7rem; }
+    .trace-line {
+      flex-direction:column;
+      align-items:stretch;
+      gap:4px;
+      padding:8px 14px;
+    }
+    .trace-line .verb {
+      white-space:normal;
+      width:100%;
+      flex:0 1 auto;
+      overflow:visible;
+      text-overflow:clip;
+      font-size:0.74rem;
+    }
+    .trace-line .latency { align-self:flex-end; font-size:0.68rem; }
+    .answer { font-size:0.98rem; }
+    .cards {
+      flex-direction:column;
+      overflow-x:visible;
+      gap:var(--space-3);
+      margin:0;
+      padding:0;
+    }
+    .card { flex:1 1 auto; }
+    .input-bar { padding:var(--space-4) var(--space-5) calc(var(--space-5) + 4px); }
+    .input-bar .input-wrap { padding:var(--space-3) var(--space-4); }
+    .input-bar .prompt, .input-bar input { font-size:0.88rem; }
+    /* aa-mark: shrink to avoid overlap with input bar */
+    .aa-mark { bottom:calc(72px + 12px); right:12px; }
+    .aa-mark svg { width:36px; }
+  }
+
+  /* =========================================================
+     A11y
+     ========================================================= */
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible,
+  .input-bar input:focus-visible,
+  .card:focus-visible {
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:var(--radius-sm);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trace-line, .empty-state .opening, .status-bar .dot { animation:none; opacity:1; }
+  }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+  <symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+  <symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0z"/></symbol>
+  <symbol id="i-bullhorn" viewBox="0 0 512 512"><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.4-.4 425.4 8.7L381.7 52.5C337 97.2 276.3 122.3 213.1 122.3L192 122.3l-32 0-64 0c-35.3 0-64 28.7-64 64l0 64c0 35.3 28.7 64 64 64l11.5 0L57 466.2c-3.9 11.7-2 24.6 5.4 34.6S81.5 517 94 517l32 0c10.4 0 20-5 26-13.4L188.8 408l24.3 0c63.2 0 123.9 25.1 168.6 69.8l43.7 43.7c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6l0-448zM413.7 90.3l0 363.4-3.4-3.4c-50.6-50.6-119.1-79.5-190.9-83.8L160 281.8 160 162.6l59.4 0c71.8-4.3 140.3-33.2 190.9-83.8l3.4-3.4z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM215.5 96.3c-3.6-1.4-7.7-1.4-11.3 0L93.4 138.4 51.3 27.6C49.9 24 46.1 21 42.1 21S34.3 24 32.9 27.6L0 96 25.3 174.2c2.5 7.5 8.4 13.4 15.9 15.9L122.4 215 96 312l78 26 26 78 26-78 78-26-26.4-97.4c2.5-7.5 8.4-13.4 15.9-15.9L375 174.2 400 96 367.1 27.6C365.7 24 361.9 21 357.9 21s-7.8 3-9.2 6.6L306.6 138.4 215.5 96.3z"/></symbol>
+</svg>
+
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/resume" aria-label="Resume"><svg aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+    <a href="/" aria-label="Home"><svg aria-hidden="true"><use href="#i-house"/></svg></a>
+  </div>
+</header>
+
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg viewBox="0 0 72 36" aria-hidden="true">
+    <text x="2" y="28" fill="#E8E4DF" font-family="Patrick Hand" font-size="28">aa</text>
+    <text x="38" y="28" fill="#E5A54B" font-family="Patrick Hand" font-size="28">.</text>
+  </svg>
+</a>
+
+<div class="conn-banner" id="conn-banner" role="alert">
+  <span>Connection lost mid-stream.</span>
+  <button type="button" id="retry-btn">retry</button>
+</div>
+
+<main class="terminal" id="terminal">
+  <div class="status-bar" id="status-bar" aria-live="polite" aria-atomic="true">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label">agent.agam</span>
+    <span aria-hidden="true">·</span>
+    <span class="verb" id="status-verb">ready</span>
+  </div>
+
+  <!-- Conversation history (post-warm-up). Single completed turn shown
+       to demonstrate the FULL contract. D-7 implementation appends new
+       turns into this container as SSE events arrive. -->
+  <div class="conversation" id="conversation">
+    <article class="turn">
+      <div class="user-query">
+        <span class="prompt-prefix">&gt;</span>
+        what is the agent-first thesis
+      </div>
+
+      <div class="trace" id="trace-1" role="region" aria-label="Agent trace">
+        <div class="trace-line">
+          <span class="verb">
+            <span class="arrow">&rarr;</span>classified
+            <span class="arg">intent=synthesis themes=[agent-first] conf=0.85</span>
+          </span>
+          <span class="latency">312ms<span class="check">&check;</span></span>
+        </div>
+        <div class="trace-line">
+          <span class="verb">
+            <span class="arrow">&rarr;</span>pulled
+            <span class="arg">wiki(agent-first, 1842 chars)</span>
+          </span>
+          <span class="latency">6ms<span class="check">&check;</span></span>
+        </div>
+        <div class="trace-line">
+          <span class="verb">
+            <span class="arrow">&rarr;</span>pulled
+            <span class="arg">edges(agent-first&rarr;supersedes, 6)</span>
+          </span>
+          <span class="latency">8ms<span class="check">&check;</span></span>
+        </div>
+        <div class="trace-line">
+          <span class="verb">
+            <span class="arrow">&rarr;</span>composed
+            <span class="arg">answer + 3 cards</span>
+          </span>
+          <span class="latency">421ms<span class="check">&check;</span></span>
+        </div>
+      </div>
+
+      <div class="answer">
+        <p>Agents are users too, and maybe first. Platforms that cannot serve autonomous agents calling on behalf of humans are already behind. The serving lens is where the differentiation lives.</p>
+        <p>Agam named it as a thesis on June 20, 2025: <a href="/wiki/agent-first/">start thinking agent-first</a>, not just from a building lens but from a serving lens.</p>
+      </div>
+
+      <div class="cards" role="list">
+        <a class="card priority" href="/wiki/agent-first/" role="listitem">
+          <svg class="card-icon" aria-hidden="true"><use href="#i-spark"/></svg>
+          <div class="card-title">Agent-first thesis</div>
+          <div class="card-desc">Wiki theme. 7 beliefs, 22 edges. The serving lens manifesto with full evidence drawer.</div>
+          <div class="card-arrow">&rarr; /wiki/agent-first/</div>
+        </a>
+        <a class="card" href="/lab/second-brain/" role="listitem">
+          <svg class="card-icon" aria-hidden="true"><use href="#i-spark"/></svg>
+          <div class="card-title">Second-brain v1</div>
+          <div class="card-desc">Lab project. Agent-first applied to personal knowledge graph.</div>
+          <div class="card-arrow">&rarr; /lab/second-brain/</div>
+        </a>
+        <a class="card" href="/wiki/voice-ai-craft/" role="listitem">
+          <svg class="card-icon" aria-hidden="true"><use href="#i-bullhorn"/></svg>
+          <div class="card-title">Voice AI craft</div>
+          <div class="card-desc">Adjacent theme. 100% MCP+APIs in production at AIonOS.</div>
+          <div class="card-arrow">&rarr; /wiki/voice-ai-craft/</div>
+        </a>
+      </div>
+    </article>
+
+    <!-- New turns get appended here by D-7 as SSE events arrive. -->
+  </div>
+</main>
+
+<div class="input-bar" id="input-bar">
+  <div class="input-wrap">
+    <span class="prompt" aria-hidden="true">&rsaquo;</span>
+    <input type="text" id="input"
+      placeholder="ask anything about agam"
+      aria-label="Ask anything about Agam"
+      maxlength="500"
+      autocomplete="off" spellcheck="false">
+  </div>
+  <div class="throttle-hint" id="throttle-hint" aria-live="polite"></div>
+</div>
+
+<script>
+(function () {
+  // =====================================================
+  // STATUS VERB CYCLE — mirrors current backend operation
+  // =====================================================
+  // Vocab from spec §1+§5 (all from operator/execution verbs).
+  // Banned: thinking, considering, analyzing, reasoning, pondering.
+  const STATUS_VERBS = ['ready', 'routing', 'classifying', 'pulling', 'composing', 'expanding', 'replied'];
+
+  const statusEl = document.getElementById('status-verb');
+  const statusBar = document.getElementById('status-bar');
+
+  // Demo: cycle through verbs for visual verification only.
+  // In real D-7 wiring, status verb updates from current trace event:
+  //   onTrace(verb) → setStatus(verb stem + 'ing')
+  //   onDone()      → setStatus('replied') → fade to 'ready' after 2s
+  function setStatus(verb, idle = false) {
+    statusEl.style.opacity = '0';
+    setTimeout(() => {
+      statusEl.textContent = verb;
+      statusEl.style.opacity = '1';
+      statusBar.classList.toggle('idle', idle);
+    }, 180);
+  }
+
+  // ROTATING PLACEHOLDER HINTS (spec §6, 5 strings, 200ms fade)
+  const HINTS = [
+    'ask anything about agam',
+    'what does he think about voice AI',
+    'how has his thinking evolved',
+    'is he hiring or hireable',
+    'what is the agent-first thesis',
+  ];
+  const inputEl = document.getElementById('input');
+  let hintIdx = 0;
+  function rotateHint() {
+    inputEl.style.transition = 'none';
+    inputEl.style.opacity = '0.4';
+    setTimeout(() => {
+      hintIdx = (hintIdx + 1) % HINTS.length;
+      inputEl.placeholder = HINTS[hintIdx];
+      inputEl.style.transition = 'opacity 0.2s';
+      inputEl.style.opacity = '1';
+    }, 200);
+  }
+  // Only rotate when input is empty + unfocused (don't disturb user)
+  let hintTimer = null;
+  function startHintRotation() {
+    stopHintRotation();
+    hintTimer = setInterval(() => {
+      if (document.activeElement !== inputEl && inputEl.value === '') rotateHint();
+    }, 4500);
+  }
+  function stopHintRotation() {
+    if (hintTimer) { clearInterval(hintTimer); hintTimer = null; }
+  }
+
+  // =====================================================
+  // DEMO — auto-cycle status verbs to show the contract
+  // (this would be event-driven in D-7 against real SSE)
+  // =====================================================
+  function demoStatusCycle() {
+    let i = 0;
+    const seq = ['routing', 'classifying', 'pulling', 'composing', 'replied', 'ready'];
+    const tick = () => {
+      if (i >= seq.length) { setStatus('ready', true); return; }
+      const verb = seq[i++];
+      setStatus(verb, verb === 'ready');
+      const delay = verb === 'replied' ? 2000 : (verb === 'pulling' ? 900 : 700);
+      setTimeout(tick, delay);
+    };
+    tick();
+  }
+
+  // Demo trigger: run the status cycle once on load to demo the
+  // "verb mix" contract. In live D-7, this fires on every query.
+  setTimeout(demoStatusCycle, 800);
+  startHintRotation();
+
+  // Throttle demo (browser-side rate limit per D-1 Tier 1: 1 q / 2s)
+  const inputBar = document.getElementById('input-bar');
+  const throttleHint = document.getElementById('throttle-hint');
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && inputEl.value.trim()) {
+      e.preventDefault();
+      // In D-7: kicks off SSE request + appends new turn to .conversation
+      inputBar.classList.add('throttled');
+      let s = 2;
+      throttleHint.textContent = `wait ${s}s before next…`;
+      const tk = setInterval(() => {
+        s -= 1;
+        if (s <= 0) {
+          clearInterval(tk);
+          inputBar.classList.remove('throttled');
+          throttleHint.textContent = '';
+        } else {
+          throttleHint.textContent = `wait ${s}s before next…`;
+        }
+      }, 1000);
+    }
+  });
+})();
+</script>
+</body>
+</html>

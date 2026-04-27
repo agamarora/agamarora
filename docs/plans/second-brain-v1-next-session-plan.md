@@ -93,7 +93,7 @@ Pick the first QUEUED row. Mark DONE after commit + push. Bump CHECKPOINT in STA
 | 13c | Phase D decisions taste-pass + spec amendments | ✅ DONE | — | CP-33c |
 | 14a | **D-0 — wiki extracts build script (NEW)** | ✅ DONE (71fc6ed) | — | (under CP-34) |
 | 14 | D-1 — LLM pool + classifier + pre-route + provider routing | ✅ DONE (2b82f9d, fix 45fc06b) | — | |
-| 14b | **D-7a — variant land + locked visual mockup at `enter/v3-mockup.html` (NEW per CEO review 2026-04-27)** | QUEUED — DO FIRST | 45 min | blocks D-7 |
+| 14b | **D-7a — variant land + locked visual mockup at `enter/v3-mockup.html`** | ✅ DONE (pending push) | — | unblocks D-7 |
 | 15 | D-2 — system prompt v3 with cache breakpoint | QUEUED | 30 min | |
 | 15a | **D-3a — KG edge bundle build + retrieval injection (NEW per CEO review)** | QUEUED | 60 min | precedes D-3 |
 | 16 | D-3 — wiki extracts integration (now incl. edges from 15a) | QUEUED | 15 min | |
