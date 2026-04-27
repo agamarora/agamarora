@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Know Agam. Live AI terminal grounded in his resume.</title>
 <meta name="description" content="Live AI terminal for Agam Arora. Grounded in his resume, shipped products, and case studies. Ask about voice AI at enterprise scale, RAG, agentic systems, PM craft, or anything in his portfolio. Streaming responses via Groq.">
@@ -600,15 +600,22 @@
        opens / closes; the html lock picks it up and the layout reflows
        once. No per-keystroke jitter, no input bar drifting through cards. */
     html, body {
+      /* MOBILE VIEWPORT MODEL.
+         Primary mechanism: <meta name="viewport" content="...,
+         interactive-widget=resizes-content"> tells Chromium-based
+         browsers (Android Chrome 108+, Edge, iOS Safari 17+) to RESIZE
+         THE LAYOUT VIEWPORT itself when the soft keyboard opens. Then
+         100dvh = actual visible height, no JS needed.
+         Fallback: --vv-height (set by JS visualViewport listener with
+         an 80px threshold so IME / suggestion-bar micro-shifts don't
+         trigger reflows). Used by older iOS / browsers without
+         interactive-widget support. */
+      height:100dvh;
       height:var(--vv-height, 100dvh);
-      /* SHARED_RESET_CSS sets body min-height:100dvh which overrode the
-         vv-height lock when the soft keyboard opened (min-height > height
-         wins). Reset min-height to 0 so the lock holds. */
       min-height:0;
       overflow:hidden;
-      /* iOS rubber-band on the page would rip the vv-locked surface.
-         Block it on html and body. Internal scrolling (main.terminal)
-         keeps its own scroll-chain. */
+      /* Block iOS rubber-band on the page; main.terminal keeps its
+         own scroll chain. */
       overscroll-behavior:none;
     }
     body {
@@ -1802,22 +1809,33 @@ if (!isMobile()) inputEl.focus();
 // scroll container; the input bar is the last flex child of body and
 // always sits at the visual-viewport bottom — no position:fixed, no
 // per-keystroke offset jitter, no scrollIntoView gymnastics.
+// Mobile soft-keyboard fallback for browsers without
+// interactive-widget=resizes-content support (iOS < 17, older Android
+// Chrome). When supported, the layout viewport resizes natively and
+// 100dvh on body picks it up — no JS needed. When not supported, this
+// listener writes --vv-height which the CSS height: var(--vv-height)
+// fallback uses. Threshold prevents IME / suggestion-bar micro-shifts
+// from triggering reflows mid-typing.
 if (isMobile() && window.visualViewport) {
   const vv = window.visualViewport;
+  let lastHeight = vv.height;
+  document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
   function onViewportChange() {
+    if (Math.abs(vv.height - lastHeight) < 80) return;
+    lastHeight = vv.height;
     document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
-    // After keyboard opens, scroll latest turn into view in the
-    // main.terminal container. Empty-state stays at top.
     requestAnimationFrame(() => {
       const last = document.querySelector('.turn:last-of-type');
       if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
     });
   }
   vv.addEventListener('resize', onViewportChange);
-  // iOS Safari sometimes misses the first resize on initial keyboard
-  // open; orientationchange + window.resize cover that case.
-  window.addEventListener('orientationchange', onViewportChange);
-  onViewportChange();
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      lastHeight = -1;
+      onViewportChange();
+    }, 200);
+  });
 }
 
 })();
