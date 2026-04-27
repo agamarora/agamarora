@@ -21,6 +21,8 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 **Next session pickup (READ THIS):** Open `docs/plans/BASELINE-2026-04-26.md` first — the "Session update 2026-04-27" section at the top tells you exactly what's live, what shipped most recently (DRY chrome refactor, italics fix, lab perf, QA pass), and which task to pick up next. For Phase A history, see `docs/plans/second-brain-v1-phase-a/STATUS.md` (also git-tracked, single source of truth for synthesis round-by-round state).
 
+**Phase D dev + eval workflow (LOCKED 2026-04-27):** all `/enter` agent work — code changes AND eval scenarios — runs through `docs/plans/phase-d-dev-workflow.md`. netlify dev on port 8888 + gstack browser headed + drive the real `/enter` UI for every change. Function-only / isolated harness is not a sufficient signal. The workflow exists because D-1 shipped a streaming bug (ReadableStream pull-mode hang) that unit tests missed and only end-to-end UI smoke surfaced. Same loop is the eval gate (D-6 + Phase E launch): 23 scenarios driven through real UI, real DOM, real screenshots.
+
 
 ## Subagent model policy (HARD RULE)
 

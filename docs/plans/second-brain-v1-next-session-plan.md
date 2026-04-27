@@ -16,6 +16,8 @@ This doc lists every remaining task in execution order, each with: scope, files 
 
 Auto mode: yes. Caveman mode: yes (fragments OK; code/commits stay normal). Subagent rule: sonnet default, haiku for trivial, never opus (project hard rule per CLAUDE.md).
 
+**Dev + eval workflow LOCKED 2026-04-27:** all `/enter` work uses `docs/plans/phase-d-dev-workflow.md`. netlify dev (port 8888) + gstack browser headed + drive real `/enter` UI for every change AND every eval scenario. No function-only smoke as the sole signal — D-1 shipped a streaming hang that only end-to-end UI testing surfaced.
+
 ---
 
 ## Resume context
@@ -908,7 +910,9 @@ allkeys-lru. Rate bucket fail open, cooldown state degrades.
 Per phase-d-decisions-2026-04-27.md Decisions 6, 8, 10.
 ```
 
-### Task 19 — D-6 Eval harness 23 scenarios (Groq path only)
+### Task 19 — D-6 Eval harness 23 scenarios (Groq path only, real UI driven)
+
+**Workflow LOCKED 2026-04-27:** harness drives the real `/enter` UI in headed gstack browser against `localhost:8888` (dev) and `https://agamarora.com` (prod gate). NOT an isolated function-call harness. Per `docs/plans/phase-d-dev-workflow.md`. Voice drift, animation jank, card overflow, mobile layout regressions only surface in real DOM — function-only eval missed them in v2.
 
 **Scope:** rewrite `eval-prompt.mjs` (current 143-line v2 stub) to run 23 pinned scenarios from `enter-v3-scenarios-v2.md`:
 - T01-T12: theme-anchor scenarios
