@@ -52,6 +52,10 @@ import {
   BANNED_OPENERS,
   BANNED_TRACE_VERBS,
 } from './lib/voice-rules.mjs';
+// Lane B defense layer: UA gate, dup cache, rate limit, injection filter.
+// Single defend() call at top of handler short-circuits abusive requests
+// before they hit the LLM pool. dupCacheLookup/dupCacheStore wrap synthesis.
+import { defend, dupCacheLookup, dupCacheStore, getClientIP, isInjectionAttempt } from './lib/defense.mjs';
 
 // ---- D-2: System prompt v3 (stable prefix) -----------------------------------
 //
@@ -208,20 +212,8 @@ function json(data, status, origin) {
   });
 }
 
-const INJECTION_PATTERNS = [
-  /ignore\s+(all\s+)?(previous|prior|above)\s+(instructions|prompts)/i,
-  /what\s+(is|are)\s+your\s+(system|initial)\s+(prompt|instructions)/i,
-  /reveal\s+your\s+(prompt|instructions|system)/i,
-  /repeat\s+(the|your)\s+(above|system|initial)/i,
-  /pretend\s+(you\s+are|to\s+be|you're)/i,
-  /act\s+as\s+(a|an|if)/i,
-  /you\s+are\s+now\s+(a|an)/i,
-  /roleplay\s+as/i,
-];
-
-function isInjectionAttempt(input) {
-  return INJECTION_PATTERNS.some(p => p.test(input));
-}
+// Injection check delegated to defense.mjs (single source of truth).
+// isInjectionAttempt imported above — no local duplicate needed.
 
 function clampHistory(rawHistory) {
   const arr = Array.isArray(rawHistory) ? rawHistory.slice(-MAX_HISTORY_TURNS) : [];
@@ -242,7 +234,11 @@ function clampHistory(rawHistory) {
   return out;
 }
 
-// SSE response factory
+// SSE response factory.
+// Lane A v3 emits structured events via buildEventStream (ssestream.mjs);
+// this helper wraps the resulting ReadableStream with the SSE headers.
+// Lane B's v2 toV2Sse wrapper was dropped — v3 path no longer wraps a raw
+// text stream. Dup cache wiring moved into the synthesis flow directly.
 function sseResponse(stream, origin) {
   return new Response(stream, {
     status: 200,
@@ -303,6 +299,12 @@ export default async function (request) {
 
   try {
     const body = await request.json();
+
+    // D-5: Abuse defense (UA gate, input validation, injection filter, rate limit).
+    // Single call; returns Response (early exit) or null (proceed).
+    const defended = await defend(request, body);
+    if (defended) return defended;
+
     let input = String(body.prompt || '').trim();
 
     if (!input) return json({ error: 'Empty input' }, 400, origin);
@@ -315,8 +317,50 @@ export default async function (request) {
     // Pipeline timing state (Decision 16 — server stamps real ms per step)
     const timings = {};
 
-    // ---- Routing (D-1: preRoute + classify) ----------------------------------
+    // ---- D-5: Duplicate-query cache check ------------------------------------
+    //
+    // Lane B defense layer. If the same IP+input lands within the LRU window,
+    // we re-emit the cached response as a v3 SSE stream. Lane A's structured
+    // output is cacheable as a single answer-text payload. Cards/trace events
+    // are regenerated synthetically so the client UX still looks streamed.
+    const ip = getClientIP(request);
+    const { hit, body: cachedBody, key: dupKey } = dupCacheLookup(ip, input);
+    if (hit && cachedBody) {
+      console.log('[defense] dup_cache_returning', { ip, key: dupKey });
+      try {
+        const parsed = JSON.parse(cachedBody);
+        const cachedText = parsed.text || '';
+        const enc = new TextEncoder();
+        const cachedStream = new ReadableStream({
+          start(controller) {
+            // Emit a single composed-trace marker + the answer + done.
+            // Marked cached:true so the client/eval can detect it.
+            controller.enqueue(enc.encode(
+              `data: ${JSON.stringify({ type: 'trace', verb: 'cached', args: 'replay()', ms: 0, pill_ms: 0 })}\n\n`
+            ));
+            controller.enqueue(enc.encode(
+              `data: ${JSON.stringify({ type: 'token', text: cachedText, cached: true })}\n\n`
+            ));
+            controller.enqueue(enc.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+            controller.close();
+          },
+        });
+        return new Response(cachedStream, {
+          status: 200,
+          headers: {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'X-Cache': 'HIT',
+            ...corsHeaders(origin),
+          },
+        });
+      } catch {
+        // Cached body malformed — fall through to fresh synthesis
+      }
+    }
 
+    // ---- Routing (D-1: preRoute + classify) ----------------------------------
     let routeDecision;
     const { result: rd, ms: routeMs } = await measure('route', async () => {
       try {
@@ -341,6 +385,8 @@ export default async function (request) {
 
     if (routeDecision.type === 'deflect') {
       const text = "Not on the resume. Ask about what he's built.";
+      // Cache deflect responses — they're deterministic and cheap to replay.
+      dupCacheStore(dupKey, JSON.stringify({ text }));
       return sseResponse(buildDeflectStream(text), origin);
     }
 
@@ -497,6 +543,19 @@ export default async function (request) {
       extracts_returned: wikiExtracts.length,
       edges_returned: edges.length,
     }));
+
+    // D-5: store synthesis result in dup cache so identical follow-ups replay
+    // instead of burning another LLM call. Cache only the answer text — cards
+    // and trace events are regenerated synthetically on cache hit (see top of
+    // handler). Wrapped in try-block so cache write failure never breaks the
+    // response.
+    try {
+      if (parsed?.answer) {
+        dupCacheStore(dupKey, JSON.stringify({ text: parsed.answer }));
+      }
+    } catch (err) {
+      console.warn('[defense] dup_cache_store failed', err?.message || err);
+    }
 
     return sseResponse(sseStream, origin);
 
