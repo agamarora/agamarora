@@ -1280,18 +1280,20 @@ function buildGraphPage() {
   // Theme radial fractions tightened 2026-04-27 (-15%) so all nodes fit on
   // mobile viewport without pan-scroll. Original spec range was 0.24-0.32 of
   // min(vw,vh); now 0.20-0.27. Genesis still center, organic placement preserved.
+  // Labels rewritten 2026-04-27 to be crisp + self-explanatory for first-time
+  // visitors — no slugs, no jargon, sentence-case, ≤3 words each.
   const THEMES = [
-    { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'agent-first',         ang: 18,  radF: 0.230 },
-    { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'ai-pm skillset',      ang: 62,  radF: 0.272 },
-    { id: 'theme.pm-taste',                    slug: 'pm-taste',                    label: 'pm taste',            ang: 98,  radF: 0.213 },
-    { id: 'theme.enterprise-ai-reality',       slug: 'enterprise-ai-reality',       label: 'enterprise ai',       ang: 138, radF: 0.255 },
-    { id: 'theme.voice-ai-craft',              slug: 'voice-ai-craft',              label: 'voice ai craft',      ang: 168, radF: 0.230 },
-    { id: 'theme.second-brain',                slug: 'second-brain',                label: 'second brain',        ang: 202, radF: 0.247 },
-    { id: 'theme.spec-first-taste',            slug: 'spec-first-taste',            label: 'spec-first taste',    ang: 232, radF: 0.213 },
-    { id: 'theme.breadth-as-differentiation',  slug: 'breadth-as-differentiation',  label: 'breadth as edge',     ang: 260, radF: 0.264 },
-    { id: 'theme.linkedin-as-instrument',      slug: 'linkedin-as-instrument',      label: 'linkedin instrument', ang: 288, radF: 0.204 },
-    { id: 'theme.career-reflection',           slug: 'career-reflection',           label: 'career reflection',   ang: 318, radF: 0.238 },
-    { id: 'theme.personal-projects-tinkering', slug: 'personal-projects-tinkering', label: 'personal projects',   ang: 348, radF: 0.272 },
+    { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'Agent-first AI',     ang: 18,  radF: 0.230 },
+    { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'AI PM craft',        ang: 62,  radF: 0.272 },
+    { id: 'theme.pm-taste',                    slug: 'pm-taste',                    label: 'PM taste',           ang: 98,  radF: 0.213 },
+    { id: 'theme.enterprise-ai-reality',       slug: 'enterprise-ai-reality',       label: 'Enterprise AI',      ang: 138, radF: 0.255 },
+    { id: 'theme.voice-ai-craft',              slug: 'voice-ai-craft',              label: 'Voice AI in prod',   ang: 168, radF: 0.230 },
+    { id: 'theme.second-brain',                slug: 'second-brain',                label: 'Second brain',       ang: 202, radF: 0.247 },
+    { id: 'theme.spec-first-taste',            slug: 'spec-first-taste',            label: 'Spec over sprint',   ang: 232, radF: 0.213 },
+    { id: 'theme.breadth-as-differentiation',  slug: 'breadth-as-differentiation',  label: 'Breadth as edge',    ang: 260, radF: 0.264 },
+    { id: 'theme.linkedin-as-instrument',      slug: 'linkedin-as-instrument',      label: 'LinkedIn craft',     ang: 288, radF: 0.204 },
+    { id: 'theme.career-reflection',           slug: 'career-reflection',           label: 'Career arc',         ang: 318, radF: 0.238 },
+    { id: 'theme.personal-projects-tinkering', slug: 'personal-projects-tinkering', label: 'Personal projects',  ang: 348, radF: 0.272 },
   ];
 
   const totalEntries = (kg.stats.posts || 0) + (kg.stats.comments || 0) + 220; // approximate corpus + uncurated
@@ -1733,13 +1735,14 @@ ${AAMARK_SCRIPT}
     // The star (always on top within group)
     el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
 
-    // Theme label — outside node, radial baseline, quadrant-aware anchor
-    const labelP = polar(0, 0, 50, t.ang);
-    let anchor = 'middle', baseDx = 0, baseDy = 4;
-    if (t.ang > 12 && t.ang < 168){ anchor = 'start'; baseDx = 6; }
-    else if (t.ang > 192 && t.ang < 348){ anchor = 'end'; baseDx = -6; }
-    if (t.ang <= 12 || t.ang >= 348) baseDy = -10;
-    if (t.ang >= 168 && t.ang <= 192) baseDy = 16;
+    // Theme label — just outside node halo, radial baseline, quadrant-aware anchor.
+    // 22 = ~3 units outside outermost halo (r=18), legible without floating away.
+    const labelP = polar(0, 0, 22, t.ang);
+    let anchor = 'middle', baseDx = 0, baseDy = 3;
+    if (t.ang > 12 && t.ang < 168){ anchor = 'start'; baseDx = 4; }
+    else if (t.ang > 192 && t.ang < 348){ anchor = 'end'; baseDx = -4; }
+    if (t.ang <= 12 || t.ang >= 348) baseDy = -6;
+    if (t.ang >= 168 && t.ang <= 192) baseDy = 12;
     el('text', {
       x: (labelP.x + baseDx).toFixed(2),
       y: (labelP.y + baseDy).toFixed(2),
@@ -1909,37 +1912,21 @@ ${AAMARK_SCRIPT}
 
   // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
   // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
-  // representing the raw corpus we synthesized from. Weak theme-clustering bias.
+  // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias —
+  // so when theme constellation tightens, atmosphere stays full-canvas (revised 2026-04-27).
   const dfRng = mulberry32(424242);
 
-  // 295 corpus posts (mid-density)
+  // 295 corpus posts (mid-density). 30% theme-biased, 70% uniform across canvas.
   for (let i = 0; i < 295; i++){
-    const themeBias = dfRng() < 0.65;
+    const themeBias = dfRng() < 0.30;
     let x, y;
     if (themeBias){
       const t = THEMES[Math.floor(dfRng() * THEMES.length)];
       const baseR = VB_MIN * t.radF;
       const aOff = (dfRng() - 0.5) * 90;
-      const rFac = 0.5 + dfRng() * 0.85;
-      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
-      x = p.x; y = p.y;
-    } else {
-      x = 60 + dfRng() * (VB_W - 120);
-      y = 60 + dfRng() * (VB_H - 120);
-    }
-    const dx = x - CX, dy = y - CY;
-    if (Math.sqrt(dx*dx + dy*dy) < 55) continue;  // don't crowd the genesis
-    deepStar(x, y, 1.1 + dfRng() * 0.7, 0.20 + dfRng() * 0.20);
-  }
-
-  // 283 corpus comments (smaller, dimmer)
-  for (let i = 0; i < 283; i++){
-    let x, y;
-    if (dfRng() < 0.5){
-      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
-      const baseR = VB_MIN * t.radF;
-      const aOff = (dfRng() - 0.5) * 110;
-      const rFac = 0.45 + dfRng() * 0.95;
+      // rFac 0.6-2.0 of baseR — themed stars now extend further outward
+      // so they reach the canvas edges and avoid the gap-around-cluster look.
+      const rFac = 0.6 + dfRng() * 1.4;
       const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
       x = p.x; y = p.y;
     } else {
@@ -1947,7 +1934,29 @@ ${AAMARK_SCRIPT}
       y = 40 + dfRng() * (VB_H - 80);
     }
     const dx = x - CX, dy = y - CY;
+    if (Math.sqrt(dx*dx + dy*dy) < 55) continue;  // don't crowd the genesis
+    // Clamp to canvas (some themed stars at large rFac may overshoot)
+    if (x < 30 || x > VB_W - 30 || y < 30 || y > VB_H - 30) continue;
+    deepStar(x, y, 1.1 + dfRng() * 0.7, 0.20 + dfRng() * 0.20);
+  }
+
+  // 283 corpus comments (smaller, dimmer). 25% theme-biased, 75% uniform.
+  for (let i = 0; i < 283; i++){
+    let x, y;
+    if (dfRng() < 0.25){
+      const t = THEMES[Math.floor(dfRng() * THEMES.length)];
+      const baseR = VB_MIN * t.radF;
+      const aOff = (dfRng() - 0.5) * 110;
+      const rFac = 0.6 + dfRng() * 1.6;
+      const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
+      x = p.x; y = p.y;
+    } else {
+      x = 30 + dfRng() * (VB_W - 60);
+      y = 30 + dfRng() * (VB_H - 60);
+    }
+    const dx = x - CX, dy = y - CY;
     if (Math.sqrt(dx*dx + dy*dy) < 45) continue;
+    if (x < 20 || x > VB_W - 20 || y < 20 || y > VB_H - 20) continue;
     deepStar(x, y, 0.7 + dfRng() * 0.6, 0.12 + dfRng() * 0.15);
   }
 
