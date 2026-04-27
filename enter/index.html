@@ -33,62 +33,29 @@
     --border:#1E1E1E; --border-hover:#2A2A2A;
     --text:#E8E4DF; --text-dim:#7A7A7A;
     --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
-    --accent-pill:rgba(229,165,75,0.25);
-    --accent-glow:rgba(229,165,75,0.45);
     --mono:'JetBrains Mono',monospace;
     --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
     --mark:'Patrick Hand',cursive;
-    --space-2:6px; --space-3:8px; --space-4:12px; --space-5:16px;
-    --space-6:24px; --space-7:32px; --space-8:48px; --space-9:64px;
-    --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  /* Auto-scroll target offset: input bar is fixed at bottom (~120px tall).
-     scroll-padding-bottom keeps scrollIntoView({block:'end'}) from landing
-     content underneath the input bar. Generous padding (240px ≈ input bar
-     + ~120px breathing room) so the latest line floats well above the
-     input rather than crowding it — feels less like a chat client, more
-     like a reading surface. */
-  html{scroll-padding-bottom:240px;}
-
-  /* Scrollbar: match dark/gold aesthetic. Default Windows white scrollbar
-     reads as a foreign UI chrome dropped onto the page. Thin dim thumb on
-     transparent track, gold on hover. Firefox uses the scrollbar-* shorthand. */
-  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
-  ::-webkit-scrollbar{width:10px;height:10px;}
-  ::-webkit-scrollbar-track{background:transparent;}
-  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
-  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
-  ::-webkit-scrollbar-corner{background:transparent;}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);
-       -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;
-       overflow-x:hidden;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
   ::selection{background:var(--accent);color:var(--bg);}
 
-  /* === Shared v2 header === */
-  header.site-header{position:fixed;top:0;left:0;right:0;
-    height:clamp(52px,6vw,64px);z-index:100;
-    padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);
-    display:flex;align-items:center;}
-  .icon-bar{display:inline-flex;align-items:center;gap:0;}
-  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;
-    justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;
-    font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;
-    text-decoration:none;}
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
-  .icon-bar svg{width:1em;height:1em;fill:currentColor;}
-  /* === /Shared v2 header === */
+  /* Agent button — gold accent. The differentiator on the site, gets weight. */
+  .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
+  .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}
 
-  /* === Shared aa. mark === */
-  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);
-    right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;
-    line-height:1;opacity:0.7;transition:opacity 0.2s;
-    font-family:var(--mark);}
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
   .aa-mark:hover{opacity:1;}
-  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;
-    overflow:visible;display:block;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
   .aa-mark svg text{font-family:var(--mark);}
-  /* === /Shared aa. mark === */
 
   .icon-bar a:focus-visible,
   .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
@@ -672,33 +639,25 @@
 <!-- === SVG sprite === -->
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
 <!-- chrome:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
 <symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
 <symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
 <symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
 <symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
-<symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0z"/></symbol>
-<!-- Card semantic icons — all gold (var(--accent)) per spec §4 -->
-<symbol id="ic-book" viewBox="0 0 576 512"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.4 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 96.4 448 144 448c33.7 0 64 12.5 87.2 25.5c2.4 1.4 5 2.5 7.7 3.5c.4 .2 .9 .3 1.4 .4l0 0 .1 0 1 .3 0 0 4.7 1.4 0 0c1.2 .4 2.3 .6 3.5 .6zm56.9-15.5c0 11.4 11.7 19.3 22.4 15.5c1.2 0 2.3-.2 3.5-.6l0 0 4.7-1.4 .9-.3 .1 0 1.4-.4c2.7-.9 5.3-2.1 7.7-3.5c23.2-13 53.5-25.5 87.2-25.5c47.6 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5L576 83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.4 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11l0 377.4z"/></symbol>
-<symbol id="ic-flask" viewBox="0 0 448 512"><path d="M288 0L160 0 128 0C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 481 31 512 69.4 512l309.2 0c38.4 0 69.4-31 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32L288 0zM192 196.8L192 64l64 0 0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320l-171 0L173 263.9c12.4-20.2 19-43.4 19-67.1z"/></symbol>
-<symbol id="ic-link" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></symbol>
-<symbol id="ic-user" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/></symbol>
-<symbol id="ic-calendar" viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L64 64C28.7 64 0 92.7 0 128l0 16 0 48L0 448c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-256 0-48 0-16c0-35.3-28.7-64-64-64l-40 0 0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L152 64l0-40zM48 192l352 0 0 256c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256z"/></symbol>
-<symbol id="ic-download" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></symbol>
-<symbol id="ic-envelope" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></symbol>
-<symbol id="ic-mic" viewBox="0 0 384 512"><path d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></symbol>
-<symbol id="ic-code" viewBox="0 0 640 512"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></symbol>
-<symbol id="ic-route" viewBox="0 0 512 512"><path d="M256 0L416 0c17.7 0 32 14.3 32 32l0 64-26.7 0c-17.8 0-34.9-7-47.5-19.7l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L256 48l0-48zM416 192l0-64-32 0c-26.5 0-51.9-10.5-70.7-29.3l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L160 70.6 160 224l256 0 0-32zM160 256l0 80c0 17.7 14.3 32 32 32l192 0 32 0 0 64c0 17.7-14.3 32-32 32l-160 0c-17.7 0-32-14.3-32-32l0-176z"/></symbol>
+<symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM112 256l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM205.1 73.3c-2.6-5.7-8.3-9.3-14.5-9.3s-11.9 3.6-14.5 9.3L123.3 187.3 9.3 240C3.6 242.6 0 248.3 0 254.5s3.6 11.9 9.3 14.5l114.1 52.7L176 435.7c2.6 5.7 8.3 9.3 14.5 9.3s11.9-3.6 14.5-9.3l52.7-114.1L371.7 269c5.7-2.6 9.3-8.3 9.3-14.5s-3.6-11.9-9.3-14.5L257.7 187.3 205.1 73.3zM384 384l-56.5 21.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 448l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 448l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 384l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L384 384z"/></symbol>
+</svg>
 <!-- /chrome:sprite -->
 </svg>
 
 <!-- chrome:header -->
 <header class="site-header">
   <div class="icon-bar">
-    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
-    <a href="/resume" aria-label="Resume"><svg aria-hidden="true"><use href="#i-file-lines"/></svg></a>
-    <a href="/" aria-label="Home"><svg aria-hidden="true"><use href="#i-house"/></svg></a>
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agam-arora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+    <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>
   </div>
 </header>
 <!-- /chrome:header -->
@@ -786,7 +745,7 @@
 
 <!-- chrome:aamark -->
 <a href="/" class="aa-mark" aria-label="agamarora.com">
-  <svg id="aa-mark-svg" viewBox="0 0 72 36" aria-hidden="true">
+  <svg id="aa-mark" viewBox="0 0 72 36">
     <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
     <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
     <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
@@ -1069,11 +1028,16 @@ function buildCard(card) {
   const icon = card.icon
     ? (CARD_ICONS[card.icon] || '#ic-link')
     : inferCardIcon(card.slug, card.url);
-  const arrow = card.type === 'external' ? '&#8599;' : '&rarr;';
-  const target = card.type === 'external' ? ' target="_blank" rel="noopener"' : '';
   const rawUrl = card.url || '#';
-  // Whitelist scheme to prevent javascript: XSS
-  const url = /^(https?:\/\/|\/[^/])/.test(rawUrl) ? rawUrl : '#';
+  // Whitelist scheme to prevent javascript: XSS. Allow http(s), root-path, mailto.
+  const url = /^(https?:\/\/|\/[^/]|mailto:)/.test(rawUrl) ? rawUrl : '#';
+  // Open external destinations in new tab so the /enter session stays alive
+  // in the original tab (user gets one-click back). Detect by URL scheme so
+  // Lane A emitting type:'page' for an external slug (book-call, linkedin,
+  // github, email) still opens in a new tab. Internal /paths stay same-tab.
+  const isExternal = card.type === 'external' || /^(https?:\/\/|mailto:)/.test(url);
+  const arrow = isExternal ? '&#8599;' : '&rarr;';
+  const target = isExternal ? ' target="_blank" rel="noopener"' : '';
   const arrowLabel = card.arrow_label || url.replace('https://', '').replace('http://', '');
 
   return `<a class="card${isPriority ? ' priority' : ''}" href="${escHtml(url)}"${target} role="listitem">
