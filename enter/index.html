@@ -106,7 +106,11 @@
   .kb-board {
     display:flex; flex-direction:column; gap:6px;
     transform:rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
-    transform-origin:center center; transform-style:preserve-3d; opacity:0.75;
+    transform-origin:center center; transform-style:preserve-3d;
+    /* Dimmed from 0.75 → 0.42 — keyboard read as a competing surface against
+       the streamed answer text. Lower opacity keeps the perspective texture
+       as ambient atmosphere rather than foreground chrome. */
+    opacity:0.42;
   }
   .kb-row { display:flex; gap:6px; justify-content:center; transform-style:preserve-3d; }
   .kb-key {
@@ -127,7 +131,15 @@
   .kb-key.w4 { width:138px; } .kb-key.space { width:320px; }
   .kb-fade {
     position:fixed; inset:0; z-index:1; pointer-events:none;
-    background:radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
+    /* Two-stop fade: a soft tint over the keyboard center for legibility,
+       then full bg at edges. The center tint (rgba 10,10,10,0.45) sits on
+       top of the keyboard but under the content (z-index:1, content z:2),
+       so streamed text reads on a near-bg backdrop while the keyboard
+       still ghosts through. */
+    background:radial-gradient(ellipse 75% 70% at 50% 50%,
+      rgba(10,10,10,0.45) 0%,
+      rgba(10,10,10,0.65) 40%,
+      var(--bg) 90%);
   }
 
   /* =========================================================
