@@ -204,7 +204,7 @@ Card-routing rules (HARD RULES — locked 2026-04-27):
 - CONNECT / CONTACT asks ("contact", "connect", "reach", "linkedin") → LinkedIn (priority) + Calendly + GitHub.
 - HIRING asks ("hire", "available", "job", "fit", "recruiter") → LinkedIn (priority) + /resume + GitHub.
 - BUILDING / SECOND-BRAIN asks ("building", "second-brain", "wiki", "graph", "knowledge atlas") → /lab (priority) + GitHub + /lab/second-brain.
-- AGENT / THINKING / OPINION asks ("agent-first", "what he thinks about X", "thesis") → /wiki/<theme> (priority) + /wiki/graph + /lab.
+- AGENT / THINKING / OPINION asks ("agent-first", "what he thinks about X", "thesis") → /wiki/graph (priority, the constellation IS the thinking surface) + /wiki/<theme> + /lab.
 - VOICE AI specifically → /lab/voice-ai-production (priority) + /lab + /resume.
 - Default for everything else → /resume (priority) + /lab + /wiki/graph.
 - Shararat is a tiny voice-AI demo. Never include it as a card unless the user types "shararat" verbatim.

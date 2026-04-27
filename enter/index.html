@@ -1481,9 +1481,9 @@ function generateFallbackCards(prompt, answer) {
   else if (p.match(/\bvoice\b|\bspeech\b|conversation ai|voice ai|4m calls|million calls/)) {
     cards.push(pri({ title:'Voice AI in production', desc:"Case study: 4M annual calls at 50% lower cost. What it took.", url:'/lab/voice-ai-production/', icon:'ic-mic' }), lab, resume);
   }
-  // Agent-first thesis / thinking → wiki + graph + lab
+  // Agent-first / thinking / opinion → graph (priority) + wiki theme + lab
   else if (p.match(/agent.first|agentic|\bagent\b|thesis|\bthinking\b|believe|opinion/)) {
-    cards.push(pri({ title:'Read the full take', desc:"Wiki page on agent-first thesis.", url:'/wiki/agent-first/', icon:'ic-book' }), graph, lab);
+    cards.push(pri(graph), { title:'Read the full take', desc:"Wiki page on agent-first thesis.", url:'/wiki/agent-first/', icon:'ic-book' }, lab);
   }
   // Default → resume + lab + graph
   else {
