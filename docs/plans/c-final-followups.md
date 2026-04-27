@@ -43,6 +43,36 @@ Pages audited (archetypes covering 33-page tree via shared build template):
 
 ---
 
+## MEDIUM — from /review pass on build pipeline (2026-04-27)
+
+### M5. `kg.json` parse has no try/catch in `build-wiki.mjs`
+**Where:** `scripts/build-wiki.mjs:991, 1181` — `JSON.parse(readFileSync(kgPath))`.
+**Risk:** if `wiki/kg.json` is malformed (manual edit, non-atomic write from a future tool), build-wiki crashes after some pages are written, leaving the tree partially rebuilt. build-kg already writes atomically so corruption is rare today.
+**Fix:** hoist parse to top of `main`, wrap in try/catch with clear error + `process.exit(1)` before any pages are written. Most worth doing before Phase D since Phase D will add another consumer of kg.json.
+**Effort:** ~10 min.
+
+### M6. groqHandler `<think>` block stripping drops same-chunk prefix
+**Where:** `netlify/functions/groqHandler.mjs:192-201`.
+**Risk:** chunk like `"Hi there <think>...</think>"` loses `"Hi there "`. Unlikely with Groq's small chunk sizes but qwen3-32b can emit reasoning in the first token.
+**Fix:** split on `<think>` first, enqueue prefix, then enter think mode. Defer to Phase D rewrite (D-1 already plans groqHandler rewrite).
+
+### M7. JSON-LD `<script>` injection theoretical risk
+**Where:** `scripts/build-wiki.mjs:566` — `${JSON.stringify(title)}` inside `<script type="application/ld+json">`.
+**Risk:** if a future title contains `</script>`, it breaks out of the script tag. All current titles safe; theoretical only.
+**Fix:** `JSON.stringify(title).replace(/</g, '\\u003c')` in Phase D template hardening pass.
+
+---
+
+## LOW — from /review pass
+
+- `scripts/build-kg.mjs:348` — `statSync` imported but never used. Dead import.
+- `scripts/build-kg.mjs:215` — `(r["internal-only"] || "").toLowerCase() === "yes" ? true : false` — redundant ternary (already boolean).
+- `scripts/build-wiki.mjs:938-976` — `processDir` per-file failures only enforced via `--strict`. Default builds report success even if N pages failed. Acceptable; CI uses `--strict`.
+- `netlify/functions/groqHandler.mjs:155` — `input.slice(0, 200)` runs *after* injection-detection on the longer trimmed string. Safe direction.
+- `scripts/build-wiki.mjs` graph builder reads kg.json into a `<script>` block via `JSON.stringify`. All node ids/labels come from hand-authored ontology + draft files; no user-supplied input. Confirmed safe.
+
+---
+
 ## POLISH (take when you want)
 
 ### P1. aa-mark touch box height shy
