@@ -567,10 +567,44 @@
     .cards {
       flex-direction:column;
       overflow-x:visible;
-      gap:var(--space-3);
+      gap:8px;
       margin:0; padding:0;
     }
-    .card { flex:1 1 auto; }
+    /* Mobile cards: compress to pill-like rows (~44px tall) instead of full
+       vertical-stack boxes. Icon left, title+arrow right, description hidden.
+       Matches the visual rhythm of trace pills above so the post-answer card
+       row reads as a tight action list, not a series of marketing tiles. */
+    .card {
+      flex:1 1 auto;
+      flex-direction:row;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:var(--radius-md);
+      min-height:44px;
+    }
+    .card .card-icon {
+      width:18px; height:18px;
+      margin:0;
+      flex-shrink:0;
+    }
+    .card .card-title {
+      font-size:0.85rem;
+      font-weight:500;
+      flex:1 1 auto;
+      min-width:0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .card .card-desc { display:none; }
+    .card .card-arrow {
+      margin-top:0;
+      flex-shrink:0;
+      font-size:0.7rem;
+    }
+    .card.priority { border-left-width:2px; }
+    .card:hover { transform:none; } /* no lift on touch — looks janky on tap */
     .input-bar { padding:var(--space-4) var(--space-5) calc(var(--space-5) + 4px); }
     .input-bar .input-wrap { padding:var(--space-3) var(--space-4); }
     .input-bar .prompt, .input-bar input { font-size:0.88rem; }
