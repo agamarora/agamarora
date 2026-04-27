@@ -356,22 +356,22 @@ export async function invokeSynthesis({ messages, temperature = 0.7, maxTokens =
 // Wrap async iterator of text chunks → ReadableStream<Uint8Array>.
 // Buffers first `bufferChars` chars before flushing. On iter throw inside
 // buffer window, we still emit whatever was buffered (graceful partial).
+//
+// Uses start-mode (eager) — kicks off the for-await loop immediately when
+// the stream is consumed, mirrors the original handler's pattern that
+// worked under Netlify dev. Pull-mode has been observed to hang here.
 function bufferAndStream(iter, bufferChars) {
   const enc = new TextEncoder();
-  let flushed = false;
-  let buf = '';
   return new ReadableStream({
-    async pull(controller) {
+    async start(controller) {
+      let flushed = false;
+      let buf = '';
       try {
-        const { value, done } = await iter.next();
-        if (done) {
-          if (!flushed && buf) controller.enqueue(enc.encode(buf));
-          controller.close();
-          return;
-        }
-        if (flushed) {
-          controller.enqueue(enc.encode(value));
-        } else {
+        for await (const value of iter) {
+          if (flushed) {
+            controller.enqueue(enc.encode(value));
+            continue;
+          }
           buf += value;
           if (buf.length >= bufferChars) {
             controller.enqueue(enc.encode(buf));
@@ -379,10 +379,13 @@ function bufferAndStream(iter, bufferChars) {
             flushed = true;
           }
         }
-      } catch (err) {
-        // Best-effort: flush what we have, then surface error.
         if (!flushed && buf) controller.enqueue(enc.encode(buf));
-        controller.error(err);
+        controller.close();
+      } catch (err) {
+        if (!flushed && buf) {
+          try { controller.enqueue(enc.encode(buf)); } catch {}
+        }
+        try { controller.close(); } catch {}
       }
     },
     cancel() {

@@ -166,36 +166,38 @@ function clampHistory(rawHistory) {
 // Wrap raw text ReadableStream into v2 SSE shape.
 // Input: ReadableStream<Uint8Array> emitting decoded text chunks.
 // Output: ReadableStream<Uint8Array> emitting `data: {"text": "..."}\n\n` lines + [DONE].
+//
+// Uses start-mode (eager). pull-mode hangs under Netlify dev v20 — the
+// outer reader never gets pulled, so inner iter never advances.
 function toV2Sse(textStream) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
-  const reader = textStream.getReader();
-  let totalChars = 0;
   return new ReadableStream({
-    async pull(controller) {
+    async start(controller) {
+      const reader = textStream.getReader();
+      let totalChars = 0;
       try {
-        const { value, done } = await reader.read();
-        if (done) {
-          if (totalChars === 0) {
-            const fb = "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: fb })}\n\n`));
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          const text = decoder.decode(value, { stream: true });
+          if (text) {
+            totalChars += text.length;
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
           }
-          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-          controller.close();
-          return;
         }
-        const text = decoder.decode(value, { stream: true });
-        if (text) {
-          totalChars += text.length;
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+        if (totalChars === 0) {
+          const fb = "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: fb })}\n\n`));
         }
-      } catch (err) {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: err?.message || 'stream_error' })}\n\n`));
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
         controller.close();
+      } catch (err) {
+        try {
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: err?.message || 'stream_error' })}\n\n`));
+        } catch {}
+        try { controller.close(); } catch {}
       }
-    },
-    cancel() {
-      reader.cancel();
     },
   });
 }
