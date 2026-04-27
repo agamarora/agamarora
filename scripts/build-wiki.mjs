@@ -2134,11 +2134,19 @@ ${AAMARK_SCRIPT}
   bgRoot.setAttribute('transform', scaleAroundCenter(0.05));
   bgRoot.style.opacity = '0';
 
-  // Genesis halos + label fade in (genesis core itself stays visible — it IS the origin)
+  // Genesis halos + label fade in (genesis core itself stays visible — it IS the origin).
+  // Two-step: define opacity:0 + transition first, then on next rAF flip to opacity:1
+  // so the browser registers the 0→1 transition. Without the rAF kick, the property
+  // change happens in the same paint cycle as the initial set and the transition is
+  // skipped — that was the intermittent "label sometimes missing" bug.
   const genesisLabelEl = svg.querySelector('text.genesis-label');
   const genesisSubEl = svg.querySelector('text.genesis-sublabel');
   if (genesisLabelEl) { genesisLabelEl.style.opacity = '0'; genesisLabelEl.style.transition = 'opacity 1s ease-out 0.6s'; }
   if (genesisSubEl) { genesisSubEl.style.opacity = '0'; genesisSubEl.style.transition = 'opacity 1s ease-out 0.8s'; }
+  requestAnimationFrame(() => {
+    if (genesisLabelEl) genesisLabelEl.style.opacity = '1';
+    if (genesisSubEl) genesisSubEl.style.opacity = '1';
+  });
 
   // Shockwave element
   const shockwave = el('circle', {
@@ -2260,6 +2268,12 @@ ${AAMARK_SCRIPT}
         deepFieldGroup.style.opacity = '1';
         bgRoot.setAttribute('transform', scaleAroundCenter(1));
         bgRoot.style.opacity = '0.85';
+        // Genesis label: ensure visible on natural entry-complete (mirror skipBigBang).
+        // Without this, the CSS transition definition exists but is never triggered,
+        // leaving "agam.arora" + "second brain" invisible until interaction. The
+        // staggered 0.6s/0.8s delays still apply via transition-delay.
+        if (genesisLabelEl) genesisLabelEl.style.opacity = '1';
+        if (genesisSubEl) genesisSubEl.style.opacity = '1';
       }
 
       // Parallax drift active during entry too
