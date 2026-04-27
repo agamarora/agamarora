@@ -76,7 +76,7 @@ What twelve to eighteen months shipping voice AI to Fortune 500 enterprises taug
 Scope lessons from building an enterprise voice AI platform from zero. The narrow control point over full-stack CCaaS. The MCP-first bet that paid off. The standalone-sellable pivot I got wrong, and the consolidation pattern that followed. Product shape is decided by what you refuse. Read at https://agamarora.com/lab/product-shape/.
 
 ### Vapi Voice Agent (Shararat)
-A playful voice AI experience where two agents, Angel and Dan, debate your choices. Built for the Vapi Build Challenge to explore multi-agent interactions and creative prompting. Try it at https://shararat.agamarora.com, full video at https://www.youtube.com/watch?v=ZS2T_5x1on0, code at https://github.com/agamarora/shararat-ai.
+A playful voice AI experience where two agents, Angel and Dan, debate your choices. Built for the Vapi Build Challenge to explore multi-agent interactions and creative prompting. Code: https://github.com/agamarora/shararat-ai. Full video: https://www.youtube.com/watch?v=ZS2T_5x1on0.
 
 ### Claude Code Resource Monitor (luna-monitor)
 A terminal dashboard for Claude Code usage (5h/7d windows), CPU, temperatures, memory, GPU, disks, and processes. Code and readme at https://github.com/agamarora/utils/tree/main/luna-monitor, downloads at https://github.com/agamarora/utils/releases.

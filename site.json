@@ -47,7 +47,7 @@
     { "slug": "github", "url": "https://github.com/agamarora", "title": "GitHub profile", "icon": "fa-github" },
     { "slug": "linkedin", "url": "https://linkedin.com/in/agam-arora", "title": "LinkedIn", "icon": "fa-linkedin" },
     { "slug": "youtube", "url": "https://youtube.com/@agamarora", "title": "YouTube", "icon": "fa-youtube" },
-    { "slug": "shararat-live", "url": "https://shararat.agamarora.com", "title": "Shararat — voice AI live demo", "icon": "fa-microphone" }
+    { "slug": "shararat-code", "url": "https://github.com/agamarora/shararat-ai", "title": "Shararat — voice AI source on GitHub", "icon": "fa-github" }
   ],
   "actions": [
     { "slug": "resume-pdf", "target": "/assets/artefacts/2026_Agam%20Arora.pdf", "title": "Download resume PDF", "icon": "fa-download" },
@@ -64,7 +64,7 @@
     "site": "/site.json"
   },
   "default_intent_routing": {
-    "voice_ai": { "priority": "lab-voice-ai-production", "supporting": ["resume-avp", "shararat-live", "wiki:voice-ai-craft"] },
+    "voice_ai": { "priority": "lab-voice-ai-production", "supporting": ["resume-avp", "shararat-code", "wiki:voice-ai-craft"] },
     "side_projects": { "priority": "lab", "supporting": ["lab-second-brain", "wiki:personal-projects-tinkering", "github"] },
     "hiring": { "priority": "book-call", "supporting": ["linkedin", "email", "resume-pdf"] },
     "credentials": { "priority": "resume", "supporting": ["resume-pdf", "linkedin", "wiki:career-reflection"] },

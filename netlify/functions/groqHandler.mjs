@@ -168,7 +168,7 @@ Pages:
 - /wiki: authored knowledge atlas (10 themes)
 - /wiki/graph: constellation graph view of the wiki
 - https://github.com/agamarora: GitHub
-- https://shararat.agamarora.com: Shararat Voice AI demo
+- https://github.com/agamarora/shararat-ai: Shararat Voice AI source + README (live demo retired)
 
 When a page would genuinely help, include it as a card slug. Max one priority card per reply. Never force a card.
 

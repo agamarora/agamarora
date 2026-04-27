@@ -1071,7 +1071,7 @@ function slugToUrl(slug) {
   if (slug === 'calendly') return 'https://calendly.com/agamarora/chat';
   if (slug === 'linkedin') return 'https://linkedin.com/in/agamarora';
   if (slug === 'github') return 'https://github.com/agamarora';
-  if (slug === 'shararat') return 'https://shararat.agamarora.com';
+  if (slug === 'shararat') return 'https://github.com/agamarora/shararat-ai';
   if (slug === 'resume-pdf') return '/assets/artefacts/2026_Agam%20Arora.pdf';
   // Internal slugs: /lab, /resume, /wiki/..., /lab/second-brain/, etc.
   return '/' + slug.replace(/^\//, '');
@@ -1282,7 +1282,7 @@ function generateFallbackCards(prompt, answer) {
     cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
     cards.push({ title:'Download resume PDF', desc:"Latest resume, updated Nov 2025.", url:'/assets/artefacts/2026_Agam%20Arora.pdf', type:'action', icon:'ic-download' });
   } else if (p.match(/voice|speech|shararat|4m|call/)) {
-    cards.push({ title:'Try Shararat live', desc:"Voice AI demo — live in production.", url:'https://shararat.agamarora.com', type:'external', icon:'ic-mic', priority:true });
+    cards.push({ title:'Shararat on GitHub', desc:"Voice AI multi-agent demo. Code + README.", url:'https://github.com/agamarora/shararat-ai', type:'external', icon:'ic-github', priority:true });
     cards.push({ title:'See his current role', desc:"AVP AI Products at AIonOS since Nov 2025.", url:'/resume#avp', icon:'ic-user' });
     cards.push({ title:'Browse the lab', desc:"All projects and builds.", url:'/lab', icon:'ic-flask' });
   } else if (p.match(/lab|project|build|ship/)) {

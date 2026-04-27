@@ -170,7 +170,7 @@ export const KG_STATS = {
 // Default routing — intent → priority slug + supporting slugs.
 // Mirrors site.json default_intent_routing for /enter v3 cards.
 export const KG_DEFAULT_ROUTING = {
-  voice_ai: { priority: "lab-voice-ai-production", supporting: ["resume-avp", "shararat-live", "wiki:voice-ai-craft"] },
+  voice_ai: { priority: "lab-voice-ai-production", supporting: ["resume-avp", "shararat-code", "wiki:voice-ai-craft"] },
   side_projects: { priority: "lab", supporting: ["lab-second-brain", "wiki:personal-projects-tinkering", "github"] },
   hiring: { priority: "book-call", supporting: ["linkedin", "email", "resume-pdf"] },
   credentials: { priority: "resume", supporting: ["resume-pdf", "linkedin", "wiki:career-reflection"] },

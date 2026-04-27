@@ -62,7 +62,7 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 
 - [second-brain](https://github.com/agamarora/second-brain): open source git-native second brain template for AI agents. MIT licensed. PRFAQ at https://agamarora.com/lab/second-brain/
 - [AI Resume](https://github.com/agamarora/ai-resume): open source. Resume for the agent-to-agent web, dual audience (hiring AI agents via /.well-known/ai-resume.json, humans via chat). Live demo: https://ai-resume-demo.netlify.app
-- [Vapi Voice Agent (Shararat)](https://shararat.agamarora.com): playful voice AI with two debating agents (Angel and Dan). Built for the Vapi Build Challenge. Code: https://github.com/agamarora/shararat-ai
+- [Vapi Voice Agent (Shararat)](https://github.com/agamarora/shararat-ai): playful voice AI with two debating agents (Angel and Dan). Built for the Vapi Build Challenge. Demo video: https://www.youtube.com/watch?v=ZS2T_5x1on0
 - [Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor): terminal dashboard for Claude Code usage, CPU, temps, GPU, disks, and processes
 
 ## Case studies
