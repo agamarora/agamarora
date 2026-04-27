@@ -1439,40 +1439,55 @@ function generateFallbackCards(prompt, answer) {
   const p = prompt.toLowerCase();
   const cards = [];
 
-  // Specific-channel asks — surface that channel as the priority card.
-  // Order matters: most specific first.
+  // Card routing rules (locked 2026-04-27):
+  //   PROJECTS / GITHUB asks       → Lab + GitHub
+  //   CONNECT / CONTACT asks       → LinkedIn + Calendly + GitHub
+  //   HIRING asks                  → LinkedIn + Resume + GitHub
+  //   BUILDING / SECOND-BRAIN asks → Lab + GitHub + second-brain
+  //   AGENT / WIKI / THINKING      → wiki/<theme> + wiki/graph + lab
+  //   Everything else              → resume + lab + wiki/graph
+
+  const lab = { title:'Browse the lab', desc:"Projects, demos, and case studies.", url:'/lab', icon:'ic-flask' };
+  const github = { title:'GitHub profile', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' };
+  const linkedin = { title:'See his LinkedIn', desc:"Full work history, posts, and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' };
+  const calendly = { title:'Book a 15-min chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' };
+  const resume = { title:'See his background', desc:"12 years, 6 companies, 5 industries.", url:'/resume', icon:'ic-user' };
+  const graph = { title:'Constellation graph', desc:"His second brain as an interactive star map.", url:'/wiki/graph', icon:'ic-route' };
+  const youtube = { title:'YouTube channel', desc:"Talks, demos, and walkthroughs.", url:'https://www.youtube.com/@agam_arora', type:'external', icon:'ic-link' };
+
+  const pri = (c) => ({ ...c, priority:true });
+
+  // YouTube — narrow, only when explicitly asked
   if (p.match(/\byoutube\b|\byt\b|\bvideos?\b|channel/)) {
-    cards.push({ title:'YouTube channel', desc:"Talks, demos, and project walkthroughs.", url:'https://www.youtube.com/@agam_arora', type:'external', icon:'ic-link', priority:true });
-    cards.push({ title:'See his LinkedIn', desc:"Posts, articles, and work history.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
-    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
-  } else if (p.match(/\bgithub\b|\bgh\b|\brepo\b|\bcode\b|open\s*source/)) {
-    cards.push({ title:'GitHub profile', desc:"Open source projects, experiments, and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github', priority:true });
-    cards.push({ title:'Browse the lab', desc:"Curated project pages with demos and writeups.", url:'/lab', icon:'ic-flask' });
-    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
-  } else if (p.match(/\blinkedin\b|\bli\b/)) {
-    cards.push({ title:'See his LinkedIn', desc:"Full work history, posts, and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link', priority:true });
-    cards.push({ title:'Book a 15-min chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' });
-    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
-  } else if (p.match(/hire|recruit|available|opportunit|contact|reach|connect|get in touch|message|talk to|chat with|book.*(call|chat|meeting)/)) {
-    cards.push({ title:'Book a 15-min chat', desc:"Not searching but always reads a good message. Fastest path in.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar', priority:true });
-    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
-    cards.push({ title:'GitHub', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' });
-  } else if (p.match(/\bvoice\b|\bspeech\b|\bshararat\b|conversation ai|voice ai|4m calls|million calls/)) {
-    cards.push({ title:'Shararat on GitHub', desc:"Voice AI multi-agent demo. Code + README.", url:'https://github.com/agamarora/shararat-ai', type:'external', icon:'ic-github', priority:true });
-    cards.push({ title:'See his current role', desc:"AVP AI Products at AIonOS since Nov 2025.", url:'/resume#avp', icon:'ic-user' });
-    cards.push({ title:'Browse the lab', desc:"All projects and builds.", url:'/lab', icon:'ic-flask' });
-  } else if (p.match(/lab|project|build|ship/)) {
-    cards.push({ title:'Browse the lab', desc:"Four projects: voice, RAG, agentic, open-source.", url:'/lab', icon:'ic-flask', priority:true });
-    cards.push({ title:'second-brain PRFAQ', desc:"The agent-first wiki + KG project.", url:'/lab/second-brain/', icon:'ic-book' });
-    cards.push({ title:'AI Resume template', desc:"Open source. CLAUDE.md as product.", url:'/lab/ai-resume/', icon:'ic-code' });
-  } else if (p.match(/agent.first|agentic|agent/)) {
-    cards.push({ title:'Read the full take', desc:"Wiki page on agent-first thesis.", url:'/wiki/agent-first/', icon:'ic-book', priority:true });
-    cards.push({ title:'See it built', desc:"second-brain — knowledge made readable for AI agents.", url:'/lab/second-brain/', icon:'ic-flask' });
-    cards.push({ title:'Browse the lab', desc:"All agent-first builds in one place.", url:'/lab', icon:'ic-flask' });
-  } else {
-    cards.push({ title:'See his background', desc:"12 years, 6 companies, 5 industries.", url:'/resume', icon:'ic-user', priority:true });
-    cards.push({ title:'Browse the lab', desc:"Projects and side builds.", url:'/lab', icon:'ic-flask' });
-    cards.push({ title:'Book a chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' });
+    cards.push(pri(youtube), linkedin, github);
+  }
+  // Hiring → LinkedIn + Resume + GitHub
+  else if (p.match(/\bhire\b|hiring|recruit|recruiter|available|availability|opportunit|interview|job\b|role\b|position|fit\b/)) {
+    cards.push(pri(linkedin), resume, github);
+  }
+  // Connect / contact → LinkedIn + Calendly + GitHub
+  else if (p.match(/contact|connect|reach|get in touch|message|talk to|chat with|book.*(call|chat|meeting)|\blinkedin\b/)) {
+    cards.push(pri(linkedin), calendly, github);
+  }
+  // GitHub-specific or projects asks → Lab + GitHub
+  else if (p.match(/\bgithub\b|\bgh\b|\brepo\b|\bcode\b|\bopen\s*source\b|projects?|portfolio|what.*built|things.*shipped/)) {
+    cards.push(pri(lab), github);
+  }
+  // Building / second-brain / wiki → Lab + GitHub + second-brain
+  else if (p.match(/build(ing)?|making|creating|second.brain|wiki|knowledge|atlas|constellation|\bgraph\b/)) {
+    cards.push(pri(lab), github, { title:'second-brain', desc:"Why AI forgets you every session, and what fixes it.", url:'/lab/second-brain/', icon:'ic-book' });
+  }
+  // Voice AI specifically (case study)
+  else if (p.match(/\bvoice\b|\bspeech\b|conversation ai|voice ai|4m calls|million calls/)) {
+    cards.push(pri({ title:'Voice AI in production', desc:"Case study: 4M annual calls at 50% lower cost. What it took.", url:'/lab/voice-ai-production/', icon:'ic-mic' }), lab, resume);
+  }
+  // Agent-first thesis / thinking → wiki + graph + lab
+  else if (p.match(/agent.first|agentic|\bagent\b|thesis|\bthinking\b|believe|opinion/)) {
+    cards.push(pri({ title:'Read the full take', desc:"Wiki page on agent-first thesis.", url:'/wiki/agent-first/', icon:'ic-book' }), graph, lab);
+  }
+  // Default → resume + lab + graph
+  else {
+    cards.push(pri(resume), lab, graph);
   }
   return cards;
 }
