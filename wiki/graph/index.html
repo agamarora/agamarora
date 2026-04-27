@@ -1301,12 +1301,18 @@
   }
 
   // === CP-7: layered visibility on hover/focus ===
-  // Only edges where the theme NODE itself is an endpoint light up. Belief/project/post
-  // children are NOT included — hovering a theme should not light up unrelated belief↔belief
-  // chords across the canvas. Subtle dotted highlit style (see .cross-edge.highlit CSS).
+  // Hover lights up everything that constitutes this theme: edges where theme node
+  // itself is an endpoint, plus edges where either endpoint is a belief/project/post/tech
+  // belonging to the theme (via nodeOffsets). Subtle dotted style (see .cross-edge.highlit
+  // CSS) so the effect reads as "what made this theme" without screaming.
+  function isEndpointInTheme(nodeId, themeId){
+    if (nodeId === themeId) return true;
+    const off = nodeOffsets[nodeId];
+    return off && off.themeId === themeId;
+  }
   function highlightTheme(themeId){
     crossEdgeRefs.forEach(ref => {
-      const isConnected = ref.from === themeId || ref.to === themeId;
+      const isConnected = isEndpointInTheme(ref.from, themeId) || isEndpointInTheme(ref.to, themeId);
       ref.path.classList.toggle('highlit', isConnected);
       ref.path.classList.toggle('dimmed', !isConnected);
     });
