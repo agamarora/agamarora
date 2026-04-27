@@ -606,6 +606,10 @@
          wins). Reset min-height to 0 so the lock holds. */
       min-height:0;
       overflow:hidden;
+      /* iOS rubber-band on the page would rip the vv-locked surface.
+         Block it on html and body. Internal scrolling (main.terminal)
+         keeps its own scroll-chain. */
+      overscroll-behavior:none;
     }
     body {
       display:flex;
@@ -620,7 +624,11 @@
               var(--space-5);
       gap:var(--space-6);
     }
-    .status-bar { font-size:0.7rem; }
+    /* Mobile font sizes bumped to clear WCAG 12px absolute minimum:
+       status-bar 0.7rem (11.2px) -> 0.78rem (12.5px),
+       trace verb 0.74rem (11.8px) -> 0.8rem (12.8px),
+       trace latency 0.68rem (10.9px) -> 0.78rem (12.5px). */
+    .status-bar { font-size:0.78rem; }
     .trace-line {
       flex-direction:column;
       align-items:stretch;
@@ -629,9 +637,9 @@
     }
     .trace-line .verb {
       white-space:normal; width:100%; flex:0 1 auto;
-      overflow:visible; text-overflow:clip; font-size:0.74rem;
+      overflow:visible; text-overflow:clip; font-size:0.8rem;
     }
-    .trace-line .latency { align-self:flex-end; font-size:0.68rem; }
+    .trace-line .latency { align-self:flex-end; font-size:0.78rem; }
     .answer { font-size:0.98rem; }
     .cards {
       flex-direction:column;
@@ -644,7 +652,11 @@
        Matches the visual rhythm of trace pills above so the post-answer card
        row reads as a tight action list, not a series of marketing tiles. */
     .card {
-      flex:1 1 auto;
+      /* In a column flex container, flex:1 1 auto grows children to
+         fill height. We want pill-row cards at content height, not
+         stretched. flex:0 0 auto + width:100% pins them. */
+      flex:0 0 auto;
+      width:100%;
       flex-direction:row;
       align-items:center;
       gap:10px;
@@ -680,7 +692,11 @@
     .input-bar {
       position:static;
       flex-shrink:0;
-      padding:var(--space-4) var(--space-5) calc(var(--space-4) + 4px);
+      /* iPhone home-indicator safe area: env(safe-area-inset-bottom)
+         falls back to 0 on browsers without notches. Matters on
+         iOS 11+ in standalone or full-screen modes. */
+      padding:var(--space-4) var(--space-5)
+              calc(var(--space-4) + 4px + env(safe-area-inset-bottom, 0px));
       transition:none;
     }
     .input-bar .input-wrap { padding:var(--space-3) var(--space-4); }
