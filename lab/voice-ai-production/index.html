@@ -169,6 +169,30 @@
     margin-right: var(--space-4);
     color: var(--border);
   }
+  .executive-summary {
+    margin-top: var(--space-6);
+    padding: var(--space-5) var(--space-6);
+    background: var(--surface);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--space-5);
+    row-gap: var(--space-4);
+  }
+  .executive-summary dt {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .executive-summary dd { font-size: 0.95rem; line-height: 1.55; color: var(--text); margin: 0; }
+  @media (max-width: 600px) {
+    .executive-summary { grid-template-columns: 1fr; row-gap: var(--space-3); padding: var(--space-5); }
+    .executive-summary dt { padding-top: 0; }
+  }
 
   /* SECTIONS */
   .section { margin-bottom: var(--space-8); }
@@ -311,6 +335,14 @@
       <span>PM lead, end-to-end</span>
       <span>12&ndash;18 month arc</span>
     </div>
+    <dl class="executive-summary" aria-label="Case study summary">
+      <dt>The challenge</dt>
+      <dd>Real-time voice agents for Fortune 500 contact centers. Sub-second interruption handling, multilingual code-switching, reliable tool execution against enterprise back-office systems. Generic voice-bot platforms failed all three.</dd>
+      <dt>AI architecture</dt>
+      <dd>Real-time voice runtime with LLM core, deterministic tool layer, telephony partner integration, multilingual prompt stack. Three verticals shipped, one airline deployment live in production, multi-million-dollar pipeline.</dd>
+      <dt>Business impact</dt>
+      <dd>Mid-seven-figure annual contact-center spend addressable, 70-80% of inbound volume on repeatable intents. Demos to adoption gap closed via integration-surface as primary signal, not stack benchmarks.</dd>
+    </dl>
   </header>
 
   <section class="section">

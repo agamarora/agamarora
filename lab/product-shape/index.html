@@ -169,6 +169,30 @@
     margin-right: var(--space-4);
     color: var(--border);
   }
+  .executive-summary {
+    margin-top: var(--space-6);
+    padding: var(--space-5) var(--space-6);
+    background: var(--surface);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: var(--space-5);
+    row-gap: var(--space-4);
+  }
+  .executive-summary dt {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .executive-summary dd { font-size: 0.95rem; line-height: 1.55; color: var(--text); margin: 0; }
+  @media (max-width: 600px) {
+    .executive-summary { grid-template-columns: 1fr; row-gap: var(--space-3); padding: var(--space-5); }
+    .executive-summary dt { padding-top: 0; }
+  }
 
   /* SECTIONS */
   .section { margin-bottom: var(--space-8); }
@@ -311,6 +335,14 @@
       <span>Head of product, from zero</span>
       <span>Real-time conversational execution</span>
     </div>
+    <dl class="executive-summary" aria-label="Case study summary">
+      <dt>The challenge</dt>
+      <dd>Enterprise voice AI scope decision. Every customer wanted full-stack CCaaS. Yes-to-everything would chase revenue but lose product shape. Pick a narrow control point and refuse the rest.</dd>
+      <dt>The bet</dt>
+      <dd>Real-time conversational execution layer between voice runtime and enterprise systems. MCP-first integration. Standalone-sellable evaluation module pivot (got wrong, walked back). Consolidation pattern that held.</dd>
+      <dt>Business impact</dt>
+      <dd>Two paying enterprise customers in production, multi-million-dollar deal pipeline, live airline deployment. Scope discipline preserved engineering velocity and integration depth where competitors fragmented.</dd>
+    </dl>
   </header>
 
   <section class="section">
