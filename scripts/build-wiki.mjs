@@ -539,6 +539,7 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>${escHtml(title)} - Agam Arora's wiki.</title>
 <meta name="description" content="${escHtml(description)}">
 <meta name="theme-color" content="#0A0A0A">
@@ -1281,6 +1282,7 @@ function buildGraphPage() {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Graph - Agam Arora's wiki.</title>
 <meta name="description" content="Authored constellation of ${kg.stats.nodes_total} graph nodes and ${kg.stats.edges.total} edges across the corpus. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
