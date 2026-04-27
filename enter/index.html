@@ -355,8 +355,13 @@
     overflow-x:auto;
     scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch;
-    padding:var(--space-2) 0 var(--space-3);
-    margin:0 calc(-1 * clamp(var(--space-5),5vw,var(--space-7)));
+    /* Vertical padding gives the hover lift (-2px translateY) and the
+       priority card's gold glow (24px box-shadow) room to render
+       without clipping. CSS spec: setting overflow-x to auto forces
+       overflow-y to also clip, so this padding IS the available
+       headroom. */
+    padding:var(--space-5) 0 var(--space-5);
+    margin:calc(-1 * var(--space-3)) calc(-1 * clamp(var(--space-5),5vw,var(--space-7)));
     padding-left:clamp(var(--space-5),5vw,var(--space-7));
     padding-right:clamp(var(--space-5),5vw,var(--space-7));
     scrollbar-width:none;
@@ -385,7 +390,12 @@
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--radius-lg);
-    padding:var(--space-5);
+    /* Asymmetric padding: more breath at the top so cards feel composed
+       rather than wrapped. Top --space-6 (24px), sides + bottom --space-5
+       (16px). Constant top padding matters because the card title is
+       single-line clamped (see .card .card-title); without title overflow
+       eating into the breath, the top is the most predictable surface. */
+    padding:var(--space-6) var(--space-5) var(--space-5);
     text-decoration:none;
     color:var(--text);
     display:flex;
@@ -409,18 +419,32 @@
     opacity:0.9;
   }
   .card.priority .card-icon { opacity:1; }
+  /* Title and description are length-clamped so every card is the same
+     height regardless of copy length. Without this, longer descs pushed
+     the arrow row down and uneven heights read as broken layout. */
   .card .card-title {
     font-family:var(--sans);
     font-size:0.95rem;
     font-weight:600;
     color:var(--text);
     line-height:1.3;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
   }
   .card .card-desc {
     font-family:var(--sans);
     font-size:0.82rem;
     color:var(--text-dim);
     line-height:1.4;
+    /* Exactly 2 lines, ellipsis on overflow. min-height pins the slot
+       so cards with shorter descs still allocate the same vertical
+       space — uniform card height. */
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    min-height:calc(0.82rem * 1.4 * 2);
   }
   .card .card-arrow {
     font-family:var(--mono);
