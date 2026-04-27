@@ -668,8 +668,11 @@
   @media (prefers-reduced-motion:reduce) {
     .trace-line, .empty-state .opening, .status-bar .dot,
     .answer, .cards { animation:none; transition:none; opacity:1; transform:none; }
-    /* Disable kb parallax and aa-mark stroke-draw animation */
-    .kb-board { transform:none !important; }
+    /* Static perspective tilt is preserved (not motion). The JS parallax
+       drift loop is already gated on prefersReducedMotion in script init,
+       so no inline transform is written and the CSS rotateX/rotateZ
+       remains. Earlier `transform:none !important` flat-cancelled the
+       perspective and rendered the keyboard as a 2D grid. */
     #aa-stroke { transition:none !important; stroke-dashoffset:0 !important; }
   }
 </style>
@@ -1721,12 +1724,14 @@ if (isMobile() && window.visualViewport) {
     const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
     document.documentElement.style.setProperty('--vv-offset', offset + 'px');
     document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
-    // When keyboard is open, scroll the latest turn (or empty-state cards)
-    // into view above the keyboard. requestAnimationFrame so the layout
-    // settles after the offset CSS update.
+    // When keyboard is open, scroll the LATEST TURN into view so the
+    // streamed answer stays visible. Empty-state is intentionally NOT
+    // scrolled — auto-scrolling it pushed the wordmark + tagline above
+    // the fold and left the input bar overlaying cards. Empty-state
+    // should stay at its natural position; user can scroll if needed.
     if (offset > 0) {
       requestAnimationFrame(() => {
-        const last = document.querySelector('.turn:last-of-type, .empty-state');
+        const last = document.querySelector('.turn:last-of-type');
         if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
       });
     }
