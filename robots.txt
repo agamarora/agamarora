@@ -8,4 +8,68 @@ Allow: /
 Disallow: /moodboard/
 Disallow: /moodboard
 
+# Explicit allow for major AI search + training crawlers.
+# Wildcard above already permits these — explicit entries signal
+# intentional welcome and help bot-vetting tooling identify intent.
+
+User-agent: GPTBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /moodboard/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Anthropic-ai
+Allow: /
+Disallow: /moodboard/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /moodboard/
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: CCBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Diffbot
+Allow: /
+Disallow: /moodboard/
+
 Sitemap: https://agamarora.com/sitemap.xml
