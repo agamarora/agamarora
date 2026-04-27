@@ -145,32 +145,33 @@
   }
 
   /* =========================================================
-     Trace block — A-style mono content + gold pill enclosure
+     Trace block — TLDR-style left-stripe blocks (matches the
+     TLDR pattern on belief pages: 3px gold left-stripe + gold-dim
+     gradient + generous padding + small right-edge radius).
+     User feedback 2026-04-27: "I don't like the circular pills
+     for the agentic actions.. we should do something similar
+     that we did with the TLDR line item in some of our thesis..
+     give it some more room and space."
      ========================================================= */
   .trace {
     display:flex;
     flex-direction:column;
     gap:var(--space-3);
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-    padding:var(--space-5) 0;
+    padding:var(--space-3) 0;
   }
   .trace-line {
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:var(--space-4);
+    gap:var(--space-5);
     font-family:var(--mono);
-    font-size:0.78rem;
-    line-height:1.4;
+    font-size:0.82rem;
+    line-height:1.5;
     color:var(--text-dim);
-    border:1px solid var(--accent-pill);
-    border-radius:var(--radius-pill);
-    padding:5px 14px;
-    background:rgba(229,165,75,0.04);
-    opacity:0;
-    transform:translateY(4px);
-    animation:trace-in 0.32s cubic-bezier(0.25,0.1,0.25,1) forwards;
+    background:linear-gradient(90deg, var(--accent-dim), transparent 70%);
+    border-left:3px solid var(--accent);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    padding:var(--space-4) var(--space-6);
   }
   /* Stagger derived from REAL backend latencies (not a frozen interval).
      Each pill carries data-latency in markup; JS computes appearance time
