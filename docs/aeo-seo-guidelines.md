@@ -189,6 +189,32 @@ Audit done 2026-04-26. What we already have, what we still need:
 
 ---
 
+## Part 2.5: Reddit AEO research synthesis (2026-04-27)
+
+Sourced from r/SEO + r/marketing 7-10mo old practitioner threads. New items not previously in plan, folded into Tasks 14-18 below.
+
+### Net-new tactics
+
+1. **`FAQPage` JSON-LD schema** — every FAQ-shaped block (belief pages, /wiki/voice/, /wiki/quotes/, Lab PRFAQs) should ship `FAQPage` schema. Multiple practitioners cite this as the #1 AEO win. Pattern: `mainEntity` array of `{ @type: Question, name, acceptedAnswer: { @type: Answer, text } }`.
+2. **`HowTo` JSON-LD schema** — `/lab/ai-resume/` setup-prompt + `/lab/second-brain/` paste-prompt are how-to shape. Add `HowTo` schema with `step` array.
+3. **Raw-HTML answer-early-in-DOM audit** — open `view-source:` on every page; the headline answer must appear in raw HTML within first 150 words. No JS-rendered content for the lead. Confirmed Reddit consensus: "AI bots only read raw DOM text."
+4. **`dateModified` + `datePublished` on Article schemas** — freshness is a ranking signal. Wiki Article schemas need both fields. Build script reads `frontmatter.published_at` + `git log -1 --format=%cI <file>` for `dateModified`.
+5. **Post-deploy AI search QA** — practitioner standard: after every shipping pass, query Perplexity / Bing Copilot / ChatGPT search / Claude.ai with 5 representative prompts ("AI PM agent-first thesis", "voice AI craft 90% rule", etc.). Document whether agamarora.com surfaces and which page is cited. If a target page doesn't surface in 7-14 days, tweak clarity / context / internal-link weight and retest.
+6. **Evidence-citation outbound links** — every Evidence drawer fact on belief pages should include outbound URL (LinkedIn post permalink, GitHub repo, etc.) where verifiable. OneFunder thesis: "unique facts cited verbatim with link beat paraphrasable paragraphs." Make individual facts the citable atom.
+
+### Enhancements to existing tasks
+
+- **AEO-3 (Q&A overlay)** — make pattern explicit: `H2 = question, first paragraph = 40-60 word answer, bullets/table = detail`. Apply to /wiki/voice/, /wiki/quotes/.
+- **AEO-4 (BLUF)** — "first 150 words = direct answer" per Reddit consensus. Lab PRFAQ leads should test as standalone snippet.
+- **Crawl audit (Part 5)** — add `view-source:` check: confirm answer text present in raw HTML, not JS-rendered.
+- **DOM bloat audit** — confirm wiki pages don't carry hidden divs, CSS-injected content, or oversized inline scripts above the fold. Constellation graph page is the only legitimate JS-heavy surface.
+
+### Tracking (optional, deferred)
+
+- Tools like AiClicks.io track citations across ChatGPT / Perplexity / Gemini / Claude. Defer until first AEO pass deployed + 30 days.
+
+---
+
 ## Part 4: Pass execution order
 
 Run in this order when triggering an AEO/SEO pass:

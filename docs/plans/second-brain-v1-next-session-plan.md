@@ -346,7 +346,12 @@ v2 pages index+follow, /moodboard remains noindex.
 
 ### Task 6 — AEO-3 Q&A overlay on /wiki/voice/ + /wiki/quotes/
 
-**Scope:** belief pages already ship Q&A shape via D6.1. Apply lighter Q&A overlay to /wiki/voice/ + /wiki/quotes/:
+**Scope:** belief pages already ship Q&A shape via D6.1. Apply lighter Q&A overlay to /wiki/voice/ + /wiki/quotes/. Per Reddit AEO consensus 2026-04-27, the canonical extractable pattern is:
+- **H2 = the question** (literal interrogative)
+- **First paragraph = 40-60 word direct answer**
+- **Bullets / table = supporting detail**
+
+Apply this shape to:
 - /wiki/voice/: add a "What does Agam's voice sound like?" section with the 4 register summaries.
 - /wiki/quotes/: structure as "What are Agam's signature lines?" with the curated 50-80 lines.
 
@@ -362,7 +367,7 @@ answer. Indexable as "what is Agam's voice / signature lines" by AI search.
 
 ### Task 7 — AEO-4 BLUF executive summary on Lab PRFAQ pages
 
-**Scope:** each Lab project PRFAQ (`/lab/second-brain/`, `/lab/ai-resume/`, `/lab/<other>/`) gets a BLUF (Bottom Line Up Front) summary in first ~50 words. Pattern: "[Project name] is [what]. It does [Y]. Built because [why]."
+**Scope:** each Lab project PRFAQ (`/lab/second-brain/`, `/lab/ai-resume/`, `/lab/<other>/`) gets a BLUF (Bottom Line Up Front) summary in first 150 words. Per Reddit AEO consensus: the first 150 words must work as a standalone snippet that fully answers "what is X." Pattern: "[Project name] is [what]. It does [Y]. Built because [why]." plus 1-2 bullet outcomes.
 
 **Files:** individual `/lab/<project>/index.html` files.
 
@@ -451,6 +456,136 @@ AEO-9: post-AEO regression review
 fixed.] AEO gate now clean.
 ```
 
+### Task 12.1 — AEO-10 FAQPage + HowTo JSON-LD schema (Reddit research 2026-04-27)
+
+**Scope:** add structured-data schemas to FAQ-shaped + how-to-shaped content:
+- `FAQPage` JSON-LD on every page with Q&A shape:
+  - 19 belief pages (`/wiki/beliefs/<slug>/`) — TLDR + How to apply + What this is not + Argues against → `Question/Answer` pairs
+  - `/wiki/voice/` — "What does Agam's voice sound like?" + register summaries
+  - `/wiki/quotes/` — "What are Agam's signature lines?" + curated lines
+  - Lab PRFAQs (`/lab/<project>/`) — existing FAQ sections
+- `HowTo` JSON-LD on:
+  - `/lab/ai-resume/` — setup-prompt as HowTo with `step` array (clone repo / paste system prompt / run / iterate)
+  - `/lab/second-brain/` — paste-prompt as HowTo
+
+**Pattern (FAQPage):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the agent-first thesis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "..." }
+    }
+  ]
+}
+```
+
+**Files:** `scripts/build-wiki.mjs` (belief + voice + quotes builders), individual `/lab/<project>/index.html`.
+
+**Gate:** validate via Google Rich Results Test on 3 sample pages.
+
+**Commit message:**
+```
+AEO-10: FAQPage + HowTo JSON-LD schema
+
+19 belief pages + voice + quotes + lab PRFAQs ship FAQPage schema.
+Lab how-to pages (ai-resume, second-brain) ship HowTo schema with step
+arrays. Per Reddit AEO research: FAQPage is the #1 cited extraction win.
+Validated 3 samples in Rich Results Test.
+```
+
+### Task 12.2 — AEO-11 raw-HTML answer-early-in-DOM audit
+
+**Scope:** open `view-source:https://agamarora.com/<page>` for each public page and verify:
+- Headline answer appears within first 150 words of raw HTML
+- No JS-rendered content above the fold (lead text must be in initial DOM)
+- No hidden divs / `display: none` carrying core answer content
+- No `aria-hidden=true` on the lead
+
+**Pages:** `/`, `/wiki/`, `/wiki/<theme>/` (sample 3), `/wiki/beliefs/<slug>/` (sample 3), `/wiki/voice/`, `/wiki/quotes/`, `/lab/<project>/` (sample 2), `/resume/`. **Excludes** `/wiki/graph/` (legitimately JS-rendered, has fallback `<noscript>` block per Phase D plan).
+
+**Output:** quick checklist in commit body.
+
+**Commit message:**
+```
+AEO-11: raw-HTML answer-early-in-DOM audit
+
+view-source: check on 12 pages. All confirm headline answer appears in
+raw HTML within first 150 words. No JS-only lead content. /wiki/graph/
+exempt (constellation viz, has <noscript> fallback). Per Reddit AEO
+consensus: bots only read raw DOM text.
+```
+
+### Task 12.3 — AEO-12 dateModified + datePublished on Article schemas
+
+**Scope:** every wiki Article JSON-LD on `/wiki/<theme>/` + `/wiki/beliefs/<slug>/` needs:
+- `datePublished` from frontmatter (or fallback: oldest git commit touching the file)
+- `dateModified` from latest `git log -1 --format=%cI <source-file>`
+
+Build script reads git history at build time. Freshness is an AEO ranking signal.
+
+**Files:** `scripts/build-wiki.mjs` Article schema emitter, frontmatter parser.
+
+**Commit message:**
+```
+AEO-12: dateModified + datePublished on wiki Article schemas
+
+Build script now reads git log for each source draft to populate
+dateModified. datePublished from frontmatter where present, fallback
+to oldest git touch. Freshness signals improve AEO ranking per Reddit
+research.
+```
+
+### Task 12.4 — AEO-13 post-deploy AI search QA
+
+**Scope:** after Tasks 4-12.3 ship, query 5 representative prompts in each of: Perplexity, Bing Copilot, ChatGPT search, Claude.ai. Document whether agamarora.com surfaces + which page is cited.
+
+**Prompts:**
+1. "Agam Arora AI product manager"
+2. "agent-first thesis AI products"
+3. "voice AI 90% production reality"
+4. "AI PM should we vs can we framework"
+5. "second brain context layer"
+
+**Output:** `docs/plans/aeo-search-qa-2026-04-XX.md` table per engine.
+
+**Re-test cadence:** after first crawl cycle (7-14 days post-deploy).
+
+**Commit message:**
+```
+AEO-13: post-deploy AI search QA — 5 prompts × 4 engines
+
+Documented surfacing on Perplexity / Bing Copilot / ChatGPT search /
+Claude.ai. [N/20] prompts surfaced agamarora.com pages. Re-test in
+7-14 days post-crawl.
+```
+
+### Task 12.5 — AEO-14 Evidence-citation outbound links on belief pages
+
+**Scope:** belief page Evidence drawer currently has dated facts but no outbound link. Per Reddit AEO research (OneFunder thesis): unique facts cited verbatim with a link beat paraphrasable paragraphs. Each Evidence row should include outbound URL where verifiable:
+- LinkedIn post permalinks for 2018-2025 corpus citations
+- GitHub repo URLs for project references
+- Public talk links for conference references
+
+Where no public source exists, leave the date-only fact as is (private corpus citations).
+
+**Files:** `docs/plans/second-brain-v1-phase-a/synthesis/belief-deep-dives/*.md` (source drafts), `scripts/build-wiki.mjs` (Evidence row renderer).
+
+**Commit message:**
+```
+AEO-14: Evidence-citation outbound links on belief pages
+
+Belief page Evidence drawer rows now include outbound URL where source
+is publicly verifiable (LinkedIn permalink, GitHub repo, talk video).
+[N rows] linked, [M rows] kept date-only (private corpus). Per Reddit
+AEO consensus: linked unique facts get cited verbatim by AI engines.
+```
+
+---
+
 ### Task 13 — Crawl audit checklist (Part 5 of guidelines)
 
 **Scope:** per `docs/aeo-seo-guidelines.md` Part 5:
@@ -461,6 +596,8 @@ fixed.] AEO gate now clean.
 - breadcrumb + BreadcrumbList JSON-LD on Lab + Resume + Enter pages (currently only wiki has breadcrumb)
 - nav link audit (all internal links resolve, no 404s)
 - 404 page check (does `/404.html` render correctly + carry the v2 design contract?)
+- view-source: check (cross-reference with AEO-11): confirm answer text in raw HTML on 5 spot-checked pages
+- DOM bloat audit: no hidden divs / oversized inline scripts above the fold (constellation graph page exempt)
 
 **Commit message:**
 ```
