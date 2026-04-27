@@ -714,13 +714,10 @@
     .input-bar .input-wrap {
       min-height:52px;
       padding:0 var(--space-4);
-      border-radius:26px;
+      border-radius:var(--radius-lg);
       gap:var(--space-3);
     }
-    .input-bar .input-wrap:focus-within {
-      border-color:var(--accent);
-      box-shadow:0 0 0 3px var(--accent-dim);
-    }
+    .input-bar .input-wrap:focus-within { border-color:var(--border-hover); }
     .input-bar .prompt { font-size:1rem; }
     .input-bar input { font-size:1rem; }
 
@@ -1803,8 +1800,16 @@ if (isMobile() && window.visualViewport) {
   const vv = window.visualViewport;
   const updateVH = () => {
     document.documentElement.style.setProperty('--vh', vv.height + 'px');
+    // Pin layout viewport to top — Android Chrome auto-scrolls the layout
+    // viewport when an input is focused (to bring it into view) which makes
+    // the bottom-pinned input bar "float" mid-screen relative to the
+    // keyboard. Forcing scrollTo(0,0) keeps the layout aligned with the
+    // visual viewport. Carried over from old /enter (commit 2fd49eb).
+    window.scrollTo(0, 0);
   };
   vv.addEventListener('resize', updateVH);
+  vv.addEventListener('scroll', () => window.scrollTo(0, 0));
+  window.addEventListener('scroll', () => window.scrollTo(0, 0), { passive:true });
   updateVH();
 }
 
