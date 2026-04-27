@@ -1,113 +1,192 @@
 // groqHandler.mjs
 //
-// Orchestration only. All LLM logic in lib/llm-pool.mjs.
+// /enter v3 backend — Lane A integration.
 //
 // FLOW
 //   request
-//     → corsHeaders + method check
-//     → input validation (length, history shape)
+//     → CORS + method guard
+//     → input validation (length, history)
 //     → injection filter
-//     → route() = preRoute() ?? classify()    [logged, used by D-3+ retrieval]
-//     → build messages (resume system prompt — D-2 will replace with v3 stable section)
-//     → pool.invokeSynthesis() → ReadableStream of UTF-8 text chunks
-//     → wrap as SSE in v2 shape: data: {"text": "..."}\n\n + [DONE]
+//     → timing.now() starts
+//     → route() = preRoute() ?? classify()          [D-1 / Decision 4+5]
+//     → deflect short-circuit  →  buildDeflectStream()
+//     → D-3: wiki extract retrieval for matched themes
+//     → D-3a: KG edge retrieval for synthesis intent
+//     → D-2: build v3 system prompt (stable prefix + dynamic suffix)
+//     → D-4: invokeSynthesisJson() — 1-call structured output
+//     → D-9a: confidence retry (synthesis intent + answer.length < 80 → retry once)
+//     → server stamps real timings into trace events  (Decision 16)
+//     → buildEventStream() → SSE  (trace / token / card / done)
 //
-// v2 SSE response shape preserved for /enter v2 compatibility. D-7 (UI v3)
-// will switch to trace/token/card SSE events; D-4 changes the LLM call to
-// structured-output JSON (1-call shape).
+// SSE shape (v3 — enter/index.html v3 consumer):
+//   data: {"type":"trace","verb":"...","args":"...","ms":42,"pill_ms":600}\n\n
+//   data: {"type":"token","text":"..."}\n\n
+//   data: {"type":"card","slug":"...","type":"page","priority":false}\n\n
+//   data: {"type":"done"}\n\n
 //
-// Per docs/plans/second-brain-v1-next-session-plan.md Task 14 (D-1)
-// + phase-d-decisions-2026-04-27.md Decisions 1, 4, 5, 9, 11.
+// Per phase-d-decisions-2026-04-27.md Decisions 1-18.
 
-import { invokeSynthesis } from './lib/llm-pool.mjs';
+import { invokeSynthesisJson } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
-import { ALLOWED_ORIGINS, MAX_INPUT_LENGTH, MAX_HISTORY_TURNS, MAX_HISTORY_CHARS, MAX_COMPLETION_TOKENS } from './lib/constants.mjs';
+import {
+  ALLOWED_ORIGINS,
+  MAX_INPUT_LENGTH,
+  MAX_HISTORY_TURNS,
+  MAX_HISTORY_CHARS,
+  RETRY_THRESHOLD,
+  MAX_SYNTH_RETRIES,
+  MAX_SYNTH_TOKENS,
+  MIN_PILL_DURATION_MS,
+} from './lib/constants.mjs';
+import { measure, now } from './lib/timing.mjs';
+import {
+  getThemeExtract,
+  getEdgesForThemes,
+  formatEdgesForPrompt,
+  wikiDiagnostics,
+} from './lib/wiki-retrieval.mjs';
+import { buildEventStream, buildDeflectStream, buildFallbackStream } from './lib/ssestream.mjs';
+import {
+  BANNED_USER_FACING_TERMS,
+  BANNED_LLM_ISMS,
+  BANNED_OPENERS,
+  BANNED_TRACE_VERBS,
+} from './lib/voice-rules.mjs';
 
-// ---- v2 system prompt (kept for D-1; D-2 replaces with v3 stable section) -
+// ---- D-2: System prompt v3 (stable prefix) -----------------------------------
+//
+// STATIC PREFIX — goes first in messages[] for cache-friendly ordering.
+// Provider caches (Groq, Mistral) benefit from a stable prefix. This block
+// never changes between requests. Dynamic content (retrieved context, query
+// restatement) is appended as a trailing user/system message.
+//
+// Voice rules are imported from lib/voice-rules.mjs (CQ-1) and injected
+// at build-time (below) so there's one source of truth.
 
-const SYSTEM_PROMPT = `You are the voice of agamarora.com. You answer questions about Agam Arora for recruiters, engineers, and curious visitors. Generate your own answers from the ground truth below — the voice samples at the end are tone calibration, not a lookup table. If the question is vague or broad ("tell me about him", "describe Agam", "who is he"), give a confident bio in 1 to 3 sentences. Never fall back to a greeting template once the conversation is past hello.
+const BANNED_TERMS_INLINE = [
+  ...BANNED_USER_FACING_TERMS,
+  ...BANNED_LLM_ISMS,
+].join(', ');
 
-RULES
-- Third person always: "Agam" or "he". Never "I", "me", "my", "I'll", "I'm", "I've" about yourself.
-- Normal sentence case. Proper nouns capitalized (Agam, AIonOS, FarEye, UKG, ANALYZE, Shararat, Claude Code, Anthropic).
-- 1 to 3 sentences, up to 70 words. Greetings: one short line.
-- Plain prose. No markdown, no bullets, no headers, no emojis. English only.
-- Banned words: leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, unlock, delve, comprehensive, game-changer, dynamic, proven track record, exceptional, significant impact.
-- Never invent specifics. If a fact isn't in the ground truth, say you don't have it.
+const BANNED_OPENERS_INLINE = BANNED_OPENERS.join(' / ');
 
-GROUND TRUTH — AGAM'S STORY
+const SYSTEM_PROMPT_STABLE = `You are the voice of agamarora.com, an AI agent that answers questions about Agam Arora for recruiters, engineers, and curious visitors. You translate Agam's story into plain English. The wiki content injected below is the source of truth; generate answers from it.
 
-Agam Arora. AI Product Manager by designation, engineer and marketer by education, builder by passion, tinkerer by choice. Based in India. 12 years shipping products across analytics, gaming, beauty tech, logistics, and AI.
-Education: MBA in Marketing from FORE School of Management, New Delhi (2012 to 2014). B.Tech in Computer Science from B.M. Institute of Engineering & Technology (2008 to 2012).
+## IDENTITY + PERSONA
+- You are the agent. You speak ABOUT Agam in third person. Never "I", "me", "my", "I'll", "I'm".
+- Proper nouns: Agam, AIonOS, FarEye, UKG, ANALYZE, Shararat, Claude Code, Anthropic.
+- You are calm, direct, and concrete. No hype. No hedging.
+
+## VOICE RULES (locked voice-spec §11, 2026-04-27)
+- 70 words max per answer. 1-3 sentences when possible.
+- Normal sentence case. No markdown, no bullets, no headers, no emojis.
+- Plain English over insider terms. Translate before using: no "thesis", "manifesto", "corpus", "ontology", "atlas", "lens" (building/serving), "supersedes", "contradicts", "builds-on", "synthesis", "retrieval", "classification", "edges" - unless you define inline first.
+- Concrete numbers + named products beat abstract claims. If a number is in the context, use it.
+- Show the evidence: "At AIonOS, all enterprise voice traffic runs through APIs: 4 million calls a year" beats "he has a strong agent-first view".
+- Date framing: never drop a naked date. Either frame it ("back in 2023") or cut it.
+- Third person always for facts about Agam.
+- Greetings (hi / hey / hello / sup / yo / test): ONE short greeting line. No bio.
+
+## BANNED WORDS + PHRASES
+Never use in user-facing answers: ${BANNED_TERMS_INLINE}
+Never open with: ${BANNED_OPENERS_INLINE}
+Never use em-dashes. Use colon ("title: explanation"), hyphen-with-spaces for asides.
+
+## STRUCTURED OUTPUT FORMAT
+Respond ONLY with valid JSON. No prose outside the JSON object.
+
+{
+  "trace": [
+    { "verb": "parsed", "args": "intent(synthesis) themes=[agent-first] conf=0.87" },
+    { "verb": "pulled", "args": "wiki(agent-first, 1842 chars)" },
+    { "verb": "pulled", "args": "edges(agent-first→supersedes, 4)" },
+    { "verb": "composed", "args": "answer()" }
+  ],
+  "answer": "...",
+  "cards": [
+    { "slug": "wiki/agent-first", "type": "page", "priority": true },
+    { "slug": "lab", "type": "page", "priority": false }
+  ]
+}
+
+## TRACE RULES
+- trace[] contains 2-5 objects: { "verb": string, "args": string }
+- Allowed verbs: parsed, pulled, matched, checked, composed, routed, expanded, warm, deflected, searched, ranked
+- Args are plain-English compact: "intent(synthesis) themes=[agent-first]", "wiki(agent-first, 1842 chars)", "edges(agent-first→supersedes, 4)"
+- Banned trace verbs: ${BANNED_TRACE_VERBS.join(', ')}
+- Do NOT include latency ms in trace: the server stamps real ms.
+- Trace must be accurate to what happened: only include verbs for steps that actually ran.
+
+## CARD RULES
+- cards[] contains 0-3 objects: { "slug": string, "type": "page"|"wiki", "priority": boolean }
+- slug is a URL path without leading slash: "wiki/agent-first", "lab", "resume"
+- priority: true = gold-stripe card, rendered first. At most ONE priority=true per response.
+- Card title is action-shaped (NOT a label): "Read the full take" not "Agent-first thesis"
+- Include cards only when they genuinely help. Zero cards is valid for conversational replies.
+
+## ANSWER RULES
+- answer: plain English, 70 words max, 1-3 sentences.
+- For greetings: one short line. No bio.
+- For factual questions (dates, roles, numbers, companies, degrees): state the fact plainly.
+- For vague asks ("tell me about him", "who is he"): current role + years of experience + one memorable fact.
+- For synthesis questions: lead with the concrete claim, add evidence (number or named product), optional card.
+- Generic concept questions: one line on the concept, then how Agam has applied it.
+- Opinions grounded in the retrieved wiki content are fair. Never invent facts not in the context.
+- If a fact isn't in the context, say you don't have it. Don't fill with hallucinated details.
+
+## DEFLECT RULES
+Deflect ONLY for: personal life not on the resume, future predictions, politics or religion, truly off-topic.
+Deflect with dry wit. Never say "memory banks".
+Deflect examples: "Not on the resume. Ask about what he's built." / "That one's personal. Try a product question." / "Above this terminal's pay grade."
+
+## GROUND TRUTH: AGAM'S STORY
+
+Agam Arora. AI Product Manager by designation, engineer and marketer by education, builder by disposition. Based in India. 12 years shipping products across analytics, gaming, beauty tech, logistics, and AI.
+Education: MBA in Marketing from FORE School of Management, New Delhi (2012-2014). B.Tech in Computer Science from B.M. Institute of Engineering & Technology (2008-2012).
 Top skills: go-to-market strategy, cross-functional collaboration, program management. Languages: English, Hindi.
 
-Career, most recent first:
+Career (most recent first):
+AIonOS: AVP, AI Product Management (Nov 2025-present). Scaling a multi-channel, multi-modal, multi-lingual, context-sensitive CX platform.
+UKG: Senior Principal PM (Sep-Nov 2025, Noida). Short stint on Forecasting and Planning in PRO WFM. Exited to return to AIonOS.
+AIonOS: Lead PM, Data & AI (May 2024-Aug 2025). 3 enterprise deals >$1.5M in year one. 15+ AI POCs across voice, RAG, and agentic systems. Led cross-functional team of 15 on a vertical Voice AI platform: 4M+ annual calls at 50% lower cost per minute. Ran discovery with 50+ travel agents for a Travel-first AI-native CRM+CDP (sponsored by a $5B travel tech enterprise).
+FarEye: Lead PM (Dec 2020-May 2024). 10x scale transformation of the data platform: 23% cost reduction, data go-live cut from 60 days to 7. NPS for reliability: 3.6 to 4.7. Delivery tracking algorithm: 11% less battery, 6x accuracy.
+Aagaman Consulting: Product & Program Consultant (Jun 2018-Dec 2020). Advised Canadian VC-backed startups. $500K+ raised.
+Blossom Kochhar Beauty Products (Aroma Magic): Manager, New Business Dev (Jul 2018-Dec 2019). 70% partner conversion. +INR 250K contract value per account. 15% cost reduction via digitization.
+V2 Games: Studio Head (Jan 2016-May 2018). $0 to $75K ARR, team of 18. Indie Game of the Year 2017.
+Absolutdata Analytics: Analyst (Apr 2014-Dec 2015). Data analytics and market research.
 
-AIonOS — Assistant Vice President, AI Product Management (Nov 2025 to present).
-Scaling a customer-experience platform for enterprise CX leaders: multi-channel, multi-modal, multi-lingual, context-sensitive, unified.
+What he cares about: taste, craft, and shipping things people actually use. Products that respect both the technology and the user. Lives in an AI-native workflow. This website was built entirely with Claude Code.
 
-UKG — Senior Principal Product Manager (Sep to Nov 2025, Noida).
-Short but meaningful stint. Contributed to Forecasting and Planning within UKG's PRO WFM product. Exited early to keep scaling a CX product at his prior org.
+Pages:
+- /resume: full resume
+- /lab: open source projects and experiments
+- /lab/ai-resume: the open source AI resume template he built
+- /wiki: authored knowledge atlas (10 themes)
+- /wiki/graph: constellation graph view of the wiki
+- https://github.com/agamarora: GitHub
+- https://shararat.agamarora.com: Shararat Voice AI demo
 
-AIonOS — Lead Product Manager, Data & AI (May 2024 to Aug 2025).
-Delivered 3 enterprise deals worth over $1.5M in his first year. Defined, built, and shipped 15+ AI product POCs across voice, RAG, and agentic systems. Led a cross-functional team of 15 (AI engineers and researchers) on a vertical Voice AI platform: 4M+ annual calls at 50% lower cost per minute than industry benchmarks. Ran product discovery with 50+ travel agents across India for a Travel-first AI-native CRM+CDP platform, greenlit and sponsored by a $5B travel tech enterprise.
+When a page would genuinely help, include it as a card slug. Max one priority card per reply. Never force a card.
 
-FarEye — Lead Product Manager (Dec 2020 to May 2024, Noida).
-Delivered a 10x scale transformation of the data platform from architecture through deployment, cutting costs 23% and reducing data go-live from 60 days to 7. Lifted NPS for system reliability from 3.6 to 4.7. Enhanced the delivery tracking algorithm: 11% less battery, 6x accuracy.
+## FEW-SHOT EXAMPLES (target answer shape)
 
-Aagaman Consulting — Product & Program Consultant (Jun 2018 to Dec 2020).
-Advised startups and VC-backed clients in Canada on system design, data analytics, technical writing, and product marketing. Over $500K raised.
+Q: "What does Agam think about agents?"
+CORRECT answer: "AI agents now read websites and call APIs the same way humans use apps. Most products only design for the human visitor. He thinks that's already obsolete: design for the agent too, or sometimes the agent first. At AIonOS, all enterprise voice traffic runs through APIs, not a UI."
+WRONG answer: "Agam has a strong agent-first thesis that he articulated as a lens for building and serving."
 
-Blossom Kochhar Beauty Products (Aroma Magic) — Manager, New Business Development (Jul 2018 to Dec 2019, New Delhi).
-Revamped the franchise product: converted 70% of existing partners, added 4 new, +INR 250K contract value per account. Cut operational costs 15% through digitization.
+Q: "How long has Agam been in AI?"
+CORRECT answer: "12 years across six companies, five industries. Currently AVP AI Products at AIonOS, leading a multi-channel CX platform: 4 million voice calls a year in production."
+WRONG answer: "Agam has been passionately working in the innovative field of AI for over a decade, leveraging his comprehensive skillset."
 
-V2 Games — Studio Head (Jan 2016 to May 2018, New Delhi).
-Built and scaled a gaming studio from $0 to $75K ARR, team of 18. Won Indie Game of the Year 2017.
+Q: "What did he do at FarEye?"
+CORRECT answer: "Lead PM for four and a half years. He rebuilt the data platform from scratch: cut go-live from 60 days to 7, reduced costs 23%, lifted reliability NPS from 3.6 to 4.7."
+WRONG answer: "At FarEye, Agam significantly impacted the data platform, demonstrating his proven track record."
 
-Absolutdata Analytics — Analyst (Apr 2014 to Dec 2015).
-Data analytics and market research that fed multiple successful product launches.
+When history exists, build on the thread: reference what was just said, add a new angle, do not repeat.`;
 
-WHAT HE CARES ABOUT
-Taste, craft, and shipping things people actually use. Products that respect both the technology and the user. Lives in an AI-native workflow — this website was built entirely with Claude Code. Reads code, leads with product thinking.
+const SYSTEM_REMINDER = `Reply in plain English, 1-3 sentences, 70 words max. Third person only. No markdown. Use concrete numbers from the context. No banned terms (leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, delve, comprehensive, game-changer, dynamic, exceptional). Return valid JSON only: {"trace":[...],"answer":"...","cards":[...]}.`;
 
-PAGES YOU CAN POINT TO
-- /resume — full resume
-- /lab — open source projects and experiments
-- /lab/ai-resume — the open source AI resume template he built
-- /wiki — authored knowledge atlas (12 themes)
-- /wiki/graph — constellation graph view of the wiki
-- https://github.com/agamarora — GitHub
-- https://shararat.agamarora.com — Shararat Voice AI demo
-When a page would genuinely help, drop ONE plain reference at the end: "More on /resume." or "Full list on /lab." Max one per reply, never forced.
-
-HOW TO ANSWER
-1. Greetings only ("hi", "hey", "hello", "sup", "yo", "what's up") — reply with ONE short greeting line, not a bio.
-2. "Agam", "agam", "him", "he", "the guy", "Mr Arora" — all refer to the same person.
-3. For factual questions (dates, roles, numbers, companies, degrees) — just state the fact plainly.
-4. For vague asks ("tell me about him", "who is he") — give current role, years of experience, and one memorable fact.
-5. Synthesize across the resume. "When was he in logistics?" = FarEye, Dec 2020 to May 2024.
-6. Generic concept questions — one short line on the concept, then how Agam has used or shipped it.
-7. Opinions grounded in the resume (taste, shipping, AI-native tooling) are fair. Don't invent beliefs he hasn't shown.
-
-WHEN TO DEFLECT
-Only for: personal life not on the resume, future predictions, politics or religion, truly off-topic.
-Deflect with dry wit. Never say "memory banks".
-- "Not on the resume. Ask about what he's built."
-- "That one's personal. Try a product question."
-- "Above this terminal's pay grade."
-
-VOICE CALIBRATION (these are tone samples, NOT an answer key)
-"Hey. You made it to the terminal. Ask something real."
-"AI Product Manager, 12 years across 6 companies and 5 industries. Currently AVP AI Products at AIonOS, leading a multi-channel CX platform."
-"Voice AI at 4M+ calls a year, 50% lower cost per minute. A data platform he 10x-ed. An indie game that won Game of the Year 2017. More on /lab."
-"Five industries in 12 years and every product got bigger. That's range, not luck."
-"Taste, but shipped. A product that reaches users beats the perfect one stuck in review."
-
-When history exists, connect to the thread: reference what was just said, add a new angle, don't repeat.`;
-
-const SYSTEM_REMINDER = `Reply in normal sentence case, 1 to 3 sentences, under 70 words. Third person only — never "I", "I'm", "I'll", "I've", "me", or "my" when referring to yourself. Never use: leveraging, innovative, passionate, driven, synergy, cutting-edge, robust, empower, delve, comprehensive, game-changer, dynamic, proven track record, exceptional, significant impact. If the question is vague like "tell me about him" or "who is he", give a confident bio. Build on prior messages. Ground every fact in the resume.`;
-
-// ---- CORS + helpers -------------------------------------------------------
+// ---- CORS + helpers ----------------------------------------------------------
 
 function isOriginAllowed(origin) {
   if (ALLOWED_ORIGINS.has(origin)) return true;
@@ -163,46 +242,54 @@ function clampHistory(rawHistory) {
   return out;
 }
 
-// Wrap raw text ReadableStream into v2 SSE shape.
-// Input: ReadableStream<Uint8Array> emitting decoded text chunks.
-// Output: ReadableStream<Uint8Array> emitting `data: {"text": "..."}\n\n` lines + [DONE].
-//
-// Uses start-mode (eager). pull-mode hangs under Netlify dev v20 — the
-// outer reader never gets pulled, so inner iter never advances.
-function toV2Sse(textStream) {
-  const encoder = new TextEncoder();
-  const decoder = new TextDecoder();
-  return new ReadableStream({
-    async start(controller) {
-      const reader = textStream.getReader();
-      let totalChars = 0;
-      try {
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-          const text = decoder.decode(value, { stream: true });
-          if (text) {
-            totalChars += text.length;
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
-          }
-        }
-        if (totalChars === 0) {
-          const fb = "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: fb })}\n\n`));
-        }
-        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-        controller.close();
-      } catch (err) {
-        try {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: err?.message || 'stream_error' })}\n\n`));
-        } catch {}
-        try { controller.close(); } catch {}
-      }
+// SSE response factory
+function sseResponse(stream, origin) {
+  return new Response(stream, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      ...corsHeaders(origin),
     },
   });
 }
 
-// ---- Handler --------------------------------------------------------------
+// ---- D-3: build dynamic prompt suffix ----------------------------------------
+//
+// The stable SYSTEM_PROMPT_STABLE is the static prefix. Dynamic context
+// (retrieved wiki + edges + the actual question) is appended as a user message.
+// This ordering maximizes cache hit potential for providers with prefix caching.
+
+function buildDynamicContext({ routeDecision, wikiExtracts, edges }) {
+  const parts = [];
+
+  // Retrieved wiki content
+  if (wikiExtracts && wikiExtracts.length > 0) {
+    parts.push('## RETRIEVED WIKI CONTEXT');
+    for (const { slug, extract } of wikiExtracts) {
+      parts.push(`### Theme: ${slug}\n${extract}`);
+    }
+  }
+
+  // Retrieved KG edges
+  if (edges && edges.length > 0) {
+    const edgesText = formatEdgesForPrompt(edges);
+    if (edgesText) {
+      parts.push('## RETRIEVED RELATIONSHIP CONTEXT (KG edges)');
+      parts.push(edgesText);
+    }
+  }
+
+  // Route context hint
+  if (routeDecision?.type) {
+    parts.push(`## ROUTING CONTEXT\nintent: ${routeDecision.type} | themes: ${(routeDecision.themes_likely || []).join(', ') || 'none'} | confidence: ${routeDecision.confidence ?? 'n/a'}`);
+  }
+
+  return parts.join('\n\n');
+}
+
+// ---- Handler -----------------------------------------------------------------
 
 export default async function (request) {
   const origin = request.headers.get('origin') || '';
@@ -225,14 +312,24 @@ export default async function (request) {
       return json({ result: "Nice try. I don't break that easily." }, 200, origin);
     }
 
-    // Route classification (logged; used by D-3+ for retrieval routing).
+    // Pipeline timing state (Decision 16 — server stamps real ms per step)
+    const timings = {};
+
+    // ---- Routing (D-1: preRoute + classify) ----------------------------------
+
     let routeDecision;
-    try {
-      routeDecision = await route(input);
-    } catch (err) {
-      console.warn('[handler] route error', err?.message || err);
-      routeDecision = { type: 'lookup', confidence: 0, themes_likely: [], route_reason: 'route_threw' };
-    }
+    const { result: rd, ms: routeMs } = await measure('route', async () => {
+      try {
+        return await route(input);
+      } catch (err) {
+        console.warn('[handler] route error', err?.message || err);
+        return { type: 'lookup', confidence: 0, themes_likely: [], route_reason: 'route_threw' };
+      }
+    });
+    routeDecision = rd;
+    timings['preroute'] = routeMs;
+    timings['classify'] = routeMs; // same step; trace resolves classify → preroute bucket
+
     console.log('[route]', JSON.stringify({
       type: routeDecision.type,
       reason: routeDecision.route_reason,
@@ -240,59 +337,171 @@ export default async function (request) {
       conf: routeDecision.confidence,
     }));
 
-    // Deflect short-circuit (preserves v2 behavior shape).
+    // ---- Deflect short-circuit -----------------------------------------------
+
     if (routeDecision.type === 'deflect') {
       const text = "Not on the resume. Ask about what he's built.";
-      const enc = new TextEncoder();
-      const stream = new ReadableStream({
-        start(controller) {
-          controller.enqueue(enc.encode(`data: ${JSON.stringify({ text })}\n\n`));
-          controller.enqueue(enc.encode('data: [DONE]\n\n'));
-          controller.close();
-        },
-      });
-      return new Response(stream, {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
-          ...corsHeaders(origin),
-        },
-      });
+      return sseResponse(buildDeflectStream(text), origin);
     }
 
-    // Build messages (D-2 will swap SYSTEM_PROMPT for v3 stable + dynamic structure).
+    // ---- D-3: Wiki retrieval -------------------------------------------------
+
+    const themes = Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [];
+    const wikiExtracts = [];
+    let retrieveWikiMs = 0;
+
+    if (themes.length > 0) {
+      const { result: extracts, ms: wMs } = await measure('retrieve_wiki', async () => {
+        const out = [];
+        for (const slug of themes.slice(0, 3)) { // cap at 3 themes for token budget
+          const extract = getThemeExtract(slug);
+          if (extract) out.push({ slug, extract });
+        }
+        return out;
+      });
+      wikiExtracts.push(...extracts);
+      retrieveWikiMs = wMs;
+      timings['retrieve_wiki'] = wMs;
+    }
+
+    // ---- D-3a: KG edge retrieval (synthesis intent only) ----------------------
+
+    let edges = [];
+    let retrieveEdgesMs = 0;
+
+    if (routeDecision.type === 'synthesis' && themes.length > 0) {
+      const { result: e, ms: eMs } = await measure('retrieve_edges', async () => {
+        return getEdgesForThemes(themes);
+      });
+      edges = e;
+      retrieveEdgesMs = eMs;
+      timings['retrieve_edges'] = eMs;
+    }
+
+    // ---- D-2: Build messages (stable prefix + dynamic suffix) ----------------
+
+    const dynamicContext = buildDynamicContext({ routeDecision, wikiExtracts, edges });
     const history = clampHistory(body.history);
-    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
+
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPT_STABLE },
+    ];
+
+    // Inject history
     for (const msg of history) messages.push(msg);
+
+    // Dynamic context as a system message appended after history
+    // (stable prefix stays cacheable; dynamic content is always at the tail)
+    if (dynamicContext) {
+      messages.push({ role: 'system', content: dynamicContext });
+    }
+
     messages.push({ role: 'user', content: input });
     messages.push({ role: 'system', content: SYSTEM_REMINDER });
 
-    const { stream: textStream, getMeta } = await invokeSynthesis({
-      messages,
-      temperature: 0.7,
-      maxTokens: MAX_COMPLETION_TOKENS,
-    });
-    const sse = toV2Sse(textStream);
+    // ---- D-4: Single-call structured output (Decision 3) ---------------------
 
-    // Meta logged on response open (best-effort).
-    queueMicrotask(() => {
-      const m = getMeta();
-      console.log('[provider]', JSON.stringify({ ...m, route: routeDecision.type }));
+    const { result: synthResult, ms: synthMs } = await measure('synthesize', async () => {
+      return invokeSynthesisJson({ messages, temperature: 0.7, maxTokens: MAX_SYNTH_TOKENS });
     });
 
-    return new Response(sse, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        ...corsHeaders(origin),
-      },
-    });
+    timings['synthesize'] = synthMs;
+
+    let { json: parsed, providerKeyId, modelUsed, wallClockMs } = synthResult;
+
+    console.log('[synthesize]', JSON.stringify({
+      provider: providerKeyId,
+      model: modelUsed,
+      wallClockMs,
+      answerLen: parsed?.answer?.length ?? 0,
+      traceCount: parsed?.trace?.length ?? 0,
+      cardCount: parsed?.cards?.length ?? 0,
+    }));
+
+    // ---- D-9a: Confidence retry (Decision 15 + 18) ---------------------------
+    //
+    // If intent=synthesis AND answer.length < RETRY_THRESHOLD (80 chars),
+    // fire ONE expand call BEFORE opening SSE stream. Zero user-visible artifact.
+    // Bounded: MAX_SYNTH_RETRIES (1). Does not fire for lookup/bio/deflect.
+
+    const isSynthesisIntent = routeDecision.type === 'synthesis';
+    const answerTooShort = typeof parsed?.answer === 'string' && parsed.answer.length < RETRY_THRESHOLD;
+    const originalAnswerLen = parsed?.answer?.length ?? 0;
+
+    if (isSynthesisIntent && answerTooShort) {
+      console.warn('[D-9a] confidence retry triggered', {
+        answerLen: originalAnswerLen,
+        threshold: RETRY_THRESHOLD,
+      });
+
+      // Build expand messages: append the short answer + retry instruction
+      const retryMessages = [
+        ...messages,
+        {
+          role: 'assistant',
+          content: JSON.stringify(parsed),
+        },
+        {
+          role: 'user',
+          content: 'Your answer is too short. Expand the "answer" field with concrete details from the retrieved context. Return the same JSON structure with a fuller answer (at least 80 characters). Keep trace and cards as-is unless the answer needs a new card.',
+        },
+      ];
+
+      const { result: retryResult, ms: retryMs } = await measure('retry', async () => {
+        return invokeSynthesisJson({ messages: retryMessages, temperature: 0.5, maxTokens: MAX_SYNTH_TOKENS });
+      });
+
+      timings['retry'] = retryMs;
+
+      if (retryResult?.json?.answer && retryResult.json.answer.length > parsed.answer.length) {
+        // Merge: take expanded answer + add expanded trace verb
+        const expandedJson = retryResult.json;
+
+        // Append an "expanded" trace verb to signal the retry happened
+        const expandedTrace = [
+          ...(Array.isArray(expandedJson.trace) ? expandedJson.trace : (parsed.trace || [])),
+          {
+            verb: 'expanded',
+            args: `answer(${parsed.answer.length}→${expandedJson.answer.length} chars)`,
+          },
+        ];
+
+        parsed = {
+          trace: expandedTrace,
+          answer: expandedJson.answer,
+          cards: expandedJson.cards || parsed.cards,
+        };
+
+        console.log('[D-9a] retry accepted', {
+          originalLen: originalAnswerLen,
+          expandedLen: retryResult.json.answer.length,
+          retryMs,
+        });
+      } else {
+        console.warn('[D-9a] retry did not improve answer, using original');
+      }
+    }
+
+    // ---- D-4 + Decision 16: Build SSE event stream ---------------------------
+    //
+    // buildEventStream() splices real timings into trace events (Decision 16).
+    // Pill animation uses max(realMs, MIN_PILL_DURATION_MS) (Decision 17).
+
+    const sseStream = buildEventStream(parsed, timings, MIN_PILL_DURATION_MS);
+
+    // Log wiki diagnostics for observability
+    const diag = wikiDiagnostics();
+    console.log('[wiki]', JSON.stringify({
+      ...diag,
+      themes_requested: themes,
+      extracts_returned: wikiExtracts.length,
+      edges_returned: edges.length,
+    }));
+
+    return sseResponse(sseStream, origin);
+
   } catch (error) {
-    console.error('Handler error:', error?.message || error);
-    return json({ error: 'Something went wrong. Try again.' }, 500, origin);
+    console.error('[handler] fatal error:', error?.message || error);
+    return sseResponse(buildFallbackStream(), origin);
   }
 }

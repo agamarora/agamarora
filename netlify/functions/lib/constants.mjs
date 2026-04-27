@@ -17,13 +17,23 @@ export const BUFFER_FIRST_CHARS = 50;
 
 // LLM caps
 export const MAX_INPUT_LENGTH = 500;          // raised from v2 200; spec §7 input val
-export const MAX_COMPLETION_TOKENS = 320;     // headroom for trace+answer+cards JSON in D-4
+export const MAX_SYNTH_TOKENS = 800;          // synthesis call token budget (trace+answer+cards JSON)
 export const MAX_HISTORY_TURNS = 6;
 export const MAX_HISTORY_CHARS = 4000;        // hard cap on conversation history total chars
 
 // Cool-down (defaults if Retry-After absent)
 export const COOLDOWN_DEFAULT_MS = 60_000;
 export const COOLDOWN_MIN_MS = 60_000;
+
+// Synthesis confidence retry (D-9a / Decision 15 + 18)
+// If intent=synthesis and answer.length < RETRY_THRESHOLD, fire one expand continuation.
+// MAX_SYNTH_RETRIES=1 bounds the retry to one attempt (Decision 15: "bounded 1 retry").
+export const RETRY_THRESHOLD = 80;        // MIN_ANSWER_CHARS per task spec
+export const MAX_SYNTH_RETRIES = 1;       // hard bound — never loop
+
+// Pill animation minimum visible duration (Decision 17)
+// Pill counts up over max(realLatencyMs, MIN_PILL_DURATION_MS)
+export const MIN_PILL_DURATION_MS = 600;
 
 // Provider pools
 export const GROQ_KEY_ENV = ['GROQ_API_KEY', 'GROQ_API_KEY_2', 'GROQ_API_KEY_3'];
