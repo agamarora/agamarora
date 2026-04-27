@@ -5,9 +5,10 @@
   "scripts": {
     "build:kg": "node scripts/build-kg.mjs --strict",
     "build:wiki": "node scripts/build-wiki.mjs --strict",
+    "build:wiki-extracts": "node scripts/build-wiki-extracts.mjs --strict",
     "sync:chrome": "node scripts/sync-chrome.mjs",
     "sync:chrome:check": "node scripts/sync-chrome.mjs --check",
-    "build": "npm run build:kg && npm run build:wiki",
+    "build": "npm run build:kg && npm run build:wiki && npm run build:wiki-extracts",
     "perf:bench": "bash scripts/perf/bench.sh",
     "perf:diff": "bash scripts/perf/diff.sh",
     "perf:lab": "bash scripts/perf/lab-breakdown.sh"
