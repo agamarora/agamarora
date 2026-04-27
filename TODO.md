@@ -1,5 +1,11 @@
 # TODO — agamarora.com
 
+## Response evals (next session)
+- [ ] Run full eval pass on /enter responses now that mobile UI is locked. Common asks tested 2026-04-27 surfaced: "linkedin" returns weak tautology, "is he available for hire" hallucinates "after current contract is fulfilled", "show me his projects" claims "AI resume template used by thousands" (not in spec). Cards on contact intents come from client-side fallback, not the LLM — server-side path is empty.
+- [ ] Tighten: more conversational follow-ups. Agent should leave a hook on factual answers, not state the fact and stop. Reduce answering-machine cadence.
+- [ ] Verify deflect rules don't fire on legitimate biographical questions ("is he hiring", "what's he like").
+- [ ] Add JSON-schema validation for cards[] so LLM can't drop the contact-card set when CONTACT CONTEXT is injected.
+
 ## Dead Files
 - [x] ~~Delete `styles/backup.css`, `main.css.old`, `refactored.css`~~ — removed
 - [x] ~~Delete `assets/avatar-front.png`~~ — removed
