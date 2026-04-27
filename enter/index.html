@@ -609,17 +609,15 @@
      rows (graph/lab/resume), no wordmark/tagline/warm-trace, fixed
      rounded input bar at bottom. */
   @media (max-width:760px) {
-    /* Tighter scroll cushion than desktop. Desktop bar ~144px tall;
-       mobile bar ~64px. Keeping 240px on mobile means scrollIntoView
-       can't push the last cards above the input bar on a short vv,
-       so they hide behind it. 96px = input bar + breathing room. */
-    html { scroll-padding-bottom:96px; }
+    /* Mobile bar ~60px. scroll-padding 140 keeps the last rendered
+       card a full card-height (~48px) clear above the input bar. */
+    html { scroll-padding-bottom:140px; }
 
     main.terminal {
       max-width:none;
       padding:calc(clamp(52px,6vw,64px) + var(--space-4))
               var(--space-5)
-              calc(96px + env(safe-area-inset-bottom, 0px));
+              calc(140px + env(safe-area-inset-bottom, 0px));
       gap:var(--space-6);
       min-height:100dvh;
     }
@@ -714,12 +712,11 @@
        bottom:0 == above-keyboard. Safe-area-inset for iPhone home
        indicator. */
     .input-bar {
-      /* Tight bottom: 4px CSS-px of breathing room. iOS adds the
-         home-indicator safe-area on top automatically. Android in
-         browser-tab mode reports safe-area = 0, so the 4px is the
-         only gap there — intentional, user wants it flush. */
+      /* Flush bottom: 0 + safe-area only. iOS adds ~34px for the
+         home indicator automatically; Android browser-tab reports
+         0 so the bar sits right against the gesture region. */
       padding:var(--space-3) var(--space-4)
-              calc(4px + env(safe-area-inset-bottom, 0px));
+              env(safe-area-inset-bottom, 0px);
       background:var(--bg);
       transition:transform 0.18s ease-out;
       will-change:transform;
