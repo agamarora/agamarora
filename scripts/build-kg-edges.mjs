@@ -148,17 +148,18 @@ for (const slug of VALID_THEME_SLUGS) {
   themeEdgeIndex[slug] = [];
 }
 
-for (const edge of outputEdges) {
+for (let edgeIdx = 0; edgeIdx < outputEdges.length; edgeIdx++) {
+  const edge = outputEdges[edgeIdx];
   if (edge.type === 'theme-theme') {
-    if (themeEdgeIndex[edge.from_slug]) themeEdgeIndex[edge.from_slug].push(outputEdges.indexOf(edge));
-    if (edge.bidirectional && themeEdgeIndex[edge.to_slug]) themeEdgeIndex[edge.to_slug].push(outputEdges.indexOf(edge));
+    if (themeEdgeIndex[edge.from_slug]) themeEdgeIndex[edge.from_slug].push(edgeIdx);
+    if (edge.bidirectional && themeEdgeIndex[edge.to_slug]) themeEdgeIndex[edge.to_slug].push(edgeIdx);
   } else if (edge.type === 'theme-belief') {
-    if (themeEdgeIndex[edge.theme_slug]) themeEdgeIndex[edge.theme_slug].push(outputEdges.indexOf(edge));
+    if (themeEdgeIndex[edge.theme_slug]) themeEdgeIndex[edge.theme_slug].push(edgeIdx);
   } else if (edge.type === 'belief-belief') {
     // Index under both source and destination themes if they're valid
-    if (edge.from_theme && themeEdgeIndex[edge.from_theme]) themeEdgeIndex[edge.from_theme].push(outputEdges.indexOf(edge));
+    if (edge.from_theme && themeEdgeIndex[edge.from_theme]) themeEdgeIndex[edge.from_theme].push(edgeIdx);
     if (edge.to_theme && edge.to_theme !== edge.from_theme && themeEdgeIndex[edge.to_theme]) {
-      themeEdgeIndex[edge.to_theme].push(outputEdges.indexOf(edge));
+      themeEdgeIndex[edge.to_theme].push(edgeIdx);
     }
   }
 }
