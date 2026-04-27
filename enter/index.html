@@ -45,9 +45,11 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   /* Auto-scroll target offset: input bar is fixed at bottom (~120px tall).
      scroll-padding-bottom keeps scrollIntoView({block:'end'}) from landing
-     content underneath the input bar. Without this, the article tail scrolls
-     to viewport bottom = obscured by the input bar overlay. */
-  html{scroll-padding-bottom:160px;}
+     content underneath the input bar. Generous padding (240px ≈ input bar
+     + ~120px breathing room) so the latest line floats well above the
+     input rather than crowding it — feels less like a chat client, more
+     like a reading surface. */
+  html{scroll-padding-bottom:240px;}
 
   /* Scrollbar: match dark/gold aesthetic. Default Windows white scrollbar
      reads as a foreign UI chrome dropped onto the page. Thin dim thumb on
