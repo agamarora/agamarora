@@ -17,7 +17,7 @@ export const BUFFER_FIRST_CHARS = 50;
 
 // LLM caps
 export const MAX_INPUT_LENGTH = 500;          // raised from v2 200; spec §7 input val
-export const MAX_COMPLETION_TOKENS = 320;     // headroom for trace+answer+cards JSON in D-4
+export const MAX_SYNTH_TOKENS = 800;          // synthesis call token budget (trace+answer+cards JSON)
 export const MAX_HISTORY_TURNS = 6;
 export const MAX_HISTORY_CHARS = 4000;        // hard cap on conversation history total chars
 
