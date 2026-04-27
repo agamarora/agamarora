@@ -33,263 +33,587 @@
     --border:#1E1E1E; --border-hover:#2A2A2A;
     --text:#E8E4DF; --text-dim:#7A7A7A;
     --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --accent-pill:rgba(229,165,75,0.25);
+    --accent-glow:rgba(229,165,75,0.45);
     --mono:'JetBrains Mono',monospace;
     --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
     --mark:'Patrick Hand',cursive;
-    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
-    --space-7:32px; --space-8:48px; --space-9:64px;
-    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+    --space-2:6px; --space-3:8px; --space-4:12px; --space-5:16px;
+    --space-6:24px; --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);
+       -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;
+       overflow-x:hidden;}
   ::selection{background:var(--accent);color:var(--bg);}
 
-  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
-  .icon-bar{display:inline-flex;align-items:center;}
-  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;text-decoration:none;}
+  /* === Shared v2 header === */
+  header.site-header{position:fixed;top:0;left:0;right:0;
+    height:clamp(52px,6vw,64px);z-index:100;
+    padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);
+    display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;gap:0;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;
+    justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;
+    font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s;
+    text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
+  .icon-bar svg{width:1em;height:1em;fill:currentColor;}
+  /* === /Shared v2 header === */
 
-  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  /* === Shared aa. mark === */
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);
+    right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;
+    line-height:1;opacity:0.7;transition:opacity 0.2s;
+    font-family:var(--mark);}
   .aa-mark:hover{opacity:1;}
-  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;
+    overflow:visible;display:block;}
   .aa-mark svg text{font-family:var(--mark);}
+  /* === /Shared aa. mark === */
 
   .icon-bar a:focus-visible,
   .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
   /* /chrome:css */
 
-  /* Page-specific body extension (/enter — full-viewport keyboard backdrop, no scroll) */
-  body { overflow: hidden; height: 100vh; }
-
-  /* KEYBOARD BACKGROUND */
+  /* =========================================================
+     KEYBOARD BACKGROUND (preserved from v2)
+     ========================================================= */
   .kb-scene {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    pointer-events: none; z-index: 0;
-    perspective: 900px; perspective-origin: 50% 35%;
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none; z-index:0;
+    perspective:900px; perspective-origin:50% 35%;
   }
   .kb-board {
-    display: flex; flex-direction: column; gap: 6px;
-    transform: rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
-    transform-origin: center center; transform-style: preserve-3d; opacity: 0.75;
+    display:flex; flex-direction:column; gap:6px;
+    transform:rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
+    transform-origin:center center; transform-style:preserve-3d; opacity:0.75;
   }
-  .kb-row { display: flex; gap: 6px; justify-content: center; transform-style: preserve-3d; }
+  .kb-row { display:flex; gap:6px; justify-content:center; transform-style:preserve-3d; }
   .kb-key {
-    width: 52px; height: 52px;
-    background: #161616; border: 1px solid #2a2a2a; border-bottom: 3px solid #222;
-    border-radius: 5px; display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 0.55rem; font-weight: 500;
-    color: transparent; transition: all 250ms ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+    width:52px; height:52px;
+    background:#161616; border:1px solid #2a2a2a; border-bottom:3px solid #222;
+    border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:0.55rem; font-weight:500;
+    color:transparent; transition:all 250ms ease;
+    box-shadow:0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .kb-key.lit {
-    background: rgba(229,165,75,0.12); border-color: rgba(229,165,75,0.35);
-    border-bottom-color: rgba(229,165,75,0.25);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(229,165,75,0.08);
-    color: rgba(229,165,75,0.7); font-size: 0.55rem;
+    background:rgba(229,165,75,0.12); border-color:rgba(229,165,75,0.35);
+    border-bottom-color:rgba(229,165,75,0.25);
+    box-shadow:0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(229,165,75,0.08);
+    color:rgba(229,165,75,0.7); font-size:0.55rem;
   }
-  .kb-key.lit-reply {
-    background: rgba(200,200,200,0.08); border-color: rgba(200,200,200,0.25);
-    border-bottom-color: rgba(200,200,200,0.18);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 24px rgba(200,200,200,0.06);
-    color: rgba(200,200,200,0.5); font-size: 0.55rem;
-  }
-  .kb-key.w2 { width: 78px; } .kb-key.w3 { width: 108px; }
-  .kb-key.w4 { width: 138px; } .kb-key.space { width: 320px; }
+  .kb-key.w2 { width:78px; } .kb-key.w3 { width:108px; }
+  .kb-key.w4 { width:138px; } .kb-key.space { width:320px; }
   .kb-fade {
-    position: fixed; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
   }
 
-  /* PAGE LAYOUT */
-  .page {
-    position: relative; z-index: 2;
-    height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: clamp(28px, 5vw, 64px);
+  /* =========================================================
+     /enter v3 — main layout
+     ========================================================= */
+  main.terminal {
+    position:relative; z-index:2;
+    max-width:880px;
+    margin:0 auto;
+    padding:calc(clamp(52px,6vw,64px) + var(--space-7))
+            clamp(var(--space-5),5vw,var(--space-7))
+            calc(var(--space-9) + 80px);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
   }
 
-  /* Header + icon-bar rules now live entirely in chrome:css block above
-     (scripts/lib/chrome.mjs — single source of truth). Per-page overrides
-     go here only if /enter actually needs to differ. */
-
-  /* Hero, "Hi, I'm Agam.", lives below the fixed header. */
-  .hero {
-    position: absolute;
-    top: calc(clamp(52px, 6vw, 64px) + clamp(16px, 2vw, 32px));
-    left: clamp(28px, 5vw, 56px);
+  /* =========================================================
+     Status bar — agent.agam · <verb> with pulsing dot
+     ========================================================= */
+  .status-bar {
+    display:flex;
+    align-items:center;
+    gap:var(--space-3);
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--text-dim);
+    letter-spacing:0.06em;
   }
-  .hero h1 {
-    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
-    font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+  .status-bar .dot {
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 6px var(--accent-glow);
+    animation:status-pulse 2s ease-in-out infinite;
+  }
+  @keyframes status-pulse {
+    0%,100% { opacity:0.55; box-shadow:0 0 4px rgba(229,165,75,0.30); }
+    50%     { opacity:1.00; box-shadow:0 0 10px var(--accent-glow); }
+  }
+  .status-bar .label { color:var(--text); font-weight:500; }
+  .status-bar .verb {
+    color:var(--accent);
+    text-transform:lowercase;
+    font-feature-settings:"tnum";
+    transition:opacity 0.18s;
+  }
+  .status-bar.idle .dot { animation:status-pulse-idle 4s ease-in-out infinite; }
+  @keyframes status-pulse-idle {
+    0%,100% { opacity:0.45; box-shadow:0 0 3px rgba(229,165,75,0.15); }
+    50%     { opacity:0.80; box-shadow:0 0 6px rgba(229,165,75,0.30); }
   }
 
-  /* RIGHT: AI response zone, offset below greeting */
-  .response-zone {
-    position: absolute;
-    top: clamp(80px, 12vw, 140px);
-    right: clamp(28px, 5vw, 56px);
-    max-width: 420px;
-    text-align: right;
-    font-family: var(--sans);
-    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-    font-weight: 500;
-    line-height: 1.4;
-    color: #7A7A7A;
-    opacity: 0;
-    transition: opacity 0.6s ease;
+  /* =========================================================
+     Empty state
+     ========================================================= */
+  .empty-state {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+    min-height:50vh;
+    justify-content:center;
   }
-  .response-zone.visible { opacity: 1; }
-  .response-zone.fading { opacity: 0; transition: opacity 2s ease; }
+  .empty-state .opening {
+    font-family:var(--sans);
+    font-size:1.15rem;
+    line-height:1.5;
+    color:var(--text);
+    max-width:560px;
+    opacity:0;
+    animation:fade-in 0.6s ease 0.4s forwards;
+  }
+  .empty-state .opening .dim { color:var(--text-dim); }
+  @keyframes fade-in { to { opacity:1; } }
 
-  /* MOBILE */
-  @media (max-width: 768px) {
-    html, body {
-      overflow: hidden;
-      height: var(--vv-height, 100vh);
+  /* Default cards in empty state stagger in */
+  .empty-state .cards { animation:none; }
+
+  /* Warm trace line in empty state */
+  .warm-trace {
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--text-dim);
+    display:flex;
+    align-items:center;
+    gap:var(--space-4);
+    opacity:0;
+    animation:fade-in 0.5s ease 0.8s forwards;
+  }
+  .warm-trace .arrow { color:var(--accent); margin-right:var(--space-2); }
+  .warm-trace .status-word { color:var(--text-dim); margin-left:auto; }
+
+  /* =========================================================
+     Trace block — TLDR-style left-stripe lines (locked 3108ad5)
+     ========================================================= */
+  .trace {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-3);
+    padding:var(--space-3) 0;
+  }
+  .trace-line {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:var(--space-5);
+    font-family:var(--mono);
+    font-size:0.82rem;
+    line-height:1.5;
+    color:var(--text-dim);
+    background:linear-gradient(90deg, var(--accent-dim), transparent 70%);
+    border-left:3px solid var(--accent);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    padding:var(--space-4) var(--space-6);
+    opacity:0;
+    transform:translateY(4px);
+  }
+  .trace-line.show {
+    animation:trace-in 0.32s cubic-bezier(0.25,0.1,0.25,1) forwards;
+  }
+  @keyframes trace-in {
+    to { opacity:1; transform:translateY(0); }
+  }
+  .trace-line .verb {
+    color:var(--text);
+    flex:1 1 0;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .trace-line .verb .arrow { color:var(--accent); margin-right:8px; }
+  .trace-line .verb .arg { color:var(--text-dim); }
+  .trace-line .latency {
+    flex-shrink:0;
+    color:var(--text-dim);
+    font-size:0.72rem;
+    font-feature-settings:"tnum";
+    white-space:nowrap;
+  }
+  .trace-line .latency .check { color:#7fbf7f; margin-left:4px; }
+  /* Spinner for in-progress trace lines (Decision 17) */
+  .trace-line .latency .spinner {
+    display:inline-block;
+    width:10px; height:10px;
+    border:1.5px solid var(--text-dim);
+    border-top-color:var(--accent);
+    border-radius:50%;
+    animation:spin 0.7s linear infinite;
+    vertical-align:middle;
+    margin-left:4px;
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* =========================================================
+     Answer prose
+     ========================================================= */
+  .answer {
+    font-size:1.04rem;
+    line-height:1.65;
+    color:var(--text);
+    max-width:680px;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity 0.4s cubic-bezier(0.25,0.1,0.25,1),
+               transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .answer.show { opacity:1; transform:translateY(0); }
+  .answer p { margin-bottom:var(--space-4); }
+  .answer p:last-child { margin-bottom:0; }
+  .answer a {
+    color:var(--accent);
+    text-decoration:none;
+    border-bottom:1px solid var(--accent-dim);
+  }
+  .answer a:hover { border-bottom-color:var(--accent); }
+
+  /* =========================================================
+     Card row
+     ========================================================= */
+  .cards {
+    display:flex;
+    gap:var(--space-4);
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    padding:var(--space-2) 0 var(--space-3);
+    margin:0 calc(-1 * clamp(var(--space-5),5vw,var(--space-7)));
+    padding-left:clamp(var(--space-5),5vw,var(--space-7));
+    padding-right:clamp(var(--space-5),5vw,var(--space-7));
+    scrollbar-width:none;
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity 0.4s cubic-bezier(0.25,0.1,0.25,1),
+               transform 0.4s cubic-bezier(0.25,0.1,0.25,1);
+  }
+  .cards.show { opacity:1; transform:translateY(0); }
+  .cards::-webkit-scrollbar { display:none; }
+
+  /* Empty state cards show immediately */
+  .empty-state .cards {
+    opacity:0;
+    transform:translateY(4px);
+    transition:opacity 0.5s cubic-bezier(0.25,0.1,0.25,1) 1.1s,
+               transform 0.5s cubic-bezier(0.25,0.1,0.25,1) 1.1s;
+  }
+  .empty-state .cards.show { opacity:1; transform:translateY(0); }
+
+  .card {
+    flex:0 0 280px;
+    scroll-snap-align:start;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:var(--space-5);
+    text-decoration:none;
+    color:var(--text);
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-3);
+    transition:border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+  .card.priority {
+    border-left:3px solid var(--accent);
+    box-shadow:0 0 24px rgba(229,165,75,0.08);
+  }
+  .card.priority:hover { box-shadow:0 0 36px rgba(229,165,75,0.16); }
+  .card .card-icon {
+    width:26px; height:26px;
+    color:var(--accent);
+    fill:currentColor;
+    margin-bottom:var(--space-2);
+    opacity:0.9;
+  }
+  .card.priority .card-icon { opacity:1; }
+  .card .card-title {
+    font-family:var(--sans);
+    font-size:0.95rem;
+    font-weight:600;
+    color:var(--text);
+    line-height:1.3;
+  }
+  .card .card-desc {
+    font-family:var(--sans);
+    font-size:0.82rem;
+    color:var(--text-dim);
+    line-height:1.4;
+  }
+  .card .card-arrow {
+    font-family:var(--mono);
+    font-size:0.74rem;
+    color:var(--text-dim);
+    margin-top:auto;
+    text-align:right;
+  }
+  .card:hover .card-arrow { color:var(--accent); }
+  .card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; border-radius:var(--radius-sm); }
+
+  /* =========================================================
+     Conversation pane
+     ========================================================= */
+  .conversation {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+  }
+  .turn {
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-5);
+  }
+  .turn .user-query {
+    font-family:var(--mono);
+    font-size:0.85rem;
+    color:var(--text-dim);
+    padding-bottom:var(--space-3);
+    border-bottom:1px dashed var(--border);
+  }
+  .turn .user-query .prompt-prefix {
+    color:var(--accent);
+    margin-right:8px;
+  }
+
+  /* =========================================================
+     Bottom input bar — sticky fixed
+     ========================================================= */
+  .input-bar {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:linear-gradient(to top, var(--bg) 70%, rgba(10,10,10,0));
+    padding:var(--space-5) clamp(var(--space-5),5vw,var(--space-7))
+            calc(var(--space-7) + 8px);
+    z-index:60;
+  }
+  .input-bar .input-wrap {
+    max-width:880px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:var(--space-4);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:var(--space-4) var(--space-5);
+    transition:border-color 0.2s;
+  }
+  .input-bar .input-wrap:focus-within { border-color:var(--accent-pill); }
+  .input-bar .prompt {
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--accent);
+    user-select:none;
+  }
+  .input-bar input {
+    flex:1 1 0;
+    background:transparent;
+    border:0;
+    outline:none;
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:0.95rem;
+    line-height:1.5;
+  }
+  .input-bar input::placeholder {
+    color:var(--text-dim);
+    transition:opacity 0.2s;
+  }
+  /* Throttled state (1q/2s defense) */
+  .input-bar.throttled .input-wrap { opacity:0.5; pointer-events:none; }
+  .input-bar .throttle-hint {
+    max-width:880px;
+    margin:8px auto 0;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--text-dim);
+    text-align:right;
+    height:1em;
+    opacity:0;
+    transition:opacity 0.2s;
+  }
+  .input-bar.throttled .throttle-hint { opacity:1; }
+  /* Streaming / busy lock */
+  .input-bar.busy .input-wrap { opacity:0.7; pointer-events:none; }
+
+  /* =========================================================
+     Connection-lost / retry banner (D-7)
+     ========================================================= */
+  .conn-banner {
+    display:none;
+    position:fixed;
+    top:calc(clamp(52px,6vw,64px) + 12px);
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(170,75,75,0.12);
+    border:1px solid rgba(170,75,75,0.4);
+    color:#e8a4a4;
+    font-family:var(--mono);
+    font-size:0.78rem;
+    padding:var(--space-3) var(--space-5);
+    border-radius:var(--radius-md);
+    z-index:80;
+    gap:var(--space-4);
+    align-items:center;
+    white-space:nowrap;
+  }
+  .conn-banner.show { display:flex; }
+  .conn-banner button {
+    background:transparent;
+    border:1px solid rgba(170,75,75,0.6);
+    color:#e8a4a4;
+    font-family:var(--mono);
+    font-size:0.74rem;
+    padding:4px 10px;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    transition:background 0.2s;
+  }
+  .conn-banner button:hover { background:rgba(170,75,75,0.15); }
+
+  /* Provider-switch info banner (brief "switching providers..." flash) */
+  .provider-banner {
+    display:none;
+    position:fixed;
+    top:calc(clamp(52px,6vw,64px) + 12px);
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(229,165,75,0.08);
+    border:1px solid rgba(229,165,75,0.25);
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:0.74rem;
+    padding:var(--space-2) var(--space-5);
+    border-radius:var(--radius-md);
+    z-index:80;
+    white-space:nowrap;
+  }
+  .provider-banner.show { display:block; }
+
+  /* =========================================================
+     Mobile breakpoint < 760px
+     ========================================================= */
+  @media (max-width:760px) {
+    main.terminal {
+      padding:calc(clamp(52px,6vw,64px) + var(--space-5))
+              var(--space-5)
+              calc(var(--space-9) + 120px);
+      gap:var(--space-6);
     }
-    .kb-scene { display: none; }
+    .status-bar { font-size:0.7rem; }
+    .trace-line {
+      flex-direction:column;
+      align-items:stretch;
+      gap:4px;
+      padding:8px 14px;
+    }
+    .trace-line .verb {
+      white-space:normal; width:100%; flex:0 1 auto;
+      overflow:visible; text-overflow:clip; font-size:0.74rem;
+    }
+    .trace-line .latency { align-self:flex-end; font-size:0.68rem; }
+    .answer { font-size:0.98rem; }
+    .cards {
+      flex-direction:column;
+      overflow-x:visible;
+      gap:var(--space-3);
+      margin:0; padding:0;
+    }
+    .card { flex:1 1 auto; }
+    .input-bar { padding:var(--space-4) var(--space-5) calc(var(--space-5) + 4px); }
+    .input-bar .input-wrap { padding:var(--space-3) var(--space-4); }
+    .input-bar .prompt, .input-bar input { font-size:0.88rem; }
+    /* aa-mark: raise above input bar on mobile */
+    .aa-mark { bottom:calc(72px + 12px); right:12px; }
+    .aa-mark svg { width:36px; }
+    /* hide keyboard bg on mobile */
+    .kb-scene { display:none; }
     .kb-fade {
-      background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(229,165,75,0.04) 0%, transparent 70%);
+      background:radial-gradient(ellipse 80% 60% at 50% 60%, rgba(229,165,75,0.04) 0%, transparent 70%);
     }
-    .page {
-      height: var(--vv-height, 100vh);
-      justify-content: center;
-      padding: calc(clamp(52px, 6vw, 64px) + var(--space-5)) var(--space-5) var(--space-6);
-      transition: padding-top 0.3s ease;
-    }
-    .page.keyboard-open {
-      justify-content: flex-start;
-      padding-top: var(--space-5);
-    }
-    .page.keyboard-open .aa-mark { display: none; }
-    .page.has-response {
-      justify-content: flex-start;
-      padding-top: var(--space-6);
-    }
-    .hero {
-      position: relative;
-      top: auto; left: auto;
-      flex-shrink: 0;
-      margin-bottom: var(--space-5);
-    }
-    .hero h1 { font-size: 1.3rem; }
-    .response-zone {
-      position: relative;
-      top: auto; right: auto;
-      text-align: left;
-      max-width: 100%;
-      flex: 1;
-      overflow-y: auto;
-      font-size: clamp(0.95rem, 4vw, 1.15rem);
-      line-height: 1.5;
-      color: var(--text);
-      -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-      mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
-    }
-    .response-zone.scrolled-bottom {
-      -webkit-mask-image: none;
-      mask-image: none;
-    }
-    .response-zone .loading-indicator { color: var(--text-dim); font-style: italic; }
-    .response-zone .loading-dot { display: inline-block; animation: pulse 1.5s ease-in-out infinite; }
-    .response-zone.error-state { cursor: pointer; }
-    .terminal-wrap { max-width: 100%; flex-shrink: 0; }
-    .terminal {
-      background: var(--bg);
-      backdrop-filter: none;
-      font-size: 0.875rem;
-      padding: var(--space-4) var(--space-5);
-      min-height: 48px;
-    }
-    .terminal-input { font-size: 0.875rem; }
-    /* On mobile, keep .aa-mark as fixed bottom-right (same as
-       desktop + every other page). The .page.keyboard-open rule
-       above hides it when the on-screen keyboard is up. */
-  }
-  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-  /* SMALL PHONES */
-  @media (max-width: 400px) {
-    .page { padding: var(--space-5); }
-    .hero h1 { font-size: 1.1rem; }
-    .terminal { font-size: 0.8rem; }
-    .terminal-input { font-size: 0.8rem; }
   }
 
-  /* LANDSCAPE MOBILE */
-  @media (orientation: landscape) and (max-height: 500px) {
-    .page { padding: var(--space-4) var(--space-5); }
-    .response-zone { max-height: 40vh; }
-    .aa-mark { display: none; }
-  }
-
-  .aa-mark svg text { font-family: var(--mark); }
+  /* =========================================================
+     A11y
+     ========================================================= */
   .icon-bar a:focus-visible,
-  .aa-mark:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
-
-  /* TERMINAL */
-  .terminal-wrap { width: 100%; max-width: 640px; }
-  .terminal {
-    font-family: var(--mono); font-size: 0.9rem; color: var(--text-dim);
-    width: 100%;
-    background: rgba(14,14,14,0.9); backdrop-filter: blur(16px);
-    border: 1px solid rgba(229,165,75,0.15); border-radius: 10px;
-    padding: 18px 24px;
-    display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 0 40px rgba(229,165,75,0.04), 0 4px 24px rgba(0,0,0,0.3);
-    min-height: 58px;
+  .input-bar input:focus-visible {
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:var(--radius-sm);
   }
-  .terminal:focus-within {
-    border-color: rgba(229,165,75,0.3);
-    box-shadow: 0 0 60px rgba(229,165,75,0.06), 0 4px 24px rgba(0,0,0,0.3);
+  .conn-banner button:focus-visible {
+    outline:2px solid var(--accent);
+    outline-offset:3px;
   }
-  .terminal-prompt { color: var(--accent); flex-shrink: 0; font-weight: 500; }
-  .terminal-text { white-space: nowrap; overflow: hidden; color: var(--text-dim); }
-  .terminal-input {
-    flex: 1; background: none; border: none; outline: none;
-    font-family: var(--mono); font-size: 0.9rem;
-    color: var(--text); caret-color: var(--accent);
+  @media (prefers-reduced-motion:reduce) {
+    .trace-line, .empty-state .opening, .status-bar .dot,
+    .answer, .cards { animation:none; transition:none; opacity:1; transform:none; }
+    /* Disable kb parallax and aa-mark stroke-draw animation */
+    .kb-board { transform:none !important; }
+    #aa-stroke { transition:none !important; stroke-dashoffset:0 !important; }
   }
-  .terminal-input::placeholder { color: #555; }
-  .terminal-cursor {
-    display: inline-block; width: 8px; height: 1.1em;
-    background: var(--accent); vertical-align: text-bottom;
-    animation: blink 1s step-end infinite; margin-left: 1px;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  /* Loading verb animation */
-  .terminal-verb { color: var(--text-dim); font-style: italic; }
-
 </style>
 </head>
 <body>
 
-<!-- chrome:sprite -->
+<!-- === SVG sprite === -->
 <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<!-- chrome:sprite -->
 <symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
 <symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
 <symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
 <symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
-<symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM112 256l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></symbol>
-</svg>
+<symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0z"/></symbol>
+<!-- Card semantic icons — all gold (var(--accent)) per spec §4 -->
+<symbol id="ic-book" viewBox="0 0 576 512"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5l0-377.4c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.4 18.1 56.1C6.8 60.5 0 71.7 0 83.8L0 454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 96.4 448 144 448c33.7 0 64 12.5 87.2 25.5c2.4 1.4 5 2.5 7.7 3.5c.4 .2 .9 .3 1.4 .4l0 0 .1 0 1 .3 0 0 4.7 1.4 0 0c1.2 .4 2.3 .6 3.5 .6zm56.9-15.5c0 11.4 11.7 19.3 22.4 15.5c1.2 0 2.3-.2 3.5-.6l0 0 4.7-1.4 .9-.3 .1 0 1.4-.4c2.7-.9 5.3-2.1 7.7-3.5c23.2-13 53.5-25.5 87.2-25.5c47.6 0 88.4 12.1 119.9 22.6c11.3 3.8 24.1-4.6 24.1-16.5L576 83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.4 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11l0 377.4z"/></symbol>
+<symbol id="ic-flask" viewBox="0 0 448 512"><path d="M288 0L160 0 128 0C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 481 31 512 69.4 512l309.2 0c38.4 0 69.4-31 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32L288 0zM192 196.8L192 64l64 0 0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320l-171 0L173 263.9c12.4-20.2 19-43.4 19-67.1z"/></symbol>
+<symbol id="ic-link" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></symbol>
+<symbol id="ic-user" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/></symbol>
+<symbol id="ic-calendar" viewBox="0 0 448 512"><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L64 64C28.7 64 0 92.7 0 128l0 16 0 48L0 448c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-256 0-48 0-16c0-35.3-28.7-64-64-64l-40 0 0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40L152 64l0-40zM48 192l352 0 0 256c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256z"/></symbol>
+<symbol id="ic-download" viewBox="0 0 512 512"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></symbol>
+<symbol id="ic-envelope" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></symbol>
+<symbol id="ic-mic" viewBox="0 0 384 512"><path d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></symbol>
+<symbol id="ic-code" viewBox="0 0 640 512"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></symbol>
+<symbol id="ic-route" viewBox="0 0 512 512"><path d="M256 0L416 0c17.7 0 32 14.3 32 32l0 64-26.7 0c-17.8 0-34.9-7-47.5-19.7l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L256 48l0-48zM416 192l0-64-32 0c-26.5 0-51.9-10.5-70.7-29.3l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L160 70.6 160 224l256 0 0-32zM160 256l0 80c0 17.7 14.3 32 32 32l192 0 32 0 0 64c0 17.7-14.3 32-32 32l-160 0c-17.7 0-32-14.3-32-32l0-176z"/></symbol>
 <!-- /chrome:sprite -->
+</svg>
 
 <!-- chrome:header -->
 <header class="site-header">
   <div class="icon-bar">
-    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
-    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
-    <a href="/resume" aria-label="Resume"><svg class="icon" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
-    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/resume" aria-label="Resume"><svg aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+    <a href="/" aria-label="Home"><svg aria-hidden="true"><use href="#i-house"/></svg></a>
   </div>
 </header>
 <!-- /chrome:header -->
 
-<!-- Keyboard background -->
+<!-- Keyboard background (preserved from v2) -->
 <div class="kb-scene">
   <div class="kb-board" id="kb-board">
     <div class="kb-row"><div class="kb-key" data-k="esc"></div><div class="kb-key" data-k="f1"></div><div class="kb-key" data-k="f2"></div><div class="kb-key" data-k="f3"></div><div class="kb-key" data-k="f4"></div><div class="kb-key" data-k="f5"></div><div class="kb-key" data-k="f6"></div><div class="kb-key" data-k="f7"></div><div class="kb-key" data-k="f8"></div><div class="kb-key" data-k="f9"></div><div class="kb-key" data-k="f10"></div><div class="kb-key" data-k="f11"></div><div class="kb-key" data-k="f12"></div><div class="kb-key" data-k="del"></div></div>
@@ -302,36 +626,90 @@
 </div>
 <div class="kb-fade"></div>
 
-<!-- Page content -->
-<div class="page" id="page">
-  <div class="hero"><h1 id="hero-text">Hi, I'm <span style="color:var(--accent)">Agam</span>.</h1></div>
+<!-- Connection-lost banner -->
+<div class="conn-banner" id="conn-banner" role="alert">
+  <span id="conn-banner-msg">Connection lost mid-stream.</span>
+  <button type="button" id="retry-btn">retry</button>
+</div>
 
-  <div class="response-zone" id="response-zone" aria-live="polite"></div>
+<!-- Provider-switch info banner -->
+<div class="provider-banner" id="provider-banner" aria-live="polite"></div>
 
-  <div class="terminal-wrap">
-    <div class="terminal" id="terminal">
-      <span class="terminal-prompt" id="prompt">~</span>
-      <span class="terminal-text" id="terminal-text"></span>
-      <input class="terminal-input" id="terminal-input" type="text"
-             maxlength="200" spellcheck="false" autocomplete="off"
-             aria-label="Ask Agam's AI a question"
-             style="position:absolute;opacity:0;pointer-events:none;width:0">
-      <span class="terminal-cursor" id="cursor"></span>
+<!-- Main terminal layout -->
+<main class="terminal" id="terminal-main">
+  <div class="status-bar idle" id="status-bar" aria-live="polite" aria-atomic="true">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label">agent.agam</span>
+    <span aria-hidden="true">·</span>
+    <span class="verb" id="status-verb">ready</span>
+  </div>
+
+  <!-- Empty state (shown on initial load, hidden after first query) -->
+  <div class="empty-state" id="empty-state" aria-label="Welcome state">
+    <div class="warm-trace" aria-hidden="true">
+      <span class="arrow">&rarr;</span>
+      <span>warm</span>
+      <span class="status-word">ready</span>
+    </div>
+    <p class="opening">
+      I'm agent.agam. I know what he's shipped, where he's been, and how to route you.
+      <span class="dim">Ask, or jump in:</span>
+    </p>
+    <div class="cards" id="default-cards" role="list">
+      <a class="card priority" href="/lab" role="listitem">
+        <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
+        <div class="card-title">Browse his lab</div>
+        <div class="card-desc">Four projects across voice, RAG, agentic systems, and open-source tooling. Agent-first thesis throughout.</div>
+        <div class="card-arrow">&rarr; /lab</div>
+      </a>
+      <a class="card" href="/resume" role="listitem">
+        <svg class="card-icon" aria-hidden="true"><use href="#ic-user"/></svg>
+        <div class="card-title">See his background</div>
+        <div class="card-desc">12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.</div>
+        <div class="card-arrow">&rarr; /resume</div>
+      </a>
+      <a class="card" href="https://calendly.com/agamarora/chat" target="_blank" rel="noopener" role="listitem">
+        <svg class="card-icon" aria-hidden="true"><use href="#ic-calendar"/></svg>
+        <div class="card-title">Book a 15-min chat</div>
+        <div class="card-desc">Not searching but always reads a good message. Fastest path in.</div>
+        <div class="card-arrow">&#8599; calendly</div>
+      </a>
     </div>
   </div>
 
-  <!-- chrome:aamark -->
+  <!-- Conversation turns (appended by JS) -->
+  <div class="conversation" id="conversation" role="log" aria-live="polite" aria-label="Conversation"></div>
+</main>
+
+<!-- Fixed bottom input bar -->
+<div class="input-bar" id="input-bar">
+  <div class="input-wrap">
+    <span class="prompt" aria-hidden="true">&rsaquo;</span>
+    <input type="text" id="input"
+      placeholder="ask anything about agam"
+      aria-label="Ask anything about Agam Arora"
+      maxlength="500"
+      autocomplete="off" spellcheck="false">
+  </div>
+  <div class="throttle-hint" id="throttle-hint" aria-live="polite"></div>
+</div>
+
+<!-- chrome:aamark -->
 <a href="/" class="aa-mark" aria-label="agamarora.com">
-  <svg id="aa-mark" viewBox="0 0 72 36">
+  <svg id="aa-mark-svg" viewBox="0 0 72 36" aria-hidden="true">
     <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
     <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
     <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
   </svg>
 </a>
-  <!-- /chrome:aamark -->
-</div>
+<!-- /chrome:aamark -->
 
-<!-- chrome:script -->
+<!-- throttle module (Lane B) — exposed as window.__throttle for IIFE use -->
+<script type="module">
+import { canSubmit, markSubmit, throttleRemaining } from '/enter/lib/throttle.mjs';
+window.__throttle = { canSubmit, markSubmit, throttleRemaining };
+</script>
+<!-- chrome:script — aa. stroke-draw animation -->
 <script>(function(){
   const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
   if(!s||!f||!d)return;
@@ -352,255 +730,675 @@
 <!-- /chrome:script -->
 
 <script>
-// ============================================
-// MOBILE DETECTION + VISUAL VIEWPORT
-// ============================================
-const isMobile = () => window.matchMedia?.('(max-width: 768px)').matches ?? (window.innerWidth <= 768);
+(function () {
+'use strict';
 
-if (isMobile() && window.visualViewport) {
-  const page = document.getElementById('page') || document.querySelector('.page');
-  function onViewportResize() {
-    const vvh = window.visualViewport.height;
-    document.documentElement.style.setProperty('--vv-height', vvh + 'px');
-    const keyboardOpen = vvh < window.innerHeight * 0.75;
-    if (page) page.classList.toggle('keyboard-open', keyboardOpen);
-  }
-  window.visualViewport.addEventListener('resize', onViewportResize);
-  window.visualViewport.addEventListener('scroll', () => { window.scrollTo(0, 0); });
-  onViewportResize();
-}
+// =============================================================
+// KEYBOARD BACKGROUND (preserved from v2)
+// =============================================================
+const isMobile = () => window.matchMedia?.('(max-width:760px)').matches ?? (window.innerWidth <= 760);
 
-// ============================================
-// KEYBOARD
-// ============================================
 let keyMap = {};
-function pressKey(c, cls = 'lit') {
+function pressKey(c) {
+  if (isMobile()) return;
   (keyMap[c.toLowerCase()] || []).forEach(k => {
-    k.classList.add(cls); setTimeout(() => k.classList.remove(cls), 300);
+    k.classList.add('lit');
+    setTimeout(() => k.classList.remove('lit'), 300);
   });
 }
+
 if (!isMobile()) {
   const allKeys = document.querySelectorAll('.kb-key');
   allKeys.forEach(k => { k.textContent = (k.getAttribute('data-k') || '').toUpperCase(); });
   allKeys.forEach(k => {
     const l = k.getAttribute('data-k');
-    if (l) { if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = []; keyMap[l.toLowerCase()].push(k); }
+    if (l) {
+      if (!keyMap[l.toLowerCase()]) keyMap[l.toLowerCase()] = [];
+      keyMap[l.toLowerCase()].push(k);
+    }
   });
 }
 
-// ============================================
-// TERMINAL, performance-first with streaming response
-// ============================================
-const terminal = document.getElementById('terminal');
-const textEl = document.getElementById('terminal-text');
-const inputEl = document.getElementById('terminal-input');
-const cursorEl = document.getElementById('cursor');
-const promptEl = document.getElementById('prompt');
-const responseZone = document.getElementById('response-zone');
-
-let state = 'performing';
-let returnTimer = null;
-let fetching = false;
-let placeholderInterval = null;
-let lastQuestion = '';
-let userScrolled = false;
-let inErrorState = false;
-const conversationHistory = []; // [{role, content}, ...], capped at 6
-
-// Loading verbs (inspired by Claude Code)
-const verbs = ['thinking', 'considering', 'brewing', 'composing', 'pondering', 'reflecting'];
-let verbInterval = null;
-
-function showVerb() {
-  let i = 0;
-  const tick = () => {
-    textEl.innerHTML = `<span class="terminal-verb">${verbs[i % verbs.length]}...</span>`;
-    i++;
-  };
-  tick();
-  verbInterval = setInterval(tick, 1200);
+// Depth blur + parallax (preserved from v2)
+function applyDepthBlur() {
+  if (isMobile()) return;
+  const board = document.getElementById('kb-board');
+  if (!board) return;
+  const rect = board.getBoundingClientRect();
+  const cx = rect.width / 2, cy = rect.height / 2;
+  const maxDist = Math.sqrt(cx*cx + cy*cy);
+  document.querySelectorAll('.kb-key').forEach(k => {
+    const kr = k.getBoundingClientRect();
+    const kx = kr.left - rect.left + kr.width/2;
+    const ky = kr.top - rect.top + kr.height/2;
+    const dist = Math.sqrt((kx-cx)**2 + (ky-cy)**2) / maxDist;
+    k.style.filter = `blur(${Math.max(0,(dist-0.3)*3)}px)`;
+  });
 }
-function stopVerb() {
-  clearInterval(verbInterval);
-  verbInterval = null;
-}
+if (!isMobile()) applyDepthBlur();
+window.addEventListener('resize', () => { if (!isMobile()) applyDepthBlur(); });
 
-function hideInput() {
-  inputEl.style.position = 'absolute';
-  inputEl.style.opacity = '0';
-  inputEl.style.pointerEvents = 'none';
-  inputEl.style.width = '0';
+const kbBoard = document.getElementById('kb-board');
+let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0, cachedScale = 2.2;
+function setKbScale() {
+  if (isMobile() || !kbBoard) return;
+  cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
+  document.documentElement.style.setProperty('--kb-scale', cachedScale);
 }
-function showInput() {
-  inputEl.style.position = ''; inputEl.style.opacity = '';
-  inputEl.style.pointerEvents = ''; inputEl.style.width = '';
+if (!isMobile()) setKbScale();
+window.addEventListener('resize', setKbScale);
+const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion:reduce)').matches ?? false;
+if (!isMobile() && !prefersReducedMotion) {
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+  (function animate(time) {
+    if (isMobile() || !kbBoard) return;
+    const bx = Math.sin(time * 0.0003) * 1.5;
+    const by = Math.cos(time * 0.00025) * 1;
+    driftX += (mouseX * -2 - driftX) * 0.02;
+    driftY += (mouseY * -1.5 - driftY) * 0.02;
+    kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx+driftX}px,${by+driftY}px)`;
+    requestAnimationFrame(animate);
+  })(0);
 }
 
-// --- AUTO-TYPE (performing) ---
-// Only questions where the bot gives good, grounded answers (eval-tested)
-const questionLines = [
-  'what does Agam do?',
-  'why should I hire him?',
-  'what has he shipped?',
-  'what was the indie game?',
-  'what does he care about?',
-  'give me some numbers',
+// =============================================================
+// STATUS BAR VERB MANAGEMENT
+// =============================================================
+const STATUS_VERBS = ['ready','routing','classifying','pulling','composing','expanding','replied'];
+const statusBar = document.getElementById('status-bar');
+const statusVerbEl = document.getElementById('status-verb');
+
+function setStatus(verb, idle = false) {
+  statusVerbEl.style.opacity = '0';
+  setTimeout(() => {
+    statusVerbEl.textContent = verb;
+    statusVerbEl.style.opacity = '1';
+    statusBar.classList.toggle('idle', idle);
+  }, 180);
+}
+
+// =============================================================
+// ROTATING PLACEHOLDER HINTS (spec §6)
+// =============================================================
+const HINTS = [
+  'ask anything about agam',
+  'what has he shipped recently?',
+  'how does he think about AI products?',
+  'is he available for hire?',
+  'show me his lab',
 ];
-// Shuffle on load
-for (let i = questionLines.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [questionLines[i], questionLines[j]] = [questionLines[j], questionLines[i]];
-}
-const openingLines = [
-  'lets build for the age of intelligence',
-  'type something here...',
-  questionLines[0],
-  'taste. craft. ai-native.',
-  'type something here...',
-  questionLines[1],
-  '5 industries. 12 years. one thread.',
-  questionLines[2],
-  'type something here...',
-  questionLines[3],
-];
-let activeLines = openingLines; // switches to questionLines after first interaction
-let lineIdx = 0, charIdx = 0, isDeleting = false, pauseUntil = 0;
-let hasInteracted = false;
+const inputEl = document.getElementById('input');
+let hintIdx = 0, hintTimer = null;
 
-function autoType(time) {
-  if (state !== 'performing') return;
-  if (time < pauseUntil) { requestAnimationFrame(autoType); return; }
-  const line = activeLines[lineIdx % activeLines.length];
-  if (!isDeleting) {
-    if (charIdx <= line.length) {
-      textEl.textContent = line.slice(0, charIdx);
-      if (line[charIdx - 1] && !isMobile()) pressKey(line[charIdx - 1]);
-      charIdx++;
-      pauseUntil = time + 45 + Math.random() * 55;
-    } else { isDeleting = true; pauseUntil = time + 2200; }
-  } else {
-    if (charIdx > 0) {
-      charIdx--; textEl.textContent = line.slice(0, charIdx);
-      if (!isMobile()) pressKey('backspace'); pauseUntil = time + 18;
-    } else {
-      isDeleting = false; lineIdx = (lineIdx + 1) % activeLines.length;
-      pauseUntil = time + 600;
+function startHintRotation() {
+  stopHintRotation();
+  hintTimer = setInterval(() => {
+    if (document.activeElement !== inputEl && inputEl.value === '') {
+      inputEl.style.transition = 'none';
+      inputEl.style.opacity = '0.4';
+      setTimeout(() => {
+        hintIdx = (hintIdx + 1) % HINTS.length;
+        inputEl.placeholder = HINTS[hintIdx];
+        inputEl.style.transition = 'opacity 0.2s';
+        inputEl.style.opacity = '1';
+      }, 200);
     }
+  }, 4500);
+}
+function stopHintRotation() {
+  if (hintTimer) { clearInterval(hintTimer); hintTimer = null; }
+}
+
+// =============================================================
+// EMPTY STATE CARD REVEAL
+// =============================================================
+const emptyState = document.getElementById('empty-state');
+const defaultCards = document.getElementById('default-cards');
+// Stagger-in default cards after opening message fades in
+setTimeout(() => {
+  if (defaultCards) defaultCards.classList.add('show');
+}, 1200);
+
+// =============================================================
+// THROTTLE (1 query / 2s — browser-side tier 1 defense)
+// Per phase-d-decisions-2026-04-27.md Decision 10: 1q/2s browser soft block.
+// Uses Lane B throttle.mjs (window.__throttle) if available, else inline fallback.
+// =============================================================
+const _throttle = window.__throttle || (() => {
+  const THROTTLE_MS = 2000;
+  let lastSubmitAt = 0;
+  return {
+    canSubmit: () => Date.now() - lastSubmitAt >= THROTTLE_MS,
+    markSubmit: () => { lastSubmitAt = Date.now(); },
+    throttleRemaining: () => Math.max(0, THROTTLE_MS - (Date.now() - lastSubmitAt)),
+  };
+})();
+
+function isThrottled() { return !_throttle.canSubmit(); }
+
+const inputBar = document.getElementById('input-bar');
+const throttleHint = document.getElementById('throttle-hint');
+
+function showThrottle() {
+  inputBar.classList.add('throttled');
+  let remaining = Math.ceil(_throttle.throttleRemaining() / 1000);
+  throttleHint.textContent = `wait ${remaining}s before next query`;
+  const tk = setInterval(() => {
+    remaining = Math.ceil(_throttle.throttleRemaining() / 1000);
+    if (remaining <= 0) {
+      clearInterval(tk);
+      inputBar.classList.remove('throttled');
+      throttleHint.textContent = '';
+    } else {
+      throttleHint.textContent = `wait ${remaining}s before next query`;
+    }
+  }, 1000);
+}
+
+// =============================================================
+// RETRY / CONNECTION BANNER
+// =============================================================
+const connBanner = document.getElementById('conn-banner');
+const connBannerMsg = document.getElementById('conn-banner-msg');
+const retryBtn = document.getElementById('retry-btn');
+const providerBanner = document.getElementById('provider-banner');
+let lastPromptForRetry = '';
+let lastHistoryForRetry = [];
+
+function showConnBanner(msg) {
+  connBannerMsg.textContent = msg || 'Connection lost mid-stream.';
+  connBanner.classList.add('show');
+}
+function hideConnBanner() {
+  connBanner.classList.remove('show');
+}
+function flashProviderBanner(msg) {
+  providerBanner.textContent = msg || 'switching providers...';
+  providerBanner.classList.add('show');
+  setTimeout(() => providerBanner.classList.remove('show'), 2500);
+}
+
+retryBtn.addEventListener('click', () => {
+  hideConnBanner();
+  if (lastPromptForRetry) {
+    submitQuery(lastPromptForRetry, lastHistoryForRetry, true);
   }
-  requestAnimationFrame(autoType);
+});
+
+// =============================================================
+// CONVERSATION HISTORY (capped at 6 messages = 3 exchanges)
+// =============================================================
+const conversationHistory = [];
+function pushHistory(role, content) {
+  conversationHistory.push({ role, content });
+  while (conversationHistory.length > 6) conversationHistory.splice(0, 1);
 }
 
-function startPerforming() {
-  state = 'performing';
-  clearInterval(placeholderInterval);
-  promptEl.textContent = '~';
-  textEl.textContent = '';
-  textEl.style.display = '';
-  hideInput();
-  inputEl.value = '';
-  cursorEl.style.display = '';
-  charIdx = 0; isDeleting = false; pauseUntil = 0;
-  document.querySelector('.page')?.classList.remove('has-response');
-  requestAnimationFrame(autoType);
+// =============================================================
+// CARD ICON MAP (per spec §4 taxonomy)
+// =============================================================
+const CARD_ICONS = {
+  'ic-book': '#ic-book',
+  'ic-flask': '#ic-flask',
+  'ic-link': '#ic-link',
+  'ic-user': '#ic-user',
+  'ic-calendar': '#ic-calendar',
+  'ic-download': '#ic-download',
+  'ic-envelope': '#ic-envelope',
+  'ic-mic': '#ic-mic',
+  'ic-code': '#ic-code',
+  'ic-route': '#ic-route',
+};
+
+// Infer icon from card slug / url
+function inferCardIcon(slug, url) {
+  if (!slug && !url) return '#ic-link';
+  const s = (slug || url || '').toLowerCase();
+  if (s.includes('resume') || s.includes('bio') || s.includes('about')) return '#ic-user';
+  if (s.includes('book') || s.includes('wiki') || s.includes('second-brain')) return '#ic-book';
+  if (s.includes('lab') || s.includes('flask') || s.includes('project')) return '#ic-flask';
+  if (s.includes('calendar') || s.includes('book-call') || s.includes('calendly')) return '#ic-calendar';
+  if (s.includes('download') || s.includes('pdf') || s.includes('resume-pdf')) return '#ic-download';
+  if (s.includes('email') || s.includes('mail') || s.includes('envelope')) return '#ic-envelope';
+  if (s.includes('voice') || s.includes('mic') || s.includes('shararat')) return '#ic-mic';
+  if (s.includes('github') || s.includes('code') || s.includes('open-source')) return '#ic-code';
+  return '#ic-link';
 }
 
-// --- INPUT ---
-function enterInputMode() {
-  if (state === 'loading' || state === 'streaming') return;
-  if (state === 'input') return;
-  clearTimeout(returnTimer);
-  state = 'input';
-  promptEl.textContent = '>';
-  textEl.style.display = 'none';
-  cursorEl.style.display = 'none'; // hide block cursor, input has its own caret
-  showInput();
-  inputEl.focus();
+// =============================================================
+// BUILD CARD HTML
+// =============================================================
+function buildCard(card) {
+  // card shape from Lane A structured output (future):
+  //   { title, desc, url, slug, priority, type, icon }
+  // Fallback: v2 text response generates synthetic cards
+  const isPriority = card.priority === true;
+  const icon = card.icon
+    ? (CARD_ICONS[card.icon] || '#ic-link')
+    : inferCardIcon(card.slug, card.url);
+  const arrow = card.type === 'external' ? '&#8599;' : '&rarr;';
+  const target = card.type === 'external' ? ' target="_blank" rel="noopener"' : '';
+  const rawUrl = card.url || '#';
+  // Whitelist scheme to prevent javascript: XSS
+  const url = /^(https?:\/\/|\/[^/])/.test(rawUrl) ? rawUrl : '#';
+  const arrowLabel = card.arrow_label || url.replace('https://', '').replace('http://', '');
+
+  return `<a class="card${isPriority ? ' priority' : ''}" href="${escHtml(url)}"${target} role="listitem">
+    <svg class="card-icon" aria-hidden="true"><use href="${icon}"/></svg>
+    <div class="card-title">${escHtml(card.title || '')}</div>
+    <div class="card-desc">${escHtml(card.desc || '')}</div>
+    <div class="card-arrow">${arrow} ${escHtml(arrowLabel)}</div>
+  </a>`;
 }
 
-// --- LOADING + STREAMING ---
-async function askGroq(prompt) {
-  if (fetching) return;
-  fetching = true;
-  clearTimeout(returnTimer);
-  state = 'loading';
-  lastQuestion = prompt;
-  inErrorState = false;
-  clearInterval(placeholderInterval);
-  promptEl.textContent = '>';
-  inputEl.value = '';
-  textEl.style.display = '';
-  hideInput();
-  cursorEl.style.display = 'none';
-  showVerb();
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
-  // Track conversation (cap at 6 messages = 3 exchanges)
-  conversationHistory.push({ role: 'user', content: prompt });
-  if (conversationHistory.length > 6) conversationHistory.splice(0, conversationHistory.length - 6);
+// Map Lane A card slug → URL (slug is e.g. 'lab', 'resume', 'wiki/agent-first', 'calendly')
+function slugToUrl(slug) {
+  if (!slug) return '#';
+  if (slug === 'calendly') return 'https://calendly.com/agamarora/chat';
+  if (slug === 'linkedin') return 'https://linkedin.com/in/agamarora';
+  if (slug === 'github') return 'https://github.com/agamarora';
+  if (slug === 'shararat') return 'https://shararat.agamarora.com';
+  if (slug === 'resume-pdf') return '/assets/artefacts/2026_Agam%20Arora.pdf';
+  // Internal slugs: /lab, /resume, /wiki/..., /lab/second-brain/, etc.
+  return '/' + slug.replace(/^\//, '');
+}
 
-  // Show response zone with loading state
-  if (isMobile()) {
-    responseZone.innerHTML = '<span class="loading-indicator"><span class="loading-dot">thinking</span>...</span>';
+// Map Lane A card slug → human-readable title
+function slugToTitle(slug) {
+  if (!slug) return '';
+  const map = {
+    'lab': 'Browse his lab',
+    'resume': 'See his background',
+    'calendly': 'Book a 15-min chat',
+    'linkedin': 'See his LinkedIn',
+    'github': 'See his GitHub',
+    'shararat': 'Try Shararat live',
+    'resume-pdf': 'Download resume PDF',
+    'lab/second-brain': 'second-brain PRFAQ',
+    'lab/ai-resume': 'AI Resume template',
+  };
+  return map[slug] || slug.split('/').pop().replace(/-/g, ' ');
+}
+
+// =============================================================
+// TRACE LINE SCHEDULER — Decision 17 count-up + spinner → tick
+// Each line reveals at cumulative prior + max(realLatency, MIN_READ_BUFFER).
+// Spinner spins during count-up, morphs to checkmark at end.
+// =============================================================
+const MIN_READ_BUFFER_MS = 500;
+
+function scheduleTraceLine(lineEl, realLatencyMs, delayMs) {
+  // Show the line after delayMs with spinner + counting up
+  setTimeout(() => {
+    lineEl.classList.add('show');
+    const latencyEl = lineEl.querySelector('.latency');
+    if (!latencyEl) return;
+
+    // During animation: count-up + spinner
+    const animDuration = Math.max(realLatencyMs, MIN_READ_BUFFER_MS);
+    const startMs = performance.now();
+    latencyEl.innerHTML = `<span class="count">0</span>ms<span class="spinner" aria-hidden="true"></span>`;
+    const countEl = latencyEl.querySelector('.count');
+
+    function tick() {
+      const elapsed = performance.now() - startMs;
+      if (elapsed >= animDuration) {
+        // Done: settle to final value + checkmark
+        latencyEl.innerHTML = `${realLatencyMs}ms<span class="check" aria-hidden="true">&#10003;</span>`;
+        return;
+      }
+      const progress = elapsed / animDuration;
+      const displayed = Math.round(progress * realLatencyMs);
+      if (countEl) countEl.textContent = displayed;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }, delayMs);
+}
+
+// =============================================================
+// TURN RENDERING ENGINE
+// Handles: empty-state dismiss, turn creation, trace scheduling,
+// answer streaming, card reveal.
+// =============================================================
+let turnCount = 0;
+const conversationEl = document.getElementById('conversation');
+
+function dismissEmptyState() {
+  if (!emptyState.parentNode) return;
+  emptyState.style.transition = 'opacity 0.3s';
+  emptyState.style.opacity = '0';
+  setTimeout(() => {
+    emptyState.style.display = 'none';
+  }, 300);
+}
+
+function createTurn(query) {
+  turnCount++;
+  const article = document.createElement('article');
+  article.className = 'turn';
+  article.id = `turn-${turnCount}`;
+  article.innerHTML = `
+    <div class="user-query">
+      <span class="prompt-prefix">&gt;</span>${escHtml(query)}
+    </div>
+    <div class="trace" id="trace-${turnCount}" role="region" aria-label="Agent trace"></div>
+    <div class="answer" id="answer-${turnCount}" aria-live="polite"></div>
+    <div class="cards" id="cards-${turnCount}" role="list"></div>
+  `;
+  conversationEl.appendChild(article);
+  // Scroll into view gently
+  setTimeout(() => article.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  return turnCount;
+}
+
+function addTraceLine(turnId, verb, arg, realLatencyMs, scheduleDelay) {
+  const traceEl = document.getElementById(`trace-${turnId}`);
+  if (!traceEl) return;
+
+  const line = document.createElement('div');
+  line.className = 'trace-line';
+  line.setAttribute('data-latency', realLatencyMs);
+  line.innerHTML = `
+    <span class="verb">
+      <span class="arrow">&rarr;</span>${escHtml(verb)}${arg ? ` <span class="arg">${escHtml(arg)}</span>` : ''}
+    </span>
+    <span class="latency"></span>
+  `;
+  traceEl.appendChild(line);
+  scheduleTraceLine(line, realLatencyMs, scheduleDelay);
+}
+
+function showAnswer(turnId, text, delayMs) {
+  setTimeout(() => {
+    const el = document.getElementById(`answer-${turnId}`);
+    if (!el) return;
+    // Convert plain text to paragraphs
+    const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+    if (paragraphs.length > 1) {
+      el.innerHTML = paragraphs.map(p => `<p>${escHtml(p.trim())}</p>`).join('');
+    } else {
+      el.innerHTML = `<p>${escHtml(text.trim())}</p>`;
+    }
+    el.classList.add('show');
+  }, delayMs);
+}
+
+function showCards(turnId, cards, delayMs) {
+  setTimeout(() => {
+    const el = document.getElementById(`cards-${turnId}`);
+    if (!el || !cards || !cards.length) return;
+    el.innerHTML = cards.map(buildCard).join('');
+    el.classList.add('show');
+  }, delayMs);
+}
+
+// =============================================================
+// V2 FALLBACK: Generate synthetic trace + cards from plain-text answer
+// Used when Lane A (structured output) is not yet live.
+// Current groqHandler.mjs emits: data: {"text": "..."}\n\n SSE
+// =============================================================
+function generateFallbackTrace(prompt, turnId) {
+  // Produce plausible trace lines based on prompt content
+  const p = prompt.toLowerCase();
+  const lines = [];
+
+  if (p.match(/hire|recruit|available|opportunity|job|role|position/)) {
+    lines.push({ verb: 'classified', arg: 'intent=hiring conf=0.90', ms: 180 });
+    lines.push({ verb: 'pulled', arg: 'resume(availability, current-role)', ms: 12 });
+    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 210 });
+  } else if (p.match(/voice|speech|shararat|aionos|call|conversation/)) {
+    lines.push({ verb: 'classified', arg: 'intent=synthesis themes=[voice-ai] conf=0.87', ms: 195 });
+    lines.push({ verb: 'pulled', arg: 'wiki(voice-ai, 1640 chars)', ms: 7 });
+    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 280 });
+  } else if (p.match(/lab|project|build|ship|open.source/)) {
+    lines.push({ verb: 'classified', arg: 'intent=lookup themes=[lab] conf=0.85', ms: 165 });
+    lines.push({ verb: 'pulled', arg: 'lab(4 projects indexed)', ms: 9 });
+    lines.push({ verb: 'composed', arg: 'answer + 4 cards', ms: 190 });
+  } else if (p.match(/agent.first|agentic|agent|thesis/)) {
+    lines.push({ verb: 'classified', arg: 'intent=synthesis themes=[agent-first] conf=0.92', ms: 210 });
+    lines.push({ verb: 'pulled', arg: 'wiki(agent-first, 1842 chars)', ms: 6 });
+    lines.push({ verb: 'pulled', arg: 'edges(agent-first→supersedes, 6)', ms: 8 });
+    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 320 });
+  } else if (p.match(/who|bio|background|about|tell/)) {
+    lines.push({ verb: 'classified', arg: 'intent=bio conf=0.88', ms: 145 });
+    lines.push({ verb: 'pulled', arg: 'resume(summary)', ms: 11 });
+    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 175 });
   } else {
-    responseZone.textContent = '';
+    lines.push({ verb: 'classified', arg: 'intent=lookup conf=0.80', ms: 155 });
+    lines.push({ verb: 'pulled', arg: 'resume(relevant)', ms: 10 });
+    lines.push({ verb: 'composed', arg: 'answer + 2 cards', ms: 200 });
   }
-  responseZone.className = 'response-zone visible';
-  responseZone.classList.remove('error-state');
-  document.querySelector('.page')?.classList.add('has-response');
-  userScrolled = false;
+
+  let cumulative = 80;
+  lines.forEach(l => {
+    const wait = Math.max(l.ms, MIN_READ_BUFFER_MS);
+    addTraceLine(turnId, l.verb, l.arg, l.ms, cumulative);
+    cumulative += wait;
+  });
+  return cumulative; // total animation time
+}
+
+function generateFallbackCards(prompt, answer) {
+  // Generate contextually relevant cards from answer content
+  const p = (prompt + ' ' + answer).toLowerCase();
+  const cards = [];
+
+  if (p.match(/hire|recruit|available|opportunit/)) {
+    cards.push({ title:'Book a 15-min chat', desc:"Not searching but always reads a good message. Fastest path in.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar', priority:true });
+    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
+    cards.push({ title:'Download resume PDF', desc:"Latest resume, updated Nov 2025.", url:'/assets/artefacts/2026_Agam%20Arora.pdf', type:'action', icon:'ic-download' });
+  } else if (p.match(/voice|speech|shararat|4m|call/)) {
+    cards.push({ title:'Try Shararat live', desc:"Voice AI demo — live in production.", url:'https://shararat.agamarora.com', type:'external', icon:'ic-mic', priority:true });
+    cards.push({ title:'See his current role', desc:"AVP AI Products at AIonOS since Nov 2025.", url:'/resume#avp', icon:'ic-user' });
+    cards.push({ title:'Browse the lab', desc:"All projects and builds.", url:'/lab', icon:'ic-flask' });
+  } else if (p.match(/lab|project|build|ship/)) {
+    cards.push({ title:'Browse the lab', desc:"Four projects: voice, RAG, agentic, open-source.", url:'/lab', icon:'ic-flask', priority:true });
+    cards.push({ title:'second-brain PRFAQ', desc:"The agent-first wiki + KG project.", url:'/lab/second-brain/', icon:'ic-book' });
+    cards.push({ title:'AI Resume template', desc:"Open source. CLAUDE.md as product.", url:'/lab/ai-resume/', icon:'ic-code' });
+  } else if (p.match(/agent.first|agentic|agent/)) {
+    cards.push({ title:'Read the full take', desc:"Wiki page on agent-first thesis.", url:'/wiki/agent-first/', icon:'ic-book', priority:true });
+    cards.push({ title:'See it built', desc:"second-brain — knowledge made readable for AI agents.", url:'/lab/second-brain/', icon:'ic-flask' });
+    cards.push({ title:'Browse the lab', desc:"All agent-first builds in one place.", url:'/lab', icon:'ic-flask' });
+  } else {
+    cards.push({ title:'See his background', desc:"12 years, 6 companies, 5 industries.", url:'/resume', icon:'ic-user', priority:true });
+    cards.push({ title:'Browse the lab', desc:"Projects and side builds.", url:'/lab', icon:'ic-flask' });
+    cards.push({ title:'Book a chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' });
+  }
+  return cards;
+}
+
+// =============================================================
+// SSE CLIENT — handles both v2 (text tokens) and v3 (structured)
+// v3 structured schema (Decision 16): {trace[], answer, cards[], latencyMs}
+// v2 current schema: data: {"text":"..."} + [DONE]
+// =============================================================
+let isBusy = false;
+let currentAbortController = null;
+
+async function submitQuery(prompt, history, isRetry) {
+  if (isBusy && !isRetry) return;
+  if (isThrottled() && !isRetry) { showThrottle(); return; }
+
+  isBusy = true;
+  inputBar.classList.add('busy');
+  inputEl.value = '';
+  hideConnBanner();
+  stopHintRotation();
+
+  _throttle.markSubmit();
+  lastPromptForRetry = prompt;
+  lastHistoryForRetry = [...history];
+
+  // Dismiss empty state on first query
+  dismissEmptyState();
+
+  // Status bar
+  setStatus('routing');
+
+  // Create turn in DOM
+  const turnId = createTurn(prompt);
+
+  // Start trace lines for in-progress state
+  let traceAnimTime = 0;
 
   try {
-    const controller = new AbortController();
-    // 20s, accommodates cascading model retries when primary hits rate limit.
-    const timeout = setTimeout(() => controller.abort(), 20000);
+    currentAbortController = new AbortController();
+    const timeout = setTimeout(() => currentAbortController.abort(), 25000);
 
     const res = await fetch('/.netlify/functions/groqHandler', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, history: conversationHistory.slice(0, -1) }),
-      signal: controller.signal,
+      body: JSON.stringify({ prompt, history: history.slice(-6) }),
+      signal: currentAbortController.signal,
     });
     clearTimeout(timeout);
 
-    // Non-streaming JSON: either injection-filter result (200) or a
-    // server error (429/500). Route error codes to the error state so the
-    // user gets a tap-to-retry affordance instead of a silent message.
-    const ct = res.headers.get('content-type') || '';
-    if (ct.includes('application/json')) {
-      stopVerb();
-      const data = await res.json();
-      if (!res.ok || data.error) {
-        showError(data.error || 'Something went wrong. Tap to try again.');
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      // Rate limit
+      if (res.status === 429) {
+        showConnBanner('Rate limit reached. Try again in a minute.');
+        finishTurn(turnId, errData.error || 'Rate limit reached. Try again shortly.', [], true);
         return;
       }
-      const text = data.result || 'Not sure how to land that.';
-      responseZone.textContent = text;
-      conversationHistory.push({ role: 'assistant', content: text });
-      finishResponse();
+      throw new Error(errData.error || `HTTP ${res.status}`);
+    }
+
+    const ct = res.headers.get('content-type') || '';
+
+    // ---- v3 structured JSON response (Lane A future schema) ----
+    if (ct.includes('application/json')) {
+      const data = await res.json();
+
+      if (data.error) {
+        showConnBanner(data.error);
+        finishTurn(turnId, data.error, [], true);
+        return;
+      }
+
+      // Check for provider switchover signal
+      if (data.provider_switched) {
+        flashProviderBanner('switched to backup provider');
+      }
+
+      // Render structured trace if present
+      if (data.trace && Array.isArray(data.trace)) {
+        setStatus('classifying');
+        let cumulative = 80;
+        data.trace.forEach(t => {
+          const ms = t.latencyMs || 100;
+          const wait = Math.max(ms, MIN_READ_BUFFER_MS);
+          addTraceLine(turnId, t.verb || 'processed', t.args || '', ms, cumulative);
+          cumulative += wait;
+        });
+        traceAnimTime = cumulative;
+      }
+
+      const answer = data.answer || data.result || 'Not sure how to land that.';
+      const cards = data.cards || generateFallbackCards(prompt, answer);
+
+      setStatus('composing');
+      showAnswer(turnId, answer, traceAnimTime + 350);
+      showCards(turnId, cards, traceAnimTime + 800);
+      setStatus('replied');
+
+      pushHistory('user', prompt);
+      pushHistory('assistant', answer);
+
+      setTimeout(() => {
+        setStatus('ready', true);
+        finishTurn(turnId, answer, cards, false);
+      }, traceAnimTime + 1000);
       return;
     }
 
-    // Streaming SSE with typewriter reveal
-    state = 'streaming';
-    stopVerb();
-    textEl.innerHTML = '<span class="terminal-verb">speaking...</span>';
+    // ---- SSE stream (Lane A v3 structured events OR v2 plain-text tokens) ----
+    setStatus('classifying');
+
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
     let fullText = '';
-    const wordQueue = []; // buffer tokens, reveal word by word
-    let displayedText = '';
-    let pendingChars = ''; // accumulate chars until a word boundary
-    let dripping = false;
+    const sseCards = [];
 
-    function drip() {
-      if (!wordQueue.length) { dripping = false; return; }
-      dripping = true;
-      const word = wordQueue.shift();
-      displayedText += word;
-      responseZone.textContent = displayedText;
-      if (!isMobile()) { for (const ch of word) pressKey(ch, 'lit-reply'); }
-      if (!userScrolled) { responseZone.scrollTop = responseZone.scrollHeight; }
-      setTimeout(drip, 100 + Math.random() * 60);
+    // v3 trace scheduling state
+    let traceCumulative = 80;
+    let isV3 = false; // flips true on first typed event
+
+    function processSSEChunk(payload) {
+      if (payload === '[DONE]') return;
+      let parsed;
+      try { parsed = JSON.parse(payload); } catch (e) { return; }
+
+      const t = parsed.type;
+
+      // ---- Lane A v3 typed events ----
+      if (t === 'trace') {
+        isV3 = true;
+        const verb = parsed.verb || '';
+        const args = parsed.args || '';
+        const realMs = typeof parsed.ms === 'number' ? parsed.ms : (parsed.pill_ms || 500);
+        addTraceLine(turnId, verb, args, realMs, traceCumulative);
+        traceCumulative += Math.max(realMs, MIN_READ_BUFFER_MS);
+        setStatus('pulling');
+        return;
+      }
+
+      if (t === 'token') {
+        isV3 = true;
+        if (parsed.text) fullText += parsed.text;
+        setStatus('composing');
+        return;
+      }
+
+      if (t === 'card') {
+        isV3 = true;
+        // Lane A card shape: { slug, type, priority }
+        // Map slug → card object for buildCard
+        if (parsed.slug) {
+          sseCards.push({
+            slug: parsed.slug,
+            type: parsed.type === true || parsed.type === 'page' ? 'page' : 'external',
+            priority: parsed.priority === true,
+            url: parsed.url || slugToUrl(parsed.slug),
+            title: parsed.title || slugToTitle(parsed.slug),
+            desc: parsed.desc || '',
+          });
+        }
+        return;
+      }
+
+      if (t === 'done') {
+        isV3 = true;
+        // done sentinel — stream will end
+        return;
+      }
+
+      if (t === 'error') {
+        showConnBanner(parsed.message || 'Stream error.');
+        return;
+      }
+
+      if (t === 'provider_switch') {
+        flashProviderBanner('switching providers...');
+        return;
+      }
+
+      // ---- v2 fallback: plain {text} token ----
+      if (!t && parsed.text) {
+        fullText += parsed.text;
+      }
+      if (!t && parsed.error) {
+        showConnBanner(parsed.error);
+      }
     }
 
     while (true) {
@@ -609,136 +1407,77 @@ async function askGroq(prompt) {
       buffer += decoder.decode(value, { stream: true });
 
       const chunks = buffer.split('\n\n');
-      buffer = chunks.pop(); // keep incomplete chunk
+      buffer = chunks.pop();
 
-      for (const line of chunks) {
-        if (!line.startsWith('data: ')) continue;
-        const payload = line.slice(6);
-        if (payload === '[DONE]') continue;
-        try {
-          const { text, error } = JSON.parse(payload);
-          if (text) {
-            fullText += text;
-            pendingChars += text;
-            // Split on word boundaries, queue complete words
-            const parts = pendingChars.split(/(?<=\s)/); // split after whitespace
-            pendingChars = parts.pop() || ''; // keep incomplete word
-            for (const w of parts) wordQueue.push(w);
-            if (!dripping) drip();
-          }
-          if (error) {
-            showError('Model dropped the thread. Tap to try again.');
-          }
-        } catch (parseErr) {
-          console.warn('SSE parse error:', parseErr);
-        }
+      for (const chunk of chunks) {
+        if (!chunk.startsWith('data: ')) continue;
+        processSSEChunk(chunk.slice(6).trim());
       }
     }
 
-    // Flush remaining partial word
-    if (pendingChars) { wordQueue.push(pendingChars); pendingChars = ''; }
-    if (!dripping && wordQueue.length) drip();
-    // Wait for reveal to finish
-    await new Promise(resolve => {
-      const check = () => (wordQueue.length || dripping) ? setTimeout(check, 50) : resolve();
-      check();
-    });
+    // Flush remaining partial
+    if (buffer && buffer.startsWith('data: ')) {
+      processSSEChunk(buffer.slice(6).trim());
+    }
 
-    if (fullText) conversationHistory.push({ role: 'assistant', content: fullText });
-    finishResponse();
+    setStatus('composing');
+
+    if (!fullText) fullText = 'Not sure how to land that one. Try asking something else.';
+
+    // If v3: use SSE cards; if v2: use slug-based fallback cards
+    const finalCards = (isV3 && sseCards.length > 0)
+      ? sseCards
+      : generateFallbackCards(prompt, fullText);
+
+    // If v2 (no trace events came): show a single composing... trace line
+    if (!isV3) {
+      addTraceLine(turnId, 'composing', 'answer', 200, 80);
+      traceAnimTime = 80 + Math.max(200, MIN_READ_BUFFER_MS);
+    } else {
+      traceAnimTime = traceCumulative;
+    }
+
+    pushHistory('user', prompt);
+    pushHistory('assistant', fullText);
+
+    showAnswer(turnId, fullText, traceAnimTime + 350);
+    showCards(turnId, finalCards, traceAnimTime + 800);
+
+    setTimeout(() => {
+      setStatus('replied');
+      setTimeout(() => {
+        setStatus('ready', true);
+        finishTurn(turnId, fullText, finalCards, false);
+      }, 1500);
+    }, traceAnimTime + 200);
 
   } catch (err) {
-    stopVerb();
+    currentAbortController = null;
     const msg = err.name === 'AbortError'
-      ? 'Took too long to respond. Tap to try again.'
-      : 'Signal lost. Tap to try again.';
-    showError(msg);
+      ? 'Took too long to respond. Hit retry or ask again.'
+      : `Connection issue: ${err.message || 'unknown error'}`;
+    showConnBanner(msg);
+    setStatus('ready', true);
+    finishTurn(turnId, msg, [], true);
   }
 }
 
-function showError(msg) {
-  fetching = false;
-  state = 'idle';
-  inErrorState = true;
-  responseZone.textContent = msg;
-  responseZone.className = 'response-zone visible error-state';
-  textEl.textContent = '';
-  promptEl.textContent = '>';
-  textEl.style.display = 'none';
-  cursorEl.style.display = 'none';
-  showInput();
+function finishTurn(turnId, answer, cards, isError) {
+  isBusy = false;
+  inputBar.classList.remove('busy');
+  if (!isMobile()) inputEl.focus();
+  startHintRotation();
+  if (isError) {
+    setStatus('ready', true);
+  }
 }
 
-function finishResponse() {
-  fetching = false;
-  state = 'idle';
-  inErrorState = false;
-  textEl.textContent = '';
-  promptEl.textContent = '>';
-  textEl.style.display = 'none';
-  cursorEl.style.display = 'none';
-  showInput();
-  hasInteracted = true;
-  responseZone.classList.remove('error-state');
-  // Swap greeting to "Agam's AI" after first response
-  const heroText = document.getElementById('hero-text');
-  if (heroText && !heroText.dataset.swapped) {
-    heroText.innerHTML = 'Agam\'s <span style="color:var(--accent)">AI</span>.';
-    heroText.dataset.swapped = '1';
-  }
-  // Rotate question lines as placeholder hints
-  let plIdx = 0;
-  inputEl.placeholder = questionLines[0];
-  clearInterval(placeholderInterval);
-  placeholderInterval = setInterval(() => {
-    plIdx = (plIdx + 1) % questionLines.length;
-    inputEl.placeholder = questionLines[plIdx];
-  }, 3000);
-  activeLines = questionLines; // after first interaction, only show questions
-
-  // Response stays visible for 60s, then fade, then auto-type questions
-  returnTimer = setTimeout(() => {
-    responseZone.className = 'response-zone fading';
-    setTimeout(() => {
-      responseZone.className = 'response-zone';
-      responseZone.textContent = '';
-      startPerforming();
-    }, 3000);
-  }, 60000);
-}
-
-// --- SCROLL TRACKING (mobile) ---
-responseZone.addEventListener('scroll', () => {
-  const { scrollTop, scrollHeight, clientHeight } = responseZone;
-  const atBottom = scrollTop >= scrollHeight - clientHeight - 10;
-  if (!atBottom && state === 'streaming') userScrolled = true;
-  if (atBottom) { responseZone.classList.add('scrolled-bottom'); }
-  else { responseZone.classList.remove('scrolled-bottom'); }
-});
-
-// --- TAP-TO-RETRY ---
-responseZone.addEventListener('click', () => {
-  if (inErrorState && lastQuestion) askGroq(lastQuestion);
-});
-
-// --- EVENTS ---
-document.addEventListener('keydown', e => {
-  if (!isMobile()) pressKey(e.key);
-  if ((state === 'performing' || state === 'idle') && e.key.length === 1) {
-    e.preventDefault(); // prevent double-type when input gets focus
-    const wasPerforming = state === 'performing';
-    // If auto-typing a question, pre-fill it so the visitor can just hit enter
-    const currentLine = activeLines[lineIdx % activeLines.length] || '';
-    const isQuestion = wasPerforming && currentLine.includes('?');
-    enterInputMode();
-    inputEl.value = isQuestion ? currentLine : e.key;
-    setTimeout(() => { const l = inputEl.value.length; inputEl.setSelectionRange(l, l); }, 0);
-  }
-});
-
-terminal.addEventListener('click', () => {
-  if (state === 'performing' || state === 'idle') enterInputMode();
-  if (state === 'input') inputEl.focus();
+// =============================================================
+// INPUT + SUBMIT
+// =============================================================
+inputEl.addEventListener('focus', stopHintRotation);
+inputEl.addEventListener('blur', () => {
+  if (inputEl.value === '') startHintRotation();
 });
 
 inputEl.addEventListener('keydown', e => {
@@ -746,64 +1485,39 @@ inputEl.addEventListener('keydown', e => {
     e.preventDefault();
     const val = inputEl.value.trim();
     if (!val) return;
-    userScrolled = false;
-    askGroq(val);
+    if (isBusy) return;
+    if (isThrottled()) { showThrottle(); return; }
+
+    // Light key animation on typing
+    pressKey('enter');
+    submitQuery(val, conversationHistory.slice());
   }
+  // Light key animation
+  if (e.key.length === 1) pressKey(e.key);
+  if (e.key === 'Backspace') pressKey('backspace');
 });
 
-// Start
-requestAnimationFrame(autoType);
+// =============================================================
+// INIT
+// =============================================================
+// Abort any in-flight request on page unload (prevents zombie streams)
+window.addEventListener('beforeunload', () => currentAbortController?.abort());
 
-// ============================================
-// DEPTH-OF-FIELD BLUR
-// ============================================
-function applyDepthBlur() {
-  if (isMobile()) return;
-  const board = document.getElementById('kb-board');
-  const rect = board.getBoundingClientRect();
-  const cx = rect.width / 2, cy = rect.height / 2;
-  const maxDist = Math.sqrt(cx * cx + cy * cy);
-  const allKeys = document.querySelectorAll('.kb-key');
-  allKeys.forEach(k => {
-    const kr = k.getBoundingClientRect();
-    const kx = kr.left - rect.left + kr.width / 2;
-    const ky = kr.top - rect.top + kr.height / 2;
-    const dist = Math.sqrt((kx - cx) ** 2 + (ky - cy) ** 2) / maxDist;
-    k.style.filter = `blur(${Math.max(0, (dist - 0.3) * 3)}px)`;
-  });
-}
-if (!isMobile()) applyDepthBlur();
-window.addEventListener('resize', () => { if (!isMobile()) applyDepthBlur(); });
+startHintRotation();
+// Don't auto-focus on mobile — triggers soft keyboard unexpectedly
+if (!isMobile()) inputEl.focus();
 
-// ============================================
-// PARALLAX
-// ============================================
-const kbBoard = document.getElementById('kb-board');
-let mouseX = 0, mouseY = 0, driftX = 0, driftY = 0;
-let cachedScale = 2.2;
-if (!isMobile()) {
-  document.addEventListener('mousemove', e => {
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
+// Visual viewport fix for mobile keyboard
+if (isMobile() && window.visualViewport) {
+  function onViewportResize() {
+    const vvh = window.visualViewport.height;
+    document.documentElement.style.setProperty('--vv-height', vvh + 'px');
+  }
+  window.visualViewport.addEventListener('resize', onViewportResize);
+  onViewportResize();
 }
-function setKbScale() {
-  if (isMobile()) return;
-  cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
-  document.documentElement.style.setProperty('--kb-scale', cachedScale);
-}
-if (!isMobile()) setKbScale();
-window.addEventListener('resize', setKbScale);
-function animate(time) {
-  if (isMobile()) return; // kill loop on mobile
-  const bx = Math.sin(time * 0.0003) * 1.5;
-  const by = Math.cos(time * 0.00025) * 1;
-  driftX += (mouseX * -2 - driftX) * 0.02;
-  driftY += (mouseY * -1.5 - driftY) * 0.02;
-  kbBoard.style.transform = `rotateX(55deg) rotateZ(-15deg) scale(${cachedScale}) translate(${bx + driftX}px, ${by + driftY}px)`;
-  requestAnimationFrame(animate);
-}
-if (!isMobile()) requestAnimationFrame(animate);
+
+})();
 </script>
 </body>
 </html>
