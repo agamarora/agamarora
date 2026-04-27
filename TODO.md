@@ -1,5 +1,8 @@
 # TODO — agamarora.com
 
+## /enter thinking-dots animation (next session)
+- [ ] Thinking-dots pulse not visible on desktop. Three plausible causes ranked: (1) Windows 11 reduce-motion accessibility setting triggers the `@media (prefers-reduced-motion:reduce)` rule at enter/index.html:315 and freezes dots at opacity 0.6; (2) desktop Groq first-token latency ~50-150ms removes the placeholder before the 1.2s pulse cycle has time to render even one beat; (3) flex blockification edge case (low probability). Verify with `getComputedStyle(document.querySelector('.thinking-dots span')).animationName` in DevTools after submit. Fix: gate placeholder removal behind MIN_PILL_DURATION_MS (~600ms) so even fast SSE responses let the pulse render once.
+
 ## Response evals (next session)
 - [ ] Run full eval pass on /enter responses now that mobile UI is locked. Common asks tested 2026-04-27 surfaced: "linkedin" returns weak tautology, "is he available for hire" hallucinates "after current contract is fulfilled", "show me his projects" claims "AI resume template used by thousands" (not in spec). Cards on contact intents come from client-side fallback, not the LLM — server-side path is empty.
 - [ ] Tighten: more conversational follow-ups. Agent should leave a hook on factual answers, not state the fact and stop. Reduce answering-machine cadence.
