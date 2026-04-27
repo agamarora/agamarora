@@ -1528,7 +1528,7 @@ ${SVG_SPRITE}
 
 ${SHARED_AAMARK_HTML}
 
-<div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
+<div class="help-strip"><a href="/wiki/themes/">themes</a> › graph</div>
 <div class="caption">${totalEntries}+ entries · ${kg.stats.nodes_total} graph nodes · ${kg.stats.edges.total} edges</div>
 
 <div class="legend-strip">
@@ -1538,7 +1538,7 @@ ${SHARED_AAMARK_HTML}
 </div>
 
 <nav class="entry-ctas" aria-label="Wiki entry">
-  <a href="/wiki/">read the wiki<span class="arr">→</span></a>
+  <a href="/wiki/themes/">read the wiki<span class="arr">→</span></a>
   <a href="/enter">talk to the agent<span class="arr">→</span></a>
 </nav>
 
@@ -1559,7 +1559,7 @@ ${SHARED_AAMARK_HTML}
     <ul>
 ${THEMES.map(t => `      <li><a href="/wiki/${t.slug}/">${escHtml(t.label)}</a></li>`).join('\n')}
     </ul>
-    <p><a href="/wiki/">Back to wiki home</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
+    <p><a href="/wiki/themes/">Browse themes</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
   </section>
 </noscript>
 
@@ -2619,7 +2619,7 @@ ${AAMARK_SCRIPT}
   });
 
   // === CP-7: keyboard global handlers ===
-  // Esc → /wiki/ home (return to wiki landing)
+  // Esc → site home (graph IS wiki entry; Esc exits to landing)
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape'){
       // Prefer exiting fullscreen first if active
@@ -2627,7 +2627,7 @@ ${AAMARK_SCRIPT}
         document.exitFullscreen().catch(() => {});
         return;
       }
-      window.location.href = '/wiki/';
+      window.location.href = '/';
     }
   });
 

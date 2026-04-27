@@ -23,6 +23,22 @@
   status = 301
   force = true
 
+# Wiki entry point: graph IS the wiki home. Theme grid moved to /wiki/themes/.
+# 2026-04-27 routing change. /wiki/index.html removed; this redirect is the
+# canonical front door. force = true so even if a stale wiki/index.html appears
+# in the build output, the redirect wins.
+[[redirects]]
+  from = "/wiki"
+  to = "/wiki/graph/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wiki/"
+  to = "/wiki/graph/"
+  status = 301
+  force = true
+
 # Security headers: applied to every response.
 # HSTS skips `preload` for now (preload list is a permanent commitment).
 # CSP allows inline style/script (site has no build step, every page is self-contained),

@@ -76,13 +76,13 @@
 
 
   <url>
-    <loc>https://agamarora.com/wiki/</loc>
+    <loc>https://agamarora.com/wiki/themes/</loc>
     <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.95</priority>
+    <priority>0.9</priority>
     <image:image>
       <image:loc>https://agamarora.com/assets/og/lab.png</image:loc>
-      <image:title>Wiki. Agam Arora second brain.</image:title>
+      <image:title>Wiki themes. Agam Arora second brain.</image:title>
     </image:image>
   </url>
   <url>
@@ -179,7 +179,7 @@
     <loc>https://agamarora.com/wiki/graph/</loc>
     <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://agamarora.com/wiki/beliefs/</loc>

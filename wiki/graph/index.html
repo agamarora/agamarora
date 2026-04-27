@@ -211,7 +211,7 @@
   </svg>
 </a>
 
-<div class="help-strip"><a href="/wiki/">wiki</a> › graph</div>
+<div class="help-strip"><a href="/wiki/themes/">themes</a> › graph</div>
 <div class="caption">295+ entries · 227 graph nodes · 224 edges</div>
 
 <div class="legend-strip">
@@ -221,7 +221,7 @@
 </div>
 
 <nav class="entry-ctas" aria-label="Wiki entry">
-  <a href="/wiki/">read the wiki<span class="arr">→</span></a>
+  <a href="/wiki/themes/">read the wiki<span class="arr">→</span></a>
   <a href="/enter">talk to the agent<span class="arr">→</span></a>
 </nav>
 
@@ -252,7 +252,7 @@
       <li><a href="/wiki/career-reflection/">Career arc</a></li>
       <li><a href="/wiki/personal-projects-tinkering/">Personal projects</a></li>
     </ul>
-    <p><a href="/wiki/">Back to wiki home</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
+    <p><a href="/wiki/themes/">Browse themes</a> &middot; <a href="/wiki/beliefs/">All beliefs</a> &middot; <a href="/wiki/projects/">Projects DAG</a></p>
   </section>
 </noscript>
 
@@ -1384,7 +1384,7 @@
   });
 
   // === CP-7: keyboard global handlers ===
-  // Esc → /wiki/ home (return to wiki landing)
+  // Esc → site home (graph IS wiki entry; Esc exits to landing)
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape'){
       // Prefer exiting fullscreen first if active
@@ -1392,7 +1392,7 @@
         document.exitFullscreen().catch(() => {});
         return;
       }
-      window.location.href = '/wiki/';
+      window.location.href = '/';
     }
   });
 
