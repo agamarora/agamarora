@@ -86,13 +86,16 @@ function cooldownKey(provider, keyId) {
 
 async function isCooled(provider, keyId) {
   const k = cooldownKey(provider, keyId);
-  const v = await redisGet(k).catch(() => null);
-  if (v == null && !upstashDegraded) {
-    // null could mean key not set OR upstash unreachable — fall back to mem
-    const mem = memCooldown.get(k);
-    if (mem && mem > Date.now()) return true;
-    return false;
-  }
+  let upstashErr = false;
+  const v = await redisGet(k).catch(err => {
+    upstashErr = true;
+    if (!upstashDegraded) {
+      upstashDegraded = true;
+      console.warn('[llm-pool] upstash_read_failure — using module memory', { err: err?.message });
+    }
+    return null;
+  });
+  // Always fall through to memCooldown if Upstash errored or is already degraded
   if (v == null) {
     const mem = memCooldown.get(k);
     if (mem && mem > Date.now()) return true;
