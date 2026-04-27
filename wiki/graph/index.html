@@ -692,15 +692,13 @@
   // === Theme spokes: theme node → its own children (beliefs/projects/posts/tech) ===
   // Hidden by default; revealed only when the parent theme is hovered. These are intra-cluster
   // visual links — not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
-  // so theme dots sit on top.
+  // so theme dots sit on top. Tiered alpha by child kind so beliefs/projects read first,
+  // posts/tech recede.
   const spokeGroup = document.createElementNS(NS, 'g');
   spokeGroup.setAttribute('id', 'theme-spokes');
   if (firstThemeGroup) svg.insertBefore(spokeGroup, firstThemeGroup);
   else svg.appendChild(spokeGroup);
 
-  // Spoke priority by child kind (derived from id prefix). Beliefs/projects are the
-  // load-bearing structure of a theme; posts/tech are atmospheric supporting evidence,
-  // so they recede further to reduce hover noise.
   function spokeStyleFor(nid){
     if (nid.startsWith('belief.'))  return { stroke: 'rgba(229,165,75,0.42)', width: '0.7', dash: '2 4' };
     if (nid.startsWith('project.')) return { stroke: 'rgba(229,165,75,0.30)', width: '0.6', dash: '2 4' };
@@ -1005,6 +1003,13 @@
         const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
         ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
       });
+      // Theme spokes track theme drift too (visibility hover-driven, geometry per frame)
+      spokeRefs.forEach(ref => {
+        const tp = nodeWorldPos[ref.themeId];
+        const cp = nodeWorldPos[ref.childId];
+        if (!tp || !cp) return;
+        ref.path.setAttribute('d', 'M ' + tp.x.toFixed(2) + ' ' + tp.y.toFixed(2) + ' L ' + cp.x.toFixed(2) + ' ' + cp.y.toFixed(2));
+      });
 
       if (allDone && sinceEntry > ENTRY_DURATION * 1.1){
         entryComplete = true;
@@ -1069,8 +1074,7 @@
       const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
       ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
     });
-
-    // Theme spokes track theme drift too (only repositions; visibility is hover-driven)
+    // Theme spokes track drift each frame (visibility hover-driven)
     spokeRefs.forEach(ref => {
       const tp = nodeWorldPos[ref.themeId];
       const cp = nodeWorldPos[ref.childId];
@@ -1349,10 +1353,11 @@
   }
 
   // === CP-7: layered visibility on hover/focus ===
-  // Hovered body = theme node itself. Only edges where the theme node is an endpoint
-  // light up (theme↔theme tensions, theme↔belief in other clusters). Belief↔belief
-  // chords stay dimmed — they aren't this theme's connections, even if one belief
-  // lives in this theme's wedge. Subtle dotted style (.cross-edge.highlit).
+  // Hovered body = theme node itself. Cross-edge highlit iff theme node is endpoint
+  // (theme↔theme tensions, theme↔belief in other clusters, theme↔genesis). Belief↔belief
+  // chords stay dimmed — they aren't this theme's connections, even if one belief lives
+  // in this theme's wedge. Subtle dotted style (.cross-edge.highlit). Spokes from theme
+  // to its own children are revealed in parallel via spokeRefs (see theme-spokes block).
   function highlightTheme(themeId){
     crossEdgeRefs.forEach(ref => {
       const isConnected = ref.from === themeId || ref.to === themeId;

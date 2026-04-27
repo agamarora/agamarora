@@ -1495,8 +1495,8 @@ ${SHARED_CHROME_CSS}
 
   /* CP-7: layered visibility on theme hover/focus — connected cross-edges light up */
   .cross-edge{transition:stroke 0.15s,stroke-width 0.15s,opacity 0.15s;}
-  .cross-edge.highlit{stroke:rgba(229,165,75,0.55) !important;stroke-width:1 !important;}
-  .cross-edge.dimmed{opacity:0.25 !important;}
+  .cross-edge.highlit{stroke:rgba(229,165,75,0.32) !important;stroke-width:0.8 !important;stroke-dasharray:2 4 !important;}
+  .cross-edge.dimmed{opacity:0.12 !important;}
 
   /* Mobile chrome: aggressive hide to prevent overlap. Only essentials remain. */
   @media (max-width: 768px){
@@ -1924,6 +1924,44 @@ ${AAMARK_SCRIPT}
   });
   console.log('[constellation] rendered ' + renderedEdges + ' cross-cluster edges');
 
+  // === Theme spokes: theme node → its own children (beliefs/projects/posts/tech) ===
+  // Hidden by default; revealed only when the parent theme is hovered. These are intra-cluster
+  // visual links — not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
+  // so theme dots sit on top. Tiered alpha by child kind so beliefs/projects read first,
+  // posts/tech recede.
+  const spokeGroup = document.createElementNS(NS, 'g');
+  spokeGroup.setAttribute('id', 'theme-spokes');
+  if (firstThemeGroup) svg.insertBefore(spokeGroup, firstThemeGroup);
+  else svg.appendChild(spokeGroup);
+
+  function spokeStyleFor(nid){
+    if (nid.startsWith('belief.'))  return { stroke: 'rgba(229,165,75,0.42)', width: '0.7', dash: '2 4' };
+    if (nid.startsWith('project.')) return { stroke: 'rgba(229,165,75,0.30)', width: '0.6', dash: '2 4' };
+    if (nid.startsWith('post.'))    return { stroke: 'rgba(229,165,75,0.20)', width: '0.5', dash: '2 4' };
+    if (nid.startsWith('tech.'))    return { stroke: 'rgba(229,165,75,0.16)', width: '0.45', dash: '2 4' };
+    return { stroke: 'rgba(229,165,75,0.20)', width: '0.5', dash: '2 4' };
+  }
+  const spokeRefs = [];
+  for (const nid in nodeOffsets) {
+    const off = nodeOffsets[nid];
+    const tp = nodeWorldPos[off.themeId];
+    const cp = nodeWorldPos[nid];
+    if (!tp || !cp) continue;
+    const sty = spokeStyleFor(nid);
+    const path = el('path', {
+      d: 'M ' + tp.x.toFixed(2) + ' ' + tp.y.toFixed(2) + ' L ' + cp.x.toFixed(2) + ' ' + cp.y.toFixed(2),
+      stroke: sty.stroke,
+      'stroke-width': sty.width,
+      'stroke-dasharray': sty.dash,
+      fill: 'none',
+      class: 'theme-spoke',
+      'data-theme': off.themeId,
+    }, spokeGroup);
+    path.style.opacity = '0';
+    path.style.transition = 'opacity 0.15s';
+    spokeRefs.push({ path: path, themeId: off.themeId, childId: nid });
+  }
+
   // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
   // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
   // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias —
@@ -2200,6 +2238,13 @@ ${AAMARK_SCRIPT}
         const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
         ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
       });
+      // Theme spokes track theme drift too (visibility hover-driven, geometry per frame)
+      spokeRefs.forEach(ref => {
+        const tp = nodeWorldPos[ref.themeId];
+        const cp = nodeWorldPos[ref.childId];
+        if (!tp || !cp) return;
+        ref.path.setAttribute('d', 'M ' + tp.x.toFixed(2) + ' ' + tp.y.toFixed(2) + ' L ' + cp.x.toFixed(2) + ' ' + cp.y.toFixed(2));
+      });
 
       if (allDone && sinceEntry > ENTRY_DURATION * 1.1){
         entryComplete = true;
@@ -2263,6 +2308,13 @@ ${AAMARK_SCRIPT}
       const mx = (a.x + b.x)/2 + (CX - (a.x + b.x)/2) * 0.45;
       const my = (a.y + b.y)/2 + (CY - (a.y + b.y)/2) * 0.45;
       ref.path.setAttribute('d', 'M ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) + ' Q ' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2));
+    });
+    // Theme spokes track drift each frame (visibility hover-driven)
+    spokeRefs.forEach(ref => {
+      const tp = nodeWorldPos[ref.themeId];
+      const cp = nodeWorldPos[ref.childId];
+      if (!tp || !cp) return;
+      ref.path.setAttribute('d', 'M ' + tp.x.toFixed(2) + ' ' + tp.y.toFixed(2) + ' L ' + cp.x.toFixed(2) + ' ' + cp.y.toFixed(2));
     });
 
     requestAnimationFrame(frame);
@@ -2536,22 +2588,19 @@ ${AAMARK_SCRIPT}
   }
 
   // === CP-7: layered visibility on hover/focus ===
-  // When a theme is hovered/focused, its connected cross-edges light up; unrelated edges dim.
-  // "Connected" means: edge endpoint is the theme itself OR any belief/project/post/tech that
-  // belongs to that theme (via nodeOffsets). Implements the "layered visibility" rule from
-  // DESIGN.md — most dim at rest, contextual ones light up on engagement (anti AI-slop
-  // "all edges visible all the time" pattern). Fixed 2026-04-27: previously only matched
-  // direct theme↔theme endpoints, dropped belief/project/post connections.
-  function isEndpointInTheme(nodeId, themeId){
-    if (nodeId === themeId) return true;
-    const off = nodeOffsets[nodeId];
-    return off && off.themeId === themeId;
-  }
+  // Hovered body = theme node itself. Cross-edge highlit iff theme node is endpoint
+  // (theme↔theme tensions, theme↔belief in other clusters, theme↔genesis). Belief↔belief
+  // chords stay dimmed — they aren't this theme's connections, even if one belief lives
+  // in this theme's wedge. Subtle dotted style (.cross-edge.highlit). Spokes from theme
+  // to its own children are revealed in parallel via spokeRefs (see theme-spokes block).
   function highlightTheme(themeId){
     crossEdgeRefs.forEach(ref => {
-      const isConnected = isEndpointInTheme(ref.from, themeId) || isEndpointInTheme(ref.to, themeId);
+      const isConnected = ref.from === themeId || ref.to === themeId;
       ref.path.classList.toggle('highlit', isConnected);
       ref.path.classList.toggle('dimmed', !isConnected);
+    });
+    spokeRefs.forEach(ref => {
+      ref.path.style.opacity = ref.themeId === themeId ? '1' : '0';
     });
   }
   function clearHighlight(){
@@ -2559,6 +2608,7 @@ ${AAMARK_SCRIPT}
       ref.path.classList.remove('highlit');
       ref.path.classList.remove('dimmed');
     });
+    spokeRefs.forEach(ref => { ref.path.style.opacity = '0'; });
   }
   document.querySelectorAll('g.theme-group').forEach(g => {
     const tid = g.getAttribute('data-theme');
