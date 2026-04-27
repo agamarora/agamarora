@@ -18,7 +18,11 @@ Auto mode: yes. Caveman mode: yes (fragments OK; code/commits stay normal). Suba
 
 **Dev + eval workflow LOCKED 2026-04-27:** all `/enter` work uses `docs/plans/phase-d-dev-workflow.md`. netlify dev (port 8888) + gstack browser headed + drive real `/enter` UI for every change AND every eval scenario. No function-only smoke as the sole signal — D-1 shipped a streaming hang that only end-to-end UI testing surfaced.
 
-**CEO scope expansion LOCKED 2026-04-27 (post D-1):** /plan-ceo-review surfaced two gaps — UI plan undershot the variant exploration; KG was a publishing artifact not agent memory at runtime. EXPANSION mode taste-pass: 6/6 proposals accepted. New tasks D-7a (variant land + mockup), D-3a (KG edge runtime injection), D-9a (synthesis confidence retry). D-4 + D-6 + D-7 scopes raised. CEO plan: `~/.gstack/projects/agamarora-agamarora/ceo-plans/2026-04-27-phase-d-expansion.md`. Total CC time delta: +3-4hr Phase D. **Decisions 13-15** appended below to `phase-d-decisions-2026-04-27.md`.
+**CEO scope expansion LOCKED 2026-04-27 (post D-1):** /plan-ceo-review surfaced two gaps — UI plan undershot the variant exploration; KG was a publishing artifact not agent memory at runtime. EXPANSION mode taste-pass: 6/6 proposals accepted. New tasks D-7a (variant land + mockup), D-3a (KG edge runtime injection), D-9a (synthesis confidence retry). D-4 + D-6 + D-7 scopes raised. CEO plan: `~/.gstack/projects/agamarora-agamarora/ceo-plans/2026-04-27-phase-d-expansion.md`. Total CC time delta: +3-4hr Phase D. **Decisions 13-15** appended to `phase-d-decisions-2026-04-27.md`.
+
+**Eng review CLEARED 2026-04-27 (post CEO + Design):** /plan-eng-review locked 3 architectural calls (Decisions 16-18) + 3 code-quality calls (CQ-1 voice-rules.mjs, CQ-2 invokeSynthesisJson, CQ-3 timing.mjs). 32 unit + 13 eval/E2E test gaps mapped. 1 critical failure mode flagged for impl: Mistral SSE parse error handling. Three parallel CC lanes feasible (Lane A backend, Lane B defense, Lane C UI) — wallclock ~5.5hr vs ~10-14hr sequential. Test plan artifact: `~/.gstack/projects/agamarora-agamarora/Agam-main-eng-review-test-plan-2026-04-27.md`. Full eng review: `~/.claude/plans/sequential-hugging-mango.md` ## ENG REVIEW OUTPUT.
+
+**EXECUTION READY (start fresh session):** all reviews CLEARED. Phase D implementation can begin. Pickup at Task 15 D-2 (system prompt v3) per critical-path table. Run `netlify dev` + gstack browser headed before any /enter change per `phase-d-dev-workflow.md`.
 
 ---
 

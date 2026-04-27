@@ -59,6 +59,24 @@ Plus scope-up of existing tasks: D-4 trace honest, D-6 multi-turn + visual asser
 
 Total CC time delta: +3-4hr over original Phase D estimate.
 
+## Eng review extension — Decisions 16-18 (2026-04-27, post CEO + Design)
+
+| # | Decision | Choice | Notes |
+|---|---|---|---|
+| 16 | Real trace ms — model emits OR server stamps? | A — server stamps post-parse | Model emits `{trace: [{verb, args}], answer, cards}` w/o latencyMs. Handler measures wall-clock per step (preRoute, classify, retrieve wiki+edges, synthesize), splices real ms into trace events before SSE emit. Eval can assert ms are non-zero + non-rounded. Closes "client stagger is theatre" gap. |
+| 17 | Pill animation — count-up + spinner→tick | A — locked per user feedback | Each pill renders initially with circular spinner + `0ms`. Over `max(realLatency, MIN_VISIBLE_DURATION 600ms)`: number counts up, spinner spins. At end: number settles, spinner morphs to checkmark via CSS transform. "Gives it more depth" per user 2026-04-27. Implemented in D-7 scheduler. |
+| 18 | D-9a retry placement — before or after first SSE flush? | A — BEFORE first SSE flush | Pool returns full `{trace, answer, cards}` JSON non-streaming. Handler inspects `answer.length`. If `intent === 'synthesis'` AND `answer.length < 80`, fire ONE expand call THEN open SSE stream. User sees zero retry artifact. Fits naturally with Decision 3 (1-call non-streaming structured output). |
+
+**Eng review reference:** `~/.claude/plans/sequential-hugging-mango.md` ## ENG REVIEW OUTPUT.
+**Test plan reference:** `~/.gstack/projects/agamarora-agamarora/Agam-main-eng-review-test-plan-2026-04-27.md`.
+
+These add code-quality decisions:
+- **CQ-1:** centralize banned terms list at NEW `lib/voice-rules.mjs` (DRY across system prompt + classifier + eval grep)
+- **CQ-2:** new pool method `invokeSynthesisJson()` for non-streaming JSON return (D-arch-3 needs this)
+- **CQ-3:** `lib/timing.mjs` `now()` + `measure(label, fn)` helpers — single source of timing truth (D-arch-1 needs this)
+
+Three parallel CC lanes for Phase D execution: Lane A (backend LLM stack: D-2 → D-3a → D-3 → D-4), Lane B (defense: D-5), Lane C (UI: D-7). Lane D (D-9a folded into Lane A; D-6 + D-9 sequential after merge). Wallclock estimate: ~5.5hr parallel vs ~10-14hr sequential.
+
 ---
 
 ## How to use this doc
