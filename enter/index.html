@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Know Agam. Live AI terminal grounded in his resume.</title>
 <meta name="description" content="Live AI terminal for Agam Arora. Grounded in his resume, shipped products, and case studies. Ask about voice AI at enterprise scale, RAG, agentic systems, PM craft, or anything in his portfolio. Streaming responses via Groq.">
@@ -468,16 +468,20 @@
   /* =========================================================
      Bottom input bar — sticky fixed
      ========================================================= */
-  /* DESKTOP input bar — floats over content. Mobile @media below switches
-     to position:static + flex flow inside the vv-locked body. */
   .input-bar {
     position:fixed;
-    bottom:0;
+    /* --vv-offset is set by JS from visualViewport so the bar floats above
+       the mobile soft keyboard. Defaults to 0 on desktop. */
+    bottom:var(--vv-offset, 0);
     left:0; right:0;
     background:linear-gradient(to top, var(--bg) 70%, rgba(10,10,10,0));
     padding:var(--space-5) clamp(var(--space-5),5vw,var(--space-7))
             calc(var(--space-7) + 8px);
     z-index:60;
+    /* No transition on `bottom` — every keystroke nudges the visual
+       viewport on mobile (suggestion bar, IME) and a transition would
+       animate the input bar up/down on each keypress (perceived as
+       jitter or "the input is sliding"). Snap-track instead. */
   }
   .input-bar .input-wrap {
     max-width:880px;
@@ -587,23 +591,31 @@
      Mobile breakpoint < 760px
      ========================================================= */
   @media (max-width:760px) {
-    /* MOBILE LAYOUT — single source of truth.
-       JS visualViewport.resize -> --vh = vv.height. CSS html/body
-       height tracks. Input bar is body's last flex child; sits at
-       visual-viewport bottom by virtue of flex flow. Same on iOS
-       Safari and Android Chrome. No interactive-widget meta, no
-       threshold, no --vv-offset, no scroll listener. */
+    /* MOBILE LAYOUT MODEL.
+       Lock html + body to the visual viewport so the page never scrolls
+       past the soft keyboard. main.terminal becomes the scroll container;
+       the input bar is a flex child (NOT position:fixed) so it always sits
+       flush above the keyboard without needing visualViewport offset math.
+       The visualViewport listener writes --vv-height as the keyboard
+       opens / closes; the html lock picks it up and the layout reflows
+       once. No per-keystroke jitter, no input bar drifting through cards. */
     html, body {
-      /* MOBILE VIEWPORT MODEL — single mechanism.
-         JS visualViewport listener writes --vh = vv.height on every
-         viewport change (keyboard open/close, URL bar collapse, IME
-         suggestion bar, orientation). Body height tracks. Input bar
-         sits as the last flex child of body so it's always at the
-         visual-viewport bottom. ONE source of truth. ONE reflow per
-         viewport event. No jitter from competing mechanisms. */
-      height:var(--vh, 100dvh);
+      /* MOBILE VIEWPORT MODEL.
+         Primary mechanism: <meta name="viewport" content="...,
+         interactive-widget=resizes-content"> tells Chromium-based
+         browsers (Android Chrome 108+, Edge, iOS Safari 17+) to RESIZE
+         THE LAYOUT VIEWPORT itself when the soft keyboard opens. Then
+         100dvh = actual visible height, no JS needed.
+         Fallback: --vv-height (set by JS visualViewport listener with
+         an 80px threshold so IME / suggestion-bar micro-shifts don't
+         trigger reflows). Used by older iOS / browsers without
+         interactive-widget support. */
+      height:100dvh;
+      height:var(--vv-height, 100dvh);
       min-height:0;
       overflow:hidden;
+      /* Block iOS rubber-band on the page; main.terminal keeps its
+         own scroll chain. */
       overscroll-behavior:none;
     }
     body {
@@ -1789,23 +1801,41 @@ startHintRotation();
 // Don't auto-focus on mobile — triggers soft keyboard unexpectedly
 if (!isMobile()) inputEl.focus();
 
-// Mobile viewport lock — single source of truth.
+// Mobile soft-keyboard handling — vv-lock model.
 //
-// Writes --vh = visualViewport.height on every viewport change. The CSS
-// `html, body { height: var(--vh, 100dvh) }` rule tracks the visible
-// area; input bar (last flex child of body) sits at the bottom.
-// Works the same on iOS Safari, Android Chrome, mobile Edge, mobile
-// Firefox. No interactive-widget meta, no threshold, no scroll listener.
-//
-// On desktop (no isMobile match), --vh is never set; CSS falls back to
-// 100dvh which is correct for the standard scrolling page model.
+// CSS locks html/body height to var(--vv-height, 100dvh) on mobile. When
+// the soft keyboard opens, visualViewport.height shrinks; we mirror it
+// into --vv-height and the layout reflows once. main.terminal is the
+// scroll container; the input bar is the last flex child of body and
+// always sits at the visual-viewport bottom — no position:fixed, no
+// per-keystroke offset jitter, no scrollIntoView gymnastics.
+// Mobile soft-keyboard fallback for browsers without
+// interactive-widget=resizes-content support (iOS < 17, older Android
+// Chrome). When supported, the layout viewport resizes natively and
+// 100dvh on body picks it up — no JS needed. When not supported, this
+// listener writes --vv-height which the CSS height: var(--vv-height)
+// fallback uses. Threshold prevents IME / suggestion-bar micro-shifts
+// from triggering reflows mid-typing.
 if (isMobile() && window.visualViewport) {
   const vv = window.visualViewport;
-  const updateVH = () => {
-    document.documentElement.style.setProperty('--vh', vv.height + 'px');
-  };
-  vv.addEventListener('resize', updateVH);
-  updateVH();
+  let lastHeight = vv.height;
+  document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
+  function onViewportChange() {
+    if (Math.abs(vv.height - lastHeight) < 80) return;
+    lastHeight = vv.height;
+    document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
+    requestAnimationFrame(() => {
+      const last = document.querySelector('.turn:last-of-type');
+      if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
+    });
+  }
+  vv.addEventListener('resize', onViewportChange);
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      lastHeight = -1;
+      onViewportChange();
+    }, 200);
+  });
 }
 
 })();
