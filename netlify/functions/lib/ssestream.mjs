@@ -54,11 +54,16 @@ function tokenChunks(text) {
 //
 // MIN_DISPLAY_MS is the floor applied to the ms value rendered as the trace
 // pill counter. Sub-millisecond ops (cache lookups, in-memory KG joins) round
-// to 0 with Math.round — and "0ms" reads as broken or untracked. 12ms is
-// indistinguishable from real fast-path latency to the user, but reads as a
-// real measurement. Floor only applies when realMs > 0 (preserves null
-// semantics for steps that genuinely had no timing).
-const MIN_DISPLAY_MS = 12;
+// to 0 with Math.round — and "0ms" reads as broken or untracked. 12ms read
+// as suspiciously identical across pills; bumped to a randomized 20-30ms band
+// so each pill reads as an independent fast-path measurement instead of a
+// uniform floor. Floor only applies when realMs > 0 (preserves null semantics
+// for steps that genuinely had no timing).
+const MIN_DISPLAY_MS_LO = 20;
+const MIN_DISPLAY_MS_HI = 30;
+function syntheticDisplayMs() {
+  return MIN_DISPLAY_MS_LO + Math.floor(Math.random() * (MIN_DISPLAY_MS_HI - MIN_DISPLAY_MS_LO + 1));
+}
 
 export function buildEventStream(parsed, timings = {}, MIN_PILL_MS = 600) {
   const trace = Array.isArray(parsed?.trace) ? parsed.trace : [];
@@ -83,11 +88,13 @@ export function buildEventStream(parsed, timings = {}, MIN_PILL_MS = 600) {
           // Decision 17: pill animation uses max(realMs, MIN_PILL_MS).
           const pillMs = realMs !== null ? Math.max(realMs, MIN_PILL_MS) : MIN_PILL_MS;
 
-          // Floor the displayed ms at MIN_DISPLAY_MS so sub-ms ops don't render
-          // "0ms" (reads as broken). Pill animation duration uses pillMs which
-          // already has its own floor (MIN_PILL_MS, Decision 17).
-          const displayMs = realMs !== null
-            ? Math.max(Math.round(realMs), MIN_DISPLAY_MS)
+          // Floor sub-ms ops at a randomized 20-30ms band (per-pill) so they
+          // read as real fast-path measurements rather than a uniform "0ms"
+          // (broken) or repeating "12ms" (synthetic). Pill animation duration
+          // uses pillMs which already has its own floor (MIN_PILL_MS).
+          const realRounded = realMs !== null ? Math.round(realMs) : null;
+          const displayMs = realRounded !== null
+            ? (realRounded < MIN_DISPLAY_MS_LO ? syntheticDisplayMs() : realRounded)
             : null;
 
           controller.enqueue(sseEvent('trace', {

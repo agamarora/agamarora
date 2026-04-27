@@ -68,12 +68,25 @@ export const SHARED_AAMARK_CSS = `  .aa-mark{position:fixed;bottom:clamp(16px,3v
 export const SHARED_FOCUS_CSS = `  .icon-bar a:focus-visible,
   .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}`;
 
+// Scrollbar — match dark/gold aesthetic site-wide. Default Windows white scrollbar
+// reads as foreign UI chrome on a dark editorial page. Thin dim thumb on transparent
+// track, gold on hover. Tokens reused: thumb is rgba(--text 0.18), hover is
+// rgba(--accent 0.45). 10px wide with 2px transparent border for breathing room.
+export const SHARED_SCROLLBAR_CSS = `  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+  ::-webkit-scrollbar-corner{background:transparent;}`;
+
 // Convenience: the full chrome CSS bundle (everything in one block, in correct cascade order).
 export const SHARED_CHROME_CSS = [
   SHARED_FONTFACE_CSS,
   SHARED_ICON_CSS,
   SHARED_TOKENS_CSS,
   SHARED_RESET_CSS,
+  '',
+  SHARED_SCROLLBAR_CSS,
   '',
   SHARED_HEADER_CSS,
   '',

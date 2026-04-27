@@ -44,6 +44,13 @@
   body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
   ::selection{background:var(--accent);color:var(--bg);}
 
+  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+  ::-webkit-scrollbar-corner{background:transparent;}
+
   header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
   .icon-bar{display:inline-flex;align-items:center;}
   .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
@@ -61,6 +68,13 @@
   .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
   /* /chrome:css */
 
+  /* /enter-only: keep streamed content above the fixed input bar when
+     scrollIntoView({block:'end'}) lands a new turn. Without this, the
+     article tail aligns to viewport bottom and disappears under the input
+     overlay — reads as "the page didn't scroll". 240px = input bar height
+     + breathing room. */
+  html { scroll-padding-bottom:240px; }
+
   /* =========================================================
      KEYBOARD BACKGROUND (preserved from v2)
      ========================================================= */
@@ -73,11 +87,10 @@
   .kb-board {
     display:flex; flex-direction:column; gap:6px;
     transform:rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
-    transform-origin:center center; transform-style:preserve-3d;
-    /* Dimmed from 0.75 → 0.42 — keyboard read as a competing surface against
-       the streamed answer text. Lower opacity keeps the perspective texture
-       as ambient atmosphere rather than foreground chrome. */
-    opacity:0.42;
+    /* opacity dimmed 0.75 → 0.42 for readability against streamed text.
+       All other properties (transform, fade, JS scale clamp) match the
+       original 133ca8e design — only the opacity dim was the asked change. */
+    transform-origin:center center; transform-style:preserve-3d; opacity:0.42;
   }
   .kb-row { display:flex; gap:6px; justify-content:center; transform-style:preserve-3d; }
   .kb-key {
@@ -98,15 +111,10 @@
   .kb-key.w4 { width:138px; } .kb-key.space { width:320px; }
   .kb-fade {
     position:fixed; inset:0; z-index:1; pointer-events:none;
-    /* Two-stop fade: a soft tint over the keyboard center for legibility,
-       then full bg at edges. The center tint (rgba 10,10,10,0.45) sits on
-       top of the keyboard but under the content (z-index:1, content z:2),
-       so streamed text reads on a near-bg backdrop while the keyboard
-       still ghosts through. */
-    background:radial-gradient(ellipse 75% 70% at 50% 50%,
-      rgba(10,10,10,0.45) 0%,
-      rgba(10,10,10,0.65) 40%,
-      var(--bg) 90%);
+    /* Original transparent-center vignette: keyboard visible at center,
+       fades fully to bg at edges. Readability comes from kb-board opacity
+       (0.42) + content sitting on z:2 above this layer. */
+    background:radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
   }
 
   /* =========================================================
@@ -184,6 +192,34 @@
 
   /* Default cards in empty state stagger in */
   .empty-state .cards { animation:none; }
+
+  /* Wordmark + tagline — display block that fills empty-state breathing room.
+     Satoshi 900 uppercase, tight tracking. Dies with empty-state on first chat. */
+  .empty-state .wordmark {
+    font-family:var(--sans);
+    font-weight:900;
+    font-size:clamp(2.75rem, 9vw, 6.5rem);
+    letter-spacing:-0.045em;
+    line-height:0.92;
+    color:var(--text);
+    text-transform:uppercase;
+    margin:var(--space-4) 0 var(--space-3);
+    opacity:0;
+    animation:fade-in 0.7s ease 0.2s forwards;
+  }
+  .empty-state .wordmark .accent { color:var(--accent); }
+  .empty-state .tagline {
+    font-family:var(--sans);
+    font-size:clamp(0.95rem, 1.4vw, 1.1rem);
+    font-weight:400;
+    font-style:italic;
+    color:var(--text-dim);
+    letter-spacing:0;
+    margin-top:calc(-1 * var(--space-3));
+    opacity:0;
+    animation:fade-in 0.6s ease 0.45s forwards;
+  }
+  .empty-state .tagline .sep { color:var(--accent); margin:0 0.5em; font-style:normal; }
 
   /* Warm trace line in empty state */
   .warm-trace {
@@ -421,11 +457,15 @@
      ========================================================= */
   .input-bar {
     position:fixed;
-    bottom:0; left:0; right:0;
+    /* --vv-offset is set by JS from visualViewport so the bar floats above
+       the mobile soft keyboard. Defaults to 0 on desktop. */
+    bottom:var(--vv-offset, 0);
+    left:0; right:0;
     background:linear-gradient(to top, var(--bg) 70%, rgba(10,10,10,0));
     padding:var(--space-5) clamp(var(--space-5),5vw,var(--space-7))
             calc(var(--space-7) + 8px);
     z-index:60;
+    transition:bottom 0.18s ease;
   }
   .input-bar .input-wrap {
     max-width:880px;
@@ -695,33 +735,39 @@
 
   <!-- Empty state (shown on initial load, hidden after first query) -->
   <div class="empty-state" id="empty-state" aria-label="Welcome state">
+    <h1 class="wordmark">Agam Arora</h1>
+    <p class="tagline">AI Product Manager <span class="sep">·</span> ships what he writes</p>
     <div class="warm-trace" aria-hidden="true">
       <span class="arrow">&rarr;</span>
       <span>warm</span>
       <span class="status-word">ready</span>
     </div>
     <p class="opening">
-      I'm agent.agam. I know what he's shipped, where he's been, and how to route you.
-      <span class="dim">Ask, or jump in:</span>
+      I am Agam's agent. I can help you explore his career, his beliefs, his work or how to reach him.
+      <span class="dim">Let me know what interests you.</span>
     </p>
+    <!-- Empty-state cards: graph is pinned priority CTA on every fresh load.
+         Lab is also pinned (always-relevant entry to the work). Third slot
+         rotates per page-load across the rotation pool (see rotateThirdCard
+         IIFE below) so repeat visitors see fresh angles. -->
     <div class="cards" id="default-cards" role="list">
-      <a class="card priority" href="/lab" role="listitem">
+      <a class="card priority" href="/wiki/graph" role="listitem">
+        <svg class="card-icon" aria-hidden="true"><use href="#ic-route"/></svg>
+        <div class="card-title">Explore the constellation</div>
+        <div class="card-desc">His knowledge atlas as a graph: 10 themes, edges between beliefs, projects, evidence. Best way in.</div>
+        <div class="card-arrow">&rarr; /wiki/graph</div>
+      </a>
+      <a class="card" href="/lab" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
         <div class="card-title">Browse his lab</div>
         <div class="card-desc">Four projects across voice, RAG, agentic systems, and open-source tooling. Agent-first thesis throughout.</div>
         <div class="card-arrow">&rarr; /lab</div>
       </a>
-      <a class="card" href="/resume" role="listitem">
+      <a class="card" id="rotation-card" href="/resume" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-user"/></svg>
         <div class="card-title">See his background</div>
         <div class="card-desc">12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.</div>
         <div class="card-arrow">&rarr; /resume</div>
-      </a>
-      <a class="card" href="https://calendly.com/agamarora/chat" target="_blank" rel="noopener" role="listitem">
-        <svg class="card-icon" aria-hidden="true"><use href="#ic-calendar"/></svg>
-        <div class="card-title">Book a 15-min chat</div>
-        <div class="card-desc">Not searching but always reads a good message. Fastest path in.</div>
-        <div class="card-arrow">&#8599; calendly</div>
       </a>
     </div>
   </div>
@@ -1255,7 +1301,7 @@ function generateFallbackTrace(prompt, turnId) {
     lines.push({ verb: 'classified', arg: 'intent=hiring conf=0.90', ms: 180 });
     lines.push({ verb: 'pulled', arg: 'resume(availability, current-role)', ms: 12 });
     lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 210 });
-  } else if (p.match(/voice|speech|shararat|aionos|call|conversation/)) {
+  } else if (p.match(/\bvoice\b|\bspeech\b|\bshararat\b|aionos|conversation ai|voice ai/)) {
     lines.push({ verb: 'classified', arg: 'intent=synthesis themes=[voice-ai] conf=0.87', ms: 195 });
     lines.push({ verb: 'pulled', arg: 'wiki(voice-ai, 1640 chars)', ms: 7 });
     lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 280 });
@@ -1294,9 +1340,9 @@ function generateFallbackCards(prompt, answer) {
 
   if (p.match(/hire|recruit|available|opportunit/)) {
     cards.push({ title:'Book a 15-min chat', desc:"Not searching but always reads a good message. Fastest path in.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar', priority:true });
-    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' });
+    cards.push({ title:'See his LinkedIn', desc:"Full work history and endorsements.", url:'https://linkedin.com/in/agam-arora', type:'external', icon:'ic-link' });
     cards.push({ title:'Download resume PDF', desc:"Latest resume, updated Nov 2025.", url:'/assets/artefacts/2026_Agam%20Arora.pdf', type:'action', icon:'ic-download' });
-  } else if (p.match(/voice|speech|shararat|4m|call/)) {
+  } else if (p.match(/\bvoice\b|\bspeech\b|\bshararat\b|conversation ai|voice ai|4m calls|million calls/)) {
     cards.push({ title:'Shararat on GitHub', desc:"Voice AI multi-agent demo. Code + README.", url:'https://github.com/agamarora/shararat-ai', type:'external', icon:'ic-github', priority:true });
     cards.push({ title:'See his current role', desc:"AVP AI Products at AIonOS since Nov 2025.", url:'/resume#avp', icon:'ic-user' });
     cards.push({ title:'Browse the lab', desc:"All projects and builds.", url:'/lab', icon:'ic-flask' });
@@ -1617,17 +1663,77 @@ inputEl.addEventListener('keydown', e => {
 window.addEventListener('beforeunload', () => currentAbortController?.abort());
 
 startHintRotation();
+
+// Rotate the third empty-state card across page loads. Graph + Lab are
+// pinned (graph is the priority CTA; lab is the always-relevant entry to
+// shipped work). The third slot draws from a rotation pool so repeat
+// visitors see a fresh angle every fresh load.
+(function rotateThirdCard() {
+  const slot = document.getElementById('rotation-card');
+  if (!slot) return;
+  const pool = [
+    { href:'/resume', icon:'#ic-user', title:'See his background',
+      desc:'12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.',
+      arrow:'&rarr; /resume', external:false },
+    { href:'https://linkedin.com/in/agam-arora', icon:'#ic-link', title:'See his LinkedIn',
+      desc:'Full work history and endorsements. The long form of the resume.',
+      arrow:'&#8599; linkedin', external:true },
+    { href:'https://github.com/agamarora', icon:'#ic-code', title:'See his GitHub',
+      desc:'Open-source builds, weekend experiments, the AI resume template, this site.',
+      arrow:'&#8599; github', external:true },
+    { href:'https://calendly.com/agamarora/chat', icon:'#ic-calendar', title:'Book a 15-min chat',
+      desc:'Not searching but always reads a good message. Fastest path in.',
+      arrow:'&#8599; calendly', external:true },
+  ];
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  slot.href = pick.href;
+  if (pick.external) { slot.target = '_blank'; slot.rel = 'noopener'; }
+  else { slot.removeAttribute('target'); slot.removeAttribute('rel'); }
+  slot.innerHTML = `
+    <svg class="card-icon" aria-hidden="true"><use href="${pick.icon}"/></svg>
+    <div class="card-title">${pick.title}</div>
+    <div class="card-desc">${pick.desc}</div>
+    <div class="card-arrow">${pick.arrow}</div>
+  `;
+})();
+
 // Don't auto-focus on mobile — triggers soft keyboard unexpectedly
 if (!isMobile()) inputEl.focus();
 
-// Visual viewport fix for mobile keyboard
+// Mobile soft-keyboard handling.
+//
+// Problem: position:fixed; bottom:0 sticks to the LAYOUT viewport. When the
+// soft keyboard opens, the layout viewport is unchanged but the VISUAL
+// viewport shrinks — the input bar gets pushed off screen, hidden behind
+// the keyboard. iOS Safari + Android Chrome both behave this way.
+//
+// Fix: use visualViewport to compute the gap between layout-bottom and
+// visual-bottom, expose it as --vv-offset, and translate the input bar
+// up by that amount via bottom: var(--vv-offset). Also expose --vv-height
+// for any layout that wants to size to the visible viewport.
+//
+// The chat conversation is allowed to scroll naturally; auto-scrollIntoView
+// uses scroll-padding-bottom which stacks on top of the offset on mobile
+// so the latest turn stays visible above the keyboard.
 if (isMobile() && window.visualViewport) {
-  function onViewportResize() {
-    const vvh = window.visualViewport.height;
-    document.documentElement.style.setProperty('--vv-height', vvh + 'px');
+  const vv = window.visualViewport;
+  function onViewportChange() {
+    const offset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    document.documentElement.style.setProperty('--vv-offset', offset + 'px');
+    document.documentElement.style.setProperty('--vv-height', vv.height + 'px');
+    // When keyboard is open, scroll the latest turn (or empty-state cards)
+    // into view above the keyboard. requestAnimationFrame so the layout
+    // settles after the offset CSS update.
+    if (offset > 0) {
+      requestAnimationFrame(() => {
+        const last = document.querySelector('.turn:last-of-type, .empty-state');
+        if (last) last.scrollIntoView({ behavior:'smooth', block:'end' });
+      });
+    }
   }
-  window.visualViewport.addEventListener('resize', onViewportResize);
-  onViewportResize();
+  vv.addEventListener('resize', onViewportChange);
+  vv.addEventListener('scroll', onViewportChange);
+  onViewportChange();
 }
 
 })();
