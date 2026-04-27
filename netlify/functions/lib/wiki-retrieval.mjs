@@ -12,7 +12,7 @@
 // Per phase-d-decisions-2026-04-27.md Decision 2 (bundle wiki-extracts.json)
 // + Decision 13 (KG edges at runtime) + D-3a task.
 
-import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -28,21 +28,55 @@ const WIKI_ENABLED = process.env.WIKI_READ_ENABLED !== '0';
 // ---- Load bundles at module init -------------------------------------------
 // These are loaded once per container cold-start. Subsequent requests reuse
 // the module-level vars (no re-reads, no fetches).
+//
+// Why fs.readFileSync instead of createRequire:
+// Netlify Functions bundles each function with esbuild, which inlines/rewrites
+// `import.meta.url` and `createRequire(import.meta.url).require('./x.json')`
+// in ways that break the resolver — `Cannot find module './wiki-extracts.json'`
+// even though the file is shipped via includedFiles in netlify.toml. Reading
+// the file directly via fs.readFileSync(resolve(__thisDir, 'x.json')) sidesteps
+// the bundler entirely. The JSON files are flat data; no module semantics needed.
 
 let wikiExtracts = null; // { _meta, themes: { [slug]: { title, purpose, sections[] } } }
 let kgEdges = null;      // { _meta, edges[], theme_index: { [slug]: number[] } }
 
+// Try multiple candidate paths because Netlify's esbuild bundles wiki-retrieval.mjs
+// into the function output, flattening the directory structure. After bundling,
+// __thisDir points to the bundled location (.netlify/functions-serve/groqHandler/
+// netlify/functions/) — NOT the original lib/ subdirectory. The included_files
+// config in netlify.toml ships the JSON next to the bundled .mjs at runtime, but
+// in dev the bundle layout differs from the source. Try candidates in order:
+//   1. Same dir as the (post-bundle) module (production prod-deployed layout)
+//   2. lib/ subdir (production fallback if bundler nests differently)
+//   3. parent's lib/ (dev mode where __thisDir is netlify/functions/)
+function loadJsonFile(filename) {
+  const candidates = [
+    resolve(__thisDir, filename),
+    resolve(__thisDir, 'lib', filename),
+    resolve(__thisDir, '..', 'lib', filename),
+    resolve(__thisDir, '..', filename),
+  ];
+  let lastErr = null;
+  for (const path of candidates) {
+    try {
+      const text = readFileSync(path, 'utf8');
+      return JSON.parse(text);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error(`could not locate ${filename} in any candidate path`);
+}
+
 if (WIKI_ENABLED) {
   try {
-    const req = createRequire(import.meta.url);
-    wikiExtracts = req('./wiki-extracts.json');
+    wikiExtracts = loadJsonFile('wiki-extracts.json');
   } catch (err) {
     console.warn('[wiki-retrieval] wiki-extracts.json not loaded:', err?.message);
   }
 
   try {
-    const req = createRequire(import.meta.url);
-    kgEdges = req('./wiki-kg-edges.json');
+    kgEdges = loadJsonFile('wiki-kg-edges.json');
   } catch (err) {
     console.warn('[wiki-retrieval] wiki-kg-edges.json not loaded:', err?.message);
   }

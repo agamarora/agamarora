@@ -43,6 +43,11 @@
     --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-pill:999px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
+  /* Auto-scroll target offset: input bar is fixed at bottom (~120px tall).
+     scroll-padding-bottom keeps scrollIntoView({block:'end'}) from landing
+     content underneath the input bar. Without this, the article tail scrolls
+     to viewport bottom = obscured by the input bar overlay. */
+  html{scroll-padding-bottom:160px;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);
        -webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;
        overflow-x:hidden;}

@@ -99,3 +99,10 @@
   for = "/wiki/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+
+# Phase D Lane A retrieval bundles. Netlify Functions ship only the .js code by
+# default; data files in lib/ must be explicitly included or fs.readFileSync
+# fails at runtime with "ENOENT". Pattern matches both .json bundles produced
+# by build:wiki-extracts and build:kg-edges.
+[functions]
+  included_files = ["netlify/functions/lib/*.json"]
