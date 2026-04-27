@@ -1,10 +1,44 @@
 # Phase D — open architectural decisions
 
 **Date:** 2026-04-27
-**Branch:** main · HEAD `e967c18`
+**Branch:** main · HEAD `741bfe0` (decisions taste-passed same session)
 **Companion to:** `docs/plans/enter-agent-decisions-index.md`
 **Source:** `~/.gstack/projects/agamarora-agamarora/reviews/plan-eng-review-phase-d-2026-04-27.md`
-**Status:** AWAITING TASTE-PASS by Agam Arora
+**Status:** ✅ TASTE-PASSED 2026-04-27 by Agam Arora. All 12 rows locked.
+
+## Locked decisions at a glance
+
+| # | Decision | Choice | Notes |
+|---|---|---|---|
+| 1 | LLM provider abstraction | A — single `llm-pool.mjs` | |
+| 2 | Wiki retrieval | A — bundle `wiki-extracts.json` at build | |
+| 3 | SSE flow | A — 1-call structured output | client stagger is theatre |
+| 4 | Classifier | A — pin Groq `llama-3.1-8b-instant`, temp 0, enum-validate | closes critical hallucinated-slug gap |
+| 5 | Heuristic pre-routing | A — pull forward to v1 | |
+| 6 | Groq cool-down state | A — Upstash-persisted + module-memory fallback | fallback on Upstash error, log + degrade |
+| 7 | Eval per-provider matrix | **B — Groq only** | Mistral path untested in eval; risk: voice drift caught only in prod |
+| 8 | Spend ledger | **DROPPED** | both providers free tier; no cost tracking, no daily/monthly/per-query caps |
+| 9 | Streaming buffer | A — buffer first 50 chars | clean failover invisible |
+| 10 | Rate-limit values | A — server 60 q/h + burst 5/10s · browser 1 q/2s soft | rate-limit is the ONLY defense post-D8-drop |
+| 11 | DeepSeek + Anthropic v1 | A — defer both, no triggers documented | reintroduce ad-hoc later if needed |
+| 12 | Test runner | A — `node --test` | zero deps |
+
+## Architectural deltas to spec (apply in spec amendments)
+
+- **Provider stack:** Groq pool {KEY, KEY_2, KEY_3} → Mistral pool {KEY, KEY_2-incoming} → static fallback. Both providers free tier. No cost tracking.
+- **Classifier:** pinned Groq `llama-3.1-8b-instant`, temp 0, output `themes_likely[]` validated against THEME_SLUGS_SET (drop unknown slugs, log `classifier_invalid_slug`).
+- **Pre-route:** heuristic `preRoute()` runs before classifier; obvious patterns (greetings, deflects, direct theme keywords) skip classifier.
+- **Wiki retrieval:** `scripts/build-wiki-extracts.mjs` emits `netlify/functions/lib/wiki-extracts.json` at build time. No HTTP fetch, no LRU cache, no race dedup.
+- **SSE:** single LLM call with structured output `{trace, answer, cards}`. Server emits SSE events with client-side stagger animation per spec §5. No reconnect protocol — disconnect = client retries. Server buffers first 50 chars before flushing for clean mid-stream failover.
+- **Abuse defense:** Tier 0 + Tier 1 only. Tier 2 (spend caps) DROPPED. Browser-side throttle (1 q / 2s soft block) NEW. Per-IP server bucket: 60 q/h sliding window + burst 5 in any 10s. Upstash failure: rate bucket fail open, cooldown state degrade to module memory.
+- **Eval gate:** 23/23 on Groq path only. Mistral path not tested in eval. Risk noted for post-launch monitoring.
+- **Test runner:** `node --test` builtin. New `npm test` script.
+
+## Decision changelog
+
+- D8 dropped → spec §7 Tier 2 entire section gone.
+- D7 picked B over recommended A → eval cost bounded but Mistral fidelity unverified.
+- All other decisions match the engineering recommendation.
 
 ---
 

@@ -138,34 +138,40 @@ Every decision below is settled. Future sessions reference these by file path; d
 
 ---
 
-## Open decisions (Phase D taste calls)
+## Phase D architectural decisions (LOCKED 2026-04-27)
 
-These 12 architectural calls are NOT yet locked. They were surfaced by today's eng review (2026-04-27, `~/.gstack/projects/agamarora-agamarora/reviews/plan-eng-review-phase-d-2026-04-27.md`). They affect implementation details; the product spec above does not change.
+Taste-passed 2026-04-27 by Agam Arora. Full per-decision detail with options + tradeoffs: `docs/plans/phase-d-decisions-2026-04-27.md`.
 
-Full options + recommendations + blast radius for each: see `docs/plans/phase-d-decisions-2026-04-27.md` (companion doc).
-
-| # | Open call | Lean recommendation |
+| # | Decision | Locked choice |
 |---|---|---|
-| 1 | LLM provider abstraction shape | Single pool driver |
-| 2 | Wiki retrieval mechanism | Bundle `wiki-extracts.json` at build time |
-| 3 | SSE flow shape (1-call vs 2-call) | 1-call structured output |
-| 4 | Classifier model pin + temp + enum validation | Pin + temp 0 + validate |
-| 5 | Heuristic pre-routing in v1 | Yes, pull forward |
-| 6 | Groq cool-down state location | Upstash-persisted |
-| 7 | Eval per-provider matrix | Both Groq + Mistral required to pass |
-| 8 | Spend ledger arithmetic | Atomic INCRBYFLOAT |
-| 9 | Streaming buffer-first-50-chars | Yes |
-| 10 | Tier 1 rate-limit values | 60 q/h + burst 5/10s |
-| 11 | DeepSeek + Anthropic v1 inclusion | Defer (key staged, code path absent) |
-| 12 | Test runner | `node --test` (built-in) |
+| 1 | LLM provider abstraction | Single `llm-pool.mjs` driver |
+| 2 | Wiki retrieval | Bundle `wiki-extracts.json` at build (no HTTP fetch, no cache) |
+| 3 | SSE flow | 1-call structured output, client-side stagger animation |
+| 4 | Classifier | Pin Groq `llama-3.1-8b-instant`, temp 0, enum-validated `themes_likely[]` |
+| 5 | Heuristic pre-routing | Pull forward to v1 |
+| 6 | Cool-down state | Upstash-persisted + module-memory fallback on Upstash error |
+| 7 | Eval matrix | Groq path only (Mistral untested in eval — risk noted for prod monitoring) |
+| 8 | Spend ledger | **DROPPED** — both providers free tier, no cost tracking |
+| 9 | Stream buffer | Buffer first 50 chars before flushing for clean failover |
+| 10 | Rate-limit values | Server: 60 q/h sliding + burst 5/10s · Browser: 1 q/2s soft block |
+| 11 | DeepSeek + Anthropic | Defer both, no triggers |
+| 12 | Test runner | `node --test` (built-in, zero deps) |
 
-Every "lean recommendation" is the eng review's call. Agam taste-pass closes each.
+### Architectural deltas (apply in spec amendments)
+
+- **Provider stack:** Groq pool {KEY, KEY_2, KEY_3} → Mistral pool {KEY, KEY_2-incoming} → static fallback. Both providers free tier.
+- **Cost tracking:** NONE. No spend caps, no `CLAUDE_DISABLED` flag, no daily/monthly counters. Free-tier ceiling is the only natural cap.
+- **Defense surface:** Tier 0 (UA gate, input val, dup cache, injection filter) + Tier 1 (per-IP rate limit, browser throttle, multi-key rotation). Tier 2 (spend caps) DROPPED.
+- **Upstash:** primary (`tight-ferret-83128.upstash.io`) + backup (`neutral-monster-83180.upstash.io`) + module-memory fallback. 3-tier graceful degrade. Eviction policy: `allkeys-lru`.
+- **Wiki retrieval:** `scripts/build-wiki-extracts.mjs` emits `netlify/functions/lib/wiki-extracts.json`. Function imports at module init.
+- **SSE:** single LLM call → structured output `{trace, answer, cards}`. No reconnect protocol — disconnect = client retries.
+- **Test runner:** `node --test` builtin. New `npm test` script.
 
 ---
 
-## Provider stack (current as of 2026-04-27)
+## Provider stack (LOCKED 2026-04-27)
 
-User directive 2026-04-27: "we will use groq and mistral for now... rotate Groq keys first; if all three fail, move to Mistral."
+User directive 2026-04-27: "we will use groq and mistral for now... rotate Groq keys first; if all three fail, move to Mistral." Plus: "both have free tiers, we are not building pricing limits."
 
 ```
 Groq pool
@@ -173,25 +179,35 @@ Groq pool
   ├─ KEY₂ (GROQ_API_KEY_2) ← added 2026-04-27
   └─ KEY₃ (GROQ_API_KEY_3) ← added 2026-04-27
        Round-robin per request. On 429: cool 60s, try next key.
+       Cool-down state in Upstash w/ module-memory fallback.
        4-model fallback chain per key:
          llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile
+       Classifier path PINNED to llama-3.1-8b-instant temp 0 (no model fallback).
 
-  ↓ (all 3 keys cooled OR all 3 hard-fail)
+  ↓ (all 3 Groq keys cooled OR hard-fail)
 
-Mistral
-  └─ MISTRAL_API_KEY  ← added 2026-04-27
+Mistral pool
+  ├─ KEY  (MISTRAL_API_KEY)   ← added 2026-04-27
+  └─ KEY₂ (MISTRAL_API_KEY_2) ← incoming
+       Round-robin per request. Same cool-down logic as Groq.
        Model: mistral-small-latest (currently mistral-small-2506)
-       Single key, no rotation pool.
 
-  ↓ (Mistral fail)
+  ↓ (both Mistral keys cooled OR hard-fail)
 
 Static fallback
   └─ kg.json default cards + canned message. No LLM call.
+       Per-intent canned response: lookup/synthesis/deflect/bio/empty.
 ```
 
+Upstash:
+- Primary: `https://tight-ferret-83128.upstash.io`
+- Backup:  `https://neutral-monster-83180.upstash.io`
+- Eviction: `allkeys-lru` (all keys have TTL anyway)
+- Failure mode: primary error → backup → module memory. Per-call key family: `rate:{ip}`, `dup:{queryHash}`, `cooldown:groq:{keyId}`, `cooldown:mistral:{keyId}`.
+
 Staged but unwired in v1:
-- `DEEPSEEK_API_KEY` (Phase 1.5 lift-up if Mistral cost or latency drifts)
-- `ANTHROPIC_API_KEY` not in env (Phase 2 quality escape valve if added)
+- `DEEPSEEK_API_KEY` (env set, no code path)
+- `ANTHROPIC_API_KEY` (not in env)
 
 ---
 

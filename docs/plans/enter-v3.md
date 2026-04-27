@@ -1,8 +1,26 @@
 # /enter v3 — Working Spec
 
-**Status:** in progress. Iterating 6 pieces, one at a time.
+**Status:** Phase D architectural decisions LOCKED 2026-04-27. 6 product/UX sections still LOCKED. Implementation begins next session.
 **Started:** 2026-04-24
 **Branch:** main
+
+---
+
+## Phase D architectural amendments (2026-04-27)
+
+Source: `docs/plans/phase-d-decisions-2026-04-27.md` (taste-passed by Agam 2026-04-27).
+Index: `docs/plans/enter-agent-decisions-index.md`.
+
+These amendments override or refine the implementation hints in §"Architecture" below. Product/UX sections (§1 Persona, §2 Sitemap, §4 Cards, §5 Trace, §6 Empty-state) are NOT affected.
+
+- **Provider stack:** Groq pool {KEY, KEY_2, KEY_3} → Mistral pool {KEY, KEY_2} → static fallback. DeepSeek + Anthropic deferred. Both providers free tier — no cost tracking, no spend caps.
+- **Classifier:** pinned Groq `llama-3.1-8b-instant`, temp 0, JSON mode. Output `themes_likely[]` validated against THEME_SLUGS_SET enum (drop unknown slugs, log).
+- **Pre-routing:** heuristic `preRoute()` runs before classifier. Greetings/deflects/direct theme keywords skip classifier entirely.
+- **SSE:** **single LLM call** with structured output `{trace, answer, cards}`. Server emits SSE events with the existing client-side stagger animation per §5. **No reconnect protocol** — disconnect = client offers manual retry. Server **buffers first 50 chars** before flushing tokens for clean mid-stream provider failover.
+- **Wiki retrieval:** plain-text section content bundled at build time into `netlify/functions/lib/wiki-extracts.json`. Function imports at module init. No HTTP fetch, no LRU cache, no race dedup.
+- **Abuse defense:** Tier 0 + Tier 1 only (Tier 2 spend caps DROPPED). Browser-side throttle 1 q / 2s soft. Per-IP server bucket 60 q/h sliding + burst 5/10s. Two Upstash projects (primary + backup) + module-memory fallback.
+- **Eval gate:** 23/23 scenarios on Groq path. Mistral path NOT tested in eval (risk noted for prod monitoring).
+- **Test runner:** `node --test` builtin. New `npm test` script.
 
 ---
 

@@ -20,13 +20,19 @@ Auto mode: yes. Caveman mode: yes (fragments OK; code/commits stay normal). Suba
 
 ## Resume context
 
-agamarora.com second-brain v1 is in Phase C close. Phase A synthesis ✅. Phase B build ✅. Phase C reauthor + graph viz ✅ (5/6 sub-tasks). C-graph ✅ — `/wiki/graph/` now serves an authored sky atlas constellation (genesis `agam.arora` at center, 11 organic theme positions, 227 kg.json nodes, 578 corpus deep-field stars, 50 real cross-theme edges, Lissajous drift, big-bang single-origin entry, parallax bg, pan/zoom/fullscreen/mobile, a11y, layered hover visibility — single self-contained 77KB HTML, no external CDN). Working tree clean. HEAD `4dbe07f`. All commits pushed.
+**UPDATED 2026-04-27 (post-eng-review + decisions taste-pass).**
 
-What remains: **C-final** (close Phase C with /design-review + /review pass) → **AEO/SEO gate** (BINDING before AI plumbing) → **Phase D** (/enter v3 + groqHandler upgrade) → **Phase E** (launch). ~9-15hr total across 5-6 sessions.
+agamarora.com second-brain v1 is **pre-Phase-D**. Phase A synthesis ✅. Phase B build ✅. Phase C reauthor + graph viz ✅ (CP-32). AEO/SEO gate ✅ CLEARED (CP-33, 14 tasks shipped). Graph polish ✅ (CP-33b). Working tree clean. HEAD on main.
 
-Two recent taste-calls 2026-04-26 to honor:
-1. **Drop time-framing.** No "n years of thinking" anywhere on public surfaces — dilutes the authored-atlas signal. Caption stripped, genesis sublabel stripped, DESIGN.md updated.
-2. **Graph as wiki entry candidate.** /wiki/graph/ is a strong landing for visitors without the /enter path. Add CTA strip (home, agent, written wiki) so it can serve as a public starting point. Folded into Task 0 below.
+**Decisions LOCKED 2026-04-27 via taste-pass:** see `docs/plans/phase-d-decisions-2026-04-27.md` (12 architectural calls), `docs/plans/enter-agent-decisions-index.md` (canonical front door), and amendments to `second-brain-v1.md` §6 + §7, `enter-v3.md` (top section).
+
+**Provider stack:** Groq pool {KEY, KEY_2, KEY_3} → Mistral pool {KEY, KEY_2} → static fallback. Both free tier. NO cost tracking, NO spend caps. Defense = rate limit only (browser 1 q/2s + per-IP 60 q/h + burst 5/10s) plus Tier 0 (UA gate, input val, dup cache, injection filter).
+
+**What remains:** Tasks 0 + 0a (site nav promotion + graph CTAs, optional polish) → **Phase D** (Tasks 14a + 14-22 per locked decisions) → **Phase E** (launch). ~6-10hr total Phase D + E across 2-3 sessions.
+
+Two recent taste-calls 2026-04-26 still in effect:
+1. **Drop time-framing.** No "n years of thinking" anywhere on public surfaces.
+2. **Graph as wiki entry candidate.** /wiki/graph/ is a strong public landing.
 
 ---
 
@@ -75,29 +81,21 @@ Pick the first QUEUED row. Mark DONE after commit + push. Bump CHECKPOINT in STA
 
 | # | Task | Status | Effort | CHECKPOINT |
 |---|---|---|---|---|
-| 0 | **Site nav promotion (CV + Wiki + Graph discoverable from every page)** | QUEUED | 60-90 min | (no bump, polish under CP-31) |
-| 0a | Graph-as-entry CTAs (intra-graph nav) | QUEUED | 30-45 min | (no bump, polish under CP-31) |
-| 1 | C-final — /design-review pass on full wiki | QUEUED | 45-60 min | bump to CP-32 |
-| 2 | C-final — /review pass on build pipeline | QUEUED | 30-45 min | (under CP-32) |
-| 3 | C-final — fix sweep + STATUS commit (Phase C COMPLETE) | QUEUED | 30 min | CP-32 sealed |
-| 4 | AEO-1 — Person schema enrichment on `/` | QUEUED | 15-20 min | (under CP-33) |
-| 5 | AEO-2 — `robots` meta directive audit | QUEUED | 10-15 min | |
-| 6 | AEO-3 — Q&A overlay on `/wiki/voice/` + `/wiki/quotes/` | QUEUED | 30 min | |
-| 7 | AEO-4 — BLUF on Lab PRFAQ pages | QUEUED | 20 min | |
-| 8 | AEO-5 — image alt text audit | QUEUED | 15 min | |
-| 9 | AEO-6 — `<pre><code>` wrap audit | QUEUED | 10 min | |
-| 10 | AEO-7 — TTFB benchmark + record | QUEUED | 15 min | |
-| 11 | AEO-8 — bot allowance verification | QUEUED | 15 min | |
-| 12 | AEO-9 — /design-review + /review post-AEO regression | QUEUED | 20 min | bump to CP-33 (AEO gate cleared) |
-| 13 | AEO crawl audit checklist (Part 5) | QUEUED | 30 min | |
-| 14 | D-1 — groqHandler classifier + tier routing | QUEUED | 60 min | (under CP-34) |
+| 0 | Site nav promotion (CV + Wiki + Graph discoverable from every page) | QUEUED (optional polish) | 60-90 min | (no bump) |
+| 0a | Graph-as-entry CTAs (intra-graph nav) | QUEUED (optional polish) | 30-45 min | (no bump) |
+| 1-3 | C-final — /design-review + /review + STATUS bump | ✅ DONE | — | CP-32 |
+| 4-13 | **AEO/SEO gate — 14 tasks (Person schema, robots, Q&A, BLUF, alt text, pre/code, TTFB, bots, FAQPage+HowTo, view-source, comparison tables, evidence outbound, regression sweep, crawl audit)** | ✅ DONE | — | CP-33 |
+| 13b | Graph hover/spokes refinement + sitemap refresh + build-clobber lesson | ✅ DONE | — | CP-33b |
+| 13c | Phase D decisions taste-pass + spec amendments | ✅ DONE | — | CP-33c |
+| 14a | **D-0 — wiki extracts build script (NEW)** | QUEUED | 30 min | (under CP-34) |
+| 14 | D-1 — LLM pool + classifier + pre-route + provider routing | QUEUED | 75-90 min | |
 | 15 | D-2 — system prompt v3 with cache breakpoint | QUEUED | 30 min | |
-| 16 | D-3 — wiki retrieval pipeline + 60s in-memory cache | QUEUED | 30 min | |
-| 17 | D-4 — SSE streaming events (trace / token / card / done) | QUEUED | 45 min | |
-| 18 | D-5 — abuse defense Tier 0-2 | QUEUED | 60-90 min | |
-| 19 | D-6 — eval harness 23 scenarios | QUEUED | 45 min | |
-| 20 | D-7 — `/enter` UI v3 SSE handler + card render | QUEUED | 60 min | |
-| 21 | D-8 — multi-key Groq rotation | QUEUED | 30 min | |
+| 16 | D-3 — wiki extracts integration (bundled, no fetch) | QUEUED | 15 min | |
+| 17 | D-4 — SSE encoder + 1-call structured output | QUEUED | 45 min | |
+| 18 | D-5 — abuse defense Tier 0-1 (Tier 2 dropped) | QUEUED | 60-75 min | |
+| 19 | D-6 — eval harness 23 scenarios (Groq-only gate) | QUEUED | 60 min | |
+| 20 | D-7 — `/enter` UI v3 SSE + browser throttle + retry banner | QUEUED | 60 min | |
+| 21 | ~~D-8 multi-key Groq rotation~~ — DROPPED, folded into D-1 | DROPPED | — | |
 | 22 | D-9 — `/lab/second-brain/` live-demo section | QUEUED | 30 min | bump to CP-34 (Phase D ready) |
 | 23 | E — launch sequence | QUEUED | 2-4 hr | bump to CP-35 = LAUNCHED |
 
@@ -672,193 +670,312 @@ After this commit: STATUS.md → CHECKPOINT 33 = AEO gate cleared.
 
 ## Tasks 14-22 — Phase D /enter v3 + groqHandler upgrade
 
-**Source spec:** `docs/plans/enter-v3.md` (6 LOCKED sections) + `docs/plans/enter-v3-scenarios-v2.md` (23 scenarios) + `docs/plans/second-brain-v1.md` §6 + §7.
+**Source specs:**
+- `docs/plans/enter-v3.md` (6 LOCKED sections + 2026-04-27 amendments at top)
+- `docs/plans/enter-v3-scenarios-v2.md` (23 scenarios)
+- `docs/plans/second-brain-v1.md` §6 + §7 (rewritten 2026-04-27)
+- `docs/plans/phase-d-decisions-2026-04-27.md` (12 locked architectural calls)
+- `docs/plans/enter-agent-decisions-index.md` (canonical front door)
 
-### Task 14 — D-1 Classifier + tier routing
+**Architectural decisions baked in (from 2026-04-27 taste-pass):**
+- Single `lib/llm-pool.mjs` driver (collapses old D-1 + D-8 into one)
+- Groq pool {KEY, KEY_2, KEY_3} round-robin + Mistral pool {KEY, KEY_2} fallback
+- Wiki extracts bundled at build time (no HTTP fetch)
+- Single-call structured output for SSE
+- Classifier pinned: `llama-3.1-8b-instant`, temp 0, enum-validated `themes_likely[]`
+- Heuristic pre-routing in v1
+- Upstash-persisted Groq cooldown w/ module-memory fallback
+- Tier 2 spend caps DROPPED (free-tier model)
+- Browser throttle 1 q / 2s + per-IP 60 q/h + burst 5/10s
+- Eval gate Groq-only
+- `node --test` runner
+- Two Upstash projects (primary + backup) for HA, eviction `allkeys-lru`
 
-**Scope:** rewrite `netlify/functions/groqHandler.mjs`:
-- Classify query (Groq 8B, 200 tokens, structured JSON output): `{ type: 'lookup'|'synthesis'|'deflect'|'bio', confidence: 0-1, themes_likely: string[] }`
-- Route by type:
-  - lookup / deflect / bio / low-confidence → Groq 8B (rotate keys)
-  - synthesis / multi-hop → DeepSeek V3 (or Mixtral via OpenRouter)
-  - Fallback chain on error: Groq 8B → Groq 70B → DeepSeek → Mixtral → Claude Haiku 4.5 cached
-- Hard 500ms timeout on classifier; default to lookup on timeout/error.
+### Task 14a — D-0 Wiki extracts build script (NEW)
 
-**Files:** `netlify/functions/groqHandler.mjs`.
+**Scope:** new `scripts/build-wiki-extracts.mjs` that walks wiki theme pages and emits plain-text section content (Core belief / How it formed / What it implies / Tension / Open question) per theme into `netlify/functions/lib/wiki-extracts.json`. Function imports JSON at module init; no HTTP fetch at request time.
 
-**Gate:** locally test 5 queries (lookup / synthesis / deflect / bio / agent-UA) hit the right model path.
+**Files:** `scripts/build-wiki-extracts.mjs` (NEW), `netlify/functions/lib/wiki-extracts.json` (build artifact, gitignored or committed — choose committed for Netlify deploy).
+
+**Update:** `package.json` `build` script chains `npm run build:kg && npm run build:wiki && npm run build:wiki-extracts`.
+
+**Gate:** `wiki-extracts.json` exists, contains all 13 theme slugs, parsed plain-text per section, total ~50KB.
 
 **Commit message:**
 ```
-D-1: groqHandler classifier + tier routing
+D-0: wiki-extracts build script + JSON bundle
 
-Adds 200-token Groq-8B classifier; routes by intent + confidence + tier.
-Cheap-first waterfall: 8B → DeepSeek → Mixtral → Claude Haiku fallback.
-Classifier 500ms timeout → default lookup path. Locally smoke-tested
-[N] queries.
+scripts/build-wiki-extracts.mjs walks wiki/<theme>/index.html, extracts
+plain-text section content per theme (Core belief / How it formed /
+What it implies / Tension / Open question / Evidence). Emits
+netlify/functions/lib/wiki-extracts.json (~50KB). Function imports at
+module init; no HTTP fetch, no LRU cache, no race dedup.
+
+Per phase-d-decisions-2026-04-27.md Decision 2 (bundle wiki extracts).
+```
+
+### Task 14 — D-1 LLM pool + classifier + pre-route + provider routing
+
+**Scope:** rewrite `netlify/functions/groqHandler.mjs` as orchestration only (~200 LOC). All LLM logic in `lib/llm-pool.mjs`.
+
+**`lib/llm-pool.mjs` (NEW):**
+- Groq pool: `[GROQ_API_KEY, GROQ_API_KEY_2, GROQ_API_KEY_3]`. Round-robin cursor seeded `(Date.now()/1000) % 3` on cold start.
+- Mistral pool: `[MISTRAL_API_KEY, MISTRAL_API_KEY_2]`. Same round-robin pattern.
+- Cool-down state: read from Upstash key `cooldown:{provider}:{keyId}` before invoke; write on 429 with TTL = max(60s, Retry-After). On Upstash error → fall back to module-memory `Map`. Logs `upstash_cooldown_fallback`.
+- Per-Groq-key 4-model fallback chain (synthesis path): `llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile`. Try next model on non-429 error; jump to next key on 429.
+- Mistral path: pinned `mistral-small-latest` (currently `mistral-small-2506`). No model fallback within Mistral.
+- Classifier path: PINNED `llama-3.1-8b-instant`, temp 0, JSON mode, no model fallback. On 429 → try next Groq key. On all 3 keys cooled → default to `lookup` path (don't call Mistral for classifier).
+- Buffer first 50 chars of stream before flushing for clean mid-stream provider failover.
+- Normalized error envelope: `{ kind: 'rate_limit' | 'timeout' | 'server_error' | 'unknown', retryAfterMs?, status? }`.
+
+**`lib/classifier.mjs` (NEW):**
+- `preRoute(message)` heuristic: greetings → lookup, off-topic → deflect, direct theme keyword → synthesis (with extracted slug). Else returns null.
+- `classify(message)` calls pool via pinned model. 800ms timeout. Validates `themes_likely[]` against `THEME_SLUGS_SET` (drop unknowns, log `classifier_invalid_slug`). Empty after dropping AND type was synthesis → downgrade to lookup. On timeout/error → default `{type: 'lookup', confidence: 0, themes_likely: []}`.
+
+**`lib/themes-enum.mjs` (NEW):**
+- `THEME_SLUGS = KG_THEMES_SUMMARY.map(t => t.slug)`, `THEME_SLUGS_SET = new Set(THEME_SLUGS)`. Single source for classifier validation, eval pins, card slug validators.
+
+**`groqHandler.mjs` (rewrite):**
+- Top-of-file ASCII flow diagram (per eng review CQ8).
+- Orchestration: corsHeaders → method check → tier 0 → tier 1 → preRoute → classify (if not preRouted) → wiki extracts lookup → build prompt → pool.invoke → SSE encode → emit.
+
+**Files:** `netlify/functions/groqHandler.mjs` (rewrite), `lib/llm-pool.mjs` (NEW), `lib/classifier.mjs` (NEW), `lib/themes-enum.mjs` (NEW), `lib/constants.mjs` (NEW: COOLDOWN_MS, CLASSIFIER_TIMEOUT_MS=800, RATE_LIMIT_PER_HOUR=60, BURST_LIMIT=5, BURST_WINDOW_MS=10_000, BUFFER_FIRST_CHARS=50).
+
+**Gate:** unit tests pass (`npm test`); 5 smoke queries (lookup/synthesis/deflect/bio/UA-gate) hit correct path; classifier slug validation logged on synthetic invalid input.
+
+**Commit message:**
+```
+D-1: LLM pool + classifier + pre-route + provider routing
+
+Single lib/llm-pool.mjs driver consolidates Groq pool {KEY,KEY_2,KEY_3}
++ Mistral pool {KEY,KEY_2}. Cool-down state in Upstash w/ module-memory
+fallback. Round-robin cursor seeded on cold start.
+
+Classifier pinned llama-3.1-8b-instant temp 0 JSON mode, 800ms timeout,
+themes_likely[] enum-validated against THEME_SLUGS_SET (drops unknowns,
+logs classifier_invalid_slug). Closes critical hallucinated-slug gap.
+
+Heuristic preRoute() pulled forward to v1: greetings/deflects/direct
+theme keywords skip classifier (~80% queries, ~300-500ms saved).
+
+Buffer first 50 chars before flushing stream for clean mid-stream
+provider failover (Groq → Mistral invisible to user).
+
+Per phase-d-decisions-2026-04-27.md Decisions 1, 4, 5, 6, 9.
+Old D-8 standalone task collapsed into this one.
 ```
 
 ### Task 15 — D-2 System prompt v3
 
-**Scope:** structure prompt with stable cache-breakpoint section:
-- STABLE (5min Anthropic cache TTL):
-  - Persona rules (per /enter v3 spec §1)
-  - Voice calibration: banned LLM-isms, signature patterns
-  - Trace vocabulary (allowed verbs)
-  - Card schema + limits
-  - `<site_map>{site.json}</site_map>`
-  - `<knowledge_graph_index>{kg-themes-summary excerpt}</knowledge_graph_index>`
-  - 5-10 few-shot examples
-- DYNAMIC (per-request, not cached):
-  - `<conversation>{last 6 turns}</conversation>`
-  - `<retrieved_wiki>{1-3 wiki page full text}</retrieved_wiki>`
-  - `<current_query>{user message}</current_query>`
+**Scope:** structure prompt with stable cache-breakpoint section. Note: spec's earlier "Anthropic 5min cache TTL" language is obsolete (Anthropic dropped). Cache hit rate target now applies to Mistral prefix cache (GA on Small/Medium) and Groq per-model where supported.
 
-**Files:** `netlify/functions/groqHandler.mjs`, `netlify/functions/lib/kg-themes-summary.mjs` (already exists).
+- STABLE (~10-12K tokens, cacheable on supporting providers):
+  - Persona rules (per `enter-v3.md` §1)
+  - Voice calibration (registers + banned LLM-isms from `voice-spec.md`)
+  - Trace verb vocabulary (per `enter-v3.md` §5)
+  - Card schema + limits (per `enter-v3.md` §4)
+  - `<site_map>` from `site.json`
+  - `<knowledge_graph_index>` from `KG_THEMES_SUMMARY`
+  - 5-10 few-shot examples (one per representative scenario class)
+- DYNAMIC (per-request, ~2-5K tokens, not cached):
+  - `<conversation>` last 6 turns (token-truncated to 4000 max)
+  - `<retrieved_wiki>` 1-3 theme extracts from bundled `wiki-extracts.json`
+  - `<current_query>` user message
+
+**Files:** `netlify/functions/lib/prompts/system-stable.mjs` (NEW), `lib/prompts/few-shot.mjs` (NEW), `lib/prompts/classifier-prompt.mjs` (NEW).
 
 **Commit message:**
 ```
 D-2: system prompt v3 with cache breakpoint
 
-Stable section ~20K tokens: persona + voice + trace vocab + card schema +
-site.json + kg.json themes summary + few-shot. Dynamic section:
-conversation + retrieved wiki + current query. Cache hit rate target
-~85% on warm sessions.
+Stable section ~10-12K tokens: persona + voice + trace vocab + card
+schema + site.json + KG_THEMES_SUMMARY + 5-10 few-shot. Dynamic section
+~2-5K tokens: conversation + retrieved wiki extracts + current query.
+
+Anthropic cache language dropped (Anthropic deferred). Cache target
+applies to Mistral prefix cache + Groq per-model where supported.
 ```
 
-### Task 16 — D-3 Wiki retrieval pipeline
+### Task 16 — D-3 Wiki extracts integration (REPLACED)
 
-**Scope:** on synthesis intent, fetch full text of 1-3 wiki theme pages relevant to `themes_likely` array. In-memory cache per function instance: `Map<theme-slug, { html, ts }>`. 60s TTL. LRU evict at 50 entries.
+**Scope:** integrate `wiki-extracts.json` (built in Task 14a) into the prompt building pipeline. No HTTP fetch, no cache, no race dedup.
 
-**Files:** `netlify/functions/groqHandler.mjs`, optionally extract retrieval to `lib/wiki-retrieval.mjs`.
+```js
+// lib/wiki-retrieval.mjs (NEW, ~30 LOC)
+import EXTRACTS from './wiki-extracts.json' assert { type: 'json' };
+
+export function getThemeExtract(slug) {
+  return EXTRACTS[slug] ?? null;
+}
+export function getThemeExtracts(slugs) {
+  return slugs.map(getThemeExtract).filter(Boolean);
+}
+```
+
+`WIKI_READ_ENABLED=0` env flag bypasses extracts → agent works from `KG_THEMES_SUMMARY` one-liners only.
+
+**Files:** `netlify/functions/lib/wiki-retrieval.mjs` (NEW).
 
 **Commit message:**
 ```
-D-3: wiki retrieval pipeline + 60s in-memory cache
+D-3: wiki extracts integration (bundled, no fetch)
 
-Synthesis queries fetch 1-3 relevant theme page HTMLs from Netlify origin.
-LRU cache 50 entries / 60s TTL per function instance. Cache hit
-short-circuits the read. WIKI_READ_ENABLED env flag (default 1) gates the
-retrieval entirely for kill-switch.
+Reads from bundled netlify/functions/lib/wiki-extracts.json (Task 14a).
+No HTTP fetch, no LRU cache, no race dedup. WIKI_READ_ENABLED=0 falls
+back to KG_THEMES_SUMMARY one-liners only.
+
+Per phase-d-decisions-2026-04-27.md Decision 2.
 ```
 
-### Task 17 — D-4 SSE streaming events
+### Task 17 — D-4 SSE encoder + single-call structured output
 
-**Scope:** server emits SSE events:
-- `event: trace` — one trace line at a time
-- `event: token` — answer tokens streaming
-- `event: card` — card array at end
-- `event: done` — stream complete
+**Scope:** new `lib/ssestream.mjs` exporting `encodeSSE(event, data)` and `sse(stream, origin)` response helper.
 
-Trace format: `{ verb: string, args: object }`. Card schema: `{ type: 'route'|'external'|'action', label, href, slug?, priority?: bool, intent? }`. 2-4 cards per response, exactly 1 with `priority: true`.
+Single LLM call returns JSON `{trace: [...], answer: string, cards: [...]}`. Server parses, emits events sequentially:
+- `event: trace` — each trace line individually (client animates 150ms stagger per `enter-v3.md` §5)
+- `event: token` — answer prose, optionally chunked synthetically at word boundaries with 30ms stagger for typed-out feel
+- `event: card` — card array
+- `event: done` — sentinel
 
-**Files:** `netlify/functions/groqHandler.mjs`.
+Trace format: `{ verb: 'parsed'|'pulled'|..., args: {...}, latencyMs: 50-220 }` (client-side seeded random).
+Card schema: `{ slug, type: 'page'|'external'|'action'|'agent', label, href, priority?: boolean, intent? }`. 2-4 cards. Exactly 1 priority.
+
+No reconnect protocol. Disconnect = client surfaces "connection lost, retry?" affordance.
+
+**Files:** `netlify/functions/lib/ssestream.mjs` (NEW).
 
 **Commit message:**
 ```
-D-4: SSE streaming events (trace/token/card/done)
+D-4: SSE encoder + 1-call structured output
 
-Server emits structured events per /enter v3 spec §3. Trace lines
-authored by model via structured-output prompt. Cards array always
-includes 1 priority + 1-3 supporting per intent→card mapping.
+Single LLM call returns {trace, answer, cards} JSON. Server emits SSE
+events with client-side stagger animation per enter-v3.md §5. Token
+event optionally chunked at word boundaries for typed-out feel (~30ms
+stagger). No reconnect protocol — disconnect = client manual retry.
+
+Per phase-d-decisions-2026-04-27.md Decision 3 + 9.
 ```
 
-### Task 18 — D-5 Abuse defense Tier 0-2
+### Task 18 — D-5 Abuse defense Tier 0-1 (Tier 2 DROPPED)
 
-**Scope:** per `docs/plans/second-brain-v1.md` §7:
+**Scope:** per `docs/plans/second-brain-v1.md` §7 (rewritten 2026-04-27).
 
-- Tier 0 (always on, $0):
-  - UA gate (return static kg.json excerpt for AI crawler UAs)
-  - Input validation (msg length 0-500 chars, conv tokens ≤ 4000, turns ≤ 6)
-  - Duplicate-query cache (60s TTL Map per instance)
-  - Injection filter (existing sandwich defense kept)
-- Tier 1 (Upstash Redis free tier):
-  - Per-IP bucket: 30 q/h sliding window
-  - Low-effort gate: msg ≤ 3 words OR known-spam → force 8B path
-  - Multi-key Groq rotation (3-4 keys, 60s cool-down on 429) — see Task 21
-- Tier 2 (budget ceilings):
-  - Daily spend cap: $3/day
-  - Monthly cap: $30/month
-  - Per-query cost cap: $0.05
-  - `CLAUDE_DISABLED=1` → no Claude calls
-  - `LLM_DISABLED=1` → no LLM at all (static fallback)
+**Tier 0** (always on, $0):
+- UA gate: match against extended allowlist (GPTBot, ClaudeBot, PerplexityBot, Anthropic-ai, Applebot-Extended, Google-Extended, Bytespider, meta-externalagent, Amazonbot, Diffbot). Match → static manifest from KG_THEMES_SUMMARY, no LLM.
+- Input validation: msg length 0-500 chars, conv history ≤4000 tokens, turns ≤6.
+- Duplicate-query cache: module-scope Map<ip:queryHash, response>, 60s TTL, LRU 1000 entries.
+- Injection filter: extended patterns (existing list + bidi/zero-width unicode + base64-shaped strings + role-newline injections).
 
-Upstash failure modes: rate limit fail open, spend counter fail closed.
+**Tier 1** (Upstash + browser):
+- **Browser-side throttle (NEW, in `enter/index.html`):** submit button disabled 2s after each request, visible countdown. Soft 1 q/2s.
+- **Per-IP rate bucket:** 60 q/h sliding window, burst 5 in any 10s. Upstash sliding-log pattern.
+- **Low-effort query gate:** msg ≤ 3 words OR greeting → force `lookup` path.
 
-**Files:** `netlify/functions/groqHandler.mjs`, `lib/abuse-defense.mjs`, `lib/upstash-client.mjs`.
+**Tier 2: DROPPED.** No spend caps, no cost tracking, no `CLAUDE_DISABLED` flag.
 
-**Env vars:** `UPSTASH_REDIS_URL`, `UPSTASH_REDIS_TOKEN`, `GROQ_KEY_1..4`, `DEEPSEEK_API_KEY`, `OPENROUTER_API_KEY`, `ANTHROPIC_API_KEY`.
+**Upstash failover (NEW):**
+- Primary: `UPSTASH_REDIS_REST_URL` / `_TOKEN`
+- Backup: `UPSTASH_REDIS_REST_URL_2` / `_TOKEN_2`
+- On primary error → try backup. On backup error → fall back to module memory.
+- Per-resource semantics: rate bucket fail open (allow request), cool-down state degrade to module memory.
+- All cooldown/dup/rate-bucket keys carry TTL. Eviction policy `allkeys-lru` set on both Upstash projects.
+
+**Kill switches:**
+- `LLM_DISABLED=1` → no LLM call, all requests serve static fallback.
+- `WIKI_READ_ENABLED=0` → wiki extracts not loaded, KG one-liners only.
+
+**Files:** `lib/abuse-defense.mjs` (NEW), `lib/upstash-client.mjs` (NEW: dual-host failover), `enter/index.html` (browser throttle UI).
+
+**Env vars:** `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `UPSTASH_REDIS_REST_URL_2`, `UPSTASH_REDIS_REST_TOKEN_2`, `GROQ_API_KEY`, `GROQ_API_KEY_2`, `GROQ_API_KEY_3`, `MISTRAL_API_KEY`, `MISTRAL_API_KEY_2`. (DEEPSEEK + ANTHROPIC keys staged but unused.)
 
 **Commit message:**
 ```
-D-5: abuse defense Tier 0-2
+D-5: abuse defense Tier 0-1 (Tier 2 DROPPED)
 
-T0: UA gate, input validation, dup cache, injection filter.
-T1: Upstash per-IP bucket (30q/h), low-effort gate, multi-key Groq.
-T2: spend caps daily $3 / monthly $30 / per-query $0.05. Kill switches
-CLAUDE_DISABLED + LLM_DISABLED. Fail-open rate, fail-closed spend.
+T0: UA gate (extended allowlist), input val (0-500 chars / ≤4000 tok /
+≤6 turns), dup cache (60s TTL Map), injection filter (extended w/ bidi
++ base64 + role-newline patterns).
+
+T1: browser throttle (1 q/2s soft, button disabled w/ countdown), per-IP
+60 q/h sliding + burst 5/10s, low-effort gate.
+
+T2 dropped per phase-d-decisions-2026-04-27.md Decision 8: both
+providers free tier, no cost tracking, no spend caps.
+
+Upstash dual-host failover: primary → backup → module memory. Eviction
+allkeys-lru. Rate bucket fail open, cooldown state degrades.
+
+Per phase-d-decisions-2026-04-27.md Decisions 6, 8, 10.
 ```
 
-### Task 19 — D-6 Eval harness 23 scenarios
+### Task 19 — D-6 Eval harness 23 scenarios (Groq path only)
 
-**Scope:** extend `eval-prompt.mjs` to run the 23 pinned scenarios from `enter-v3-scenarios-v2.md`:
-- T01-T12: theme-anchor lookup
-- C01-C06: cross-theme synthesis
-- M01-M02: meta queries (about Agam, the wiki)
-- X01-X03: deflect/edge
+**Scope:** rewrite `eval-prompt.mjs` (current 143-line v2 stub) to run 23 pinned scenarios from `enter-v3-scenarios-v2.md`:
+- T01-T12: theme-anchor scenarios
+- C01-C06: cross-cutting (hiring, capability, bio, role lookup, credentials, evolution)
+- M01-M02: meta (site origin, agent identity)
+- X01-X03: special (deflect, empty state, agent crawler UA gate)
 
-Each scenario pins: expected classifier output, expected trace pattern (verbs + arg shapes), expected card set (priority + supporting, order-invariant), voice markers present/absent.
+Each scenario pins: classifier output (type + themes_likely contains expected), trace pattern (verbs from locked vocab, count 2-5), answer assertions (≤70 words, 0 em-dashes, 0 banned LLM-isms, scenario-specific phrase contains), cards (2-4, exactly 1 priority, expected priority slug, all slugs in sitemap).
 
-Pass criteria: 23/23 for ship.
+**Eval gate:** Groq path only (Mistral path NOT tested per Decision 7). Risk: Mistral voice drift only caught in production observation.
 
-**Files:** `eval-prompt.mjs` (extend), `eval-scenarios.json` (data).
+**Retry policy:** 3 retries per scenario, pass on ≥1. Bounds flake from temperature 0.7 on synthesis path.
+
+**Files:** `eval-prompt.mjs` (rewrite), `eval-scenarios.json` (NEW, scenario data extracted from enter-v3-scenarios-v2.md).
+
+**Pass criteria:** 23/23 for ship gate. Re-run on each ontology / wiki-extracts change.
 
 **Commit message:**
 ```
-D-6: eval harness — 23 pinned scenarios
+D-6: eval harness — 23 pinned scenarios (Groq path only)
 
-Extended eval-prompt.mjs to run T01-T12, C01-C06, M01-M02, X01-X03.
-Each scenario validates: classifier intent + confidence threshold, trace
-verb pattern, card set (priority + supporting, order-invariant), voice
-markers (banned absent, signature present).
+Rewrites eval-prompt.mjs (was 143-line v2 stub) to run T01-T12, C01-C06,
+M01-M02, X01-X03. Per-scenario pins: classifier output, trace pattern,
+answer markers (≤70w, 0 em-dashes, 0 banned LLM-isms, scenario phrase),
+cards (count, priority, slug enum).
+
+Eval gate Groq path only per phase-d-decisions-2026-04-27.md Decision 7.
+Mistral path drift caught only in prod monitoring.
+
+Retry up to 3x per scenario (pass on ≥1) bounds temperature flake.
 ```
 
-### Task 20 — D-7 /enter UI v3
+### Task 20 — D-7 /enter UI v3 SSE handler + browser throttle
 
-**Scope:** update `enter/index.html` front-end to consume the new SSE events:
-- Render trace lines with 150ms client-side stagger
-- Stream answer tokens to the conversation pane
-- Render card array as horizontal scroll strip (or grid on wide viewport)
-- Priority card gets gold-accent stripe
+**Scope:** update `enter/index.html`:
+- Consume new SSE events (`trace`, `token`, `card`, `done`).
+- Render trace lines with 150ms client-side stagger animation (per `enter-v3.md` §5).
+- Stream answer tokens to conversation pane (existing pattern; new event name).
+- Render card array as horizontal scroll strip on desktop, vertical stack on mobile (per `enter-v3.md` §4).
+- Priority card gets gold-accent stripe.
+- **NEW: browser-side throttle** — submit button disabled 2s after each submit, visual countdown ("retry in 2s..."). Per `lib/abuse-defense.mjs` Tier 1.
+- **NEW: connection-lost banner** — on stream disconnect, show "Connection lost. Retry?" with one-click retry that resends last user message (no server-side reconnect).
 
-Keep keyboard background, conversation memory, existing v2 visual contract.
+Keep keyboard background, conversation memory (last 6 turns), existing v2 visual contract.
 
 **Files:** `enter/index.html`.
 
 **Commit message:**
 ```
-D-7: /enter UI v3 SSE handler + card render
+D-7: /enter UI v3 SSE handler + browser throttle
 
-Front-end now consumes server-emitted trace/token/card/done events.
-Trace stagger 150ms client-side. Cards rendered as horizontal scroll
-strip; priority card gets gold-accent stripe. Conversation memory +
-keyboard background unchanged.
+Front-end consumes server-emitted trace/token/card/done events. Trace
+stagger 150ms client-side. Cards rendered as horizontal scroll strip
+(desktop) / vertical stack (mobile); priority = gold-accent stripe.
+
+Browser-side throttle: submit button disabled 2s after submit, visible
+countdown. Soft layer atop server's per-IP bucket.
+
+Connection-lost banner on stream disconnect — one-click retry resends
+last user message (no server-side reconnect; SSE is fire-and-forget).
+
+Per phase-d-decisions-2026-04-27.md Decisions 9, 10.
 ```
 
-### Task 21 — D-8 Multi-key Groq rotation
+### Task 21 — DROPPED (folded into Task 14 D-1)
 
-**Scope:** 3-4 `GROQ_KEY_N` env vars in Netlify dashboard. Round-robin per request. On 429: mark cool-down 60s, move to next. Effective free-tier capacity: 4x single-key limits.
-
-**Files:** `lib/groq-client.mjs` (key pool + rotation logic).
-
-**Commit message:**
-```
-D-8: multi-key Groq rotation
-
-Pool of 4 GROQ_KEY_N env vars. Round-robin per request. 60s cool-down
-on 429. Removes single-key rate limit as a spend trigger; hits Groq
-free-tier ceiling 4x slower.
-```
+D-8 multi-key Groq rotation collapsed into D-1's `lib/llm-pool.mjs` per Decision 1. Single pool driver owns both Groq + Mistral rotation. No standalone task.
 
 ### Task 22 — D-9 /lab/second-brain/ live-demo section
 

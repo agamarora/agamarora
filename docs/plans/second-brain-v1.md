@@ -316,43 +316,77 @@ Shared aa. mark (bottom-right)
 
 ## 6. /enter v3 Spec
 
+**Updated 2026-04-27** per `docs/plans/phase-d-decisions-2026-04-27.md` taste-pass. Changes from prior version: provider stack collapsed (Groq pool → Mistral pool, DeepSeek+Anthropic deferred), spend ledger DROPPED (free-tier-only model), classifier pinned, heuristic pre-routing pulled forward, wiki retrieval bundled at build time, single-call structured output for SSE.
+
 ### Request flow
 
 ```
 1. Client POST /enter { message, session_id }
+   Browser-side throttle: input button disabled 2s after submit (1 q/2s soft).
+
 2. Server validates input (§7 abuse defense tier 0)
-3. Server checks rate limit + spend cap (§7 tier 1-2)
-4. Server classifies query (Groq 8B, 200-token prompt)
-   → { type: 'lookup'|'synthesis'|'deflect'|'bio', confidence: 0-1 }
-5. Router selects path (cheap-first waterfall):
-   - lookup/deflect/bio OR low-confidence → Groq 8B (rotate across N keys)
-   - synthesis OR multi-hop → DeepSeek V3 or Mixtral primary
-   - Fallback chain on any error: Groq 8B → Groq 70B → DeepSeek → Mixtral → Claude Haiku 4.5 cached
-   - Claude Haiku invoked only when: cheaper providers all fail, OR query flagged high-value (e.g., detected recruiter intent from specific company domain — future)
-6. Server builds system prompt:
-   - Stable section (cache breakpoint here): site.json + voice-calibration + few-shot examples + kg.json theme index
-   - Dynamic section: retrieved wiki excerpts based on intent + conversation history
-7. Call LLM, stream SSE events
-8. Parse structured output → emit events: trace, token, card, done
-9. Log: duration, cost estimate, query type (for cost tracking)
+3. Server checks per-IP rate bucket (§7 tier 1: 60 q/h sliding + burst 5/10s).
+   No spend cap check (tier 2 dropped).
+
+4. Heuristic pre-route (preRoute()):
+   - msg ≤ 3 words OR matches greeting pattern → lookup, skip classifier
+   - Matches off-topic patterns → deflect, skip classifier
+   - Direct theme keyword match → synthesis with extracted slug, skip classifier
+   - Else → call classifier
+
+5. Classifier (pinned: Groq llama-3.1-8b-instant, temp 0, 200-token prompt, JSON mode):
+   → { type: 'lookup'|'synthesis'|'deflect'|'bio', confidence: 0-1, themes_likely: string[] }
+   Validate themes_likely against THEME_SLUGS_SET enum. Drop unknowns, log classifier_invalid_slug.
+   On 800ms timeout OR error → default to lookup, log classifier_default.
+   No Mistral fallback for classifier (graceful default is sufficient).
+
+6. Build system prompt:
+   - STABLE (cacheable): persona + voice spec + trace verbs + card schema + site.json
+                       + KG_THEMES_SUMMARY + 5-10 few-shot examples
+   - DYNAMIC: conversation (last 6 turns) + retrieved wiki extracts (1-3 themes)
+                                          + current query
+   Wiki extracts come from bundled wiki-extracts.json (no HTTP fetch).
+
+7. Single LLM call via lib/llm-pool.mjs invoke() — JSON mode, structured output:
+   { trace: [{verb, args, latencyMs}], answer: string, cards: [{slug, type, priority?}] }
+
+   Pool routing:
+   - Groq pool {KEY, KEY_2, KEY_3} round-robin, cool-down state in Upstash (+ module fallback)
+   - 4-model fallback per Groq key on non-rate-limit errors
+   - All 3 Groq keys cooled OR hard-fail → Mistral pool {KEY, KEY_2}
+   - Both Mistral keys cooled OR hard-fail → static fallback
+   - Server buffers first 50 chars before flushing for clean mid-stream failover
+
+8. Server emits SSE events:
+   - event: trace — one trace line at a time (server emits all at once,
+                    client animates 150ms stagger per spec §5)
+   - event: token — answer prose streamed as model emits OR synthetically
+                    chunked at word boundaries
+   - event: card  — card array at end
+   - event: done  — sentinel
+   No reconnect protocol — disconnect = client offers manual retry.
+
+9. Log structured: { duration_ms, intent, themes_used[], provider, key_id, model, cache_hit }.
+   No cost calculation.
 ```
 
 ### Classifier failure handling
 
-- Hard 500ms timeout on classifier call. On timeout → default intent = `lookup`, cheap path.
-- On API error (any 4xx/5xx from Groq) → default intent = `lookup`, cheap path. Log classifier failure to structured log.
-- On malformed JSON response → same default + log.
-- Rationale: the cheap path serves 85% of queries correctly; defaulting there is safe fallback. Worst case: a synthesis-worthy query gets a simpler answer. Not broken, just less-rich.
+- Hard 800ms timeout on classifier call (raised from 500ms after eng review measurement caveat). On timeout → default intent = `lookup`, log `classifier_default`.
+- On API error (any 4xx/5xx from Groq) → default intent = `lookup`, log `classifier_default`.
+- On malformed JSON → retry once with stricter prompt; if retry fails → default to `lookup`.
+- On valid JSON with `themes_likely[]` containing slugs not in `THEME_SLUGS_SET` → drop unknown slugs, log `classifier_invalid_slug`. If after dropping the array is empty AND type was `synthesis`, downgrade to `lookup`.
+- Rationale: the cheap path serves the common case correctly; defaulting there is safe. Worst case: a synthesis-worthy query gets a simpler answer. Critical gap (silent retrieval miss on hallucinated slug) closed by enum validation.
 
-### Performance optimization: heuristic pre-routing (improvement path, not v1 blocker)
+### Heuristic pre-routing (v1)
 
-Skip classifier for obvious cases. Client-side or pre-classifier server heuristics:
-- Message is ≤ 3 words or matches common patterns ("hi", "test") → `lookup`, 8B direct
-- Message contains known theme keywords ("agent-first", "voice AI") → route directly to synthesis path
-- Message contains off-topic triggers ("your family", "politics") → `deflect`, 8B with deflect prompt
-- Only ambiguous cases go through classifier call
+Promoted from Phase 1.5 to v1 per 2026-04-27 taste-pass. `preRoute()` runs before classifier:
+- Message ≤ 3 words OR matches greeting pattern (`hi|hey|hello|sup|yo|test`) → `lookup`, skip classifier
+- Matches off-topic trigger pattern (`your family|politics|religion|where do you live|...`) → `deflect`, skip classifier
+- Direct theme keyword match (`agent[- ]first|voice ai|spec[- ]first|second[- ]brain|...`) → `synthesis` with extracted theme slug, skip classifier
+- All else → call classifier
 
-Saves ~500ms on ~80% of queries. Adds to v1 if implementation time allows. Documented as Phase 1.5.
+Saves ~300-500ms on ~80% of queries. Heuristic is conservative (only routes obvious cases); ambiguous queries hit classifier.
 
 ### Classifier prompt (Groq 8B, 200 tokens, structured output)
 
@@ -370,10 +404,25 @@ Types:
 Return JSON: { "type": string, "confidence": number 0-1, "themes_likely": string[] }
 ```
 
+### Classifier prompt — themes_likely enum
+
+The classifier prompt enumerates the 13 valid theme slugs explicitly:
+
+```
+themes_likely[] must use only these slugs:
+  root.substance-over-hype, agent-first, voice-ai-craft,
+  breadth-as-differentiation, pm-taste, ai-pm-skillset,
+  enterprise-ai-reality, second-brain, spec-first-taste,
+  career-reflection, linkedin-as-instrument,
+  personal-projects-tinkering, humor-wit
+```
+
+Server validates output against `THEME_SLUGS_SET` (single-source export from `lib/themes-enum.mjs`, derived from `kg-themes-summary.mjs`).
+
 ### System prompt structure (with cache breakpoints)
 
 ```
-[STABLE — cached, 5min TTL on Anthropic]
+[STABLE — cached on provider where supported (Mistral prefix cache GA, Groq per-model)]
 <system>
 You are agent.agam, first-person AI agent representing Agam Arora.
 [Persona rules from /enter v3 plan, §1 Agent Persona]
@@ -445,90 +494,99 @@ Pass criteria: 10/10 for ship. Re-run on each wiki update.
 
 ## 7. Abuse Defense Spec
 
-**Core principle:** cost cap is the only reliable defense. Everything else is friction.
+**Updated 2026-04-27** per `docs/plans/phase-d-decisions-2026-04-27.md` taste-pass. Major change from prior version: Tier 2 (spend caps) DROPPED entirely — both providers (Groq + Mistral) are free tier; no cost tracking. Defense is rate-limiting only, with browser-side throttle as a new top layer.
 
-### Tier 0 — always on, $0 cost, in `groqHandler.mjs`
+**Core principle (revised):** rate limit at the surface is the primary defense. Free-tier ceilings are the natural ceiling. No money at risk; no spend ledger needed.
 
-1. **UA gate.** Match UA against list: `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Anthropic-ai`, `Applebot-Extended`, `cohere-ai`, `Google-Extended`. Match → return static JSON manifest from `/wiki/kg.json` excerpt, no LLM.
+### Tier 0 — always on, $0 cost, in function
+
+1. **UA gate.** Match UA against allowlist: `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Anthropic-ai`, `Applebot-Extended`, `Google-Extended`, `Bytespider`, `meta-externalagent`, `Amazonbot`, `Diffbot`. Match → return static JSON manifest from bundled `KG_THEMES_SUMMARY` + key entry points. No LLM call.
 2. **Input validation:**
    - `message.length` ∈ (0, 500] chars — reject outside with 400.
-   - Conversation history token count ≤ 4000 — truncate oldest with warning.
-   - Conversation turn cap ≤ 6 — existing.
-3. **Duplicate-query cache.** In-memory `Map<ip:queryHash, response>` with 60s TTL per function instance. Hit → serve cached, no LLM. Size-cap 1000 entries LRU.
-4. **Injection filter.** Reject strings containing: `ignore previous`, `ignore above`, `disregard`, `system prompt`, `you are now`, `pretend you are`, `act as`, `bypass`, `<|im_start|>`, `[INST]`. Existing sandwich defense wraps user input.
+   - Conversation history token count ≤ 4000 — truncate oldest.
+   - Conversation turn cap ≤ 6.
+3. **Duplicate-query cache.** Module-scope `Map<ip:queryHash, response>` with 60s TTL per function instance. Hit → serve cached, no LLM. Size-cap 1000 entries LRU.
+4. **Injection filter.** Reject strings containing: `ignore previous`, `ignore above`, `disregard`, `system prompt`, `you are now`, `pretend you are`, `act as`, `bypass`, `<|im_start|>`, `[INST]`, plus 2026-era patterns: bidi/zero-width unicode (`‮`, `​`, `‏`), base64-shaped long strings, role-injection newlines (`\nsystem:`, `\nassistant:`).
 
-### Tier 1 — friction, Upstash Redis free tier
+### Tier 1 — friction, Upstash + browser throttle
 
-1. **Per-IP bucket.** 30 queries/hour. Sliding window in Redis. Over → 429 with retry-after header.
-2. **Low-effort query gate.** If message ≤ 3 words OR message is known common spam ("hello", "test", "hi"), force cheap path (8B only). No Claude invocation.
+1. **Browser-side throttle (new).** Submit button disabled 2s after each request, visible countdown. Soft limit 1 q / 2s. Prevents accidental double-submits and slows determined spam at the surface before it reaches the function.
+2. **Per-IP rate bucket (server-side).** 60 queries/hour sliding window in Upstash. Burst allowance: 5 queries in any 10-second window. Over → 429 with `Retry-After` header. (Updated from spec's earlier 30 q/h.)
+3. **Low-effort query gate.** If message ≤ 3 words OR matches greeting pattern, route to `lookup` cheap path (Groq 8B) regardless of classifier output. No synthesis call.
 
 ### Groq multi-key rotation
 
-- Pool of 3-4 Groq API keys in env vars: `GROQ_KEY_1`, `GROQ_KEY_2`, ...
-- Round-robin per request. On 429 from one key, mark cool-down 60s, move next.
-- Effective free-tier capacity: 4x single-key limits. Removes Groq rate limit as a spend trigger.
-- Keys live in Netlify env only, never in repo. Document creation steps in setup.
+- 3 Groq keys in env: `GROQ_API_KEY`, `GROQ_API_KEY_2`, `GROQ_API_KEY_3`.
+- Round-robin per request. Cursor seeded on cold start with `(Date.now()/1000) % 3` to distribute first-tries.
+- On 429: mark cool-down 60s (or `Retry-After` if longer), move to next key.
+- Cool-down state persisted in Upstash (`cooldown:groq:{keyId}`, TTL = remaining seconds). Read once before invoke.
+- On Upstash read failure: fall back to module-memory cool-down map. Log error.
 
-### DeepSeek / Mixtral cheap tier
+### Mistral fallback pool
 
-- DeepSeek V3 via direct API (deepseek.com): ~$0.27/M input, ~$1.10/M output. Cheap.
-- Mixtral 8x22B via OpenRouter or Together: similar pricing.
-- System prompt ~20K tokens × $0.27/M = $0.0054/query input. Negligible.
-- Prompt caching on DeepSeek: partial (they offer prefix cache). Use where available.
-- Primary synthesis path. Claude Haiku only as fallback.
+- 2 Mistral keys in env: `MISTRAL_API_KEY`, `MISTRAL_API_KEY_2`.
+- Same rotation + cool-down logic as Groq.
+- Triggered only when all 3 Groq keys are cooled OR all 3 Groq keys have hard-failed for the current request.
+- On both Mistral keys cooled → static fallback.
 
-### Tier 2 — budget ceilings (THE REAL DEFENSE)
+### Static fallback (last resort)
 
-1. **Daily spend cap: $3/day.**
-   - Track cost per-query in Redis counter (key: `spend:YYYY-MM-DD`).
-   - Pre-query: read current day total. If ≥ $3 → serve static fallback (no LLM, default cards from kg.json + apologetic message).
-   - Pre-query cost estimate: token count × rate per model. Skip Claude call if estimate would breach cap.
-   - Reset UTC midnight.
-2. **Monthly spend cap: $30/month.**
-   - Track monthly counter (key: `spend:YYYY-MM`).
-   - ≥ $30 → env flag `CLAUDE_DISABLED=1` triggers, all synthesis queries fall back to 8B.
-   - Requires manual reset.
-3. **Per-query cost cap: $0.05.**
-   - Pre-estimate token count (prompt + max_tokens). Multiply by model rate. Reject if > $0.05.
-   - Kills oversized-prompt attacks.
+- No LLM call. Returns a per-intent canned response with default cards from `KG_DEFAULT_ROUTING`:
+  - lookup/synthesis/bio: "Couldn't reach the agent right now. Here are the main entry points." + 3 default cards
+  - deflect: dry one-liner ("Not in the file. Try a product question.") + 2 cards
+  - empty/first-load: standard opening message + 3 default cards
 
-### Upstash failure modes
+### Upstash failure modes (updated)
 
-- **Rate limit bucket** (per-IP): if Upstash read/write fails → **fail open** (allow request, log the Redis error). Trade-off: brief abuse window during Redis outage, but legitimate users never locked out. Spend caps are the real defense.
-- **Spend counter** (daily/monthly): if Upstash read fails → **fail closed** (assume over cap, return static fallback). Trade-off: brief outage if Redis hiccups, but money is protected. Availability loss acceptable at small scale.
-- Log all Upstash errors to Netlify function logs with structured format for monitoring.
+Two Upstash projects in env for HA:
+- Primary: `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` (host `tight-ferret-83128.upstash.io`)
+- Backup:  `UPSTASH_REDIS_REST_URL_2` + `UPSTASH_REDIS_REST_TOKEN_2` (host `neutral-monster-83180.upstash.io`)
+
+Failover order on read/write error:
+1. Try primary
+2. On error → try backup
+3. On error → fall back to module-memory state (per-container `Map`)
+4. Log error in structured form `{kind, target, op}` for monitoring
+
+Per-resource semantics:
+- **Rate-limit bucket** (per-IP): both Upstash unreachable → **fail open** (allow request). Trade-off: brief abuse window during dual outage; legitimate users never locked out.
+- **Cool-down state** (Groq/Mistral keys): both Upstash unreachable → **fall back to module memory**. Container-scoped only (thundering herd risk noted, accepted at this scale).
+- **Dup cache:** module-scope only; not in Upstash.
+
+Eviction policy (both Upstash projects): `allkeys-lru`. All keys carry TTL anyway, but defense in depth.
 
 ### Feature flag: `WIKI_READ_ENABLED`
 
-- Env var controls whether /enter retrieves wiki excerpts. Default: `1` (on).
-- Set to `0` to bypass wiki read path if issues observed post-launch. Agent falls back to site.json + resume.md only (existing v2 behavior).
-- Kill switch for wiki-specific regressions without rolling back the whole function.
+- Env var, default `1` (on).
+- Set to `0` to bypass wiki extracts loading. Agent falls back to `KG_THEMES_SUMMARY` one-liners only.
+- Kill switch for wiki-specific regressions without rolling back the function.
 
-### Tier 3 — deferred (add if abuse observed)
+### Kill switches
+
+- `LLM_DISABLED=1` env flag → no LLM call. All requests serve static fallback.
+- `WIKI_READ_ENABLED=0` env flag → wiki extracts not loaded into prompt; agent works from KG summary only.
+
+(`CLAUDE_DISABLED` removed — no Claude in v1 chain. Spec §6's old tiering language is superseded.)
+
+### Deferred (add only if abuse observed in logs)
 
 - Cloudflare Turnstile invisible challenge.
-- ASN-based VPN/proxy detection → force 8B path.
+- ASN-based VPN/proxy detection → tighter rate limit.
 - IP range temp-block on burst patterns.
-
-### Tier 4 — kill switches
-
-- `CLAUDE_DISABLED=1` env flag → no Claude calls, 8B only.
-- `LLM_DISABLED=1` env flag → no LLM at all, return static kg.json-based response with default cards.
-- Monitoring: daily cron (GitHub Action on separate repo or Netlify scheduled function) queries Anthropic API usage → alert if monthly projected > $50.
 
 ### Abuse scenarios covered
 
 | Attack | Defense | Layer |
 |---|---|---|
-| Single-IP query flood | Per-IP bucket + duplicate cache | T0, T1 |
-| Prompt injection / jailbreak | Injection filter + sandwich defense | T0 |
-| Cost exhaustion (big prompts) | Per-query cost cap | T2 |
-| Distributed botnet | Daily + monthly spend caps | T2 |
-| System prompt extraction | Injection filter + existing defense | T0 |
-| Infinite conversation | Turn cap | T0 |
-| Identical-query spam | Duplicate cache | T0 |
-| Low-effort spam ("hi" ×1000) | Low-effort → 8B free path | T1 |
-| Credentialed attack (legit user going rogue) | No auth, same defenses apply | T0-T2 |
+| Single-IP query flood | Browser throttle + per-IP bucket + dup cache | T0, T1 |
+| Prompt injection / jailbreak | Injection filter (extended) + sandwich defense | T0 |
+| Distributed botnet | Per-IP bucket per attacker IP; free-tier ceiling on providers | T1 + provider |
+| System prompt extraction | Injection filter + sandwich defense | T0 |
+| Infinite conversation | Turn cap (≤6) + history token cap (≤4000) | T0 |
+| Identical-query spam | Dup cache | T0 |
+| Low-effort spam ("hi" ×1000) | Low-effort → cheap path; per-IP bucket | T1 |
+| Bidi/zero-width injection | Extended injection filter | T0 |
+| Base64-encoded prompts | Heuristic filter on long base64-shaped input | T0 |
 
 ### What NOT to build v1
 
@@ -536,6 +594,8 @@ Pass criteria: 10/10 for ship. Re-run on each wiki update.
 - Always-on CAPTCHA
 - Proof-of-work challenge
 - ML-based anomaly detection
+- Cost ledger / spend caps (free-tier model — no money to protect)
+- Cross-document cost monitoring cron
 
 ---
 
