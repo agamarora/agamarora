@@ -25,6 +25,16 @@ export const MAX_HISTORY_CHARS = 4000;        // hard cap on conversation histor
 export const COOLDOWN_DEFAULT_MS = 60_000;
 export const COOLDOWN_MIN_MS = 60_000;
 
+// Synthesis confidence retry (D-9a / Decision 15 + 18)
+// If intent=synthesis and answer.length < RETRY_THRESHOLD, fire one expand continuation.
+// MAX_SYNTH_RETRIES=1 bounds the retry to one attempt (Decision 15: "bounded 1 retry").
+export const RETRY_THRESHOLD = 80;        // MIN_ANSWER_CHARS per task spec
+export const MAX_SYNTH_RETRIES = 1;       // hard bound — never loop
+
+// Pill animation minimum visible duration (Decision 17)
+// Pill counts up over max(realLatencyMs, MIN_PILL_DURATION_MS)
+export const MIN_PILL_DURATION_MS = 600;
+
 // Provider pools
 export const GROQ_KEY_ENV = ['GROQ_API_KEY', 'GROQ_API_KEY_2', 'GROQ_API_KEY_3'];
 export const MISTRAL_KEY_ENV = ['MISTRAL_API_KEY', 'MISTRAL_API_KEY_2'];
