@@ -1772,8 +1772,13 @@ ${AAMARK_SCRIPT}
     return beliefs.map(b => `beliefSlug[${JSON.stringify(b.id)}] = ${JSON.stringify(String(b.tier) === '1' ? b.id.replace(/^belief\./,'') : null)};`).join('\n  ');
   })()}
 
-  // Position map for CP-3 cross-theme edge rendering: nodeId -> { x, y } in canvas space
+  // Position map for CP-3 cross-theme edge rendering: nodeId -> { x, y } in canvas space.
+  // For non-theme nodes (beliefs/projects/posts/tech) we ALSO record the offset relative
+  // to their parent theme so the animation loop can recompute world position each frame
+  // when themes drift via Lissajous. Without this, cross-edges to non-theme endpoints
+  // point at stale (init-time) positions and pulses appear to fly off into deep field.
   const nodeWorldPos = {};
+  const nodeOffsets = {}; // nodeId -> { themeId, ox, oy }
   // Theme positions are already known
   THEMES.forEach(t => { nodeWorldPos[t.id] = { x: t.x, y: t.y }; });
 
@@ -1806,6 +1811,7 @@ ${AAMARK_SCRIPT}
         });
       }
       nodeWorldPos[bid] = { x: t.x + p.x, y: t.y + p.y };
+      nodeOffsets[bid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
     // 2. Projects — placed slightly farther out, mid-bright
@@ -1821,6 +1827,7 @@ ${AAMARK_SCRIPT}
         'data-id':pid,
       }, cluster);
       nodeWorldPos[pid] = { x: t.x + p.x, y: t.y + p.y };
+      nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
     // 3. Posts — small, dim, scattered in theme wedge
@@ -1835,6 +1842,7 @@ ${AAMARK_SCRIPT}
         'data-id':pid,
       }, cluster);
       nodeWorldPos[pid] = { x: t.x + p.x, y: t.y + p.y };
+      nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
     // 4. Tech — smallest, dimmest, scattered in wedge
@@ -1849,6 +1857,7 @@ ${AAMARK_SCRIPT}
         'data-id':tid,
       }, cluster);
       nodeWorldPos[tid] = { x: t.x + p.x, y: t.y + p.y };
+      nodeOffsets[tid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
   });
 
@@ -2164,8 +2173,13 @@ ${AAMARK_SCRIPT}
         themeCurPos[i].x = tx;
         themeCurPos[i].y = ty;
       });
-      // Update node world map for cross-edges
+      // Update node world map for cross-edges (themes + non-theme children that ride the theme transform)
       THEMES.forEach((th, i) => { nodeWorldPos[th.id] = { x: themeCurPos[i].x, y: themeCurPos[i].y }; });
+      for (const nid in nodeOffsets) {
+        const off = nodeOffsets[nid];
+        const tp = nodeWorldPos[off.themeId];
+        if (tp) nodeWorldPos[nid] = { x: tp.x + off.ox, y: tp.y + off.oy };
+      }
 
       // Cross-edges fade in past 55% of entry
       if (sinceEntry > ENTRY_DURATION * 0.55){
@@ -2230,6 +2244,12 @@ ${AAMARK_SCRIPT}
     THEMES.forEach((th, i) => {
       nodeWorldPos[th.id] = { x: themeCurPos[i].x, y: themeCurPos[i].y };
     });
+    // Non-theme children ride the parent theme's drift via the offset map.
+    for (const nid in nodeOffsets) {
+      const off = nodeOffsets[nid];
+      const tp = nodeWorldPos[off.themeId];
+      if (tp) nodeWorldPos[nid] = { x: tp.x + off.ox, y: tp.y + off.oy };
+    }
 
     crossEdgeRefs.forEach(ref => {
       const a = nodeWorldPos[ref.from];
