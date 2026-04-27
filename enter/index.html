@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Know Agam. Live AI terminal grounded in his resume.</title>
 <meta name="description" content="Live AI terminal for Agam Arora. Grounded in his resume, shipped products, and case studies. Ask about voice AI at enterprise scale, RAG, agentic systems, PM craft, or anything in his portfolio. Streaming responses via Groq.">
@@ -591,42 +591,31 @@
   /* =========================================================
      Mobile breakpoint < 760px — mobile-native redesign
      =========================================================
-     Single viewport mechanism: visualViewport JS writes --vh,
-     CSS height locks to var(--vh, 100dvh). No interactive-widget,
-     no thresholds, no offset math. body is a flex column; main is
-     the scroll container; .input-bar is a static flex child that
-     always sits at the visible-viewport bottom.
-
-     Empty state on mobile: status bar (top), one-line greeting,
-     three pill rows (graph/lab/resume), no wordmark, no tagline,
-     no warm-trace, no opening copy. */
+     Viewport handling: rely on the platform.
+     - viewport meta has interactive-widget=resizes-content. Chrome
+       108+ default flipped to resizes-visual in 2026, so without
+       this the layout viewport stays full when the keyboard opens
+       and any position:fixed bottom:0 element sits BEHIND the
+       keyboard. With resizes-content, Android shrinks the layout
+       viewport when the keyboard opens — 100dvh tracks it natively,
+       the fixed input bar pins above the keyboard, no JS needed.
+     - iOS Safari ignores interactive-widget but auto-scrolls a
+       focused input + its surrounding fixed-bottom element above
+       the keyboard when the input bar is a direct child of <body>.
+     - Net: ONE mechanism (CSS dvh + position:fixed bottom:0) covers
+       both platforms. No --vh JS, no visualViewport listeners, no
+       state model.
+     Mobile design: status bar at top, one-line greeting, three pill
+     rows (graph/lab/resume), no wordmark/tagline/warm-trace, fixed
+     rounded input bar at bottom. */
   @media (max-width:760px) {
-    html {
-      /* Desktop sets scroll-padding-bottom:240px to keep streamed content
-         above the fixed input bar. On mobile the input bar is a static
-         flex child, not fixed — so that padding instead causes the browser
-         to slide the layout up ~240px when the input is focused. Result:
-         input "floats" mid-screen with a tall empty gap below it. Reset. */
-      scroll-padding-bottom:0;
-    }
-    html, body {
-      height:var(--vh, 100dvh);
-      min-height:0;
-      overflow:hidden;
-      overscroll-behavior:none;
-    }
-    body {
-      display:flex;
-      flex-direction:column;
-    }
     main.terminal {
-      flex:1 1 auto;
-      min-height:0;
-      overflow-y:auto;
+      max-width:none;
       padding:calc(clamp(52px,6vw,64px) + var(--space-4))
               var(--space-5)
-              var(--space-5);
+              calc(80px + env(safe-area-inset-bottom, 0px) + var(--space-5));
       gap:var(--space-6);
+      min-height:100dvh;
     }
 
     /* Hide desktop empty-state pieces */
@@ -713,16 +702,15 @@
     .card.priority { border-left-width:2px; }
     .card:hover { transform:none; }
 
-    /* Input bar = prominent rounded mobile control.
-       Static flex child of body so it always pins to visible-viewport
-       bottom (body height = --vh). 52px tall, fully rounded, gold focus
-       ring on focus-within. */
+    /* Input bar stays position:fixed bottom:0 (inherited from desktop).
+       Direct body child — iOS auto-scrolls it above the keyboard;
+       Android shrinks layout viewport via interactive-widget so
+       bottom:0 == above-keyboard. Safe-area-inset for iPhone home
+       indicator. */
     .input-bar {
-      position:static;
-      flex-shrink:0;
-      background:var(--bg);
       padding:var(--space-3) var(--space-4)
               calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+      background:var(--bg);
       transition:none;
     }
     .input-bar .input-wrap {
@@ -1753,6 +1741,12 @@ inputEl.addEventListener('keydown', e => {
 
     // Light key animation on typing
     pressKey('enter');
+    // Dismiss soft keyboard on mobile after submit. Frees the visible
+    // viewport for the streamed answer + cards; next tap on the input
+    // reopens the keyboard fresh. Removes one whole class of layout
+    // bugs (input-bar floating over a dwindling vv). Desktop is a
+    // no-op since there's no soft keyboard.
+    if (isMobile()) inputEl.blur();
     submitQuery(val, conversationHistory.slice());
   }
   // Light key animation
@@ -1804,20 +1798,15 @@ startHintRotation();
 // Don't auto-focus on mobile — triggers soft keyboard unexpectedly
 if (!isMobile()) inputEl.focus();
 
-// Mobile viewport — single mechanism: visualViewport JS writes --vh.
-// CSS locks html/body to var(--vh, 100dvh). When the soft keyboard
-// opens, vv.height shrinks; --vh updates; body shrinks; .input-bar
-// (static flex child) lands at the new viewport bottom. No threshold,
-// no scroll listener, no orientationchange dance — the resize event
-// fires for rotation too.
-if (isMobile() && window.visualViewport) {
-  const vv = window.visualViewport;
-  const updateVH = () => {
-    document.documentElement.style.setProperty('--vh', vv.height + 'px');
-  };
-  vv.addEventListener('resize', updateVH);
-  updateVH();
-}
+// Mobile viewport: NO JS. The combination of viewport meta
+// `interactive-widget=resizes-content` + CSS `100dvh` + a position:fixed
+// input bar that's a direct child of <body> covers both platforms:
+//   - Android Chrome shrinks the layout viewport when the keyboard
+//     opens; 100dvh tracks it; fixed bottom:0 sits above the keyboard.
+//   - iOS Safari auto-scrolls the focused input + its sibling fixed
+//     bottom bar into view above the keyboard.
+// On submit we blur() the input so the keyboard dismisses, freeing the
+// vv for the streamed response. See keydown handler.
 
 })();
 </script>
