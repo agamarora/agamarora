@@ -259,7 +259,10 @@
     font-size:0.82rem;
     line-height:1.5;
     color:var(--text-dim);
-    background:linear-gradient(90deg, var(--accent-dim), transparent 70%);
+    /* Trace-pill background: bumped from --accent-dim (rgba 0.12) to
+       0.22 for readability. The pills are the TLDR — the user
+       should be able to scan verb + arg without leaning in. */
+    background:linear-gradient(90deg, rgba(229,165,75,0.22), rgba(229,165,75,0.04) 70%, transparent);
     border-left:3px solid var(--accent);
     border-radius:0 var(--radius-sm) var(--radius-sm) 0;
     padding:var(--space-4) var(--space-6);
