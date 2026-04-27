@@ -134,10 +134,10 @@ Tracked in `TODO.md`. Current:
 
 - `/moodboard` is orphan from main nav — by design (design doc, not user-facing). `robots: noindex` and `robots.txt` entries added 2026-04-22.
 - `/lab` OG image is still the generic site preview. A dedicated OG image for the lab page (and for `/lab/second-brain/` individually) would lift social-share CTR.
-- Font Awesome 6.5.0 full CSS loads from CDN on every v2 page. Only ~8 icons actually used — could be subset.
+- Icons are inline SVG sprites (FA solid family, sourced from `chrome.mjs` `SVG_SPRITE`). No CDN dependency, no external CSS. Sprite is reused across all v2 pages via `<svg><use href="#i-name"/></svg>`.
 
 ## Conventions for video media in lab slots
 
-- `/lab/second-brain/` uses a looping video both in the `/lab` card media slot and in the PRFAQ hero. Source encoded at 720×720, H.264, no audio, `+faststart`. 1.2MB. Plays `autoplay muted loop playsinline` with a poster JPG for instant paint.
+- `/lab/second-brain/` uses a looping video both in the `/lab` card media slot and in the PRFAQ hero. Source encoded at 720×404, H.264, 24fps, CRF 30, no audio, `+faststart`. ~600KB. PRFAQ hero plays `autoplay muted loop playsinline` for instant paint. The `/lab` card uses `preload="none"` + `data-src` and is hydrated by an IntersectionObserver in `lab/index.html` (rootMargin 200px) — the video only loads + plays when the card scrolls into view, so first-paint of `/lab` is ~150KB instead of ~1.84MB.
 - Media-slot behavior matches image behavior: `object-fit: cover`, flex-stretched, info column drives row height.
-- When re-encoding: use `imageio-ffmpeg` bundled Python package if ffmpeg is not on PATH (pip install imageio-ffmpeg, then `python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"`).
+- When re-encoding: ffmpeg recipe is `ffmpeg -i in.mp4 -c:v libx264 -crf 30 -preset slow -profile:v main -level 3.1 -pix_fmt yuv420p -r 24 -movflags +faststart -an out.mp4`. Original source is preserved at `assets/lab/second-brain-anim.original.mp4` (gitignored or kept as-is, do NOT serve to web).

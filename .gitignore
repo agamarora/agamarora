@@ -21,3 +21,6 @@ Thumbs.db
 
 # Obsidian local config (Phase A authoring tool)
 .obsidian/
+
+# Re-encode source — kept locally, not served
+assets/lab/*.original.mp4

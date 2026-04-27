@@ -445,9 +445,9 @@
       <div class="project-media sb-media">
         <a href="/lab/second-brain/" aria-label="Open second-brain PRFAQ">
           <video
-            src="/assets/lab/second-brain-anim.mp4"
+            data-src="/assets/lab/second-brain-anim.mp4"
             poster="/assets/lab/second-brain-poster.jpg"
-            autoplay muted loop playsinline preload="metadata"
+            muted loop playsinline preload="none"
             aria-hidden="true"></video>
         </a>
       </div>
@@ -656,6 +656,30 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.classList.add('loaded'), 300 + i * 120);
   });
 });
+
+// Lazy-load <video data-src> via IntersectionObserver. Loads + plays only
+// when the card scrolls into view; saves first-paint bytes.
+(function lazyVideo(){
+  const vids = document.querySelectorAll('video[data-src]');
+  if (!vids.length) return;
+  if (!('IntersectionObserver' in window)) {
+    vids.forEach(v => { v.src = v.dataset.src; v.autoplay = true; v.play().catch(()=>{}); });
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const v = e.target;
+      if (!v.src) {
+        v.src = v.dataset.src;
+        v.load();
+        v.play().catch(()=>{});
+      }
+      io.unobserve(v);
+    });
+  }, { rootMargin: '200px 0px', threshold: 0.01 });
+  vids.forEach(v => io.observe(v));
+})();
 </script>
 
 </body>
