@@ -1470,7 +1470,7 @@ ${SHARED_CHROME_CSS}
 
   /* Signal pulse: gold dot traveling along edges */
   .signal-pulse{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(229,165,75,0.85));pointer-events:none;}
-  .signal-pulse-white{fill:rgba(232,228,223,0.95);filter:drop-shadow(0 0 4px rgba(232,228,223,0.6));pointer-events:none;}
+  .signal-pulse-white{fill:rgba(232,228,223,0.55);filter:drop-shadow(0 0 3px rgba(232,228,223,0.3));pointer-events:none;}
 
   /* Parallax bg star twinkle — slower, dimmer than foreground */
   @keyframes bg-twinkle{0%,100%{opacity:var(--bg-base,0.15);}50%{opacity:calc(var(--bg-base,0.15) * 1.7);}}
@@ -1587,9 +1587,12 @@ ${AAMARK_SCRIPT}
     return e;
   }
 
-  // Compute base positions for each theme
+  // Compute base positions for each theme.
+  // Mobile (≤480px viewport): pull themes another 10% closer to genesis so the
+  // tight-cluster reads even cleaner on small portrait screens. Desktop unchanged.
+  const mobileShrink = (typeof window !== 'undefined' && Math.min(window.innerWidth, window.innerHeight) <= 480) ? 0.9 : 1.0;
   THEMES.forEach(t => {
-    const r = VB_MIN * t.radF;
+    const r = VB_MIN * t.radF * mobileShrink;
     const p = polar(CX, CY, r, t.ang);
     t.x = p.x;
     t.y = p.y;
@@ -1885,12 +1888,14 @@ ${AAMARK_SCRIPT}
   else svg.appendChild(crossEdgeGroup);
 
   function styleForRel(rel){
+    // Subtler 2026-04-27: white edges dropped ~40% alpha so they read as
+    // atmosphere, not foreground structure. Gold (semantic) edges unchanged.
     if (rel === 'tension-with')  return { stroke: 'rgba(229,165,75,0.16)', dasharray: '2 6', width: '0.6' };
     if (rel === 'superseded_by') return { stroke: 'rgba(229,165,75,0.32)', dasharray: '3 5', width: '0.7' };
     if (rel === 'refined_by')    return { stroke: 'rgba(229,165,75,0.32)', dasharray: '3 5', width: '0.7' };
-    if (rel === 'builds_on')     return { stroke: 'rgba(232,228,223,0.18)', dasharray: '',    width: '0.5' };
-    if (rel === 'demonstrates')  return { stroke: 'rgba(232,228,223,0.10)', dasharray: '',    width: '0.4' };
-    return { stroke: 'rgba(232,228,223,0.08)', dasharray: '', width: '0.4' };
+    if (rel === 'builds_on')     return { stroke: 'rgba(232,228,223,0.10)', dasharray: '',    width: '0.4' };
+    if (rel === 'demonstrates')  return { stroke: 'rgba(232,228,223,0.06)', dasharray: '',    width: '0.35' };
+    return { stroke: 'rgba(232,228,223,0.05)', dasharray: '', width: '0.35' };
   }
 
   let renderedEdges = 0;
@@ -2278,7 +2283,7 @@ ${AAMARK_SCRIPT}
       if (t < 0.18) op = t / 0.18;
       else if (t > 0.82) op = (1 - t) / 0.18;
       else op = 1;
-      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.95 : 0.65));
+      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.95 : 0.40));
       if (t < 1) requestAnimationFrame(tick);
       else pulse.remove();
     }
@@ -2304,7 +2309,7 @@ ${AAMARK_SCRIPT}
       if (t < 0.18) op = t / 0.18;
       else if (t > 0.82) op = (1 - t) / 0.18;
       else op = 1;
-      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.85 : 0.55));
+      pulse.setAttribute('opacity', op * (color === 'gold' ? 0.85 : 0.32));
       if (t < 1) requestAnimationFrame(tick);
       else pulse.remove();
     }
@@ -2532,11 +2537,19 @@ ${AAMARK_SCRIPT}
 
   // === CP-7: layered visibility on hover/focus ===
   // When a theme is hovered/focused, its connected cross-edges light up; unrelated edges dim.
-  // Implements the "layered visibility" rule from DESIGN.md (most dim at rest, contextual ones
-  // light up on engagement — anti AI-slop "all edges visible all the time" pattern).
+  // "Connected" means: edge endpoint is the theme itself OR any belief/project/post/tech that
+  // belongs to that theme (via nodeOffsets). Implements the "layered visibility" rule from
+  // DESIGN.md — most dim at rest, contextual ones light up on engagement (anti AI-slop
+  // "all edges visible all the time" pattern). Fixed 2026-04-27: previously only matched
+  // direct theme↔theme endpoints, dropped belief/project/post connections.
+  function isEndpointInTheme(nodeId, themeId){
+    if (nodeId === themeId) return true;
+    const off = nodeOffsets[nodeId];
+    return off && off.themeId === themeId;
+  }
   function highlightTheme(themeId){
     crossEdgeRefs.forEach(ref => {
-      const isConnected = ref.from === themeId || ref.to === themeId;
+      const isConnected = isEndpointInTheme(ref.from, themeId) || isEndpointInTheme(ref.to, themeId);
       ref.path.classList.toggle('highlit', isConnected);
       ref.path.classList.toggle('dimmed', !isConnected);
     });

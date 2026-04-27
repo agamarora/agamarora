@@ -2,7 +2,7 @@
 
 **Single source of truth for resuming work across sessions + machines. Git-tracked. Update after every milestone.**
 
-Last updated: 2026-04-27 — **CHECKPOINT 33 — AEO/SEO gate CLEARED. 14 tasks shipped across 4 batches: Person schema enrichment, robots+bot allowlist (15 AI crawlers), Q&A overlay, BLUF, FAQPage on 19 belief pages, HowTo on Lab pages, view-source audit + noscript graph fallback (M2 fold), 120 LinkedIn outbound links, 3 comparison tables, DRY chrome enforcement. AEO-13 (post-deploy AI search QA) runs 7-14d after Phase D ships. Working tree clean. Final audit: `docs/plans/aeo-gate-final-audit-2026-04-27.md`. Next: `/plan-eng-review` on Phase D plan → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
+Last updated: 2026-04-27 — **CHECKPOINT 33 — AEO/SEO gate CLEARED + post-CP-33 graph polish round. AEO: 14 tasks across 4 batches (Person schema, robots+bot allowlist, Q&A, BLUF, FAQPage, HowTo, view-source audit + noscript graph fallback, 120 LinkedIn outbound links, comparison tables, DRY chrome enforcement). Graph polish: tighter labels, even atmosphere, crisp self-explanatory theme names, theme radF -15% then mobile additional -10%, non-theme nodeWorldPos tracks Lissajous drift (eliminates stranded white pulses), hover-highlight extended to belief/project/post connections, white edges + pulses dimmed ~40-50%. Working tree clean. Resume: `docs/plans/NEXT-SESSION-RESUME-2026-04-27.md`. Final audit: `docs/plans/aeo-gate-final-audit-2026-04-27.md`. Next: `/plan-eng-review` on Phase D plan → Phase D (/enter v3 + AI plumbing) → Phase E (launch).**
 
 ---
 
