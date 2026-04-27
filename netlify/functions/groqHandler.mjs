@@ -22,7 +22,7 @@
 import { invokeSynthesis } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
 import { ALLOWED_ORIGINS, MAX_INPUT_LENGTH, MAX_HISTORY_TURNS, MAX_HISTORY_CHARS, MAX_COMPLETION_TOKENS } from './lib/constants.mjs';
-import { defend, dupCacheLookup, dupCacheStore, getClientIP } from './lib/defense.mjs';
+import { defend, dupCacheLookup, dupCacheStore, getClientIP, isInjectionAttempt } from './lib/defense.mjs';
 
 // ---- v2 system prompt (kept for D-1; D-2 replaces with v3 stable section) -
 
@@ -130,20 +130,8 @@ function json(data, status, origin) {
   });
 }
 
-const INJECTION_PATTERNS = [
-  /ignore\s+(all\s+)?(previous|prior|above)\s+(instructions|prompts)/i,
-  /what\s+(is|are)\s+your\s+(system|initial)\s+(prompt|instructions)/i,
-  /reveal\s+your\s+(prompt|instructions|system)/i,
-  /repeat\s+(the|your)\s+(above|system|initial)/i,
-  /pretend\s+(you\s+are|to\s+be|you're)/i,
-  /act\s+as\s+(a|an|if)/i,
-  /you\s+are\s+now\s+(a|an)/i,
-  /roleplay\s+as/i,
-];
-
-function isInjectionAttempt(input) {
-  return INJECTION_PATTERNS.some(p => p.test(input));
-}
+// Injection check delegated to defense.mjs (single source of truth).
+// isInjectionAttempt imported above — no local duplicate needed.
 
 function clampHistory(rawHistory) {
   const arr = Array.isArray(rawHistory) ? rawHistory.slice(-MAX_HISTORY_TURNS) : [];
@@ -170,13 +158,17 @@ function clampHistory(rawHistory) {
 //
 // Uses start-mode (eager). pull-mode hangs under Netlify dev v20 — the
 // outer reader never gets pulled, so inner iter never advances.
-function toV2Sse(textStream) {
+//
+// onComplete(fullText) is called with the complete synthesized text once the
+// stream finishes cleanly. Used by groqHandler to wire dupCacheStore.
+function toV2Sse(textStream, { onComplete } = {}) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
   return new ReadableStream({
     async start(controller) {
       const reader = textStream.getReader();
       let totalChars = 0;
+      let fullText = '';
       try {
         while (true) {
           const { value, done } = await reader.read();
@@ -184,15 +176,21 @@ function toV2Sse(textStream) {
           const text = decoder.decode(value, { stream: true });
           if (text) {
             totalChars += text.length;
+            fullText += text;
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
           }
         }
         if (totalChars === 0) {
           const fb = "Not sure how to land that one. Try asking about his role, a specific company, or what he's shipped.";
+          fullText = fb;
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: fb })}\n\n`));
         }
         controller.enqueue(encoder.encode('data: [DONE]\n\n'));
         controller.close();
+        // Wire dup cache after clean stream completion
+        if (onComplete && fullText) {
+          try { onComplete(fullText); } catch {}
+        }
       } catch (err) {
         try {
           controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: err?.message || 'stream_error' })}\n\n`));
@@ -284,6 +282,8 @@ export default async function (request) {
     // Deflect short-circuit (preserves v2 behavior shape).
     if (routeDecision.type === 'deflect') {
       const text = "Not on the resume. Ask about what he's built.";
+      // Cache deflect responses — they're deterministic
+      dupCacheStore(dupKey, JSON.stringify({ text }));
       const enc = new TextEncoder();
       const stream = new ReadableStream({
         start(controller) {
@@ -315,7 +315,13 @@ export default async function (request) {
       temperature: 0.7,
       maxTokens: MAX_COMPLETION_TOKENS,
     });
-    const sse = toV2Sse(textStream);
+    const sse = toV2Sse(textStream, {
+      onComplete: (fullText) => {
+        // Wire dup cache: store synthesized text so identical follow-up queries get a cache hit.
+        dupCacheStore(dupKey, JSON.stringify({ text: fullText }));
+        console.log('[defense] dup_cache_stored', { key: dupKey, len: fullText.length });
+      },
+    });
 
     // Meta logged on response open (best-effort).
     queueMicrotask(() => {
