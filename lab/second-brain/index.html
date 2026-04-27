@@ -34,6 +34,32 @@
   "inLanguage": "en"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Set up a git-native second brain for AI agents",
+  "description": "Drop three artifacts into a git repo so every future AI session has memory, and yours compounds every time you use it.",
+  "totalTime": "PT10M",
+  "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+  "tool": [
+    { "@type": "HowToTool", "name": "Claude Code (Anthropic CLI)" },
+    { "@type": "HowToTool", "name": "git" }
+  ],
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Clone the template",
+      "text": "Use github.com/agamarora/second-brain as a template. Clone into your project repo or a new dedicated brain repo." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste setup prompt into Claude Code",
+      "text": "Open Claude Code at the brain repo root. Paste the second-brain setup prompt. The wizard interviews you to capture context: what you're working on, who matters, decisions in flight." },
+    { "@type": "HowToStep", "position": 3, "name": "Drop three artifacts",
+      "text": "Wizard generates three files: identity.md (who you are), context.md (current state), decisions.md (open and resolved decisions). All git-tracked, all readable by any future Claude / Cursor / Codex session." },
+    { "@type": "HowToStep", "position": 4, "name": "Use across sessions",
+      "text": "Future agents read the three artifacts at session start. They know your identity, current state, decision history. No re-explaining. Every session compounds the brain." },
+    { "@type": "HowToStep", "position": 5, "name": "Compound over time",
+      "text": "Each session updates the brain via Claude Code. Decisions get logged. Context evolves. Git history becomes the ledger of how your work + thinking moved." }
+  ]
+}
+</script>
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <!-- chrome:preload -->

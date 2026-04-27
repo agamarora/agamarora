@@ -38,6 +38,33 @@
   "inLanguage": "en"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Deploy AI Resume in 30 minutes",
+  "description": "Open source template that turns your career into a chat-based resume with Schema.org JSON endpoint for recruiter agents. Paste one prompt into Claude Code, deploy to Netlify.",
+  "totalTime": "PT30M",
+  "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+  "tool": [
+    { "@type": "HowToTool", "name": "Claude Code (Anthropic CLI)" },
+    { "@type": "HowToTool", "name": "GitHub" },
+    { "@type": "HowToTool", "name": "Netlify" }
+  ],
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Use as template",
+      "text": "Open github.com/agamarora/ai-resume and click 'Use this template' to clone into your own GitHub repo." },
+    { "@type": "HowToStep", "position": 2, "name": "Paste setup prompt into Claude Code",
+      "text": "Open Claude Code in the cloned repo. Paste the AI Resume setup prompt (provided on the lab page). The wizard generates your system prompt by interviewing you about your career." },
+    { "@type": "HowToStep", "position": 3, "name": "Run twelve behavioral evals",
+      "text": "Setup wizard runs twelve behavioral tests across two Llama models to validate the system prompt before any deploy." },
+    { "@type": "HowToStep", "position": 4, "name": "Deploy to Netlify",
+      "text": "Wizard pushes your code, connects Netlify, deploys at your subdomain. Recruiter-facing chat at root, machine-readable career data at /.well-known/ai-resume.json." },
+    { "@type": "HowToStep", "position": 5, "name": "Iterate on system prompt",
+      "text": "Edit system-prompt.md in the repo. Re-run evals. Push. Netlify auto-deploys. Your resume answers questions in your voice with your real metrics." }
+  ]
+}
+</script>
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
 <!-- chrome:preload -->

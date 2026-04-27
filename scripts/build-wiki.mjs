@@ -532,8 +532,19 @@ function themeNav(slug) {
 // ---------------------------------------------------------------------------
 // 6. Build a single page (theme + root, OR belief)
 // ---------------------------------------------------------------------------
-function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, navHtml, schemaType }) {
+
+// Safely serialize an object as JSON-LD body. Escapes `</` so a stray `</script>`
+// inside any string field can't break out of the surrounding <script> tag.
+// Standard XSS-defense pattern for inline JSON-LD.
+function safeJsonLd(obj) {
+  return JSON.stringify(obj, null, 2).replace(/<\//g, "<\\/");
+}
+
+function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, navHtml, schemaType, faqPage }) {
   const ogImage = "https://agamarora.com/assets/og/lab.png"; // TODO: per-page OG (B-future)
+  const faqLd = faqPage
+    ? `\n<script type="application/ld+json">\n${safeJsonLd(faqPage)}\n</script>\n`
+    : "";
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -561,15 +572,15 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, 
 <link rel="canonical" href="${canonical}">
 
 <script type="application/ld+json">
-{
+${safeJsonLd({
   "@context": "https://schema.org",
-  "@type": "${schemaType}",
-  "headline": ${JSON.stringify(title)},
-  "url": "${canonical}",
+  "@type": schemaType,
+  "headline": title,
+  "url": canonical,
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
   "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
-}
-</script>
+})}
+</script>${faqLd}
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
@@ -837,6 +848,36 @@ function buildMetaPage(slug, src) {
   const { meta, body } = parseFrontmatter(src);
   const m = pageMeta(meta, slug);
   const articleHtml = blockMd(body.trim());
+
+  // FAQPage JSON-LD for voice + quotes — pulled from explicit Q&A H2 block
+  // added to source drafts during AEO-3.
+  const META_FAQ = {
+    voice: {
+      question: "What does Agam Arora's voice sound like?",
+      answer:
+        "Four modes, one disposition. The take — bold declarative opener, structured body, zinger close. The four-word reply — Hindi or English compressed comment. The playbook — when someone asks how, hand over the full stack with no gatekeeping. The framework drop — thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.",
+    },
+    quotes: {
+      question: "What are Agam Arora's signature lines?",
+      answer:
+        "Twelve years of LinkedIn posts compressed to roughly seventy verbatim lines. Each one anchors a date and an era. The manifesto theses lead the page — \"We need to kill prompting,\" \"Context > Prompt. Spec > Sprint. Taste > Execution,\" \"The model wasn't broken, the agent layer was.\" Then anti-hype, PM craft, the AI PM lines from 2023 that still hold, enterprise reality, career and learning, aphorisms, closers.",
+    },
+  };
+  const f = META_FAQ[slug];
+  const faqPage = f
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": f.question,
+            "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+          },
+        ],
+      }
+    : null;
+
   return pageWrap({
     title: m.title,
     description: `${m.title} - meta page in agamarora.second-brain.`,
@@ -847,6 +888,7 @@ function buildMetaPage(slug, src) {
   </nav>`,
     articleHtml,
     navHtml: `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>`,
+    faqPage,
   });
 }
 
@@ -913,6 +955,21 @@ function buildBeliefPage(slug, src) {
 
   const relatedHtml = renderRelated(related);
 
+  // FAQPage JSON-LD: 1 Q&A using title + one_line. AEO-extractable.
+  const faqPage = m.oneLine
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": `What does Agam Arora believe about ${m.title.toLowerCase()}?`,
+            "acceptedAnswer": { "@type": "Answer", "text": m.oneLine },
+          },
+        ],
+      }
+    : null;
+
   return pageWrap({
     title: m.title,
     description: m.oneLine || `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
@@ -926,6 +983,7 @@ function buildBeliefPage(slug, src) {
     navHtml: parentTheme
       ? `<nav class="theme-nav"><a href="/wiki/${parentTheme}/">&larr; ${NAV_TITLES[parentTheme] || parentTheme}</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>`
       : `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>`,
+    faqPage,
   });
 }
 
