@@ -699,7 +699,7 @@
 
     <div class="prompt-box">
       <button class="copy-btn" id="copy-btn" aria-label="Copy paste prompt">Copy</button>
-      <pre id="paste-prompt">I want my own second brain. Use the template at github.com/agamarora/second-brain.
+      <pre id="paste-prompt"><code class="language-prompt">I want my own second brain. Use the template at github.com/agamarora/second-brain.
 
 Execute this end-to-end. The authoritative instructions live in the template's CLAUDE.md, read it before acting and follow it exactly. This paste prompt is just the entry point.
 
@@ -741,7 +741,7 @@ ORDER OF OPERATIONS:
    - To sync to GitHub: `git add -A && git commit -m "initial brain setup" && git push`. Confirm with me first.
    - To publish a read-only view at `&lt;username&gt;.github.io/&lt;repo&gt;/`: uncomment the `on:` trigger in `.github/workflows/publish-brain.yml`.
 
-I'll answer your questions. Ask before anything destructive (rm, force-push, deleting branches). I have `gh`, `git`, and Claude Code installed.</pre>
+I'll answer your questions. Ask before anything destructive (rm, force-push, deleting branches). I have `gh`, `git`, and Claude Code installed.</code></pre>
     </div>
     <!-- KEEP IN SYNC WITH github.com/agamarora/second-brain/blob/main/README.md (BEGIN:PASTE_PROMPT … END:PASTE_PROMPT) -->
     <p style="font-size: 0.88rem; color: var(--text-dim);">
@@ -864,8 +864,10 @@ I'll answer your questions. Ask before anything destructive (rm, force-push, del
     if (!btn || !pre) return;
 
     btn.addEventListener('click', async function() {
+      // Read from inner <code> if present (AEO-6 wrapper); fall back to <pre>.
+      const codeEl = pre.querySelector('code');
       const tmp = document.createElement('textarea');
-      tmp.innerHTML = pre.innerHTML;
+      tmp.innerHTML = (codeEl || pre).innerHTML;
       const text = tmp.value;
 
       try {
