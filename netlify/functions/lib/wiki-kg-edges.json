@@ -1,0 +1,275 @@
+{
+  "_meta": {
+    "generated_at": "2026-04-27T10:07:36.280Z",
+    "source": "wiki/kg.json",
+    "edge_count": 19,
+    "total_chars": 8960,
+    "target_rels": [
+      "tension-with",
+      "superseded_by",
+      "builds_on",
+      "supersedes",
+      "contradicts"
+    ]
+  },
+  "edges": [
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.dominate-dont-compete",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.help-market-flourish",
+      "to_label": "Go increase the size of the pie if you want a bigger share. Collaborative-growth over zero-sum. **2026-04 live evidence: this repo (agamarora/agamarora) is open-source as a direct application of this principle.**",
+      "to_theme": "career-reflection"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.ideas-are-enough",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.ship-the-prototype",
+      "to_label": "Build to validate; don't just conceptualize. The prototype is the argument. (Absorbs former tinker-publicly belief as loop-closure framing per A3.)",
+      "to_theme": "personal-projects-tinkering"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.horizontal-ai-will-scale",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.agent-first",
+      "to_label": "Start thinking agent-first — both building and serving lens. Platforms that cannot talk to autonomous agents are behind.",
+      "to_theme": "agent-first"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.prompt-engineering-as-skill",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.kill-prompting",
+      "to_label": "We need to kill prompting. (Stance evolved per A1: prompting → context engineering → harness engineering. Verdict held; layer migrated.)",
+      "to_theme": "agent-first"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.ship-fast",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.spec-over-sprint",
+      "to_label": "Spec > Sprint. When you have specced every pixel, a generative tool gives you a worse version of what you already decided.",
+      "to_theme": "spec-first-taste"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.people-management-is-endgame",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.ic-path-legitimacy",
+      "to_label": "Individual Contributor path is a valid career arc. People management is critical but not for everyone. **2026 reframe: AI-era amplifies IC leverage — IC + AI agents = throughput closer to a small team than ever.**",
+      "to_theme": "career-reflection"
+    },
+    {
+      "type": "belief-belief",
+      "rel": "superseded_by",
+      "from_id": "belief.personal-website-is-future-tense",
+      "from_label": "(superseded)",
+      "from_theme": null,
+      "to_id": "belief.personal-website-is-present-tense",
+      "to_label": "You are a brand, and you should have your own nameplate. Ship it.",
+      "to_theme": "personal-projects-tinkering"
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "agent-first",
+      "from_label": "Agent-first thesis",
+      "from_one_line": "Platforms that cannot talk to autonomous agents are already behind. The prompting skill layer migrated; the verdict held.",
+      "to_slug": "enterprise-ai-reality",
+      "to_label": "Enterprise AI reality - ships vs demos",
+      "to_one_line": "Roughly 80% of enterprise AI experiments don't reach production. Moats are infrastructure, talent, data: model is not on the list.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "agent-first",
+      "from_label": "Agent-first thesis",
+      "from_one_line": "Platforms that cannot talk to autonomous agents are already behind. The prompting skill layer migrated; the verdict held.",
+      "to_slug": "spec-first-taste",
+      "to_label": "Spec first, taste always - the builder trilogy",
+      "to_one_line": "Spec > Sprint. Taste > Execution. Context > Prompt. Lived since 2021, named April 2026. Same disposition, sharper words.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "voice-ai-craft",
+      "from_label": "Voice AI craft - cost, latency, scale",
+      "from_one_line": "Voice AI is a distinct engineering discipline with its own constraints. Under-share on LinkedIn is deliberate; case study is on agamarora.com /lab.",
+      "to_slug": "linkedin-as-instrument",
+      "to_label": "LinkedIn as instrument - the meta-platform game",
+      "to_one_line": "Platform to be gamed productively. Posting IS the thinking. Loop closes when others learn (build → post → teach → learn → build).",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "breadth-as-differentiation",
+      "from_label": "Breadth as differentiation",
+      "from_one_line": "Breadth differentiates. Depth makes it matter. Humanness-as-depth (EQ, taste, judgment) is the AI-era axis.",
+      "to_slug": "career-reflection",
+      "to_label": "Career reflection - IC path, learning, market lift",
+      "to_one_line": "IC path is legitimate; AI-era amplifies IC leverage. Help the market flourish (this repo open-source is the proof). Learn concepts not tools.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "pm-taste",
+      "from_label": "PM taste - craft, metaphors, what a PM actually does",
+      "from_one_line": "PM is taste of what to build, what experience, what value. 99% should-we, 1% can-we. Strong opinion about not having strong opinions licenses everything else.",
+      "to_slug": "spec-first-taste",
+      "to_label": "Spec first, taste always - the builder trilogy",
+      "to_one_line": "Spec > Sprint. Taste > Execution. Context > Prompt. Lived since 2021, named April 2026. Same disposition, sharper words.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "pm-taste",
+      "from_label": "PM taste - craft, metaphors, what a PM actually does",
+      "from_one_line": "PM is taste of what to build, what experience, what value. 99% should-we, 1% can-we. Strong opinion about not having strong opinions licenses everything else.",
+      "to_slug": "linkedin-as-instrument",
+      "to_label": "LinkedIn as instrument - the meta-platform game",
+      "to_one_line": "Platform to be gamed productively. Posting IS the thinking. Loop closes when others learn (build → post → teach → learn → build).",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "ai-pm-skillset",
+      "from_label": "What AI PM actually requires",
+      "from_one_line": "LLMs are the primary daily tool. AI replaces the grunt - thinking, writing, coding, PRDs. Taste of what to build is the irreducible PM job.",
+      "to_slug": "agent-first",
+      "to_label": "Agent-first thesis",
+      "to_one_line": "Platforms that cannot talk to autonomous agents are already behind. The prompting skill layer migrated; the verdict held.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "second-brain",
+      "from_label": "Second brain - structured knowledge for agents",
+      "from_one_line": "Built for me, hobbyist scope, Karpathy-inspired. Personal context layer for AI sessions. Pattern probably generalizes for builders.",
+      "to_slug": "ai-pm-skillset",
+      "to_label": "What AI PM actually requires",
+      "to_one_line": "LLMs are the primary daily tool. AI replaces the grunt - thinking, writing, coding, PRDs. Taste of what to build is the irreducible PM job.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "spec-first-taste",
+      "from_label": "Spec first, taste always - the builder trilogy",
+      "from_one_line": "Spec > Sprint. Taste > Execution. Context > Prompt. Lived since 2021, named April 2026. Same disposition, sharper words.",
+      "to_slug": "personal-projects-tinkering",
+      "to_label": "Personal projects - ship it or it doesn't exist",
+      "to_one_line": "Five top-tier open-source projects. Ideas are cheap; the prototype is the argument. Loop: build, post, teach, learn, build.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "career-reflection",
+      "from_label": "Career reflection - IC path, learning, market lift",
+      "from_one_line": "IC path is legitimate; AI-era amplifies IC leverage. Help the market flourish (this repo open-source is the proof). Learn concepts not tools.",
+      "to_slug": "ai-pm-skillset",
+      "to_label": "What AI PM actually requires",
+      "to_one_line": "LLMs are the primary daily tool. AI replaces the grunt - thinking, writing, coding, PRDs. Taste of what to build is the irreducible PM job.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "linkedin-as-instrument",
+      "from_label": "LinkedIn as instrument - the meta-platform game",
+      "from_one_line": "Platform to be gamed productively. Posting IS the thinking. Loop closes when others learn (build → post → teach → learn → build).",
+      "to_slug": "voice-ai-craft",
+      "to_label": "Voice AI craft - cost, latency, scale",
+      "to_one_line": "Voice AI is a distinct engineering discipline with its own constraints. Under-share on LinkedIn is deliberate; case study is on agamarora.com /lab.",
+      "bidirectional": true
+    },
+    {
+      "type": "theme-theme",
+      "rel": "tension-with",
+      "from_slug": "personal-projects-tinkering",
+      "from_label": "Personal projects - ship it or it doesn't exist",
+      "from_one_line": "Five top-tier open-source projects. Ideas are cheap; the prototype is the argument. Loop: build, post, teach, learn, build.",
+      "to_slug": "linkedin-as-instrument",
+      "to_label": "LinkedIn as instrument - the meta-platform game",
+      "to_one_line": "Platform to be gamed productively. Posting IS the thinking. Loop closes when others learn (build → post → teach → learn → build).",
+      "bidirectional": true
+    }
+  ],
+  "theme_index": {
+    "root.substance-over-hype": [],
+    "agent-first": [
+      2,
+      3,
+      7,
+      8,
+      13
+    ],
+    "voice-ai-craft": [
+      9,
+      17
+    ],
+    "breadth-as-differentiation": [
+      10
+    ],
+    "pm-taste": [
+      11,
+      12
+    ],
+    "ai-pm-skillset": [
+      13,
+      14,
+      16
+    ],
+    "enterprise-ai-reality": [
+      7
+    ],
+    "second-brain": [
+      14
+    ],
+    "spec-first-taste": [
+      4,
+      8,
+      11,
+      15
+    ],
+    "career-reflection": [
+      0,
+      5,
+      10,
+      16
+    ],
+    "linkedin-as-instrument": [
+      9,
+      12,
+      17,
+      18
+    ],
+    "personal-projects-tinkering": [
+      1,
+      6,
+      15,
+      18
+    ]
+  }
+}
