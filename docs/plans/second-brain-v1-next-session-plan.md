@@ -539,20 +539,50 @@ to oldest git touch. Freshness signals improve AEO ranking per Reddit
 research.
 ```
 
-### Task 12.4 — AEO-13 post-deploy AI search QA
+### Task 12.4 — AEO-13 post-deploy AI search QA (expanded per goose-aeo framework)
 
-**Scope:** after Tasks 4-12.3 ship, query 5 representative prompts in each of: Perplexity, Bing Copilot, ChatGPT search, Claude.ai. Document whether agamarora.com surfaces + which page is cited.
+**Scope:** after Tasks 4-12.3 ship, query representative prompts in each of: Perplexity, Bing Copilot, ChatGPT search, Claude.ai, Gemini, Grok. Document mention metrics + source citations.
 
-**Prompts:**
-1. "Agam Arora AI product manager"
-2. "agent-first thesis AI products"
-3. "voice AI 90% production reality"
-4. "AI PM should we vs can we framework"
-5. "second brain context layer"
+**Framework upgrade (goose-aeo learnings 2026-04-27):**
+Instead of binary "did it surface," capture per provider:
+- **Mention rate** — % of prompts where agamarora.com (or "Agam Arora") appears
+- **Prominence score** — order/position of mention in answer (1st = high, last = low)
+- **Share of voice** — % of cited sources that are agamarora.com vs others
+- **Source citations** — which page (wiki/<theme>, /lab/<project>, etc.) gets cited
 
-**Output:** `docs/plans/aeo-search-qa-2026-04-XX.md` table per engine.
+**Prompt set (~15 prompts across 4 categories):**
 
-**Re-test cadence:** after first crawl cycle (7-14 days post-deploy).
+*Person identity (3):*
+1. "Who is Agam Arora AI product manager"
+2. "Agam Arora AIonOS background"
+3. "Agam Arora portfolio"
+
+*Theme alignment (8 — one per major theme):*
+1. "agent-first thesis AI products"
+2. "voice AI 90% production reality"
+3. "AI PM should we vs can we framework"
+4. "second brain context layer for AI agents"
+5. "spec-first vs sprint-first product development"
+6. "breadth as differentiation AI engineering"
+7. "enterprise AI ships vs demos"
+8. "LinkedIn as instrument career"
+
+*Comparison / vs queries (2):*
+1. "AI PM vs traditional PM differences"
+2. "agent-first vs human-first AI products"
+
+*Long-tail discovery (2):*
+1. "personal site authored constellation knowledge graph"
+2. "AI product manager second brain wiki"
+
+**Output:** `docs/plans/aeo-search-qa-2026-04-XX.md` with per-prompt × per-provider table:
+
+| Prompt | Provider | Mentioned? | Prominence | Source page |
+|---|---|---|---|---|
+
+Plus aggregate: mention rate per provider, share of voice, weak prompts (zero mention), source-page distribution (which pages get cited most).
+
+**Re-test cadence:** after first crawl cycle (7-14 days post-deploy). Then quarterly.
 
 **Commit message:**
 ```
@@ -561,6 +591,35 @@ AEO-13: post-deploy AI search QA — 5 prompts × 4 engines
 Documented surfacing on Perplexity / Bing Copilot / ChatGPT search /
 Claude.ai. [N/20] prompts surfaced agamarora.com pages. Re-test in
 7-14 days post-crawl.
+```
+
+### Task 12.6 — AEO-15 Comparison content surfaces (goose-aeo learning)
+
+**Why:** goose-aeo audit framework lists "Comparison Content" as one of 6 AI-search readiness dimensions. AI engines surface vs/comparison pages disproportionately for "X vs Y" queries — which are common discovery prompts. Currently agamarora.com has zero explicit comparison content.
+
+**Scope:** add 2-3 lightweight comparison surfaces. Not a marketing growth play — just AEO-extraction surface for queries like "AI PM vs traditional PM" or "agent-first vs human-first." Existing wiki content already implicitly compares (e.g. agent-first thesis is anti-human-first); pull the comparisons out into explicit Q&A blocks.
+
+**Surfaces:**
+1. `/wiki/agent-first/` — already has "What this is not" + "Argues against" sections. Add an explicit `<table>` row "Agent-first vs Human-first." Frames the comparison as data.
+2. `/wiki/spec-first-taste/` — same pattern: "Spec-first vs Sprint-first." Already implicit; surface explicit table.
+3. `/wiki/ai-pm-skillset/` — "AI PM vs Traditional PM" comparison table.
+
+**Pattern:** simple HTML table with 2-3 columns (Aspect | This | That) + 4-6 rows. Followed by 1-paragraph synthesis. Tables outperform paragraphs in AI extraction per Reddit AEO consensus + goose-aeo dimension scoring.
+
+**Files:** `scripts/build-wiki.mjs` theme builders OR direct edits to source drafts in `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/`.
+
+**Effort:** ~45min for 3 tables.
+
+**Commit message:**
+```
+AEO-15: comparison content surfaces (goose-aeo learning)
+
+3 wiki theme pages get explicit comparison tables: agent-first vs
+human-first (/wiki/agent-first/), spec-first vs sprint-first
+(/wiki/spec-first-taste/), AI PM vs traditional PM (/wiki/ai-pm-skillset/).
+HTML tables outperform paragraphs in AI extraction; goose-aeo audit
+framework counts comparison content as 1 of 6 AI-search readiness
+dimensions.
 ```
 
 ### Task 12.5 — AEO-14 Evidence-citation outbound links on belief pages

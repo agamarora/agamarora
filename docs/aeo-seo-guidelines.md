@@ -215,6 +215,42 @@ Sourced from r/SEO + r/marketing 7-10mo old practitioner threads. New items not 
 
 ---
 
+## Part 2.6: goose-aeo framework synthesis (2026-04-27)
+
+Source: https://github.com/gooseworks-ai/goose-aeo (open-source AEO toolkit + skill for Claude Code). MIT-licensed, queries 6 AI providers (Perplexity, OpenAI, Gemini, Grok, Claude, DeepSeek) and scores brand visibility.
+
+### Their 6-dimension AI-search readiness audit
+
+| Dimension | Maps to our work |
+|---|---|
+| Positioning Clarity | AEO-4 BLUF + AEO-1 Person schema description |
+| Structured Content | AEO-3 Q&A overlay + AEO-10 FAQPage schema |
+| **Query Alignment** | **NEW — AEO-13 prompt set should mirror "what does Agam think about X" queries; AEO-3 + AEO-4 content should answer those exactly** |
+| Technical Signals | AEO-1, AEO-2, AEO-8, AEO-10, AEO-12 (dropped) |
+| Content Depth | covered by long-form wiki pages |
+| **Comparison Content** | **NEW — AEO-15 added: 3 explicit "X vs Y" comparison tables on theme pages** |
+
+### Quantified metrics (folded into AEO-13)
+
+- Mention rate per provider (% of prompts surfacing the brand)
+- Prominence score (position-in-answer of mention)
+- Share of voice (% of cited sources that are us)
+- Source-page distribution (which page gets cited most)
+
+Replaces our binary "did it surface" with structured measurement. Re-test quarterly post-deploy.
+
+### What we're NOT adopting
+
+- goose-aeo CLI / skill itself — we own a smaller surface, don't need 50-query batched runs across 6 paid providers. Manual 15-prompt re-test in AEO-13 is sufficient.
+- Provider-cost optimization (Perplexity + OpenAI + Gemini = $2-5/run) — not relevant at our scale.
+
+### Net new tasks added to plan
+
+- AEO-15 (comparison content surfaces) — see next-session-plan Task 12.6
+- AEO-13 expanded — 5 prompts → 15 prompts across identity/theme/comparison/long-tail. Quantified metrics replace binary surfacing.
+
+---
+
 ## Part 4: Pass execution order
 
 Run in this order when triggering an AEO/SEO pass:
