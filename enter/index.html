@@ -564,9 +564,16 @@
     outline-offset:3px;
     border-radius:var(--radius-sm);
   }
+  .conn-banner button:focus-visible {
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
   @media (prefers-reduced-motion:reduce) {
     .trace-line, .empty-state .opening, .status-bar .dot,
     .answer, .cards { animation:none; transition:none; opacity:1; transform:none; }
+    /* Disable kb parallax and aa-mark stroke-draw animation */
+    .kb-board { transform:none !important; }
+    #aa-stroke { transition:none !important; stroke-dashoffset:0 !important; }
   }
 </style>
 </head>
@@ -590,6 +597,7 @@
 <symbol id="ic-envelope" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></symbol>
 <symbol id="ic-mic" viewBox="0 0 384 512"><path d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></symbol>
 <symbol id="ic-code" viewBox="0 0 640 512"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></symbol>
+<symbol id="ic-route" viewBox="0 0 512 512"><path d="M256 0L416 0c17.7 0 32 14.3 32 32l0 64-26.7 0c-17.8 0-34.9-7-47.5-19.7l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L256 48l0-48zM416 192l0-64-32 0c-26.5 0-51.9-10.5-70.7-29.3l-9.4-9.4c-12-12-28.3-18.7-45.3-18.7L160 70.6 160 224l256 0 0-32zM160 256l0 80c0 17.7 14.3 32 32 32l192 0 32 0 0 64c0 17.7-14.3 32-32 32l-160 0c-17.7 0-32-14.3-32-32l0-176z"/></symbol>
 <!-- /chrome:sprite -->
 </svg>
 
@@ -625,7 +633,7 @@
 </div>
 
 <!-- Provider-switch info banner -->
-<div class="provider-banner" id="provider-banner" aria-live="polite">switching providers...</div>
+<div class="provider-banner" id="provider-banner" aria-live="polite"></div>
 
 <!-- Main terminal layout -->
 <main class="terminal" id="terminal-main">
@@ -696,6 +704,11 @@
 </a>
 <!-- /chrome:aamark -->
 
+<!-- throttle module (Lane B) — exposed as window.__throttle for IIFE use -->
+<script type="module">
+import { canSubmit, markSubmit, throttleRemaining } from '/enter/lib/throttle.mjs';
+window.__throttle = { canSubmit, markSubmit, throttleRemaining };
+</script>
 <!-- chrome:script — aa. stroke-draw animation -->
 <script>(function(){
   const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
@@ -774,7 +787,8 @@ function setKbScale() {
 }
 if (!isMobile()) setKbScale();
 window.addEventListener('resize', setKbScale);
-if (!isMobile()) {
+const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion:reduce)').matches ?? false;
+if (!isMobile() && !prefersReducedMotion) {
   document.addEventListener('mousemove', e => {
     mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -851,24 +865,29 @@ setTimeout(() => {
 // =============================================================
 // THROTTLE (1 query / 2s — browser-side tier 1 defense)
 // Per phase-d-decisions-2026-04-27.md Decision 10: 1q/2s browser soft block.
-// Lane B (defense.mjs) not yet shipped; this is the client-side guard.
+// Uses Lane B throttle.mjs (window.__throttle) if available, else inline fallback.
 // =============================================================
-let lastQueryTime = 0;
-const THROTTLE_MS = 2000;
+const _throttle = window.__throttle || (() => {
+  const THROTTLE_MS = 2000;
+  let lastSubmitAt = 0;
+  return {
+    canSubmit: () => Date.now() - lastSubmitAt >= THROTTLE_MS,
+    markSubmit: () => { lastSubmitAt = Date.now(); },
+    throttleRemaining: () => Math.max(0, THROTTLE_MS - (Date.now() - lastSubmitAt)),
+  };
+})();
 
-function isThrottled() {
-  return Date.now() - lastQueryTime < THROTTLE_MS;
-}
+function isThrottled() { return !_throttle.canSubmit(); }
 
 const inputBar = document.getElementById('input-bar');
 const throttleHint = document.getElementById('throttle-hint');
 
 function showThrottle() {
   inputBar.classList.add('throttled');
-  let remaining = Math.ceil((THROTTLE_MS - (Date.now() - lastQueryTime)) / 1000);
+  let remaining = Math.ceil(_throttle.throttleRemaining() / 1000);
   throttleHint.textContent = `wait ${remaining}s before next query`;
   const tk = setInterval(() => {
-    remaining -= 1;
+    remaining = Math.ceil(_throttle.throttleRemaining() / 1000);
     if (remaining <= 0) {
       clearInterval(tk);
       inputBar.classList.remove('throttled');
@@ -931,6 +950,7 @@ const CARD_ICONS = {
   'ic-envelope': '#ic-envelope',
   'ic-mic': '#ic-mic',
   'ic-code': '#ic-code',
+  'ic-route': '#ic-route',
 };
 
 // Infer icon from card slug / url
@@ -961,10 +981,12 @@ function buildCard(card) {
     : inferCardIcon(card.slug, card.url);
   const arrow = card.type === 'external' ? '&#8599;' : '&rarr;';
   const target = card.type === 'external' ? ' target="_blank" rel="noopener"' : '';
-  const url = card.url || '#';
+  const rawUrl = card.url || '#';
+  // Whitelist scheme to prevent javascript: XSS
+  const url = /^(https?:\/\/|\/[^/])/.test(rawUrl) ? rawUrl : '#';
   const arrowLabel = card.arrow_label || url.replace('https://', '').replace('http://', '');
 
-  return `<a class="card${isPriority ? ' priority' : ''}" href="${url}"${target} role="listitem">
+  return `<a class="card${isPriority ? ' priority' : ''}" href="${escHtml(url)}"${target} role="listitem">
     <svg class="card-icon" aria-hidden="true"><use href="${icon}"/></svg>
     <div class="card-title">${escHtml(card.title || '')}</div>
     <div class="card-desc">${escHtml(card.desc || '')}</div>
@@ -976,12 +998,41 @@ function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// Map Lane A card slug → URL (slug is e.g. 'lab', 'resume', 'wiki/agent-first', 'calendly')
+function slugToUrl(slug) {
+  if (!slug) return '#';
+  if (slug === 'calendly') return 'https://calendly.com/agamarora/chat';
+  if (slug === 'linkedin') return 'https://linkedin.com/in/agamarora';
+  if (slug === 'github') return 'https://github.com/agamarora';
+  if (slug === 'shararat') return 'https://shararat.agamarora.com';
+  if (slug === 'resume-pdf') return '/assets/artefacts/2026_Agam%20Arora.pdf';
+  // Internal slugs: /lab, /resume, /wiki/..., /lab/second-brain/, etc.
+  return '/' + slug.replace(/^\//, '');
+}
+
+// Map Lane A card slug → human-readable title
+function slugToTitle(slug) {
+  if (!slug) return '';
+  const map = {
+    'lab': 'Browse his lab',
+    'resume': 'See his background',
+    'calendly': 'Book a 15-min chat',
+    'linkedin': 'See his LinkedIn',
+    'github': 'See his GitHub',
+    'shararat': 'Try Shararat live',
+    'resume-pdf': 'Download resume PDF',
+    'lab/second-brain': 'second-brain PRFAQ',
+    'lab/ai-resume': 'AI Resume template',
+  };
+  return map[slug] || slug.split('/').pop().replace(/-/g, ' ');
+}
+
 // =============================================================
 // TRACE LINE SCHEDULER — Decision 17 count-up + spinner → tick
 // Each line reveals at cumulative prior + max(realLatency, MIN_READ_BUFFER).
 // Spinner spins during count-up, morphs to checkmark at end.
 // =============================================================
-const MIN_READ_BUFFER_MS = 600;
+const MIN_READ_BUFFER_MS = 500;
 
 function scheduleTraceLine(lineEl, realLatencyMs, delayMs) {
   // Show the line after delayMs with spinner + counting up
@@ -1182,7 +1233,7 @@ async function submitQuery(prompt, history, isRetry) {
   hideConnBanner();
   stopHintRotation();
 
-  lastQueryTime = Date.now();
+  _throttle.markSubmit();
   lastPromptForRetry = prompt;
   lastHistoryForRetry = [...history];
 
@@ -1205,7 +1256,7 @@ async function submitQuery(prompt, history, isRetry) {
     const res = await fetch('/.netlify/functions/groqHandler', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, history: history.slice(0, -0) || [] }),
+      body: JSON.stringify({ prompt, history: history.slice(-6) }),
       signal: currentAbortController.signal,
     });
     clearTimeout(timeout);
@@ -1269,18 +1320,86 @@ async function submitQuery(prompt, history, isRetry) {
       return;
     }
 
-    // ---- v2 SSE text stream (current groqHandler.mjs) ----
+    // ---- SSE stream (Lane A v3 structured events OR v2 plain-text tokens) ----
     setStatus('classifying');
 
-    // Generate plausible trace before stream arrives
-    traceAnimTime = generateFallbackTrace(prompt, turnId);
-    setStatus('pulling');
-
-    // Buffer SSE stream
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
     let fullText = '';
+    const sseCards = [];
+
+    // v3 trace scheduling state
+    let traceCumulative = 80;
+    let isV3 = false; // flips true on first typed event
+
+    function processSSEChunk(payload) {
+      if (payload === '[DONE]') return;
+      let parsed;
+      try { parsed = JSON.parse(payload); } catch (e) { return; }
+
+      const t = parsed.type;
+
+      // ---- Lane A v3 typed events ----
+      if (t === 'trace') {
+        isV3 = true;
+        const verb = parsed.verb || '';
+        const args = parsed.args || '';
+        const realMs = typeof parsed.ms === 'number' ? parsed.ms : (parsed.pill_ms || 500);
+        addTraceLine(turnId, verb, args, realMs, traceCumulative);
+        traceCumulative += Math.max(realMs, MIN_READ_BUFFER_MS);
+        setStatus('pulling');
+        return;
+      }
+
+      if (t === 'token') {
+        isV3 = true;
+        if (parsed.text) fullText += parsed.text;
+        setStatus('composing');
+        return;
+      }
+
+      if (t === 'card') {
+        isV3 = true;
+        // Lane A card shape: { slug, type, priority }
+        // Map slug → card object for buildCard
+        if (parsed.slug) {
+          sseCards.push({
+            slug: parsed.slug,
+            type: parsed.type === true || parsed.type === 'page' ? 'page' : 'external',
+            priority: parsed.priority === true,
+            url: parsed.url || slugToUrl(parsed.slug),
+            title: parsed.title || slugToTitle(parsed.slug),
+            desc: parsed.desc || '',
+          });
+        }
+        return;
+      }
+
+      if (t === 'done') {
+        isV3 = true;
+        // done sentinel — stream will end
+        return;
+      }
+
+      if (t === 'error') {
+        showConnBanner(parsed.message || 'Stream error.');
+        return;
+      }
+
+      if (t === 'provider_switch') {
+        flashProviderBanner('switching providers...');
+        return;
+      }
+
+      // ---- v2 fallback: plain {text} token ----
+      if (!t && parsed.text) {
+        fullText += parsed.text;
+      }
+      if (!t && parsed.error) {
+        showConnBanner(parsed.error);
+      }
+    }
 
     while (true) {
       const { done, value } = await reader.read();
@@ -1292,52 +1411,43 @@ async function submitQuery(prompt, history, isRetry) {
 
       for (const chunk of chunks) {
         if (!chunk.startsWith('data: ')) continue;
-        const payload = chunk.slice(6).trim();
-        if (payload === '[DONE]') continue;
-        try {
-          const parsed = JSON.parse(payload);
-
-          // v3 provider-switch signal
-          if (parsed.type === 'provider_switch') {
-            flashProviderBanner('switching providers...');
-            continue;
-          }
-
-          if (parsed.text) fullText += parsed.text;
-          if (parsed.error) {
-            showConnBanner(parsed.error);
-          }
-        } catch (e) {
-          // ignore parse errors
-        }
+        processSSEChunk(chunk.slice(6).trim());
       }
     }
 
     // Flush remaining partial
     if (buffer && buffer.startsWith('data: ')) {
-      try {
-        const p = JSON.parse(buffer.slice(6).trim());
-        if (p.text) fullText += p.text;
-      } catch (e) { /* ignore */ }
+      processSSEChunk(buffer.slice(6).trim());
     }
 
     setStatus('composing');
 
     if (!fullText) fullText = 'Not sure how to land that one. Try asking something else.';
 
-    const fallbackCards = generateFallbackCards(prompt, fullText);
+    // If v3: use SSE cards; if v2: use slug-based fallback cards
+    const finalCards = (isV3 && sseCards.length > 0)
+      ? sseCards
+      : generateFallbackCards(prompt, fullText);
+
+    // If v2 (no trace events came): show a single composing... trace line
+    if (!isV3) {
+      addTraceLine(turnId, 'composing', 'answer', 200, 80);
+      traceAnimTime = 80 + Math.max(200, MIN_READ_BUFFER_MS);
+    } else {
+      traceAnimTime = traceCumulative;
+    }
 
     pushHistory('user', prompt);
     pushHistory('assistant', fullText);
 
     showAnswer(turnId, fullText, traceAnimTime + 350);
-    showCards(turnId, fallbackCards, traceAnimTime + 800);
+    showCards(turnId, finalCards, traceAnimTime + 800);
 
     setTimeout(() => {
       setStatus('replied');
       setTimeout(() => {
         setStatus('ready', true);
-        finishTurn(turnId, fullText, fallbackCards, false);
+        finishTurn(turnId, fullText, finalCards, false);
       }, 1500);
     }, traceAnimTime + 200);
 
@@ -1355,7 +1465,7 @@ async function submitQuery(prompt, history, isRetry) {
 function finishTurn(turnId, answer, cards, isError) {
   isBusy = false;
   inputBar.classList.remove('busy');
-  inputEl.focus();
+  if (!isMobile()) inputEl.focus();
   startHintRotation();
   if (isError) {
     setStatus('ready', true);
@@ -1390,8 +1500,12 @@ inputEl.addEventListener('keydown', e => {
 // =============================================================
 // INIT
 // =============================================================
+// Abort any in-flight request on page unload (prevents zombie streams)
+window.addEventListener('beforeunload', () => currentAbortController?.abort());
+
 startHintRotation();
-inputEl.focus();
+// Don't auto-focus on mobile — triggers soft keyboard unexpectedly
+if (!isMobile()) inputEl.focus();
 
 // Visual viewport fix for mobile keyboard
 if (isMobile() && window.visualViewport) {
