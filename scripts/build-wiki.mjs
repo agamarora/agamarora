@@ -1277,18 +1277,21 @@ function buildGraphPage() {
 
   // Theme positions: hand-tuned (angle°, radF). Genesis at center; 11 themes orbit.
   // NOT a perfect circle — irregular radF gives organic distribution per memorable-thing.
+  // Theme radial fractions tightened 2026-04-27 (-15%) so all nodes fit on
+  // mobile viewport without pan-scroll. Original spec range was 0.24-0.32 of
+  // min(vw,vh); now 0.20-0.27. Genesis still center, organic placement preserved.
   const THEMES = [
-    { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'agent-first',         ang: 18,  radF: 0.27 },
-    { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'ai-pm skillset',      ang: 62,  radF: 0.32 },
-    { id: 'theme.pm-taste',                    slug: 'pm-taste',                    label: 'pm taste',            ang: 98,  radF: 0.25 },
-    { id: 'theme.enterprise-ai-reality',       slug: 'enterprise-ai-reality',       label: 'enterprise ai',       ang: 138, radF: 0.30 },
-    { id: 'theme.voice-ai-craft',              slug: 'voice-ai-craft',              label: 'voice ai craft',      ang: 168, radF: 0.27 },
-    { id: 'theme.second-brain',                slug: 'second-brain',                label: 'second brain',        ang: 202, radF: 0.29 },
-    { id: 'theme.spec-first-taste',            slug: 'spec-first-taste',            label: 'spec-first taste',    ang: 232, radF: 0.25 },
-    { id: 'theme.breadth-as-differentiation',  slug: 'breadth-as-differentiation',  label: 'breadth as edge',     ang: 260, radF: 0.31 },
-    { id: 'theme.linkedin-as-instrument',      slug: 'linkedin-as-instrument',      label: 'linkedin instrument', ang: 288, radF: 0.24 },
-    { id: 'theme.career-reflection',           slug: 'career-reflection',           label: 'career reflection',   ang: 318, radF: 0.28 },
-    { id: 'theme.personal-projects-tinkering', slug: 'personal-projects-tinkering', label: 'personal projects',   ang: 348, radF: 0.32 },
+    { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'agent-first',         ang: 18,  radF: 0.230 },
+    { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'ai-pm skillset',      ang: 62,  radF: 0.272 },
+    { id: 'theme.pm-taste',                    slug: 'pm-taste',                    label: 'pm taste',            ang: 98,  radF: 0.213 },
+    { id: 'theme.enterprise-ai-reality',       slug: 'enterprise-ai-reality',       label: 'enterprise ai',       ang: 138, radF: 0.255 },
+    { id: 'theme.voice-ai-craft',              slug: 'voice-ai-craft',              label: 'voice ai craft',      ang: 168, radF: 0.230 },
+    { id: 'theme.second-brain',                slug: 'second-brain',                label: 'second brain',        ang: 202, radF: 0.247 },
+    { id: 'theme.spec-first-taste',            slug: 'spec-first-taste',            label: 'spec-first taste',    ang: 232, radF: 0.213 },
+    { id: 'theme.breadth-as-differentiation',  slug: 'breadth-as-differentiation',  label: 'breadth as edge',     ang: 260, radF: 0.264 },
+    { id: 'theme.linkedin-as-instrument',      slug: 'linkedin-as-instrument',      label: 'linkedin instrument', ang: 288, radF: 0.204 },
+    { id: 'theme.career-reflection',           slug: 'career-reflection',           label: 'career reflection',   ang: 318, radF: 0.238 },
+    { id: 'theme.personal-projects-tinkering', slug: 'personal-projects-tinkering', label: 'personal projects',   ang: 348, radF: 0.272 },
   ];
 
   const totalEntries = (kg.stats.posts || 0) + (kg.stats.comments || 0) + 220; // approximate corpus + uncurated
