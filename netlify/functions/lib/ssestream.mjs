@@ -51,6 +51,15 @@ function tokenChunks(text) {
 //   MIN_PILL_MS  minimum duration for pill animation (Decision 17, default 600ms)
 //
 // Returns ReadableStream<Uint8Array>.
+//
+// MIN_DISPLAY_MS is the floor applied to the ms value rendered as the trace
+// pill counter. Sub-millisecond ops (cache lookups, in-memory KG joins) round
+// to 0 with Math.round — and "0ms" reads as broken or untracked. 12ms is
+// indistinguishable from real fast-path latency to the user, but reads as a
+// real measurement. Floor only applies when realMs > 0 (preserves null
+// semantics for steps that genuinely had no timing).
+const MIN_DISPLAY_MS = 12;
+
 export function buildEventStream(parsed, timings = {}, MIN_PILL_MS = 600) {
   const trace = Array.isArray(parsed?.trace) ? parsed.trace : [];
   const answer = typeof parsed?.answer === 'string' ? parsed.answer : '';
@@ -74,10 +83,17 @@ export function buildEventStream(parsed, timings = {}, MIN_PILL_MS = 600) {
           // Decision 17: pill animation uses max(realMs, MIN_PILL_MS).
           const pillMs = realMs !== null ? Math.max(realMs, MIN_PILL_MS) : MIN_PILL_MS;
 
+          // Floor the displayed ms at MIN_DISPLAY_MS so sub-ms ops don't render
+          // "0ms" (reads as broken). Pill animation duration uses pillMs which
+          // already has its own floor (MIN_PILL_MS, Decision 17).
+          const displayMs = realMs !== null
+            ? Math.max(Math.round(realMs), MIN_DISPLAY_MS)
+            : null;
+
           controller.enqueue(sseEvent('trace', {
             verb,
             args,
-            ms: realMs !== null ? Math.round(realMs) : null,
+            ms: displayMs,
             pill_ms: Math.round(pillMs),
           }));
         }
