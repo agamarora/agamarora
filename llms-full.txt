@@ -1,6 +1,6 @@
 # Agam Arora, Full Site Content
 
-> Agam Arora is an AI Product Manager at AIonOS. 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
+> Agam Arora is an AI Product Manager and engineer-PM. 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
 
 Home: https://agamarora.com
 Last updated: 2026-04-22

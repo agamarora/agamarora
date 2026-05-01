@@ -1,6 +1,6 @@
 # Agam Arora
 
-> Agam Arora is an AI Product Manager at AIonOS. He has 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
+> Agam Arora is an AI Product Manager and engineer-PM. He has 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
 
 This site is hand-built in vanilla HTML. Every page is a self-contained file, no framework, no build step. The `/enter` page hosts an AI terminal grounded in the resume below, so questions about Agam's work can be answered conversationally.
 

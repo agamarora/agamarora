@@ -55,7 +55,7 @@ You may **not**:
 - Redistribute modified versions.
 - Strip attribution.
 
-For permissions beyond this license: **agam.arora11@gmail.com**.
+For permissions beyond this license: **reachme.agam@gmail.com**.
 
 Copyright © 2026 Agam Arora. All rights reserved.
 
