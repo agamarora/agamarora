@@ -24,5 +24,11 @@
   },
   "dependencies": {
     "groq-sdk": "^1.1.2"
+  },
+  "devDependencies": {
+    "opentype.js": "^1.3.5",
+    "png-to-ico": "^3.0.1",
+    "sharp": "^0.34.5",
+    "wawoff2": "^2.0.1"
   }
 }
