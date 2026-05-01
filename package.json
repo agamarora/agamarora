@@ -2,6 +2,13 @@
   "name": "agamarora-com",
   "private": true,
   "type": "module",
+  "author": "Agam Arora <agam.arora11@gmail.com> (https://agamarora.com)",
+  "license": "CC-BY-NC-ND-4.0",
+  "homepage": "https://agamarora.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agamarora/agamarora.git"
+  },
   "scripts": {
     "build:kg": "node scripts/build-kg.mjs --strict",
     "build:wiki": "node scripts/build-wiki.mjs --strict",

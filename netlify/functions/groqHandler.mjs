@@ -1,5 +1,9 @@
 // groqHandler.mjs
 //
+// Copyright (c) 2026 Agam Arora. All rights reserved.
+// Licensed under CC BY-NC-ND 4.0. View-only, non-commercial, no derivatives.
+// See LICENSE in the repository root.
+//
 // /enter v3 backend — Lane A integration.
 //
 // FLOW
