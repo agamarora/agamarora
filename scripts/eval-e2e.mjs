@@ -109,8 +109,9 @@ const SCENARIOS = [
       bannedAbsent: true,
       cardsMin: 1,
       cardsMax: 3,
-      // Deflect answer should be terse. Trace should show 'deflected' verb.
-      traceShouldInclude: 'deflected',
+      // Deflect answer should be terse. Trace should show one of the
+      // deflect-family verbs per system prompt verb list.
+      traceShouldIncludeAny: ['deflected', 'declined', 'deflect'],
     },
   },
 ];
@@ -264,6 +265,13 @@ function checkAsserts(scenario, collected, answer, ms) {
     const verbs = collected.traceLines.map((l) => l.verb);
     if (!verbs.includes(a.traceShouldInclude)) {
       fails.push(`trace missing verb: ${a.traceShouldInclude} (got ${verbs.join(',')})`);
+    }
+  }
+  if (a.traceShouldIncludeAny) {
+    const verbs = new Set(collected.traceLines.map((l) => l.verb));
+    const matched = a.traceShouldIncludeAny.some((v) => verbs.has(v));
+    if (!matched) {
+      fails.push(`trace missing any-of verb: ${a.traceShouldIncludeAny.join(', ')} (got ${[...verbs].join(',')})`);
     }
   }
 
