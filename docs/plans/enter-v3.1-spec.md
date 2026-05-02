@@ -1,6 +1,6 @@
 # /enter v3.1 — Working Spec
 
-**Status:** DRAFT — investigation complete, not yet locked.
+**Status:** LOCKED 2026-05-02 — autoplan dual-voice review complete, decisions taste-passed by Agam, execution underway on `enter-v3.1-dev` branch.
 **Started:** 2026-05-02
 **Branch:** main
 **Predecessor:** `/enter v3` (LIVE, see `enter-v3.md` and `phase-d-decisions-2026-04-27.md`).
@@ -193,60 +193,66 @@ Risk: privacy + key collision. Scope: localStorage, no server. User can clear vi
 
 ---
 
-## 5. Proposed phasing
+## 5. Phasing (LOCKED 2026-05-02)
 
-The phasing is a recommendation. Each phase is a separate commit. No bundling. Each phase has visual parity check before commit.
+Subagent review surfaced a critical regression risk: B1 (SSE wire fix) cannot ship alone because LLM cards reaching `buildCard` with empty desc + ugly fallback titles is worse UX than today's all-fallback path. Phase 1 and Phase 2 therefore MERGE into a single atomic landing.
 
-### Phase 1 — Wire correctness (P0, 1 session)
-1. E2 eval runner skeleton + 5 canonical scenarios (greeting, lookup, contact, synthesis, deflect)
-2. E3 visual parity script
-3. B1 SSE wire fix (rename `type` → `kind`)
-4. B2 cache-replay cards
-5. B4 dead-code removal
-6. B8 docstring fix
+Each phase ships as a coherent commit set on `enter-v3.1-dev` branch. Visual parity check + eval gate before commit. No commits to main until full v3.1 lands and is taste-passed.
 
-Gate: all 5 eval scenarios green, parity diff acceptable, manual headed-browser smoke.
+### Phase 1+2 (merged) — Wire correctness + card metadata SSOT (P0, atomic)
+1. **E1** — `netlify/functions/lib/card-meta.mjs` (new). SSOT for slug→{title, desc, url, kind}. Sources wiki theme metadata from `wiki-extracts.json`. Static maps for lab pages, externals, actions. Export `resolveCard(slug)`.
+2. **E2** — `scripts/eval-e2e.mjs`. Drives real /enter via SSE against `netlify dev`. 5 canonical scenarios first (greeting, lookup, contact, synthesis, deflect). Uses dedicated `GROQ_API_KEY_EVAL` env var (free-tier separate key). `npm run eval:e2e` manual trigger.
+3. **E3** — `scripts/enter-parity.mjs`. Drives gstack browser headed. 5 query screenshots desktop (1280×800) + mobile (390×844). Saves to `.gstack/parity/`. Manual visual diff for v3.1; auto pixelmatch deferred.
+4. **B1** — SSE wire fix. `ssestream.mjs` renames inner card key `type` → `kind`. Server now emits resolved meta: `{slug, kind, priority, title, desc, url, arrow_label}`. Frontend reads verbatim.
+5. **B3 + B7** — Frontend `buildCard` becomes pure render. Drop `slugToTitle`, `slugToUrl`, `slugToDesc`, `inferCardIcon`. All resolution server-side.
+6. **B2** — Cache replay stores + emits cards. `dupCacheStore({text, cards})`. Cache hit re-emits trace + token + card + done.
+7. **B4** — Delete dead v2 JSON-response branch (`enter/index.html` ~1568-1612). Delete `generateFallbackTrace`. Keep `generateFallbackCards` as last-resort safety net for zero-card SSE.
+8. **B8** — Update `groqHandler.mjs:28` SSE shape docstring.
+9. **B11** — Deflect stream emits varied 2-card set (still bounded — pick from {lab, resume, wiki/graph, calendly} based on hash of input).
 
-### Phase 2 — Card-metadata SSOT (P1, 1 session)
-1. E1 server-side card-meta table + SSE shape extension `{slug, kind, priority, title, desc, url, arrow_label}`
-2. B3 client `buildCard` becomes pure render (drop `slugToTitle`/`slugToUrl`/`slugToDesc`)
-3. B7 ride-along (theme slug rendering correct)
-4. B11 deflect cards: variety per request (still bounded set)
-5. Eval scenarios extended for each known card-bearing intent
+**Gate:** 5 eval scenarios green, parity screenshots reviewed, manual headed-browser smoke across desktop + mobile + 3 query types.
 
-Gate: parity check, eval green, every theme + lab subpage renders correct title+desc.
+### Phase 3 — Retrieval coverage (P1, separate landing)
+1. **B9 / E4** — Belief-page retrieval. Extend `scripts/build-wiki-extracts.mjs` to emit `beliefs` map keyed by belief slug, capped ~600 chars per belief. Extend `THEME_SLUGS` enum or add `BELIEF_SLUGS`. Extend classifier `KEYWORD_TO_SLUG`. Token budget verified safe: worst case 3 themes + 2 beliefs ≈ 6.5K tokens (subagent estimate).
+2. **E6** — Cards JSON-schema validation. Post-LLM, validate `parsed.cards` shape. Inject defaults for known intents (CONTACT must include book-call+linkedin+github). Closes B10.
+3. **B5** — Confidence retry trace fix. Use `parsed.trace` (original), append synthetic `expanded` verb, ignore retry's trace.
+4. **B6** — Trace timing key broadening. Verb-keyed map with args as tiebreaker. Only if cheap.
 
-### Phase 3 — Coverage (P1, 1 session)
-1. B9 / E4 belief-page retrieval — extend `wiki-extracts.json` build script + classifier
-2. E6 cards JSON-schema validation + defaults injection (closes B10)
-3. B5 confidence retry trace fix
-4. B6 trace timing key broadening (low priority, do if cheap)
+**Gate:** 19-belief eval scenarios green, retrieval coverage report.
 
-Gate: 19-belief eval scenarios + retrieval coverage report.
+### Phase 4 — Demo pazzazz (LOCKED scope, ship in this order)
+Built to sell. Each independent commit + parity + eval scenario.
 
-### Phase 4 — Surface lifts (earn-place, 1 session each, optional)
-1. W1 inline citations
-2. E7 pill click-to-expand
-3. W2 `/enter?q=...` deep-link
-4. W3 cross-session memory
+1. **W1 — Inline citations [1][2] in answer prose.** Server-side post-synthesis: regex match between answer text and retrieved theme keywords. Substring/fuzzy match required (no hallucinated cites). `[1]` superscript links to `/wiki/<theme>`. Hover preview desktop, tap mobile. Per locked decision in §6.
+2. **E7 — Pill click-to-expand.** Click `pulled wiki(agent-first, 1842 chars)` pill, inline expand to first 200 chars of injected extract + link to full `/wiki/<theme>`. Server already has the content; client just renders. Per locked decision in §6.
+3. **W4 — Mini-graph.** Real Canvas, ~160px tall, between trace pills + answer. Reuses `/wiki/graph` rendering engine, scoped to retrieved subgraph (2-3 themes + 5-8 edges + 1 belief if KG hit). Same dark + gold style. Animated entry: nodes fade with offset, edges stroke-draw ~600ms. Click node → `/wiki/<theme>`. Mobile: collapse to horizontal node row with edge labels (graph layout doesn't work <400px). Per locked decision in §6 — earned its place because user judgement: "ASCII is nothing, this is the demo asset that sells."
 
-Each is independent. Each must demo a clear lift on its own commit + parity + eval.
+### Phase 5 — Distribution + continuity (defer-able)
+1. **W2** — `/enter?q=...` deep-link. URL param auto-runs query on load. LinkedIn-post surface.
+2. **W3** — Cross-session memory. localStorage persist last 6 turns. Returning visitor: small `continue last thread?` link. Differentiator vs cold-start chatbots.
 
-### Phase 5 — Multi-turn (only if asks demand it)
-1. E5 conversation history condensation
+**Phase 5 is deferred until Phase 4 ships and demand is validated. Do not ship blind.**
+
+### Phase 6 — Multi-turn (only if real asks demand it)
+1. **E5** — Conversation history condensation.
 
 ---
 
-## 6. Decisions still needed (gate to lock spec)
+## 6. Decisions (LOCKED 2026-05-02)
 
-1. **Card metadata SSOT location.** New file `card-meta.mjs`, or extend `kg-themes-summary.mjs`?
-2. **Belief slug namespace.** `beliefs/<slug>` or flat `<slug>`? Affects classifier + URL routing.
-3. **Inline citation rendering.** Numbered `[1]` (Perplexity) or footnote-style with hover? Mobile fallback?
-4. **localStorage memory key.** Per-domain only, or also per-anonymized-fingerprint?
-5. **Eval runner home.** Existing `eval-prompt.mjs` or new `eval-prompt-v3.mjs`?
-6. **Visual parity diff tooling.** Pixelmatch / odiff / manual screenshot review?
+1. **Phase 1+2 atomicity** → MERGE. Subagent flagged regression window if B1 ships without B3. Atomic commit set on `enter-v3.1-dev`.
+2. **Card metadata SSOT location** → New file `netlify/functions/lib/card-meta.mjs`. Imports wiki theme titles from `wiki-extracts.json`. Hardcodes lab/resume/socials. Single resolved object emitted to frontend.
+3. **Belief slug namespace** → `wiki/beliefs/<slug>` URL pattern (matches existing `/wiki/beliefs/...` routes). Classifier emits flat slug; card-meta resolves to URL.
+4. **Inline citation rendering** → Numbered `[1]` superscript (Perplexity-style). Hover preview on desktop showing first 80 chars of cited extract + link. Mobile: tap shows preview as inline expansion below answer paragraph (since hover unavailable).
+5. **Mini-graph in scope** → YES, ship in Phase 4. Real Canvas reusing `/wiki/graph` engine, 160px tall. User judgement: "ASCII is nothing, this is the demo asset that sells."
+6. **Eval runner** → New `scripts/eval-e2e.mjs`. Existing `eval-prompt.mjs` is prompt-level only and stays for prompt regression. Eval-e2e drives real HTTP+SSE against `netlify dev`. Uses dedicated `GROQ_API_KEY_EVAL` env var (free-tier separate key). Manual trigger only.
+7. **Visual parity tooling** → Manual screenshot review for v3.1 (`scripts/enter-parity.mjs` produces before/after PNG sets). Auto pixelmatch deferred to v3.2 once cadence justifies the build cost.
+8. **localStorage memory** → Phase 5 only, deferred. Domain-scoped key `agamarora.enter.history.v1`. No fingerprinting.
+9. **Wow priorities for Phase 4** → Inline citations + pill expand + mini-graph (locked). Cross-session memory + deep-link defer to Phase 5 pending demand validation. Confidence-stripe rejected (priority gold border already encodes this signal).
 
-These get answered in the next session before any code lands.
+### Open setup items (one-time, before Phase 1+2 lands)
+
+- `GROQ_API_KEY_EVAL` env var must be added to local `.env` for `npm run eval:e2e`. Use a free-tier Groq key separate from production. (Production `GROQ_API_KEY` stays in Netlify dashboard; eval key is local-only for now.)
 
 ---
 
