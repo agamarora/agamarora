@@ -3,10 +3,12 @@
 // Copyright (c) 2026 Agam Arora. All rights reserved.
 // Licensed under CC BY-NC-ND 4.0.
 //
-// Generates favicon + app icon set from the aa. mark.
-// One unified design at every size: full Patrick Hand "aa." with gold dot
+// Generates favicon + app icon set from the aa mark.
+// One unified design at every size: Patrick Hand "aa" (no trailing dot)
 // on dark bg. At 16x16 the cursive strokes go slightly soft, accepted —
 // modern displays mostly render favicons at 32px effective via retina.
+// (The full "aa." mark with gold dot still ships in the page footer; at
+//  favicon scale the dot reads as a stray pixel, so we drop it here.)
 //
 // Outputs:
 //   /favicon.ico                  (16+32+48 multi-res, dot-only)
@@ -56,55 +58,46 @@ function glyphAdvance(font, char, fontSize) {
   return (glyph.advanceWidth * fontSize) / font.unitsPerEm;
 }
 
-// Master SVG — full "aa." mark, used for app icons + apple-touch.
+// Master SVG — "aa" mark (no trailing dot), used for app icons + apple-touch.
 function buildMasterSvg(font, size = 1024) {
   const FONT_SIZE = Math.round(size * 0.78);
 
   const aAdv = glyphAdvance(font, 'a', FONT_SIZE);
-  const dotAdv = glyphAdvance(font, '.', FONT_SIZE);
-  const totalW = aAdv * 2 + dotAdv;
+  const totalW = aAdv * 2;
 
   const startX = (size - totalW) / 2;
   const baseY = size * 0.74;
 
   const a1 = glyphPath(font, 'a', FONT_SIZE, startX, baseY);
   const a2 = glyphPath(font, 'a', FONT_SIZE, startX + aAdv, baseY);
-  const dot = glyphPath(font, '.', FONT_SIZE, startX + aAdv * 2, baseY);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="${COLOR_BG}"/>
   <path d="${a1}" fill="${COLOR_TEXT}"/>
   <path d="${a2}" fill="${COLOR_TEXT}"/>
-  <path d="${dot}" fill="${COLOR_ACCENT}"/>
 </svg>`;
 }
 
 // (Earlier dot-only variant removed — full mark used at every size.)
 
-// Maskable variant — full mark scaled into inner 80% so Android adaptive icon
+// Maskable variant — "aa" mark scaled into inner 80% so Android adaptive icon
 // shapes (circle, squircle, rounded square) don't crop the design.
 function buildMaskableSvg(font, size = 1024) {
   const SAFE = size * 0.8;
   const PAD = (size - SAFE) / 2;
-  const inner = buildMasterSvg(font, SAFE);
-  // Strip outer <svg> tag from inner, place inside a wrapper with padding + bg fill.
-  // Easier: render the master content but at a smaller bbox and add bg padding.
   const FONT_SIZE = Math.round(SAFE * 0.78);
   const aAdv = glyphAdvance(font, 'a', FONT_SIZE);
-  const dotAdv = glyphAdvance(font, '.', FONT_SIZE);
-  const totalW = aAdv * 2 + dotAdv;
+  const totalW = aAdv * 2;
   const startX = PAD + (SAFE - totalW) / 2;
   const baseY = PAD + SAFE * 0.74;
 
   const a1 = glyphPath(font, 'a', FONT_SIZE, startX, baseY);
   const a2 = glyphPath(font, 'a', FONT_SIZE, startX + aAdv, baseY);
-  const dot = glyphPath(font, '.', FONT_SIZE, startX + aAdv * 2, baseY);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="${COLOR_BG}"/>
   <path d="${a1}" fill="${COLOR_TEXT}"/>
   <path d="${a2}" fill="${COLOR_TEXT}"/>
-  <path d="${dot}" fill="${COLOR_ACCENT}"/>
 </svg>`;
 }
 
