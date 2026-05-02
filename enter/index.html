@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <title>Know Agam. Live AI terminal grounded in his resume.</title>
-<meta name="description" content="Live AI terminal for Agam Arora. Grounded in his resume, shipped products, and case studies. Ask about voice AI at enterprise scale, RAG, agentic systems, PM craft, or anything in his portfolio. Streaming responses via Groq.">
+<meta name="description" content="Live AI terminal grounded in Agam Arora's resume, products, and case studies. Ask about voice AI, RAG, agentic systems, or PM craft. Streaming.">
 <meta property="og:title" content="Know Agam. Live AI terminal grounded in his resume.">
 <meta property="og:description" content="Ask Agam's AI about his work. Grounded in his resume, products, and case studies. Streaming responses, opinionated answers.">
 <meta property="og:type" content="website">
@@ -16,6 +16,7 @@
 <meta property="og:image:height" content="1256">
 <meta property="og:image:alt" content="Agam Arora — AI Product Manager, Engineer-PM, Builder.">
 <meta property="og:site_name" content="Agam Arora">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Know Agam. Live AI terminal grounded in his resume.">
 <meta name="twitter:description" content="Ask Agam's AI about his work. Grounded in his resume and case studies. Streaming responses.">
@@ -796,7 +797,7 @@
 <header class="site-header">
   <div class="icon-bar">
     <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
     <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>
@@ -1207,7 +1208,7 @@ function slugToUrl(slug) {
   if (!slug) return '#';
   // Calendly: both 'calendly' (legacy) and 'book-call' (canonical per site.json) map here
   if (slug === 'calendly' || slug === 'book-call') return 'https://calendly.com/agamarora/chat';
-  if (slug === 'linkedin') return 'https://linkedin.com/in/agamarora';
+  if (slug === 'linkedin') return 'https://www.linkedin.com/in/agamarora/';
   if (slug === 'github') return 'https://github.com/agamarora';
   if (slug === 'shararat') return 'https://github.com/agamarora/shararat-ai';
   if (slug === 'email') return 'mailto:agam.arora@aionos.ai';
@@ -1456,7 +1457,7 @@ function generateFallbackCards(prompt, answer) {
 
   const lab = { title:'Browse the lab', desc:"Projects, demos, and case studies.", url:'/lab', icon:'ic-flask' };
   const github = { title:'GitHub profile', desc:"Open source projects and code.", url:'https://github.com/agamarora', type:'external', icon:'ic-github' };
-  const linkedin = { title:'See his LinkedIn', desc:"Full work history, posts, and endorsements.", url:'https://linkedin.com/in/agamarora', type:'external', icon:'ic-link' };
+  const linkedin = { title:'See his LinkedIn', desc:"Full work history, posts, and endorsements.", url:'https://www.linkedin.com/in/agamarora/', type:'external', icon:'ic-link' };
   const calendly = { title:'Book a 15-min chat', desc:"Fastest path to a real conversation.", url:'https://calendly.com/agamarora/chat', type:'external', icon:'ic-calendar' };
   const resume = { title:'See his background', desc:"12 years, 6 companies, 5 industries.", url:'/resume', icon:'ic-user' };
   const graph = { title:'Constellation graph', desc:"His second brain as an interactive star map.", url:'/wiki/graph', icon:'ic-route' };
@@ -1818,7 +1819,7 @@ startHintRotation();
     { href:'/resume', icon:'#ic-user', title:'See his background',
       desc:'12 years, 6 companies, 5 industries.',
       arrow:'&rarr; /resume', external:false },
-    { href:'https://linkedin.com/in/agamarora', icon:'#ic-link', title:'See his LinkedIn',
+    { href:'https://www.linkedin.com/in/agamarora/', icon:'#ic-link', title:'See his LinkedIn',
       desc:'Long form of the resume.',
       arrow:'&#8599; linkedin', external:true },
     { href:'https://github.com/agamarora', icon:'#ic-code', title:'See his GitHub',

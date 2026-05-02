@@ -39,6 +39,22 @@
   status = 301
   force = true
 
+# Canonical no-trailing-slash for /resume and /enter. Both pages declare a
+# canonical without a trailing slash and the sitemap matches; Netlify by
+# default serves the same file at both forms, which can create soft duplicates.
+# Force the slashed variant to 301 to the bare canonical.
+[[redirects]]
+  from = "/resume/"
+  to = "/resume"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/enter/"
+  to = "/enter"
+  status = 301
+  force = true
+
 # Security headers: applied to every response.
 # HSTS skips `preload` for now (preload list is a permanent commitment).
 # CSP allows inline style/script (site has no build step, every page is self-contained),

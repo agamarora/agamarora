@@ -121,7 +121,7 @@ export const SVG_SPRITE = `<svg xmlns="http://www.w3.org/2000/svg" style="positi
 export const SHARED_HEADER_HTML = `<header class="site-header">
   <div class="icon-bar">
     <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
     <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>
@@ -131,7 +131,7 @@ export const SHARED_HEADER_HTML = `<header class="site-header">
 export const SHARED_HEADER_HTML_LANDING = `<header class="site-header">
   <div class="icon-bar">
     <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
     <a href="/resume" aria-label="Resume"><svg class="icon" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>

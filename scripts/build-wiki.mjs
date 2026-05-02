@@ -542,32 +542,66 @@ function safeJsonLd(obj) {
   return JSON.stringify(obj, null, 2).replace(/<\//g, "<\\/");
 }
 
-function pageWrap({ title, description, canonical, breadcrumbHtml, articleHtml, navHtml, schemaType, faqPage }) {
-  const ogImage = "https://agamarora.com/assets/og/lab.png"; // TODO: per-page OG (B-future)
+function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbItems, articleHtml, navHtml, schemaType, faqPage }) {
+  const ogImage = "https://agamarora.com/assets/og/og-wiki.jpg";
   const faqLd = faqPage
     ? `\n<script type="application/ld+json">\n${safeJsonLd(faqPage)}\n</script>\n`
     : "";
+
+  // SEO: keep <title> under 60 chars. Long source titles often have a ` - `
+  // separator splitting headline from kicker; if total would blow past 60,
+  // use only the headline half for <title> (full title stays in og/twitter).
+  const SUFFIX = " — wiki";
+  const headTitle = (title + SUFFIX).length > 60 && title.includes(" - ")
+    ? title.split(" - ")[0].trim() + SUFFIX
+    : title + SUFFIX;
+  const fullTitle = title + SUFFIX;
+
+  // BreadcrumbList JSON-LD. Items are passed in as [{name, url}, ...]; if a
+  // caller forgets to pass them, derive a minimal Home → Wiki → <title> chain
+  // from the canonical so we never emit zero structured breadcrumbs.
+  const items = breadcrumbItems && breadcrumbItems.length > 0
+    ? breadcrumbItems
+    : [
+        { name: "Home", url: "https://agamarora.com/" },
+        { name: "Wiki", url: "https://agamarora.com/wiki/" },
+        { name: title, url: canonical },
+      ];
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((it, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": it.name,
+      "item": it.url,
+    })),
+  };
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>${escHtml(title)} - Agam Arora's wiki.</title>
+<title>${escHtml(headTitle)}</title>
 <meta name="description" content="${escHtml(description)}">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="${canonical}">
-<meta property="og:title" content="${escHtml(title)} - Agam Arora's wiki.">
+<meta property="og:title" content="${escHtml(fullTitle)}">
 <meta property="og:description" content="${escHtml(description)}">
 <meta property="og:image" content="${ogImage}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1256">
+<meta property="og:image:alt" content="${escHtml(title)} — second brain by Agam Arora.">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${escHtml(title)} - Agam Arora's wiki.">
+<meta name="twitter:title" content="${escHtml(fullTitle)}">
 <meta name="twitter:description" content="${escHtml(description)}">
 <meta name="twitter:image" content="${ogImage}">
 
@@ -579,9 +613,13 @@ ${safeJsonLd({
   "@type": schemaType,
   "headline": title,
   "url": canonical,
+  "image": ogImage,
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
   "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
 })}
+</script>
+<script type="application/ld+json">
+${safeJsonLd(breadcrumbLd)}
 </script>${faqLd}
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
@@ -858,6 +896,11 @@ function buildThemePage(slug, src) {
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
   </nav>`,
+    breadcrumbItems: [
+      { name: "Home", url: "https://agamarora.com/" },
+      { name: "Wiki", url: "https://agamarora.com/wiki/" },
+      { name: m.title, url: `https://agamarora.com/wiki/${slug}/` },
+    ],
     articleHtml: articleHtml + (relatedHtml ? `\n${relatedHtml}` : ""),
     navHtml: themeNav(slug),
   });
@@ -905,6 +948,11 @@ function buildMetaPage(slug, src) {
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><span>${escHtml(m.title)}</span>
   </nav>`,
+    breadcrumbItems: [
+      { name: "Home", url: "https://agamarora.com/" },
+      { name: "Wiki", url: "https://agamarora.com/wiki/" },
+      { name: m.title, url: `https://agamarora.com/wiki/${slug}/` },
+    ],
     articleHtml,
     navHtml: `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><span></span></nav>`,
     faqPage,
@@ -989,6 +1037,23 @@ function buildBeliefPage(slug, src) {
       }
     : null;
 
+  // Breadcrumb chain: Home → Wiki → Beliefs → [ParentTheme] → <Title>
+  const beliefBreadcrumbItems = [
+    { name: "Home", url: "https://agamarora.com/" },
+    { name: "Wiki", url: "https://agamarora.com/wiki/" },
+    { name: "Beliefs", url: "https://agamarora.com/wiki/beliefs/" },
+  ];
+  if (parentTheme && HAS_PAGE.themes.has(parentTheme)) {
+    beliefBreadcrumbItems.push({
+      name: NAV_TITLES[parentTheme] || parentTheme,
+      url: `https://agamarora.com/wiki/${parentTheme}/`,
+    });
+  }
+  beliefBreadcrumbItems.push({
+    name: m.title,
+    url: `https://agamarora.com/wiki/beliefs/${slug}/`,
+  });
+
   return pageWrap({
     title: m.title,
     description: m.oneLine || `${m.title} - belief sub-page under ${parentTheme || "wiki"} in agamarora.second-brain.`,
@@ -998,6 +1063,7 @@ function buildBeliefPage(slug, src) {
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><a href="/wiki/beliefs/">beliefs</a><span class="sep">/</span>${parentLink}<span>${escHtml(m.title)}</span>
   </nav>`,
+    breadcrumbItems: beliefBreadcrumbItems,
     articleHtml: articleHtml + (relatedHtml ? `\n${relatedHtml}` : ""),
     navHtml: parentTheme
       ? `<nav class="theme-nav"><a href="/wiki/${parentTheme}/">&larr; ${NAV_TITLES[parentTheme] || parentTheme}</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/beliefs/">All beliefs &rarr;</a></nav>`
@@ -1131,6 +1197,11 @@ ${projectRows}
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><span>Projects</span>
   </nav>`,
+    breadcrumbItems: [
+      { name: "Home", url: "https://agamarora.com/" },
+      { name: "Wiki", url: "https://agamarora.com/wiki/" },
+      { name: "Projects", url: "https://agamarora.com/wiki/projects/" },
+    ],
     articleHtml,
     navHtml: `<nav class="theme-nav"><span></span><a href="/wiki/" class="home">wiki home</a><a href="/wiki/graph/">Graph &rarr;</a></nav>`,
   });
@@ -1239,6 +1310,11 @@ ${groupBlocks}
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/wiki/">wiki</a><span class="sep">/</span><span>Beliefs</span>
   </nav>`,
+    breadcrumbItems: [
+      { name: "Home", url: "https://agamarora.com/" },
+      { name: "Wiki", url: "https://agamarora.com/wiki/" },
+      { name: "Beliefs", url: "https://agamarora.com/wiki/beliefs/" },
+    ],
     articleHtml,
     navHtml: `<nav class="theme-nav"><a href="/wiki/">&larr; wiki home</a><a href="/wiki/" class="home">wiki home</a><a href="/wiki/graph/">Graph &rarr;</a></nav>`,
   }).replace(/<\/style>\n<\/head>/, `${extraCss}\n</style>\n</head>`);
@@ -1365,15 +1441,38 @@ function buildGraphPage() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>Graph - Agam Arora's wiki.</title>
+<title>Graph — wiki</title>
 <meta name="description" content="Authored constellation of ${kg.stats.nodes_total} graph nodes and ${kg.stats.edges.total} edges across the corpus. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/wiki/graph/">
-<meta property="og:title" content="Graph - Agam Arora's wiki.">
+<meta property="og:title" content="Graph — Agam Arora's wiki.">
 <meta property="og:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
-<meta property="og:image" content="https://agamarora.com/assets/og/lab.png">
+<meta property="og:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1256">
+<meta property="og:image:alt" content="Graph — second brain by Agam Arora.">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Agam Arora">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Graph — Agam Arora's wiki.">
+<meta name="twitter:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://agamarora.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Wiki", "item": "https://agamarora.com/wiki/" },
+    { "@type": "ListItem", "position": 3, "name": "Graph", "item": "https://agamarora.com/wiki/graph/" }
+  ]
+}
+</script>
 
 <link rel="canonical" href="https://agamarora.com/wiki/graph/">
 <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">

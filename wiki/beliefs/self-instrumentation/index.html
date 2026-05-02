@@ -4,21 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>Self-instrumentation is how you debug your own thinking - Agam Arora's wiki.</title>
+<title>Self-instrumentation is how you debug your own thinking — wiki</title>
 <meta name="description" content="Instrument yourself the same way you'd instrument a system - name the patterns, externalize them, then synthesize them back.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://agamarora.com/wiki/beliefs/self-instrumentation/">
-<meta property="og:title" content="Self-instrumentation is how you debug your own thinking - Agam Arora's wiki.">
+<meta property="og:title" content="Self-instrumentation is how you debug your own thinking — wiki">
 <meta property="og:description" content="Instrument yourself the same way you'd instrument a system - name the patterns, externalize them, then synthesize them back.">
 <meta property="og:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
+<meta property="og:image:alt" content="Self-instrumentation is how you debug your own thinking — second brain by Agam Arora.">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Self-instrumentation is how you debug your own thinking - Agam Arora's wiki.">
+<meta name="twitter:title" content="Self-instrumentation is how you debug your own thinking — wiki">
 <meta name="twitter:description" content="Instrument yourself the same way you'd instrument a system - name the patterns, externalize them, then synthesize them back.">
 <meta name="twitter:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
 
@@ -30,6 +33,7 @@
   "@type": "Article",
   "headline": "Self-instrumentation is how you debug your own thinking",
   "url": "https://agamarora.com/wiki/beliefs/self-instrumentation/",
+  "image": "https://agamarora.com/assets/og/og-wiki.jpg",
   "isPartOf": {
     "@type": "WebSite",
     "@id": "https://agamarora.com/#website"
@@ -38,6 +42,44 @@
     "@type": "Person",
     "@id": "https://agamarora.com/#person"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://agamarora.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Wiki",
+      "item": "https://agamarora.com/wiki/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Beliefs",
+      "item": "https://agamarora.com/wiki/beliefs/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "Second brain",
+      "item": "https://agamarora.com/wiki/second-brain/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "Self-instrumentation is how you debug your own thinking",
+      "item": "https://agamarora.com/wiki/beliefs/self-instrumentation/"
+    }
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -71,7 +113,7 @@
   :root {
     --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
     --border:#1E1E1E; --border-hover:#2A2A2A;
-    --text:#E8E4DF; --text-dim:#7A7A7A;
+    --text:#E8E4DF; --text-dim:#8a8a8a;
     --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
     --mono:'JetBrains Mono',monospace;
     --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
@@ -83,6 +125,13 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
   ::selection{background:var(--accent);color:var(--bg);}
+
+  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+  ::-webkit-scrollbar-corner{background:transparent;}
 
   header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
   .icon-bar{display:inline-flex;align-items:center;}
@@ -230,7 +279,7 @@
 <header class="site-header">
   <div class="icon-bar">
     <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
-    <a href="https://linkedin.com/in/agamarora" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
     <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
     <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
     <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>

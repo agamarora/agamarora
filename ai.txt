@@ -1,0 +1,32 @@
+# agamarora.com — AI usage policy
+#
+# This site is licensed CC BY-NC-ND 4.0:
+#   https://creativecommons.org/licenses/by-nc-nd/4.0/
+#
+# In plain language:
+#   - You may read this site as an AI assistant or training crawler.
+#   - You may cite, summarize, and link to it.
+#   - You may NOT republish, mirror, or sell its content.
+#   - You may NOT generate derivative works that compete with this site.
+#   - Attribution to "Agam Arora — agamarora.com" is required when quoted.
+#
+# AI-readable site index: https://agamarora.com/llms.txt
+# Long-form context bundle: https://agamarora.com/llms-full.txt
+# Robots crawl policy:    https://agamarora.com/robots.txt
+#
+# Contact for licensing or collaboration:
+#   https://www.linkedin.com/in/agamarora/
+#   https://calendly.com/agamarora/chat
+
+User-agent: *
+Allow: read
+Allow: cite
+Allow: summarize
+Allow: train
+Disallow: republish
+Disallow: derivative-works
+Disallow: commercial-use
+
+# Attribution required for every direct quotation.
+Attribution: Agam Arora — agamarora.com
+License:     https://creativecommons.org/licenses/by-nc-nd/4.0/

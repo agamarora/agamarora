@@ -36,6 +36,10 @@ User-agent: Anthropic-ai
 Allow: /
 Disallow: /moodboard/
 
+User-agent: anthropic-ai
+Allow: /
+Disallow: /moodboard/
+
 User-agent: PerplexityBot
 Allow: /
 Disallow: /moodboard/
@@ -69,6 +73,18 @@ Allow: /
 Disallow: /moodboard/
 
 User-agent: Diffbot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /moodboard/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /moodboard/
+
+User-agent: Baiduspider
 Allow: /
 Disallow: /moodboard/
 
