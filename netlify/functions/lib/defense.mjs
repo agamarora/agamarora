@@ -58,7 +58,7 @@ const BOT_STATIC_RESPONSE = {
     { slug: 'breadth-as-differentiation', label: 'Breadth as differentiation', one_line: 'Breadth differentiates; depth is what makes it matter', url: 'https://agamarora.com/wiki/breadth-as-differentiation/' },
     { slug: 'shipping-vs-perfection', label: 'Shipping vs perfection', one_line: 'A product that reaches users beats the perfect one stuck in review', url: 'https://agamarora.com/wiki/shipping-vs-perfection/' },
   ],
-  resume: 'https://agamarora.com/resume',
+  resume: 'https://agamarora.com/resume/',
   wiki: 'https://agamarora.com/wiki',
   llms_txt: 'https://agamarora.com/llms.txt',
 };

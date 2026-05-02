@@ -85,7 +85,7 @@ A terminal dashboard for Claude Code usage (5h/7d windows), CPU, temperatures, m
 
 ## Talk to Agam's AI
 
-At https://agamarora.com/enter there is an immersive AI terminal: a keyboard-background UI with a Groq-streamed conversation grounded in Agam's resume. It's opinionated and sharp, ask it about Agam's work, his taste, or anything the resume speaks to.
+At https://agamarora.com/enter/ there is an immersive AI terminal: a keyboard-background UI with a Groq-streamed conversation grounded in Agam's resume. It's opinionated and sharp, ask it about Agam's work, his taste, or anything the resume speaks to.
 
 ---
 

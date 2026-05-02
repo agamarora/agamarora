@@ -9,14 +9,14 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 ## Pages
 
 - [Home](https://agamarora.com/): landing page, greeting cycle, bio, three entry points (AI chat, projects, resume)
-- [Resume](https://agamarora.com/resume): full career history, roles, and education
+- [Resume](https://agamarora.com/resume/): full career history, roles, and education
 - [resume.md](https://agamarora.com/resume.md): plain-markdown source of the resume, ground truth for factual work-history questions
 - [Lab](https://agamarora.com/lab/): open source, case studies, and experiments
 - [second-brain](https://agamarora.com/lab/second-brain/): open source template, a git-native second brain your AI can read, write, and compound
 - [AI Resume template](https://agamarora.com/lab/ai-resume/): open source, a resume for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint; humans get a chat with proof cards
 - [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
 - [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
-- [Talk to Agam's AI](https://agamarora.com/enter): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
+- [Talk to Agam's AI](https://agamarora.com/enter/): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
 - [Wiki](https://agamarora.com/wiki/): second-brain wiki - twelve themes plus a root disposition. Twelve years of writing distilled into beliefs, evidence, and tensions. Built for me, readable by agents.
 
 ## Wiki tree (machine-readable knowledge graph)
