@@ -39,21 +39,13 @@
   status = 301
   force = true
 
-# Canonical no-trailing-slash for /resume and /enter. Both pages declare a
-# canonical without a trailing slash and the sitemap matches; Netlify by
-# default serves the same file at both forms, which can create soft duplicates.
-# Force the slashed variant to 301 to the bare canonical.
-[[redirects]]
-  from = "/resume/"
-  to = "/resume"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/enter/"
-  to = "/enter"
-  status = 301
-  force = true
+# NOTE: trailing-slash redirects for /resume and /enter were attempted on
+# 2026-05-02 (commit 0d89698) and caused an infinite 301 loop because
+# Netlify's default pretty-URL behavior internally normalizes /resume to
+# /resume/ before matching redirects, so /resume → /resume/ → (our redirect)
+# → /resume → ... Removed. The declared <link rel="canonical"> on each page
+# already tells search engines which form is canonical; Netlify serves both
+# forms transparently and that's fine.
 
 # Security headers: applied to every response.
 # HSTS skips `preload` for now (preload list is a permanent commitment).
