@@ -1232,8 +1232,59 @@ function slugToTitle(slug) {
     'resume-pdf': 'Download resume PDF',
     'lab/second-brain': 'second-brain PRFAQ',
     'lab/ai-resume': 'AI Resume template',
+    'lab/voice-ai-production': 'Voice AI in production',
+    'lab/product-shape': 'Product shape',
+    'wiki/agent-first': 'Agent-first thesis',
+    'wiki/voice-ai-craft': 'Voice AI craft',
+    'wiki/spec-first-taste': 'Spec-first taste',
+    'wiki/second-brain': 'Second-brain wiki',
+    'wiki/breadth-as-differentiation': 'Breadth as differentiation',
+    'wiki/pm-taste': 'PM taste',
+    'wiki/ai-pm-skillset': 'AI-PM skillset',
+    'wiki/enterprise-ai-reality': 'Enterprise AI reality',
+    'wiki/career-reflection': 'Career reflection',
+    'wiki/linkedin-as-instrument': 'LinkedIn as instrument',
+    'wiki/personal-projects-tinkering': 'Personal projects + tinkering',
+    'wiki/root.substance-over-hype': 'Substance over hype',
+    'wiki/graph': 'Constellation graph',
+    'wiki/beliefs': 'Beliefs index',
+    'wiki/projects': 'Projects DAG',
+    'wiki/voice': 'How he writes',
+    'wiki/quotes': 'Signature lines',
   };
   return map[slug] || slug.split('/').pop().replace(/-/g, ' ');
+}
+
+// Map Lane A card slug → short description (one line). Used for theme/wiki cards
+// emitted server-side without a `desc` field.
+function slugToDesc(slug) {
+  if (!slug) return '';
+  const map = {
+    'wiki/agent-first': 'Why agents are the new primary user. The thesis in full.',
+    'wiki/voice-ai-craft': 'What it takes to ship voice AI at scale.',
+    'wiki/spec-first-taste': 'Context over prompt. Taste over execution.',
+    'wiki/second-brain': 'The knowledge graph behind these answers.',
+    'wiki/breadth-as-differentiation': 'Why breadth beats depth in the AI era.',
+    'wiki/pm-taste': 'What product taste actually looks like.',
+    'wiki/ai-pm-skillset': 'LLMs as the daily tool, not the topic.',
+    'wiki/enterprise-ai-reality': 'Why 80% of enterprise AI never ships.',
+    'wiki/career-reflection': '12 years across 6 companies, lessons earned.',
+    'wiki/linkedin-as-instrument': 'Posting as thinking. The platform as a game.',
+    'wiki/personal-projects-tinkering': 'Side projects, demos, why he ships.',
+    'wiki/root.substance-over-hype': 'Reduce any hyped category to its substrate.',
+    'wiki/graph': 'His second brain as an interactive star map.',
+    'wiki/beliefs': 'Indexed positions, with evidence.',
+    'wiki/projects': 'Project lineage as a DAG.',
+    'wiki/voice': 'How he writes. The rules.',
+    'wiki/quotes': 'Lines worth keeping.',
+    'lab/voice-ai-production': 'Case study: 4M annual calls at 50% lower cost.',
+    'lab/second-brain': 'Why AI forgets you every session, and what fixes it.',
+    'lab/ai-resume': 'AI-readable resume template.',
+    'lab/product-shape': 'How he scopes a product.',
+    'lab': 'Projects, demos, and case studies.',
+    'resume': '12 years, 6 companies, 5 industries.',
+  };
+  return map[slug] || '';
 }
 
 // =============================================================
@@ -1655,16 +1706,19 @@ async function submitQuery(prompt, history, isRetry) {
 
       if (t === 'card') {
         isV3 = true;
-        // Lane A card shape: { slug, type, priority }
+        // Lane A card shape: { slug, kind, priority }
+        // (inner key is `kind` not `type` to avoid collision with the SSE
+        // event-type wrapper. server-side rename in ssestream.mjs.)
         // Map slug → card object for buildCard
         if (parsed.slug) {
+          const cardKind = parsed.kind || parsed.type;
           sseCards.push({
             slug: parsed.slug,
-            type: parsed.type === true || parsed.type === 'page' ? 'page' : 'external',
+            type: cardKind === true || cardKind === 'page' ? 'page' : 'external',
             priority: parsed.priority === true,
             url: parsed.url || slugToUrl(parsed.slug),
             title: parsed.title || slugToTitle(parsed.slug),
-            desc: parsed.desc || '',
+            desc: parsed.desc || slugToDesc(parsed.slug),
           });
         }
         return;
