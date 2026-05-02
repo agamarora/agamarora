@@ -112,16 +112,11 @@ export function buildEventStream(parsed, timings = {}, MIN_PILL_MS = 600) {
         }
 
         // --- Card events ---
-        // NOTE: inner key is `kind` (not `type`) to avoid collision with the
-        // outer SSE event-type wrapper. sseEvent serializes as
-        //   {type, ...data}
-        // and a spread named `type` would silently overwrite the event-type,
-        // which broke the frontend's `t === 'card'` matching for ages.
         for (const card of cards) {
           if (!card?.slug) continue;
           controller.enqueue(sseEvent('card', {
             slug: card.slug,
-            kind: card.type || card.kind || 'page',
+            type: card.type || 'page',
             priority: card.priority === true || card.priority === 'true',
           }));
         }
@@ -165,8 +160,8 @@ export function buildDeflectStream(text) {
       for (const chunk of chunks) {
         controller.enqueue(sseEvent('token', { text: chunk }));
       }
-      controller.enqueue(sseEvent('card', { slug: 'lab', kind: 'page', priority: true }));
-      controller.enqueue(sseEvent('card', { slug: 'resume', kind: 'page', priority: false }));
+      controller.enqueue(sseEvent('card', { slug: 'lab', type: 'page', priority: true }));
+      controller.enqueue(sseEvent('card', { slug: 'resume', type: 'page', priority: false }));
       controller.enqueue(sseEvent('done', {}));
       controller.close();
     },
@@ -182,7 +177,7 @@ export function buildFallbackStream() {
       for (const chunk of chunks) {
         controller.enqueue(sseEvent('token', { text: chunk }));
       }
-      controller.enqueue(sseEvent('card', { slug: 'lab', kind: 'page', priority: true }));
+      controller.enqueue(sseEvent('card', { slug: 'lab', type: 'page', priority: true }));
       controller.enqueue(sseEvent('done', {}));
       controller.close();
     },

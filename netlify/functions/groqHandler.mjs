@@ -25,7 +25,7 @@
 // SSE shape (v3 — enter/index.html v3 consumer):
 //   data: {"type":"trace","verb":"...","args":"...","ms":42,"pill_ms":600}\n\n
 //   data: {"type":"token","text":"..."}\n\n
-//   data: {"type":"card","slug":"...","kind":"page","priority":false}\n\n
+//   data: {"type":"card","slug":"...","type":"page","priority":false}\n\n
 //   data: {"type":"done"}\n\n
 //
 // Per phase-d-decisions-2026-04-27.md Decisions 1-18.
@@ -627,42 +627,6 @@ export default async function (request) {
       } else {
         console.warn('[D-9a] retry did not improve answer, using original');
       }
-    }
-
-    // ---- Theme-card exit-points: prepend wiki/<slug> cards for retrieved themes
-    //
-    // When retrieval pulled theme content, surface those wiki pages as exit-point
-    // cards. Makes the demo feel like a live atlas: answer cites the corpus +
-    // cards point to the source pages. Dedupe by slug, cap final cards at 3.
-    // Preserves any LLM-emitted project/lab cards as supporting slots.
-    if (Array.isArray(parsed?.cards) && wikiExtracts.length > 0) {
-      const wikiCards = wikiExtracts.map((w) => ({
-        slug: `wiki/${w.slug}`,
-        type: 'page',
-        priority: false,
-      }));
-      const existingSlugs = new Set(parsed.cards.map((c) => c?.slug));
-      const prepended = wikiCards.filter((c) => !existingSlugs.has(c.slug));
-      parsed.cards = [...prepended, ...parsed.cards];
-
-      // Pad to 3 cards with default supporting links so every theme-grounded
-      // answer feels like a live atlas (3 exit points), not a sparse stub.
-      const supporting = [
-        { slug: 'wiki/graph', type: 'page', priority: false },
-        { slug: 'lab', type: 'page', priority: false },
-        { slug: 'resume', type: 'page', priority: false },
-      ];
-      for (const s of supporting) {
-        if (parsed.cards.length >= 3) break;
-        if (!parsed.cards.some((c) => c?.slug === s.slug)) parsed.cards.push(s);
-      }
-      parsed.cards = parsed.cards.slice(0, 3);
-
-      console.log('[theme-cards]', JSON.stringify({
-        wiki_slugs: wikiCards.map((c) => c.slug),
-        prepended_count: prepended.length,
-        final_slugs: parsed.cards.map((c) => c?.slug),
-      }));
     }
 
     // ---- D-4 + Decision 16: Build SSE event stream ---------------------------
