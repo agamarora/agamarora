@@ -202,7 +202,7 @@ Each phase ships as a coherent commit set on `enter-v3.1-dev` branch. Visual par
 ### Phase 1+2 (merged) — Wire correctness + card metadata SSOT (P0, atomic)
 1. **E1** — `netlify/functions/lib/card-meta.mjs` (new). SSOT for slug→{title, desc, url, kind}. Sources wiki theme metadata from `wiki-extracts.json`. Static maps for lab pages, externals, actions. Export `resolveCard(slug)`.
 2. **E2** — `scripts/eval-e2e.mjs`. Drives real /enter via SSE against `netlify dev`. 5 canonical scenarios first (greeting, lookup, contact, synthesis, deflect). Uses dedicated `GROQ_API_KEY_EVAL` env var (free-tier separate key). `npm run eval:e2e` manual trigger.
-3. **E3** — `scripts/enter-parity.mjs`. Drives gstack browser headed. 5 query screenshots desktop (1280×800) + mobile (390×844). Saves to `.gstack/parity/`. Manual visual diff for v3.1; auto pixelmatch deferred.
+3. **E3** — Visual parity for v3.1 = user's eyeball check on `netlify dev`. eval-e2e.mjs already validates SSE shape + card metadata structurally (catches B3 regression directly). Auto pixelmatch + headed-browser screenshot script deferred to v3.2 once the gstack browse binary is available locally and cadence justifies the build cost.
 4. **B1** — SSE wire fix. `ssestream.mjs` renames inner card key `type` → `kind`. Server now emits resolved meta: `{slug, kind, priority, title, desc, url, arrow_label}`. Frontend reads verbatim.
 5. **B3 + B7** — Frontend `buildCard` becomes pure render. Drop `slugToTitle`, `slugToUrl`, `slugToDesc`, `inferCardIcon`. All resolution server-side.
 6. **B2** — Cache replay stores + emits cards. `dupCacheStore({text, cards})`. Cache hit re-emits trace + token + card + done.
