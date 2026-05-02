@@ -22,13 +22,20 @@
 //     → server stamps real timings into trace events  (Decision 16)
 //     → buildEventStream() → SSE  (trace / token / card / done)
 //
-// SSE shape (v3 — enter/index.html v3 consumer):
+// SSE shape (v3.1 — enter/index.html consumer):
 //   data: {"type":"trace","verb":"...","args":"...","ms":42,"pill_ms":600}\n\n
 //   data: {"type":"token","text":"..."}\n\n
-//   data: {"type":"card","slug":"...","type":"page","priority":false}\n\n
+//   data: {"type":"card","slug":"wiki/agent-first","kind":"page","priority":true,
+//          "title":"Read the agent-first take","desc":"...","url":"/wiki/agent-first/",
+//          "arrow_label":"/wiki/agent-first/"}\n\n
 //   data: {"type":"done"}\n\n
 //
+// IMPORTANT: inner card key is `kind` (not `type`) to avoid collision with
+// the outer SSE event-type wrapper. Pre-v3.1 used `type` and the spread
+// silently overwrote the event type, breaking all card rendering.
+//
 // Per phase-d-decisions-2026-04-27.md Decisions 1-18.
+// Per docs/plans/enter-v3.1-spec.md B1 (wire fix), B3 (card meta SSOT), B2 (cache cards).
 
 import { invokeSynthesisJson } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
@@ -49,7 +56,7 @@ import {
   formatEdgesForPrompt,
   wikiDiagnostics,
 } from './lib/wiki-retrieval.mjs';
-import { buildEventStream, buildDeflectStream, buildFallbackStream } from './lib/ssestream.mjs';
+import { buildEventStream, buildDeflectStream, buildFallbackStream, buildCacheReplayStream } from './lib/ssestream.mjs';
 import {
   BANNED_USER_FACING_TERMS,
   BANNED_LLM_ISMS,
@@ -421,41 +428,30 @@ export default async function (request) {
     // ---- D-5: Duplicate-query cache check ------------------------------------
     //
     // Lane B defense layer. If the same IP+input lands within the LRU window,
-    // we re-emit the cached response as a v3 SSE stream. Lane A's structured
-    // output is cacheable as a single answer-text payload. Cards/trace events
-    // are regenerated synthetically so the client UX still looks streamed.
+    // re-emit the cached response as a v3.1 SSE stream. v3.1 fix (B2): cards
+    // are cached alongside text so cache hits don't degrade UX. Card meta is
+    // re-resolved on replay via card-meta so titles/descs stay current.
     const ip = getClientIP(request);
     const { hit, body: cachedBody, key: dupKey } = dupCacheLookup(ip, input);
     if (hit && cachedBody) {
       console.log('[defense] dup_cache_returning', { ip, key: dupKey });
       try {
-        const parsed = JSON.parse(cachedBody);
-        const cachedText = parsed.text || '';
-        const enc = new TextEncoder();
-        const cachedStream = new ReadableStream({
-          start(controller) {
-            // Emit a single composed-trace marker + the answer + done.
-            // Marked cached:true so the client/eval can detect it.
-            controller.enqueue(enc.encode(
-              `data: ${JSON.stringify({ type: 'trace', verb: 'cached', args: 'replay()', ms: 0, pill_ms: 0 })}\n\n`
-            ));
-            controller.enqueue(enc.encode(
-              `data: ${JSON.stringify({ type: 'token', text: cachedText, cached: true })}\n\n`
-            ));
-            controller.enqueue(enc.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-            controller.close();
+        const cached = JSON.parse(cachedBody);
+        const cachedText = cached.text || '';
+        const cachedCards = Array.isArray(cached.cards) ? cached.cards : [];
+        return new Response(
+          buildCacheReplayStream({ text: cachedText, cards: cachedCards }),
+          {
+            status: 200,
+            headers: {
+              'Content-Type': 'text/event-stream',
+              'Cache-Control': 'no-cache',
+              'Connection': 'keep-alive',
+              'X-Cache': 'HIT',
+              ...corsHeaders(origin),
+            },
           },
-        });
-        return new Response(cachedStream, {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'X-Cache': 'HIT',
-            ...corsHeaders(origin),
-          },
-        });
+        );
       } catch {
         // Cached body malformed — fall through to fresh synthesis
       }
@@ -486,8 +482,10 @@ export default async function (request) {
 
     if (routeDecision.type === 'deflect') {
       const text = "Not on the resume. Ask about what he's built.";
-      // Cache deflect responses — they're deterministic and cheap to replay.
-      dupCacheStore(dupKey, JSON.stringify({ text }));
+      // Cache deflect responses — deterministic and cheap to replay. Empty
+      // cards array; deflect stream picks its own card pair from a bounded
+      // set on replay (see ssestream.pickDeflectCards).
+      dupCacheStore(dupKey, JSON.stringify({ text, cards: [] }));
       return sseResponse(buildDeflectStream(text), origin);
     }
 
@@ -646,13 +644,22 @@ export default async function (request) {
     }));
 
     // D-5: store synthesis result in dup cache so identical follow-ups replay
-    // instead of burning another LLM call. Cache only the answer text — cards
-    // and trace events are regenerated synthetically on cache hit (see top of
-    // handler). Wrapped in try-block so cache write failure never breaks the
+    // instead of burning another LLM call. v3.1 (B2): cards are stored
+    // alongside text so cache hits keep their card row. Only slug+priority
+    // are cached (~50 bytes vs full meta) — meta is re-resolved at replay
+    // via card-meta. Wrapped in try-block so cache write never breaks the
     // response.
     try {
       if (parsed?.answer) {
-        dupCacheStore(dupKey, JSON.stringify({ text: parsed.answer }));
+        const cachedCards = Array.isArray(parsed.cards)
+          ? parsed.cards
+              .filter((c) => c?.slug)
+              .map((c) => ({ slug: c.slug, priority: c.priority === true }))
+          : [];
+        dupCacheStore(dupKey, JSON.stringify({
+          text: parsed.answer,
+          cards: cachedCards,
+        }));
       }
     } catch (err) {
       console.warn('[defense] dup_cache_store failed', err?.message || err);
