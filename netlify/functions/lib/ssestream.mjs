@@ -193,14 +193,19 @@ function enqueueResolvedCard(controller, slug, priority = false) {
 // Build a static deflect SSE stream (no LLM call).
 //
 // v3.1: deflect cards vary across requests within a bounded set. Same handler,
-// same input always picks the same pair (deterministic by hash of `text`),
-// but different deflect texts yield different pairs. Avoids the v3 problem of
-// every deflect ending with the identical lab+resume trio.
+// same input always picks the same triple (deterministic by hash of `text`),
+// but different deflect texts yield different triples. Avoids the v3 problem
+// of every deflect ending with the identical lab+resume trio.
+//
+// Triples (locked 2026-05-03 per user direction): all deflect rows ship 3
+// cards so the row aligns visually with synthesis/lookup rows. Earlier
+// 2-tuple sets exposed the pre-existing 32px CSS bleed-drift between
+// 2-card and 3-card rows in mixed-intent conversations.
 const DEFLECT_CARD_SETS = [
-  ['lab', 'resume'],
-  ['wiki/graph', 'lab'],
-  ['resume', 'wiki/graph'],
-  ['lab', 'calendly'],
+  ['lab', 'resume', 'wiki/graph'],
+  ['wiki/graph', 'lab', 'resume'],
+  ['resume', 'wiki/graph', 'lab'],
+  ['lab', 'calendly', 'wiki/graph'],
 ];
 function pickDeflectCards(text) {
   // Cheap deterministic hash: sum of charcodes mod set count.
@@ -218,9 +223,10 @@ export function buildDeflectStream(text) {
         for (const chunk of chunks) {
           controller.enqueue(sseEvent('token', { text: chunk }));
         }
-        const [pri, sec] = pickDeflectCards(text);
+        const [pri, sec, ter] = pickDeflectCards(text);
         enqueueResolvedCard(controller, pri, true);
         enqueueResolvedCard(controller, sec, false);
+        enqueueResolvedCard(controller, ter, false);
         controller.enqueue(sseEvent('done', {}));
         controller.close();
       } catch (err) {

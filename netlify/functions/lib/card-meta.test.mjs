@@ -186,17 +186,38 @@ test('padCardsToThree: contact intent → book-call/linkedin/github family', () 
   assert.equal(r.cards[2].slug, 'github');
 });
 
-test('padCardsToThree: greeting intent → no padding', () => {
+test('padCardsToThree: greeting with 0 cards → 0 (terse, no row)', () => {
+  // Pure conversational reply — keep terse, no card row.
   const r = padCardsToThree([], { intent: 'greeting', themes: [], query: 'hi' });
   assert.equal(r.cards.length, 0);
   assert.equal(r.padMiss, false);
   assert.equal(r.family, null);
 });
 
-test('padCardsToThree: deflect intent → no padding', () => {
-  const r = padCardsToThree([resolveCard('resume')], { intent: 'deflect', themes: [], query: 'family' });
-  assert.equal(r.cards.length, 1);
-  assert.equal(r.family, null);
+test('padCardsToThree: greeting with 1 LLM card → pads to 3 (consistency)', () => {
+  // Once the LLM seeds at least one card, fill to 3 for visual consistency
+  // with synthesis/lookup rows. Hides the pre-existing CSS bleed-drift.
+  const r = padCardsToThree([resolveCard('lab', { priority: false })], {
+    intent: 'greeting', themes: [], query: 'hi',
+  });
+  assert.equal(r.cards.length, 3);
+});
+
+test('padCardsToThree: deflect with 1 card → pads to 3 (when called via padder)', () => {
+  // Note: deflect path in groqHandler doesn't go through padCardsToThree —
+  // buildDeflectStream emits its own 3-card hardcoded triple. This test
+  // covers the padder's behavior when called with deflect intent + seed.
+  const r = padCardsToThree([resolveCard('resume')], {
+    intent: 'deflect', themes: [], query: 'family',
+  });
+  assert.equal(r.cards.length, 3);
+});
+
+test('padCardsToThree: deflect with 0 cards → 0 (caller decides via deflect stream)', () => {
+  // Padder stays empty for 0-seed deflect — but groqHandler's deflect
+  // short-circuit uses buildDeflectStream which always emits 3 anyway.
+  const r = padCardsToThree([], { intent: 'deflect', themes: [], query: 'family' });
+  assert.equal(r.cards.length, 0);
 });
 
 test('padCardsToThree: lookup intent → padded like synthesis', () => {
@@ -299,8 +320,9 @@ test('padCardsToThree: unknown retrievedSlugs filtered out', () => {
   assert.deepEqual(slugs, ['resume', 'lab', 'wiki/graph']);
 });
 
-test('padCardsToThree: retrievedSlugs ignored on greeting intent', () => {
-  // Greetings stay 0-cards even if retrieval ran (shouldn't, but be defensive).
+test('padCardsToThree: greeting with 0 cards stays 0 even if retrievedSlugs present', () => {
+  // Pure conversational replies stay terse — retrieval wouldn't normally
+  // run for greetings, but defensively confirm the policy.
   const r = padCardsToThree([], {
     intent: 'greeting',
     themes: [],

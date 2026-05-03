@@ -751,12 +751,20 @@ export default async function (request) {
 
       let finalCards;
       let padInfo = { padMiss: false, family: null, added: [] };
-      if (isGreetingOrShort) {
-        // Conversational reply — keep LLM cards as-is, do not menu-fy.
+      // Padding policy (locked 2026-05-03 per user direction):
+      //   - synthesis / lookup: always pad to 3 (existing).
+      //   - greeting (incl. short queries): pad to 3 ONLY if LLM emitted
+      //     at least one card. Pure conversational replies (0 cards) stay
+      //     terse — no card row. Mixed-card-count rows expose the
+      //     pre-existing 32px CSS bleed-drift; always-3-when-seeded keeps
+      //     the conversation visually consistent.
+      const baseIntent = isGreetingOrShort ? 'greeting' : routeDecision.type;
+      const shouldPad = !isGreetingOrShort || resolved.length > 0;
+      if (!shouldPad) {
         finalCards = resolved;
       } else {
         const padCtx = {
-          intent: routeDecision.type,
+          intent: baseIntent,
           themes: routeDecision.themes_likely || [],
           query: input,
           // Retrieval-aware fillers: if the server actually pulled extracts
@@ -772,7 +780,7 @@ export default async function (request) {
         finalCards = padResult.cards;
         padInfo = padResult;
         if (padResult.added.length > 0) {
-          console.log('[cards] padded', { family: padResult.family, added: padResult.added, padMiss: padResult.padMiss });
+          console.log('[cards] padded', { intent: baseIntent, family: padResult.family, added: padResult.added, padMiss: padResult.padMiss });
         }
         // F5: surface pad_miss as a trace event so the eval suite can assert.
         if (padResult.padMiss && Array.isArray(parsed?.trace)) {

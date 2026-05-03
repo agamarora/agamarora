@@ -159,7 +159,9 @@ const BASE_SCENARIOS = [
       minTokens: 1,
       maxAnswerWords: 30,
       bannedAbsent: true,
-      cardsMin: 1,
+      // Locked 2026-05-03: deflect rows always 3 cards (consistency with
+      // synthesis/lookup) — buildDeflectStream emits a hardcoded triple.
+      cardsMin: 3,
       cardsMax: 3,
       traceShouldIncludeAny: ['deflected', 'declined', 'deflect'],
     },

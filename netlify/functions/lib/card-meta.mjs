@@ -456,14 +456,24 @@ export function padCardsToThree(resolvedCards, ctx) {
   const intent = ctx?.intent;
   const baseCards = Array.isArray(resolvedCards) ? resolvedCards : [];
 
-  // Greetings + deflect: respect LLM's choice, no padding.
-  if (intent !== 'synthesis' && intent !== 'lookup') {
+  // Already at or above cap — never exceed 3.
+  if (baseCards.length >= 3) {
     return { cards: baseCards.slice(0, 3), padMiss: false, family: null, added: [] };
   }
 
-  // Already at or above cap.
-  if (baseCards.length >= 3) {
-    return { cards: baseCards.slice(0, 3), padMiss: false, family: null, added: [] };
+  // Greetings + deflect with ZERO emitted cards: stay terse, no card row.
+  // Pure conversational replies should not auto-grow into a menu. Only pad
+  // when the LLM (or a deterministic stream) has already seeded at least
+  // one card — that signals "this answer is card-worthy" and the user
+  // expects a complete row, so fill to 3 for visual consistency with
+  // synthesis + lookup rows.
+  //
+  // This trades the original voice-spec §11 "warm not menu" terse stance
+  // for visual consistency: prior CSS bleed math produced a 32px LEFT-edge
+  // drift between 2-card and 3-card rows in mixed-intent conversations.
+  // Always-3 (when seeded) hides the drift. Per user direction 2026-05-03.
+  if (baseCards.length === 0 && intent !== 'synthesis' && intent !== 'lookup') {
+    return { cards: [], padMiss: false, family: null, added: [] };
   }
 
   const family = pickPadFamily(ctx);
