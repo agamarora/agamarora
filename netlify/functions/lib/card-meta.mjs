@@ -22,6 +22,8 @@
 // §1 B3 (kill the slugToTitle/slugToDesc duplication).
 
 import { KG_THEMES_SUMMARY } from './kg-themes-summary.mjs';
+import { getAllBeliefs } from './wiki-retrieval.mjs';
+import { BELIEF_NAMESPACE } from './beliefs-enum.mjs';
 
 // ---- WIKI THEME CARDS ------------------------------------------------------
 //
@@ -250,6 +252,35 @@ const EXTERNALS = {
   },
 };
 
+// ---- WIKI BELIEFS (Phase 3 commit 4 — registry built from wiki-extracts) ----
+//
+// 19 belief pages at /wiki/beliefs/<bare>/. Card data sourced from
+// wiki-extracts.json belief entries (built by build-wiki-extracts.mjs walking
+// wiki/beliefs/<bare>/index.html). Title + card_desc are pre-computed at
+// build time — no runtime overhead.
+//
+// Per docs/plans/fluffy-tinkering-crane.md commit 4 + autoplan F1 (registry
+// lands AFTER padder, so padder defaults stay non-belief).
+
+function buildWikiBeliefsRegistry() {
+  const beliefs = getAllBeliefs();
+  const out = {};
+  for (const [bareSlug, data] of Object.entries(beliefs)) {
+    const key = `${BELIEF_NAMESPACE}${bareSlug}`;
+    const url = `/wiki/beliefs/${bareSlug}/`;
+    out[key] = {
+      kind: 'page',
+      url,
+      title: data.title || bareSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+      desc: data.card_desc || data.tldr || '',
+      arrow_label: `/wiki/beliefs/${bareSlug}`,
+    };
+  }
+  return out;
+}
+
+const WIKI_BELIEFS = buildWikiBeliefsRegistry();
+
 // ---- ACTIONS (download, mailto) --------------------------------------------
 
 const ACTIONS = {
@@ -274,6 +305,7 @@ const ACTIONS = {
 const CARD_REGISTRY = {
   ...WIKI_THEMES,
   ...WIKI_META,
+  ...WIKI_BELIEFS,
   ...LAB_PAGES,
   ...INTERNAL_PAGES,
   ...EXTERNALS,
@@ -397,7 +429,7 @@ export function pickPadFamily(ctx) {
     return { name: 'projects', slugs: FAMILIES.projects };
   if (/\b(voice|speech|conversational\s*ai|4m\s+calls|million\s+calls)\b/.test(q))
     return { name: 'voice', slugs: FAMILIES.voice };
-  if (/\b(agent|agentic|thesis|thinking|opinion|believ|wiki|graph|knowledge\s+(graph|atlas)|constellation|second[\s\-]?brain|atlas)\b/.test(q))
+  if (/\b(agent|agentic|thesis|thinking|opinion|believe|believes|belief|beliefs|philosophy|stance|position|wiki|graph|knowledge\s+(graph|atlas)|constellation|second[\s\-]?brain|atlas)\b/.test(q))
     return { name: 'agent', slugs: FAMILIES.agent };
   return { name: 'default', slugs: FAMILIES.default };
 }

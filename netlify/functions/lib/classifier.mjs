@@ -18,6 +18,7 @@
 
 import { invokeClassifier } from './llm-pool.mjs';
 import { THEME_SLUGS, filterValidSlugs } from './themes-enum.mjs';
+import { BELIEF_SLUGS } from './beliefs-enum.mjs';
 
 // ---- preRoute ------------------------------------------------------------
 
@@ -52,7 +53,16 @@ const HEADLINE_RE = /\b(best|biggest|favorite|favourite|top|main|signature|headl
 
 // Direct theme keyword → synthesis with extracted slug.
 // Matched against `message`; first hit wins.
+//
+// Theme patterns are ordered FIRST. Belief patterns follow — they only fire
+// when the user phrases something belief-specific that doesn't match a theme.
+// On ambiguous queries the richer theme content wins; classifier LLM may
+// still emit `belief.<slug>` in themes_likely[] when phrasing is sharp
+// enough to warrant the narrower belief page.
+//
+// Per docs/plans/fluffy-tinkering-crane.md §D — commit 4 wires belief routing.
 const KEYWORD_TO_SLUG = [
+  // ---- Theme patterns (richer pages — first hit wins) ----
   [/agent[\s\-]?first|serving\s+lens|agents?\s+(are|as)\s+users?/i, 'agent-first'],
   [/voice\s*ai|voice\s+platform|stt|tts/i, 'voice-ai-craft'],
   [/spec[\s\-]?first|context\s+over\s+prompt|taste\s+over\s+execution/i, 'spec-first-taste'],
@@ -65,6 +75,20 @@ const KEYWORD_TO_SLUG = [
   [/linkedin\s+(as|is)\s+(instrument|platform|game)|posting\s+is\s+thinking/i, 'linkedin-as-instrument'],
   [/personal\s+projects?|tinkering|ship\s+the\s+prototype/i, 'personal-projects-tinkering'],
   [/substance\s+over\s+hype|root\s+disposition/i, 'root.substance-over-hype'],
+
+  // ---- Belief-specific patterns (narrower, no theme overlap) ----
+  // Each pattern is deliberately distinctive — phrases that would NOT match
+  // any theme regex above. Slug is namespaced `belief.<bare>` so groqHandler
+  // partitions correctly via isBeliefSlug.
+  [/anti[\s\-]?customization|customization\s+(is|isn'?t)\s+the\s+answer/i, 'belief.anti-customization'],
+  [/breadth\s+needs\s+depth|t[\s\-]?shaped\s+(person|profile|pm|engineer)/i, 'belief.breadth-needs-depth'],
+  [/(should\s+we\s+vs\s+can\s+we|99\s*%?\s+should\s+we|99\s+percent\s+should\s+we)/i, 'belief.pm-is-99-should-we-1-can-we'],
+  [/help\s+(the\s+)?market\s+flourish|market\s+flourishing/i, 'belief.help-market-flourish'],
+  [/concepts?\s+not\s+tools|principles?\s+not\s+tools|first\s+principles\s+not\s+tools/i, 'belief.learn-concepts-not-tools'],
+  [/self[\s\-]?instrument(ation|ed|ing)?|instrumenting\s+(my|him|his)self/i, 'belief.self-instrumentation'],
+  [/spec\s+over\s+sprint|specs?\s+beat\s+sprints?/i, 'belief.spec-over-sprint'],
+  [/table[\s\-]?stakes\s+(for\s+)?ai\s+pm|ai\s+pm\s+table[\s\-]?stakes/i, 'belief.ai-pm-skillset-table-stakes'],
+  [/posting\s+is\s+(thinking|the\s+game)|linkedin\s+(as\s+)?instrument(al)?\s+platform/i, 'belief.linkedin-as-instrumental-platform'],
 ];
 
 export function preRoute(message) {
@@ -148,9 +172,18 @@ CONTACT queries are NOT deflect. "how do I reach him", "can I connect", "email",
 SUPERLATIVE queries about his work ("best", "biggest", "favorite", "main project", "signature work") → type:"synthesis" with themes_likely:["headline"]. The agent reads the HEADLINE WORK curated set and surfaces agent-first cards.
 
 themes_likely[] — zero or more slugs from this set (drop slugs not in set):
+
+THEME slugs (richer multi-section pages — prefer when query is broad):
 ${THEME_SLUGS.map(s => `  - ${s}`).join('\n')}
+
+BELIEF slugs (narrower single-position pages — emit when query is sharp on one belief):
+${BELIEF_SLUGS.map(s => `  - ${s}`).join('\n')}
+
+SPECIAL markers:
   - contact     (special marker for connect/reach/hire queries)
   - headline    (special marker for superlative work/project queries)
+
+Belief slugs are namespaced with the "belief." prefix — never strip it. When a query is broad ("what does he think about agents"), prefer the THEME slug. When a query is sharp on one specific belief ("anti-customization", "ship the prototype as the argument"), emit the BELIEF slug.
 
 Output exactly: {"type": "...", "confidence": 0..1, "themes_likely": ["..."]}
 Do not include any other keys, prose, or markdown. Return JSON only.`;

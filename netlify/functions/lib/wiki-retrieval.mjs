@@ -128,6 +128,54 @@ export function getThemeExtractCharCount(slug) {
   return extract ? extract.length : 0;
 }
 
+// ---- Belief extract retrieval (Phase 3 / fluffy-tinkering-crane) -----------
+//
+// Beliefs have a parallel data shape in wiki-extracts.json — see
+// scripts/build-wiki-extracts.mjs. Each entry has { title, tldr, extract,
+// card_desc }. extract is already capped at ~600 chars at build time.
+//
+// Caller passes the BARE slug (without `belief.` prefix). The namespacing
+// happens at the classifier output layer; retrieval works in bare-slug space.
+// Use bareBeliefSlug() from beliefs-enum.mjs to normalize at the boundary.
+
+// Returns plain-text belief content for a belief slug (BARE — no prefix).
+// Returns null if slug unknown or bundle missing.
+export function getBeliefExtract(bareSlug) {
+  if (!WIKI_ENABLED || !wikiExtracts) return null;
+  if (typeof bareSlug !== 'string' || !bareSlug) return null;
+  const entry = wikiExtracts.beliefs?.[bareSlug];
+  if (!entry) return null;
+  return entry.extract || null;
+}
+
+// Returns the title for a belief slug (BARE). Used by card-meta WIKI_BELIEFS
+// registry build.
+export function getBeliefTitle(bareSlug) {
+  if (!WIKI_ENABLED || !wikiExtracts) return null;
+  const entry = wikiExtracts.beliefs?.[bareSlug];
+  return entry?.title || null;
+}
+
+// Returns the card-friendly desc (cap ~80c) for a belief slug (BARE).
+export function getBeliefCardDesc(bareSlug) {
+  if (!WIKI_ENABLED || !wikiExtracts) return null;
+  const entry = wikiExtracts.beliefs?.[bareSlug];
+  return entry?.card_desc || null;
+}
+
+// Returns char count of a belief's extract (for trace logging).
+export function getBeliefExtractCharCount(bareSlug) {
+  const extract = getBeliefExtract(bareSlug);
+  return extract ? extract.length : 0;
+}
+
+// Iterate belief data (used by card-meta to build the registry).
+// Returns { [bareSlug]: { title, tldr, extract, card_desc } } or {}.
+export function getAllBeliefs() {
+  if (!WIKI_ENABLED || !wikiExtracts) return {};
+  return wikiExtracts.beliefs || {};
+}
+
 // ---- KG edge retrieval -----------------------------------------------------
 
 // Returns edges relevant to a list of theme slugs.
@@ -188,6 +236,7 @@ export function wikiDiagnostics() {
     wiki_enabled: WIKI_ENABLED,
     extracts_loaded: !!wikiExtracts,
     extracts_themes: wikiExtracts ? Object.keys(wikiExtracts.themes || {}).length : 0,
+    extracts_beliefs: wikiExtracts ? Object.keys(wikiExtracts.beliefs || {}).length : 0,
     kg_edges_loaded: !!kgEdges,
     kg_edge_count: kgEdges ? (kgEdges.edges || []).length : 0,
   };

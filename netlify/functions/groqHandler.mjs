@@ -53,10 +53,12 @@ import {
 import { measure, now } from './lib/timing.mjs';
 import {
   getThemeExtract,
+  getBeliefExtract,
   getEdgesForThemes,
   formatEdgesForPrompt,
   wikiDiagnostics,
 } from './lib/wiki-retrieval.mjs';
+import { isBeliefSlug, bareBeliefSlug } from './lib/beliefs-enum.mjs';
 import { buildEventStream, buildDeflectStream, buildFallbackStream, buildCacheReplayStream } from './lib/ssestream.mjs';
 import {
   BANNED_USER_FACING_TERMS,
@@ -150,6 +152,7 @@ Respond ONLY with valid JSON. No prose outside the JSON object.
 ## CARD RULES
 - cards[] contains 0-3 objects: { "slug": string, "type": "page"|"wiki", "priority": boolean }
 - slug is a URL path without leading slash: "wiki/agent-first", "lab", "resume"
+- For belief cards (single locked positions), use the namespaced slug "belief.<slug>", e.g. "belief.anti-customization", "belief.ship-the-prototype". The 19 belief slugs match /wiki/beliefs/<slug>/ pages. Surface a belief card when the user's question is sharp on ONE belief.
 - priority: true = gold-stripe card, rendered first. At most ONE priority=true per response.
 - Card title is action-shaped (NOT a label): "Read the full take" not "Agent-first thesis"
 - Include cards only when they genuinely help. Zero cards is valid for conversational replies.
@@ -353,7 +356,7 @@ function sseResponse(stream, origin) {
 // (retrieved wiki + edges + the actual question) is appended as a user message.
 // This ordering maximizes cache hit potential for providers with prefix caching.
 
-function buildDynamicContext({ routeDecision, wikiExtracts, edges }) {
+function buildDynamicContext({ routeDecision, wikiExtracts, beliefExtracts, edges }) {
   const parts = [];
 
   // Contact intent — inject channel list. Triggers when preroute matched
@@ -391,11 +394,20 @@ Default cards for headline queries: wiki/agent-first (priority) + wiki/graph + l
 Compose the answer in plain English (under 70 words): lead with the agent-first thesis as the niche, name one concrete artefact (the wiki/graph or this chat), then close with a hook (e.g., "want the thesis or want to see it work in production?"). Do NOT lead with voice AI.`);
   }
 
-  // Retrieved wiki content
+  // Retrieved wiki theme content
   if (wikiExtracts && wikiExtracts.length > 0) {
     parts.push('## RETRIEVED WIKI CONTEXT');
     for (const { slug, extract } of wikiExtracts) {
       parts.push(`### Theme: ${slug}\n${extract}`);
+    }
+  }
+
+  // Retrieved belief content (Phase 3 commit 4 — narrower than themes,
+  // each belief is a single locked position from /wiki/beliefs/<bare>/).
+  if (beliefExtracts && beliefExtracts.length > 0) {
+    parts.push('## RETRIEVED BELIEF CONTEXT');
+    for (const { slug, extract } of beliefExtracts) {
+      parts.push(`### Belief: ${slug}\n${extract}`);
     }
   }
 
@@ -512,22 +524,44 @@ export default async function (request) {
       return sseResponse(buildDeflectStream(text), origin);
     }
 
-    // ---- D-3: Wiki retrieval -------------------------------------------------
+    // ---- D-3: Wiki retrieval (themes + beliefs partitioned) ------------------
+    //
+    // Partition `themes_likely[]` into theme slugs and namespaced belief
+    // slugs (`belief.<bare>`). Themes via getThemeExtract; beliefs via
+    // getBeliefExtract. Cap: 3 themes + 2 beliefs (per spec subagent
+    // budget — worst case ~6.6K tokens of context).
+    //
+    // Per docs/plans/fluffy-tinkering-crane.md commit 4 + autoplan F3
+    // (isBeliefSlug imported from beliefs-enum.mjs — prefix string lives
+    // in ONE place). Special markers ('contact', 'headline') skip both
+    // retrievers.
 
-    const themes = Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [];
+    const allSlugs = Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [];
+    const themeSlugs = allSlugs.filter((s) => !isBeliefSlug(s) && s !== 'contact' && s !== 'headline');
+    const beliefSlugs = allSlugs.filter((s) => isBeliefSlug(s));
+    const themes = themeSlugs;
     const wikiExtracts = [];
+    const beliefExtracts = [];
     let retrieveWikiMs = 0;
 
-    if (themes.length > 0) {
+    if (themeSlugs.length > 0 || beliefSlugs.length > 0) {
       const { result: extracts, ms: wMs } = await measure('retrieve_wiki', async () => {
-        const out = [];
-        for (const slug of themes.slice(0, 3)) { // cap at 3 themes for token budget
+        const themesOut = [];
+        for (const slug of themeSlugs.slice(0, 3)) { // cap at 3 themes for token budget
           const extract = getThemeExtract(slug);
-          if (extract) out.push({ slug, extract });
+          if (extract) themesOut.push({ slug, extract });
         }
-        return out;
+        const beliefsOut = [];
+        for (const slug of beliefSlugs.slice(0, 2)) { // cap at 2 beliefs
+          const bare = bareBeliefSlug(slug);
+          if (!bare) continue;
+          const extract = getBeliefExtract(bare);
+          if (extract) beliefsOut.push({ slug, extract });
+        }
+        return { themesOut, beliefsOut };
       });
-      wikiExtracts.push(...extracts);
+      wikiExtracts.push(...extracts.themesOut);
+      beliefExtracts.push(...extracts.beliefsOut);
       retrieveWikiMs = wMs;
       timings['retrieve_wiki'] = wMs;
     }
@@ -548,7 +582,7 @@ export default async function (request) {
 
     // ---- D-2: Build messages (stable prefix + dynamic suffix) ----------------
 
-    const dynamicContext = buildDynamicContext({ routeDecision, wikiExtracts, edges });
+    const dynamicContext = buildDynamicContext({ routeDecision, wikiExtracts, beliefExtracts, edges });
     const history = clampHistory(body.history);
 
     const messages = [
@@ -716,8 +750,10 @@ export default async function (request) {
     const diag = wikiDiagnostics();
     console.log('[wiki]', JSON.stringify({
       ...diag,
-      themes_requested: themes,
-      extracts_returned: wikiExtracts.length,
+      themes_requested: themeSlugs,
+      beliefs_requested: beliefSlugs,
+      theme_extracts_returned: wikiExtracts.length,
+      belief_extracts_returned: beliefExtracts.length,
       edges_returned: edges.length,
     }));
 
