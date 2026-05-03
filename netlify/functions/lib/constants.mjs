@@ -17,7 +17,7 @@ export const BUFFER_FIRST_CHARS = 50;
 
 // LLM caps
 export const MAX_INPUT_LENGTH = 500;          // raised from v2 200; spec §7 input val
-export const MAX_SYNTH_TOKENS = 800;          // synthesis call token budget (trace+answer+cards JSON)
+export const MAX_SYNTH_TOKENS = 1000;         // synthesis call token budget (trace+answer+cards JSON). Raised 800→1000 2026-05-03 per /autoplan F7: HEADLINE WORK + belief context push richer instructions; truncated JSON has no retry path (retry fires only on length<80).
 export const MAX_HISTORY_TURNS = 6;
 export const MAX_HISTORY_CHARS = 4000;        // hard cap on conversation history total chars
 

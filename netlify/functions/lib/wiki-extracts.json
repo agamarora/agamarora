@@ -1,8 +1,11 @@
 {
   "_meta": {
-    "generated_at": "2026-05-02T08:03:17.113Z",
+    "generated_at": "2026-05-03T05:57:12.794Z",
     "theme_count": 12,
-    "total_chars": 75986
+    "belief_count": 19,
+    "total_chars": 87060,
+    "theme_chars": 75986,
+    "belief_chars": 11074
   },
   "themes": {
     "root.substance-over-hype": {
@@ -324,6 +327,122 @@
           "text": "Three exits, depending on what you came for.\nIf you want the belief in its starkest form - the ship-the-prototype conviction with its 2020 crystallization point and its 2026 refinement - read spec-first-taste . The builder trilogy (Spec > Sprint / Taste > Execution / Context > Prompt) is the current version of the same instinct, upgraded.\nIf you want the loop's posting dimension - where build-post-teach-learn is analyzed as platform strategy rather than personal practice - read linkedin as instrument . The same posts that close the loop there are the evidence records here.\nIf you want the open-source instinct in the broader frame - why making things public is the same move as shipping them - read career reflection for the help-market-flourish evidence with 2026 open-source data."
         }
       ]
+    }
+  },
+  "beliefs": {
+    "agent-first": {
+      "title": "Agent-first",
+      "tldr": "Build for autonomous agents as users, not just for humans - and maybe first.",
+      "extract": "Agent-first\n\nTL;DR: Build for autonomous agents as users, not just for humans - and maybe first.\n\nThe belief: Platforms that cannot talk to autonomous agents are already behind. The serving lens - what your APIs, data surfaces, and systems look like to an agent calling on behalf of a user - is where the next layer of differentiation live…\n\nHow to apply: Default to agent-legible interfaces. When designing a new system or feature, the API and the agent-callable surface are the primary specification. The human UI is downstream of that, not the other way around. Spec the agent flo…",
+      "card_desc": "Build for autonomous agents as users, not just for humans - and maybe first."
+    },
+    "ai-pm-skillset-table-stakes": {
+      "title": "AI Fluency is Table Stakes for PMs, Not a Differentiator",
+      "tldr": "AI fluency is table stakes for PMs: not a differentiator, a non-negotiable buy-in - the floor on which every application-layer PM now stands.",
+      "extract": "AI Fluency is Table Stakes for PMs, Not a Differentiator\n\nTL;DR: AI fluency is table stakes for PMs: not a differentiator, a non-negotiable buy-in - the floor on which every application-layer PM now stands.\n\nThe belief: AI fluency is table stakes for application-layer PMs. Table stakes in the literal poker sense: not a flex, not a differentiator - a non-negotiable buy-in. The relevant archet…\n\nHow to apply: Default to hands-on fluency, not certified familiarity. Being technical is not about knowing a technology - it is about using one. A PM who has read about LLMs but has not…",
+      "card_desc": "AI fluency is table stakes for PMs: not a differentiator, a non-negotiable buy-…"
+    },
+    "anti-customization": {
+      "title": "Anti-customization",
+      "tldr": "Say no to customization in the PRD, even when you're fighting yourself to do it.",
+      "extract": "Anti-customization\n\nTL;DR: Say no to customization in the PRD, even when you're fighting yourself to do it.\n\nThe belief: Every customization setting in a PRD is a deferred design decision. The moment a team writes \"users can configure X,\" they have pushed a real product call into implementation, onboarding, and support - all places where it c…\n\nHow to apply: Default to no customization in the first PRD draft. When a feature is proposed as \"configurable,\" ask what the opinionated default would be. Write that default into the spec. Do not yield to configurability as a conflict-…",
+      "card_desc": "Say no to customization in the PRD, even when you're fighting yourself to do it."
+    },
+    "breadth-as-differentiation": {
+      "title": "Breadth as differentiation",
+      "tldr": "Breadth is not scatter: it is pattern-matching speed across domains that specialists pay a premium to hire.",
+      "extract": "Breadth as differentiation\n\nTL;DR: Breadth is not scatter: it is pattern-matching speed across domains that specialists pay a premium to hire.\n\nThe belief: Cross-domain range is a real professional differentiator. A PM who can hold logistics, data infrastructure, marketing strategy, and AI architecture in a single conversation is faster than one who knows only…\n\nHow to apply: Default to T-shape positioning when asked to describe your value. Lead with the breadth: the range of domains you have operated in and the speed that range creates. Follow immediately with the depth ancho…",
+      "card_desc": "Breadth is not scatter: it is pattern-matching speed across domains that specia…"
+    },
+    "breadth-needs-depth": {
+      "title": "Breadth needs depth",
+      "tldr": "Breadth without depth is Human-GPT. Pick a niche and invest - the axis is a free variable, the choice to pick one is not.",
+      "extract": "Breadth needs depth\n\nTL;DR: Breadth without depth is Human-GPT. Pick a niche and invest - the axis is a free variable, the choice to pick one is not.\n\nThe belief: Pure breadth is commoditized. A generalist with no specialty is now indistinguishable from a chat interface: wide, available, useful to a point, replicable by a prompt. The fix is the T-shape. Keep the…\n\nHow to apply: Default to the T-shape when describing your value. Lead with the breadth - range of domains, pattern-matching speed across them. Then immediately name the depth-axis. An answer that stops at breadth i…",
+      "card_desc": "Breadth without depth is Human-GPT. Pick a niche and invest - the axis is a fre…"
+    },
+    "context-over-prompt": {
+      "title": "Context over prompt",
+      "tldr": "Context > Prompt. Curating context is the real skill. Composing user-facing prompts is plumbing.",
+      "extract": "Context over prompt\n\nTL;DR: Context > Prompt. Curating context is the real skill. Composing user-facing prompts is plumbing.\n\nThe belief: Context is the lever. The prompt is the I/O seam. What you put in front of a model before a session begins - personal data, organizational data, prior conversation, structured knowledge - determines output quality m…\n\nHow to apply: Audit context first when output is bad. When an AI response disappoints, look at what was in the system prompt, the retrieval, the memory, before tweaking the user-facing prompt wording. Most \"bad prompt\" problems…",
+      "card_desc": "Context > Prompt. Curating context is the real skill. Composing user-facing pro…"
+    },
+    "enterprise-ai-production-reality": {
+      "title": "Enterprise AI production reality",
+      "tldr": "Demos are not deployments. The failure modes are non-functional, data-pipeline, and governance - not model quality.",
+      "extract": "Enterprise AI production reality\n\nTL;DR: Demos are not deployments. The failure modes are non-functional, data-pipeline, and governance - not model quality.\n\nThe belief: Roughly 80% of enterprise AI experiments do not reach production. The failures are not model-quality failures. They are non-functional-requirement failures, data-pipeline failures, and governance fai…\n\nHow to apply: Default to production criteria before demo criteria. When scoping an AI initiative, write down the non-functional requirements - latency, uptime, audit trail, data residency, access control - befor…",
+      "card_desc": "Demos are not deployments. The failure modes are non-functional, data-pipeline,…"
+    },
+    "help-market-flourish": {
+      "title": "Help the Market Flourish",
+      "tldr": "Go increase the size of the pie if you want a bigger share.",
+      "extract": "Help the Market Flourish\n\nTL;DR: Go increase the size of the pie if you want a bigger share.\n\nThe belief: Expand the market before competing for share. The conquest posture has compounding costs: moral, emotional, financial, and aesthetic. The market-expanding posture compounds differently - it builds reputation, trust, and pipeline by…\n\nHow to apply: Default to the \"does this grow the field?\" test before any strategic move. Before entering a partnership, building a feature, or making a public claim, ask: does this action make the category larger or just redistribute existing…",
+      "card_desc": "Go increase the size of the pie if you want a bigger share."
+    },
+    "ic-path-legitimacy": {
+      "title": "IC path as legitimate endgame",
+      "tldr": "The IC path is not a consolation prize. It is a career shaped by deepening craft, and AI makes that bet compound harder.",
+      "extract": "IC path as legitimate endgame\n\nTL;DR: The IC path is not a consolation prize. It is a career shaped by deepening craft, and AI makes that bet compound harder.\n\nThe belief: People management is a critical skill. It is not the only growth axis. The Individual Contributor track - where growth is measured by functional expertise and depth of judgment, not by span of contr…\n\nHow to apply: Default to depth as the primary career metric. When evaluating growth, ask \"did my judgment get sharper?\" before \"did my team get larger?\". Span of control is a lagging indicator; altitude of thin…",
+      "card_desc": "The IC path is not a consolation prize. It is a career shaped by deepening craf…"
+    },
+    "learn-concepts-not-tools": {
+      "title": "Learn concepts, not tools",
+      "tldr": "Frameworks endure. Tools rotate. Learn the concept that spawns the tools.",
+      "extract": "Learn concepts, not tools\n\nTL;DR: Frameworks endure. Tools rotate. Learn the concept that spawns the tools.\n\nThe belief: Frameworks endure. Tools rotate. STP (Kotler via Wendell Smith, 1956) is still live in AI-PM practice today: the concept has not changed; the tools running segmentation have changed dozens of times. Investing in the tool la…\n\nHow to apply: When picking what to study, default to the concept behind the tool. Do not learn Figma; learn design thinking and visual hierarchy. Do not learn a specific AI orchestration framework; learn how agents reason, how context…",
+      "card_desc": "Frameworks endure. Tools rotate. Learn the concept that spawns the tools."
+    },
+    "linkedin-as-instrumental-platform": {
+      "title": "LinkedIn as instrumental platform",
+      "tldr": "LinkedIn is an instrument, not a stage. Play it with the mechanics visible and the loop closed.",
+      "extract": "LinkedIn as instrumental platform\n\nTL;DR: LinkedIn is an instrument, not a stage. Play it with the mechanics visible and the loop closed.\n\nThe belief: LinkedIn is a tool you play deliberately, with the mechanics visible. You diagnose how it works, participate inside that understanding, and do not pretend otherwise. The platform serves one purpose: closing t…\n\nHow to apply: Treat the platform as a system to test, not a stage to perform on. Name the algorithm when relevant. Run experiments in public. Label experiments as experiments. The transparency is not a style choice - it…",
+      "card_desc": "LinkedIn is an instrument, not a stage. Play it with the mechanics visible and…"
+    },
+    "llm-as-primary-daily-tool": {
+      "title": "LLMs are the primary daily tool in the stack",
+      "tldr": "LLMs are the primary daily tool. Not philosophy: frequency of use across every work surface, every day.",
+      "extract": "LLMs are the primary daily tool in the stack\n\nTL;DR: LLMs are the primary daily tool. Not philosophy: frequency of use across every work surface, every day.\n\nThe belief: LLMs top the daily-use stack by frequency. Not as an extension of self: as the tool you open first. Code, writing, data analysis, learning, structured thinking - LLMs handle the first pass on all of…\n\nHow to apply: Default to LLM-first on any first-pass task. Code review, draft writing, data pattern identification, concept explanation - start with the LLM before reaching for a specialist tool or doing it manu…",
+      "card_desc": "LLMs are the primary daily tool. Not philosophy: frequency of use across every…"
+    },
+    "pm-is-99-should-we-1-can-we": {
+      "title": "PM is 99 Should-We Questions to Earn 1 Can-We",
+      "tldr": "PM is the grind of answering 99 'should we?' to earn that 1 'can we?' - the rest is food.",
+      "extract": "PM is 99 Should-We Questions to Earn 1 Can-We\n\nTL;DR: PM is the grind of answering 99 'should we?' to earn that 1 'can we?' - the rest is food.\n\nThe belief: Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline. The rare \"can we do it?\" is the bonus question…\n\nHow to apply: Default to \"should we?\" before \"can we?\". When a new feature request, direction change, or scope addition arrives, the first filter is not technical feasibility - it is strategic fit. Can the team build…",
+      "card_desc": "PM is the grind of answering 99 'should we?' to earn that 1 'can we?' - the res…"
+    },
+    "second-brain-is-context-layer": {
+      "title": "The second brain as context layer",
+      "tldr": "The second brain is context-over-prompt made into infrastructure: plain markdown, git, kg.json, and every future AI session reads the same brain and writes back to it.",
+      "extract": "The second brain as context layer\n\nTL;DR: The second brain is context-over-prompt made into infrastructure: plain markdown, git, kg.json, and every future AI session reads the same brain and writes back to it.\n\nThe belief: Context-over-prompt is an axiom. The second brain is what makes it operational. Plain markdown, git, a kg.json ontology - every future AI session reads the same brain and w…\n\nHow to apply: Default to markdown-plus-git as the substrate, not a dedicated app. Notes apps lock you into a platform's schema. Markdown files in a git repo are readable by any AI agen…",
+      "card_desc": "The second brain is context-over-prompt made into infrastructure: plain markdow…"
+    },
+    "self-instrumentation": {
+      "title": "Self-instrumentation is how you debug your own thinking",
+      "tldr": "The tool changes. The habit doesn't. Instrument yourself the way you'd instrument a system.",
+      "extract": "Self-instrumentation is how you debug your own thinking\n\nTL;DR: The tool changes. The habit doesn't. Instrument yourself the way you'd instrument a system.\n\nThe belief: The PM who cannot be debugged from data is not doing their job. The same loop applies inward: look at your own patterns, name them, externalize them into something that synthesizes them back. That is…\n\nHow to apply: Name the pattern before reaching for a tool. Instrumentation starts with observation, not apparatus. The first step is labeling: \"my urge here is competitive, not escapist.\" Name it plainly before…",
+      "card_desc": "The tool changes. The habit doesn't. Instrument yourself the way you'd instrume…"
+    },
+    "ship-the-prototype": {
+      "title": "Ship the Prototype",
+      "tldr": "Ideas are cheap. The prototype is the position. Shipping is the step that makes the work reusable.",
+      "extract": "Ship the Prototype\n\nTL;DR: Ideas are cheap. The prototype is the position. Shipping is the step that makes the work reusable.\n\nThe belief: The prototype is the position. An idea stays hypothetical until it ships. Shipping converts a private build into a reusable artifact - something teachable, something iterable, something that compounds through feedb…\n\nHow to apply: Default to shipping over pitching. Build a working version before pitching the concept. A prototype proves something a slide deck never can. Capability acquired before declaration is the model: build first, name…",
+      "card_desc": "Ideas are cheap. The prototype is the position. Shipping is the step that makes…"
+    },
+    "spec-over-sprint": {
+      "title": "Spec over Sprint",
+      "tldr": "Spec > Sprint: when iteration is cheap, the binding constraint is how clearly you can spec, not how fast you can ship.",
+      "extract": "Spec over Sprint\n\nTL;DR: Spec > Sprint: when iteration is cheap, the binding constraint is how clearly you can spec, not how fast you can ship.\n\nThe belief: When iteration is cheap, preparation is the lever. Generative tools produce full layouts in seconds - wrong fonts, wrong colors, approximate everything. The tool averaged across a population; the spec had…\n\nHow to apply: Default to spec-first when AI is in the loop. Before opening any generative tool, write down what you want: the exact typography scale, the color tokens, the interaction model, the core jobs-to-be-done.…",
+      "card_desc": "Spec > Sprint: when iteration is cheap, the binding constraint is how clearly y…"
+    },
+    "substance-over-hype": {
+      "title": "Substance over hype",
+      "tldr": "Reduce every hyped category to its substrate. If the substrate is genuinely new, the excitement is earned. If not, refuse the rebrand.",
+      "extract": "Substance over hype\n\nTL;DR: Reduce every hyped category to its substrate. If the substrate is genuinely new, the excitement is earned. If not, refuse the rebrand.\n\nThe belief: When a new category arrives with a new label, the first move is to name what it actually is at the layer below. If the substrate is genuinely new, the excitement is earned. If the substrate is a r…\n\nHow to apply: Reduce before evaluating. When a new category claims your attention, name its substrate before forming a view. Ask: what is the mechanism underneath the label? A category that cannot be reduced…",
+      "card_desc": "Reduce every hyped category to its substrate. If the substrate is genuinely new…"
+    },
+    "taste-over-execution": {
+      "title": "Taste over Execution",
+      "tldr": "When AI can execute anything, the binding constraint is taste: knowing what to build, what to refuse, and what counts as done.",
+      "extract": "Taste over Execution\n\nTL;DR: When AI can execute anything, the binding constraint is taste: knowing what to build, what to refuse, and what counts as done.\n\nThe belief: AI commoditizes execution. Writing, coding, designing, drafting PRDs - these are no longer scarce. The scarce thing is the upstream judgment: what to build, what to refuse, what constitutes done, and…\n\nHow to apply: When starting any product decision, resolve the \"should we\" before the \"how we.\" The PM job is 99 \"should we build this?\" questions for every 1 \"can we build this?\" question. The execution question…",
+      "card_desc": "When AI can execute anything, the binding constraint is taste: knowing what to…"
     }
   }
 }
