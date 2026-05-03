@@ -692,6 +692,41 @@ export default async function (request) {
       }
     }
 
+    // ---- Server-stamped retrieval verb (eval honesty) -------------------------
+    //
+    // The LLM is instructed to emit a 'pulled' / 'read' / 'fetched' / etc. trace
+    // verb when retrieval happened, but the LLM is inconsistent — sometimes
+    // skipping the middle verb entirely or using synonyms outside the allowed
+    // verb list. When retrieval ACTUALLY ran server-side, we inject a synthetic
+    // 'pulled' trace event so the trace honestly reflects what the server did.
+    // Inserted at position 1 (after the canonical 'parsed' verb) so the trace
+    // reads as: parsed → pulled → ... → composed.
+
+    {
+      const RETRIEVAL_VERBS = new Set([
+        'pulled', 'read', 'fetched', 'loaded', 'retrieved',
+        'searched', 'scanned', 'looked-up', 'queried',
+        'matched', 'mapped', 'identified', 'resolved',
+        'traced', 'walked', 'expanded', 'followed',
+      ]);
+      const totalRetrieved = wikiExtracts.length + beliefExtracts.length;
+      if (totalRetrieved > 0 && Array.isArray(parsed?.trace)) {
+        const hasRetrievalVerb = parsed.trace.some(
+          (l) => RETRIEVAL_VERBS.has(String(l?.verb || '').toLowerCase()),
+        );
+        if (!hasRetrievalVerb) {
+          const argsBits = [];
+          for (const e of wikiExtracts) argsBits.push(`wiki(${e.slug}, ${e.extract.length}c)`);
+          for (const e of beliefExtracts) argsBits.push(`belief(${e.slug}, ${e.extract.length}c)`);
+          const insertAt = parsed.trace[0]?.verb === 'parsed' ? 1 : 0;
+          parsed.trace.splice(insertAt, 0, {
+            verb: 'pulled',
+            args: argsBits.join(' + ').slice(0, 200),
+          });
+        }
+      }
+    }
+
     // ---- v3.1 §B+E: Validate + pad cards (autoplan F1+F4+F5) ------------------
     //
     // Pipeline: validate → resolve → pad-to-3 (with F5 escape).

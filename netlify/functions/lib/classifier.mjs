@@ -29,9 +29,12 @@ const GREETING_RE = /^(hi|hey|hello|sup|yo|test|hola|namaste|good (morning|after
 // instead of being classified as deflect/off-topic.
 const CONVERSATIONAL_RE = /^(say (hi|hello)|at least say (hi|hello)|talk to me|are you (there|alive|real)|you (there|tell me|alive)|let'?s chat|anyone (there|here)|hello back|what'?s up|what do you (think|do)|how('?s| is) it going|anything\??$|nothing\??$)/i;
 const DEFLECT_RES = [
-  /your\s+(family|wife|girlfriend|kids|children|parents)/i,
+  // Family/personal life — match "your" / "his" / "her" / "their" possessives
+  // and bare "family"/"wife"/"kids" when phrased as a topic ("his family",
+  // "tell me about his family").
+  /(your|his|her|their|agam'?s)\s+(family|wife|girlfriend|kids|children|parents|spouse|partner|wedding|marriage)/i,
   /(political|politics|religion|religious|caste)/i,
-  /where\s+do\s+you\s+live/i,
+  /where\s+(do|does)\s+(you|he|she|they|agam)\s+live/i,
   /home\s+address/i,
   /salary\s+(of|details)/i,
 ];

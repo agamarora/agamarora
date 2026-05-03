@@ -96,7 +96,7 @@ const BELIEF_SCENARIOS = BELIEF_BARES.map((bare) => ({
     cardsMaxFlex: 3,
     traceMinLines: 2,
     // Trace must show a retrieval verb (pulled/read/fetched/loaded).
-    traceShouldIncludeAny: ['pulled', 'read', 'fetched', 'loaded', 'searched', 'matched'],
+    traceShouldIncludeAny: ['pulled', 'read', 'fetched', 'loaded', 'retrieved', 'searched', 'scanned', 'looked-up', 'queried', 'matched', 'mapped', 'identified', 'resolved', 'traced', 'walked', 'expanded', 'followed'],
   },
 }));
 

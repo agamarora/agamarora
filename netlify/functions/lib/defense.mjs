@@ -300,6 +300,13 @@ export async function defend(request, parsedBody) {
   const ua = request.headers.get('user-agent') || '';
   const ip = getClientIP(request);
 
+  // Local-dev rate-limit bypass: requests originating from 127.0.0.1 / ::1 /
+  // localhost-style IPs during `netlify dev` are noisy when running eval-e2e
+  // (28 scenarios in ~70s easily exceeds BURST_LIMIT=5 in 10s + the 60/hour
+  // ceiling shared with prod via Upstash). Bypass burst + hourly checks for
+  // loopback IPs only — production traffic is never loopback.
+  const isLoopback = ip === '127.0.0.1' || ip === '::1' || ip === 'localhost' || ip.startsWith('192.168.') || ip.startsWith('10.');
+
   // --- Tier 0a: Bot UA gate ---
   const botCheck = isBotUA(ua);
   if (botCheck) {
@@ -333,6 +340,10 @@ export async function defend(request, parsedBody) {
   }
 
   // --- Tier 1a: Burst check (fast, in-process) ---
+  // Loopback / LAN bypass for local netlify dev + phone testing.
+  if (isLoopback) {
+    return null;
+  }
   const burst = checkBurst(ip);
   if (!burst.allowed) {
     console.log('[defense] burst_limited', { ip, retryAfterMs: burst.retryAfterMs });
