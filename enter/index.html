@@ -441,6 +441,12 @@
     font-size:0.875rem;
     color:var(--text-dim);
     line-height:1.45;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    word-break:normal;
+    overflow-wrap:break-word;
   }
   .card .card-arrow {
     font-family:var(--mono);
@@ -859,19 +865,19 @@
         <svg class="card-icon" aria-hidden="true"><use href="#ic-route"/></svg>
         <div class="card-title">Explore the constellation</div>
         <div class="card-desc">His knowledge atlas as a graph. Best way in.</div>
-        <div class="card-arrow">&rarr; /wiki/graph</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
       <a class="card" href="/lab" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
         <div class="card-title">Browse his lab</div>
         <div class="card-desc">Four projects. Voice, RAG, agentic, open-source.</div>
-        <div class="card-arrow">&rarr; /lab</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
       <a class="card" id="rotation-card" href="/resume" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-user"/></svg>
         <div class="card-title">See his background</div>
         <div class="card-desc">12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.</div>
-        <div class="card-arrow">&rarr; /resume</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
     </div>
   </div>
@@ -1177,13 +1183,25 @@ function buildCard(card) {
   const isExternal = card.kind === 'external' || /^(https?:\/\/|mailto:)/.test(url);
   const arrow = isExternal ? '&#8599;' : '&rarr;';
   const target = isExternal ? ' target="_blank" rel="noopener"' : '';
-  const arrowLabel = card.arrow_label || url.replace('https://', '').replace('http://', '');
+  // Internal pages: arrow alone, no path label (the path duplicated nothing
+  // useful — destination is implied by the title + click target). Externals
+  // keep a short domain label so the user can see they're leaving the site.
+  // arrow_label === null/undefined → fall back to URL-minus-scheme for
+  // externals; arrow_label === '' (empty string) → no label.
+  let arrowLabel;
+  if (card.arrow_label != null) {
+    arrowLabel = card.arrow_label;
+  } else if (isExternal) {
+    arrowLabel = url.replace('https://', '').replace('http://', '');
+  } else {
+    arrowLabel = '';
+  }
 
   return `<a class="card${isPriority ? ' priority' : ''}" href="${escHtml(url)}"${target} role="listitem">
     <svg class="card-icon" aria-hidden="true"><use href="${icon}"/></svg>
     <div class="card-title">${escHtml(card.title || '')}</div>
     <div class="card-desc">${escHtml(card.desc || '')}</div>
-    <div class="card-arrow">${arrow} ${escHtml(arrowLabel)}</div>
+    <div class="card-arrow">${arrow}${arrowLabel ? ' ' + escHtml(arrowLabel) : ''}</div>
   </a>`;
 }
 
@@ -1692,16 +1710,16 @@ startHintRotation();
   const pool = [
     { href:'/resume', icon:'#ic-user', title:'See his background',
       desc:'12 years, 6 companies, 5 industries.',
-      arrow:'&rarr; /resume', external:false },
+      arrow:'&rarr;', external:false },
     { href:'https://www.linkedin.com/in/agamarora/', icon:'#ic-link', title:'See his LinkedIn',
       desc:'Long form of the resume.',
-      arrow:'&#8599; linkedin', external:true },
+      arrow:'&#8599; linkedin.com', external:true },
     { href:'https://github.com/agamarora', icon:'#ic-code', title:'See his GitHub',
       desc:'Open-source builds and weekend experiments.',
-      arrow:'&#8599; github', external:true },
+      arrow:'&#8599; github.com', external:true },
     { href:'https://calendly.com/agamarora/chat', icon:'#ic-calendar', title:'Book a 15-min chat',
       desc:'Fastest path to a real conversation.',
-      arrow:'&#8599; calendly', external:true },
+      arrow:'&#8599; calendly.com', external:true },
   ];
   const pick = pool[Math.floor(Math.random() * pool.length)];
   slot.href = pick.href;

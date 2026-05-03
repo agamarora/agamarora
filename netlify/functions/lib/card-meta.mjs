@@ -323,6 +323,13 @@ export function resolveCard(slug, opts = {}) {
   const normalized = slug.replace(/^\//, '').replace(/\/$/, '');
   const meta = CARD_REGISTRY[normalized];
   if (!meta) return null;
+  // Internal pages: emit empty arrow_label so frontend renders the arrow
+  // alone (no path duplication — destination is implied by title + click).
+  // Externals: keep the registry-supplied domain label so users know the
+  // click navigates off-site (linkedin.com, github.com, calendly.com).
+  // Per user direction 2026-05-03 — `/wiki/beliefs/<slug>` path under the
+  // arrow added zero signal, just visual noise.
+  const arrow_label = meta.kind === 'external' ? meta.arrow_label : '';
   return {
     slug: normalized,
     kind: meta.kind,
@@ -330,7 +337,7 @@ export function resolveCard(slug, opts = {}) {
     title: meta.title,
     desc: meta.desc,
     url: meta.url,
-    arrow_label: meta.arrow_label,
+    arrow_label,
   };
 }
 
