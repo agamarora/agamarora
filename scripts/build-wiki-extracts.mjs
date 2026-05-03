@@ -28,6 +28,19 @@ const STRICT = process.argv.includes('--strict');
 const log = (...a) => console.log('[build-wiki-extracts]', ...a);
 const fail = (msg) => { console.error('[build-wiki-extracts] ERROR:', msg); process.exit(1); };
 
+// Trim a string at the last whitespace boundary inside `maxChars`, append `…`
+// if a trim was applied. Falls back to a hard slice when no whitespace is
+// present in the cap window (preserves the cap as an upper bound).
+function shortenAtWord(text, maxChars) {
+  if (typeof text !== 'string' || text.length <= maxChars) return text || '';
+  const slice = text.slice(0, maxChars);
+  const lastSpace = slice.lastIndexOf(' ');
+  // Only honor a word-boundary trim if it doesn't lop off too much (>40% of
+  // the cap). Otherwise hard-slice — better to clip than emit a tiny stub.
+  if (lastSpace > maxChars * 0.6) return slice.slice(0, lastSpace).replace(/[\s,;:.\-—]+$/, '') + '…';
+  return slice.replace(/[\s,;:.\-—]+$/, '') + '…';
+}
+
 // ---- HTML helpers (no deps) -----------------------------------------------
 
 // Strip HTML tags + decode common entities to plain text.
@@ -198,9 +211,13 @@ for (const slug of beliefSlugs) {
 
   // Card title: human-friendly. Fallback to slug → title-case.
   const cardTitle = title || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-  // Card desc: first 80 chars of TL;DR (or extract if no TL;DR).
+  // Card desc: target ~60 chars so the desc fits within 2 visible lines on
+  // a 280px-wide card without mid-line truncation. Trim at the last word
+  // boundary inside the cap so we never cut a word in half. Per user
+  // direction 2026-05-03 — earlier 80-char hard slice produced
+  // "...how clearly y..." mid-word breaks.
   const sourceForDesc = tldr || extract;
-  const cardDesc = sourceForDesc.length > 80 ? sourceForDesc.slice(0, 79).trimEnd() + '…' : sourceForDesc;
+  const cardDesc = shortenAtWord(sourceForDesc, 60);
 
   beliefs[slug] = {
     title: cardTitle,

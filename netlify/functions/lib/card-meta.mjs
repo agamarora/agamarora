@@ -318,18 +318,38 @@ const CARD_REGISTRY = {
 // Returns null if slug unknown — caller can decide whether to drop the card
 // or render a placeholder. Server-side flow drops unknown slugs (the LLM
 // was told the canonical slug list in the system prompt; unknown = drift).
+// For internal cards, collapse a path-style arrow_label down to the last
+// non-empty segment so the user sees a short hint instead of the full
+// /wiki/beliefs/<slug> path. Externals are kept as-is (their labels are
+// already domain-style — linkedin.com, github.com, calendly.com).
+//
+// Examples:
+//   /wiki/agent-first/        -> agent-first
+//   /wiki/beliefs/spec-over-sprint -> spec-over-sprint
+//   /lab/voice-ai-production  -> voice-ai-production
+//   /lab                      -> lab
+//   /resume                   -> resume
+//   /                         -> home (special case)
+function shortInternalLabel(rawLabel) {
+  if (typeof rawLabel !== 'string') return '';
+  const trimmed = rawLabel.replace(/^\/+/, '').replace(/\/+$/, '');
+  if (!trimmed) return 'home';
+  const last = trimmed.split('/').filter(Boolean).pop();
+  return last || trimmed;
+}
+
 export function resolveCard(slug, opts = {}) {
   if (typeof slug !== 'string' || !slug) return null;
   const normalized = slug.replace(/^\//, '').replace(/\/$/, '');
   const meta = CARD_REGISTRY[normalized];
   if (!meta) return null;
-  // Internal pages: emit empty arrow_label so frontend renders the arrow
-  // alone (no path duplication — destination is implied by title + click).
-  // Externals: keep the registry-supplied domain label so users know the
-  // click navigates off-site (linkedin.com, github.com, calendly.com).
-  // Per user direction 2026-05-03 — `/wiki/beliefs/<slug>` path under the
-  // arrow added zero signal, just visual noise.
-  const arrow_label = meta.kind === 'external' ? meta.arrow_label : '';
+  // Internal pages: shorten the arrow_label to the last path segment.
+  // Externals: keep the domain label as-is (already short + signals
+  // off-site nav). Per user direction 2026-05-03 — full
+  // `/wiki/beliefs/<slug>` paths were noise; users want the short form.
+  const arrow_label = meta.kind === 'external'
+    ? meta.arrow_label
+    : shortInternalLabel(meta.arrow_label);
   return {
     slug: normalized,
     kind: meta.kind,
