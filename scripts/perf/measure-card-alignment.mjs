@@ -31,8 +31,8 @@ async function measure(viewport, label) {
     } : null };
   });
 
-  // Trigger a query
-  await page.fill('#input', 'who is agam');
+  // Trigger a query — phrasing forces synthesis route → padder fires → 3 cards
+  await page.fill('#input', 'what is his best work and biggest project');
   await page.press('#input', 'Enter');
   await page.waitForSelector('#cards-1', { timeout: 30000 });
   // Wait for cards to be populated
@@ -56,7 +56,7 @@ async function measure(viewport, label) {
   let turn2Rect = null;
   try {
     await page.waitForFunction(() => !document.getElementById('input-bar')?.classList.contains('busy'), { timeout: 15000 });
-    await page.fill('#input', 'best work');
+    await page.fill('#input', 'tell me about his agent first thesis in detail');
     await page.press('#input', 'Enter');
     await page.waitForSelector('#cards-2', { timeout: 20000 });
     await page.waitForFunction(() => {
