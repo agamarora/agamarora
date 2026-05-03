@@ -39,9 +39,68 @@ const BANNED_TERMS = [
   'game-changer', 'dynamic', 'exceptional',
 ];
 
-// ---- Scenarios (5 canonical) ----------------------------------------------
+// ---- Scenarios -------------------------------------------------------------
+//
+// 5 base + 4 headline + 19 belief = 28 e2e scenarios.
+// Per fluffy-tinkering-crane plan F5, the cards.length===3 rule has an
+// escape hatch: cards can be 1-3 IF trace includes a `padded` (pad_miss)
+// verb. Asserts use `cardsMaxFlex: 3` + `cardsMinFlex: 1` for synthesis +
+// lookup scenarios.
 
-const SCENARIOS = [
+const BELIEF_BARES = [
+  'agent-first', 'ai-pm-skillset-table-stakes', 'anti-customization',
+  'breadth-as-differentiation', 'breadth-needs-depth', 'context-over-prompt',
+  'enterprise-ai-production-reality', 'help-market-flourish',
+  'ic-path-legitimacy', 'learn-concepts-not-tools',
+  'linkedin-as-instrumental-platform', 'llm-as-primary-daily-tool',
+  'pm-is-99-should-we-1-can-we', 'second-brain-is-context-layer',
+  'self-instrumentation', 'ship-the-prototype', 'spec-over-sprint',
+  'substance-over-hype', 'taste-over-execution',
+];
+
+// Belief-specific phrasing for each of the 19 beliefs. Each phrasing is
+// chosen to be distinctive enough that classifier (preroute KEYWORD_TO_SLUG
+// or LLM) routes either to the matching belief slug OR the related theme.
+// Asserts only check that retrieval happened (a belief OR theme extract
+// pulled), not the exact slug — multiple paths are acceptable.
+const BELIEF_QUERIES = {
+  'agent-first': 'what is his agent-first thesis exactly',
+  'ai-pm-skillset-table-stakes': 'what are the table stakes for ai pm in 2026',
+  'anti-customization': 'what is his anti customization belief',
+  'breadth-as-differentiation': 'why does he think breadth is a differentiator',
+  'breadth-needs-depth': 'why does he say breadth needs depth',
+  'context-over-prompt': 'what does context over prompt mean to him',
+  'enterprise-ai-production-reality': 'what is the enterprise ai production reality',
+  'help-market-flourish': 'why does he help the market flourish',
+  'ic-path-legitimacy': 'what is his view on the ic path',
+  'learn-concepts-not-tools': 'why concepts not tools',
+  'linkedin-as-instrumental-platform': 'why is linkedin an instrumental platform',
+  'llm-as-primary-daily-tool': 'why is llm his primary daily tool',
+  'pm-is-99-should-we-1-can-we': 'why is pm 99 percent should we and 1 percent can we',
+  'second-brain-is-context-layer': 'how is second brain a context layer',
+  'self-instrumentation': 'what is self instrumentation about',
+  'ship-the-prototype': 'why does he say ship the prototype',
+  'spec-over-sprint': 'why spec over sprint',
+  'substance-over-hype': 'why substance over hype',
+  'taste-over-execution': 'why taste over execution',
+};
+
+const BELIEF_SCENARIOS = BELIEF_BARES.map((bare) => ({
+  id: `belief-${bare}`,
+  prompt: BELIEF_QUERIES[bare],
+  asserts: {
+    minTokens: 1,
+    maxAnswerWords: 90,
+    bannedAbsent: true,
+    cardsMinFlex: 1,
+    cardsMaxFlex: 3,
+    traceMinLines: 2,
+    // Trace must show a retrieval verb (pulled/read/fetched/loaded).
+    traceShouldIncludeAny: ['pulled', 'read', 'fetched', 'loaded', 'searched', 'matched'],
+  },
+}));
+
+const BASE_SCENARIOS = [
   {
     id: 'greeting',
     prompt: 'hi',
@@ -49,10 +108,8 @@ const SCENARIOS = [
       minTokens: 1,
       maxAnswerWords: 30,
       bannedAbsent: true,
-      // Greetings: 0-2 cards is fine. No specific card required.
       cardsMin: 0,
       cardsMax: 3,
-      // Trace should include 'parsed' or 'warm' or similar
       traceMinLines: 1,
     },
   },
@@ -63,11 +120,9 @@ const SCENARIOS = [
       minTokens: 1,
       maxAnswerWords: 80,
       bannedAbsent: true,
-      cardsMin: 1,
-      cardsMax: 3,
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
       traceMinLines: 1,
-      // Lookup answers about Agam should mention concrete numbers.
-      // Soft assert: not a hard fail, logged as a warning.
       shouldMention: ['12 years', 'AIonOS', 'AVP'],
     },
   },
@@ -77,9 +132,8 @@ const SCENARIOS = [
     asserts: {
       minTokens: 1,
       bannedAbsent: true,
-      cardsMin: 1,
-      cardsMax: 3,
-      // Contact intent MUST include book-call as priority (per system prompt rules).
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
       requiresCardSlug: 'book-call',
       requiresPriorityOnSlug: 'book-call',
       traceMinLines: 1,
@@ -92,10 +146,8 @@ const SCENARIOS = [
       minTokens: 1,
       maxAnswerWords: 90,
       bannedAbsent: true,
-      cardsMin: 1,
-      cardsMax: 3,
-      // Should retrieve agent-first wiki theme. Either a wiki/agent-first
-      // card OR /wiki/graph card is acceptable.
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
       requiresAnyCardSlug: ['wiki/agent-first', 'wiki/graph'],
       traceMinLines: 2,
     },
@@ -109,11 +161,81 @@ const SCENARIOS = [
       bannedAbsent: true,
       cardsMin: 1,
       cardsMax: 3,
-      // Deflect answer should be terse. Trace should show one of the
-      // deflect-family verbs per system prompt verb list.
       traceShouldIncludeAny: ['deflected', 'declined', 'deflect'],
     },
   },
+];
+
+// ---- Headline scenarios (4) — agent-first niche surface ------------------
+
+const HEADLINE_SCENARIOS = [
+  {
+    id: 'headline-best-work-default',
+    prompt: 'what is his best work',
+    asserts: {
+      minTokens: 1,
+      maxAnswerWords: 90,
+      bannedAbsent: true,
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
+      // Niche shift: best work surfaces wiki/agent-first or wiki/graph priority,
+      // NOT lab/voice-ai-production.
+      requiresAnyCardSlug: ['wiki/agent-first', 'wiki/graph'],
+      traceMinLines: 1,
+    },
+  },
+  {
+    id: 'headline-biggest-project',
+    prompt: 'what is his biggest project',
+    asserts: {
+      minTokens: 1,
+      maxAnswerWords: 90,
+      bannedAbsent: true,
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
+      requiresAnyCardSlug: ['wiki/agent-first', 'wiki/graph', 'lab'],
+      traceMinLines: 1,
+    },
+  },
+  {
+    id: 'headline-best-after-voice-history',
+    prompt: 'what is his best work',
+    history: [
+      { role: 'user', content: 'tell me about voice ai work' },
+      { role: 'assistant', content: 'At AIonOS he led a voice AI platform handling 4 million calls a year at 50% lower cost.' },
+    ],
+    asserts: {
+      minTokens: 1,
+      maxAnswerWords: 90,
+      bannedAbsent: true,
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
+      // Voice-thread context: voice-ai-production may surface as priority,
+      // but agent-first niche should stay visible somewhere in cards.
+      traceMinLines: 1,
+    },
+  },
+  {
+    id: 'niche-positioning',
+    prompt: 'what kind of pm is he',
+    asserts: {
+      minTokens: 1,
+      maxAnswerWords: 90,
+      bannedAbsent: true,
+      cardsMinFlex: 1,
+      cardsMaxFlex: 3,
+      // The new POSITIONING block leads with agent-first niche.
+      // Soft check: answer should mention agent-first framing.
+      shouldMention: ['agent'],
+      traceMinLines: 1,
+    },
+  },
+];
+
+const SCENARIOS = [
+  ...BASE_SCENARIOS,
+  ...HEADLINE_SCENARIOS,
+  ...BELIEF_SCENARIOS,
 ];
 
 // ---- SSE parser -----------------------------------------------------------
@@ -136,7 +258,10 @@ async function runScenario(scenario) {
     res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: scenario.prompt, history: [] }),
+      body: JSON.stringify({
+        prompt: scenario.prompt,
+        history: Array.isArray(scenario.history) ? scenario.history : [],
+      }),
       signal: ctrl.signal,
     });
   } catch (err) {
@@ -232,6 +357,24 @@ function checkAsserts(scenario, collected, answer, ms) {
   }
   if (typeof a.cardsMax === 'number' && collected.cards.length > a.cardsMax) {
     fails.push(`too many cards (${collected.cards.length} > ${a.cardsMax})`);
+  }
+
+  // F5 escape-hatch flex assertion: cards.length should be 3 OR a pad_miss
+  // trace must explain why the padder couldn't reach 3. Per fluffy-tinkering-
+  // crane plan F5 — never fall back to default family from a specific family.
+  if (typeof a.cardsMinFlex === 'number' && typeof a.cardsMaxFlex === 'number') {
+    const len = collected.cards.length;
+    const padMiss = collected.traceLines.some((l) => l.verb === 'padded');
+    if (len < a.cardsMinFlex) {
+      fails.push(`too few cards (flex) (${len} < ${a.cardsMinFlex})`);
+    } else if (len > a.cardsMaxFlex) {
+      fails.push(`too many cards (flex) (${len} > ${a.cardsMaxFlex})`);
+    } else if (len < 3 && !padMiss) {
+      // Soft warn: <3 cards without padded trace verb — possibly LLM-controlled.
+      // For greetings + deflect this is expected, but those use cardsMin/Max
+      // not flex. Flex implies synthesis/lookup which should pad to 3.
+      warns.push(`soft: ${len} cards < 3 without padded trace verb (LLM emitted few?)`);
+    }
   }
 
   // Card shape: every card MUST have kind, slug, title (per v3.1 contract).
