@@ -18,6 +18,7 @@
     "sync:chrome:check": "node scripts/sync-chrome.mjs --check",
     "build": "npm run build:kg && npm run build:wiki && npm run build:wiki-extracts && npm run build:kg-edges",
     "test": "node --test netlify/functions/lib/",
+    "eval:e2e": "node scripts/eval-e2e.mjs",
     "perf:bench": "bash scripts/perf/bench.sh",
     "perf:diff": "bash scripts/perf/diff.sh",
     "perf:lab": "bash scripts/perf/lab-breakdown.sh"

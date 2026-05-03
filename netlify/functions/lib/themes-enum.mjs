@@ -12,6 +12,7 @@
 // (closes critical hallucinated-slug gap).
 
 import { KG_THEMES_SUMMARY } from './kg-themes-summary.mjs';
+import { isBeliefSlug } from './beliefs-enum.mjs';
 
 export const THEME_SLUGS = KG_THEMES_SUMMARY.map(t => t.slug);
 export const THEME_SLUGS_SET = new Set(THEME_SLUGS);
@@ -20,7 +21,10 @@ export const THEME_SLUGS_SET = new Set(THEME_SLUGS);
 // wiki themes — they signal special routing intents that groqHandler
 // reads to inject context (channel list, etc.) and surface specific
 // cards. Kept narrow to avoid hallucinated-slug regressions.
-export const SPECIAL_MARKERS_SET = new Set(['contact']);
+//
+// `headline` (added 2026-05-03) marks superlative queries ("best work",
+// "biggest project") — groqHandler injects the HEADLINE WORK block.
+export const SPECIAL_MARKERS_SET = new Set(['contact', 'headline']);
 
 export function isValidThemeSlug(slug) {
   return typeof slug === 'string' && THEME_SLUGS_SET.has(slug);
@@ -28,7 +32,8 @@ export function isValidThemeSlug(slug) {
 
 // Filter an array of slug strings — drop unknowns, keep order, dedupe.
 // Caller logs `classifier_invalid_slug` for dropped entries.
-// Theme slugs + SPECIAL_MARKERS_SET are both preserved.
+// Accepted: theme slugs, SPECIAL_MARKERS_SET, namespaced belief slugs
+// (e.g. `belief.agent-first`).
 export function filterValidSlugs(slugs) {
   if (!Array.isArray(slugs)) return { valid: [], dropped: [] };
   const seen = new Set();
@@ -36,7 +41,8 @@ export function filterValidSlugs(slugs) {
   const dropped = [];
   for (const s of slugs) {
     if (typeof s !== 'string') { dropped.push(s); continue; }
-    if (!THEME_SLUGS_SET.has(s) && !SPECIAL_MARKERS_SET.has(s)) { dropped.push(s); continue; }
+    const ok = THEME_SLUGS_SET.has(s) || SPECIAL_MARKERS_SET.has(s) || isBeliefSlug(s);
+    if (!ok) { dropped.push(s); continue; }
     if (seen.has(s)) continue;
     seen.add(s);
     valid.push(s);

@@ -22,16 +22,24 @@
 //     → server stamps real timings into trace events  (Decision 16)
 //     → buildEventStream() → SSE  (trace / token / card / done)
 //
-// SSE shape (v3 — enter/index.html v3 consumer):
+// SSE shape (v3.1 — enter/index.html consumer):
 //   data: {"type":"trace","verb":"...","args":"...","ms":42,"pill_ms":600}\n\n
 //   data: {"type":"token","text":"..."}\n\n
-//   data: {"type":"card","slug":"...","type":"page","priority":false}\n\n
+//   data: {"type":"card","slug":"wiki/agent-first","kind":"page","priority":true,
+//          "title":"Read the agent-first take","desc":"...","url":"/wiki/agent-first/",
+//          "arrow_label":"/wiki/agent-first/"}\n\n
 //   data: {"type":"done"}\n\n
 //
+// IMPORTANT: inner card key is `kind` (not `type`) to avoid collision with
+// the outer SSE event-type wrapper. Pre-v3.1 used `type` and the spread
+// silently overwrote the event type, breaking all card rendering.
+//
 // Per phase-d-decisions-2026-04-27.md Decisions 1-18.
+// Per docs/plans/enter-v3.1-spec.md B1 (wire fix), B3 (card meta SSOT), B2 (cache cards).
 
 import { invokeSynthesisJson } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
+import { validateLLMCards, padCardsToThree, resolveLLMCard } from './lib/card-meta.mjs';
 import {
   ALLOWED_ORIGINS,
   MAX_INPUT_LENGTH,
@@ -45,11 +53,13 @@ import {
 import { measure, now } from './lib/timing.mjs';
 import {
   getThemeExtract,
+  getBeliefExtract,
   getEdgesForThemes,
   formatEdgesForPrompt,
   wikiDiagnostics,
 } from './lib/wiki-retrieval.mjs';
-import { buildEventStream, buildDeflectStream, buildFallbackStream } from './lib/ssestream.mjs';
+import { isBeliefSlug, bareBeliefSlug } from './lib/beliefs-enum.mjs';
+import { buildEventStream, buildDeflectStream, buildFallbackStream, buildCacheReplayStream } from './lib/ssestream.mjs';
 import {
   BANNED_USER_FACING_TERMS,
   BANNED_LLM_ISMS,
@@ -142,6 +152,9 @@ Respond ONLY with valid JSON. No prose outside the JSON object.
 ## CARD RULES
 - cards[] contains 0-3 objects: { "slug": string, "type": "page"|"wiki", "priority": boolean }
 - slug is a URL path without leading slash: "wiki/agent-first", "lab", "resume"
+- For belief cards (single locked positions), use the namespaced slug "belief.<slug>", e.g. "belief.anti-customization", "belief.ship-the-prototype". The 19 belief slugs match /wiki/beliefs/<slug>/ pages. Surface a belief card when the user's question is sharp on ONE belief.
+- HARD RULE: when the dynamic context contains a "## RETRIEVED BELIEF CONTEXT" block, the matching belief.<slug> card MUST appear as priority:true. The retrieved belief IS the answer; the card is the canonical place to read more.
+- HARD RULE: when the dynamic context contains a "## RETRIEVED WIKI CONTEXT" block (and no belief block), the matching wiki/<theme> card MUST appear as priority:true unless a belief card outranks it.
 - priority: true = gold-stripe card, rendered first. At most ONE priority=true per response.
 - Card title is action-shaped (NOT a label): "Read the full take" not "Agent-first thesis"
 - Include cards only when they genuinely help. Zero cards is valid for conversational replies.
@@ -165,8 +178,9 @@ Deflect ONLY for: personal life not on the resume, future predictions, politics 
 Deflect with dry wit. Never say "memory banks".
 Deflect examples: "Not on the resume. Ask about what he's built." / "That one's personal. Try a product question." / "Above this terminal's pay grade."
 
-## POSITIONING (use this lens when describing Agam)
-Agam is an AI Product Manager who reads code and ships it. The combination is the point: deep technical fluency (LLMs, voice AI infra, RAG, agent systems, model routing) AND product judgment (GTM, taste, scope discipline). Engineer-PM hybrid, not a generalist PM with a tech vocabulary. Lives in an AI-native workflow, codes the tools he ships. When asked who he is or what kind of PM he is, lead with this combination, not the title alone.
+## POSITIONING (use this lens when describing Agam — locked 2026-05-03)
+Agam is an agent-first AI Product Manager. AI agents are the niche he builds for and thinks about — that is the headline. He builds for agents as much as humans, codes the tools he ships, and reads the source. Engineer-PM hybrid: deep technical fluency (LLMs, agent systems, RAG, voice infra, model routing) AND product judgment (positioning, GTM, taste, scope discipline). Lives in an AI-native workflow.
+When asked who he is or what kind of PM he is, lead with the agent-first niche, then the engineer-PM hybrid framing as the supporting beat. Do NOT lead with "voice AI guy" — voice AI at AIonOS is production credential, not the headline identity.
 
 ## GROUND TRUTH: AGAM'S STORY
 
@@ -203,13 +217,14 @@ Biggest current project = second-brain. The /wiki and /wiki/graph are its readab
 
 When a page would genuinely help, include it as a card slug. Max one priority card per reply. Never force a card.
 
-Card-routing rules (HARD RULES — locked 2026-04-27):
+Card-routing rules (HARD RULES — locked 2026-04-27, headline added 2026-05-03):
 - PROJECTS / GITHUB asks ("his projects", "what he built", "github", "repos", "portfolio") → /lab (priority) + GitHub.
 - CONNECT / CONTACT asks ("contact", "connect", "reach", "linkedin") → LinkedIn (priority) + Calendly + GitHub.
 - HIRING asks ("hire", "available", "job", "fit", "recruiter") → LinkedIn (priority) + /resume + GitHub.
+- HEADLINE / SUPERLATIVE asks ("best work", "biggest project", "favorite", "most important", "signature work") → /wiki/agent-first (priority — the thesis) + /wiki/graph + /lab. Lead the answer with the agent-first niche. Voice AI is NOT the headline.
 - BUILDING / SECOND-BRAIN asks ("building", "second-brain", "wiki", "graph", "knowledge atlas") → /lab (priority) + GitHub + /lab/second-brain.
 - AGENT / THINKING / OPINION asks ("agent-first", "what he thinks about X", "thesis") → /wiki/graph (priority, the constellation IS the thinking surface) + /wiki/<theme> + /lab.
-- VOICE AI specifically → /lab/voice-ai-production (priority) + /lab + /resume.
+- VOICE AI specifically (user explicitly asks about voice/scale/4M calls) → /lab/voice-ai-production (priority) + /lab + /resume.
 - Default for everything else → /resume (priority) + /lab + /wiki/graph.
 - Shararat is a tiny voice-AI demo. Never include it as a card unless the user types "shararat" verbatim.
 - Vary cards across turns. NEVER repeat the same card set on consecutive replies.
@@ -253,12 +268,14 @@ CORRECT answer: "Lead PM for four and a half years. He rebuilt the data platform
 WRONG answer: "At FarEye, Agam significantly impacted the data platform, demonstrating his proven track record."
 
 Q: "Who is Agam?"
-CORRECT answer: "AI Product Manager who reads code and ships it. AVP AI Products at AIonOS, running a multi-channel voice platform: 4 million calls a year in production. Engineer-PM hybrid: deep on the tech (LLMs, voice infra, agents) and the product surface (positioning, GTM, taste)."
+CORRECT answer: "Agent-first AI Product Manager. He builds for AI agents as the primary reader, codes the tools he ships, and runs a voice platform at AIonOS: 4 million calls a year in production. Engineer-PM hybrid: deep on agent systems, LLMs, and voice infra; sharp on positioning, GTM, and taste."
 WRONG answer: "Agam is a passionate AI Product Manager with a proven track record of shipping innovative products."
+WRONG answer: "AI Product Manager who reads code and ships it. AVP AI Products at AIonOS..." (leads with the engineer-PM hybrid, missing the agent-first niche.)
 
 Q: "What kind of PM is he?"
-CORRECT answer: "Engineer-PM. He codes the tools he ships and lives in an AI-native workflow. This site, the AI resume template, the voice platform at AIonOS: he wrote the spec, drove the build, and ships from the same workspace. Not a generalist PM with a tech vocabulary."
+CORRECT answer: "Agent-first AI PM. Agents are the niche he builds for and thinks about — the headline. Engineer-PM hybrid as the supporting beat: he codes the tools, writes the spec, and ships from the same workspace. At AIonOS he runs a voice platform: 4 million calls a year, all over agent-callable APIs."
 WRONG answer: "Agam is a versatile and dynamic Product Manager with comprehensive expertise across multiple domains."
+WRONG answer: "Engineer-PM. He codes the tools he ships..." (leads with the hybrid, missing the agent-first niche that is the actual headline.)
 
 Q: "How do I connect with Agam?" / "Can I reach him?"
 CORRECT answer: "Fastest path: book a 15-min chat on Calendly. He's also on LinkedIn and GitHub."
@@ -343,7 +360,7 @@ function sseResponse(stream, origin) {
 // (retrieved wiki + edges + the actual question) is appended as a user message.
 // This ordering maximizes cache hit potential for providers with prefix caching.
 
-function buildDynamicContext({ routeDecision, wikiExtracts, edges }) {
+function buildDynamicContext({ routeDecision, wikiExtracts, beliefExtracts, edges }) {
   const parts = [];
 
   // Contact intent — inject channel list. Triggers when preroute matched
@@ -361,11 +378,40 @@ Channels available, surface as cards:
 Compose a one-line answer naming the fastest path (book-call) plus the alternates. Do NOT deflect — this is a legitimate inquiry. Cards: book-call as priority:true, then linkedin + github as supporting. Do NOT mention email — it is not an available channel.`);
   }
 
-  // Retrieved wiki content
+  // Headline / superlative intent — inject curated AGENT-FIRST set. Triggers
+  // when preroute matched HEADLINE_RE or LLM emitted themes_likely:['headline'].
+  // Per fluffy-tinkering-crane plan §C + autoplan F2 (gate buildDynamicContext
+  // on 'headline' marker — without this gate, cards route correctly but
+  // answer is generic since the curated context never reaches the LLM).
+  if (themes.includes('headline') || routeDecision?.route_reason === 'preroute_headline') {
+    parts.push(`## HEADLINE WORK (user asked superlatively — "best", "biggest", "favorite", "main project", "signature work")
+The niche is AI agents. The honest answer to "best work" leads with the agent-first thesis and the things he has built around it:
+- /wiki/agent-first — his signature thesis on agents as primary readers + users.
+- /wiki/graph — the constellation graph + 12-theme atlas, a second-brain he wrote for agents to read.
+- This /enter chat — a working agent artefact answering the user right now.
+- /lab/ai-resume — the open-source agent-readable resume template he built.
+
+Voice AI at AIonOS (4M calls/yr, 50% lower cost) IS in his career, but it is the production credential, NOT the headline answer for "what is his best work". Surface voice AI in the cards ONLY if the user explicitly asks about voice, scale, or production reliability.
+
+Default cards for headline queries: wiki/agent-first (priority) + wiki/graph + lab.
+
+Compose the answer in plain English (under 70 words): lead with the agent-first thesis as the niche, name one concrete artefact (the wiki/graph or this chat), then close with a hook (e.g., "want the thesis or want to see it work in production?"). Do NOT lead with voice AI.`);
+  }
+
+  // Retrieved wiki theme content
   if (wikiExtracts && wikiExtracts.length > 0) {
     parts.push('## RETRIEVED WIKI CONTEXT');
     for (const { slug, extract } of wikiExtracts) {
       parts.push(`### Theme: ${slug}\n${extract}`);
+    }
+  }
+
+  // Retrieved belief content (Phase 3 commit 4 — narrower than themes,
+  // each belief is a single locked position from /wiki/beliefs/<bare>/).
+  if (beliefExtracts && beliefExtracts.length > 0) {
+    parts.push('## RETRIEVED BELIEF CONTEXT');
+    for (const { slug, extract } of beliefExtracts) {
+      parts.push(`### Belief: ${slug}\n${extract}`);
     }
   }
 
@@ -421,41 +467,30 @@ export default async function (request) {
     // ---- D-5: Duplicate-query cache check ------------------------------------
     //
     // Lane B defense layer. If the same IP+input lands within the LRU window,
-    // we re-emit the cached response as a v3 SSE stream. Lane A's structured
-    // output is cacheable as a single answer-text payload. Cards/trace events
-    // are regenerated synthetically so the client UX still looks streamed.
+    // re-emit the cached response as a v3.1 SSE stream. v3.1 fix (B2): cards
+    // are cached alongside text so cache hits don't degrade UX. Card meta is
+    // re-resolved on replay via card-meta so titles/descs stay current.
     const ip = getClientIP(request);
     const { hit, body: cachedBody, key: dupKey } = dupCacheLookup(ip, input);
     if (hit && cachedBody) {
       console.log('[defense] dup_cache_returning', { ip, key: dupKey });
       try {
-        const parsed = JSON.parse(cachedBody);
-        const cachedText = parsed.text || '';
-        const enc = new TextEncoder();
-        const cachedStream = new ReadableStream({
-          start(controller) {
-            // Emit a single composed-trace marker + the answer + done.
-            // Marked cached:true so the client/eval can detect it.
-            controller.enqueue(enc.encode(
-              `data: ${JSON.stringify({ type: 'trace', verb: 'cached', args: 'replay()', ms: 0, pill_ms: 0 })}\n\n`
-            ));
-            controller.enqueue(enc.encode(
-              `data: ${JSON.stringify({ type: 'token', text: cachedText, cached: true })}\n\n`
-            ));
-            controller.enqueue(enc.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-            controller.close();
+        const cached = JSON.parse(cachedBody);
+        const cachedText = cached.text || '';
+        const cachedCards = Array.isArray(cached.cards) ? cached.cards : [];
+        return new Response(
+          buildCacheReplayStream({ text: cachedText, cards: cachedCards }),
+          {
+            status: 200,
+            headers: {
+              'Content-Type': 'text/event-stream',
+              'Cache-Control': 'no-cache',
+              'Connection': 'keep-alive',
+              'X-Cache': 'HIT',
+              ...corsHeaders(origin),
+            },
           },
-        });
-        return new Response(cachedStream, {
-          status: 200,
-          headers: {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'X-Cache': 'HIT',
-            ...corsHeaders(origin),
-          },
-        });
+        );
       } catch {
         // Cached body malformed — fall through to fresh synthesis
       }
@@ -486,27 +521,51 @@ export default async function (request) {
 
     if (routeDecision.type === 'deflect') {
       const text = "Not on the resume. Ask about what he's built.";
-      // Cache deflect responses — they're deterministic and cheap to replay.
-      dupCacheStore(dupKey, JSON.stringify({ text }));
+      // Cache deflect responses — deterministic and cheap to replay. Empty
+      // cards array; deflect stream picks its own card pair from a bounded
+      // set on replay (see ssestream.pickDeflectCards).
+      dupCacheStore(dupKey, JSON.stringify({ text, cards: [] }));
       return sseResponse(buildDeflectStream(text), origin);
     }
 
-    // ---- D-3: Wiki retrieval -------------------------------------------------
+    // ---- D-3: Wiki retrieval (themes + beliefs partitioned) ------------------
+    //
+    // Partition `themes_likely[]` into theme slugs and namespaced belief
+    // slugs (`belief.<bare>`). Themes via getThemeExtract; beliefs via
+    // getBeliefExtract. Cap: 3 themes + 2 beliefs (per spec subagent
+    // budget — worst case ~6.6K tokens of context).
+    //
+    // Per docs/plans/fluffy-tinkering-crane.md commit 4 + autoplan F3
+    // (isBeliefSlug imported from beliefs-enum.mjs — prefix string lives
+    // in ONE place). Special markers ('contact', 'headline') skip both
+    // retrievers.
 
-    const themes = Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [];
+    const allSlugs = Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [];
+    const themeSlugs = allSlugs.filter((s) => !isBeliefSlug(s) && s !== 'contact' && s !== 'headline');
+    const beliefSlugs = allSlugs.filter((s) => isBeliefSlug(s));
+    const themes = themeSlugs;
     const wikiExtracts = [];
+    const beliefExtracts = [];
     let retrieveWikiMs = 0;
 
-    if (themes.length > 0) {
+    if (themeSlugs.length > 0 || beliefSlugs.length > 0) {
       const { result: extracts, ms: wMs } = await measure('retrieve_wiki', async () => {
-        const out = [];
-        for (const slug of themes.slice(0, 3)) { // cap at 3 themes for token budget
+        const themesOut = [];
+        for (const slug of themeSlugs.slice(0, 3)) { // cap at 3 themes for token budget
           const extract = getThemeExtract(slug);
-          if (extract) out.push({ slug, extract });
+          if (extract) themesOut.push({ slug, extract });
         }
-        return out;
+        const beliefsOut = [];
+        for (const slug of beliefSlugs.slice(0, 2)) { // cap at 2 beliefs
+          const bare = bareBeliefSlug(slug);
+          if (!bare) continue;
+          const extract = getBeliefExtract(bare);
+          if (extract) beliefsOut.push({ slug, extract });
+        }
+        return { themesOut, beliefsOut };
       });
-      wikiExtracts.push(...extracts);
+      wikiExtracts.push(...extracts.themesOut);
+      beliefExtracts.push(...extracts.beliefsOut);
       retrieveWikiMs = wMs;
       timings['retrieve_wiki'] = wMs;
     }
@@ -527,7 +586,7 @@ export default async function (request) {
 
     // ---- D-2: Build messages (stable prefix + dynamic suffix) ----------------
 
-    const dynamicContext = buildDynamicContext({ routeDecision, wikiExtracts, edges });
+    const dynamicContext = buildDynamicContext({ routeDecision, wikiExtracts, beliefExtracts, edges });
     const history = clampHistory(body.history);
 
     const messages = [
@@ -601,12 +660,16 @@ export default async function (request) {
       timings['retry'] = retryMs;
 
       if (retryResult?.json?.answer && retryResult.json.answer.length > parsed.answer.length) {
-        // Merge: take expanded answer + add expanded trace verb
+        // Merge: take expanded answer + KEEP ORIGINAL TRACE (B5 fix per
+        // enter-v3.1-spec §1 + autoplan F-equivalent). The retry's
+        // returned trace often hallucinates re-runs of the pipeline that
+        // didn't actually execute server-side; we keep the original
+        // parsed.trace (which the server stamped real ms on) and append
+        // a single synthetic `expanded` verb to signal the retry happened.
         const expandedJson = retryResult.json;
-
-        // Append an "expanded" trace verb to signal the retry happened
+        const originalTrace = Array.isArray(parsed.trace) ? parsed.trace : [];
         const expandedTrace = [
-          ...(Array.isArray(expandedJson.trace) ? expandedJson.trace : (parsed.trace || [])),
+          ...originalTrace,
           {
             verb: 'expanded',
             args: `answer(${parsed.answer.length}→${expandedJson.answer.length} chars)`,
@@ -625,8 +688,118 @@ export default async function (request) {
           retryMs,
         });
       } else {
+        // Retry did not improve answer — KEEP ORIGINAL parsed unchanged.
+        // Do NOT append `expanded` verb (the spec reserves it for accepted
+        // retries; appending on failure would mislead the trace + risk
+        // double-append if this branch were ever invoked twice).
         console.warn('[D-9a] retry did not improve answer, using original');
       }
+    }
+
+    // ---- Server-stamped retrieval verb (eval honesty) -------------------------
+    //
+    // The LLM is instructed to emit a 'pulled' / 'read' / 'fetched' / etc. trace
+    // verb when retrieval happened, but the LLM is inconsistent — sometimes
+    // skipping the middle verb entirely or using synonyms outside the allowed
+    // verb list. When retrieval ACTUALLY ran server-side, we inject a synthetic
+    // 'pulled' trace event so the trace honestly reflects what the server did.
+    // Inserted at position 1 (after the canonical 'parsed' verb) so the trace
+    // reads as: parsed → pulled → ... → composed.
+
+    {
+      const RETRIEVAL_VERBS = new Set([
+        'pulled', 'read', 'fetched', 'loaded', 'retrieved',
+        'searched', 'scanned', 'looked-up', 'queried',
+        'matched', 'mapped', 'identified', 'resolved',
+        'traced', 'walked', 'expanded', 'followed',
+      ]);
+      const totalRetrieved = wikiExtracts.length + beliefExtracts.length;
+      if (totalRetrieved > 0 && Array.isArray(parsed?.trace)) {
+        const hasRetrievalVerb = parsed.trace.some(
+          (l) => RETRIEVAL_VERBS.has(String(l?.verb || '').toLowerCase()),
+        );
+        if (!hasRetrievalVerb) {
+          const argsBits = [];
+          for (const e of wikiExtracts) argsBits.push(`wiki(${e.slug}, ${e.extract.length}c)`);
+          for (const e of beliefExtracts) argsBits.push(`belief(${e.slug}, ${e.extract.length}c)`);
+          const insertAt = parsed.trace[0]?.verb === 'parsed' ? 1 : 0;
+          parsed.trace.splice(insertAt, 0, {
+            verb: 'pulled',
+            args: argsBits.join(' + ').slice(0, 200),
+          });
+        }
+      }
+    }
+
+    // ---- v3.1 §B+E: Validate + pad cards (autoplan F1+F4+F5) ------------------
+    //
+    // Pipeline: validate → resolve → pad-to-3 (with F5 escape).
+    // Greetings (preroute_greeting_or_short) bypass padding: their answers
+    // are conversational, not factual; padding turns them into menus.
+    // F1: padder NEVER references belief slugs in commit 3 (registry not
+    //     present until commit 4).
+    // F2: HEADLINE WORK block was already gated above in buildDynamicContext.
+    // F5: padder ships 1-2 cards + emits pad_miss trace if family runs short
+    //     (no fallback to default — irrelevant fillers dilute hiring signal).
+
+    const isGreetingOrShort = routeDecision.route_reason === 'preroute_greeting_or_short';
+    {
+      const { valid: cleaned, dropped } = validateLLMCards(parsed?.cards);
+      if (dropped > 0) console.log('[cards] llm_validation_dropped', { dropped });
+
+      const resolved = cleaned.map((c) => resolveLLMCard(c)).filter(Boolean);
+
+      let finalCards;
+      let padInfo = { padMiss: false, family: null, added: [] };
+      // Padding policy (locked 2026-05-03 per user direction):
+      //   - synthesis / lookup: always pad to 3 (existing).
+      //   - greeting (incl. short queries): pad to 3 ONLY if LLM emitted
+      //     at least one card. Pure conversational replies (0 cards) stay
+      //     terse — no card row. Mixed-card-count rows expose the
+      //     pre-existing 32px CSS bleed-drift; always-3-when-seeded keeps
+      //     the conversation visually consistent.
+      const baseIntent = isGreetingOrShort ? 'greeting' : routeDecision.type;
+      const shouldPad = !isGreetingOrShort || resolved.length > 0;
+      if (!shouldPad) {
+        finalCards = resolved;
+      } else {
+        const padCtx = {
+          intent: baseIntent,
+          themes: routeDecision.themes_likely || [],
+          query: input,
+          // Retrieval-aware fillers: if the server actually pulled extracts
+          // for these slugs, prefer them over generic family fillers when
+          // the LLM didn't emit cards. Keeps belief/theme queries from
+          // falling to default (resume/lab/wiki/graph) cards.
+          retrievedSlugs: [
+            ...wikiExtracts.map((e) => `wiki/${e.slug}`),
+            ...beliefExtracts.map((e) => e.slug),
+          ],
+        };
+        const padResult = padCardsToThree(resolved, padCtx);
+        finalCards = padResult.cards;
+        padInfo = padResult;
+        if (padResult.added.length > 0) {
+          console.log('[cards] padded', { intent: baseIntent, family: padResult.family, added: padResult.added, padMiss: padResult.padMiss });
+        }
+        // F5: surface pad_miss as a trace event so the eval suite can assert.
+        if (padResult.padMiss && Array.isArray(parsed?.trace)) {
+          parsed.trace.push({
+            verb: 'padded',
+            args: `family(${padResult.family}) miss(${finalCards.length}/3)`,
+          });
+        }
+      }
+
+      // ssestream.buildEventStream calls resolveLLMCard on each entry — pass
+      // slim {slug, priority, type} shape (resolveLLMCard re-resolves
+      // idempotently). Carrying the resolved meta forward is wasteful but
+      // doesn't break anything; the slim shape keeps the wire format stable.
+      parsed.cards = finalCards.map((c) => ({
+        slug: c.slug,
+        priority: c.priority === true,
+        type: c.kind || 'page',
+      }));
     }
 
     // ---- D-4 + Decision 16: Build SSE event stream ---------------------------
@@ -640,19 +813,30 @@ export default async function (request) {
     const diag = wikiDiagnostics();
     console.log('[wiki]', JSON.stringify({
       ...diag,
-      themes_requested: themes,
-      extracts_returned: wikiExtracts.length,
+      themes_requested: themeSlugs,
+      beliefs_requested: beliefSlugs,
+      theme_extracts_returned: wikiExtracts.length,
+      belief_extracts_returned: beliefExtracts.length,
       edges_returned: edges.length,
     }));
 
     // D-5: store synthesis result in dup cache so identical follow-ups replay
-    // instead of burning another LLM call. Cache only the answer text — cards
-    // and trace events are regenerated synthetically on cache hit (see top of
-    // handler). Wrapped in try-block so cache write failure never breaks the
+    // instead of burning another LLM call. v3.1 (B2): cards are stored
+    // alongside text so cache hits keep their card row. Only slug+priority
+    // are cached (~50 bytes vs full meta) — meta is re-resolved at replay
+    // via card-meta. Wrapped in try-block so cache write never breaks the
     // response.
     try {
       if (parsed?.answer) {
-        dupCacheStore(dupKey, JSON.stringify({ text: parsed.answer }));
+        const cachedCards = Array.isArray(parsed.cards)
+          ? parsed.cards
+              .filter((c) => c?.slug)
+              .map((c) => ({ slug: c.slug, priority: c.priority === true }))
+          : [];
+        dupCacheStore(dupKey, JSON.stringify({
+          text: parsed.answer,
+          cards: cachedCards,
+        }));
       }
     } catch (err) {
       console.warn('[defense] dup_cache_store failed', err?.message || err);

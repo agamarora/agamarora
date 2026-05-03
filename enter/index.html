@@ -441,6 +441,12 @@
     font-size:0.875rem;
     color:var(--text-dim);
     line-height:1.45;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    word-break:normal;
+    overflow-wrap:break-word;
   }
   .card .card-arrow {
     font-family:var(--mono);
@@ -859,19 +865,19 @@
         <svg class="card-icon" aria-hidden="true"><use href="#ic-route"/></svg>
         <div class="card-title">Explore the constellation</div>
         <div class="card-desc">His knowledge atlas as a graph. Best way in.</div>
-        <div class="card-arrow">&rarr; /wiki/graph</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
       <a class="card" href="/lab" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-flask"/></svg>
         <div class="card-title">Browse his lab</div>
         <div class="card-desc">Four projects. Voice, RAG, agentic, open-source.</div>
-        <div class="card-arrow">&rarr; /lab</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
       <a class="card" id="rotation-card" href="/resume" role="listitem">
         <svg class="card-icon" aria-hidden="true"><use href="#ic-user"/></svg>
         <div class="card-title">See his background</div>
         <div class="card-desc">12 years, 6 companies, 5 industries. AVP AI Products at AIonOS since Nov 2025.</div>
-        <div class="card-arrow">&rarr; /resume</div>
+        <div class="card-arrow">&rarr;</div>
       </a>
     </div>
   </div>
@@ -1138,102 +1144,69 @@ function pushHistory(role, content) {
 }
 
 // =============================================================
-// CARD ICON MAP (per spec §4 taxonomy)
+// CARD ICON MAP — slug-prefix to icon sprite id
+// v3.1 note: server (card-meta.mjs) is now SSOT for title/desc/url. Icon
+// is the only remaining client-side derivation. Kept simple — slug prefix
+// match into a small map. If we want server-emitted icons later, extend
+// card-meta to carry an `icon` field.
 // =============================================================
-const CARD_ICONS = {
-  'ic-book': '#ic-book',
-  'ic-flask': '#ic-flask',
-  'ic-link': '#ic-link',
-  'ic-user': '#ic-user',
-  'ic-calendar': '#ic-calendar',
-  'ic-download': '#ic-download',
-  'ic-envelope': '#ic-envelope',
-  'ic-mic': '#ic-mic',
-  'ic-code': '#ic-code',
-  'ic-route': '#ic-route',
-};
-
-// Infer icon from card slug / url
 function inferCardIcon(slug, url) {
   if (!slug && !url) return '#ic-link';
   const s = (slug || url || '').toLowerCase();
-  if (s.includes('resume') || s.includes('bio') || s.includes('about')) return '#ic-user';
-  if (s.includes('book') || s.includes('wiki') || s.includes('second-brain')) return '#ic-book';
-  if (s.includes('lab') || s.includes('flask') || s.includes('project')) return '#ic-flask';
+  // Most-specific first. graph/constellation/route must beat wiki/book.
+  if (s.includes('graph') || s.includes('constellation') || s.includes('/route')) return '#ic-route';
   if (s.includes('calendar') || s.includes('book-call') || s.includes('calendly')) return '#ic-calendar';
   if (s.includes('download') || s.includes('pdf') || s.includes('resume-pdf')) return '#ic-download';
-  if (s.includes('email') || s.includes('mail') || s.includes('envelope')) return '#ic-envelope';
+  if (s.includes('email') || s.includes('mailto') || s.includes('envelope')) return '#ic-envelope';
   if (s.includes('voice') || s.includes('mic') || s.includes('shararat')) return '#ic-mic';
   if (s.includes('github') || s.includes('code') || s.includes('open-source')) return '#ic-code';
+  if (s.includes('resume') || s.includes('/bio') || s.includes('/about')) return '#ic-user';
+  if (s.includes('book') || s.includes('wiki') || s.includes('second-brain')) return '#ic-book';
+  if (s.includes('lab') || s.includes('flask') || s.includes('project')) return '#ic-flask';
   return '#ic-link';
 }
 
 // =============================================================
-// BUILD CARD HTML
+// BUILD CARD HTML — v3.1 pure render
+// Server resolves slug → {title, desc, url, kind, arrow_label} via
+// card-meta.mjs and emits ready-to-render fields in the SSE card event.
+// Frontend just renders. No more slugToTitle / slugToUrl maps.
 // =============================================================
 function buildCard(card) {
-  // card shape from Lane A structured output (future):
-  //   { title, desc, url, slug, priority, type, icon }
-  // Fallback: v2 text response generates synthetic cards
   const isPriority = card.priority === true;
-  const icon = card.icon
-    ? (CARD_ICONS[card.icon] || '#ic-link')
-    : inferCardIcon(card.slug, card.url);
+  const icon = inferCardIcon(card.slug, card.url);
   const rawUrl = card.url || '#';
   // Whitelist scheme to prevent javascript: XSS. Allow http(s), root-path, mailto.
   const url = /^(https?:\/\/|\/[^/]|mailto:)/.test(rawUrl) ? rawUrl : '#';
-  // Open external destinations in new tab so the /enter session stays alive
-  // in the original tab (user gets one-click back). Detect by URL scheme so
-  // Lane A emitting type:'page' for an external slug (book-call, linkedin,
-  // github, email) still opens in a new tab. Internal /paths stay same-tab.
-  const isExternal = card.type === 'external' || /^(https?:\/\/|mailto:)/.test(url);
+  // External vs internal: kind from server is authoritative (set by card-meta).
+  // Fall back to URL-scheme sniff if kind missing (e.g. legacy v2 fallback path).
+  const isExternal = card.kind === 'external' || /^(https?:\/\/|mailto:)/.test(url);
   const arrow = isExternal ? '&#8599;' : '&rarr;';
   const target = isExternal ? ' target="_blank" rel="noopener"' : '';
-  const arrowLabel = card.arrow_label || url.replace('https://', '').replace('http://', '');
+  // Internal pages: arrow alone, no path label (the path duplicated nothing
+  // useful — destination is implied by the title + click target). Externals
+  // keep a short domain label so the user can see they're leaving the site.
+  // arrow_label === null/undefined → fall back to URL-minus-scheme for
+  // externals; arrow_label === '' (empty string) → no label.
+  let arrowLabel;
+  if (card.arrow_label != null) {
+    arrowLabel = card.arrow_label;
+  } else if (isExternal) {
+    arrowLabel = url.replace('https://', '').replace('http://', '');
+  } else {
+    arrowLabel = '';
+  }
 
   return `<a class="card${isPriority ? ' priority' : ''}" href="${escHtml(url)}"${target} role="listitem">
     <svg class="card-icon" aria-hidden="true"><use href="${icon}"/></svg>
     <div class="card-title">${escHtml(card.title || '')}</div>
     <div class="card-desc">${escHtml(card.desc || '')}</div>
-    <div class="card-arrow">${arrow} ${escHtml(arrowLabel)}</div>
+    <div class="card-arrow">${arrow}${arrowLabel ? ' ' + escHtml(arrowLabel) : ''}</div>
   </a>`;
 }
 
 function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// Map Lane A card slug → URL (slug is e.g. 'lab', 'resume', 'wiki/agent-first', 'calendly')
-function slugToUrl(slug) {
-  if (!slug) return '#';
-  // Calendly: both 'calendly' (legacy) and 'book-call' (canonical per site.json) map here
-  if (slug === 'calendly' || slug === 'book-call') return 'https://calendly.com/agamarora/chat';
-  if (slug === 'linkedin') return 'https://www.linkedin.com/in/agamarora/';
-  if (slug === 'github') return 'https://github.com/agamarora';
-  if (slug === 'shararat') return 'https://github.com/agamarora/shararat-ai';
-  if (slug === 'email') return 'mailto:agam.arora@aionos.ai';
-  if (slug === 'resume-pdf') return '/assets/artefacts/2026_Agam%20Arora.pdf';
-  // Internal slugs: /lab, /resume, /wiki/..., /lab/second-brain/, etc.
-  return '/' + slug.replace(/^\//, '');
-}
-
-// Map Lane A card slug → human-readable title
-function slugToTitle(slug) {
-  if (!slug) return '';
-  const map = {
-    'lab': 'Browse his lab',
-    'resume': 'See his background',
-    'calendly': 'Book a 15-min chat',
-    'book-call': 'Book a 15-min chat',
-    'linkedin': 'Connect on LinkedIn',
-    'github': 'See his GitHub',
-    'email': 'Email Agam',
-    'shararat': 'Shararat on GitHub',
-    'resume-pdf': 'Download resume PDF',
-    'lab/second-brain': 'second-brain PRFAQ',
-    'lab/ai-resume': 'AI Resume template',
-  };
-  return map[slug] || slug.split('/').pop().replace(/-/g, ' ');
 }
 
 // =============================================================
@@ -1393,51 +1366,13 @@ function showCards(turnId, cards, delayMs) {
 }
 
 // =============================================================
-// V2 FALLBACK: Generate synthetic trace + cards from plain-text answer
-// Used when Lane A (structured output) is not yet live.
-// Current groqHandler.mjs emits: data: {"text": "..."}\n\n SSE
+// LAST-RESORT FALLBACK: synthesize cards from prompt regex
+// v3.1: server (card-meta.mjs) is now SSOT for cards via SSE. This
+// helper survives only as a zero-card-SSE safety net — if the LLM emits
+// no cards AND no slug is recognized, we still show a sensible row
+// instead of an empty card area. Should fire approximately never on
+// the v3.1 path.
 // =============================================================
-function generateFallbackTrace(prompt, turnId) {
-  // Produce plausible trace lines based on prompt content
-  const p = prompt.toLowerCase();
-  const lines = [];
-
-  if (p.match(/hire|recruit|available|opportunity|job|role|position/)) {
-    lines.push({ verb: 'classified', arg: 'intent=hiring conf=0.90', ms: 180 });
-    lines.push({ verb: 'pulled', arg: 'resume(availability, current-role)', ms: 12 });
-    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 210 });
-  } else if (p.match(/\bvoice\b|\bspeech\b|\bshararat\b|aionos|conversation ai|voice ai/)) {
-    lines.push({ verb: 'classified', arg: 'intent=synthesis themes=[voice-ai] conf=0.87', ms: 195 });
-    lines.push({ verb: 'pulled', arg: 'wiki(voice-ai, 1640 chars)', ms: 7 });
-    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 280 });
-  } else if (p.match(/lab|project|build|ship|open.source/)) {
-    lines.push({ verb: 'classified', arg: 'intent=lookup themes=[lab] conf=0.85', ms: 165 });
-    lines.push({ verb: 'pulled', arg: 'lab(4 projects indexed)', ms: 9 });
-    lines.push({ verb: 'composed', arg: 'answer + 4 cards', ms: 190 });
-  } else if (p.match(/agent.first|agentic|agent|thesis/)) {
-    lines.push({ verb: 'classified', arg: 'intent=synthesis themes=[agent-first] conf=0.92', ms: 210 });
-    lines.push({ verb: 'pulled', arg: 'wiki(agent-first, 1842 chars)', ms: 6 });
-    lines.push({ verb: 'pulled', arg: 'edges(agent-first→supersedes, 6)', ms: 8 });
-    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 320 });
-  } else if (p.match(/who|bio|background|about|tell/)) {
-    lines.push({ verb: 'classified', arg: 'intent=bio conf=0.88', ms: 145 });
-    lines.push({ verb: 'pulled', arg: 'resume(summary)', ms: 11 });
-    lines.push({ verb: 'composed', arg: 'answer + 3 cards', ms: 175 });
-  } else {
-    lines.push({ verb: 'classified', arg: 'intent=lookup conf=0.80', ms: 155 });
-    lines.push({ verb: 'pulled', arg: 'resume(relevant)', ms: 10 });
-    lines.push({ verb: 'composed', arg: 'answer + 2 cards', ms: 200 });
-  }
-
-  let cumulative = 80;
-  lines.forEach(l => {
-    const wait = Math.max(l.ms, MIN_READ_BUFFER_MS);
-    addTraceLine(turnId, l.verb, l.arg, l.ms, cumulative);
-    cumulative += wait;
-  });
-  return cumulative; // total animation time
-}
-
 function generateFallbackCards(prompt, answer) {
   // Generate contextually relevant cards from PROMPT content only.
   // Earlier we joined prompt + answer, but that surfaced voice/shararat
@@ -1563,55 +1498,10 @@ async function submitQuery(prompt, history, isRetry) {
       throw new Error(errData.error || `HTTP ${res.status}`);
     }
 
-    const ct = res.headers.get('content-type') || '';
-
-    // ---- v3 structured JSON response (Lane A future schema) ----
-    if (ct.includes('application/json')) {
-      const data = await res.json();
-
-      if (data.error) {
-        showConnBanner(data.error);
-        finishTurn(turnId, data.error, [], true);
-        return;
-      }
-
-      // Check for provider switchover signal
-      if (data.provider_switched) {
-        flashProviderBanner('switched to backup provider');
-      }
-
-      // Render structured trace if present
-      if (data.trace && Array.isArray(data.trace)) {
-        setStatus('classifying');
-        let cumulative = 80;
-        data.trace.forEach(t => {
-          const ms = t.latencyMs || 100;
-          const wait = Math.max(ms, MIN_READ_BUFFER_MS);
-          addTraceLine(turnId, t.verb || 'processed', t.args || '', ms, cumulative);
-          cumulative += wait;
-        });
-        traceAnimTime = cumulative;
-      }
-
-      const answer = data.answer || data.result || 'Not sure how to land that.';
-      const cards = data.cards || generateFallbackCards(prompt, answer);
-
-      setStatus('composing');
-      showAnswer(turnId, answer, traceAnimTime + 350);
-      showCards(turnId, cards, traceAnimTime + 800);
-      setStatus('replied');
-
-      pushHistory('user', prompt);
-      pushHistory('assistant', answer);
-
-      setTimeout(() => {
-        setStatus('ready', true);
-        finishTurn(turnId, answer, cards, false);
-      }, traceAnimTime + 1000);
-      return;
-    }
-
-    // ---- SSE stream (Lane A v3 structured events OR v2 plain-text tokens) ----
+    // v3.1: server is SSE-only (text/event-stream). The pre-v3 JSON-response
+    // branch was dead code (server never returned application/json) and was
+    // removed. If a future deployment regresses to JSON, the connBanner will
+    // surface it via the response-text fallback below.
     setStatus('classifying');
 
     const reader = res.body.getReader();
@@ -1655,16 +1545,18 @@ async function submitQuery(prompt, history, isRetry) {
 
       if (t === 'card') {
         isV3 = true;
-        // Lane A card shape: { slug, type, priority }
-        // Map slug → card object for buildCard
+        // v3.1 card shape (resolved server-side via card-meta.mjs):
+        //   { slug, kind:'page'|'external', priority, title, desc, url, arrow_label }
+        // Frontend just stores + renders. No more slug→title mapping.
         if (parsed.slug) {
           sseCards.push({
             slug: parsed.slug,
-            type: parsed.type === true || parsed.type === 'page' ? 'page' : 'external',
+            kind: parsed.kind || 'page',
             priority: parsed.priority === true,
-            url: parsed.url || slugToUrl(parsed.slug),
-            title: parsed.title || slugToTitle(parsed.slug),
+            url: parsed.url || '#',
+            title: parsed.title || '',
             desc: parsed.desc || '',
+            arrow_label: parsed.arrow_label || '',
           });
         }
         return;
@@ -1818,16 +1710,16 @@ startHintRotation();
   const pool = [
     { href:'/resume', icon:'#ic-user', title:'See his background',
       desc:'12 years, 6 companies, 5 industries.',
-      arrow:'&rarr; /resume', external:false },
+      arrow:'&rarr;', external:false },
     { href:'https://www.linkedin.com/in/agamarora/', icon:'#ic-link', title:'See his LinkedIn',
       desc:'Long form of the resume.',
-      arrow:'&#8599; linkedin', external:true },
+      arrow:'&#8599; linkedin.com', external:true },
     { href:'https://github.com/agamarora', icon:'#ic-code', title:'See his GitHub',
       desc:'Open-source builds and weekend experiments.',
-      arrow:'&#8599; github', external:true },
+      arrow:'&#8599; github.com', external:true },
     { href:'https://calendly.com/agamarora/chat', icon:'#ic-calendar', title:'Book a 15-min chat',
       desc:'Fastest path to a real conversation.',
-      arrow:'&#8599; calendly', external:true },
+      arrow:'&#8599; calendly.com', external:true },
   ];
   const pick = pool[Math.floor(Math.random() * pool.length)];
   slot.href = pick.href;
