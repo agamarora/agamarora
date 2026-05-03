@@ -24,3 +24,6 @@ Thumbs.db
 
 # Re-encode source — kept locally, not served
 assets/lab/*.original.mp4
+
+# Playwright artifacts from perf scripts (regenerated on demand, not committed)
+scripts/perf/*.png
