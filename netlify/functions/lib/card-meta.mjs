@@ -323,3 +323,142 @@ export function resolveLLMCard(card) {
 export function _getRegistry() {
   return CARD_REGISTRY;
 }
+
+// ---- LLM CARD VALIDATION + PADDER -----------------------------------------
+//
+// Per docs/plans/fluffy-tinkering-crane.md §B + §E + §C (autoplan F1+F2+F4+F5).
+//
+// Pipeline order (in groqHandler post-LLM):
+//   1. validateLLMCards(parsed.cards)  — drop malformed, normalize shape
+//   2. resolveLLMCard(...) per entry    — registry resolution
+//   3. padCardsToThree(resolved, ctx)   — fill to 3 from intent-family
+//                                          OR ship < 3 with pad_miss flag (F5)
+//
+// HARD RULE (F1): padder family slugs are theme/lab/external ONLY in
+// commit 3. Belief slugs (`belief.*`) are added in commit 4 once
+// WIKI_BELIEFS registry lands. Mixing family belief refs before the
+// registry exists would silently drop them via resolveCard → null and
+// break the always-3 promise this padder exists to enforce.
+
+// Validate raw LLM card array. Drops:
+//  - non-objects
+//  - entries without string `slug`
+//  - entries with unknown slug (resolveCard returns null)
+// Normalizes shape: returns { slug, priority, type } objects safe to feed
+// resolveLLMCard. type stays advisory; registry kind always wins downstream.
+export function validateLLMCards(rawCards) {
+  if (!Array.isArray(rawCards)) return { valid: [], dropped: 0 };
+  const valid = [];
+  let dropped = 0;
+  for (const c of rawCards) {
+    if (!c || typeof c !== 'object' || typeof c.slug !== 'string' || !c.slug) {
+      dropped++;
+      continue;
+    }
+    if (!isKnownSlug(c.slug)) {
+      dropped++;
+      continue;
+    }
+    valid.push({
+      slug: c.slug.replace(/^\//, '').replace(/\/$/, ''),
+      priority: c.priority === true,
+      type: typeof c.type === 'string' ? c.type : (typeof c.kind === 'string' ? c.kind : 'page'),
+    });
+  }
+  return { valid, dropped };
+}
+
+// Intent-keyed card families. NO belief slugs in commit 3 (F1 enforced).
+// First entry of each family is the priority candidate when padder fills
+// from zero. Order matters: padder tries entries in sequence, skipping
+// already-emitted slugs.
+const FAMILIES = {
+  contact:  ['book-call', 'linkedin', 'github'],
+  headline: ['wiki/agent-first', 'wiki/graph', 'lab'],
+  hiring:   ['linkedin', 'resume', 'github'],
+  projects: ['lab', 'github', 'lab/voice-ai-production'],
+  voice:    ['lab/voice-ai-production', 'lab', 'resume'],
+  agent:    ['wiki/graph', 'wiki/agent-first', 'lab'],
+  default:  ['resume', 'lab', 'wiki/graph'],
+};
+
+// Pick padder family from routing context. themes_likely[] markers win
+// (contact, headline). Otherwise query keywords decide. Returns
+// { name, slugs }.
+export function pickPadFamily(ctx) {
+  const themes = Array.isArray(ctx?.themes) ? ctx.themes : [];
+  if (themes.includes('contact'))  return { name: 'contact',  slugs: FAMILIES.contact };
+  if (themes.includes('headline')) return { name: 'headline', slugs: FAMILIES.headline };
+
+  const q = String(ctx?.query || '').toLowerCase();
+  if (/\b(hire|hiring|recruit|recruiter|available|availability|opportunit|interview|job|role|position|fit\b)/.test(q))
+    return { name: 'hiring', slugs: FAMILIES.hiring };
+  if (/\b(github|repo|open[\s\-]?source|portfolio)\b|\bprojects?\b|what.{0,12}(he|hes|has).{0,12}(built|shipped|made)/.test(q))
+    return { name: 'projects', slugs: FAMILIES.projects };
+  if (/\b(voice|speech|conversational\s*ai|4m\s+calls|million\s+calls)\b/.test(q))
+    return { name: 'voice', slugs: FAMILIES.voice };
+  if (/\b(agent|agentic|thesis|thinking|opinion|believ|wiki|graph|knowledge\s+(graph|atlas)|constellation|second[\s\-]?brain|atlas)\b/.test(q))
+    return { name: 'agent', slugs: FAMILIES.agent };
+  return { name: 'default', slugs: FAMILIES.default };
+}
+
+// Pad an array of resolved cards up to 3, filling from the matched intent
+// family. Greetings + deflect intents return cards as-is.
+//
+// F5 escape hatch: if the family cannot supply enough valid fillers (every
+// remaining slug already in cards OR fails to resolve), ship < 3 cards and
+// flag pad_miss. NEVER fall back to the default family from a specific
+// family (irrelevant fillers dilute hiring-signal cards).
+//
+// Priority handling: at most ONE card is priority. If LLM emitted a
+// priority card, padder fillers stay non-priority. If LLM emitted no
+// priority, the FIRST padded card claims priority.
+//
+// ctx: { intent: 'synthesis'|'lookup'|'deflect'|'greeting'|'lookup-greeting',
+//        themes: string[],
+//        query: string }
+//
+// Returns: { cards: resolvedCard[], padMiss: bool, family: string|null,
+//            added: string[]  /* slugs added by padder */ }
+export function padCardsToThree(resolvedCards, ctx) {
+  const intent = ctx?.intent;
+  const baseCards = Array.isArray(resolvedCards) ? resolvedCards : [];
+
+  // Greetings + deflect: respect LLM's choice, no padding.
+  if (intent !== 'synthesis' && intent !== 'lookup') {
+    return { cards: baseCards.slice(0, 3), padMiss: false, family: null, added: [] };
+  }
+
+  // Already at or above cap.
+  if (baseCards.length >= 3) {
+    return { cards: baseCards.slice(0, 3), padMiss: false, family: null, added: [] };
+  }
+
+  const family = pickPadFamily(ctx);
+  const seen = new Set(baseCards.map((c) => c?.slug).filter(Boolean));
+  const hasLLMPriority = baseCards.some((c) => c?.priority === true);
+  let priorityAssigned = hasLLMPriority;
+  const out = [...baseCards];
+  const added = [];
+
+  for (const slug of family.slugs) {
+    if (out.length >= 3) break;
+    if (seen.has(slug)) continue;
+    const card = resolveCard(slug, { priority: !priorityAssigned });
+    if (!card) continue; // unknown — skip per F1 belief-slug guard
+    out.push(card);
+    added.push(slug);
+    seen.add(slug);
+    if (card.priority) priorityAssigned = true;
+  }
+
+  return {
+    cards: out.slice(0, 3),
+    padMiss: out.length < 3,
+    family: family.name,
+    added,
+  };
+}
+
+// Test surface
+export const __test = { FAMILIES };

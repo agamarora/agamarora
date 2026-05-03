@@ -45,3 +45,33 @@ test('preRoute: non-string input → null', () => {
   assert.equal(preRoute(null), null);
   assert.equal(preRoute(42), null);
 });
+
+test('preRoute: superlative → headline marker', () => {
+  for (const q of [
+    'what is his best work',
+    'biggest project he has built',
+    'favorite product he shipped',
+    'whats his most impressive achievement',
+    'main project hes proud of',
+  ]) {
+    const r = preRoute(q);
+    assert.equal(r?.type, 'synthesis', `expected synthesis for "${q}"`);
+    assert.deepEqual(r?.themes_likely, ['headline'], `expected ['headline'] for "${q}", got ${JSON.stringify(r?.themes_likely)}`);
+    assert.equal(r?.route_reason, 'preroute_headline');
+  }
+});
+
+test('preRoute: voice-specific superlative routes to voice-ai-craft theme, not headline', () => {
+  // "best voice ai work" should hit voice-ai-craft keyword first (more specific)
+  const r = preRoute('what voice ai stack hits 4M calls');
+  assert.equal(r?.type, 'synthesis');
+  assert.deepEqual(r?.themes_likely, ['voice-ai-craft']);
+});
+
+test('preRoute: contact query NOT misrouted to headline', () => {
+  // "best way to reach him" — best appears but is contact-shaped
+  // CONTACT_RE has higher priority in preRoute order (contact before headline)
+  const r = preRoute('best way to reach him');
+  assert.equal(r?.type, 'synthesis');
+  assert.deepEqual(r?.themes_likely, ['contact']);
+});

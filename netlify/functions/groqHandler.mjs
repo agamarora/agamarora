@@ -39,6 +39,7 @@
 
 import { invokeSynthesisJson } from './lib/llm-pool.mjs';
 import { route } from './lib/classifier.mjs';
+import { validateLLMCards, padCardsToThree, resolveLLMCard } from './lib/card-meta.mjs';
 import {
   ALLOWED_ORIGINS,
   MAX_INPUT_LENGTH,
@@ -172,8 +173,9 @@ Deflect ONLY for: personal life not on the resume, future predictions, politics 
 Deflect with dry wit. Never say "memory banks".
 Deflect examples: "Not on the resume. Ask about what he's built." / "That one's personal. Try a product question." / "Above this terminal's pay grade."
 
-## POSITIONING (use this lens when describing Agam)
-Agam is an AI Product Manager who reads code and ships it. The combination is the point: deep technical fluency (LLMs, voice AI infra, RAG, agent systems, model routing) AND product judgment (GTM, taste, scope discipline). Engineer-PM hybrid, not a generalist PM with a tech vocabulary. Lives in an AI-native workflow, codes the tools he ships. When asked who he is or what kind of PM he is, lead with this combination, not the title alone.
+## POSITIONING (use this lens when describing Agam — locked 2026-05-03)
+Agam is an agent-first AI Product Manager. AI agents are the niche he builds for and thinks about — that is the headline. He builds for agents as much as humans, codes the tools he ships, and reads the source. Engineer-PM hybrid: deep technical fluency (LLMs, agent systems, RAG, voice infra, model routing) AND product judgment (positioning, GTM, taste, scope discipline). Lives in an AI-native workflow.
+When asked who he is or what kind of PM he is, lead with the agent-first niche, then the engineer-PM hybrid framing as the supporting beat. Do NOT lead with "voice AI guy" — voice AI at AIonOS is production credential, not the headline identity.
 
 ## GROUND TRUTH: AGAM'S STORY
 
@@ -210,13 +212,14 @@ Biggest current project = second-brain. The /wiki and /wiki/graph are its readab
 
 When a page would genuinely help, include it as a card slug. Max one priority card per reply. Never force a card.
 
-Card-routing rules (HARD RULES — locked 2026-04-27):
+Card-routing rules (HARD RULES — locked 2026-04-27, headline added 2026-05-03):
 - PROJECTS / GITHUB asks ("his projects", "what he built", "github", "repos", "portfolio") → /lab (priority) + GitHub.
 - CONNECT / CONTACT asks ("contact", "connect", "reach", "linkedin") → LinkedIn (priority) + Calendly + GitHub.
 - HIRING asks ("hire", "available", "job", "fit", "recruiter") → LinkedIn (priority) + /resume + GitHub.
+- HEADLINE / SUPERLATIVE asks ("best work", "biggest project", "favorite", "most important", "signature work") → /wiki/agent-first (priority — the thesis) + /wiki/graph + /lab. Lead the answer with the agent-first niche. Voice AI is NOT the headline.
 - BUILDING / SECOND-BRAIN asks ("building", "second-brain", "wiki", "graph", "knowledge atlas") → /lab (priority) + GitHub + /lab/second-brain.
 - AGENT / THINKING / OPINION asks ("agent-first", "what he thinks about X", "thesis") → /wiki/graph (priority, the constellation IS the thinking surface) + /wiki/<theme> + /lab.
-- VOICE AI specifically → /lab/voice-ai-production (priority) + /lab + /resume.
+- VOICE AI specifically (user explicitly asks about voice/scale/4M calls) → /lab/voice-ai-production (priority) + /lab + /resume.
 - Default for everything else → /resume (priority) + /lab + /wiki/graph.
 - Shararat is a tiny voice-AI demo. Never include it as a card unless the user types "shararat" verbatim.
 - Vary cards across turns. NEVER repeat the same card set on consecutive replies.
@@ -366,6 +369,26 @@ Channels available, surface as cards:
 - github: https://github.com/agamarora
 
 Compose a one-line answer naming the fastest path (book-call) plus the alternates. Do NOT deflect — this is a legitimate inquiry. Cards: book-call as priority:true, then linkedin + github as supporting. Do NOT mention email — it is not an available channel.`);
+  }
+
+  // Headline / superlative intent — inject curated AGENT-FIRST set. Triggers
+  // when preroute matched HEADLINE_RE or LLM emitted themes_likely:['headline'].
+  // Per fluffy-tinkering-crane plan §C + autoplan F2 (gate buildDynamicContext
+  // on 'headline' marker — without this gate, cards route correctly but
+  // answer is generic since the curated context never reaches the LLM).
+  if (themes.includes('headline') || routeDecision?.route_reason === 'preroute_headline') {
+    parts.push(`## HEADLINE WORK (user asked superlatively — "best", "biggest", "favorite", "main project", "signature work")
+The niche is AI agents. The honest answer to "best work" leads with the agent-first thesis and the things he has built around it:
+- /wiki/agent-first — his signature thesis on agents as primary readers + users.
+- /wiki/graph — the constellation graph + 12-theme atlas, a second-brain he wrote for agents to read.
+- This /enter chat — a working agent artefact answering the user right now.
+- /lab/ai-resume — the open-source agent-readable resume template he built.
+
+Voice AI at AIonOS (4M calls/yr, 50% lower cost) IS in his career, but it is the production credential, NOT the headline answer for "what is his best work". Surface voice AI in the cards ONLY if the user explicitly asks about voice, scale, or production reliability.
+
+Default cards for headline queries: wiki/agent-first (priority) + wiki/graph + lab.
+
+Compose the answer in plain English (under 70 words): lead with the agent-first thesis as the niche, name one concrete artefact (the wiki/graph or this chat), then close with a hook (e.g., "want the thesis or want to see it work in production?"). Do NOT lead with voice AI.`);
   }
 
   // Retrieved wiki content
@@ -625,6 +648,61 @@ export default async function (request) {
       } else {
         console.warn('[D-9a] retry did not improve answer, using original');
       }
+    }
+
+    // ---- v3.1 §B+E: Validate + pad cards (autoplan F1+F4+F5) ------------------
+    //
+    // Pipeline: validate → resolve → pad-to-3 (with F5 escape).
+    // Greetings (preroute_greeting_or_short) bypass padding: their answers
+    // are conversational, not factual; padding turns them into menus.
+    // F1: padder NEVER references belief slugs in commit 3 (registry not
+    //     present until commit 4).
+    // F2: HEADLINE WORK block was already gated above in buildDynamicContext.
+    // F5: padder ships 1-2 cards + emits pad_miss trace if family runs short
+    //     (no fallback to default — irrelevant fillers dilute hiring signal).
+
+    const isGreetingOrShort = routeDecision.route_reason === 'preroute_greeting_or_short';
+    {
+      const { valid: cleaned, dropped } = validateLLMCards(parsed?.cards);
+      if (dropped > 0) console.log('[cards] llm_validation_dropped', { dropped });
+
+      const resolved = cleaned.map((c) => resolveLLMCard(c)).filter(Boolean);
+
+      let finalCards;
+      let padInfo = { padMiss: false, family: null, added: [] };
+      if (isGreetingOrShort) {
+        // Conversational reply — keep LLM cards as-is, do not menu-fy.
+        finalCards = resolved;
+      } else {
+        const padCtx = {
+          intent: routeDecision.type,
+          themes: routeDecision.themes_likely || [],
+          query: input,
+        };
+        const padResult = padCardsToThree(resolved, padCtx);
+        finalCards = padResult.cards;
+        padInfo = padResult;
+        if (padResult.added.length > 0) {
+          console.log('[cards] padded', { family: padResult.family, added: padResult.added, padMiss: padResult.padMiss });
+        }
+        // F5: surface pad_miss as a trace event so the eval suite can assert.
+        if (padResult.padMiss && Array.isArray(parsed?.trace)) {
+          parsed.trace.push({
+            verb: 'padded',
+            args: `family(${padResult.family}) miss(${finalCards.length}/3)`,
+          });
+        }
+      }
+
+      // ssestream.buildEventStream calls resolveLLMCard on each entry — pass
+      // slim {slug, priority, type} shape (resolveLLMCard re-resolves
+      // idempotently). Carrying the resolved meta forward is wasteful but
+      // doesn't break anything; the slim shape keeps the wire format stable.
+      parsed.cards = finalCards.map((c) => ({
+        slug: c.slug,
+        priority: c.priority === true,
+        type: c.kind || 'page',
+      }));
     }
 
     // ---- D-4 + Decision 16: Build SSE event stream ---------------------------

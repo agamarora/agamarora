@@ -41,6 +41,15 @@ const DEFLECT_RES = [
 // 'contact' marker so groqHandler can inject the channel list.
 const CONTACT_RE = /(connect|contact|reach|email|message|dm|talk to|chat with|book.*(call|chat|time|meeting)|calendly|linkedin|hire|collaborate|work\s+(with|together)|get in touch|mail|gmail)/i;
 
+// Superlative / headline-work intent. "best work", "biggest project",
+// "favorite thing he built". Routes to synthesis with 'headline' marker so
+// groqHandler injects the HEADLINE WORK curated set. Per fluffy-tinkering-crane
+// plan §C — agent-first niche + curated set.
+//
+// Voice-AI-specific phrasing routes to voice-ai-craft theme (existing
+// keyword), so explicitly voice queries don't hit headline routing.
+const HEADLINE_RE = /\b(best|biggest|favorite|favourite|top|main|signature|headline|proudest|most\s+(important|impressive|impactful))\b.*\b(work|project|product|build|thing|achievement|accomplishment|case)\b|\b(what(?:'s|\s+is)?\s+his\s+best|best\s+thing\s+he('s|\s+has)?\s+(built|made|shipped|done))\b/i;
+
 // Direct theme keyword → synthesis with extracted slug.
 // Matched against `message`; first hit wins.
 const KEYWORD_TO_SLUG = [
@@ -95,6 +104,20 @@ export function preRoute(message) {
     };
   }
 
+  // Headline / superlative intent. Routes to synthesis with 'headline' marker.
+  // groqHandler reads this and injects the HEADLINE WORK block (agent-first
+  // curated set: wiki/agent-first, wiki/graph, lab/ai-resume). Voice AI is
+  // NOT in the headline set — see SYSTEM_PROMPT_STABLE in groqHandler.
+  // Voice-specific phrasing falls through to the voice-ai-craft theme keyword.
+  if (HEADLINE_RE.test(trimmed)) {
+    return {
+      type: 'synthesis',
+      confidence: 0.9,
+      themes_likely: ['headline'],
+      route_reason: 'preroute_headline',
+    };
+  }
+
   for (const [re, slug] of KEYWORD_TO_SLUG) {
     if (re.test(trimmed)) {
       return {
@@ -122,9 +145,12 @@ GREETINGS AND CONVERSATIONAL PROMPTS ARE NEVER DEFLECT. "hello", "say hi", "you 
 
 CONTACT queries are NOT deflect. "how do I reach him", "can I connect", "email", "linkedin", "book a call", "hire him", "work with him" → type:"synthesis" with themes_likely:["contact"]. The agent has the channel list and will surface the right cards. Only deflect personal life, politics, religion, or genuinely off-topic noise.
 
+SUPERLATIVE queries about his work ("best", "biggest", "favorite", "main project", "signature work") → type:"synthesis" with themes_likely:["headline"]. The agent reads the HEADLINE WORK curated set and surfaces agent-first cards.
+
 themes_likely[] — zero or more slugs from this set (drop slugs not in set):
 ${THEME_SLUGS.map(s => `  - ${s}`).join('\n')}
   - contact     (special marker for connect/reach/hire queries)
+  - headline    (special marker for superlative work/project queries)
 
 Output exactly: {"type": "...", "confidence": 0..1, "themes_likely": ["..."]}
 Do not include any other keys, prose, or markdown. Return JSON only.`;
@@ -181,4 +207,4 @@ export async function route(message) {
   return classify(message);
 }
 
-export const __test = { GREETING_RE, KEYWORD_TO_SLUG, CLASSIFIER_SYSTEM };
+export const __test = { GREETING_RE, KEYWORD_TO_SLUG, CLASSIFIER_SYSTEM, HEADLINE_RE, CONTACT_RE };
