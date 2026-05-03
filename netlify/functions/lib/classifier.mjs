@@ -52,7 +52,12 @@ const CONTACT_RE = /(connect|contact|reach|email|message|dm|talk to|chat with|bo
 //
 // Voice-AI-specific phrasing routes to voice-ai-craft theme (existing
 // keyword), so explicitly voice queries don't hit headline routing.
-const HEADLINE_RE = /\b(best|biggest|favorite|favourite|top|main|signature|headline|proudest|most\s+(important|impressive|impactful))\b.*\b(work|project|product|build|thing|achievement|accomplishment|case)\b|\b(what(?:'s|\s+is)?\s+his\s+best|best\s+thing\s+he('s|\s+has)?\s+(built|made|shipped|done))\b/i;
+// `.{0,40}` cap (was unbounded `.*`) prevents over-matching across long
+// sentences like "best way to reach him about a project" — that example
+// already routes to contact via CONTACT_RE which runs first, but tighter
+// bounds protect future regex ordering and stop superlative+noun pairs
+// that span unrelated clauses from collapsing into a headline route.
+const HEADLINE_RE = /\b(best|biggest|favorite|favourite|top|main|signature|headline|proudest|most\s+(important|impressive|impactful))\b.{0,40}\b(work|project|product|build|thing|achievement|accomplishment|case)\b|\b(what(?:'s|\s+is)?\s+his\s+best|best\s+thing\s+he('s|\s+has)?\s+(built|made|shipped|done))\b/i;
 
 // Direct theme keyword → synthesis with extracted slug.
 // Matched against `message`; first hit wins.

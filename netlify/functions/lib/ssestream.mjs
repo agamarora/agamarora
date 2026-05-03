@@ -211,17 +211,22 @@ function pickDeflectCards(text) {
 export function buildDeflectStream(text) {
   return new ReadableStream({
     start(controller) {
-      controller.enqueue(sseEvent('trace', { verb: 'parsed', args: 'intent(off-topic)', ms: syntheticDisplayMs(), pill_ms: 600 }));
-      controller.enqueue(sseEvent('trace', { verb: 'deflected', args: 'personal', ms: syntheticDisplayMs(), pill_ms: 600 }));
-      const chunks = tokenChunks(text);
-      for (const chunk of chunks) {
-        controller.enqueue(sseEvent('token', { text: chunk }));
+      try {
+        controller.enqueue(sseEvent('trace', { verb: 'parsed', args: 'intent(off-topic)', ms: syntheticDisplayMs(), pill_ms: 600 }));
+        controller.enqueue(sseEvent('trace', { verb: 'deflected', args: 'personal', ms: syntheticDisplayMs(), pill_ms: 600 }));
+        const chunks = tokenChunks(text);
+        for (const chunk of chunks) {
+          controller.enqueue(sseEvent('token', { text: chunk }));
+        }
+        const [pri, sec] = pickDeflectCards(text);
+        enqueueResolvedCard(controller, pri, true);
+        enqueueResolvedCard(controller, sec, false);
+        controller.enqueue(sseEvent('done', {}));
+        controller.close();
+      } catch (err) {
+        try { controller.enqueue(sseEvent('error', { message: err?.message || 'deflect_stream_error' })); } catch {}
+        try { controller.close(); } catch {}
       }
-      const [pri, sec] = pickDeflectCards(text);
-      enqueueResolvedCard(controller, pri, true);
-      enqueueResolvedCard(controller, sec, false);
-      controller.enqueue(sseEvent('done', {}));
-      controller.close();
     },
   });
 }
@@ -250,19 +255,24 @@ export function buildFallbackStream() {
 export function buildCacheReplayStream({ text, cards = [] }) {
   return new ReadableStream({
     start(controller) {
-      controller.enqueue(sseEvent('trace', {
-        verb: 'cached',
-        args: 'replay()',
-        ms: 0,
-        pill_ms: 0,
-      }));
-      controller.enqueue(sseEvent('token', { text, cached: true }));
-      for (const card of cards) {
-        if (!card?.slug) continue;
-        enqueueResolvedCard(controller, card.slug, card.priority === true);
+      try {
+        controller.enqueue(sseEvent('trace', {
+          verb: 'cached',
+          args: 'replay()',
+          ms: 0,
+          pill_ms: 0,
+        }));
+        controller.enqueue(sseEvent('token', { text, cached: true }));
+        for (const card of cards) {
+          if (!card?.slug) continue;
+          enqueueResolvedCard(controller, card.slug, card.priority === true);
+        }
+        controller.enqueue(sseEvent('done', {}));
+        controller.close();
+      } catch (err) {
+        try { controller.enqueue(sseEvent('error', { message: err?.message || 'cache_replay_stream_error' })); } catch {}
+        try { controller.close(); } catch {}
       }
-      controller.enqueue(sseEvent('done', {}));
-      controller.close();
     },
   });
 }

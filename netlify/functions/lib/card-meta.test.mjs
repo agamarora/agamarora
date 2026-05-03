@@ -237,3 +237,75 @@ test('padCardsToThree: F5 escape hatch — does not fall back to default from sp
   // No padding needed — LLM already filled.
   assert.equal(r.added.length, 0);
 });
+
+// ---- retrievedSlugs (retrieval-aware filler) -----------------------------
+
+test('padCardsToThree: retrievedSlugs prepended before family fillers', () => {
+  // LLM emitted 0 cards. Retrieval pulled wiki/spec-first-taste.
+  // Padder should fill wiki/spec-first-taste FIRST, then family fillers.
+  const r = padCardsToThree([], {
+    intent: 'synthesis',
+    themes: ['spec-first-taste'],
+    query: 'why taste over execution',
+    retrievedSlugs: ['wiki/spec-first-taste'],
+  });
+  assert.equal(r.cards.length, 3);
+  assert.equal(r.cards[0].slug, 'wiki/spec-first-taste');
+  assert.equal(r.cards[0].priority, true);
+});
+
+test('padCardsToThree: retrievedSlugs include belief slug', () => {
+  // LLM didn't emit belief card; retrieval pulled belief.spec-over-sprint.
+  // Padder must surface the belief as the priority card.
+  const r = padCardsToThree([], {
+    intent: 'synthesis',
+    themes: ['belief.spec-over-sprint'],
+    query: 'why spec over sprint',
+    retrievedSlugs: ['belief.spec-over-sprint'],
+  });
+  assert.equal(r.cards.length, 3);
+  assert.equal(r.cards[0].slug, 'belief.spec-over-sprint');
+  assert.equal(r.cards[0].priority, true);
+});
+
+test('padCardsToThree: retrievedSlugs dedupe vs LLM cards', () => {
+  // LLM already emitted wiki/agent-first; retrieval also returned wiki/agent-first.
+  // Padder must NOT add a duplicate.
+  const llm = [resolveCard('wiki/agent-first', { priority: true })];
+  const r = padCardsToThree(llm, {
+    intent: 'synthesis',
+    themes: ['agent-first'],
+    query: 'agent thesis',
+    retrievedSlugs: ['wiki/agent-first'],
+  });
+  assert.equal(r.cards.length, 3);
+  const slugs = r.cards.map((c) => c.slug);
+  assert.equal(new Set(slugs).size, 3, 'no duplicate slugs across the row');
+  assert.equal(slugs[0], 'wiki/agent-first');
+});
+
+test('padCardsToThree: unknown retrievedSlugs filtered out', () => {
+  // Defensive: if retrieval supplies a slug not in the registry, padder skips
+  // it and falls through to family fillers.
+  const r = padCardsToThree([], {
+    intent: 'synthesis',
+    themes: [],
+    query: 'who is he',
+    retrievedSlugs: ['totally-fake-slug', 'belief.does-not-exist'],
+  });
+  assert.equal(r.cards.length, 3);
+  // Default family kicks in — no fake slugs leaked through.
+  const slugs = r.cards.map((c) => c.slug);
+  assert.deepEqual(slugs, ['resume', 'lab', 'wiki/graph']);
+});
+
+test('padCardsToThree: retrievedSlugs ignored on greeting intent', () => {
+  // Greetings stay 0-cards even if retrieval ran (shouldn't, but be defensive).
+  const r = padCardsToThree([], {
+    intent: 'greeting',
+    themes: [],
+    query: 'hi',
+    retrievedSlugs: ['wiki/agent-first'],
+  });
+  assert.equal(r.cards.length, 0);
+});

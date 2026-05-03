@@ -53,6 +53,13 @@ function loadBeliefs() {
 
 const _beliefsData = loadBeliefs();
 
+// Surface a load failure at cold-start so silent classifier degradation
+// (no belief slugs in the system prompt → LLM never emits belief cards →
+// belief queries fall to themes/default) is observable in function logs.
+if (Object.keys(_beliefsData).length === 0) {
+  console.warn('[beliefs-enum] wiki-extracts.json belief data missing or empty — belief routing will silently no-op');
+}
+
 // Bare belief slugs (without `belief.` prefix). Sorted alphabetically.
 export const BELIEF_BARE_SLUGS = Object.keys(_beliefsData).sort();
 

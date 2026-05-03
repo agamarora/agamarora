@@ -75,3 +75,28 @@ test('preRoute: contact query NOT misrouted to headline', () => {
   assert.equal(r?.type, 'synthesis');
   assert.deepEqual(r?.themes_likely, ['contact']);
 });
+
+test('preRoute: llm primary daily tool — possessive phrasings route to belief', () => {
+  // Belief regex covers possessive phrasings ("his primary daily tool",
+  // "the primary tool") that the existing ai-pm-skillset theme regex misses.
+  // Canonical "as primary tool" / "as daily tool" wording still routes to
+  // the ai-pm-skillset theme (theme patterns are listed first by design).
+  for (const q of [
+    'why is llm his primary daily tool',
+    'why is llm the primary tool for him',
+    'llm is his main tool daily',
+  ]) {
+    const r = preRoute(q);
+    assert.equal(r?.type, 'synthesis', `expected synthesis for "${q}"`);
+    assert.deepEqual(r?.themes_likely, ['belief.llm-as-primary-daily-tool'], `expected belief slug for "${q}"`);
+  }
+});
+
+test('preRoute: canonical "llm as primary tool" phrasing routes to theme not belief', () => {
+  // Theme patterns are ordered first; the ai-pm-skillset theme captures
+  // the canonical "llm as (daily|primary) tool" phrasing. Theme wins because
+  // theme content is richer than the single-position belief.
+  const r = preRoute('why is llm as primary tool the right call');
+  assert.equal(r?.type, 'synthesis');
+  assert.deepEqual(r?.themes_likely, ['ai-pm-skillset']);
+});
