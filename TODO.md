@@ -1,75 +1,78 @@
 # TODO — agamarora.com
 
-## /enter thinking-dots animation (next session)
-- [ ] Thinking-dots pulse not visible on desktop. Three plausible causes ranked: (1) Windows 11 reduce-motion accessibility setting triggers the `@media (prefers-reduced-motion:reduce)` rule at enter/index.html:315 and freezes dots at opacity 0.6; (2) desktop Groq first-token latency ~50-150ms removes the placeholder before the 1.2s pulse cycle has time to render even one beat; (3) flex blockification edge case (low probability). Verify with `getComputedStyle(document.querySelector('.thinking-dots span')).animationName` in DevTools after submit. Fix: gate placeholder removal behind MIN_PILL_DURATION_MS (~600ms) so even fast SSE responses let the pulse render once.
+**Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-## Response evals (next session)
-- [ ] Run full eval pass on /enter responses now that mobile UI is locked. Common asks tested 2026-04-27 surfaced: "linkedin" returns weak tautology, "is he available for hire" hallucinates "after current contract is fulfilled", "show me his projects" claims "AI resume template used by thousands" (not in spec). Cards on contact intents come from client-side fallback, not the LLM — server-side path is empty.
-- [ ] Tighten: more conversational follow-ups. Agent should leave a hook on factual answers, not state the fact and stop. Reduce answering-machine cadence.
-- [ ] Verify deflect rules don't fire on legitimate biographical questions ("is he hiring", "what's he like").
-- [ ] Add JSON-schema validation for cards[] so LLM can't drop the contact-card set when CONTACT CONTEXT is injected.
+Last updated: 2026-05-03 (audited + triaged — stale entries removed, deferred items parked).
 
-## Dead Files
-- [x] ~~Delete `styles/backup.css`, `main.css.old`, `refactored.css`~~ — removed
-- [x] ~~Delete `assets/avatar-front.png`~~ — removed
-- [x] ~~Delete old UKG PNG logos~~ — removed (webp versions used)
-- [x] ~~Delete `experiments/`~~ — removed
-- [x] ~~Delete `styles/main.css` + `styles/lab.css`~~ — removed 2026-04-22 (v2 pages are self-contained inline)
-- [x] ~~Delete `scripts/main.js` + `lab.js` + `utils.js` + `explore.js`~~ — removed 2026-04-22
-- [x] ~~Delete `explore/index.html`~~ — removed 2026-04-22 (netlify.toml handles 301 → /lab)
+---
 
-## Inconsistencies
-- [x] ~~Fix LinkedIn URL mismatch in schema.org vs header~~ — unified on `agamarora` (no hyphen)
-- [x] ~~Fix job title mismatch across pages~~ — "AI Product Manager" everywhere
-- [x] ~~Update copyright year wherever it still says 2025~~ — no © markers on site; only date ranges in resume content (correct)
+## Active
 
-## SEO / Meta
-- [x] ~~Fix `og:image` on `/lab`~~ — now points at existing `/assets/preview.png`
-- [x] ~~Add `sitemap.xml`~~ — added 2026-04-22, 5 public URLs
-- [x] ~~Add `robots.txt`~~ — allow-all with `Disallow: /moodboard/`, sitemap reference
-- [x] ~~Add `/llms.txt` and `/llms-full.txt`~~ — AEO/GEO discoverability for AI answer engines
-- [x] ~~Add `<link rel="canonical">` on all v2 pages~~
-- [x] ~~Enhance JSON-LD~~ — Person @graph with alumniOf/knowsAbout/description on `/`, ProfilePage on `/resume`, CollectionPage on `/lab`
-- [x] ~~Add `robots: noindex` to `/moodboard` pages~~
-- [x] ~~Generate a proper OG image for `/lab`~~ — shipped 2026-04-24, per-page OGs for `/`, `/lab`, `/lab/second-brain/`, `/lab/ai-resume/`
+### `/writing/` framework — new content surface + build pipeline
+**Why:** no home today for freeform essays / POV / industry commentary. `/lab/` is product PRFAQs, `/wiki/` is curated synthesis. Adding posts pollutes wiki; staying silent blocks blog cadence. Spec'd 2026-05-03, build pending.
 
-## Content
-- [x] ~~Add more projects to `/lab`~~ — 4 now: second-brain, AI Resume, Voice AI, Claude Code Resource Monitor
-- [x] ~~Launch `/lab/second-brain/` PRFAQ~~ — shipped 2026-04-23, same body live on [Medium](https://medium.com/@agam.arora11/your-ai-forgets-you-every-session-78ad24bf49be) and [LinkedIn](https://www.linkedin.com/pulse/your-ai-forgets-you-every-session-agam-arora-8fafc/)
-- [x] ~~Dedicated OG image for `/lab/second-brain/`~~ — shipped 2026-04-24
+- [ ] `scripts/build-writing.mjs` — modeled on `scripts/build-wiki.mjs`. Source: `content/writing/<slug>.md` (YAML frontmatter: title, date, summary, tags, canonical, optional `agent_retrievable: true`).
+- [ ] Generates `/writing/<slug>/index.html` via `scripts/lib/chrome.mjs` (DRY contract enforced).
+- [ ] Generates `/writing/index.html` — auto-listed reverse-chronological landing.
+- [ ] Auto-merges entries into `sitemap.xml`, `llms.txt`, `llms-full.txt`, `site.json`.
+- [ ] Optional: emits `wiki/extracts/writing-<slug>.md` so `/enter` agent can cite (when frontmatter `agent_retrievable: true`).
+- [ ] Wire into `npm run build` after `build:wiki-extracts`.
+- [ ] Locked decisions: `~/.claude/projects/D--AA-agamarora/memory/project_writing_framework.md`.
 
-## Performance
-- [x] ~~Delete 2.3 MB unused `agamarora_banner.png`~~ — was unused in site, restored for readme.md (GitHub profile). Still on disk, serves the profile header.
-- [x] ~~Remove main.css weight from site~~ — 32 KB unminified stylesheet, now orphan and deleted
-- [x] ~~`assets/lab/vapi-thumbnail.png` (948 KB)~~ — deleted 2026-04-22 with its webp pair; the /lab Voice AI card embeds a YouTube iframe, neither file was referenced
-- [x] ~~Font Awesome 6.5.0 full CSS~~ — replaced with inline SVG sprite per page 2026-04-24. 274 KB font + 100 KB CSS → ~4 KB inline. Zero external deps.
+---
 
-## v2 Design System
+## Build infra
 
-All v2 pages follow a unified contract. See `CLAUDE.md` for the layout rules and tokens.
+- [ ] **`scripts/lib/kg-parse.mjs` unit tests.** Refactor done. Test file `tests/kg-parse.test.mjs` (referenced in source comment) not created. 6 test gaps: orphan-edge --strict, tableUnder branches, allTablesUnder EOF, cleanSlug, edge regex parsers, addBelief dedup. Tracked as B7.
 
-- [x] ~~Landing ported to v2~~
-- [x] ~~`/lab` ported to v2~~
-- [x] ~~`/lab/ai-resume` on v2~~
-- [x] ~~`/resume` on v2~~
-- [x] ~~`/enter` has shared v2 header + aa. mark~~
+---
 
-## AEO/SEO pass (2026 architecture)
+## Parked (revisit later, not committed to ship)
 
-- [ ] **Run AEO/SEO pass per `docs/aeo-seo-guidelines.md`** — full architecture guide for 2026 AI search optimization. Covers Person schema enrichment, AEO Q&A blocks, BLUF executive summaries on Lab PRFAQs, image alt text audit, `<pre><code>` wrap audit, TTFB benchmark, bot allowance verification, robots.txt audit, canonical tags audit, breadcrumbs + BreadcrumbList JSON-LD, internal link density, navigation interlinks. **Trigger: after major content work (currently C-voice-themes done, C-voice-beliefs queued) AND BEFORE Phase D (AI plumbing / `/enter` v3 / groqHandler upgrade).** Per Part 4 of the guide, run in 9-step order with commit per step.
+### CEO C5 — niche cascade to non-/enter surfaces (uncertain)
+Agent-first niche shipped 2026-05-03 inside Netlify function only. Recruiter cold-scan of `/resume` or `/` still leads with "Engineer-PM. Voice AI." Verified 2026-05-03: `index.html` title still "AI Product Manager. Engineer-PM. Builder."; `resume/index.html` meta desc still leads "voice AI at enterprise scale". Triaged 2026-05-03 — keep visible, defer commit.
 
-## Open (Phase B follow-ups)
+If picked up: rewrite `/` + `/resume` `<title>` / meta / OG / JSON-LD + `<h1>` tagline. Re-export `assets/og/og-master.jpg` with new tagline. LinkedIn headline manual. Source of truth: `~/.claude/projects/D--AA-agamarora/memory/project_positioning_locked.md`.
 
-- [ ] **Site-wide favicon 404** — every v2 page references `/favicon.ico` + `/favicon.png` at root, but the actual files live at `/assets/favicon.ico` + `/assets/favicon.png`. Pre-existing across all 5 v2 pages (lab, resume, enter, index, wiki). Fix in one commit per CLAUDE.md "update all v2 pages in one commit" by either (a) updating all 5 page paths to `/assets/favicon.*` or (b) adding root copies. Surfaced by /qa pass on Phase B Task 2.
-- [ ] **`/wiki/` OG image** — `wiki/index.html` currently reuses `/assets/og/lab.png`. Create `/assets/og/wiki.png` (1200x630) for dedicated social share preview. Same gap as the closed /lab issue when it shipped.
-- [ ] **HTML stats drift from kg.json** — `wiki/index.html` hardcodes counts (12 pages, 44 beliefs, 20 projects, 111 edges). Will drift when ontology v2 lands. Wire build-kg.mjs to patch the HTML, or inline-fetch kg.json on page load. Tracked as B8.
-- [ ] **`scripts/build-kg.mjs` unit tests** — 6 boilable-lake test gaps (orphan-edge --strict, tableUnder branches, allTablesUnder EOF, cleanSlug, edge regex parsers, addBelief dedup). Refactor helpers to scripts/kg-parse.mjs for testability. Tracked as B7.
+### Phase 4 — `/enter` demo pazzazz (uncertain)
+Zero code shipped (verified 2026-05-03 — no citations, pill-expand, mini-graph in `enter/index.html` or `groqHandler.mjs`). LOCKED scope per `docs/plans/enter-v3.1-spec.md` §5. Triaged 2026-05-03 — keep visible, defer commit.
 
-## Future
+| ID | What |
+|---|---|
+| W1 | Inline citations `[1][2]` in answer prose. Server-side post-synthesis substring/fuzzy match. Hover preview desktop, tap mobile. |
+| E7 | Pill click-to-expand. Click trace pill → inline expand to first 200 chars + link. Server already has the content. |
+| W4 | Mini-graph. Real Canvas ~160px tall between trace pills + answer. Reuses `/wiki/graph` engine, scoped to retrieved subgraph. |
 
-- [x] ~~`/moodboard` robots noindex~~ — added 2026-04-22 on both `/moodboard/index.html` and `/moodboard/aa-mark.html`; also blocked in `robots.txt`
-- [x] ~~Google Fonts vendored locally~~ — JetBrains Mono + Patrick Hand woff2 self-hosted 2026-04-24. `feedback_no_external_deps` fully satisfied.
-- [x] ~~Security headers~~ — CSP, HSTS, X-Frame-Options, Referrer-Policy, Permissions-Policy, X-Content-Type-Options added to netlify.toml 2026-04-24.
-- [x] ~~Project tag contrast fix~~ — `.project-tag` color #7a7a7a → #8a8a8a, passes WCAG AA (5.18 ratio) 2026-04-24.
-- [x] ~~Lab card aria-labels~~ — descriptive aria-label on Read more / Code CTAs 2026-04-24.
-- [x] ~~Lab card image resize~~ — luna-monitor + ai-resume PNGs resized to displayed dimensions (.v2.png) 2026-04-24.
+Phase 5 + 6 deferred. See spec §5.
+
+---
+
+## Reference
+
+- Architecture / system stitching: `~/.claude/plans/rosy-plotting-flame.md`
+- second-brain v1 canonical spec: `docs/plans/second-brain-v1.md`
+- `/enter` v3.1 spec: `docs/plans/enter-v3.1-spec.md`
+- Phase A status (closed): `docs/plans/second-brain-v1-phase-a/STATUS.md`
+- Last session log: `docs/plans/BASELINE-2026-04-26.md`
+- Phase D dev + eval workflow: `docs/plans/phase-d-dev-workflow.md` (BINDING for any /enter change)
+- AEO/SEO gate audit (CLEARED): `docs/plans/aeo-gate-final-audit-2026-04-27.md`
+- Locked positioning: `~/.claude/projects/D--AA-agamarora/memory/project_positioning_locked.md`
+- Auto-memory index: `~/.claude/projects/D--AA-agamarora/memory/MEMORY.md`
+
+---
+
+## Closed / dropped this audit (2026-05-03)
+
+**Verified shipped — do NOT relitigate:**
+- ~~Favicon 404~~ — files exist at root + `/assets/`. Both paths work. False alarm.
+- ~~`/wiki/` OG image~~ — `og-wiki.jpg` shipped + wired in `wiki/themes/index.html:15`.
+- ~~Card schema validation~~ — `validateLLMCards` shipped at `card-meta.mjs:501`, used in `groqHandler:747`, has tests at `card-meta.test.mjs:43+`.
+- ~~AEO/SEO BINDING gate~~ — CLEARED 2026-04-27 per `aeo-gate-final-audit-2026-04-27.md`. 14 tasks shipped.
+- ~~Phase E publish to Medium + LinkedIn~~ — already shipped. Links live in `lab/second-brain/index.html:799,803`.
+
+**Dropped — won't pursue:**
+- ~~/enter thinking-dots animation~~ — cosmetic, not chasing.
+- ~~/enter response evals re-run~~ — Apr 27 issues untested, niche-locked prompt may have resolved; not worth proactive sweep.
+- ~~/enter conversational follow-ups~~ — vague, no clear ROI.
+- ~~/enter deflect-rule audit~~ — already tightened 2026-05-03.
+- ~~HTML stats drift in `wiki/themes/index.html`~~ — theoretical, only breaks if ontology changes; currently stable.
