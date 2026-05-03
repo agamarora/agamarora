@@ -656,12 +656,16 @@ export default async function (request) {
       timings['retry'] = retryMs;
 
       if (retryResult?.json?.answer && retryResult.json.answer.length > parsed.answer.length) {
-        // Merge: take expanded answer + add expanded trace verb
+        // Merge: take expanded answer + KEEP ORIGINAL TRACE (B5 fix per
+        // enter-v3.1-spec §1 + autoplan F-equivalent). The retry's
+        // returned trace often hallucinates re-runs of the pipeline that
+        // didn't actually execute server-side; we keep the original
+        // parsed.trace (which the server stamped real ms on) and append
+        // a single synthetic `expanded` verb to signal the retry happened.
         const expandedJson = retryResult.json;
-
-        // Append an "expanded" trace verb to signal the retry happened
+        const originalTrace = Array.isArray(parsed.trace) ? parsed.trace : [];
         const expandedTrace = [
-          ...(Array.isArray(expandedJson.trace) ? expandedJson.trace : (parsed.trace || [])),
+          ...originalTrace,
           {
             verb: 'expanded',
             args: `answer(${parsed.answer.length}→${expandedJson.answer.length} chars)`,
@@ -680,6 +684,10 @@ export default async function (request) {
           retryMs,
         });
       } else {
+        // Retry did not improve answer — KEEP ORIGINAL parsed unchanged.
+        // Do NOT append `expanded` verb (the spec reserves it for accepted
+        // retries; appending on failure would mislead the trace + risk
+        // double-append if this branch were ever invoked twice).
         console.warn('[D-9a] retry did not improve answer, using original');
       }
     }
