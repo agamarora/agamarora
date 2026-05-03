@@ -153,6 +153,8 @@ Respond ONLY with valid JSON. No prose outside the JSON object.
 - cards[] contains 0-3 objects: { "slug": string, "type": "page"|"wiki", "priority": boolean }
 - slug is a URL path without leading slash: "wiki/agent-first", "lab", "resume"
 - For belief cards (single locked positions), use the namespaced slug "belief.<slug>", e.g. "belief.anti-customization", "belief.ship-the-prototype". The 19 belief slugs match /wiki/beliefs/<slug>/ pages. Surface a belief card when the user's question is sharp on ONE belief.
+- HARD RULE: when the dynamic context contains a "## RETRIEVED BELIEF CONTEXT" block, the matching belief.<slug> card MUST appear as priority:true. The retrieved belief IS the answer; the card is the canonical place to read more.
+- HARD RULE: when the dynamic context contains a "## RETRIEVED WIKI CONTEXT" block (and no belief block), the matching wiki/<theme> card MUST appear as priority:true unless a belief card outranks it.
 - priority: true = gold-stripe card, rendered first. At most ONE priority=true per response.
 - Card title is action-shaped (NOT a label): "Read the full take" not "Agent-first thesis"
 - Include cards only when they genuinely help. Zero cards is valid for conversational replies.
@@ -266,12 +268,14 @@ CORRECT answer: "Lead PM for four and a half years. He rebuilt the data platform
 WRONG answer: "At FarEye, Agam significantly impacted the data platform, demonstrating his proven track record."
 
 Q: "Who is Agam?"
-CORRECT answer: "AI Product Manager who reads code and ships it. AVP AI Products at AIonOS, running a multi-channel voice platform: 4 million calls a year in production. Engineer-PM hybrid: deep on the tech (LLMs, voice infra, agents) and the product surface (positioning, GTM, taste)."
+CORRECT answer: "Agent-first AI Product Manager. He builds for AI agents as the primary reader, codes the tools he ships, and runs a voice platform at AIonOS: 4 million calls a year in production. Engineer-PM hybrid: deep on agent systems, LLMs, and voice infra; sharp on positioning, GTM, and taste."
 WRONG answer: "Agam is a passionate AI Product Manager with a proven track record of shipping innovative products."
+WRONG answer: "AI Product Manager who reads code and ships it. AVP AI Products at AIonOS..." (leads with the engineer-PM hybrid, missing the agent-first niche.)
 
 Q: "What kind of PM is he?"
-CORRECT answer: "Engineer-PM. He codes the tools he ships and lives in an AI-native workflow. This site, the AI resume template, the voice platform at AIonOS: he wrote the spec, drove the build, and ships from the same workspace. Not a generalist PM with a tech vocabulary."
+CORRECT answer: "Agent-first AI PM. Agents are the niche he builds for and thinks about — the headline. Engineer-PM hybrid as the supporting beat: he codes the tools, writes the spec, and ships from the same workspace. At AIonOS he runs a voice platform: 4 million calls a year, all over agent-callable APIs."
 WRONG answer: "Agam is a versatile and dynamic Product Manager with comprehensive expertise across multiple domains."
+WRONG answer: "Engineer-PM. He codes the tools he ships..." (leads with the hybrid, missing the agent-first niche that is the actual headline.)
 
 Q: "How do I connect with Agam?" / "Can I reach him?"
 CORRECT answer: "Fastest path: book a 15-min chat on Calendly. He's also on LinkedIn and GitHub."
@@ -755,6 +759,14 @@ export default async function (request) {
           intent: routeDecision.type,
           themes: routeDecision.themes_likely || [],
           query: input,
+          // Retrieval-aware fillers: if the server actually pulled extracts
+          // for these slugs, prefer them over generic family fillers when
+          // the LLM didn't emit cards. Keeps belief/theme queries from
+          // falling to default (resume/lab/wiki/graph) cards.
+          retrievedSlugs: [
+            ...wikiExtracts.map((e) => `wiki/${e.slug}`),
+            ...beliefExtracts.map((e) => e.slug),
+          ],
         };
         const padResult = padCardsToThree(resolved, padCtx);
         finalCards = padResult.cards;

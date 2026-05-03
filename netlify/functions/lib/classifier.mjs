@@ -92,6 +92,7 @@ const KEYWORD_TO_SLUG = [
   [/spec\s+over\s+sprint|specs?\s+beat\s+sprints?/i, 'belief.spec-over-sprint'],
   [/table[\s\-]?stakes\s+(for\s+)?ai\s+pm|ai\s+pm\s+table[\s\-]?stakes/i, 'belief.ai-pm-skillset-table-stakes'],
   [/posting\s+is\s+(thinking|the\s+game)|linkedin\s+(as\s+)?instrument(al)?\s+platform/i, 'belief.linkedin-as-instrumental-platform'],
+  [/llm\s+(is|as)?\s*(his|the)?\s*(primary|main)\s+(daily\s+)?tool|llm\s+as\s+(primary|daily)\s+tool/i, 'belief.llm-as-primary-daily-tool'],
 ];
 
 export function preRoute(message) {

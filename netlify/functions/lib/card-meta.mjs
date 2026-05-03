@@ -473,7 +473,19 @@ export function padCardsToThree(resolvedCards, ctx) {
   const out = [...baseCards];
   const added = [];
 
-  for (const slug of family.slugs) {
+  // Retrieval-aware fillers: when retrieval ran (themes or beliefs pulled
+  // server-side), prefer those slugs as fillers BEFORE generic family slugs.
+  // Without this, a belief query that the LLM answers without emitting a
+  // belief card falls to the family default (resume/lab/wiki-graph) — cards
+  // lose all relevance to what the user actually asked. Per smoke check
+  // 2026-05-03: "what does context over prompt mean to him" retrieved
+  // wiki/spec-first-taste but cards were resume + lab + wiki/graph.
+  const retrievedFillers = (Array.isArray(ctx?.retrievedSlugs) ? ctx.retrievedSlugs : [])
+    .filter((s) => typeof s === 'string' && isKnownSlug(s));
+
+  const fillerSequence = [...retrievedFillers, ...family.slugs];
+
+  for (const slug of fillerSequence) {
     if (out.length >= 3) break;
     if (seen.has(slug)) continue;
     const card = resolveCard(slug, { priority: !priorityAssigned });
