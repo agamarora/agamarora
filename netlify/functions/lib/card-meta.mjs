@@ -262,17 +262,110 @@ const EXTERNALS = {
 // Per docs/plans/fluffy-tinkering-crane.md commit 4 + autoplan F1 (registry
 // lands AFTER padder, so padder defaults stay non-belief).
 
+// Hand-curated belief card titles + descs. Themes / lab / internal / external
+// all have static curated text. Beliefs were the last auto-derived family
+// (build-wiki-extracts.mjs sliced data.tldr to ~60 chars, which felt like a
+// band-aid — descs were ending mid-thought even at word boundaries). These
+// are written to fit cleanly inside a 280px card with no truncation.
+//
+// Per user direction 2026-05-03: "we should have clean description in
+// lesser words". Each entry: title <= 28 chars, desc <= 56 chars.
+//
+// To add a new belief: add the slug here AND on disk (wiki/beliefs/<slug>/).
+// Build script still emits extract content into wiki-extracts.json for the
+// LLM retrieval path; this map only governs the CARD render.
+const BELIEF_CARD_OVERRIDES = {
+  'agent-first': {
+    title: 'Agent-first thesis',
+    desc: 'Build for AI agents as primary users, not humans alone.',
+  },
+  'ai-pm-skillset-table-stakes': {
+    title: 'AI PM table stakes',
+    desc: 'AI fluency is now the floor for PMs, not the edge.',
+  },
+  'anti-customization': {
+    title: 'Anti-customization',
+    desc: 'Say no in the PRD, even when you want to say yes.',
+  },
+  'breadth-as-differentiation': {
+    title: 'Breadth as edge',
+    desc: 'Pattern-matching speed across domains is the moat.',
+  },
+  'breadth-needs-depth': {
+    title: 'Breadth needs depth',
+    desc: 'Breadth without depth is just Human-GPT. Pick a niche.',
+  },
+  'context-over-prompt': {
+    title: 'Context over prompt',
+    desc: 'Curating context beats composing prompts.',
+  },
+  'enterprise-ai-production-reality': {
+    title: 'Enterprise AI reality',
+    desc: 'Demos are not deployments. Most enterprise AI fails.',
+  },
+  'help-market-flourish': {
+    title: 'Help the market flourish',
+    desc: 'Grow the pie before chasing a bigger slice.',
+  },
+  'ic-path-legitimacy': {
+    title: 'IC path is legitimate',
+    desc: 'The IC track is a career, not a consolation prize.',
+  },
+  'learn-concepts-not-tools': {
+    title: 'Concepts not tools',
+    desc: 'Frameworks endure, tools rotate. Learn the concept.',
+  },
+  'linkedin-as-instrumental-platform': {
+    title: 'LinkedIn as instrument',
+    desc: 'Posting IS thinking. The platform as a game played well.',
+  },
+  'llm-as-primary-daily-tool': {
+    title: 'LLM as daily tool',
+    desc: 'LLM first across every surface. Frequency beats specialty.',
+  },
+  'pm-is-99-should-we-1-can-we': {
+    title: '99% should-we',
+    desc: 'PM is 99% should-we and 1% can-we. The craft, not the title.',
+  },
+  'second-brain-is-context-layer': {
+    title: 'Second brain as context',
+    desc: 'A persistent knowledge substrate every session reads from.',
+  },
+  'self-instrumentation': {
+    title: 'Self-instrumentation',
+    desc: 'Debug your own thinking like you would a system.',
+  },
+  'ship-the-prototype': {
+    title: 'Ship the prototype',
+    desc: 'Evidence beats arguments. The prototype is the case.',
+  },
+  'spec-over-sprint': {
+    title: 'Spec over Sprint',
+    desc: 'When iteration is cheap, clarity is the bottleneck.',
+  },
+  'substance-over-hype': {
+    title: 'Substance over hype',
+    desc: 'Reduce hyped categories to their substrate, then evaluate.',
+  },
+  'taste-over-execution': {
+    title: 'Taste over execution',
+    desc: 'AI commodifies execution. Taste is the remaining craft.',
+  },
+};
+
 function buildWikiBeliefsRegistry() {
   const beliefs = getAllBeliefs();
   const out = {};
-  for (const [bareSlug, data] of Object.entries(beliefs)) {
+  for (const bareSlug of Object.keys(beliefs)) {
     const key = `${BELIEF_NAMESPACE}${bareSlug}`;
     const url = `/wiki/beliefs/${bareSlug}/`;
+    const override = BELIEF_CARD_OVERRIDES[bareSlug] || {};
+    const fallbackTitle = bareSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
     out[key] = {
       kind: 'page',
       url,
-      title: data.title || bareSlug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-      desc: data.card_desc || data.tldr || '',
+      title: override.title || fallbackTitle,
+      desc: override.desc || '',
       arrow_label: `/wiki/beliefs/${bareSlug}`,
     };
   }
@@ -319,23 +412,23 @@ const CARD_REGISTRY = {
 // or render a placeholder. Server-side flow drops unknown slugs (the LLM
 // was told the canonical slug list in the system prompt; unknown = drift).
 // For internal cards, collapse a path-style arrow_label down to the last
-// non-empty segment so the user sees a short hint instead of the full
-// /wiki/beliefs/<slug> path. Externals are kept as-is (their labels are
-// already domain-style — linkedin.com, github.com, calendly.com).
+// non-empty segment with a leading slash so the user sees the `/resume`
+// style across every card depth. Externals are kept as-is (their labels
+// are already domain-style — linkedin.com, github.com, calendly.com).
 //
 // Examples:
-//   /wiki/agent-first/        -> agent-first
-//   /wiki/beliefs/spec-over-sprint -> spec-over-sprint
-//   /lab/voice-ai-production  -> voice-ai-production
-//   /lab                      -> lab
-//   /resume                   -> resume
-//   /                         -> home (special case)
+//   /resume                        -> /resume
+//   /lab                           -> /lab
+//   /wiki/agent-first/             -> /agent-first
+//   /wiki/beliefs/spec-over-sprint -> /spec-over-sprint
+//   /lab/voice-ai-production       -> /voice-ai-production
+//   /                              -> /
 function shortInternalLabel(rawLabel) {
   if (typeof rawLabel !== 'string') return '';
   const trimmed = rawLabel.replace(/^\/+/, '').replace(/\/+$/, '');
-  if (!trimmed) return 'home';
+  if (!trimmed) return '/';
   const last = trimmed.split('/').filter(Boolean).pop();
-  return last || trimmed;
+  return '/' + (last || trimmed);
 }
 
 export function resolveCard(slug, opts = {}) {
