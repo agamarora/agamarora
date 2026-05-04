@@ -92,8 +92,9 @@ function getBeliefTldr(html) {
 
 // Walk h2 sections. Returns [{ heading, text }].
 function getSections(html) {
-  // Drop related-links aside + theme-nav so they don't bleed into the last section.
+  // Drop continue-row + theme-nav so they don't bleed into the last section.
   const cleaned = html
+    .replace(/<nav\b[^>]*class="[^"]*continue-row[^"]*"[\s\S]*?<\/nav>/gi, '')
     .replace(/<aside\b[^>]*class="[^"]*related-links[^"]*"[\s\S]*?<\/aside>/gi, '')
     .replace(/<nav\b[^>]*class="[^"]*theme-nav[^"]*"[\s\S]*?<\/nav>/gi, '');
 

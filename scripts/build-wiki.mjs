@@ -511,8 +511,8 @@ function renderRelated(items) {
         `<li><span class="kind">${escHtml(it.kind || "")}</span><a href="${it.href}">${escHtml(it.label)}</a></li>`
     )
     .join("");
-  return `<aside class="related-links" aria-label="Related pages">
-    <h2>Related</h2>
+  return `<aside class="related-links" aria-label="Related architecture memos">
+    <h2>Related architecture memos</h2>
     <ul>${lis}</ul>
   </aside>`;
 }
@@ -551,7 +551,7 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbIte
   // SEO: keep <title> under 60 chars. Long source titles often have a ` - `
   // separator splitting headline from kicker; if total would blow past 60,
   // use only the headline half for <title> (full title stays in og/twitter).
-  const SUFFIX = " — wiki";
+  const SUFFIX = ". Wiki.";
   const headTitle = (title + SUFFIX).length > 60 && title.includes(" - ")
     ? title.split(" - ")[0].trim() + SUFFIX
     : title + SUFFIX;
@@ -596,7 +596,7 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbIte
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
-<meta property="og:image:alt" content="${escHtml(title)} — second brain by Agam Arora.">
+<meta property="og:image:alt" content="${escHtml(title)} Second brain by Agam Arora.">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
@@ -706,11 +706,11 @@ function linkifyLinkedInUrns(body) {
 }
 
 function inlineEvidenceHtml(html) {
-  const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
-  return html.replace(pattern, (_, heading, body) => {
-    body = linkifyLinkedInUrns(body);
-    return `${heading}${body}`;
-  });
+  // Phase 3 (2026-05-04): drop the <details> wrap; render Evidence inline.
+  // The inlineMd pass already converts bare urn:li:activity:NNN refs into
+  // class="urn-link" anchors, so a second linkifyLinkedInUrns pass would
+  // double-wrap (broken HTML). Evidence section now passes through as-is.
+  return html;
 }
 
 // Sections we drop from human-rendered theme pages. These are agent-retrieval
@@ -1433,24 +1433,24 @@ function buildGraphPage() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>Graph — wiki</title>
+<title>Graph. Wiki.</title>
 <meta name="description" content="Authored constellation of ${kg.stats.nodes_total} graph nodes and ${kg.stats.edges.total} edges across the corpus. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/wiki/graph/">
-<meta property="og:title" content="Graph — Agam Arora's wiki.">
+<meta property="og:title" content="Graph. Agam Arora's wiki.">
 <meta property="og:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
 <meta property="og:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
-<meta property="og:image:alt" content="Graph — second brain by Agam Arora.">
+<meta property="og:image:alt" content="Graph. Second brain by Agam Arora.">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Graph — Agam Arora's wiki.">
+<meta name="twitter:title" content="Graph. Agam Arora's wiki.">
 <meta name="twitter:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
 <meta name="twitter:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
 

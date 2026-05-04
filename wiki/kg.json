@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated_at": "2026-05-04T10:05:10.139Z",
+  "generated_at": "2026-05-04T10:24:39.165Z",
   "source": "docs/plans/second-brain-v1-phase-a/synthesis/ontology-v1.md (locked 2026-04-26)",
   "nodes": [
     {
@@ -1301,105 +1301,6 @@
     },
     {
       "type": "Post",
-      "id": "post.urn-li-activity-7044971627607900160",
-      "urn": "urn:li:activity:7044971627607900160",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7044971627607900160/",
-      "label": "The very first AI marketplace.",
-      "date": "2023-03-24",
-      "snippet": "The very first AI marketplace."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7204325913650491392",
-      "urn": "urn:li:activity:7204325913650491392",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7204325913650491392/",
-      "label": "Not a question of if, but when.",
-      "date": "2024-06-06",
-      "snippet": "Not a question of if, but when."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7236941772336066560",
-      "urn": "urn:li:activity:7236941772336066560",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7236941772336066560/",
-      "label": "Building for a demo vs. building for production is a different beast.",
-      "date": "2024-09-04",
-      "snippet": "Building for a demo vs. building for production is a different beast."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7277158028422914048",
-      "urn": "urn:li:activity:7277158028422914048",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7277158028422914048/",
-      "label": "2025 is the year of agentic systems.",
-      "date": "2024-12-24",
-      "snippet": "2025 is the year of agentic systems."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7341662205257433088",
-      "urn": "urn:li:activity:7341662205257433088",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7341662205257433088/",
-      "label": "Start thinking 'agent first'. Not just from a building lens but from a serving l",
-      "date": "2025-06-20",
-      "snippet": "Start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7351602695977226243",
-      "urn": "urn:li:activity:7351602695977226243",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7351602695977226243/",
-      "label": "While I hate the fact that reliance on the prompt is not reducing it is still th",
-      "date": "2025-07-17",
-      "snippet": "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7378427141190799360",
-      "urn": "urn:li:activity:7378427141190799360",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/",
-      "label": "0% automation driven through UI, 100% driven through MCP + APIs.",
-      "date": "2025-09-29",
-      "snippet": "0% automation driven through UI, 100% driven through MCP + APIs."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7396047657951064064",
-      "urn": "urn:li:activity:7396047657951064064",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7396047657951064064/",
-      "label": "The model wasn't broken, the agent layer was.",
-      "date": "2025-11-17",
-      "snippet": "The model wasn't broken, the agent layer was."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7414150680820547584",
-      "urn": "urn:li:activity:7414150680820547584",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7414150680820547584/",
-      "label": "This is not a research problem, but an application problem.",
-      "date": "2026-01-06",
-      "snippet": "This is not a research problem, but an application problem."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7447981735901949952",
-      "urn": "urn:li:activity:7447981735901949952",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7447981735901949952/",
-      "label": "Context > Prompt.",
-      "date": "2026-04-09",
-      "snippet": "Context > Prompt."
-    },
-    {
-      "type": "Post",
-      "id": "post.urn-li-activity-7452998640345853952",
-      "urn": "urn:li:activity:7452998640345853952",
-      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7452998640345853952/",
-      "label": "Every future AI session reads the same brain and writes back to it.",
-      "date": "2026-04-23",
-      "snippet": "Every future AI session reads the same brain and writes back to it."
-    },
-    {
-      "type": "Post",
       "id": "post.urn-li-activity-6349574083381944321",
       "urn": "urn:li:activity:6349574083381944321",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6349574083381944321/",
@@ -1472,6 +1373,24 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7341662205257433088",
+      "urn": "urn:li:activity:7341662205257433088",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7341662205257433088/",
+      "label": "start thinking 'agent first'. Not just from a building lens but from a serving l",
+      "date": "2025-06-20",
+      "snippet": "start thinking 'agent first'. Not just from a building lens but from a serving lens. That will be the differentiation."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7447981735901949952",
+      "urn": "urn:li:activity:7447981735901949952",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7447981735901949952/",
+      "label": "When you have already spent hours speccing every pixel... a generative tool give",
+      "date": "2026-04-09",
+      "snippet": "When you have already spent hours speccing every pixel... a generative tool gives you a worse version of what you have already decided. Spec > Sprint / Taste > Execution / Context > Prompt."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-6314056957212876800",
       "urn": "urn:li:activity:6314056957212876800",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:6314056957212876800/",
@@ -1532,6 +1451,15 @@
       "label": "To get this into my muscle memory... Use this man's writing/talks as not just on",
       "date": "2025-12-26",
       "snippet": "To get this into my muscle memory... Use this man's writing/talks as not just one-offs, but commit to them."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7378427141190799360",
+      "urn": "urn:li:activity:7378427141190799360",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7378427141190799360/",
+      "label": "The September 2025 reply to a production-stack survey (`urn:li:activity:73784271",
+      "date": "2025-09-29",
+      "snippet": "The September 2025 reply to a production-stack survey (`urn:li:activity:7378427141190799360`) contains more voice-AI eng"
     },
     {
       "type": "Post",
@@ -1670,12 +1598,39 @@
     },
     {
       "type": "Post",
+      "id": "post.urn-li-activity-7277158028422914048",
+      "urn": "urn:li:activity:7277158028422914048",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7277158028422914048/",
+      "label": "Locking great responses behind well crafted string of words is nothing but a lac",
+      "date": "2024-12-24",
+      "snippet": "Locking great responses behind well crafted string of words is nothing but a lack of deeper context understanding by the models."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7351602695977226243",
+      "urn": "urn:li:activity:7351602695977226243",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7351602695977226243/",
+      "label": "While I hate the fact that reliance on the prompt is not reducing it is still th",
+      "date": "2025-07-17",
+      "snippet": "While I hate the fact that reliance on the prompt is not reducing it is still the magic sauce in most cases."
+    },
+    {
+      "type": "Post",
       "id": "post.urn-li-activity-7452296800352305152",
       "urn": "urn:li:activity:7452296800352305152",
       "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7452296800352305152/",
       "label": "10x more connections leading to richer more informed answers while also deliveri",
       "date": "2026-04-21",
       "snippet": "10x more connections leading to richer more informed answers while also delivering 10-20K token saving each time a complex query is thrown at the second brain."
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7452998640345853952",
+      "urn": "urn:li:activity:7452998640345853952",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7452998640345853952/",
+      "label": "All of us know the power of a personal context layer... every future AI session ",
+      "date": "2026-04-23",
+      "snippet": "All of us know the power of a personal context layer... every future AI session reads the same brain and writes back to it."
     },
     {
       "type": "Post",
@@ -1721,6 +1676,15 @@
       "label": "AI Product Manager",
       "date": "2024-07-04",
       "snippet": "AI Product Manager"
+    },
+    {
+      "type": "Post",
+      "id": "post.urn-li-activity-7396047657951064064",
+      "urn": "urn:li:activity:7396047657951064064",
+      "permalink": "https://www.linkedin.com/feed/update/urn:li:activity:7396047657951064064/",
+      "label": "Growth as a product manager is moving from 'best product' to 'profitable and val",
+      "date": "2025-11-25",
+      "snippet": "Growth as a product manager is moving from 'best product' to 'profitable and valuable business'."
     },
     {
       "type": "Post",
@@ -2544,61 +2508,6 @@
       "to": "belief.gaming-as-economic-intuition"
     },
     {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7044971627607900160"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7204325913650491392"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7236941772336066560"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7277158028422914048"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7341662205257433088"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7351602695977226243"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7378427141190799360"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7396047657951064064"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7414150680820547584"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7447981735901949952"
-    },
-    {
-      "from": "theme.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7452998640345853952"
-    },
-    {
       "from": "theme.ai-pm-skillset",
       "rel": "cites-post",
       "to": "post.urn-li-activity-6349574083381944321"
@@ -2697,51 +2606,6 @@
       "from": "theme.voice-ai-craft",
       "rel": "cites-post",
       "to": "post.urn-li-activity-7214487241681772545"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7044971627607900160"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7204325913650491392"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7277158028422914048"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7341662205257433088"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7351602695977226243"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7378427141190799360"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7396047657951064064"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7414150680820547584"
-    },
-    {
-      "from": "belief.agent-first",
-      "rel": "cites-post",
-      "to": "post.urn-li-activity-7452998640345853952"
     },
     {
       "from": "belief.ai-pm-skillset-table-stakes",
@@ -3231,9 +3095,9 @@
     },
     "projects": 20,
     "tech": 56,
-    "posts": 75,
+    "posts": 71,
     "edges": {
-      "total": 224,
+      "total": 204,
       "by_relation": {
         "builds_on": 14,
         "demonstrates": 16,
@@ -3243,9 +3107,9 @@
         "earned_through": 2,
         "evidences": 2,
         "contains-belief": 57,
-        "cites-post": 113
+        "cites-post": 93
       }
     },
-    "nodes_total": 227
+    "nodes_total": 223
   }
 }
