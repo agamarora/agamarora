@@ -705,18 +705,11 @@ function linkifyLinkedInUrns(body) {
   });
 }
 
-function collapseEvidenceHtml(html) {
+function inlineEvidenceHtml(html) {
   const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
   return html.replace(pattern, (_, heading, body) => {
     body = linkifyLinkedInUrns(body);
-    // Count data rows only - <tbody> contents for tables, <li> count for bullets.
-    // Avoids the off-by-one from including <thead><tr>.
-    const tbodyMatch = body.match(/<tbody>([\s\S]*?)<\/tbody>/);
-    const rowCount = tbodyMatch
-      ? (tbodyMatch[1].match(/<tr>/g) || []).length
-      : (body.match(/<li>/g) || []).length;
-    const noun = body.includes("<table") ? "rows" : "items";
-    return `<details class="evidence-block"><summary>Evidence (${rowCount} dated ${noun} - click to expand)</summary>${body}</details>`;
+    return `${heading}${body}`;
   });
 }
 
@@ -847,7 +840,7 @@ function buildThemePage(slug, src) {
   let trimmed = stripDraftTraces(body.trim());
   trimmed = stripSections(trimmed, STRIP_THEME);
   let articleHtml = blockMd(trimmed.trim());
-  articleHtml = collapseEvidenceHtml(articleHtml);
+  articleHtml = inlineEvidenceHtml(articleHtml);
   articleHtml = injectPagePurpose(articleHtml, m.oneLine);
 
   // Build Related footer for themes:
@@ -967,7 +960,7 @@ function buildBeliefPage(slug, src) {
   let trimmed = stripDraftTraces(body.trim());
   trimmed = stripSections(trimmed, STRIP_BELIEF);
   let articleHtml = blockMd(trimmed.trim());
-  articleHtml = collapseEvidenceHtml(articleHtml);
+  articleHtml = inlineEvidenceHtml(articleHtml);
   // When a belief has a TL;DR quotable assertion, the TL;DR block carries the
   // "what is this" job and the page-purpose italic block becomes redundant.
   // Skip page-purpose to reduce the above-the-fold density. Keep page-purpose
@@ -976,9 +969,10 @@ function buildBeliefPage(slug, src) {
   if (!hasQuotable) {
     articleHtml = injectPagePurpose(articleHtml, m.oneLine);
   }
-  articleHtml = injectBeliefChips(articleHtml, meta);
-  articleHtml = injectBeliefTags(articleHtml, meta);
-  articleHtml = injectBeliefTldr(articleHtml, meta);
+  // Bulldozer 2026-05-04: chip strip / tag strip / TL;DR block removed from
+  // belief pages. Executive-memo register has no room for graph-position
+  // chrome above the fold. Frontmatter still drives kg.json + extracts; only
+  // the human-rendered HTML drops the chrome.
 
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme
@@ -1174,7 +1168,6 @@ function buildProjectsPage() {
     .join("\n");
 
   const articleHtml = `<h1 id="projects">Projects</h1>
-<p class="theme-meta"><span class="tier">DAG view</span> &middot; ${projects.length} projects &middot; ${lineage.length} lineage edges &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
 <p>Twelve years of building. Day-job work is intentionally generic here. Personal projects are the substrate of the ship-the-prototype belief: the prototype is the argument. Every learning project compounds into a top-tier project later.</p>
 <p>The lineage column shows the parent project that taught the technique or framework. Read it as a directed acyclic graph, newest at the top.</p>
 
@@ -1282,7 +1275,6 @@ ${items}
 
   const articleHtml = `<h1 id="beliefs">Beliefs</h1>
 <p class="page-purpose">${escHtml(`${total} Tier-1 beliefs grouped by their parent theme. Each one has a sub-page with origin, evidence, and current state. The full graph (themes + Tier-2 / Tier-3 beliefs + projects + posts) lives in the knowledge graph.`)}</p>
-<p class="theme-meta"><span class="tier">${total} beliefs</span> &middot; ${groups.filter((g) => g.theme !== "_orphan").length} parent themes &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
 
 ${groupBlocks}
 `;
