@@ -2,40 +2,58 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-04 (Bulldozer rewrite SHIPPED Phases 0-7 on dev. Wiki rewritten as single publication. Outstanding: real-Groq UI eval before main merge + remaining surfaces (`/`, `/resume`, `/lab/*`) need Bulldozer pass).
+Last updated: 2026-05-04 (Bulldozer wiki landed live on main. Em-dash sweep + dead CSS strip shipped. Backlog: rewrite remaining non-wiki surfaces in Bulldozer voice.).
 
 ---
 
 ## Active
 
-### Real-Groq /enter eval (gate before main merge)
-**Why:** Phase 7 baseline (2026-05-04) ran 26/28 PASS but most synthesis answers fell back to "Service is busy" because Groq was rate-limited / key fallback during the eval window. Wire shape + retrieval + cards + traces validated; synthesis quality not validated.
+### Bulldozer rewrite. Non-wiki surfaces
+**Why:** Wiki landed 2026-05-04 (`/wiki/*` 30 pages). Other public surfaces still in pre-Bulldozer voice. Hiring manager who lands on `/lab/second-brain/` or `/resume` from a /enter card click drops out of the L7-memo register. Inconsistent voice across surfaces is the next biggest credibility leak.
 
-**Action:** with working Groq key in `.env`, re-run `npm run eval:e2e`. Manually drive 6-8 representative scenarios through `/enter` UI per Phase D workflow. Verify the Bulldozer voice carries from wiki extracts into agent answers.
+**Editorial contract:** Bulldozer spec at `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1-5.10 (binding). Anchor reference: live `/wiki/agent-first/` + `/wiki/beliefs/agent-first/`. 15-point rubric per spec section 5.10.
 
-**Pass:** ≥26/28 + manual UI smoke clean → green-light merge to main.
+**Backlog. Per-surface state + scope:**
 
-### Ruthless copy pass — non-wiki surfaces
-**Why:** Wiki was Bulldozer'd 2026-05-04 (Phase 5). Non-wiki surfaces still need the same pass. C5 niche cascade flipped titles + meta on `/` and `/resume` but body copy is unchanged. Apply Bulldozer voice + 15-point rubric to remaining surfaces.
+| Surface | File | Voice state | Scope |
+|---|---|---|---|
+| `/lab/` | `lab/index.html` | OLD | Card titles + descs + lead copy. 4 lab cards |
+| `/lab/second-brain/` | `lab/second-brain/index.html` | OLD (PRFAQ shape) | PRFAQ body text. Subhead. Quote-tile copy. Paste-prompt block intact. |
+| `/lab/ai-resume/` | `lab/ai-resume/index.html` | OLD (PRFAQ shape) | PRFAQ body. Setup wizard paste-prompt unchanged. |
+| `/lab/voice-ai-production/` | `lab/voice-ai-production/index.html` | OLD (case study) | Body sections. Lead. Lessons. Should align with `/wiki/voice-ai-craft/` register. |
+| `/lab/product-shape/` | `lab/product-shape/index.html` | OLD (case study) | Body. Lead. Three-section structure. |
+| `/resume` | `resume/index.html` | OLD subtitle ("B2B AI PM. Technical PM, AI agents. 12 years. 5 industries.") + role bullets | Subtitle. Each role bullet against 15-point rubric. Skip dates + employer names (factual ground truth). |
+| `resume.md` | `resume.md` | OLD ground-truth file | Summary line + role bullets. **Re-run `/enter` eval per Phase D workflow if bullets shift materially.** |
+| `/moodboard` | `moodboard/index.html` | OLD (design doc, orphan) | Lowest pri. Internal design ref, not user-facing path. Skip unless re-promoted. |
+| `/enter` UI text | `enter/index.html` | OLD (locked-ish) | Status bar verbs + empty-state copy. **Locked scope per `docs/plans/enter-v3.1-spec.md` §5**. Touch only if user explicitly opens. |
+| `/wiki/themes/` landing hero | `wiki/themes/index.html` | Phase 6 already touched | Quick re-grade against rubric. May need second pass. |
+| `/wiki/beliefs/` landing | `wiki/beliefs/index.html` (built from `scripts/build-wiki.mjs`) | Phase 6 already touched | Same. |
+| `README.md` | `readme.md` | LOCKED per user 2026-05-03 | Do NOT touch unless user re-opens. |
 
-**Scope:** `/` (`index.html`), `/resume` (`resume/index.html`), `resume.md`, `/lab/` (`lab/index.html`), `/lab/<slug>/` PRFAQs, `/moodboard` (orphan, lowest pri).
-Skip: `/enter` UI (locked), `groqHandler.mjs` system prompt (locked), `README.md` (locked 2026-05-03), `og-master.jpg` (image, defer), all wiki pages (already done Phase 5).
+**Locked / do NOT touch:**
+- `groqHandler.mjs` system prompt (locked positioning per `feedback_positioning.md`)
+- `og-master.jpg` (user said "forget the og image. Nothing changes" 2026-05-04)
+- Locked positioning text in `~/.claude/projects/D--AA-agamarora/memory/project_positioning_locked.md`
 
-**Editorial contract:** the Bulldozer spec at `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1-5.10 is binding. Anchor reference: the live `wiki/agent-first` theme + `wiki/beliefs/agent-first` belief.
+**Execution approach (per the Phase 5 pattern that worked on wiki):**
+1. Read source page. Read anchor refs. Read rubric.
+2. Edit in place per Bulldozer rules. ZERO em-dashes. Banned vocab body 0. Hedging 0. Hook ≤80w. Bottom line ≤120w. ≥3 H2 (where article-shape applies). ≥3 distinct action verbs.
+3. Self-grade against 15-point rubric. Iterate to A or B+.
+4. Visual diff in headed gstack browser before merge to main.
+5. Eval re-run if `resume.md` bullets shifted.
+6. Commit per surface or per logical group.
 
-**Execution plan (per-surface):**
-- [ ] `/` (`index.html`) — hero tagline + greeting line + CTA copy
-- [ ] `/resume` (`resume/index.html`) — role bullets + summary subtitle
-- [ ] `resume.md` — Summary + role bullets (ground truth, used by /enter — re-run eval after if bullets shift materially)
-- [ ] `/lab/` (`lab/index.html`) — card descs
-- [ ] `/lab/second-brain/`, `/lab/ai-resume/`, `/lab/voice-ai-production/`, `/lab/product-shape/` — PRFAQ body
-- [ ] `/moodboard/` (orphan, lowest pri) — optional
+**Estimated effort:** ~6-8 hr CC for the lab batch + resume + landings second pass. ~2 hr Agam for spot-checks.
 
-**Boundaries:**
-- Stay on `dev` until manual UI smoke + real-Groq eval pass.
-- UI sacrosanct rule: any rendered-surface change → before/after visual diff in headed gstack browser before merging to main.
-- If `resume.md` bullets change, re-run /enter eval per Phase D workflow.
-- Em-dash hard rule: zero in any shipped HTML/MD/JSON/TXT.
+### Real-Groq /enter eval (re-run when next on Groq)
+**Why:** Phase 7 baseline ran 26/28 PASS but most synthesis answers fell back to "Service is busy" because Groq was rate-limited / key fallback during eval window. Wire shape + retrieval + cards + traces validated. Synthesis quality not validated against Bulldozer-rewritten extracts.
+
+**Action:** with working Groq key in `.env`, re-run `npm run eval:e2e`. Manually drive 6-8 representative scenarios through `/enter` UI per Phase D workflow. Verify Bulldozer voice carries from wiki extracts into agent answers.
+
+**Pass:** ≥26/28 + manual UI smoke clean.
+
+### Phase 9 AEO smoke (post-deploy, 24-48h after main deploy)
+Per spec section 6 Phase 9: query Perplexity + ChatGPT search for the 5 target phrases, verify Agam frameworks surface in ≥2/5 within 7 days.
 
 ---
 
