@@ -31,8 +31,6 @@ Reduce any hyped category to its substrate, then evaluate. This is a procedure, 
 
 Every theme in the knowledge graph applies a version of this procedure to a specific domain. Agent-first applies it to AI architecture: agents as substrate, not chatbots with UX skins on top. Enterprise AI reality applies it to deployment: demo versus production as the real test. The PM taste theme applies it at the PRD level: anti-customization is the same disposition executed at the product decision layer. Breadth as differentiation applies it to career strategy: Human-GPT integration as the failure mode of breadth without a real substrate underneath.
 
-This page does not apply the filter. It names the filter.
-
 The eight-year through-line is the credential. The disposition was enforced inside categories (blockchain while running a blockchain startup) not just from outside them. Operator discipline at B2B scale requires the same move: evaluate the substrate, not the label. The label rotates every eighteen months. The substrate evaluation procedure does not.
 
 ## Bottom line
