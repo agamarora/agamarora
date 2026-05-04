@@ -4,7 +4,7 @@ slug: spec-first-taste
 title: Spec first, taste always  -  the builder trilogy
 one_line: "The April 2026 trilogy that names the builder stance: spec > sprint, taste > execution, context > prompt."
 status: c-voice-r1-cp8
-length_target: 900-1200
+length_target: 1100-1500
 voice_register: 1 (free-form post-essay)
 beliefs:
   - belief.spec-over-sprint (anchor)
@@ -73,6 +73,24 @@ Ship-fast - my 2020 identity - is correctly listed as superseded. The shipping c
 Anti-customization scope: the belief applies to enterprise AI deployments specifically - six-month implementation cycles, foundation-model coupling, training-document overhead. The economic argument has not been tested against consumer products where the cost structure differs.
 
 Without a persistent context layer, "Context > Prompt" is a slogan. The [second-brain](/wiki/second-brain/) page holds the operational shape - the engineering choice that makes the third line true rather than aspirational.
+
+## Design as a non-designer
+
+AI design tools do not produce taste. They produce slop, polished. Stitch, Claude design, every variant has the same failure mode: generates a layout in seconds, cannot hit locked tokens. Wrong fonts, wrong colors, approximate everything. The tool is not the constraint - the operator's discrimination is.
+
+### What gets enforced before AI writes a line
+
+Every solo-PM build that ships at quality enforces a frozen design spec before the model is invoked. The non-negotiables:
+
+- **Study the operators who shipped at scale.** Dieter Rams, Vignelli, Ive, the Apple HIG, the Material Design source. Form an opinion. Without an opinion, every AI output reads as plausible default - which is to say, indistinguishable from every other shipped product that month.
+- **Freeze the tokens.** Color palette, typography stack with type scale and line-heights, spacing primitives, component states (hover, focus, disabled, error), motion vocabulary, breakpoint behavior. Locked artifacts before the model is invoked. The spec is the input contract; the model is the amplifier.
+- **Encode the anti-patterns.** Document what to refuse - drop-shadows on cards, gradient noise, rounded corners on data tables, modal abuse, decorative motion. The refusal list is the spec's load-bearing half. Without it, the model defaults to the most common training-set output, which is to say the most common 2024 SaaS template.
+
+This site shipped that way. Multiple weekends architecting the spec - aesthetic, type stack, color tokens for both palettes, spacing system, component states, motion vocabulary, voice rules, anti-patterns - before Claude wrote a single line of code. The moodboard at [agamarora.com/moodboard](/moodboard) is the artifact.
+
+### Bottom line
+
+Design discipline upstream of the model is the unit-economics lever for the solo PM shipping AI products. The operator architects the system; the model executes against it. Skip the spec and the velocity multiplier inverts - every iteration drifts further from the locked vision, every fix surfaces three regressions, the artifact decays toward training-set median. Spec-first design enforces the same axiom as Spec > Sprint at the visual layer. The B2B PM who survives the next product cycle is the one who refuses to ship slop and treats the frozen spec as a hard constraint on every AI-generated artifact.
 
 ## Where this sits in the wiki
 

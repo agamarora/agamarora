@@ -40,7 +40,20 @@
   force = true
 
 # /writing/ retired 2026-05-04 — single publication architecture.
-# Wiki is the canonical surface. All writing-* paths fold into /wiki/.
+# Wiki is the canonical surface. design-as-non-designer migrated to spec-first-taste;
+# everything else folds back to the graph (the visual hook).
+[[redirects]]
+  from = "/writing/design-as-non-designer"
+  to = "/wiki/spec-first-taste/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/writing/design-as-non-designer/"
+  to = "/wiki/spec-first-taste/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/writing"
   to = "/wiki/graph/"
