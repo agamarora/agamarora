@@ -30,17 +30,7 @@ The technical shape is intentionally constrained: human-readable wiki in plain m
 
 The 2026-04-23 public launch was not a new idea. It was the current substrate of an eight-year practice.
 
-**2018: manual self-observation.** A gaming retrospection post on the co-founded casual platform V2 Games named four behavioral patterns extracted through deliberate observation. No apparatus yet. The cognitive seed: self-observable patterns as a structured insight source. Written while running a company, under financial exposure, which distinguishes it from external analysis.
-
-**2020: first externalization.** Time tracking via Toggl expanded from work hours to personal activities. The closing line of that post is still the correct framing in 2026: "it is not the tool, it is the habit of being mindful with time." The substrate changed six times over the following years. The practice did not.
-
-**2023: LLM as cognitive extension.** Six weeks after ChatGPT entered public discourse, the canonical note-structuring use case was documented: "my notes have never been so actionable thanks to ChatGPT's help." The second-brain seed. The critical gap: context still died when the window closed. Every session started from zero. A capable co-processor with no persistent memory is a degraded form of the actual capability.
-
-**2024: stack hardened.** Ollama running locally, ChatGPT Pro, GitHub Copilot, custom GPT wrappers shaped around active curricula. The substrate kept upgrading. The practice stayed stable. The gap remained: no cross-session compounding.
-
-**December 2025: private build begins.** The second-brain in its current form went into private use four months before the public launch. The practice had already become the primary interface for Claude before the announcement post went live. Shipped internally; iterated; confirmed the architecture worked before publishing it.
-
-**April 23, 2026: canonical launch.** Paste-prompt, setup guide, public artifact. "Plain markdown. Git. Open source. MIT. Free forever." Eight years of practice resolved into a publishable architecture.
+Self-instrumentation started at V2 Games in 2018 with a gaming retrospective naming behavioral patterns: no apparatus, just the reflex to look inward and write what was observed. Toggl expanded from work hours to personal time in 2020; six weeks after ChatGPT entered public discourse in 2023, LLM-as-cognitive-extension was already documented, but context still died when the chat window closed. Four months before the April 2026 public launch, the architecture went into private use, was iterated, and confirmed to work. Eight years from seed to substrate; the span is the proof of practice, not a timeline of milestones.
 
 ## Why prior attempts failed
 
@@ -60,4 +50,4 @@ The practical implication: personal AI infrastructure is a cognitive extension t
 
 ## Bottom line
 
-The second-brain architecture compresses the gap between what an AI session can theoretically do and what it actually delivers across repeated use. Sessions that inherit structured context from prior sessions outperform cold-start sessions on problem framing, continuity, and precision. The 4-6 week to 1-2 week delivery cadence compression achieved in the MCP-first re-architecture at AIonOS was the same structural move applied at the platform level: agents reading from a structured, persistent context rather than reconstructing state on every call. The personal second-brain operationalizes the same principle at the practitioner level. The architecture is not novel. The discipline of building and maintaining it is.
+The second-brain architecture compresses the gap between what an AI session can theoretically do and what it actually delivers across repeated use. Sessions that inherit structured context from prior sessions outperform cold-start sessions on problem framing, continuity, and precision. The 4-6 week to 1-2 week delivery cadence compression achieved in the MCP-first re-architecture at AIonOS was the same structural move applied at the platform level: agents reading from a structured, persistent context rather than reconstructing state on every call. The personal second-brain operationalizes the same principle at the practitioner level. The architecture is not novel; it was shipped as plain markdown, git-versioned, MIT-licensed, on April 23, 2026. The discipline of building and maintaining it is.

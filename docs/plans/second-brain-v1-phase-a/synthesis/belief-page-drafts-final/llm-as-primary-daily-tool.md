@@ -36,11 +36,15 @@ LLMs top the daily-use stack by frequency. Not as a philosophical claim about AI
 
 ## The multi-substrate stack
 
+Multi-model is now the floor.
+
 Vendor dependency is an operational risk. The production configuration: at least one cloud primary and one local fallback, already warm. When the primary goes down, the fallback is ready without ceremony. Which provider serves the session is a logistics question. Continuous LLM access is non-negotiable; the specific substrate is not.
 
 Per-domain wrappers replace generic sessions. A data analytics wrapper structured around a real curriculum. A writing helper with persistent PRD context. A summarizer tuned for specific document formats. Each wrapper carries domain-specific system context so the operator does not rebuild orientation on every session. "This has replaced my podcast addiction with a more interactive version." The wrappers turn frequency into compounding.
 
 ## The build-partner shift
+
+LLM-as-search is dead.
 
 LLM-as-search-engine is the 2023 pattern. LLM-as-build-partner is 2026. The shift changes what context quality means. A search query tolerates a thin context window. A build session that runs code generation, specification review, and data analysis in sequence requires a context layer that persists across sessions. That is why the second brain exists: LLM-as-primary-daily-tool created a context management problem worth solving architecturally.
 
