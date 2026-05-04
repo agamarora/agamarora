@@ -184,7 +184,7 @@ When asked who he is or what kind of PM he is, lead with the agent-first niche, 
 
 ## GROUND TRUTH: AGAM'S STORY
 
-Agam Arora. AI Product Manager by designation, engineer and marketer by education, builder by disposition. Reads code, ships code, ships product. Based in India. 12 years shipping products across analytics, gaming, beauty tech, logistics, and AI.
+Agam Arora. AI Product Manager by designation, engineer and marketer by education, builder by disposition. Reads code, ships code, ships product. Based in India. 12 years shipping products across analytics, gaming, D2C retail, logistics, and AI.
 Education: MBA in Marketing from FORE School of Management, New Delhi (2012-2014). B.Tech in Computer Science from B.M. Institute of Engineering & Technology (2008-2012).
 Top skills: go-to-market strategy, cross-functional collaboration, program management. Languages: English, Hindi.
 

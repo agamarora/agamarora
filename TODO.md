@@ -2,22 +2,46 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-03 (audited + triaged — stale entries removed, deferred items parked).
+Last updated: 2026-05-04 (C5 niche cascade landed on dev branch; ruthless copy pass + /writing/ framework queued).
 
 ---
 
 ## Active
 
-### `/writing/` framework — new content surface + build pipeline
-**Why:** no home today for freeform essays / POV / industry commentary. `/lab/` is product PRFAQs, `/wiki/` is curated synthesis. Adding posts pollutes wiki; staying silent blocks blog cadence. Spec'd 2026-05-03, build pending.
+### Ruthless copy pass — full website
+**Why:** C5 niche cascade (2026-05-04) flipped headline + meta to "B2B AI Product Manager. Technical PM building AI agents." across `/`, `/resume`, sitemap, llms.txt, llms-full.txt, site.json, resume.md, moodboard. Cascade was a positioning swap — not a quality pass. Body copy across surfaces still has generic PM phrasing, fluff, weak action verbs. This task is the ruthless edit pass.
 
-- [ ] `scripts/build-writing.mjs` — modeled on `scripts/build-wiki.mjs`. Source: `content/writing/<slug>.md` (YAML frontmatter: title, date, summary, tags, canonical, optional `agent_retrievable: true`).
-- [ ] Generates `/writing/<slug>/index.html` via `scripts/lib/chrome.mjs` (DRY contract enforced).
-- [ ] Generates `/writing/index.html` — auto-listed reverse-chronological landing.
-- [ ] Auto-merges entries into `sitemap.xml`, `llms.txt`, `llms-full.txt`, `site.json`.
-- [ ] Optional: emits `wiki/extracts/writing-<slug>.md` so `/enter` agent can cite (when frontmatter `agent_retrievable: true`).
-- [ ] Wire into `npm run build` after `build:wiki-extracts`.
-- [ ] Locked decisions: `~/.claude/projects/D--AA-agamarora/memory/project_writing_framework.md`.
+**Scope:** every public page — `/`, `/resume`, `/lab/`, `/lab/<slug>/`, `/wiki/`, `/wiki/<theme>/`, `/wiki/beliefs/<slug>/`, `/moodboard` (orphan, lower priority). Skip: `/enter` (live agent UI, locked), `README.md` (locked 2026-05-03), `og-master.jpg` (manual export task #2).
+
+**Editorial brief (paste verbatim into editor agent):**
+
+> **Role & Context:** Act as a ruthless Director of Product at a top-tier B2B enterprise tech company (Stripe, AWS, Databricks). You are reviewing the personal website copy of a highly technical Product Manager who specializes in AI products, B2B SaaS, and complex engineering systems.
+>
+> **Task:** Proofread, edit, and elevate the provided website copy. Do not just fix grammar; ruthlessly optimize tone, structure, and technical density.
+>
+> **Strict Editorial Guidelines:**
+>
+> 1. **Zero Fluff & Buzzwords:** Eradicate generic PM phrases ("cross-functional collaboration," "driving synergy," "passionate about users"). Replace with concrete, action-oriented technical language ("shipped," "architected," "reduced latency," "scaled").
+> 2. **Tone & Persona:** Authoritative, battle-tested, highly opinionated. Sounds like an internal strategy memo from a Senior/Principal PM — not generic marketing.
+> 3. **The "So What?" Test:** Every paragraph connects a technical action to a distinct business outcome (ARR, engineering velocity, scale). If a sentence doesn't add immediate value, delete.
+> 4. **Formatting for Scannability:** Dense paragraphs → scannable bullets. Clear hierarchy via H2/H3. Core argument understandable in a 3-second scroll.
+> 5. **Answer Engine Optimization (AEO):** Technical concepts + definitions stated clearly and directly in the first sentence of each paragraph so LLMs / AI search summaries ingest them cleanly.
+>
+> **Output:** Revised copy, plus a brief bulleted list of the specific changes that elevated authority + technical density.
+
+**Execution plan (per-surface):**
+- [ ] `/` (`index.html`) — hero tagline + greeting line, CTAs (only if weak)
+- [ ] `/resume` (`resume/index.html`) — role bullets, summary subtitle
+- [ ] `resume.md` — Summary section + role bullets (ground truth, used by /enter — re-eval scenarios after if bullets shift materially)
+- [ ] `/lab/` (`lab/index.html`) — card descs
+- [ ] `/lab/second-brain/`, `/lab/ai-resume/`, `/lab/voice-ai-production/`, `/lab/product-shape/` — PRFAQ body
+- [ ] `/wiki/themes/`, `/wiki/<12 themes>/`, `/wiki/beliefs/<19 beliefs>/` — theme + belief intros (auto-generated from synthesis MD; edit source `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/` then `npm run build:wiki`)
+- [ ] `/moodboard/` (orphan, lowest pri) — optional
+
+**Boundaries:**
+- Do NOT touch `/enter` UI / `groqHandler.mjs` system prompt / `README.md` / `og-master.jpg` (separate locked artefacts).
+- Stay on dev branch. UI sacrosanct rule: any rendered-surface change → before/after visual diff in headed gstack browser before merging to main.
+- If `resume.md` bullets change materially, re-run /enter eval scenarios per Phase D workflow.
 
 ---
 
@@ -58,6 +82,13 @@ Phase 5 + 6 deferred. See spec §5.
 - AEO/SEO gate audit (CLEARED): `docs/plans/aeo-gate-final-audit-2026-04-27.md`
 - Locked positioning: `~/.claude/projects/D--AA-agamarora/memory/project_positioning_locked.md`
 - Auto-memory index: `~/.claude/projects/D--AA-agamarora/memory/MEMORY.md`
+
+---
+
+## Closed (2026-05-04)
+
+**Shipped on `dev/c5-niche-cascade`:**
+- ~~`/writing/` framework~~ — `scripts/build-writing.mjs` + `content/writing/<slug>.md` source pattern + auto-merge into sitemap/llms/llms-full/site.json via marker blocks. Optional agent extracts. Wired into `npm run build`. Seed post `design-as-non-designer` shipped. Pre-existing `site.json` legacy `writing` array (placeholder for never-shipped `second-brain-live`) cleaned up.
 
 ---
 

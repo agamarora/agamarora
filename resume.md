@@ -4,7 +4,7 @@ LinkedIn: linkedin.com/in/agamarora
 
 ## Summary
 
-AI Product Manager by designation, engineer and marketer by education, builder by passion, tinkerer by choice. 12 years across analytics, gaming, beauty tech, logistics, and AI. Based in India.
+AI Product Manager by designation, engineer and marketer by education, builder by passion, tinkerer by choice. 12 years across analytics, gaming, D2C retail, logistics, and AI. Based in India.
 
 Top skills: Go-to-Market Strategy, Cross-functional Collaboration, Program Management. Languages: English, Hindi.
 

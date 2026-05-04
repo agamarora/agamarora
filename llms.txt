@@ -1,6 +1,6 @@
 # Agam Arora
 
-> Agam Arora is an AI Product Manager and engineer-PM. He has 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
+> Agam Arora is an AI Product Manager and engineer-PM. He has 12 years of experience shipping products across analytics, gaming, D2C retail, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
 
 This site is hand-built in vanilla HTML. Every page is a self-contained file, no framework, no build step. The `/enter` page hosts an AI terminal grounded in the resume below, so questions about Agam's work can be answered conversationally.
 
@@ -51,7 +51,7 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 - Current role: Assistant Vice President, AI Products, AIonOS India Pvt. Ltd. (since June 2024)
 - Previous roles: Lead Product Manager, FarEye Technologies (Dec 2020 to May 2024); Product & Program Consultant freelance (2020); Manager Business Development, Blossom Kochhar Aroma Magic (2018-2019); Co-Founder & Studio Head, V2 Games (2016-2018); Analyst, AbsolutData Analytics (2014-2015)
 - Years of experience: 12+
-- Industries shipped in: analytics, gaming, beauty tech, logistics, AI
+- Industries shipped in: analytics, gaming, D2C retail, logistics, AI
 - Education: PGDM in Marketing, FORE School of Management (2014); B.Tech in Computer Science, BM Institute of Engineering & Technology (2012)
 - LinkedIn: https://www.linkedin.com/in/agamarora/
 - GitHub: https://github.com/agamarora
@@ -69,6 +69,12 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 
 - [Voice AI in production](https://agamarora.com/lab/voice-ai-production/): lessons from shipping real-time voice agents into enterprise contact centers over 12-18 months. Demos vs adoption, integration surface, telephony partner risk, multilingual prompt drift, kill criteria.
 - [Product shape is what you refuse](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. The narrow control point, MCP-first bet, standalone-sellable pivot that failed, consolidation pattern that followed.
+
+<!-- writing:start -->
+## Writing
+
+- [Design as a non-designer](https://agamarora.com/writing/design-as-non-designer/): Building good design as a non-designer requires study, not AI tools. Freeze a design spec before any code.
+<!-- writing:end -->
 
 ## Optional
 

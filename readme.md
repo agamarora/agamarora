@@ -1,6 +1,6 @@
 # [Agam Arora](https://agamarora.com)
 
-### Agent-first AI Product Manager.
+### AI Product Manager.
 
 [![Site](https://img.shields.io/badge/site-agamarora.com-E5A54B?style=flat-square)](https://agamarora.com)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-agamarora-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/agamarora)

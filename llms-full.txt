@@ -1,6 +1,6 @@
 # Agam Arora, Full Site Content
 
-> Agam Arora is an AI Product Manager and engineer-PM. 12 years of experience shipping products across analytics, gaming, beauty tech, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
+> Agam Arora is an AI Product Manager and engineer-PM. 12 years of experience shipping products across analytics, gaming, D2C retail, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
 
 Home: https://agamarora.com
 Last updated: 2026-04-22
@@ -113,6 +113,59 @@ Theme one-liners:
 Belief sub-pages (19 Tier-1 beliefs) live at /wiki/beliefs/. Voice doc at /wiki/voice/. Quote library at /wiki/quotes/. Projects DAG at /wiki/projects/. Force-directed graph viz at /wiki/graph/.
 
 The agent at /enter is grounded in this wiki. It speaks for Agam in third person. It will tell you it's an agent, not Agam, if you ask.
+
+---
+
+<!-- writing:start -->
+## Writing
+
+### Design as a non-designer
+
+Date: 2026-05-04
+URL: https://agamarora.com/writing/design-as-non-designer/
+Tags: design, AI, product, taste
+
+> Building good design as a non-designer requires study, not AI tools. Freeze a design spec before any code.
+
+# Design as a non-designer
+
+Let me tell you a secret on how to build great design as a non-designer.
+
+Study.
+
+No Stitch, no Claude design, no AI design tool will solve that. You need to spend time studying design principles, study the work of great designers, and most importantly develop an opinion on design for yourself.
+
+Otherwise, you will just be generating AI slop, maybe a tad bit more polished.
+
+## Freeze these before AI writes a line
+
+If you are starting your own project, freeze these before any AI starts implementing:
+
+- Color scheme and palette
+- Typography. Spacing. Line and character.
+- Layout. Responsiveness. Breakpoints.
+- Border. Button states.
+- Motion.
+- Components. Imagery. Decoration.
+- Most importantly: anti-patterns. What to avoid as guardrails.
+
+## What I did for this site
+
+I spent multiple weekends building a design spec and a moodboard for this site before I let Claude write a single line of code. You can check it out at [agamarora.com/moodboard](/moodboard).
+
+Mine includes:
+
+- **Brand aesthetic and mood.** What the site should feel like.
+- **Typography stack.** Type scale and line-heights.
+- **Color tokens.** Full dark and light palettes, hex values, when to use which.
+- **Spacing system.** Layout primitives.
+- **Components.** Icon bar, headers, cards, buttons, links, every state including hover and focus.
+- **Motion vocabulary.** What animates. What does not.
+- **Editorial voice.** Voice rules so copy and design stay in sync.
+- **Anti-patterns.** What not to do, with examples.
+
+Have fun building.
+<!-- writing:end -->
 
 ---
 
