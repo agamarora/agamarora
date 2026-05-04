@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: context-over-prompt
-title: "Context is the Lever. Prompt is the Seam."
+title: "Context is the lever. Prompt is the seam."
 one_line: "Upstream context curation decides production AI quality. The prompt is plumbing. The context layer is the architecture."
 quotable: "Context is the lever. Curating what flows in decides output quality far more than the words composed at the seam."
 parent_theme: agent-first
@@ -33,7 +33,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# Context is the Lever. Prompt is the Seam.
+# Context is the lever. Prompt is the seam.
 
 The 2026 trilogy is Spec over Sprint, Taste over Execution, Context over Prompt. All three make the same structural claim: the load-bearing work migrated upstream. For production AI systems, that migration is sharpest at the context layer. What flows into the context window before a session begins, specifically the personal data, organizational knowledge, conversation history, and structured retrieval, determines output quality more decisively than anything composed at the prompt seam. Hiring a prompt engineer to write user-facing incantations is a 2023 investment. Building a retrieval pipeline and a curated knowledge layer is the 2026 architecture.
 

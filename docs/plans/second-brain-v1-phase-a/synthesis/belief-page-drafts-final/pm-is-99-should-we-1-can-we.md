@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: pm-is-99-should-we-1-can-we
-title: "PM Is a Discrimination Function. 99 Refusals to Earn 1 Disruption."
+title: "PM is a discrimination function. 99 refusals to earn 1 disruption."
 one_line: "Product management is 99% selection: deciding what not to build, which direction not to take, which request to kill before the sprint. The 1 can-we that survives the filter is disruption."
 quotable: "PM is the grind of answering 99 should-we questions to earn that 1 can-we. That 1 is disruption. The rest is food."
 parent_theme: pm-taste
@@ -33,7 +33,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# PM Is a Discrimination Function. 99 Refusals to Earn 1 Disruption.
+# PM is a discrimination function. 99 refusals to earn 1 disruption.
 
 Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline before it enters the sprint. The rare "can we do it?" question is the bonus that arrives only after 99 correct "should we do it?" calls cleared the path. That 1 is disruption. The rest is food.
 

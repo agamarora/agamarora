@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: taste-over-execution
-title: "PM Taste as Risk Mitigation. The Irreducible Skill AI Cannot Replace."
+title: "PM taste as risk mitigation. The irreducible skill AI cannot replace."
 one_line: "AI commoditizes execution. Taste: knowing what to build, what to refuse, and what counts as done, is the PM skill that does not automate."
 quotable: "When AI can execute anything, the binding constraint is taste: knowing what to build, what to refuse, and what counts as done."
 parent_theme: spec-first-taste
@@ -32,7 +32,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# PM Taste as Risk Mitigation. The Irreducible Skill AI Cannot Replace.
+# PM taste as risk mitigation. The irreducible skill AI cannot replace.
 
 Building and measuring products is no longer the binding constraint. Knowing what to build, what to refuse, and what constitutes done is the work that remains after AI handles the execution layer. Writing, coding, designing, drafting PRDs: these are no longer scarce. The scarce thing is the upstream discrimination: scope judgment under ambiguity, the refusal that prevents a six-month detour, the acceptance standard that saves two rounds of remediation. That discrimination is taste. It has not been automated. The proliferation of generation tools makes it more valuable, not less.
 

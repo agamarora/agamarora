@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: breadth-needs-depth
-title: "Breadth Without Depth Is Human-GPT. Pick a Niche and Invest."
+title: "Breadth without depth is human-GPT. Pick a niche and invest."
 one_line: "Post-ChatGPT, a generalist with no depth-axis is indistinguishable from a chat interface. The axis is a free variable. The choice to pick one is not."
 quotable: "Breadth without depth is Human-GPT. Pick a niche and invest. The axis is free; the choice is not."
 parent_theme: breadth-as-differentiation
@@ -35,7 +35,7 @@ applies_to:
   - learning
 ---
 
-# Breadth Without Depth Is Human-GPT. Pick a Niche and Invest.
+# Breadth without depth is human-GPT. Pick a niche and invest.
 
 Pure breadth is commoditized. A generalist with no specialty is now indistinguishable from a chat interface: wide, available, useful to a point, replicable by a prompt. The market corrected for this faster than most practitioners expected. Domain-specific AI models, fine-tuned agents, and specialized tooling are fragmenting the generalist value layer that broad PMs occupied before 2023. A PM who arrived at this fragmentation without a depth-axis is competing with tooling that costs $20 per month.
 

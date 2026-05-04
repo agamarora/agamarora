@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: ai-pm-skillset-table-stakes
-title: "AI Fluency Is the Buy-In, Not the Pitch. The 2026 Enterprise PM Floor."
+title: "AI fluency is the buy-in, not the pitch. The 2026 enterprise PM floor."
 one_line: "AI fluency is table stakes for application-layer PMs: the minimum required to sit down, not the differentiator. Taste is what stands on top of it."
 quotable: "AI fluency is table stakes for PMs: not a differentiator, a non-negotiable buy-in. The floor on which every application-layer PM now stands."
 parent_theme: ai-pm-skillset
@@ -31,7 +31,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# AI Fluency Is the Buy-In, Not the Pitch. The 2026 Enterprise PM Floor.
+# AI fluency is the buy-in, not the pitch. The 2026 enterprise PM floor.
 
 AI fluency is table stakes for application-layer PMs. Table stakes in the literal poker sense: not a flex, not a differentiator, a non-negotiable buy-in. A PM who leads with "I use AI tools daily" as a credential in a 2026 enterprise interview is naming the floor, not the ceiling. Every PM at the table has paid that buy-in or is not at the table. The differentiating layer is what they can spec, judge, and decide that the tools cannot.
 

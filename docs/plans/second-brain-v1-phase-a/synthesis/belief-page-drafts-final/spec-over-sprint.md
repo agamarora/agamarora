@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: spec-over-sprint
-title: "The Spec Is the Argument. Pre-Code Discipline at Enterprise Scale."
+title: "The spec is the argument. Pre-code discipline at enterprise scale."
 one_line: "When AI makes iteration nearly free, the binding constraint is spec quality. The model amplifies whatever goes in. Put precision in, get precision out."
 quotable: "Spec over Sprint: when iteration is cheap, the binding constraint is clarity of specification, not speed of execution."
 parent_theme: spec-first-taste
@@ -33,7 +33,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# The Spec Is the Argument. Pre-Code Discipline at Enterprise Scale.
+# The spec is the argument. Pre-code discipline at enterprise scale.
 
 Most organizations that survive the POC phase fail at the spec phase. Not at the model selection phase, not at the sprint velocity phase: at the specification phase. The AI system amplifies what the PM puts in front of it. A vague brief produces a plausible-but-wrong output that requires six more cycles of remediation. A tight spec produces a correct output on the first pass. When iteration costs measured in tokens and hours approach near-zero, the economic argument for "ship fast and fix later" collapses. The binding constraint is now how precisely the team specified what they wanted, not how quickly they shipped a first attempt.
 

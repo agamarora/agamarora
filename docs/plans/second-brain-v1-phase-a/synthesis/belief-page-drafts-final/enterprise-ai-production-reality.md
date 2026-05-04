@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: enterprise-ai-production-reality
-title: "Demos Are Not Deployments. The 80% Production Gap."
+title: "Demos are not deployments. The 80% production gap."
 one_line: "Roughly 80% of enterprise AI experiments do not ship. The failure modes are non-functional requirements, data pipelines, and governance, not model quality."
 quotable: "Demos are not deployments. The failure modes are non-functional, data-pipeline, and governance, not model quality."
 parent_theme: enterprise-ai-reality
@@ -30,7 +30,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# Demos Are Not Deployments. The 80% Production Gap.
+# Demos are not deployments. The 80% production gap.
 
 Roughly 80% of enterprise AI experiments do not reach production. The failures are not model-quality failures. They are non-functional-requirement failures, data-pipeline failures, and governance failures. The gap between a working demo and a working deployment is wider than vendors admit. It is more boring than analysts cover. It is consistently fatal to most attempts.
 

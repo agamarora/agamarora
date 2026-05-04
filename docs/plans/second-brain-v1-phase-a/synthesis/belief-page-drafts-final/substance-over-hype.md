@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: substance-over-hype
-title: "Reduce Before Evaluating. The 8-Year Operator Discipline."
+title: "Reduce before evaluating. The 8-year operator discipline."
 one_line: "Strip the marketing label, name the underlying mechanism, ask whether the mechanism is genuinely new. The substrate test has returned the same verdict across blockchain, no-code, AI, and anti-customization."
 quotable: "Reduce every hyped category to its substrate. If the substrate is genuinely new, the excitement is earned. If not, refuse the rebrand."
 parent_theme: root.substance-over-hype
@@ -29,7 +29,7 @@ voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# Reduce Before Evaluating. The 8-Year Operator Discipline.
+# Reduce before evaluating. The 8-year operator discipline.
 
 Every technology hype cycle runs the same sequence: new label, elevated energy, market formation, substrate test, verdict. The operator's job is to run the substrate test before the market does, not after. Strip the marketing label, name the underlying mechanism, ask one question: is this mechanism genuinely new, or is it a rebranded version of something already understood? If the mechanism is new, the excitement is earned and worth building against. If the mechanism is familiar wearing different terminology, the rebrand gets refused, in writing, regardless of how much financial exposure the operator has to the category being evaluated.
 

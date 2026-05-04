@@ -1,7 +1,7 @@
 ---
 type: BeliefPage
 slug: breadth-as-differentiation
-title: "Cross-Domain Range as Competitive Leverage. Why Boundary Problems Need Breadth."
+title: "Cross-domain range as competitive leverage. Why boundary problems need breadth."
 one_line: "Cross-domain range is a genuine PM differentiator: pattern-matching speed across domains that specialists pay a premium to hire and cannot replicate from depth alone."
 quotable: "Breadth is not scatter: it is pattern-matching speed across domains that specialists pay a premium to hire."
 parent_theme: breadth-as-differentiation
@@ -32,7 +32,7 @@ applies_to:
   - hiring
 ---
 
-# Cross-Domain Range as Competitive Leverage. Why Boundary Problems Need Breadth.
+# Cross-domain range as competitive leverage. Why boundary problems need breadth.
 
 Most product problems are boundary problems. They sit between logistics and data infrastructure, between security architecture and user experience, between AI capability and enterprise compliance. The person who has operated in multiple rooms recognizes the shape of a boundary problem before the single-domain specialist has finished framing it. That recognition speed is the asset. It is not scatter. It is pattern-matching built by compressing concepts across fields until the underlying structure shows.
 
