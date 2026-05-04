@@ -2,46 +2,40 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-04 (Bulldozer rewrite in progress on dev — wiki = single publication, /writing/ retired, all 35 article pages getting Proof-of-Work rewrite).
+Last updated: 2026-05-04 (Bulldozer rewrite SHIPPED Phases 0-7 on dev. Wiki rewritten as single publication. Outstanding: real-Groq UI eval before main merge + remaining surfaces (`/`, `/resume`, `/lab/*`) need Bulldozer pass).
 
 ---
 
 ## Active
 
-### Ruthless copy pass — full website
-**Why:** C5 niche cascade (2026-05-04) flipped headline + meta to "B2B AI Product Manager. Technical PM building AI agents." across `/`, `/resume`, sitemap, llms.txt, llms-full.txt, site.json, resume.md, moodboard. Cascade was a positioning swap — not a quality pass. Body copy across surfaces still has generic PM phrasing, fluff, weak action verbs. This task is the ruthless edit pass.
+### Real-Groq /enter eval (gate before main merge)
+**Why:** Phase 7 baseline (2026-05-04) ran 26/28 PASS but most synthesis answers fell back to "Service is busy" because Groq was rate-limited / key fallback during the eval window. Wire shape + retrieval + cards + traces validated; synthesis quality not validated.
 
-**Scope:** every public page — `/`, `/resume`, `/lab/`, `/lab/<slug>/`, `/wiki/`, `/wiki/<theme>/`, `/wiki/beliefs/<slug>/`, `/moodboard` (orphan, lower priority). Skip: `/enter` (live agent UI, locked), `README.md` (locked 2026-05-03), `og-master.jpg` (manual export task #2).
+**Action:** with working Groq key in `.env`, re-run `npm run eval:e2e`. Manually drive 6-8 representative scenarios through `/enter` UI per Phase D workflow. Verify the Bulldozer voice carries from wiki extracts into agent answers.
 
-**Editorial brief (paste verbatim into editor agent):**
+**Pass:** ≥26/28 + manual UI smoke clean → green-light merge to main.
 
-> **Role & Context:** Act as a ruthless Director of Product at a top-tier B2B enterprise tech company (Stripe, AWS, Databricks). You are reviewing the personal website copy of a highly technical Product Manager who specializes in AI products, B2B SaaS, and complex engineering systems.
->
-> **Task:** Proofread, edit, and elevate the provided website copy. Do not just fix grammar; ruthlessly optimize tone, structure, and technical density.
->
-> **Strict Editorial Guidelines:**
->
-> 1. **Zero Fluff & Buzzwords:** Eradicate generic PM phrases ("cross-functional collaboration," "driving synergy," "passionate about users"). Replace with concrete, action-oriented technical language ("shipped," "architected," "reduced latency," "scaled").
-> 2. **Tone & Persona:** Authoritative, battle-tested, highly opinionated. Sounds like an internal strategy memo from a Senior/Principal PM — not generic marketing.
-> 3. **The "So What?" Test:** Every paragraph connects a technical action to a distinct business outcome (ARR, engineering velocity, scale). If a sentence doesn't add immediate value, delete.
-> 4. **Formatting for Scannability:** Dense paragraphs → scannable bullets. Clear hierarchy via H2/H3. Core argument understandable in a 3-second scroll.
-> 5. **Answer Engine Optimization (AEO):** Technical concepts + definitions stated clearly and directly in the first sentence of each paragraph so LLMs / AI search summaries ingest them cleanly.
->
-> **Output:** Revised copy, plus a brief bulleted list of the specific changes that elevated authority + technical density.
+### Ruthless copy pass — non-wiki surfaces
+**Why:** Wiki was Bulldozer'd 2026-05-04 (Phase 5). Non-wiki surfaces still need the same pass. C5 niche cascade flipped titles + meta on `/` and `/resume` but body copy is unchanged. Apply Bulldozer voice + 15-point rubric to remaining surfaces.
+
+**Scope:** `/` (`index.html`), `/resume` (`resume/index.html`), `resume.md`, `/lab/` (`lab/index.html`), `/lab/<slug>/` PRFAQs, `/moodboard` (orphan, lowest pri).
+Skip: `/enter` UI (locked), `groqHandler.mjs` system prompt (locked), `README.md` (locked 2026-05-03), `og-master.jpg` (image, defer), all wiki pages (already done Phase 5).
+
+**Editorial contract:** the Bulldozer spec at `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1-5.10 is binding. Anchor reference: the live `wiki/agent-first` theme + `wiki/beliefs/agent-first` belief.
 
 **Execution plan (per-surface):**
-- [ ] `/` (`index.html`) — hero tagline + greeting line, CTAs (only if weak)
-- [ ] `/resume` (`resume/index.html`) — role bullets, summary subtitle
-- [ ] `resume.md` — Summary section + role bullets (ground truth, used by /enter — re-eval scenarios after if bullets shift materially)
+- [ ] `/` (`index.html`) — hero tagline + greeting line + CTA copy
+- [ ] `/resume` (`resume/index.html`) — role bullets + summary subtitle
+- [ ] `resume.md` — Summary + role bullets (ground truth, used by /enter — re-run eval after if bullets shift materially)
 - [ ] `/lab/` (`lab/index.html`) — card descs
 - [ ] `/lab/second-brain/`, `/lab/ai-resume/`, `/lab/voice-ai-production/`, `/lab/product-shape/` — PRFAQ body
-- [ ] `/wiki/themes/`, `/wiki/<12 themes>/`, `/wiki/beliefs/<19 beliefs>/` — theme + belief intros (auto-generated from synthesis MD; edit source `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/` then `npm run build:wiki`)
 - [ ] `/moodboard/` (orphan, lowest pri) — optional
 
 **Boundaries:**
-- Do NOT touch `/enter` UI / `groqHandler.mjs` system prompt / `README.md` / `og-master.jpg` (separate locked artefacts).
-- Stay on dev branch. UI sacrosanct rule: any rendered-surface change → before/after visual diff in headed gstack browser before merging to main.
-- If `resume.md` bullets change materially, re-run /enter eval scenarios per Phase D workflow.
+- Stay on `dev` until manual UI smoke + real-Groq eval pass.
+- UI sacrosanct rule: any rendered-surface change → before/after visual diff in headed gstack browser before merging to main.
+- If `resume.md` bullets change, re-run /enter eval per Phase D workflow.
+- Em-dash hard rule: zero in any shipped HTML/MD/JSON/TXT.
 
 ---
 
@@ -88,7 +82,10 @@ Phase 5 + 6 deferred. See spec §5.
 ## Closed (2026-05-04)
 
 **Shipped on `dev` (was `dev/c5-niche-cascade`, renamed):**
-- ~~`/writing/` framework~~ — built then RETIRED same week. Bulldozer review (2026-05-04) locked single-publication architecture: `/wiki/` is the canonical surface, `/writing/` is gone. `scripts/build-writing.mjs`, `writing/`, `content/writing/`, marker blocks, build chain entry, sitemap rows all removed. 301 `/writing/* → /wiki/graph/` in netlify.toml. Seed post migrating to `/wiki/spec-first-taste/` in Phase 2.
+- ~~Bulldozer rewrite (Phases 0-7)~~ — full /wiki/ rewrite landed on dev. 30 articles rewritten as L7 strategy memos (11 themes + 18 beliefs + 1 meta as "Operator aphorisms"). Voice meta retired. Build pipeline strip (chrome, page-purpose, em-dash). New lint script `scripts/lint-bulldozer.mjs`. /enter eval baseline 26/28 PASS. Spec sections 5.1-5.10 in `~/.claude/plans/lets-think-this-through-staged-zebra.md` are binding. Anchors: agent-first theme + belief.
+- ~~`/writing/` framework~~ — built then RETIRED same week. Bulldozer review locked single-publication architecture: `/wiki/` is the canonical surface, `/writing/` is gone. `scripts/build-writing.mjs`, `writing/`, `content/writing/`, marker blocks, build chain entry, sitemap rows all removed. 301 `/writing/* → /wiki/graph/` in netlify.toml. Seed post migrated into `/wiki/spec-first-taste/` Phase 2.
+- ~~Voice meta page (`/wiki/voice/`) retired~~ — collapsed into Bulldozer architecture. 301 to `/wiki/graph/`.
+- ~~Wiki Related footer relabeled~~ — H2 changed from "Related" to "Related architecture memos" per 15-point rubric item #14.
 
 ---
 

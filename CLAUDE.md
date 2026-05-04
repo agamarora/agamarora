@@ -8,20 +8,29 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 ## Active Work
 
-**second-brain v1** — three-layer build: wiki (10 themes) + kg.json ontology + /enter v3 as thin playback layer.
+**Bulldozer rewrite (locked 2026-05-04, shipped on `dev`)** — `/wiki/` is the single canonical publication. Every page reads as an L7 internal architecture and product strategy memo. 30 source drafts rewritten + voice meta page retired + 31 anchor lint slugs gated.
 
+- **Bulldozer spec (BINDING):** `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1 through 5.10. Voice rules + Kill List + L7 polish + 15-point grading rubric all locked.
+- **Anchor reference (A-grade examples):** `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/agent-first.md` (theme) + `docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final/agent-first.md` (belief).
+- **Lint gate:** `npm run lint:bulldozer --strict` runs 31 anchor slugs through banned-vocab + hedging + em-dash + H2 + hook + bottom-line + verb-floor checks. Strict = 0 violations to commit.
+- **Single-publication architecture:** no `/writing/`, no `/blog/`, no chronological surface. New writing folds into the right wiki theme/belief as a Bulldozer-voice H2 section. See `~/.claude/projects/D--AA-agamarora/memory/feedback_no_chronological.md`.
+- **Memory references:** `feedback_wiki_proof_of_work.md`, `feedback_no_chronological.md`, `project_second_brain_v1.md`, `project_writing_framework.md` (RETIRED).
+
+**Eval baseline:** `docs/plans/eval-results/phase-7-bulldozer-baseline-2026-05-04.md` — 26/28 PASS via `npm run eval:e2e` against local netlify dev. Real-Groq + manual UI smoke gate before main merge.
+
+**Outstanding (parked on dev):** Bulldozer pass on non-wiki surfaces (`/`, `/resume`, `/lab/*`). See `TODO.md` for the per-surface plan.
+
+---
+
+**second-brain v1 (original spec, supplanted by Bulldozer for content; structural decisions still hold):**
 - **Spec** (canonical): `docs/plans/second-brain-v1.md` — locked 2026-04-24
 - **CEO review**: `docs/plans/second-brain-v1-ceo-review.md`
 - **Architecture doc** (system stitching, request flow, failure modes, gaps): `~/.claude/plans/rosy-plotting-flame.md` — approved 2026-04-24
-- **Project memory**: `~/.claude/projects/C--aa-agamarora/memory/project_second_brain_v1.md`
+- **Project memory**: `~/.claude/projects/D--AA-agamarora/memory/project_second_brain_v1.md`
 
 **Corpus** is local at `~/.gstack/projects/agamarora-agamarora/corpus/` (4 files copied 2026-04-24 from private repo `agamarora/agam-linkedin`).
 
-**Phase A pivot 2026-04-24:** Original spec §12 required Agam full-read. Pivoted because synthesizer = source author (Agam wrote the corpus, doesn't need to "learn" it). Replaced with Task #2a (CC subagent fan-out, autonomous, 1-2hr) + Task #2b (Agam taste-pass, 60-90min, irreplaceable). See spec §12 revised + architecture doc §1.
-
-**Next session pickup (READ THIS):** Open `docs/plans/BASELINE-2026-04-26.md` first — the "Session update 2026-04-27" section at the top tells you exactly what's live, what shipped most recently (DRY chrome refactor, italics fix, lab perf, QA pass), and which task to pick up next. For Phase A history, see `docs/plans/second-brain-v1-phase-a/STATUS.md` (also git-tracked, single source of truth for synthesis round-by-round state).
-
-**Phase D dev + eval workflow (LOCKED 2026-04-27):** all `/enter` agent work — code changes AND eval scenarios — runs through `docs/plans/phase-d-dev-workflow.md`. netlify dev on port 8888 + gstack browser headed + drive the real `/enter` UI for every change. Function-only / isolated harness is not a sufficient signal. The workflow exists because D-1 shipped a streaming bug (ReadableStream pull-mode hang) that unit tests missed and only end-to-end UI smoke surfaced. Same loop is the eval gate (D-6 + Phase E launch): 23 scenarios driven through real UI, real DOM, real screenshots.
+**Phase D dev + eval workflow (LOCKED 2026-04-27):** all `/enter` agent work — code changes AND eval scenarios — runs through `docs/plans/phase-d-dev-workflow.md`. netlify dev on port 8888 + gstack browser headed + drive the real `/enter` UI for every change. Function-only / isolated harness is not a sufficient signal.
 
 
 ## Subagent model policy (HARD RULE)
