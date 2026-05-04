@@ -48,7 +48,7 @@
 <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" crossorigin>
 
 <!--
-  C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
+  C-graph implementation status. track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
   CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
@@ -140,7 +140,7 @@
   .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
   .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
 
-  /* Entry CTAs — graph as public landing path. Bottom-center, low priority,
+  /* Entry CTAs. graph as public landing path. Bottom-center, low priority,
      does not crowd aa-mark (right) / legend-strip (left). */
   .entry-ctas{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:10px;align-items:center;}
   .entry-ctas a{font-family:var(--mono);font-size:11px;letter-spacing:0.05em;text-transform:lowercase;color:var(--text);background:rgba(10,10,10,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(232,228,223,0.2);border-radius:4px;padding:7px 14px;text-decoration:none;opacity:0.7;transition:opacity 0.2s,border-color 0.2s,color 0.2s;}
@@ -158,7 +158,7 @@
   .genesis-label{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:lowercase;fill:rgba(229,165,75,0.85);}
   .genesis-sublabel{font-family:var(--mono);font-size:9px;fill:rgba(229,165,75,0.5);letter-spacing:0.06em;}
 
-  /* Genesis halo pulse — origin alive */
+  /* Genesis halo pulse. origin alive */
   @keyframes core-pulse{0%,100%{opacity:0.55;}50%{opacity:0.85;}}
   .genesis-halo{animation:core-pulse 5s ease-in-out infinite;}
 
@@ -176,7 +176,7 @@
   .signal-pulse{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(229,165,75,0.85));pointer-events:none;}
   .signal-pulse-white{fill:rgba(232,228,223,0.55);filter:drop-shadow(0 0 3px rgba(232,228,223,0.3));pointer-events:none;}
 
-  /* Parallax bg star twinkle — slower, dimmer than foreground */
+  /* Parallax bg star twinkle. slower, dimmer than foreground */
   @keyframes bg-twinkle{0%,100%{opacity:var(--bg-base,0.15);}50%{opacity:calc(var(--bg-base,0.15) * 1.7);}}
   .bg-star{animation:bg-twinkle 8s ease-in-out infinite;}
 
@@ -197,7 +197,7 @@
   .genesis-core:focus-visible{stroke:var(--accent);stroke-width:2;}
   .belief-node:focus-visible{stroke:var(--accent);stroke-width:1.5;}
 
-  /* CP-7: layered visibility on theme hover/focus — connected cross-edges light up */
+  /* CP-7: layered visibility on theme hover/focus. connected cross-edges light up */
   .cross-edge{transition:stroke 0.15s,stroke-width 0.15s,opacity 0.15s;}
   .cross-edge.highlit{stroke:rgba(229,165,75,0.32) !important;stroke-width:0.8 !important;stroke-dasharray:2 4 !important;}
   .cross-edge.dimmed{opacity:0.12 !important;}
@@ -407,7 +407,7 @@
     bgGroup.appendChild(dot);
   });
 
-  // Parallax drift via mouse / touch — lerp-based, target offset ±18px in viewBox space.
+  // Parallax drift via mouse / touch. lerp-based, target offset ±18px in viewBox space.
   let parallaxTargetX = 0, parallaxTargetY = 0, parallaxX = 0, parallaxY = 0;
   const PARALLAX_STRENGTH = 18;
   document.addEventListener('mousemove', (e) => {
@@ -434,11 +434,11 @@
     { r:16, fill:'rgba(229,165,75,0.22)'  },
   ].forEach(h => el('circle', { cx:CX, cy:CY, r:h.r, fill:h.fill, class:'genesis-halo' }));
 
-  // Genesis core — clickable + keyboard accessible, navigates to wiki home
+  // Genesis core. clickable + keyboard accessible, navigates to wiki home
   const genesisCore = el('circle', {
     cx:CX, cy:CY, r:11, fill:'#E5A54B', class:'genesis-core',
     tabindex:'0', role:'button',
-    'aria-label':'agam.arora root — open wiki home',
+    'aria-label':'agam.arora root. open wiki home',
   });
   genesisCore.style.cursor = 'pointer';
   genesisCore.addEventListener('click', () => { window.location.href = '/wiki/root.substance-over-hype/'; });
@@ -458,7 +458,7 @@
       transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')',
       tabindex:'0',
       role:'button',
-      'aria-label':'theme: ' + t.label + ' — open /wiki/' + t.slug + '/',
+      'aria-label':'theme: ' + t.label + '. open /wiki/' + t.slug + '/',
     });
     g.style.cursor = 'pointer';
     g.addEventListener('click', (ev) => {
@@ -470,7 +470,7 @@
       if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); window.location.href = '/wiki/' + t.slug + '/'; }
     });
 
-    // Belief-cluster sub-group — created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
+    // Belief-cluster sub-group. created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
     // render BENEATH the theme halos + star within this group.
     el('g', { 'data-belief-cluster':t.id }, g);
 
@@ -481,7 +481,7 @@
     // The star (always on top within group)
     el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
 
-    // Theme label — just outside node halo, radial baseline, quadrant-aware anchor.
+    // Theme label. just outside node halo, radial baseline, quadrant-aware anchor.
     // 22 = ~3 units outside outermost halo (r=18), legible without floating away.
     const labelP = polar(0, 0, 22, t.ang);
     let anchor = 'middle', baseDx = 0, baseDy = 3;
@@ -593,7 +593,7 @@
     if (!cluster) return;
     const rng = mulberry32(t.ang * 1000 + ti * 31 + 13);
 
-    // 1. Beliefs — irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
+    // 1. Beliefs. irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
     const beliefs = beliefByTheme[t.id] || [];
     beliefs.forEach((bid, bi) => {
       const baseA = (360 / Math.max(beliefs.length, 1)) * bi;
@@ -620,7 +620,7 @@
       nodeOffsets[bid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 2. Projects — placed slightly farther out, mid-bright
+    // 2. Projects. placed slightly farther out, mid-bright
     const projects = projectByTheme[t.id] || [];
     projects.forEach((pid, pi) => {
       const baseA = (360 / Math.max(projects.length, 1)) * pi + 18;
@@ -636,7 +636,7 @@
       nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 3. Posts — small, dim, scattered in theme wedge
+    // 3. Posts. small, dim, scattered in theme wedge
     const posts = postByTheme[t.id] || [];
     posts.forEach((pid, pi) => {
       const a = (rng() - 0.5) * 70;
@@ -651,7 +651,7 @@
       nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 4. Tech — smallest, dimmest, scattered in wedge
+    // 4. Tech. smallest, dimmest, scattered in wedge
     const tech = techByTheme[t.id] || [];
     tech.forEach((tid, tii) => {
       const a = (rng() - 0.5) * 90;
@@ -725,7 +725,7 @@
 
   // === Theme spokes: theme node → its own children (beliefs/projects/posts/tech) ===
   // Hidden by default; revealed only when the parent theme is hovered. These are intra-cluster
-  // visual links — not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
+  // visual links. not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
   // so theme dots sit on top. Tiered alpha by child kind so beliefs/projects read first,
   // posts/tech recede.
   const spokeGroup = document.createElementNS(NS, 'g');
@@ -762,8 +762,8 @@
   }
 
   // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
-  // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
-  // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias —
+  // These are ATMOSPHERIC density. they live OUTSIDE theme groups, fixed in canvas space,
+  // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias .
   // so when theme constellation tightens, atmosphere stays full-canvas (revised 2026-04-27).
   const dfRng = mulberry32(424242);
 
@@ -775,7 +775,7 @@
       const t = THEMES[Math.floor(dfRng() * THEMES.length)];
       const baseR = VB_MIN * t.radF;
       const aOff = (dfRng() - 0.5) * 90;
-      // rFac 0.6-2.0 of baseR — themed stars now extend further outward
+      // rFac 0.6-2.0 of baseR. themed stars now extend further outward
       // so they reach the canvas edges and avoid the gap-around-cluster look.
       const rFac = 0.6 + dfRng() * 1.4;
       const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
@@ -811,7 +811,7 @@
     deepStar(x, y, 0.7 + dfRng() * 0.6, 0.12 + dfRng() * 0.15);
   }
 
-  // === CP-2: Proximity mesh — short hairlines between nearby corpus stars ===
+  // === CP-2: Proximity mesh. short hairlines between nearby corpus stars ===
   // Synthesizes co-mention / post-comment relations as visual proxy.
   // Real semantic edges from kg.json land at CP-3.
   (function buildMesh(){
@@ -900,16 +900,16 @@
   // Track current theme world position (used by signal pulses + cross-edge recompute)
   const themeCurPos = THEMES.map(t => ({ x: t.x, y: t.y }));
 
-  // Randomize twinkle delay per theme node (so they desync — feels like real stars)
+  // Randomize twinkle delay per theme node (so they desync. feels like real stars)
   document.querySelectorAll('.theme-node').forEach(e => {
     e.style.animationDelay = '-' + (Math.random() * 4.5).toFixed(2) + 's';
   });
 
-  // === CP-5: Big-bang entry — single-origin radial expansion ===
+  // === CP-5: Big-bang entry. single-origin radial expansion ===
   // All elements start at scale ~0 around (CX, CY) with opacity 0. Over ENTRY_DURATION
   // they expand outward to final state. Skippable on user input.
   const ENTRY_DURATION = 1800;
-  const ENTRY_THEME_STAGGER = 16; // ms per theme — small + near-simultaneous
+  const ENTRY_THEME_STAGGER = 16; // ms per theme. small + near-simultaneous
   const DRIFT_FADE = 1500; // ms ramp-in for ambient drift amplitudes after entry
   const entryStartTime = performance.now() + 250;
   let entryComplete = false;
@@ -927,7 +927,7 @@
   function easeOutQuint(t){ return 1 - Math.pow(1 - t, 5); }
   function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
 
-  // Hide initial state — everything invisible except parallax bg + deep-field which scale from center
+  // Hide initial state. everything invisible except parallax bg + deep-field which scale from center
   themeGroupEls.forEach(g => { if (g) g.style.opacity = '0'; });
   crossEdgeRefs.forEach(ref => { ref.path.style.opacity = '0'; });
   deepFieldGroup.setAttribute('transform', scaleAroundCenter(0.05));
@@ -935,11 +935,11 @@
   bgRoot.setAttribute('transform', scaleAroundCenter(0.05));
   bgRoot.style.opacity = '0';
 
-  // Genesis halos + label fade in (genesis core itself stays visible — it IS the origin).
+  // Genesis halos + label fade in (genesis core itself stays visible. it IS the origin).
   // Two-step: define opacity:0 + transition first, then on next rAF flip to opacity:1
   // so the browser registers the 0→1 transition. Without the rAF kick, the property
   // change happens in the same paint cycle as the initial set and the transition is
-  // skipped — that was the intermittent "label sometimes missing" bug.
+  // skipped. that was the intermittent "label sometimes missing" bug.
   const genesisLabelEl = svg.querySelector('text.genesis-label');
   const genesisSubEl = svg.querySelector('text.genesis-sublabel');
   if (genesisLabelEl) { genesisLabelEl.style.opacity = '0'; genesisLabelEl.style.transition = 'opacity 1s ease-out 0.6s'; }
@@ -1101,7 +1101,7 @@
     // Drift amplitude ramp-in: themes were at rest at end of entry. The Lissajous
     // sin/cos terms have arbitrary phase (px/py per theme), so without a ramp
     // the displacement jumps from 0 to a non-zero value on the first drift frame
-    // — the visible "jerk" between big-bang end and ambient drift. Smoothstep
+    //. the visible "jerk" between big-bang end and ambient drift. Smoothstep
     // 0→1 over DRIFT_FADE ms kills the seam.
     if (driftStartTime === null) driftStartTime = now;
     const driftFadeT = Math.min((now - driftStartTime) / DRIFT_FADE, 1);
@@ -1150,7 +1150,7 @@
   }
   requestAnimationFrame(frame);
 
-  // Signal pulses — gold/white dots traveling along paths or straight lines, fade in/out
+  // Signal pulses. gold/white dots traveling along paths or straight lines, fade in/out
   function pulseAlongLine(x1, y1, x2, y2, duration, color, radius){
     const cls = color === 'gold' ? 'signal-pulse' : 'signal-pulse-white';
     const pulse = el('circle', { cx:x1, cy:y1, r:radius || 2.4, class:cls, opacity:0 });
@@ -1205,7 +1205,7 @@
   }
   setTimeout(fireRadial, 800);
 
-  // Cadence 2: cross-edge pulse (every 0.6-1.5s) — fires along a real interlinkage
+  // Cadence 2: cross-edge pulse (every 0.6-1.5s). fires along a real interlinkage
   function fireCrossEdge(){
     if (crossEdgeRefs.length){
       const ref = crossEdgeRefs[Math.floor(Math.random() * crossEdgeRefs.length)];
@@ -1215,7 +1215,7 @@
   }
   setTimeout(fireCrossEdge, 1200);
 
-  // Cadence 3: tension chord pulse (every 2.4-5s) — bigger, gold, big-event signals
+  // Cadence 3: tension chord pulse (every 2.4-5s). bigger, gold, big-event signals
   function fireTension(){
     const tensions = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'tension-with');
     if (tensions.length){
@@ -1226,7 +1226,7 @@
   }
   setTimeout(fireTension, 2700);
 
-  // Cadence 4: supersedes/refines pulse (every 1.5-3.2s) — narrative arc signals
+  // Cadence 4: supersedes/refines pulse (every 1.5-3.2s). narrative arc signals
   function fireNarrative(){
     const narr = crossEdgeRefs.filter(r => {
       const rel = r.path.getAttribute('data-rel');
@@ -1240,7 +1240,7 @@
   }
   setTimeout(fireNarrative, 1900);
 
-  // Cadence 5: builds_on lineage pulse (every 1.0-2.0s) — project chain firing
+  // Cadence 5: builds_on lineage pulse (every 1.0-2.0s). project chain firing
   function fireLineage(){
     const lin = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'builds_on');
     if (lin.length){
@@ -1419,7 +1419,7 @@
   // === CP-7: layered visibility on hover/focus ===
   // Hovered body = theme node itself. Cross-edge highlit iff theme node is endpoint
   // (theme↔theme tensions, theme↔belief in other clusters, theme↔genesis). Belief↔belief
-  // chords stay dimmed — they aren't this theme's connections, even if one belief lives
+  // chords stay dimmed. they aren't this theme's connections, even if one belief lives
   // in this theme's wedge. Subtle dotted style (.cross-edge.highlit). Spokes from theme
   // to its own children are revealed in parallel via spokeRefs (see theme-spokes block).
   function highlightTheme(themeId){

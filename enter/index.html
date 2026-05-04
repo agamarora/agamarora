@@ -14,7 +14,7 @@
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
-<meta property="og:image:alt" content="Agam Arora — AI Product Manager, Engineer-PM, Builder.">
+<meta property="og:image:alt" content="Agam Arora . AI Product Manager, Engineer-PM, Builder.">
 <meta property="og:site_name" content="Agam Arora">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
@@ -63,7 +63,7 @@
   .icon-bar{display:inline-flex;align-items:center;}
   .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
-  /* Agent button — gold accent. The differentiator on the site, gets weight. */
+  /* Agent button . gold accent. The differentiator on the site, gets weight. */
   .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
   .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}
 
@@ -79,7 +79,7 @@
   /* /enter-only: keep streamed content above the fixed input bar when
      scrollIntoView({block:'end'}) lands a new turn. Without this, the
      article tail aligns to viewport bottom and disappears under the input
-     overlay — reads as "the page didn't scroll". 240px = input bar height
+     overlay . reads as "the page didn't scroll". 240px = input bar height
      + breathing room. */
   html { scroll-padding-bottom:240px; }
 
@@ -97,7 +97,7 @@
     transform:rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
     /* opacity dimmed 0.75 → 0.42 for readability against streamed text.
        All other properties (transform, fade, JS scale clamp) match the
-       original 133ca8e design — only the opacity dim was the asked change. */
+       original 133ca8e design . only the opacity dim was the asked change. */
     transform-origin:center center; transform-style:preserve-3d; opacity:0.32;
   }
   .kb-row { display:flex; gap:6px; justify-content:center; transform-style:preserve-3d; }
@@ -126,7 +126,7 @@
   }
 
   /* =========================================================
-     /enter v3 — main layout
+     /enter v3 . main layout
      ========================================================= */
   main.terminal {
     position:relative; z-index:2;
@@ -142,7 +142,7 @@
   }
 
   /* =========================================================
-     Status bar — agent.agam · <verb> with pulsing dot
+     Status bar . agent.agam · <verb> with pulsing dot
      ========================================================= */
   .status-bar {
     display:flex;
@@ -201,10 +201,10 @@
   /* Default cards in empty state stagger in */
   .empty-state .cards { animation:none; }
 
-  /* Mobile-only greeting — hidden on desktop. Shown via mobile @media. */
+  /* Mobile-only greeting . hidden on desktop. Shown via mobile @media. */
   .empty-state .mobile-greeting { display:none; }
 
-  /* Wordmark + tagline — display block that fills empty-state breathing room.
+  /* Wordmark + tagline . display block that fills empty-state breathing room.
      Satoshi 900 uppercase, tight tracking. Dies with empty-state on first chat. */
   .empty-state .wordmark {
     font-family:var(--sans);
@@ -250,7 +250,7 @@
   .warm-trace .status-word { color:var(--text-dim); margin-left:auto; }
 
   /* =========================================================
-     Trace block — TLDR-style left-stripe lines (locked 3108ad5)
+     Trace block . TLDR-style left-stripe lines (locked 3108ad5)
      ========================================================= */
   .trace {
     display:flex;
@@ -268,7 +268,7 @@
     line-height:1.5;
     color:var(--text-dim);
     /* Trace-pill background: bumped from --accent-dim (rgba 0.12) to
-       0.22 for readability. The pills are the TLDR — the user
+       0.22 for readability. The pills are the TLDR . the user
        should be able to scan verb + arg without leaning in. */
     background:linear-gradient(90deg, rgba(229,165,75,0.22), rgba(229,165,75,0.04) 70%, transparent);
     border-left:3px solid var(--accent);
@@ -389,7 +389,7 @@
 
   /* Empty state cards: fade + slide up. Triggered by JS .show class
      ~900ms after page load (last in the empty-state stagger). No CSS
-     delay — JS controls the kickoff so single trigger, predictable. */
+     delay . JS controls the kickoff so single trigger, predictable. */
   .empty-state .cards {
     opacity:0;
     transform:translateY(4px);
@@ -484,7 +484,7 @@
   }
 
   /* =========================================================
-     Bottom input bar — sticky fixed
+     Bottom input bar . sticky fixed
      ========================================================= */
   .input-bar {
     position:fixed;
@@ -494,7 +494,7 @@
     padding:var(--space-5) clamp(var(--space-5),5vw,var(--space-7))
             calc(var(--space-7) + 8px);
     z-index:60;
-    /* No transition on `bottom` — every keystroke nudges the visual
+    /* No transition on `bottom` . every keystroke nudges the visual
        viewport on mobile (suggestion bar, IME) and a transition would
        animate the input bar up/down on each keypress (perceived as
        jitter or "the input is sliding"). Snap-track instead. */
@@ -604,7 +604,7 @@
   .provider-banner.show { display:block; }
 
   /* =========================================================
-     Mobile breakpoint < 760px — mobile-native redesign
+     Mobile breakpoint < 760px . mobile-native redesign
      =========================================================
      Viewport handling: rely on the platform.
      - viewport meta has interactive-widget=resizes-content. Chrome
@@ -612,7 +612,7 @@
        this the layout viewport stays full when the keyboard opens
        and any position:fixed bottom:0 element sits BEHIND the
        keyboard. With resizes-content, Android shrinks the layout
-       viewport when the keyboard opens — 100dvh tracks it natively,
+       viewport when the keyboard opens . 100dvh tracks it natively,
        the fixed input bar pins above the keyboard, no JS needed.
      - iOS Safari ignores interactive-widget but auto-scrolls a
        focused input + its surrounding fixed-bottom element above
@@ -679,7 +679,7 @@
     .trace-line .latency { align-self:flex-end; font-size:0.78rem; }
     .answer { font-size:0.98rem; }
 
-    /* Cards as pill rows — same pattern Claude/ChatGPT/WhatsApp */
+    /* Cards as pill rows . same pattern Claude/ChatGPT/WhatsApp */
     .cards {
       flex-direction:column;
       overflow-x:visible;
@@ -707,7 +707,7 @@
       text-overflow:ellipsis;
     }
     .card .card-desc { display:none; }
-    /* Hide explicit link text on mobile — title + chevron is enough hint. */
+    /* Hide explicit link text on mobile . title + chevron is enough hint. */
     .card .card-arrow { display:none; }
     .card::after {
       content:"›";
@@ -722,7 +722,7 @@
     .card:hover { transform:none; }
 
     /* Input bar stays position:fixed bottom:0 (inherited from desktop).
-       Direct body child — iOS auto-scrolls it above the keyboard;
+       Direct body child . iOS auto-scrolls it above the keyboard;
        Android shrinks layout viewport via interactive-widget so
        bottom:0 == above-keyboard. Safe-area-inset for iPhone home
        indicator. */
@@ -762,7 +762,7 @@
     outline-offset:3px;
     border-radius:var(--radius-sm);
   }
-  /* Input itself has no focus outline — the wrapper's :focus-within border
+  /* Input itself has no focus outline . the wrapper's :focus-within border
      (line 423) is the visual focus signal. Doubling them produced a jarring
      bright inner outline that clipped to the input's content box. */
   .input-bar input:focus,
@@ -909,12 +909,12 @@
 </a>
 <!-- /chrome:aamark -->
 
-<!-- throttle module (Lane B) — exposed as window.__throttle for IIFE use -->
+<!-- throttle module (Lane B) . exposed as window.__throttle for IIFE use -->
 <script type="module">
 import { canSubmit, markSubmit, throttleRemaining } from '/enter/lib/throttle.mjs';
 window.__throttle = { canSubmit, markSubmit, throttleRemaining };
 </script>
-<!-- chrome:script — aa. stroke-draw animation -->
+<!-- chrome:script . aa. stroke-draw animation -->
 <script>(function(){
   const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
   if(!s||!f||!d)return;
@@ -1069,7 +1069,7 @@ setTimeout(() => {
 }, 900);
 
 // =============================================================
-// THROTTLE (1 query / 2s — browser-side tier 1 defense)
+// THROTTLE (1 query / 2s . browser-side tier 1 defense)
 // Per phase-d-decisions-2026-04-27.md Decision 10: 1q/2s browser soft block.
 // Uses Lane B throttle.mjs (window.__throttle) if available, else inline fallback.
 // =============================================================
@@ -1144,9 +1144,9 @@ function pushHistory(role, content) {
 }
 
 // =============================================================
-// CARD ICON MAP — slug-prefix to icon sprite id
+// CARD ICON MAP . slug-prefix to icon sprite id
 // v3.1 note: server (card-meta.mjs) is now SSOT for title/desc/url. Icon
-// is the only remaining client-side derivation. Kept simple — slug prefix
+// is the only remaining client-side derivation. Kept simple . slug prefix
 // match into a small map. If we want server-emitted icons later, extend
 // card-meta to carry an `icon` field.
 // =============================================================
@@ -1167,7 +1167,7 @@ function inferCardIcon(slug, url) {
 }
 
 // =============================================================
-// BUILD CARD HTML — v3.1 pure render
+// BUILD CARD HTML . v3.1 pure render
 // Server resolves slug → {title, desc, url, kind, arrow_label} via
 // card-meta.mjs and emits ready-to-render fields in the SSE card event.
 // Frontend just renders. No more slugToTitle / slugToUrl maps.
@@ -1184,7 +1184,7 @@ function buildCard(card) {
   const arrow = isExternal ? '&#8599;' : '&rarr;';
   const target = isExternal ? ' target="_blank" rel="noopener"' : '';
   // Internal pages: arrow alone, no path label (the path duplicated nothing
-  // useful — destination is implied by the title + click target). Externals
+  // useful . destination is implied by the title + click target). Externals
   // keep a short domain label so the user can see they're leaving the site.
   // arrow_label === null/undefined → fall back to URL-minus-scheme for
   // externals; arrow_label === '' (empty string) → no label.
@@ -1210,7 +1210,7 @@ function escHtml(str) {
 }
 
 // =============================================================
-// TRACE LINE SCHEDULER — Decision 17 count-up + spinner → tick
+// TRACE LINE SCHEDULER . Decision 17 count-up + spinner → tick
 // Each line reveals at cumulative prior + max(realLatency, MIN_READ_BUFFER).
 // Spinner spins during count-up, morphs to checkmark at end.
 // =============================================================
@@ -1368,7 +1368,7 @@ function showCards(turnId, cards, delayMs) {
 // =============================================================
 // LAST-RESORT FALLBACK: synthesize cards from prompt regex
 // v3.1: server (card-meta.mjs) is now SSOT for cards via SSE. This
-// helper survives only as a zero-card-SSE safety net — if the LLM emits
+// helper survives only as a zero-card-SSE safety net . if the LLM emits
 // no cards AND no slug is recognized, we still show a sensible row
 // instead of an empty card area. Should fire approximately never on
 // the v3.1 path.
@@ -1400,7 +1400,7 @@ function generateFallbackCards(prompt, answer) {
 
   const pri = (c) => ({ ...c, priority:true });
 
-  // YouTube — narrow, only when explicitly asked
+  // YouTube . narrow, only when explicitly asked
   if (p.match(/\byoutube\b|\byt\b|\bvideos?\b|channel/)) {
     cards.push(pri(youtube), linkedin, github);
   }
@@ -1436,7 +1436,7 @@ function generateFallbackCards(prompt, answer) {
 }
 
 // =============================================================
-// SSE CLIENT — handles both v2 (text tokens) and v3 (structured)
+// SSE CLIENT . handles both v2 (text tokens) and v3 (structured)
 // v3 structured schema (Decision 16): {trace[], answer, cards[], latencyMs}
 // v2 current schema: data: {"text":"..."} + [DONE]
 // =============================================================
@@ -1524,7 +1524,7 @@ async function submitQuery(prompt, history, isRetry) {
       // ---- Lane A v3 typed events ----
       if (t === 'trace') {
         isV3 = true;
-        // First real trace event — drop the immediate-feedback placeholder
+        // First real trace event . drop the immediate-feedback placeholder
         // so the trace area is clean before the real lines schedule in.
         removeThinkingPlaceholder(turnId);
         const verb = parsed.verb || '';
@@ -1564,7 +1564,7 @@ async function submitQuery(prompt, history, isRetry) {
 
       if (t === 'done') {
         isV3 = true;
-        // done sentinel — stream will end. Drop the thinking placeholder
+        // done sentinel . stream will end. Drop the thinking placeholder
         // in case no trace events arrived (cached fast-path responses).
         removeThinkingPlaceholder(turnId);
         return;
@@ -1733,7 +1733,7 @@ startHintRotation();
   `;
 })();
 
-// Don't auto-focus on mobile — triggers soft keyboard unexpectedly
+// Don't auto-focus on mobile . triggers soft keyboard unexpectedly
 if (!isMobile()) inputEl.focus();
 
 // Mobile viewport: NO JS. The combination of viewport meta

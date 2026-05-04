@@ -358,51 +358,8 @@ ${SHARED_CHROME_CSS}
   .md-table td{color:var(--text);opacity:0.88;}
   .md-table tr:last-child td{border-bottom:0;}
 
-  .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
-  .theme-meta .tier{color:var(--accent);}
-
   /* Page-purpose hook: one-line "what is this for?" rendered directly under h1. */
   .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
-
-  /* Belief chip strip: graph-position metadata under h1. Desktop = single row with separator dots, mobile = each group stacks vertically with label-above-chips. */
-  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:baseline;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-5);}
-  .belief-chips .group{display:inline-flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap;}
-  .belief-chips .group-label{color:var(--accent);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.08em;font-weight:500;white-space:nowrap;}
-  .belief-chips .chip{color:var(--text);text-decoration:none;border-bottom:1px dashed var(--border-hover);padding-bottom:1px;transition:color 0.2s,border-color 0.2s;}
-  .belief-chips .chip:hover{color:var(--accent);border-color:var(--accent);}
-  .belief-chips .chip.dead{color:var(--text-dim);opacity:0.65;border-bottom:1px dotted var(--border);cursor:help;}
-  .belief-chips .sep-dot{opacity:0.45;}
-  @media (max-width: 720px) {
-    .belief-chips{flex-direction:column;align-items:flex-start;gap:var(--space-4);}
-    .belief-chips .group{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);width:100%;}
-    .belief-chips .group-label{display:block;margin-bottom:0;font-size:0.66rem;}
-    .belief-chips .group .chip,.belief-chips .group span:not(.group-label){display:inline-block;margin-right:var(--space-3);margin-bottom:var(--space-2);}
-    .belief-chips .sep-dot{display:none;}
-  }
-
-  /* Belief tag strip: applies-to domain tags + confidence marker. Second row under chip strip. */
-  .belief-tags{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-4);align-items:center;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-3));margin-bottom:var(--space-7);}
-  .belief-tags .group-label{color:var(--accent);text-transform:uppercase;font-size:0.66rem;letter-spacing:0.08em;font-weight:500;white-space:nowrap;}
-  .belief-tags .tag{display:inline-block;padding:2px 8px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-size:0.7rem;white-space:nowrap;}
-  .belief-tags .confidence{margin-left:auto;display:inline-flex;align-items:center;gap:var(--space-3);}
-  .belief-tags .confidence .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
-  .belief-tags .confidence.settled .dot{background:var(--accent);}
-  .belief-tags .confidence.evolving .dot{background:var(--text-dim);}
-  .belief-tags .confidence.contested .dot{background:#a23b3b;}
-  @media (max-width: 720px) {
-    .belief-tags{flex-direction:column;align-items:flex-start;gap:var(--space-3);}
-    .belief-tags .group-label{display:block;margin-bottom:var(--space-2);}
-    .belief-tags .confidence{margin-left:0;margin-top:var(--space-2);}
-  }
-
-  /* TL;DR quotable assertion: agent-grabbable single-line quote at top of body. */
-  .belief-tldr{margin:0 0 var(--space-7) 0;padding:var(--space-5) var(--space-6);background:linear-gradient(90deg, var(--accent-dim), transparent 70%);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
-  .belief-tldr .label{font-family:var(--mono);font-size:0.7rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;display:block;margin-bottom:var(--space-3);}
-  .belief-tldr .quote{font-family:var(--sans);font-size:1.15rem;line-height:1.5;color:var(--text);font-weight:500;margin:0;}
-  @media (max-width: 720px) {
-    .belief-tldr{padding:var(--space-4) var(--space-5);}
-    .belief-tldr .quote{font-size:1.05rem;line-height:1.45;}
-  }
 
   /* Related cross-links footer: rendered above theme-nav. */
   .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
@@ -423,20 +380,6 @@ ${SHARED_CHROME_CSS}
   /* Blockquotes (used heavily on /wiki/quotes/). */
   article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
   article blockquote strong { color: var(--accent); }
-
-  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
-  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
-  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
-  details.evidence-block > summary::-webkit-details-marker { display: none; }
-  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
-  details.evidence-block[open] > summary::before { content: '- '; }
-  details.evidence-block > summary:hover { color: var(--text); }
-  details.evidence-block > * { padding: 0 var(--space-5); }
-  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
-  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
-  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
-  details.evidence-block a.evidence-link { color: var(--text-dim); font-family: var(--mono); font-size: 0.74rem; text-decoration: none; border-bottom: 1px dotted var(--border); transition: color 0.2s, border-color 0.2s; word-break: break-all; }
-  details.evidence-block a.evidence-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 `;
 
 // SVG_SPRITE, SHARED_HEADER_HTML, SHARED_AAMARK_HTML, AAMARK_SCRIPT now imported
@@ -906,13 +849,13 @@ function buildMetaPage(slug, src) {
   const m = pageMeta(meta, slug);
   const articleHtml = blockMd(body.trim());
 
-  // FAQPage JSON-LD for voice + quotes — pulled from explicit Q&A H2 block
+  // FAQPage JSON-LD for voice + quotes. pulled from explicit Q&A H2 block
   // added to source drafts during AEO-3.
   const META_FAQ = {
     voice: {
       question: "What does Agam Arora's voice sound like?",
       answer:
-        "Four modes, one disposition. The take — bold declarative opener, structured body, zinger close. The four-word reply — Hindi or English compressed comment. The playbook — when someone asks how, hand over the full stack with no gatekeeping. The framework drop — thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.",
+        "Four modes, one disposition. The take. bold declarative opener, structured body, zinger close. The four-word reply. Hindi or English compressed comment. The playbook. when someone asks how, hand over the full stack with no gatekeeping. The framework drop. thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.",
     },
     quotes: {
       question: "What are Agam Arora's operator aphorisms?",
@@ -1340,18 +1283,18 @@ function buildGraphPage() {
     process.exit(1);
   }
 
-  // === Constellation CP-1 — authored sky atlas skeleton ===
+  // === Constellation CP-1. authored sky atlas skeleton ===
   // Aesthetic + spec lives in DESIGN.md ## Constellation graph (locked 2026-04-26).
   // CP-1 = static foundation: genesis + 11 hand-placed theme nodes. No motion, no edges,
   // no deep-field, no big-bang yet. Those land at CP-2..CP-7.
 
   // Theme positions: hand-tuned (angle°, radF). Genesis at center; 11 themes orbit.
-  // NOT a perfect circle — irregular radF gives organic distribution per memorable-thing.
+  // NOT a perfect circle. irregular radF gives organic distribution per memorable-thing.
   // Theme radial fractions tightened 2026-04-27 (-15%) so all nodes fit on
   // mobile viewport without pan-scroll. Original spec range was 0.24-0.32 of
   // min(vw,vh); now 0.20-0.27. Genesis still center, organic placement preserved.
   // Labels rewritten 2026-04-27 to be crisp + self-explanatory for first-time
-  // visitors — no slugs, no jargon, sentence-case, ≤3 words each.
+  // visitors. no slugs, no jargon, sentence-case, ≤3 words each.
   const THEMES = [
     { id: 'theme.agent-first',                 slug: 'agent-first',                 label: 'Agent-first AI',     ang: 18,  radF: 0.230 },
     { id: 'theme.ai-pm-skillset',              slug: 'ai-pm-skillset',              label: 'AI PM craft',        ang: 62,  radF: 0.272 },
@@ -1479,7 +1422,7 @@ function buildGraphPage() {
 <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" crossorigin>
 
 <!--
-  C-graph implementation status — track CP completion against DESIGN.md ## Constellation graph
+  C-graph implementation status. track CP completion against DESIGN.md ## Constellation graph
   CP-1 ✅ static skeleton: genesis + 11 theme nodes hand-placed, labels w/ quadrant anchor
   CP-2 ✅ deep-field: kg.json beliefs+projects+posts+tech rendered, 578 corpus stars, proximity mesh
   CP-3 ✅ real cross-theme interlinkages: tension-with + superseded_by + refined_by + builds_on + demonstrates edges drawn as curved beziers
@@ -1529,7 +1472,7 @@ ${SHARED_CHROME_CSS}
   .legend-strip .gold{background:var(--accent);width:8px;height:8px;box-shadow:0 0 6px rgba(229,165,75,0.6);}
   .legend-strip .genesis{background:var(--accent);width:11px;height:11px;box-shadow:0 0 10px rgba(229,165,75,0.7);}
 
-  /* Entry CTAs — graph as public landing path. Bottom-center, low priority,
+  /* Entry CTAs. graph as public landing path. Bottom-center, low priority,
      does not crowd aa-mark (right) / legend-strip (left). */
   .entry-ctas{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:10px;align-items:center;}
   .entry-ctas a{font-family:var(--mono);font-size:11px;letter-spacing:0.05em;text-transform:lowercase;color:var(--text);background:rgba(10,10,10,0.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(232,228,223,0.2);border-radius:4px;padding:7px 14px;text-decoration:none;opacity:0.7;transition:opacity 0.2s,border-color 0.2s,color 0.2s;}
@@ -1547,7 +1490,7 @@ ${SHARED_CHROME_CSS}
   .genesis-label{font-family:var(--mono);font-size:11px;letter-spacing:0.12em;text-transform:lowercase;fill:rgba(229,165,75,0.85);}
   .genesis-sublabel{font-family:var(--mono);font-size:9px;fill:rgba(229,165,75,0.5);letter-spacing:0.06em;}
 
-  /* Genesis halo pulse — origin alive */
+  /* Genesis halo pulse. origin alive */
   @keyframes core-pulse{0%,100%{opacity:0.55;}50%{opacity:0.85;}}
   .genesis-halo{animation:core-pulse 5s ease-in-out infinite;}
 
@@ -1565,7 +1508,7 @@ ${SHARED_CHROME_CSS}
   .signal-pulse{fill:var(--accent);filter:drop-shadow(0 0 5px rgba(229,165,75,0.85));pointer-events:none;}
   .signal-pulse-white{fill:rgba(232,228,223,0.55);filter:drop-shadow(0 0 3px rgba(232,228,223,0.3));pointer-events:none;}
 
-  /* Parallax bg star twinkle — slower, dimmer than foreground */
+  /* Parallax bg star twinkle. slower, dimmer than foreground */
   @keyframes bg-twinkle{0%,100%{opacity:var(--bg-base,0.15);}50%{opacity:calc(var(--bg-base,0.15) * 1.7);}}
   .bg-star{animation:bg-twinkle 8s ease-in-out infinite;}
 
@@ -1586,7 +1529,7 @@ ${SHARED_CHROME_CSS}
   .genesis-core:focus-visible{stroke:var(--accent);stroke-width:2;}
   .belief-node:focus-visible{stroke:var(--accent);stroke-width:1.5;}
 
-  /* CP-7: layered visibility on theme hover/focus — connected cross-edges light up */
+  /* CP-7: layered visibility on theme hover/focus. connected cross-edges light up */
   .cross-edge{transition:stroke 0.15s,stroke-width 0.15s,opacity 0.15s;}
   .cross-edge.highlit{stroke:rgba(229,165,75,0.32) !important;stroke-width:0.8 !important;stroke-dasharray:2 4 !important;}
   .cross-edge.dimmed{opacity:0.12 !important;}
@@ -1757,7 +1700,7 @@ ${AAMARK_SCRIPT}
     bgGroup.appendChild(dot);
   });
 
-  // Parallax drift via mouse / touch — lerp-based, target offset ±18px in viewBox space.
+  // Parallax drift via mouse / touch. lerp-based, target offset ±18px in viewBox space.
   let parallaxTargetX = 0, parallaxTargetY = 0, parallaxX = 0, parallaxY = 0;
   const PARALLAX_STRENGTH = 18;
   document.addEventListener('mousemove', (e) => {
@@ -1784,11 +1727,11 @@ ${AAMARK_SCRIPT}
     { r:16, fill:'rgba(229,165,75,0.22)'  },
   ].forEach(h => el('circle', { cx:CX, cy:CY, r:h.r, fill:h.fill, class:'genesis-halo' }));
 
-  // Genesis core — clickable + keyboard accessible, navigates to wiki home
+  // Genesis core. clickable + keyboard accessible, navigates to wiki home
   const genesisCore = el('circle', {
     cx:CX, cy:CY, r:11, fill:'#E5A54B', class:'genesis-core',
     tabindex:'0', role:'button',
-    'aria-label':'agam.arora root — open wiki home',
+    'aria-label':'agam.arora root. open wiki home',
   });
   genesisCore.style.cursor = 'pointer';
   genesisCore.addEventListener('click', () => { window.location.href = '/wiki/root.substance-over-hype/'; });
@@ -1808,7 +1751,7 @@ ${AAMARK_SCRIPT}
       transform:'translate(' + t.x.toFixed(2) + ' ' + t.y.toFixed(2) + ')',
       tabindex:'0',
       role:'button',
-      'aria-label':'theme: ' + t.label + ' — open /wiki/' + t.slug + '/',
+      'aria-label':'theme: ' + t.label + '. open /wiki/' + t.slug + '/',
     });
     g.style.cursor = 'pointer';
     g.addEventListener('click', (ev) => {
@@ -1820,7 +1763,7 @@ ${AAMARK_SCRIPT}
       if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); window.location.href = '/wiki/' + t.slug + '/'; }
     });
 
-    // Belief-cluster sub-group — created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
+    // Belief-cluster sub-group. created FIRST so beliefs/projects/posts/tech (CP-2 appends here)
     // render BENEATH the theme halos + star within this group.
     el('g', { 'data-belief-cluster':t.id }, g);
 
@@ -1831,7 +1774,7 @@ ${AAMARK_SCRIPT}
     // The star (always on top within group)
     el('circle', { cx:0, cy:0, r:8.5, fill:'#E5A54B', class:'theme-node' }, g);
 
-    // Theme label — just outside node halo, radial baseline, quadrant-aware anchor.
+    // Theme label. just outside node halo, radial baseline, quadrant-aware anchor.
     // 22 = ~3 units outside outermost halo (r=18), legible without floating away.
     const labelP = polar(0, 0, 22, t.ang);
     let anchor = 'middle', baseDx = 0, baseDy = 3;
@@ -1883,7 +1826,7 @@ ${AAMARK_SCRIPT}
     if (!cluster) return;
     const rng = mulberry32(t.ang * 1000 + ti * 31 + 13);
 
-    // 1. Beliefs — irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
+    // 1. Beliefs. irregular halo at jittered angle/radius (radii 22/28/34/40/46 ± 4)
     const beliefs = beliefByTheme[t.id] || [];
     beliefs.forEach((bid, bi) => {
       const baseA = (360 / Math.max(beliefs.length, 1)) * bi;
@@ -1910,7 +1853,7 @@ ${AAMARK_SCRIPT}
       nodeOffsets[bid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 2. Projects — placed slightly farther out, mid-bright
+    // 2. Projects. placed slightly farther out, mid-bright
     const projects = projectByTheme[t.id] || [];
     projects.forEach((pid, pi) => {
       const baseA = (360 / Math.max(projects.length, 1)) * pi + 18;
@@ -1926,7 +1869,7 @@ ${AAMARK_SCRIPT}
       nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 3. Posts — small, dim, scattered in theme wedge
+    // 3. Posts. small, dim, scattered in theme wedge
     const posts = postByTheme[t.id] || [];
     posts.forEach((pid, pi) => {
       const a = (rng() - 0.5) * 70;
@@ -1941,7 +1884,7 @@ ${AAMARK_SCRIPT}
       nodeOffsets[pid] = { themeId: t.id, ox: p.x, oy: p.y };
     });
 
-    // 4. Tech — smallest, dimmest, scattered in wedge
+    // 4. Tech. smallest, dimmest, scattered in wedge
     const tech = techByTheme[t.id] || [];
     tech.forEach((tid, tii) => {
       const a = (rng() - 0.5) * 90;
@@ -2019,7 +1962,7 @@ ${AAMARK_SCRIPT}
 
   // === Theme spokes: theme node → its own children (beliefs/projects/posts/tech) ===
   // Hidden by default; revealed only when the parent theme is hovered. These are intra-cluster
-  // visual links — not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
+  // visual links. not in CROSS_EDGES (which are cross-cluster only). Drawn beneath theme groups
   // so theme dots sit on top. Tiered alpha by child kind so beliefs/projects read first,
   // posts/tech recede.
   const spokeGroup = document.createElementNS(NS, 'g');
@@ -2056,8 +1999,8 @@ ${AAMARK_SCRIPT}
   }
 
   // === CP-2: Uncurated corpus deep-field (295 posts + 283 comments = 578 stars) ===
-  // These are ATMOSPHERIC density — they live OUTSIDE theme groups, fixed in canvas space,
-  // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias —
+  // These are ATMOSPHERIC density. they live OUTSIDE theme groups, fixed in canvas space,
+  // representing the raw corpus we synthesized from. Mostly uniform with weak theme bias .
   // so when theme constellation tightens, atmosphere stays full-canvas (revised 2026-04-27).
   const dfRng = mulberry32(424242);
 
@@ -2069,7 +2012,7 @@ ${AAMARK_SCRIPT}
       const t = THEMES[Math.floor(dfRng() * THEMES.length)];
       const baseR = VB_MIN * t.radF;
       const aOff = (dfRng() - 0.5) * 90;
-      // rFac 0.6-2.0 of baseR — themed stars now extend further outward
+      // rFac 0.6-2.0 of baseR. themed stars now extend further outward
       // so they reach the canvas edges and avoid the gap-around-cluster look.
       const rFac = 0.6 + dfRng() * 1.4;
       const p = polar(CX, CY, baseR * rFac, t.ang + aOff);
@@ -2105,7 +2048,7 @@ ${AAMARK_SCRIPT}
     deepStar(x, y, 0.7 + dfRng() * 0.6, 0.12 + dfRng() * 0.15);
   }
 
-  // === CP-2: Proximity mesh — short hairlines between nearby corpus stars ===
+  // === CP-2: Proximity mesh. short hairlines between nearby corpus stars ===
   // Synthesizes co-mention / post-comment relations as visual proxy.
   // Real semantic edges from kg.json land at CP-3.
   (function buildMesh(){
@@ -2194,16 +2137,16 @@ ${AAMARK_SCRIPT}
   // Track current theme world position (used by signal pulses + cross-edge recompute)
   const themeCurPos = THEMES.map(t => ({ x: t.x, y: t.y }));
 
-  // Randomize twinkle delay per theme node (so they desync — feels like real stars)
+  // Randomize twinkle delay per theme node (so they desync. feels like real stars)
   document.querySelectorAll('.theme-node').forEach(e => {
     e.style.animationDelay = '-' + (Math.random() * 4.5).toFixed(2) + 's';
   });
 
-  // === CP-5: Big-bang entry — single-origin radial expansion ===
+  // === CP-5: Big-bang entry. single-origin radial expansion ===
   // All elements start at scale ~0 around (CX, CY) with opacity 0. Over ENTRY_DURATION
   // they expand outward to final state. Skippable on user input.
   const ENTRY_DURATION = 1800;
-  const ENTRY_THEME_STAGGER = 16; // ms per theme — small + near-simultaneous
+  const ENTRY_THEME_STAGGER = 16; // ms per theme. small + near-simultaneous
   const DRIFT_FADE = 1500; // ms ramp-in for ambient drift amplitudes after entry
   const entryStartTime = performance.now() + 250;
   let entryComplete = false;
@@ -2221,7 +2164,7 @@ ${AAMARK_SCRIPT}
   function easeOutQuint(t){ return 1 - Math.pow(1 - t, 5); }
   function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
 
-  // Hide initial state — everything invisible except parallax bg + deep-field which scale from center
+  // Hide initial state. everything invisible except parallax bg + deep-field which scale from center
   themeGroupEls.forEach(g => { if (g) g.style.opacity = '0'; });
   crossEdgeRefs.forEach(ref => { ref.path.style.opacity = '0'; });
   deepFieldGroup.setAttribute('transform', scaleAroundCenter(0.05));
@@ -2229,11 +2172,11 @@ ${AAMARK_SCRIPT}
   bgRoot.setAttribute('transform', scaleAroundCenter(0.05));
   bgRoot.style.opacity = '0';
 
-  // Genesis halos + label fade in (genesis core itself stays visible — it IS the origin).
+  // Genesis halos + label fade in (genesis core itself stays visible. it IS the origin).
   // Two-step: define opacity:0 + transition first, then on next rAF flip to opacity:1
   // so the browser registers the 0→1 transition. Without the rAF kick, the property
   // change happens in the same paint cycle as the initial set and the transition is
-  // skipped — that was the intermittent "label sometimes missing" bug.
+  // skipped. that was the intermittent "label sometimes missing" bug.
   const genesisLabelEl = svg.querySelector('text.genesis-label');
   const genesisSubEl = svg.querySelector('text.genesis-sublabel');
   if (genesisLabelEl) { genesisLabelEl.style.opacity = '0'; genesisLabelEl.style.transition = 'opacity 1s ease-out 0.6s'; }
@@ -2395,7 +2338,7 @@ ${AAMARK_SCRIPT}
     // Drift amplitude ramp-in: themes were at rest at end of entry. The Lissajous
     // sin/cos terms have arbitrary phase (px/py per theme), so without a ramp
     // the displacement jumps from 0 to a non-zero value on the first drift frame
-    // — the visible "jerk" between big-bang end and ambient drift. Smoothstep
+    //. the visible "jerk" between big-bang end and ambient drift. Smoothstep
     // 0→1 over DRIFT_FADE ms kills the seam.
     if (driftStartTime === null) driftStartTime = now;
     const driftFadeT = Math.min((now - driftStartTime) / DRIFT_FADE, 1);
@@ -2444,7 +2387,7 @@ ${AAMARK_SCRIPT}
   }
   requestAnimationFrame(frame);
 
-  // Signal pulses — gold/white dots traveling along paths or straight lines, fade in/out
+  // Signal pulses. gold/white dots traveling along paths or straight lines, fade in/out
   function pulseAlongLine(x1, y1, x2, y2, duration, color, radius){
     const cls = color === 'gold' ? 'signal-pulse' : 'signal-pulse-white';
     const pulse = el('circle', { cx:x1, cy:y1, r:radius || 2.4, class:cls, opacity:0 });
@@ -2499,7 +2442,7 @@ ${AAMARK_SCRIPT}
   }
   setTimeout(fireRadial, 800);
 
-  // Cadence 2: cross-edge pulse (every 0.6-1.5s) — fires along a real interlinkage
+  // Cadence 2: cross-edge pulse (every 0.6-1.5s). fires along a real interlinkage
   function fireCrossEdge(){
     if (crossEdgeRefs.length){
       const ref = crossEdgeRefs[Math.floor(Math.random() * crossEdgeRefs.length)];
@@ -2509,7 +2452,7 @@ ${AAMARK_SCRIPT}
   }
   setTimeout(fireCrossEdge, 1200);
 
-  // Cadence 3: tension chord pulse (every 2.4-5s) — bigger, gold, big-event signals
+  // Cadence 3: tension chord pulse (every 2.4-5s). bigger, gold, big-event signals
   function fireTension(){
     const tensions = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'tension-with');
     if (tensions.length){
@@ -2520,7 +2463,7 @@ ${AAMARK_SCRIPT}
   }
   setTimeout(fireTension, 2700);
 
-  // Cadence 4: supersedes/refines pulse (every 1.5-3.2s) — narrative arc signals
+  // Cadence 4: supersedes/refines pulse (every 1.5-3.2s). narrative arc signals
   function fireNarrative(){
     const narr = crossEdgeRefs.filter(r => {
       const rel = r.path.getAttribute('data-rel');
@@ -2534,7 +2477,7 @@ ${AAMARK_SCRIPT}
   }
   setTimeout(fireNarrative, 1900);
 
-  // Cadence 5: builds_on lineage pulse (every 1.0-2.0s) — project chain firing
+  // Cadence 5: builds_on lineage pulse (every 1.0-2.0s). project chain firing
   function fireLineage(){
     const lin = crossEdgeRefs.filter(r => r.path.getAttribute('data-rel') === 'builds_on');
     if (lin.length){
@@ -2713,7 +2656,7 @@ ${AAMARK_SCRIPT}
   // === CP-7: layered visibility on hover/focus ===
   // Hovered body = theme node itself. Cross-edge highlit iff theme node is endpoint
   // (theme↔theme tensions, theme↔belief in other clusters, theme↔genesis). Belief↔belief
-  // chords stay dimmed — they aren't this theme's connections, even if one belief lives
+  // chords stay dimmed. they aren't this theme's connections, even if one belief lives
   // in this theme's wedge. Subtle dotted style (.cross-edge.highlit). Spokes from theme
   // to its own children are revealed in parallel via spokeRefs (see theme-spokes block).
   function highlightTheme(themeId){
@@ -2767,7 +2710,7 @@ ${AAMARK_SCRIPT}
   const tmp = `${out}.tmp`;
   writeFileSync(tmp, html);
   renameSync(tmp, out);
-  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-7 a11y + layered visibility — C-graph COMPLETE]`);
+  console.log(`[build-wiki] generated graph -> wiki/graph/index.html (${html.length} bytes) [CP-7 a11y + layered visibility. C-graph COMPLETE]`);
   okCount++;
 }
 

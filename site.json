@@ -15,7 +15,7 @@
     {
       "slug": "lab",
       "path": "/lab",
-      "title": "Lab — projects index",
+      "title": "Lab. Projects index",
       "type": "page"
     },
     {
@@ -45,7 +45,7 @@
     {
       "slug": "resume",
       "path": "/resume",
-      "title": "Resume — dark editorial",
+      "title": "Resume. Dark editorial",
       "type": "page"
     },
     {
@@ -63,7 +63,7 @@
     {
       "slug": "enter",
       "path": "/enter",
-      "title": "Immersive AI terminal — agent.agam",
+      "title": "Immersive AI terminal. agent.agam",
       "type": "page"
     },
     {
@@ -79,13 +79,13 @@
     "home": {
       "slug": "wiki-home",
       "path": "/wiki/",
-      "title": "second-brain wiki — theme grid + timeline",
+      "title": "second-brain wiki. Theme grid + timeline",
       "type": "wiki-index"
     },
     "quotes": {
       "slug": "wiki-quotes",
       "path": "/wiki/quotes/",
-      "title": "Quote library — signature lines",
+      "title": "Operator aphorisms. Signature lines",
       "type": "wiki-meta"
     },
     "graph": {
@@ -103,14 +103,14 @@
     "beliefs_index": {
       "slug": "wiki-beliefs",
       "path": "/wiki/beliefs/",
-      "title": "Beliefs index — 19 Tier-1 beliefs grouped by theme",
+      "title": "Principles index. 19 Tier-1 operating principles grouped by theme",
       "type": "wiki-meta"
     },
     "themes": [
       {
         "slug": "root.substance-over-hype",
         "path": "/wiki/root.substance-over-hype/",
-        "title": "Substance over hype — the root disposition",
+        "title": "Substance over hype. The root disposition",
         "tier": "root",
         "type": "wiki-theme"
       },
@@ -124,7 +124,7 @@
       {
         "slug": "voice-ai-craft",
         "path": "/wiki/voice-ai-craft/",
-        "title": "Voice AI craft — cost, latency, scale",
+        "title": "Voice AI craft. Cost, latency, scale",
         "tier": "theme",
         "type": "wiki-theme"
       },
@@ -138,7 +138,7 @@
       {
         "slug": "pm-taste",
         "path": "/wiki/pm-taste/",
-        "title": "PM taste — craft, metaphors, what a PM actually does",
+        "title": "PM taste. Craft, metaphors, what a PM actually does",
         "tier": "theme",
         "type": "wiki-theme"
       },
@@ -152,42 +152,42 @@
       {
         "slug": "enterprise-ai-reality",
         "path": "/wiki/enterprise-ai-reality/",
-        "title": "Enterprise AI reality — ships vs demos",
+        "title": "Enterprise AI reality. Ships vs demos",
         "tier": "theme",
         "type": "wiki-theme"
       },
       {
         "slug": "second-brain",
         "path": "/wiki/second-brain/",
-        "title": "Second brain — structured knowledge for agents",
+        "title": "Second brain. structured knowledge for agents",
         "tier": "theme",
         "type": "wiki-theme"
       },
       {
         "slug": "spec-first-taste",
         "path": "/wiki/spec-first-taste/",
-        "title": "Spec first, taste always — the builder trilogy",
+        "title": "Spec first, taste always. the builder trilogy",
         "tier": "theme",
         "type": "wiki-theme"
       },
       {
         "slug": "career-reflection",
         "path": "/wiki/career-reflection/",
-        "title": "Career reflection — IC path, learning, market lift",
+        "title": "Career reflection. IC path, learning, market lift",
         "tier": "theme",
         "type": "wiki-theme"
       },
       {
         "slug": "linkedin-as-instrument",
         "path": "/wiki/linkedin-as-instrument/",
-        "title": "LinkedIn as instrument — the meta-platform game",
+        "title": "LinkedIn as instrument. the meta-platform game",
         "tier": "theme",
         "type": "wiki-theme"
       },
       {
         "slug": "personal-projects-tinkering",
         "path": "/wiki/personal-projects-tinkering/",
-        "title": "Personal projects — ship it or it doesn't exist",
+        "title": "Personal projects. ship it or it doesn't exist",
         "tier": "theme",
         "type": "wiki-theme"
       }
@@ -215,7 +215,7 @@
     {
       "slug": "shararat-code",
       "url": "https://github.com/agamarora/shararat-ai",
-      "title": "Shararat — voice AI source on GitHub",
+      "title": "Shararat. voice AI source on GitHub",
       "icon": "fa-github"
     }
   ],

@@ -172,51 +172,8 @@
   .md-table td{color:var(--text);opacity:0.88;}
   .md-table tr:last-child td{border-bottom:0;}
 
-  .theme-meta{font-family:var(--mono);font-size:0.78rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);}
-  .theme-meta .tier{color:var(--accent);}
-
   /* Page-purpose hook: one-line "what is this for?" rendered directly under h1. */
   .page-purpose{font-family:var(--sans);font-size:1.05rem;line-height:1.55;color:var(--text-dim);font-style:italic;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-7);padding-left:var(--space-5);border-left:2px solid var(--accent-dim);max-width:640px;}
-
-  /* Belief chip strip: graph-position metadata under h1. Desktop = single row with separator dots, mobile = each group stacks vertically with label-above-chips. */
-  .belief-chips{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-5);align-items:baseline;font-family:var(--mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-5));margin-bottom:var(--space-5);}
-  .belief-chips .group{display:inline-flex;align-items:baseline;gap:var(--space-3);flex-wrap:wrap;}
-  .belief-chips .group-label{color:var(--accent);text-transform:uppercase;font-size:0.7rem;letter-spacing:0.08em;font-weight:500;white-space:nowrap;}
-  .belief-chips .chip{color:var(--text);text-decoration:none;border-bottom:1px dashed var(--border-hover);padding-bottom:1px;transition:color 0.2s,border-color 0.2s;}
-  .belief-chips .chip:hover{color:var(--accent);border-color:var(--accent);}
-  .belief-chips .chip.dead{color:var(--text-dim);opacity:0.65;border-bottom:1px dotted var(--border);cursor:help;}
-  .belief-chips .sep-dot{opacity:0.45;}
-  @media (max-width: 720px) {
-    .belief-chips{flex-direction:column;align-items:flex-start;gap:var(--space-4);}
-    .belief-chips .group{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);width:100%;}
-    .belief-chips .group-label{display:block;margin-bottom:0;font-size:0.66rem;}
-    .belief-chips .group .chip,.belief-chips .group span:not(.group-label){display:inline-block;margin-right:var(--space-3);margin-bottom:var(--space-2);}
-    .belief-chips .sep-dot{display:none;}
-  }
-
-  /* Belief tag strip: applies-to domain tags + confidence marker. Second row under chip strip. */
-  .belief-tags{display:flex;flex-wrap:wrap;gap:var(--space-3) var(--space-4);align-items:center;font-family:var(--mono);font-size:0.7rem;color:var(--text-dim);letter-spacing:0.04em;margin-top:calc(-1 * var(--space-3));margin-bottom:var(--space-7);}
-  .belief-tags .group-label{color:var(--accent);text-transform:uppercase;font-size:0.66rem;letter-spacing:0.08em;font-weight:500;white-space:nowrap;}
-  .belief-tags .tag{display:inline-block;padding:2px 8px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-dim);font-size:0.7rem;white-space:nowrap;}
-  .belief-tags .confidence{margin-left:auto;display:inline-flex;align-items:center;gap:var(--space-3);}
-  .belief-tags .confidence .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
-  .belief-tags .confidence.settled .dot{background:var(--accent);}
-  .belief-tags .confidence.evolving .dot{background:var(--text-dim);}
-  .belief-tags .confidence.contested .dot{background:#a23b3b;}
-  @media (max-width: 720px) {
-    .belief-tags{flex-direction:column;align-items:flex-start;gap:var(--space-3);}
-    .belief-tags .group-label{display:block;margin-bottom:var(--space-2);}
-    .belief-tags .confidence{margin-left:0;margin-top:var(--space-2);}
-  }
-
-  /* TL;DR quotable assertion: agent-grabbable single-line quote at top of body. */
-  .belief-tldr{margin:0 0 var(--space-7) 0;padding:var(--space-5) var(--space-6);background:linear-gradient(90deg, var(--accent-dim), transparent 70%);border-left:3px solid var(--accent);border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
-  .belief-tldr .label{font-family:var(--mono);font-size:0.7rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:500;display:block;margin-bottom:var(--space-3);}
-  .belief-tldr .quote{font-family:var(--sans);font-size:1.15rem;line-height:1.5;color:var(--text);font-weight:500;margin:0;}
-  @media (max-width: 720px) {
-    .belief-tldr{padding:var(--space-4) var(--space-5);}
-    .belief-tldr .quote{font-size:1.05rem;line-height:1.45;}
-  }
 
   /* Related cross-links footer: rendered above theme-nav. */
   .related-links{margin-top:var(--space-9);padding-top:var(--space-6);border-top:1px solid var(--border);}
@@ -237,20 +194,6 @@
   /* Blockquotes (used heavily on /wiki/quotes/). */
   article blockquote { border-left: 3px solid var(--accent-dim); padding: var(--space-3) var(--space-5); margin: var(--space-5) 0; background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1rem; line-height: 1.6; color: var(--text); opacity: 0.92; }
   article blockquote strong { color: var(--accent); }
-
-  /* Collapsible Evidence block - kept for agents + research, hidden by default for humans. */
-  details.evidence-block { margin: var(--space-6) 0; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0; }
-  details.evidence-block > summary { font-family: var(--mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; padding: var(--space-4) var(--space-5); cursor: pointer; list-style: none; user-select: none; }
-  details.evidence-block > summary::-webkit-details-marker { display: none; }
-  details.evidence-block > summary::before { content: '+ '; color: var(--accent); display: inline-block; width: 1em; transition: transform 0.2s; }
-  details.evidence-block[open] > summary::before { content: '- '; }
-  details.evidence-block > summary:hover { color: var(--text); }
-  details.evidence-block > * { padding: 0 var(--space-5); }
-  details.evidence-block > *:last-child { padding-bottom: var(--space-4); }
-  details.evidence-block .md-table-wrap { margin: var(--space-4) var(--space-5); border: 1px solid var(--border); }
-  details.evidence-block ul { margin: var(--space-4) var(--space-5); padding-left: var(--space-5); }
-  details.evidence-block a.evidence-link { color: var(--text-dim); font-family: var(--mono); font-size: 0.74rem; text-decoration: none; border-bottom: 1px dotted var(--border); transition: color 0.2s, border-color 0.2s; word-break: break-all; }
-  details.evidence-block a.evidence-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
 </style>
 </head>
 <body>
