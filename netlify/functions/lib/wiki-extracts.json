@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "generated_at": "2026-05-04T10:56:26.731Z",
+    "generated_at": "2026-05-04T11:33:51.680Z",
     "theme_count": 12,
     "belief_count": 19,
-    "total_chars": 86147,
-    "theme_chars": 75063,
-    "belief_chars": 11084
+    "total_chars": 84363,
+    "theme_chars": 73278,
+    "belief_chars": 11085
   },
   "themes": {
     "root.substance-over-hype": {
@@ -18,7 +18,7 @@
         },
         {
           "heading": "Why this is the root",
-          "text": "Every theme in the knowledge graph applies a version of this procedure to a specific domain. Agent-first applies it to AI architecture: agents as substrate, not chatbots with UX skins on top. Enterprise AI reality applies it to deployment: demo versus production as the real test. The PM taste theme applies it at the PRD level: anti-customization is the same disposition executed at the product decision layer. Breadth as differentiation applies it to career strategy: Human-GPT integration as the failure mode of breadth without a real substrate underneath.\nThis page does not apply the filter. It names the filter.\nThe eight-year through-line is the credential. The disposition was enforced inside categories (blockchain while running a blockchain startup) not just from outside them. Operator discipline at B2B scale requires the same move: evaluate the substrate, not the label. The label rotates every eighteen months. The substrate evaluation procedure does not."
+          "text": "Every theme in the knowledge graph applies a version of this procedure to a specific domain. Agent-first applies it to AI architecture: agents as substrate, not chatbots with UX skins on top. Enterprise AI reality applies it to deployment: demo versus production as the real test. The PM taste theme applies it at the PRD level: anti-customization is the same disposition executed at the product decision layer. Breadth as differentiation applies it to career strategy: Human-GPT integration as the failure mode of breadth without a real substrate underneath.\nThe eight-year through-line is the credential. The disposition was enforced inside categories (blockchain while running a blockchain startup) not just from outside them. Operator discipline at B2B scale requires the same move: evaluate the substrate, not the label. The label rotates every eighteen months. The substrate evaluation procedure does not."
         },
         {
           "heading": "Bottom line",
@@ -184,7 +184,7 @@
         },
         {
           "heading": "Eight years, not eight weeks",
-          "text": "The 2026-04-23 public launch was not a new idea. It was the current substrate of an eight-year practice.\n2018: manual self-observation. A gaming retrospection post on the co-founded casual platform V2 Games named four behavioral patterns extracted through deliberate observation. No apparatus yet. The cognitive seed: self-observable patterns as a structured insight source. Written while running a company, under financial exposure, which distinguishes it from external analysis.\n2020: first externalization. Time tracking via Toggl expanded from work hours to personal activities. The closing line of that post is still the correct framing in 2026: \"it is not the tool, it is the habit of being mindful with time.\" The substrate changed six times over the following years. The practice did not.\n2023: LLM as cognitive extension. Six weeks after ChatGPT entered public discourse, the canonical note-structuring use case was documented: \"my notes have never been so actionable thanks to ChatGPT's help.\" The second-brain seed. The critical gap: context still died when the window closed. Every session started from zero. A capable co-processor with no persistent memory is a degraded form of the actual capability.\n2024: stack hardened. Ollama running locally, ChatGPT Pro, GitHub Copilot, custom GPT wrappers shaped around active curricula. The substrate kept upgrading. The practice stayed stable. The gap remained: no cross-session compounding.\nDecember 2025: private build begins. The second-brain in its current form went into private use four months before the public launch. The practice had already become the primary interface for Claude before the announcement post went live. Shipped internally; iterated; confirmed the architecture worked before publishing it.\nApril 23, 2026: canonical launch. Paste-prompt, setup guide, public artifact. \"Plain markdown. Git. Open source. MIT. Free forever.\" Eight years of practice resolved into a publishable architecture."
+          "text": "The 2026-04-23 public launch was not a new idea. It was the current substrate of an eight-year practice.\nSelf-instrumentation started at V2 Games in 2018 with a gaming retrospective naming behavioral patterns: no apparatus, just the reflex to look inward and write what was observed. Toggl expanded from work hours to personal time in 2020; six weeks after ChatGPT entered public discourse in 2023, LLM-as-cognitive-extension was already documented, but context still died when the chat window closed. Four months before the April 2026 public launch, the architecture went into private use, was iterated, and confirmed to work. Eight years from seed to substrate; the span is the proof of practice, not a timeline of milestones."
         },
         {
           "heading": "Why prior attempts failed",
@@ -196,7 +196,7 @@
         },
         {
           "heading": "Bottom line",
-          "text": "The second-brain architecture compresses the gap between what an AI session can theoretically do and what it actually delivers across repeated use. Sessions that inherit structured context from prior sessions outperform cold-start sessions on problem framing, continuity, and precision. The 4-6 week to 1-2 week delivery cadence compression achieved in the MCP-first re-architecture at AIonOS was the same structural move applied at the platform level: agents reading from a structured, persistent context rather than reconstructing state on every call. The personal second-brain operationalizes the same principle at the practitioner level. The architecture is not novel. The discipline of building and maintaining it is."
+          "text": "The second-brain architecture compresses the gap between what an AI session can theoretically do and what it actually delivers across repeated use. Sessions that inherit structured context from prior sessions outperform cold-start sessions on problem framing, continuity, and precision. The 4-6 week to 1-2 week delivery cadence compression achieved in the MCP-first re-architecture at AIonOS was the same structural move applied at the platform level: agents reading from a structured, persistent context rather than reconstructing state on every call. The personal second-brain operationalizes the same principle at the practitioner level. The architecture is not novel; it was shipped as plain markdown, git-versioned, MIT-licensed, on April 23, 2026. The discipline of building and maintaining it is."
         }
       ]
     },
@@ -218,11 +218,11 @@
         },
         {
           "heading": "Design as a non-designer",
-          "text": "AI design tools do not produce taste. They produce slop, polished. Stitch, Claude design, every variant has the same failure mode: generates a layout in seconds, cannot hit locked tokens. Wrong fonts, wrong colors, approximate everything. The tool is not the constraint. The operator's discrimination is.\nWhat gets enforced before AI writes a line\nEvery solo-PM build that ships at quality enforces a frozen design spec before the model is invoked. The non-negotiables:\nStudy the operators who shipped at scale. Dieter Rams, Vignelli, Ive, the Apple HIG, the Material Design source. Form an opinion. Without an opinion, every AI output reads as plausible default, which is to say indistinguishable from every other shipped product that month. Freeze the tokens. Color palette, typography stack with type scale and line-heights, spacing primitives, component states (hover, focus, disabled, error), motion vocabulary, breakpoint behavior. Locked artifacts before the model is invoked. The spec is the input contract; the model is the amplifier. Encode the anti-patterns. Document what to refuse: drop-shadows on cards, gradient noise, rounded corners on data tables, modal abuse, decorative motion. The refusal list is the spec's load-bearing half. Without it, the model defaults to the most common training-set output, which is to say the most common 2024 SaaS template.\nThis site shipped that way. Multiple weekends architecting the spec: aesthetic, type stack, color tokens for both palettes, spacing system, component states, motion vocabulary, voice rules, anti-patterns before Claude wrote a single line of code. The moodboard at agamarora.com/moodboard is the artifact.\nBottom line\nDesign discipline upstream of the model is the unit-economics lever for the solo PM shipping AI products. The operator architects the system; the model executes against it. Skip the spec and the velocity multiplier inverts: every iteration drifts further from the locked vision, every fix surfaces three regressions, the artifact decays toward training-set median. Spec-first design enforces the same axiom as Spec over Sprint at the visual layer. The B2B PM who survives the next product cycle is the one who refuses to ship slop and treats the frozen spec as a hard constraint on every AI-generated artifact."
+          "text": "AI design tools do not produce taste. They produce slop, polished. Stitch, Claude design, every variant has the same failure mode: generates a layout in seconds, cannot hit locked tokens. Wrong fonts, wrong colors, approximate everything. The tool is not the constraint. The operator's discrimination is.\nWhat gets enforced before AI writes a line\nEvery solo-PM build that ships at quality enforces a frozen design spec before the model is invoked. The non-negotiables:\nStudy the operators who shipped at scale. Dieter Rams, Vignelli, Ive, the Apple HIG, the Material Design source. Form an opinion. Without an opinion, every AI output reads as plausible default, which is to say indistinguishable from every other shipped product that month. Freeze the tokens. Color palette, typography stack with type scale and line-heights, spacing primitives, component states (hover, focus, disabled, error), motion vocabulary, breakpoint behavior. Locked artifacts before the model is invoked. The spec is the input contract; the model is the amplifier. Encode the anti-patterns. Document what to refuse: drop-shadows on cards, gradient noise, rounded corners on data tables, modal abuse, decorative motion. The refusal list is the spec's load-bearing half. Without it, the model defaults to the most common training-set output, which is to say the most common 2024 SaaS template.\nThis site shipped that way. Multiple weekends architecting the spec: aesthetic, type stack, color tokens for both palettes, spacing system, component states, motion vocabulary, voice rules, anti-patterns before Claude wrote a single line of code. The moodboard at agamarora.com/moodboard is the artifact."
         },
         {
           "heading": "Bottom line",
-          "text": "The trilogy is a single economic argument restated at three levels. At the process level: preparation beats iteration when iteration is free. At the craft level: discrimination is now the scarce skill, not execution velocity. At the tooling level: context curation is a higher-leverage investment than prompt engineering. The PM who enforces all three upstream compresses delivery cycles, ships artifacts that match the locked vision, and avoids the rework spiral that kills velocity inside enterprise delivery schedules. The PM who skips them ships fast in the wrong direction, then pays the rework tax in the same sprint where the deadline moved."
+          "text": "The trilogy is a single economic argument restated at three levels. At the process level: preparation beats iteration when iteration is free. At the craft level: discrimination is now the scarce skill, not execution velocity. At the tooling level: context curation is a higher-leverage investment than prompt engineering. The PM who enforces all three upstream compresses delivery cycles, ships artifacts that match the locked vision, and avoids the rework spiral that kills velocity inside enterprise delivery schedules. The PM who skips them ships fast in the wrong direction, then pays the rework tax in the same sprint where the deadline moved. The frozen spec is the hard constraint on every AI-generated artifact."
         }
       ]
     },
@@ -313,10 +313,10 @@
       "card_desc": "The serving lens. The architectural standard for B2B AI…"
     },
     "ai-pm-skillset-table-stakes": {
-      "title": "AI Fluency Is the Buy-In, Not the Pitch. The 2026 Enterprise PM Floor.",
+      "title": "AI fluency is the buy-in, not the pitch. The 2026 enterprise PM floor.",
       "tldr": "",
-      "extract": "AI Fluency Is the Buy-In, Not the Pitch. The 2026 Enterprise PM Floor.\n\nThe three components of the 2026 floor: 1. Applied fluency, not studied familiarity\nBeing technical is not about knowing a technology. It is about using one. A PM who has read extensively about LLMs but has not shipped a prompt to real users, hit an API…\n\nThe hiring committee signal in 2026: The 2026 enterprise PM hiring bar at AWS, Stripe, Databricks, and equivalent tier-one employers has internalized AI fluency as table stakes. Candidates who do not demonstrate daily operational use of AI tools are scre…",
-      "card_desc": "AI Fluency Is the Buy-In, Not the Pitch. The 2026…"
+      "extract": "AI fluency is the buy-in, not the pitch. The 2026 enterprise PM floor.\n\nThe three components of the 2026 floor: 1. Applied fluency, not studied familiarity\nBeing technical is not about knowing a technology. It is about using one. A PM who has read extensively about LLMs but has not shipped a prompt to real users, hit an API…\n\nThe hiring committee signal in 2026: The 2026 enterprise PM hiring bar at AWS, Stripe, Databricks, and equivalent tier-one employers has internalized AI fluency as table stakes. Candidates who do not demonstrate daily operational use of AI tools are scre…",
+      "card_desc": "AI fluency is the buy-in, not the pitch. The 2026…"
     },
     "anti-customization": {
       "title": "Anti-customization. The PRD discipline that protects enterprise sales velocity.",
@@ -325,28 +325,28 @@
       "card_desc": "Anti-customization. The PRD discipline that protects…"
     },
     "breadth-as-differentiation": {
-      "title": "Cross-Domain Range as Competitive Leverage. Why Boundary Problems Need Breadth.",
+      "title": "Cross-domain range as competitive leverage. Why boundary problems need breadth.",
       "tldr": "",
-      "extract": "Cross-Domain Range as Competitive Leverage. Why Boundary Problems Need Breadth.\n\nWhy boundary problems require range: Enterprise product decisions at scale are rarely contained within a single domain. The decision to route AI inference through a model-cascade architecture instead of a single flagship model is simultaneously a un…\n\nThe T-shape as the positioning standard: Breadth without a depth-axis is a resume. The T-shape is the positioning standard: lead with the breadth (the range of domains operated in and the speed that range creates), then immediately name the depth an…",
-      "card_desc": "Cross-Domain Range as Competitive Leverage. Why Boundary…"
+      "extract": "Cross-domain range as competitive leverage. Why boundary problems need breadth.\n\nWhy boundary problems require range: Enterprise product decisions at scale are rarely contained within a single domain. The decision to route AI inference through a model-cascade architecture instead of a single flagship model is simultaneously a un…\n\nThe T-shape as the positioning standard: Breadth without a depth-axis is a resume. The T-shape is the positioning standard: lead with the breadth (the range of domains operated in and the speed that range creates), then immediately name the depth an…",
+      "card_desc": "Cross-domain range as competitive leverage. Why boundary…"
     },
     "breadth-needs-depth": {
-      "title": "Breadth Without Depth Is Human-GPT. Pick a Niche and Invest.",
+      "title": "Breadth without depth is human-GPT. Pick a niche and invest.",
       "tldr": "",
-      "extract": "Breadth Without Depth Is Human-GPT. Pick a Niche and Invest.\n\nThe depth-axis as differentiation gate: At the enterprise hiring level, the depth-axis question is explicit. Hiring committees at AWS, Stripe, and Databricks are not hiring general-purpose PMs. They are hiring PMs who can operate across domains and hold a spe…\n\nThe depth-axis is a free variable. The choice is not.: Depth does not need to be technical. The axis can go as humanward as EQ: if you know how to use AI you will be efficient, but if you know how to connect with humans you will be loved. That is not a consol…",
-      "card_desc": "Breadth Without Depth Is Human-GPT. Pick a Niche and…"
+      "extract": "Breadth without depth is human-GPT. Pick a niche and invest.\n\nThe depth-axis as differentiation gate: At the enterprise hiring level, the depth-axis question is explicit. Hiring committees at AWS, Stripe, and Databricks are not hiring general-purpose PMs. They are hiring PMs who can operate across domains and hold a spe…\n\nThe depth-axis is a free variable. The choice is not.: Depth does not need to be technical. The axis can go as humanward as EQ: if you know how to use AI you will be efficient, but if you know how to connect with humans you will be loved. That is not a consol…",
+      "card_desc": "Breadth without depth is human-GPT. Pick a niche and…"
     },
     "context-over-prompt": {
-      "title": "Context is the Lever. Prompt is the Seam.",
+      "title": "Context is the lever. Prompt is the seam.",
       "tldr": "",
-      "extract": "Context is the Lever. Prompt is the Seam.\n\nWhy the seam stopped mattering: User-facing prompt-as-skill is dead. This is a layer-specific claim, not a blanket one.\nEngineering-layer prompts are alive and load-bearing. System messages, tool-routing instructions, few-shot exemplars, output-parsing constraints: th…\n\nThe three components of production context: 1. Retrieval architecture\nRetrieval-Augmented Generation is where the context investment pays in measurable production terms. RAG architecture decisions set the cost-per-query floor, the answer-quality ceiling, and the laten…",
-      "card_desc": "Context is the Lever. Prompt is the Seam.\n\nWhy the seam…"
+      "extract": "Context is the lever. Prompt is the seam.\n\nWhy the seam stopped mattering: User-facing prompt-as-skill is dead. This is a layer-specific claim, not a blanket one.\nEngineering-layer prompts are alive and load-bearing. System messages, tool-routing instructions, few-shot exemplars, output-parsing constraints: th…\n\nThe three components of production context: 1. Retrieval architecture\nRetrieval-Augmented Generation is where the context investment pays in measurable production terms. RAG architecture decisions set the cost-per-query floor, the answer-quality ceiling, and the laten…",
+      "card_desc": "Context is the lever. Prompt is the seam.\n\nWhy the seam…"
     },
     "enterprise-ai-production-reality": {
-      "title": "Demos Are Not Deployments. The 80% Production Gap.",
+      "title": "Demos are not deployments. The 80% production gap.",
       "tldr": "",
-      "extract": "Demos Are Not Deployments. The 80% Production Gap.\n\nWhere the 80% fail: Non-functional requirements, not features\nEnterprise AI procurement is not a feature evaluation. It is an NFR evaluation wearing a feature demo. The buying committee clears the demo in thirty minutes. They then spend six to twelve weeks on late…\n\nThe tools-behind-the-voice problem: At AIonOS, the production architecture that processes 4M+ calls per year is not a voice model. The voice model is the interface layer. The production system is the orchestration layer below it: routing logic, context injection,…",
-      "card_desc": "Demos Are Not Deployments. The 80% Production Gap.\n\nWhere…"
+      "extract": "Demos are not deployments. The 80% production gap.\n\nWhere the 80% fail: Non-functional requirements, not features\nEnterprise AI procurement is not a feature evaluation. It is an NFR evaluation wearing a feature demo. The buying committee clears the demo in thirty minutes. They then spend six to twelve weeks on late…\n\nThe tools-behind-the-voice problem: At AIonOS, the production architecture that processes 4M+ calls per year is not a voice model. The voice model is the interface layer. The production system is the orchestration layer below it: routing logic, context injection,…",
+      "card_desc": "Demos are not deployments. The 80% production gap.\n\nWhere…"
     },
     "help-market-flourish": {
       "title": "Help the market flourish. Expand the denominator before competing for share.",
@@ -375,14 +375,14 @@
     "llm-as-primary-daily-tool": {
       "title": "LLM-native workflow. The 2026 B2B PM hiring bar.",
       "tldr": "",
-      "extract": "LLM-native workflow. The 2026 B2B PM hiring bar.\n\nThe multi-substrate stack: Vendor dependency is an operational risk. The production configuration: at least one cloud primary and one local fallback, already warm. When the primary goes down, the fallback is ready without ceremony. Which provider serves the session…\n\nThe build-partner shift: LLM-as-search-engine is the 2023 pattern. LLM-as-build-partner is 2026. The shift changes what context quality means. A search query tolerates a thin context window. A build session that runs code generation, specification review, and data…",
+      "extract": "LLM-native workflow. The 2026 B2B PM hiring bar.\n\nThe multi-substrate stack: Multi-model is now the floor.\nVendor dependency is an operational risk. The production configuration: at least one cloud primary and one local fallback, already warm. When the primary goes down, the fallback is ready without ceremony. Whi…\n\nThe build-partner shift: LLM-as-search is dead.\nLLM-as-search-engine is the 2023 pattern. LLM-as-build-partner is 2026. The shift changes what context quality means. A search query tolerates a thin context window. A build session that runs code generation, specific…",
       "card_desc": "LLM-native workflow. The 2026 B2B PM hiring bar.\n\nThe…"
     },
     "pm-is-99-should-we-1-can-we": {
-      "title": "PM Is a Discrimination Function. 99 Refusals to Earn 1 Disruption.",
+      "title": "PM is a discrimination function. 99 refusals to earn 1 disruption.",
       "tldr": "",
-      "extract": "PM Is a Discrimination Function. 99 Refusals to Earn 1 Disruption.\n\nThe ratio as operating system: The 99/1 structure is not a productivity framework. It is the PM's operating system for every decision that arrives.\nWhen a new feature request lands, the first filter is not technical feasibility: it is strategic fit. Can th…\n\nRefusals are deliverables: Saying no is the work. The PRD that ships without the wrong feature exercised taste upstream; the sprint team never debates the question because the PM already resolved it. Scope refusals are invisible deliverables: when executed…",
-      "card_desc": "PM Is a Discrimination Function. 99 Refusals to Earn 1…"
+      "extract": "PM is a discrimination function. 99 refusals to earn 1 disruption.\n\nThe ratio as operating system: The 99/1 structure is not a productivity framework. It is the PM's operating system for every decision that arrives.\nWhen a new feature request lands, the first filter is not technical feasibility: it is strategic fit. Can th…\n\nRefusals are deliverables: Saying no is the work. The PRD that ships without the wrong feature exercised taste upstream; the sprint team never debates the question because the PM already resolved it. Scope refusals are invisible deliverables: when executed…",
+      "card_desc": "PM is a discrimination function. 99 refusals to earn 1…"
     },
     "second-brain-is-context-layer": {
       "title": "The second brain as context layer. How context-over-prompt becomes operational infrastructure.",
@@ -403,22 +403,22 @@
       "card_desc": "Ship the prototype. The argument that cannot be made with a…"
     },
     "spec-over-sprint": {
-      "title": "The Spec Is the Argument. Pre-Code Discipline at Enterprise Scale.",
+      "title": "The spec is the argument. Pre-code discipline at enterprise scale.",
       "tldr": "",
-      "extract": "The Spec Is the Argument. Pre-Code Discipline at Enterprise Scale.\n\nThe economics changed. The habits did not.: The case for fast-iteration-over-spec was built on a correct assumption: iteration was expensive. A design round took two weeks. A coding cycle took four. Under that constraint, getting something in front of user…\n\nThe PRD as scope enforcement mechanism: A PRD that does not settle scope questions creates sprint debt. Every hour of sprint-level scope debate that could have been resolved in the PRD is a tax charged to engineering velocity and team trust. The 99 \"should…",
-      "card_desc": "The Spec Is the Argument. Pre-Code Discipline at Enterprise…"
+      "extract": "The spec is the argument. Pre-code discipline at enterprise scale.\n\nThe economics changed. The habits did not.: The case for fast-iteration-over-spec was built on a correct assumption: iteration was expensive. A design round took two weeks. A coding cycle took four. Under that constraint, getting something in front of user…\n\nThe PRD as scope enforcement mechanism: A PRD that does not settle scope questions creates sprint debt. Every hour of sprint-level scope debate that could have been resolved in the PRD is a tax charged to engineering velocity and team trust. The 99 \"should…",
+      "card_desc": "The spec is the argument. Pre-code discipline at enterprise…"
     },
     "substance-over-hype": {
-      "title": "Reduce Before Evaluating. The 8-Year Operator Discipline.",
+      "title": "Reduce before evaluating. The 8-year operator discipline.",
       "tldr": "",
-      "extract": "Reduce Before Evaluating. The 8-Year Operator Discipline.\n\nThe 8-year through-line: 2018: Blockchain. The market was pricing blockchain as a transformation of trust infrastructure. The substrate test returned: database innovation first. Not wrong in kind, wrong in scope. \"No one wants to accept the biggest database in…\n\nThe substrate test as a single-move procedure: Strip the marketing label. Name the underlying mechanism. Ask whether that mechanism is new.\nThe reduction is complete when it fits in one declarative sentence. \"A database innovation first.\" \"A platform that radi…",
-      "card_desc": "Reduce Before Evaluating. The 8-Year Operator…"
+      "extract": "Reduce before evaluating. The 8-year operator discipline.\n\nThe 8-year through-line: 2018: Blockchain. The market was pricing blockchain as a transformation of trust infrastructure. The substrate test returned: database innovation first. Not wrong in kind, wrong in scope. \"No one wants to accept the biggest database in…\n\nThe substrate test as a single-move procedure: Strip the marketing label. Name the underlying mechanism. Ask whether that mechanism is new.\nThe reduction is complete when it fits in one declarative sentence. \"A database innovation first.\" \"A platform that radi…",
+      "card_desc": "Reduce before evaluating. The 8-year operator…"
     },
     "taste-over-execution": {
-      "title": "PM Taste as Risk Mitigation. The Irreducible Skill AI Cannot Replace.",
+      "title": "PM taste as risk mitigation. The irreducible skill AI cannot replace.",
       "tldr": "",
-      "extract": "PM Taste as Risk Mitigation. The Irreducible Skill AI Cannot Replace.\n\nThe 99/1 structure of PM work: Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline before it reaches the sprint. The rare \"can we do it?\" question i…\n\nThe acceptance standard before the generation tool: Execution is cheap when AI is in the loop. The trap is reaching for the generation tool before the taste standard is specified.\nA model produces a plausible output by default. Plausible is not the same…",
-      "card_desc": "PM Taste as Risk Mitigation. The Irreducible Skill AI…"
+      "extract": "PM taste as risk mitigation. The irreducible skill AI cannot replace.\n\nThe 99/1 structure of PM work: Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline before it reaches the sprint. The rare \"can we do it?\" question i…\n\nThe acceptance standard before the generation tool: Execution is cheap when AI is in the loop. The trap is reaching for the generation tool before the taste standard is specified.\nA model produces a plausible output by default. Plausible is not the same…",
+      "card_desc": "PM taste as risk mitigation. The irreducible skill AI…"
     }
   }
 }
