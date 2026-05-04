@@ -4,58 +4,248 @@
   "site": "agamarora.com",
   "owner": "Agam Arora",
   "agent": "agent.agam",
-  "description": "AI Product Manager. 12 years across analytics, gaming, logistics, beauty, AI. Agent-first thesis, substance-over-hype root disposition.",
+  "description": "AI Product Manager. Twelve years shipping product across analytics, gaming, logistics, D2C retail, and AI. Currently architecting B2B AI agents at AIonOS at production scale. Substance-over-hype root disposition.",
   "pages": [
-    { "slug": "home", "path": "/", "title": "Landing", "type": "page" },
-    { "slug": "lab", "path": "/lab", "title": "Lab — projects index", "type": "page" },
-    { "slug": "lab-second-brain", "path": "/lab/second-brain/", "title": "second-brain PRFAQ + live demo", "type": "page" },
-    { "slug": "lab-ai-resume", "path": "/lab/ai-resume/", "title": "AI Resume PRFAQ", "type": "page" },
-    { "slug": "lab-voice-ai-production", "path": "/lab/voice-ai-production/", "title": "Voice AI Production case study", "type": "page" },
-    { "slug": "lab-shararat-anchor", "path": "/lab#shararat", "title": "Shararat card on /lab", "type": "page-anchor" },
-    { "slug": "resume", "path": "/resume", "title": "Resume — dark editorial", "type": "page" },
-    { "slug": "resume-avp", "path": "/resume#avp", "title": "AVP role anchor", "type": "page-anchor" },
-    { "slug": "resume-fareye", "path": "/resume#fareye", "title": "FarEye Lead PM role anchor", "type": "page-anchor" },
-    { "slug": "enter", "path": "/enter", "title": "Immersive AI terminal — agent.agam", "type": "page" },
-    { "slug": "moodboard", "path": "/moodboard", "title": "Design system reference (orphan from main nav)", "type": "page", "robots": "noindex" }
+    {
+      "slug": "home",
+      "path": "/",
+      "title": "Landing",
+      "type": "page"
+    },
+    {
+      "slug": "lab",
+      "path": "/lab",
+      "title": "Lab — projects index",
+      "type": "page"
+    },
+    {
+      "slug": "lab-second-brain",
+      "path": "/lab/second-brain/",
+      "title": "second-brain PRFAQ + live demo",
+      "type": "page"
+    },
+    {
+      "slug": "lab-ai-resume",
+      "path": "/lab/ai-resume/",
+      "title": "AI Resume PRFAQ",
+      "type": "page"
+    },
+    {
+      "slug": "lab-voice-ai-production",
+      "path": "/lab/voice-ai-production/",
+      "title": "Voice AI Production case study",
+      "type": "page"
+    },
+    {
+      "slug": "lab-shararat-anchor",
+      "path": "/lab#shararat",
+      "title": "Shararat card on /lab",
+      "type": "page-anchor"
+    },
+    {
+      "slug": "resume",
+      "path": "/resume",
+      "title": "Resume — dark editorial",
+      "type": "page"
+    },
+    {
+      "slug": "resume-avp",
+      "path": "/resume#avp",
+      "title": "AVP role anchor",
+      "type": "page-anchor"
+    },
+    {
+      "slug": "resume-fareye",
+      "path": "/resume#fareye",
+      "title": "FarEye Lead PM role anchor",
+      "type": "page-anchor"
+    },
+    {
+      "slug": "enter",
+      "path": "/enter",
+      "title": "Immersive AI terminal — agent.agam",
+      "type": "page"
+    },
+    {
+      "slug": "moodboard",
+      "path": "/moodboard",
+      "title": "Design system reference (orphan from main nav)",
+      "type": "page",
+      "robots": "noindex"
+    },
+    }
   ],
   "wiki": {
-    "home": { "slug": "wiki-home", "path": "/wiki/", "title": "second-brain wiki — theme grid + timeline", "type": "wiki-index" },
-    "voice": { "slug": "wiki-voice", "path": "/wiki/voice/", "title": "How I write — voice calibration", "type": "wiki-meta" },
-    "quotes": { "slug": "wiki-quotes", "path": "/wiki/quotes/", "title": "Quote library — signature lines", "type": "wiki-meta" },
-    "graph": { "slug": "wiki-graph", "path": "/wiki/graph/", "title": "Knowledge graph visualization", "type": "wiki-meta" },
-    "projects_dag": { "slug": "wiki-projects", "path": "/wiki/projects/", "title": "Project + tech lineage DAG", "type": "wiki-meta" },
-    "beliefs_index": { "slug": "wiki-beliefs", "path": "/wiki/beliefs/", "title": "Beliefs index — 19 Tier-1 beliefs grouped by theme", "type": "wiki-meta" },
+    "home": {
+      "slug": "wiki-home",
+      "path": "/wiki/",
+      "title": "second-brain wiki — theme grid + timeline",
+      "type": "wiki-index"
+    },
+    "quotes": {
+      "slug": "wiki-quotes",
+      "path": "/wiki/quotes/",
+      "title": "Quote library — signature lines",
+      "type": "wiki-meta"
+    },
+    "graph": {
+      "slug": "wiki-graph",
+      "path": "/wiki/graph/",
+      "title": "Knowledge graph visualization",
+      "type": "wiki-meta"
+    },
+    "projects_dag": {
+      "slug": "wiki-projects",
+      "path": "/wiki/projects/",
+      "title": "Project + tech lineage DAG",
+      "type": "wiki-meta"
+    },
+    "beliefs_index": {
+      "slug": "wiki-beliefs",
+      "path": "/wiki/beliefs/",
+      "title": "Beliefs index — 19 Tier-1 beliefs grouped by theme",
+      "type": "wiki-meta"
+    },
     "themes": [
-      { "slug": "root.substance-over-hype", "path": "/wiki/root.substance-over-hype/", "title": "Substance over hype — the root disposition", "tier": "root", "type": "wiki-theme" },
-      { "slug": "agent-first", "path": "/wiki/agent-first/", "title": "Agent-first thesis", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "voice-ai-craft", "path": "/wiki/voice-ai-craft/", "title": "Voice AI craft — cost, latency, scale", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "breadth-as-differentiation", "path": "/wiki/breadth-as-differentiation/", "title": "Breadth as differentiation", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "pm-taste", "path": "/wiki/pm-taste/", "title": "PM taste — craft, metaphors, what a PM actually does", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "ai-pm-skillset", "path": "/wiki/ai-pm-skillset/", "title": "What AI PM actually requires", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "enterprise-ai-reality", "path": "/wiki/enterprise-ai-reality/", "title": "Enterprise AI reality — ships vs demos", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "second-brain", "path": "/wiki/second-brain/", "title": "Second brain — structured knowledge for agents", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "spec-first-taste", "path": "/wiki/spec-first-taste/", "title": "Spec first, taste always — the builder trilogy", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "career-reflection", "path": "/wiki/career-reflection/", "title": "Career reflection — IC path, learning, market lift", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "linkedin-as-instrument", "path": "/wiki/linkedin-as-instrument/", "title": "LinkedIn as instrument — the meta-platform game", "tier": "theme", "type": "wiki-theme" },
-      { "slug": "personal-projects-tinkering", "path": "/wiki/personal-projects-tinkering/", "title": "Personal projects — ship it or it doesn't exist", "tier": "theme", "type": "wiki-theme" }
+      {
+        "slug": "root.substance-over-hype",
+        "path": "/wiki/root.substance-over-hype/",
+        "title": "Substance over hype — the root disposition",
+        "tier": "root",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "agent-first",
+        "path": "/wiki/agent-first/",
+        "title": "Agent-first thesis",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "voice-ai-craft",
+        "path": "/wiki/voice-ai-craft/",
+        "title": "Voice AI craft — cost, latency, scale",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "breadth-as-differentiation",
+        "path": "/wiki/breadth-as-differentiation/",
+        "title": "Breadth as differentiation",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "pm-taste",
+        "path": "/wiki/pm-taste/",
+        "title": "PM taste — craft, metaphors, what a PM actually does",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "ai-pm-skillset",
+        "path": "/wiki/ai-pm-skillset/",
+        "title": "What AI PM actually requires",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "enterprise-ai-reality",
+        "path": "/wiki/enterprise-ai-reality/",
+        "title": "Enterprise AI reality — ships vs demos",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "second-brain",
+        "path": "/wiki/second-brain/",
+        "title": "Second brain — structured knowledge for agents",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "spec-first-taste",
+        "path": "/wiki/spec-first-taste/",
+        "title": "Spec first, taste always — the builder trilogy",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "career-reflection",
+        "path": "/wiki/career-reflection/",
+        "title": "Career reflection — IC path, learning, market lift",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "linkedin-as-instrument",
+        "path": "/wiki/linkedin-as-instrument/",
+        "title": "LinkedIn as instrument — the meta-platform game",
+        "tier": "theme",
+        "type": "wiki-theme"
+      },
+      {
+        "slug": "personal-projects-tinkering",
+        "path": "/wiki/personal-projects-tinkering/",
+        "title": "Personal projects — ship it or it doesn't exist",
+        "tier": "theme",
+        "type": "wiki-theme"
+      }
     ]
   },
-  "writing": [
-    { "slug": "writing-second-brain-live", "path": "/writing/second-brain-live/", "title": "Thesis post — second-brain live", "type": "essay", "status": "pending-launch" }
-  ],
   "externals": [
-    { "slug": "github", "url": "https://github.com/agamarora", "title": "GitHub profile", "icon": "fa-github" },
-    { "slug": "linkedin", "url": "https://linkedin.com/in/agamarora", "title": "LinkedIn", "icon": "fa-linkedin" },
-    { "slug": "youtube", "url": "https://www.youtube.com/@agam_arora", "title": "YouTube", "icon": "fa-youtube" },
-    { "slug": "shararat-code", "url": "https://github.com/agamarora/shararat-ai", "title": "Shararat — voice AI source on GitHub", "icon": "fa-github" }
+    {
+      "slug": "github",
+      "url": "https://github.com/agamarora",
+      "title": "GitHub profile",
+      "icon": "fa-github"
+    },
+    {
+      "slug": "linkedin",
+      "url": "https://linkedin.com/in/agamarora",
+      "title": "LinkedIn",
+      "icon": "fa-linkedin"
+    },
+    {
+      "slug": "youtube",
+      "url": "https://www.youtube.com/@agam_arora",
+      "title": "YouTube",
+      "icon": "fa-youtube"
+    },
+    {
+      "slug": "shararat-code",
+      "url": "https://github.com/agamarora/shararat-ai",
+      "title": "Shararat — voice AI source on GitHub",
+      "icon": "fa-github"
+    }
   ],
   "actions": [
-    { "slug": "resume-pdf", "target": "/assets/artefacts/2026_Agam%20Arora.pdf", "title": "Download resume PDF", "icon": "fa-download" },
-    { "slug": "email", "target": "mailto:agam.arora@aionos.ai", "title": "Email Agam", "icon": "fa-envelope" },
-    { "slug": "book-call", "target": "https://calendly.com/agamarora/chat", "title": "Book a 15-min chat", "icon": "fa-calendar" }
+    {
+      "slug": "resume-pdf",
+      "target": "/assets/artefacts/2026_Agam%20Arora.pdf",
+      "title": "Download resume PDF",
+      "icon": "fa-download"
+    },
+    {
+      "slug": "email",
+      "target": "mailto:agam.arora@aionos.ai",
+      "title": "Email Agam",
+      "icon": "fa-envelope"
+    },
+    {
+      "slug": "book-call",
+      "target": "https://calendly.com/agamarora/chat",
+      "title": "Book a 15-min chat",
+      "icon": "fa-calendar"
+    }
   ],
   "subagents": [
-    { "slug": "agent-lab", "target": "/enter?agent=lab", "title": "Switch to lab-specialist agent", "status": "phase-2-deferred" }
+    {
+      "slug": "agent-lab",
+      "target": "/enter?agent=lab",
+      "title": "Switch to lab-specialist agent",
+      "status": "phase-2-deferred"
+    }
   ],
   "machine_readable": {
     "kg": "/wiki/kg.json",
@@ -64,16 +254,82 @@
     "site": "/site.json"
   },
   "default_intent_routing": {
-    "voice_ai": { "priority": "lab-voice-ai-production", "supporting": ["resume-avp", "shararat-code", "wiki:voice-ai-craft"] },
-    "side_projects": { "priority": "lab", "supporting": ["lab-second-brain", "wiki:personal-projects-tinkering", "github"] },
-    "hiring": { "priority": "book-call", "supporting": ["linkedin", "email", "resume-pdf"] },
-    "credentials": { "priority": "resume", "supporting": ["resume-pdf", "linkedin", "wiki:career-reflection"] },
-    "code": { "priority": "github", "supporting": ["lab", "wiki:personal-projects-tinkering"] },
-    "product_thinking": { "priority": "wiki:pm-taste", "supporting": ["resume-avp", "wiki:spec-first-taste", "lab-second-brain"] },
-    "ai_capability": { "priority": "wiki:ai-pm-skillset", "supporting": ["lab", "wiki:breadth-as-differentiation", "github"] },
-    "philosophy": { "priority": "wiki:agent-first", "supporting": ["wiki:root.substance-over-hype", "writing-second-brain-live"] },
-    "specific_role": { "priority": "resume", "supporting": ["resume-avp", "resume-fareye", "wiki:career-reflection"] },
-    "default_greeting": { "priority": "lab", "supporting": ["resume", "book-call"] }
+    "voice_ai": {
+      "priority": "lab-voice-ai-production",
+      "supporting": [
+        "resume-avp",
+        "shararat-code",
+        "wiki:voice-ai-craft"
+      ]
+    },
+    "side_projects": {
+      "priority": "lab",
+      "supporting": [
+        "lab-second-brain",
+        "wiki:personal-projects-tinkering",
+        "github"
+      ]
+    },
+    "hiring": {
+      "priority": "book-call",
+      "supporting": [
+        "linkedin",
+        "email",
+        "resume-pdf"
+      ]
+    },
+    "credentials": {
+      "priority": "resume",
+      "supporting": [
+        "resume-pdf",
+        "linkedin",
+        "wiki:career-reflection"
+      ]
+    },
+    "code": {
+      "priority": "github",
+      "supporting": [
+        "lab",
+        "wiki:personal-projects-tinkering"
+      ]
+    },
+    "product_thinking": {
+      "priority": "wiki:pm-taste",
+      "supporting": [
+        "resume-avp",
+        "wiki:spec-first-taste",
+        "lab-second-brain"
+      ]
+    },
+    "ai_capability": {
+      "priority": "wiki:ai-pm-skillset",
+      "supporting": [
+        "lab",
+        "wiki:breadth-as-differentiation",
+        "github"
+      ]
+    },
+    "philosophy": {
+      "priority": "wiki:agent-first",
+      "supporting": [
+        "wiki:root.substance-over-hype"
+      ]
+    },
+    "specific_role": {
+      "priority": "resume",
+      "supporting": [
+        "resume-avp",
+        "resume-fareye",
+        "wiki:career-reflection"
+      ]
+    },
+    "default_greeting": {
+      "priority": "lab",
+      "supporting": [
+        "resume",
+        "book-call"
+      ]
+    }
   },
   "wiki_route_resolver": {
     "format": "wiki:<slug>",
@@ -87,19 +343,67 @@
   "agent_persona": {
     "name": "agent.agam",
     "model": "P2 Operator (first-person agent, never speaks AS Agam)",
-    "pronouns": { "I": "agent", "he/Agam": "the human" },
-    "banned_phrases": ["As an AI", "I'm a language model", "My memory banks", "as a chatbot"],
-    "banned_words": ["leveraging", "innovative", "passionate", "driven", "synergy", "cutting-edge", "robust", "empower", "unlock", "delve", "comprehensive", "game-changer", "dynamic", "proven track record", "exceptional", "significant impact", "deeply", "navigate"],
-    "execution_verb_openers": ["Ran", "Pulled", "Routed", "Composed", "Searched", "Parsed", "Matched"],
-    "voice_rules": "no em-dashes; use colons + hyphen-with-spaces; 4 voice registers per /wiki/voice/; ≤70 words typical",
-    "deflection_lines": ["Not in the file. Ask about what he's built.", "That's personal. Try a product question.", "Above this terminal's pay grade."]
+    "pronouns": {
+      "I": "agent",
+      "he/Agam": "the human"
+    },
+    "banned_phrases": [
+      "As an AI",
+      "I'm a language model",
+      "My memory banks",
+      "as a chatbot"
+    ],
+    "banned_words": [
+      "leveraging",
+      "innovative",
+      "passionate",
+      "driven",
+      "synergy",
+      "cutting-edge",
+      "robust",
+      "empower",
+      "unlock",
+      "delve",
+      "comprehensive",
+      "game-changer",
+      "dynamic",
+      "proven track record",
+      "exceptional",
+      "significant impact",
+      "deeply",
+      "navigate"
+    ],
+    "execution_verb_openers": [
+      "Ran",
+      "Pulled",
+      "Routed",
+      "Composed",
+      "Searched",
+      "Parsed",
+      "Matched"
+    ],
+    "voice_rules": "no em-dashes; use colons + hyphen-with-spaces; staccato rhythm + friction-grounded; ≤70 words typical",
+    "deflection_lines": [
+      "Not in the file. Ask about what he's built.",
+      "That's personal. Try a product question.",
+      "Above this terminal's pay grade."
+    ]
   },
   "agent_runtime": {
     "endpoint": "/.netlify/functions/groqHandler",
     "method": "POST",
-    "request_shape": { "message": "string ≤500 chars", "history": "array ≤6 turns" },
+    "request_shape": {
+      "message": "string ≤500 chars",
+      "history": "array ≤6 turns"
+    },
     "response_format": "SSE stream",
-    "sse_events": ["trace", "token", "card", "done", "error"],
+    "sse_events": [
+      "trace",
+      "token",
+      "card",
+      "done",
+      "error"
+    ],
     "card_schema": {
       "slug": "string (unique)",
       "type": "page | external | action | agent",
@@ -110,10 +414,26 @@
       "priority": "boolean (exactly 1 per response)"
     },
     "abuse_defense": {
-      "tier_0": ["UA gate (agent crawlers → static manifest)", "input validation (≤500 chars, ≤6 turns, ≤4000 history tokens)", "duplicate-query in-mem cache 60s", "injection filter"],
-      "tier_1": ["per-IP bucket 30 q/h sliding window (Upstash Redis)", "low-effort gate ≤3 words → cheap path"],
-      "tier_2": ["daily spend cap $3", "monthly spend cap $30", "per-query cost cap $0.05"],
-      "kill_switches": ["CLAUDE_DISABLED", "LLM_DISABLED", "WIKI_READ_ENABLED"]
+      "tier_0": [
+        "UA gate (agent crawlers → static manifest)",
+        "input validation (≤500 chars, ≤6 turns, ≤4000 history tokens)",
+        "duplicate-query in-mem cache 60s",
+        "injection filter"
+      ],
+      "tier_1": [
+        "per-IP bucket 30 q/h sliding window (Upstash Redis)",
+        "low-effort gate ≤3 words → cheap path"
+      ],
+      "tier_2": [
+        "daily spend cap $3",
+        "monthly spend cap $30",
+        "per-query cost cap $0.05"
+      ],
+      "kill_switches": [
+        "CLAUDE_DISABLED",
+        "LLM_DISABLED",
+        "WIKI_READ_ENABLED"
+      ]
     }
   }
 }

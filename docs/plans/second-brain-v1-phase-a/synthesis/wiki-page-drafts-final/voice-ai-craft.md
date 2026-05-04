@@ -1,88 +1,60 @@
 ---
 type: Theme
 slug: voice-ai-craft
-title: Voice AI craft  -  cost, latency, scale
-one_line: "Production voice AI is a different beast from chatbots: latency, cost, and state at 4M+ calls per year - the public surface is intentionally light."
-status: c-voice-r1-cp2
+title: "Voice AI craft. The engineering discipline behind 4M+ call production deployments."
+one_line: "Production voice AI at enterprise scale is an engineering discipline constrained by millisecond latency budgets, per-minute cost structures, and state management that demo environments never surface."
+status: c-bulldozer-r1-2026-05-04
 length_target: 800-1200
 voice_register: 4 (technical-practitioner numbered precision)
 positioning: peer_page (confirmed per E1)
-evidence_anchor: agamarora.com /lab voice-AI production case study (2025-2026)  -  public surface independent from LinkedIn corpus
+evidence_anchor: agamarora.com /lab voice-AI production case study (2025-2026)
 beliefs:
-  - belief.voice-as-enterprise-wedge (ghost belief; intentional under-share per Decision 2)
-  - belief.enterprise-ai-production-reality (cross-linked anchor)
+  - belief.voice-as-enterprise-wedge
+  - belief.enterprise-ai-production-reality
 ---
 
-# Voice AI craft  -  cost, latency, scale
+# Voice AI craft. The engineering discipline behind 4M+ call production deployments.
 
-This is one of twelve themes in the wiki. It covers what production voice AI actually requires: latency budgets in milliseconds, cost structures priced per call-minute, state management that survives mid-sentence network drops. You are likely here because the words "4M+ calls per year" or "MCP-first voice pipeline" appeared somewhere in the wiki and you want the operational shape. This page sits between [enterprise AI reality](/wiki/enterprise-ai-reality/) and [agent-first](/wiki/agent-first/) - the craft layer that connects the production philosophy to a specific domain.
+Voice AI is not a chatbot with audio on top. The engineering constraints are different in kind, not in degree. A production pipeline running 4M+ calls per year exposes three constraint classes that demo environments hide completely: a latency budget measured in milliseconds where a single component miss collapses the entire user experience, a cost structure priced per call-minute where an inefficient pipeline is a business model question not a rounding error, and state management that must survive mid-sentence interruptions, human handovers, and network failures at scale. Confuse the demo for the product and you will spend the next six months rebuilding.
 
-One thing to know before reading: the LinkedIn corpus is intentionally sparse on voice AI specifics. The page explains why, and what the public record actually contains.
+## The three constraints that separate production from demo
 
-## The craft reality
+### Latency: every component owns a slice
 
-Voice AI is not a chatbot with audio on top. The engineering constraints are different in kind, not in degree.
+Time-to-first-token is not a nice-to-have. At voice scale, TTFT is the product. A user on a live call does not wait. Every node in the pipeline, the speech recognition layer, the LLM call, the tool execution, the synthesis, carries a latency budget that sums to a total threshold that must still feel conversational. Miss the threshold and accuracy is irrelevant. The call fails regardless of model quality.
 
-A production voice pipeline carries a latency budget measured in milliseconds. A user on a call does not wait. Every component in the chain - the speech recognition, the LLM call, the tool execution, the synthesis - has to fit inside a total time-to-first-token (TTFT) threshold that still feels like a real conversation. That threshold is unforgiving. Miss it and the product fails regardless of how accurate the model is.
+The constraint is unforgiving because it is cumulative. One slow tool-call does not degrade the experience. It breaks it. Engineers who architected production voice pipelines treat latency as a hard constraint on system topology, not a metric to optimize post-launch. Component selection, hosting topology, and fallback routing are all evaluated against the latency envelope before any other criterion.
 
-Cost structure is priced per minute of call, not per token batch. At 4M+ calls per year, the difference between an expensive pipeline and an efficient one is not a rounding error. It is a business model question.
+### Cost: per-minute arithmetic at scale
 
-State management adds a third constraint. A voice call is a session with mid-sentence interruptions, human handovers, integration events, and network failures. Maintaining coherent state across that surface is an engineering problem that demo environments do not expose.
+Latency determines whether the product works. Cost determines whether the business works. Production voice AI is priced per minute of call, not per token batch. At 4M+ calls per year, a 50% reduction in cost per minute is not an engineering efficiency. It is the difference between a viable unit model and one that bleeds margin at every incremental deployment. That arithmetic was the basis for the decision to run 100% cloud LLMs rather than self-hosting.
 
-The discipline is real. The corpus is intentionally light on it.
+Self-hosting LLMs for a production voice pipeline at this scale is not a cost optimization. It is a cost increase with staffing and infrastructure overhead on top. The intuition many engineers bring from sandbox environments, that self-hosting reduces inference cost, inverts at enterprise scale. Infrastructure management cost plus reliability tail risk outweigh raw inference pricing. The inflection point where self-hosting wins is further out than demo math suggests.
 
-## Why the corpus is sparse
+### State: sessions that survive the real world
 
-The under-share here is deliberate - and worth naming directly, because the absence can look like ignorance if you do not know the reason.
+Voice calls are sessions with adversarial conditions. Mid-sentence interruptions. Human handovers. Integration events. Network failures between tool calls. A conversation that routes cleanly in a demo environment routinely breaks in production when real carrier infrastructure, real network variability, and real user behavior intersect with real tool dependencies.
 
-Publishing craft specifics from a live enterprise voice AI platform carries disclosure risk: customer data, production stack details, NPS numbers tied to specific deployments. So the LinkedIn surface is thin by design. A March 2024 passing mention. A September 2025 production-stack reply. A case study on agamarora.com/lab. That is the full public record.
-
-The agamarora.com /lab voice-AI production case study is the independent public anchor: engineering principles from the deployment, written for the personal site rather than the employer platform, with specifics calibrated to what can be named.
-
-This page names what can be named. It does not invent specifics that would require disclosing customer or platform internals.
+State management that survives this surface is an engineering problem that cannot be tested into existence during development. It requires architecting persistence, idempotency, and recovery into the pipeline from the first design document, not retrofitted after the first production incident.
 
 ## Three principles from the field
 
-The September 2025 reply to a production-stack survey (`urn:li:activity:7378427141190799360`) contains more voice-AI engineering specificity than all prior public LinkedIn output combined. Three principles come out of it directly.
+These came directly out of a 4M+ call-per-year production deployment. They generalize beyond voice.
 
-**Principle 1: Cloud-first economics at this scale.** Self-hosting LLMs for a production voice pipeline at 4M+ calls per year is not a cost optimization. It is a cost increase with staffing and infrastructure overhead on top. The decision to run 100% cloud LLMs was not a capability compromise - it was the result of working through the math. This inverts the intuition many engineers bring ("self-hosting reduces inference cost"). At enterprise scale, the infrastructure management cost and reliability tail risk outweigh raw inference pricing. The inflection point where self-hosting wins is further out than it looks from a demo environment. The plan to pivot long-term acknowledges that the calculus shifts with volume and capability maturity. It is not a permanent answer.
+**Principle 1: Cloud-first economics at enterprise scale.** The decision to run 100% cloud LLMs was not a capability compromise. It was the result of working through the math at production load. Self-hosting at this scale adds staffing, infrastructure reliability overhead, and a failure surface the team does not control. The long-term plan to re-evaluate self-hosting acknowledges that the calculus shifts with volume and capability maturity. It is not a permanent answer. It is the right answer for the current cost and reliability envelope.
 
-**Principle 2: Business KPI before tech KPI.** The north star metric is the percentage of cases handled with neutral-to-positive customer NPS. Not TTFT. Not cost per minute. The ordering matters: business metric first, tech KPI second. TTFT and blended cost per minute are real constraints with real thresholds - they exist to enable the business outcome, not to replace it. An engineering team that optimizes TTFT without knowing what case-handling rate constitutes a win has inverted the priority stack. The user experience degradation from misaligned priorities is immediate and audible. Literally audible - this is the domain where "it works in the demo" fails the hardest.
+**Principle 2: Business KPI before tech KPI.** The north star metric is the percentage of cases handled with neutral-to-positive customer NPS. Not TTFT. Not cost per minute. TTFT and blended cost per minute are real constraints with real thresholds. They exist to enable the business outcome. An engineering team that optimizes TTFT without knowing what case-handling rate constitutes a win has inverted the priority stack. In voice AI, the cost of misaligned priorities is immediate and audible. Literally audible: the domain where "it works in the demo" fails most visibly.
 
-**Principle 3: Abstraction layer choice is a reliability decision.** The interface was 100% MCP and APIs, 0% browser automation. That is not a constraint imposed by the platform. It is a deliberate choice about where complexity lives and who maintains it. Browser automation in a production voice pipeline adds a fragile layer: DOM changes break it, CAPTCHA handling becomes a dependency, headless browser infrastructure adds cost and failure surface. MCP as the abstraction layer keeps the tool-calling surface clean and observable. When something breaks in a voice call flow spanning multiple tool calls, you want the failure in a place you control. Browser automation is not that place. The implication generalizes beyond voice: in any agentic system at production scale, the integration layer choice is a reliability decision first.
+**Principle 3: Abstraction layer choice is a reliability decision.** The production interface was 100% MCP and APIs, 0% browser automation. That is not a constraint imposed by the platform. It is a deliberate choice about where complexity lives and who maintains it. Browser automation in a production voice pipeline introduces DOM fragility, CAPTCHA dependencies, and headless browser infrastructure as compounding failure surfaces. MCP as the abstraction layer keeps the tool-calling surface clean and observable. When something breaks in a voice call spanning multiple tool calls, the failure must be in a place the team controls and can instrument. Browser automation is not that place.
 
-## The productive paradox
+The implication generalizes across every agentic system at production scale: the integration layer choice is a reliability decision first, a capability decision second.
 
-The largest professional contribution in the corpus by volume - 4M+ calls per year, enterprise deployments, two-plus years of production work - generates almost no LinkedIn output.
+## The cost-structure reframe
 
-[LinkedIn as instrument](/wiki/linkedin-as-instrument/) holds that posting IS the thinking: writing sharpens the thought, distribution is a byproduct of the practice. Voice-ai-craft is the counterexample. Both are true at once. Posting is thinking-out-loud when the topic is safe to think out loud about. When the topic carries disclosure risk, the practice shifts to private.
+The 50% cost reduction shipped at AIonOS was not primarily a model selection outcome. It came from three architectural decisions enforced at the infrastructure layer: routing calls to the appropriate model tier based on task complexity rather than defaulting to the most capable model for every request, constraining tool-call graphs to minimize unnecessary LLM invocations, and scaling cloud infrastructure dynamically against actual call volume curves rather than peak provisioning.
 
-The 2025-09-29 reply shows the private-to-public pattern at its most concentrated: two-plus years of production work, one field-data comment when a direct question landed on a survey thread. The under-share is not a contradiction of the linkedin-as-instrument thesis. It is the constraint that defines its boundary condition.
+The lesson: cost per minute is a product architecture decision, not an infrastructure operations decision. It gets made at PRD-time, not at cloud-cost-review-time. PMs who delegate cost-structure to infrastructure teams after the architecture is locked are handing the conversation to the wrong room too late.
 
-## Where to go from here
+## Bottom line
 
-Three exits, depending on what you came for.
-
-If you want the **production AI context** - the broader field-data lens on why enterprise AI experiments fail and what the 20% that ships looks like - read [enterprise AI reality](/wiki/enterprise-ai-reality/). The 2025-09-29 voice-AI reply appears there as a worked example in the evidence section.
-
-If you want the **craft layer** that explains the MCP-first choice and why abstraction layer matters across agentic systems beyond voice - read [agent-first](/wiki/agent-first/). The "100% MCP + APIs, 0% UI" production deployment is one application of that thesis.
-
-If you want the **full public case study** with engineering principles from the actual deployment - the agamarora.com /lab voice-AI production case study is the independent evidence anchor, written for the personal site and scoped to what can be named publicly.
-
-## Evidence
-
-The corpus surface for this theme is intentionally sparse. Decision 2 (interim-taste-calls) names the under-share as deliberate. What exists:
-
-**2024-03-29 · `urn:li:activity:7179449143407386624`**
-Voice-based LLM experimentation for drafting LinkedIn Collaborative Article responses. Hobbyist context, not enterprise. Establishes voice-as-interface on the radar in early E4. No production learning carried here.
-
-**2024-07-04 · `urn:li:activity:7214487241681772545`**
-Enterprise voice AI platform role announced. Names the role ("AI Product Manager") and context. No craft specifics. Background evidence that the production voice work begins here.
-
-**2025-2026 · agamarora.com /lab voice-AI production case study**
-Public case study on the personal site: production voice AI deployment, engineering principles, independent of the LinkedIn corpus. This is the primary non-LinkedIn public surface for voice-AI craft evidence. (`project.agamarora-com-voice-ai-case-study`)
-
-**2025-09-29 · comment URN tail `7378427141190799360`**
-Production-stack reply to an agentic-production survey. The highest-density craft evidence in the corpus: cloud vs on-prem trade-off, MCP vs browser automation choice, business KPI ordering (NPS % of cases handled) before tech KPIs (blended cost per minute, TTFT). This item is the source for all three principles named in "Three principles from the field" above.
-
-Per Decision 2: voice-AI is one example of the production-reality described in `theme.enterprise-ai-reality`. The 2025-09-29 reply appears there as a worked example in the evidence section.
+Production voice AI is where enterprise AI reality is most legible. The 80% of AI experiments that do not reach production fail on exactly these constraints: latency budgets that engineering teams discover post-launch, cost structures that invert the business model at scale, state management that was never built for adversarial real-world conditions. The 4M+ call deployment validated each of these failure modes from the inside. The discipline is real: enforce the latency envelope at design time, evaluate cost arithmetic at PRD-time, constrain the abstraction layer to what the team controls and can instrument. Miss any one of these and the demo ships. The product does not.

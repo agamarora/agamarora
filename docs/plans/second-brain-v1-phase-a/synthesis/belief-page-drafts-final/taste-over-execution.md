@@ -1,8 +1,8 @@
 ---
 type: BeliefPage
 slug: taste-over-execution
-title: Taste over Execution
-one_line: "AI commoditizes execution. Taste - knowing what to build and what to refuse - is the irreducible PM skill that no model can replace."
+title: "PM taste as risk mitigation. The irreducible skill AI cannot replace."
+one_line: "AI commoditizes execution. Taste: knowing what to build, what to refuse, and what counts as done, is the PM skill that does not automate."
 quotable: "When AI can execute anything, the binding constraint is taste: knowing what to build, what to refuse, and what counts as done."
 parent_theme: spec-first-taste
 related_beliefs:
@@ -26,58 +26,45 @@ applies_to:
   - ai-pm
 confidence: settled
 tier: 1
-length_target: 400-600w
-status: c-voice-beliefs-r1-cp4-d6.1
+length_target: 600-900w
+status: c-bulldozer-r1-2026-05-04
 voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
-# Taste over Execution
+# PM taste as risk mitigation. The irreducible skill AI cannot replace.
 
-## The belief
+Building and measuring products is no longer the binding constraint. Knowing what to build, what to refuse, and what constitutes done is the work that remains after AI handles the execution layer. Writing, coding, designing, drafting PRDs: these are no longer scarce. The scarce thing is the upstream discrimination: scope judgment under ambiguity, the refusal that prevents a six-month detour, the acceptance standard that saves two rounds of remediation. That discrimination is taste. It has not been automated. The proliferation of generation tools makes it more valuable, not less.
 
-AI commoditizes execution. Writing, coding, designing, drafting PRDs - these are no longer scarce. The scarce thing is the upstream judgment: what to build, what to refuse, what constitutes done, and what to leave out of the PRD entirely. Taste is the discriminating function. It has not been automated, and the proliferation of generation tools makes it more valuable, not less.
+## The 99/1 structure of PM work
 
-## How to apply
+Product management is a discrimination function. The work is 99% selection: deciding what not to build, which direction not to take, which request to decline before it reaches the sprint. The rare "can we do it?" question is the bonus that only arrives after 99 correct "should we do it?" calls cleared the runway.
 
-1. **When starting any product decision, resolve the "should we" before the "how we."** The PM job is 99 "should we build this?" questions for every 1 "can we build this?" question. The execution question is easy to answer; the taste question is the actual work. If a sprint is debating scope, the spec failed to exercise taste upstream.
+This is not a difficulty claim. It is an identity claim: the PM role is defined by refusal and prioritization at a ratio of 99 to 1. When AI handles the execution layer cheaply, that ratio becomes more visible, not less. The PM who delegates taste to velocity signals to the organization that the role is a project coordinator. The PM who owns the 99 refusals upstream is the one whose team ships correctly at speed, with fewer late-stage surprises, lower rework cost, and cleaner SLA performance.
 
-2. **Audit the acceptance bar before reaching for a generation tool.** A model produces a plausible output by default. Plausible is not the same as right. Before prompting, name concretely what "right" looks like: the exact voice, the exact scope, the specific value. Without that standard, no taste is applied to the output - only vibes.
+At enterprise scale, taste is explicitly a risk-mitigation function. A product scope that includes aggressive customization options commits the customer to a six-month implementation engagement, an implementation partner, and hundreds of training documents before day-zero go-live. A PM who exercised taste upstream and refused that scope during PRD review prevented a customer success failure and protected the margin. A PM who deferred that call to the sprint team shipped a liability.
 
-3. **Treat scope refusal as a deliverable, not a failure.** The taste-call is: does this belong at all? Saying no is the work. The PRD that ships without the wrong feature exercised taste; the one that included it did not.
+## The acceptance standard before the generation tool
 
-4. **When a generative output disappoints, interrogate your taste standard before the tool.** Wrong voice, wrong scope, wrong prioritization in the output - these are almost always a reflection of an underspecified taste standard, not a tool failure. The tool averaged across a population; the taste call was missing.
+Execution is cheap when AI is in the loop. The trap is reaching for the generation tool before the taste standard is specified.
 
-5. **Recognize that "delight" is a taste judgment, not a feature category.** Building and measuring products is no longer the constraint. Knowing what delight looks like for this user, at this fidelity, is. No checklist produces that discrimination.
+A model produces a plausible output by default. Plausible is not the same as right. Before prompting, the PM names concretely what right looks like: the exact voice register, the exact scope boundary, the specific value proposition, the features that are deliberately excluded and why. Without that standard, no taste is applied to the output. The model averaged across a population; the taste call was not made. The result is an output that requires multiple remediation rounds to close because the acceptance bar was never specified upstream.
 
-## What this is not
+This is the same pattern at three altitudes:
+- At the PRD layer: should we build this at all?
+- At the generative tool layer: what does right look like before I generate?
+- At the demo layer: does this qualify as production-grade or is it still a POC with good lighting?
 
-- **Not "execution doesn't matter."** Execution still ships the product. The belief is about which constraint is binding: when execution is cheap, taste is the bottleneck. In environments where execution is genuinely scarce - no engineers, no runway - taste-first advice is the wrong medicine.
-- **Not "PM taste is unteachable."** The belief says taste is irreducible, not innate. The 99/1 framing and the anti-customization discipline are learnable. They require judgment under ambiguity, but that is different from being unteachable.
-- **Not a claim that taste is faster than execution.** When AI makes execution nearly free, the investment should shift to the thing that remains scarce. Taste becomes the rate-limiter; that is the only claim.
+All three require taste. None of them are answered by a faster iteration cycle. The PM who architected the acceptance standard before reaching for the generation tool and enforced the scope boundary at the PRD layer rather than the sprint retrospective is the one whose team ships correctly at speed.
 
-## Argues against
+## Scope refusal as a deliverable
 
-- "Move fast and let the market tell you what to build - taste is something you discover in iteration."
-- "Good enough shipped is better than perfect held - execution speed is the real PM discipline."
-- "AI makes taste more democratic: anyone can generate a high-quality output now, so the bar has risen for everyone equally."
+Saying no is the work. The PRD that ships without the wrong feature exercised taste; the one that included it did not. Scope refusal is an invisible deliverable: when the PM gets it right, the sprint never debates the question because it was already resolved. The engineering team ships faster. The customer does not hit a hidden implementation tax. The sales team closes without a last-minute scope negotiation.
 
-## Where to go from here
+The visibility problem is real. A PM who says no correctly is invisible because the product simply works. Hiring committees at top-tier enterprise companies evaluate this explicitly: they are looking for evidence that the candidate understood what not to build, not just what shipped. A portfolio built entirely around features shipped signals a feature-factory PM. A portfolio that includes explicit scope refusals, with the reasoning, signals a PM who understands that taste is risk mitigation.
 
-If you want the **parent theme** that holds this belief alongside its siblings, go to [spec-first-taste](/wiki/spec-first-taste/). The theme frames why the load-bearing work has migrated from doing to deciding.
+Product management was, is, and will continue to be about taste: what to build and what to leave out. AI handles writing, coding, structuring, and analysis. The 99 "should we?" questions remain irreducibly human. A PM who offloads the execution and keeps the taste is applying this correctly. A PM who offloads the taste has misunderstood the architecture of the role.
 
-If you want the **process-layer version** of the same claim - taste applied to what you write before building - go to [spec over sprint](/wiki/beliefs/spec-over-sprint/). For the **tooling-layer version** - taste applied to what you give the model - go to [context over prompt](/wiki/beliefs/context-over-prompt/).
+## Bottom line
 
-If you want the **decision pattern** taste most directly produces - refusing scope at the PRD layer rather than the sprint - go to [anti-customization](/wiki/beliefs/anti-customization/).
-
-## Evidence
-
-| Date | Entry | Post |
-|---|---|---|
-| 2021-09-22 | "Product management is a featherless hat that is omnipresent yet indistinguishable if done properly." The taste-as-invisible-infrastructure framing. | linkedin-corpus, Cluster 6 |
-| 2022-06-03 | "Product management is the grind of answering 99 questions of 'should we do it?' to get to that 1 bonus question of 'can we do it?'." 99 should-we questions = pure taste-work. | linkedin-corpus, Cluster 6 |
-| 2024-Q1 | "Building and measuring products is not difficult now. Learning to delight is the next pitstop." Execution no longer the constraint; discrimination of delight is. | linkedin-comments (Collaborative Article) |
-| 2025-12-04 | "I am extremely opinionated about adding customization to products. To the point where I feel like I've lost a hard-fought battle with myself if a PRD ends up including customization settings." | urn:li:activity:7402319253036531712 |
-| 2026-04-09 | "Spec > Sprint / Taste > Execution / Context > Prompt." Canonical trilogy crystallization. | linkedin-corpus, Cluster 16 |
-| 2026-04-23 | "Plain markdown. Git. Open source. MIT. Free forever." Four compressed taste-refusals in eight words: refused tool-trap, over-build, defensive moat, freemium tier-hell. | project.second-brain-v1 |
-| 2026-04-26 | "Product management was, is and will continue to be about taste of what to build and experience and value...we can outsource thinking and writing and coding but the taste of great product is still with product managers." | taste-pass session (B1 resolution) |
+Taste is the PM's irreducible contribution in 2026. It is also the variable that determines product velocity, rework cost, and enterprise deployment success rates. The PM who exercises taste upstream at the PRD layer eliminates sprint-level scope debates, reduces remediation cycles, and ships features that clear customer SLAs without late-stage surprises. The PM who defers taste to iteration ships faster on the first round and slower on every subsequent one. At enterprise scale, where a single scope error commits six months of implementation cost, taste is not a soft skill. It is the primary risk-mitigation mechanism.

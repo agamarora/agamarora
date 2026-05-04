@@ -9,7 +9,7 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://agamarora.com/assets/og/og-master.jpg</image:loc>
-      <image:title>Agam Arora. AI Product Manager. Engineer-PM. Builder.</image:title>
+      <image:title>Agam Arora. AI Product Manager.</image:title>
     </image:image>
   </url>
 
@@ -156,12 +156,6 @@
     <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://agamarora.com/wiki/voice/</loc>
-    <lastmod>2026-04-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://agamarora.com/wiki/quotes/</loc>

@@ -2,22 +2,40 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-03 (audited + triaged — stale entries removed, deferred items parked).
+Last updated: 2026-05-04 (Bulldozer rewrite SHIPPED Phases 0-7 on dev. Wiki rewritten as single publication. Outstanding: real-Groq UI eval before main merge + remaining surfaces (`/`, `/resume`, `/lab/*`) need Bulldozer pass).
 
 ---
 
 ## Active
 
-### `/writing/` framework — new content surface + build pipeline
-**Why:** no home today for freeform essays / POV / industry commentary. `/lab/` is product PRFAQs, `/wiki/` is curated synthesis. Adding posts pollutes wiki; staying silent blocks blog cadence. Spec'd 2026-05-03, build pending.
+### Real-Groq /enter eval (gate before main merge)
+**Why:** Phase 7 baseline (2026-05-04) ran 26/28 PASS but most synthesis answers fell back to "Service is busy" because Groq was rate-limited / key fallback during the eval window. Wire shape + retrieval + cards + traces validated; synthesis quality not validated.
 
-- [ ] `scripts/build-writing.mjs` — modeled on `scripts/build-wiki.mjs`. Source: `content/writing/<slug>.md` (YAML frontmatter: title, date, summary, tags, canonical, optional `agent_retrievable: true`).
-- [ ] Generates `/writing/<slug>/index.html` via `scripts/lib/chrome.mjs` (DRY contract enforced).
-- [ ] Generates `/writing/index.html` — auto-listed reverse-chronological landing.
-- [ ] Auto-merges entries into `sitemap.xml`, `llms.txt`, `llms-full.txt`, `site.json`.
-- [ ] Optional: emits `wiki/extracts/writing-<slug>.md` so `/enter` agent can cite (when frontmatter `agent_retrievable: true`).
-- [ ] Wire into `npm run build` after `build:wiki-extracts`.
-- [ ] Locked decisions: `~/.claude/projects/D--AA-agamarora/memory/project_writing_framework.md`.
+**Action:** with working Groq key in `.env`, re-run `npm run eval:e2e`. Manually drive 6-8 representative scenarios through `/enter` UI per Phase D workflow. Verify the Bulldozer voice carries from wiki extracts into agent answers.
+
+**Pass:** ≥26/28 + manual UI smoke clean → green-light merge to main.
+
+### Ruthless copy pass — non-wiki surfaces
+**Why:** Wiki was Bulldozer'd 2026-05-04 (Phase 5). Non-wiki surfaces still need the same pass. C5 niche cascade flipped titles + meta on `/` and `/resume` but body copy is unchanged. Apply Bulldozer voice + 15-point rubric to remaining surfaces.
+
+**Scope:** `/` (`index.html`), `/resume` (`resume/index.html`), `resume.md`, `/lab/` (`lab/index.html`), `/lab/<slug>/` PRFAQs, `/moodboard` (orphan, lowest pri).
+Skip: `/enter` UI (locked), `groqHandler.mjs` system prompt (locked), `README.md` (locked 2026-05-03), `og-master.jpg` (image, defer), all wiki pages (already done Phase 5).
+
+**Editorial contract:** the Bulldozer spec at `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1-5.10 is binding. Anchor reference: the live `wiki/agent-first` theme + `wiki/beliefs/agent-first` belief.
+
+**Execution plan (per-surface):**
+- [ ] `/` (`index.html`) — hero tagline + greeting line + CTA copy
+- [ ] `/resume` (`resume/index.html`) — role bullets + summary subtitle
+- [ ] `resume.md` — Summary + role bullets (ground truth, used by /enter — re-run eval after if bullets shift materially)
+- [ ] `/lab/` (`lab/index.html`) — card descs
+- [ ] `/lab/second-brain/`, `/lab/ai-resume/`, `/lab/voice-ai-production/`, `/lab/product-shape/` — PRFAQ body
+- [ ] `/moodboard/` (orphan, lowest pri) — optional
+
+**Boundaries:**
+- Stay on `dev` until manual UI smoke + real-Groq eval pass.
+- UI sacrosanct rule: any rendered-surface change → before/after visual diff in headed gstack browser before merging to main.
+- If `resume.md` bullets change, re-run /enter eval per Phase D workflow.
+- Em-dash hard rule: zero in any shipped HTML/MD/JSON/TXT.
 
 ---
 
@@ -58,6 +76,16 @@ Phase 5 + 6 deferred. See spec §5.
 - AEO/SEO gate audit (CLEARED): `docs/plans/aeo-gate-final-audit-2026-04-27.md`
 - Locked positioning: `~/.claude/projects/D--AA-agamarora/memory/project_positioning_locked.md`
 - Auto-memory index: `~/.claude/projects/D--AA-agamarora/memory/MEMORY.md`
+
+---
+
+## Closed (2026-05-04)
+
+**Shipped on `dev` (was `dev/c5-niche-cascade`, renamed):**
+- ~~Bulldozer rewrite (Phases 0-7)~~ — full /wiki/ rewrite landed on dev. 30 articles rewritten as L7 strategy memos (11 themes + 18 beliefs + 1 meta as "Operator aphorisms"). Voice meta retired. Build pipeline strip (chrome, page-purpose, em-dash). New lint script `scripts/lint-bulldozer.mjs`. /enter eval baseline 26/28 PASS. Spec sections 5.1-5.10 in `~/.claude/plans/lets-think-this-through-staged-zebra.md` are binding. Anchors: agent-first theme + belief.
+- ~~`/writing/` framework~~ — built then RETIRED same week. Bulldozer review locked single-publication architecture: `/wiki/` is the canonical surface, `/writing/` is gone. `scripts/build-writing.mjs`, `writing/`, `content/writing/`, marker blocks, build chain entry, sitemap rows all removed. 301 `/writing/* → /wiki/graph/` in netlify.toml. Seed post migrated into `/wiki/spec-first-taste/` Phase 2.
+- ~~Voice meta page (`/wiki/voice/`) retired~~ — collapsed into Bulldozer architecture. 301 to `/wiki/graph/`.
+- ~~Wiki Related footer relabeled~~ — H2 changed from "Related" to "Related architecture memos" per 15-point rubric item #14.
 
 ---
 

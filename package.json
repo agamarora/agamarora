@@ -14,6 +14,7 @@
     "build:wiki": "node scripts/build-wiki.mjs --strict",
     "build:wiki-extracts": "node scripts/build-wiki-extracts.mjs --strict",
     "build:kg-edges": "node scripts/build-kg-edges.mjs --strict",
+    "lint:bulldozer": "node scripts/lint-bulldozer.mjs --strict",
     "sync:chrome": "node scripts/sync-chrome.mjs",
     "sync:chrome:check": "node scripts/sync-chrome.mjs --check",
     "build": "npm run build:kg && npm run build:wiki && npm run build:wiki-extracts && npm run build:kg-edges",

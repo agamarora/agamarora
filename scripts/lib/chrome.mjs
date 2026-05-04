@@ -24,7 +24,7 @@ export const SHARED_FONTFACE_CSS = `  @font-face { font-family:'Satoshi'; src:ur
   @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
   @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }`;
 
-// :root design tokens. Locked across all v2 pages — do not drift per page.
+// :root design tokens. Locked across all v2 pages . do not drift per page.
 export const SHARED_TOKENS_CSS = `  :root {
     --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
     --border:#1E1E1E; --border-hover:#2A2A2A;
@@ -43,7 +43,7 @@ export const SHARED_RESET_CSS = `  *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
   ::selection{background:var(--accent);color:var(--bg);}`;
 
-// .icon utility — used by every <svg class="icon">.
+// .icon utility . used by every <svg class="icon">.
 export const SHARED_ICON_CSS = `  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }`;
 
 // Header + icon-bar styling.
@@ -51,11 +51,11 @@ export const SHARED_HEADER_CSS = `  header.site-header{position:fixed;top:0;left
   .icon-bar{display:inline-flex;align-items:center;}
   .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
   .icon-bar a:hover{color:var(--accent);}
-  /* Agent button — gold accent. The differentiator on the site, gets weight. */
+  /* Agent button . gold accent. The differentiator on the site, gets weight. */
   .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
   .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}`;
 
-// aa. mark — fixed bottom-right brand. font-family on wrapper forces Patrick Hand
+// aa. mark . fixed bottom-right brand. font-family on wrapper forces Patrick Hand
 // to be fetched before SVG renders, so stroke-length measurement runs against the
 // real font (not a cursive fallback).
 export const SHARED_AAMARK_CSS = `  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
@@ -63,12 +63,12 @@ export const SHARED_AAMARK_CSS = `  .aa-mark{position:fixed;bottom:clamp(16px,3v
   .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
   .aa-mark svg text{font-family:var(--mark);}`;
 
-// :focus-visible — keyboard a11y. WCAG 2.1 AA. Applied to every interactive element
+// :focus-visible . keyboard a11y. WCAG 2.1 AA. Applied to every interactive element
 // the chrome introduces; pages can override on their own widgets.
 export const SHARED_FOCUS_CSS = `  .icon-bar a:focus-visible,
   .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}`;
 
-// Scrollbar — match dark/gold aesthetic site-wide. Default Windows white scrollbar
+// Scrollbar . match dark/gold aesthetic site-wide. Default Windows white scrollbar
 // reads as foreign UI chrome on a dark editorial page. Thin dim thumb on transparent
 // track, gold on hover. Tokens reused: thumb is rgba(--text 0.18), hover is
 // rgba(--accent 0.45). 10px wide with 2px transparent border for breathing room.
@@ -97,7 +97,7 @@ export const SHARED_CHROME_CSS = [
 
 // ---------- DOM ----------
 
-// SVG sprite — 5 Font Awesome 6 solid glyphs. Hidden via inline style; symbols are
+// SVG sprite . 5 Font Awesome 6 solid glyphs. Hidden via inline style; symbols are
 // referenced via <use href="#i-X">. Place at top of <body>.
 export const SVG_SPRITE = `<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
 <symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
@@ -108,12 +108,12 @@ export const SVG_SPRITE = `<svg xmlns="http://www.w3.org/2000/svg" style="positi
 <symbol id="i-sparkles" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM205.1 73.3c-2.6-5.7-8.3-9.3-14.5-9.3s-11.9 3.6-14.5 9.3L123.3 187.3 9.3 240C3.6 242.6 0 248.3 0 254.5s3.6 11.9 9.3 14.5l114.1 52.7L176 435.7c2.6 5.7 8.3 9.3 14.5 9.3s11.9-3.6 14.5-9.3l52.7-114.1L371.7 269c5.7-2.6 9.3-8.3 9.3-14.5s-3.6-11.9-9.3-14.5L257.7 187.3 205.1 73.3zM384 384l-56.5 21.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 448l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 448l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 384l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L384 384z"/></symbol>
 </svg>`;
 
-// Header markup — site-fixed top bar with social + home + agent icons.
+// Header markup . site-fixed top bar with social + home + agent icons.
 // Two variants:
-//   SHARED_HEADER_HTML        — non-landing pages (5 icons, no Resume,
+//   SHARED_HEADER_HTML        . non-landing pages (5 icons, no Resume,
 //                                agent gold accent rightmost)
-//   SHARED_HEADER_HTML_LANDING — landing only (6 icons, keeps Resume).
-// Agent button is gold-accent (class .icon-bar-agent) — pulls the eye
+//   SHARED_HEADER_HTML_LANDING . landing only (6 icons, keeps Resume).
+// Agent button is gold-accent (class .icon-bar-agent) . pulls the eye
 // because it's the differentiator. New tab opens via target="_self" since
 // /enter is internal and we want the session to live in the same tab.
 // On the graph page the page adds its own fullscreen button after this
@@ -139,8 +139,8 @@ export const SHARED_HEADER_HTML_LANDING = `<header class="site-header">
   </div>
 </header>`;
 
-// aa. mark — clickable Patrick Hand "aa." brand at bottom-right of every page.
-// MUST be an <a>, not a <div> — keyboard-reachable + click-back-to-home.
+// aa. mark . clickable Patrick Hand "aa." brand at bottom-right of every page.
+// MUST be an <a>, not a <div> . keyboard-reachable + click-back-to-home.
 export const SHARED_AAMARK_HTML = `<a href="/" class="aa-mark" aria-label="agamarora.com">
   <svg id="aa-mark" viewBox="0 0 72 36">
     <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>

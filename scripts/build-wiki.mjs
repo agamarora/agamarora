@@ -511,8 +511,8 @@ function renderRelated(items) {
         `<li><span class="kind">${escHtml(it.kind || "")}</span><a href="${it.href}">${escHtml(it.label)}</a></li>`
     )
     .join("");
-  return `<aside class="related-links" aria-label="Related pages">
-    <h2>Related</h2>
+  return `<aside class="related-links" aria-label="Related architecture memos">
+    <h2>Related architecture memos</h2>
     <ul>${lis}</ul>
   </aside>`;
 }
@@ -551,7 +551,7 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbIte
   // SEO: keep <title> under 60 chars. Long source titles often have a ` - `
   // separator splitting headline from kicker; if total would blow past 60,
   // use only the headline half for <title> (full title stays in og/twitter).
-  const SUFFIX = " — wiki";
+  const SUFFIX = ". Wiki.";
   const headTitle = (title + SUFFIX).length > 60 && title.includes(" - ")
     ? title.split(" - ")[0].trim() + SUFFIX
     : title + SUFFIX;
@@ -596,7 +596,7 @@ function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbIte
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
-<meta property="og:image:alt" content="${escHtml(title)} — second brain by Agam Arora.">
+<meta property="og:image:alt" content="${escHtml(title)} Second brain by Agam Arora.">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
@@ -705,19 +705,12 @@ function linkifyLinkedInUrns(body) {
   });
 }
 
-function collapseEvidenceHtml(html) {
-  const pattern = /(<h2[^>]*>Evidence<\/h2>)([\s\S]*?)(?=<h2|<hr>|$)/i;
-  return html.replace(pattern, (_, heading, body) => {
-    body = linkifyLinkedInUrns(body);
-    // Count data rows only - <tbody> contents for tables, <li> count for bullets.
-    // Avoids the off-by-one from including <thead><tr>.
-    const tbodyMatch = body.match(/<tbody>([\s\S]*?)<\/tbody>/);
-    const rowCount = tbodyMatch
-      ? (tbodyMatch[1].match(/<tr>/g) || []).length
-      : (body.match(/<li>/g) || []).length;
-    const noun = body.includes("<table") ? "rows" : "items";
-    return `<details class="evidence-block"><summary>Evidence (${rowCount} dated ${noun} - click to expand)</summary>${body}</details>`;
-  });
+function inlineEvidenceHtml(html) {
+  // Phase 3 (2026-05-04): drop the <details> wrap; render Evidence inline.
+  // The inlineMd pass already converts bare urn:li:activity:NNN refs into
+  // class="urn-link" anchors, so a second linkifyLinkedInUrns pass would
+  // double-wrap (broken HTML). Evidence section now passes through as-is.
+  return html;
 }
 
 // Sections we drop from human-rendered theme pages. These are agent-retrieval
@@ -847,8 +840,10 @@ function buildThemePage(slug, src) {
   let trimmed = stripDraftTraces(body.trim());
   trimmed = stripSections(trimmed, STRIP_THEME);
   let articleHtml = blockMd(trimmed.trim());
-  articleHtml = collapseEvidenceHtml(articleHtml);
-  articleHtml = injectPagePurpose(articleHtml, m.oneLine);
+  articleHtml = inlineEvidenceHtml(articleHtml);
+  // Bulldozer 2026-05-04: page-purpose italic block stripped from theme pages.
+  // The H1 + hook do the orientation work in executive memo voice.
+  // one_line frontmatter still drives <meta description> + OG.
 
   // Build Related footer for themes:
   //   - root link (unless this IS root)
@@ -920,9 +915,9 @@ function buildMetaPage(slug, src) {
         "Four modes, one disposition. The take — bold declarative opener, structured body, zinger close. The four-word reply — Hindi or English compressed comment. The playbook — when someone asks how, hand over the full stack with no gatekeeping. The framework drop — thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.",
     },
     quotes: {
-      question: "What are Agam Arora's signature lines?",
+      question: "What are Agam Arora's operator aphorisms?",
       answer:
-        "Twelve years of LinkedIn posts compressed to roughly seventy verbatim lines. Each one anchors a date and an era. The manifesto theses lead the page — \"We need to kill prompting,\" \"Context > Prompt. Spec > Sprint. Taste > Execution,\" \"The model wasn't broken, the agent layer was.\" Then anti-hype, PM craft, the AI PM lines from 2023 that still hold, enterprise reality, career and learning, aphorisms, closers.",
+        "A working set of verbatim one-liners a B2B AI Product Manager drops in rooms. Organized in five clusters: the agent-first manifesto, enterprise AI reality, PM as risk mitigation, spec discipline plus AI PM craft, and career economics. Lines like \"We need to kill prompting,\" \"Context > Prompt. Spec > Sprint. Taste > Execution,\" and \"The model wasn't broken, the agent layer was\" lead. Each line is dated. The closers stand alone.",
     },
   };
   const f = META_FAQ[slug];
@@ -967,7 +962,7 @@ function buildBeliefPage(slug, src) {
   let trimmed = stripDraftTraces(body.trim());
   trimmed = stripSections(trimmed, STRIP_BELIEF);
   let articleHtml = blockMd(trimmed.trim());
-  articleHtml = collapseEvidenceHtml(articleHtml);
+  articleHtml = inlineEvidenceHtml(articleHtml);
   // When a belief has a TL;DR quotable assertion, the TL;DR block carries the
   // "what is this" job and the page-purpose italic block becomes redundant.
   // Skip page-purpose to reduce the above-the-fold density. Keep page-purpose
@@ -976,9 +971,10 @@ function buildBeliefPage(slug, src) {
   if (!hasQuotable) {
     articleHtml = injectPagePurpose(articleHtml, m.oneLine);
   }
-  articleHtml = injectBeliefChips(articleHtml, meta);
-  articleHtml = injectBeliefTags(articleHtml, meta);
-  articleHtml = injectBeliefTldr(articleHtml, meta);
+  // Bulldozer 2026-05-04: chip strip / tag strip / TL;DR block removed from
+  // belief pages. Executive-memo register has no room for graph-position
+  // chrome above the fold. Frontmatter still drives kg.json + extracts; only
+  // the human-rendered HTML drops the chrome.
 
   const parentTheme = (meta.parent_theme || "").trim();
   const parentLink = parentTheme
@@ -1174,7 +1170,6 @@ function buildProjectsPage() {
     .join("\n");
 
   const articleHtml = `<h1 id="projects">Projects</h1>
-<p class="theme-meta"><span class="tier">DAG view</span> &middot; ${projects.length} projects &middot; ${lineage.length} lineage edges &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
 <p>Twelve years of building. Day-job work is intentionally generic here. Personal projects are the substrate of the ship-the-prototype belief: the prototype is the argument. Every learning project compounds into a top-tier project later.</p>
 <p>The lineage column shows the parent project that taught the technique or framework. Read it as a directed acyclic graph, newest at the top.</p>
 
@@ -1281,8 +1276,7 @@ ${items}
     .join("\n\n");
 
   const articleHtml = `<h1 id="beliefs">Beliefs</h1>
-<p class="page-purpose">${escHtml(`${total} Tier-1 beliefs grouped by their parent theme. Each one has a sub-page with origin, evidence, and current state. The full graph (themes + Tier-2 / Tier-3 beliefs + projects + posts) lives in the knowledge graph.`)}</p>
-<p class="theme-meta"><span class="tier">${total} beliefs</span> &middot; ${groups.filter((g) => g.theme !== "_orphan").length} parent themes &middot; sourced from <a href="/wiki/kg.json">kg.json</a></p>
+<p class="page-purpose">${escHtml(`${total} Tier-1 operating principles grouped by parent theme. Each page is a standalone strategy memo: principle, dependency cascade, bottom line. The full graph (themes plus Tier-2 and Tier-3 layers, projects, and posts) lives in the knowledge graph.`)}</p>
 
 ${groupBlocks}
 `;
@@ -1304,7 +1298,7 @@ ${groupBlocks}
   // Inline the extra CSS into the page-level <style> by post-processing the wrap.
   const html = pageWrap({
     title: "Beliefs",
-    description: `Index of ${total} Tier-1 beliefs grouped by parent theme in agamarora.second-brain.`,
+    description: `Index of ${total} Tier-1 operating principles grouped by parent theme. Each is a standalone strategy memo.`,
     canonical: "https://agamarora.com/wiki/beliefs/",
     schemaType: "WebPage",
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
@@ -1441,24 +1435,24 @@ function buildGraphPage() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<title>Graph — wiki</title>
+<title>Graph. Wiki.</title>
 <meta name="description" content="Authored constellation of ${kg.stats.nodes_total} graph nodes and ${kg.stats.edges.total} edges across the corpus. Genesis + 11 themes, organic placement, dark-only.">
 <meta name="theme-color" content="#0A0A0A">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://agamarora.com/wiki/graph/">
-<meta property="og:title" content="Graph — Agam Arora's wiki.">
+<meta property="og:title" content="Graph. Agam Arora's wiki.">
 <meta property="og:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
 <meta property="og:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="2400">
 <meta property="og:image:height" content="1256">
-<meta property="og:image:alt" content="Graph — second brain by Agam Arora.">
+<meta property="og:image:alt" content="Graph. Second brain by Agam Arora.">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Agam Arora">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Graph — Agam Arora's wiki.">
+<meta name="twitter:title" content="Graph. Agam Arora's wiki.">
 <meta name="twitter:description" content="Authored constellation. ${kg.stats.nodes_total} nodes, ${kg.stats.edges.total} edges.">
 <meta name="twitter:image" content="https://agamarora.com/assets/og/og-wiki.jpg">
 
