@@ -39,6 +39,26 @@
   status = 301
   force = true
 
+# /writing/ retired 2026-05-04 — single publication architecture.
+# Wiki is the canonical surface. All writing-* paths fold into /wiki/.
+[[redirects]]
+  from = "/writing"
+  to = "/wiki/graph/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/writing/"
+  to = "/wiki/graph/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/writing/*"
+  to = "/wiki/graph/"
+  status = 301
+  force = true
+
 # NOTE: trailing-slash redirects for /resume and /enter were attempted on
 # 2026-05-02 (commit 0d89698) and caused an infinite 301 loop because
 # Netlify's default pretty-URL behavior internally normalizes /resume to

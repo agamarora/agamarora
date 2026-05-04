@@ -70,12 +70,6 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 - [Voice AI in production](https://agamarora.com/lab/voice-ai-production/): lessons from shipping real-time voice agents into enterprise contact centers over 12-18 months. Demos vs adoption, integration surface, telephony partner risk, multilingual prompt drift, kill criteria.
 - [Product shape is what you refuse](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. The narrow control point, MCP-first bet, standalone-sellable pivot that failed, consolidation pattern that followed.
 
-<!-- writing:start -->
-## Writing
-
-- [Design as a non-designer](https://agamarora.com/writing/design-as-non-designer/): Building good design as a non-designer requires study, not AI tools. Freeze a design spec before any code.
-<!-- writing:end -->
-
 ## Optional
 
 - [llms-full.txt](https://agamarora.com/llms-full.txt): the full resume and site content in one file, for single-paste context ingestion

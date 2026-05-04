@@ -2,7 +2,7 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-04 (C5 niche cascade landed on dev branch; ruthless copy pass + /writing/ framework queued).
+Last updated: 2026-05-04 (Bulldozer rewrite in progress on dev — wiki = single publication, /writing/ retired, all 35 article pages getting Proof-of-Work rewrite).
 
 ---
 
@@ -87,8 +87,8 @@ Phase 5 + 6 deferred. See spec §5.
 
 ## Closed (2026-05-04)
 
-**Shipped on `dev/c5-niche-cascade`:**
-- ~~`/writing/` framework~~ — `scripts/build-writing.mjs` + `content/writing/<slug>.md` source pattern + auto-merge into sitemap/llms/llms-full/site.json via marker blocks. Optional agent extracts. Wired into `npm run build`. Seed post `design-as-non-designer` shipped. Pre-existing `site.json` legacy `writing` array (placeholder for never-shipped `second-brain-live`) cleaned up.
+**Shipped on `dev` (was `dev/c5-niche-cascade`, renamed):**
+- ~~`/writing/` framework~~ — built then RETIRED same week. Bulldozer review (2026-05-04) locked single-publication architecture: `/wiki/` is the canonical surface, `/writing/` is gone. `scripts/build-writing.mjs`, `writing/`, `content/writing/`, marker blocks, build chain entry, sitemap rows all removed. 301 `/writing/* → /wiki/graph/` in netlify.toml. Seed post migrating to `/wiki/spec-first-taste/` in Phase 2.
 
 ---
 

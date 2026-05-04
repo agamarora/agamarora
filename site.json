@@ -73,26 +73,6 @@
       "type": "page",
       "robots": "noindex"
     },
-    {
-      "slug": "writing",
-      "path": "/writing/",
-      "title": "Writing — essays + POV",
-      "type": "page",
-      "managed": "writing"
-    },
-    {
-      "slug": "writing-design-as-non-designer",
-      "path": "/writing/design-as-non-designer/",
-      "title": "Design as a non-designer",
-      "type": "writing-post",
-      "date": "2026-05-04",
-      "tags": [
-        "design",
-        "AI",
-        "product",
-        "taste"
-      ],
-      "managed": "writing"
     }
   ],
   "wiki": {
@@ -338,8 +318,7 @@
     "philosophy": {
       "priority": "wiki:agent-first",
       "supporting": [
-        "wiki:root.substance-over-hype",
-        "writing-design-as-non-designer"
+        "wiki:root.substance-over-hype"
       ]
     },
     "specific_role": {
