@@ -82,12 +82,6 @@
       "title": "second-brain wiki — theme grid + timeline",
       "type": "wiki-index"
     },
-    "voice": {
-      "slug": "wiki-voice",
-      "path": "/wiki/voice/",
-      "title": "How I write — voice calibration",
-      "type": "wiki-meta"
-    },
     "quotes": {
       "slug": "wiki-quotes",
       "path": "/wiki/quotes/",
@@ -388,7 +382,7 @@
       "Parsed",
       "Matched"
     ],
-    "voice_rules": "no em-dashes; use colons + hyphen-with-spaces; 4 voice registers per /wiki/voice/; ≤70 words typical",
+    "voice_rules": "no em-dashes; use colons + hyphen-with-spaces; staccato rhythm + friction-grounded; ≤70 words typical",
     "deflection_lines": [
       "Not in the file. Ask about what he's built.",
       "That's personal. Try a product question.",

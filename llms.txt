@@ -37,7 +37,6 @@ The wiki is the source layer; /enter is the playback layer. Every theme page has
 - [Career reflection](https://agamarora.com/wiki/career-reflection/): IC path, AI-era multiplier on the IC, learn concepts not tools, help market flourish
 - [LinkedIn as instrument](https://agamarora.com/wiki/linkedin-as-instrument/): platform to be gamed productively, posting IS the thinking
 - [Personal projects](https://agamarora.com/wiki/personal-projects-tinkering/): ship it or it doesn't exist; the prototype is the argument
-- [Voice doc](https://agamarora.com/wiki/voice/): how I write - banned LLM-isms, real signatures, four registers
 - [Quotes](https://agamarora.com/wiki/quotes/): curated signature lines from twelve years of posts
 - [Projects DAG](https://agamarora.com/wiki/projects/): 18 public projects with lineage edges
 - [Knowledge graph viz](https://agamarora.com/wiki/graph/): force-directed visualization of the full graph

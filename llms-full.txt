@@ -110,7 +110,7 @@ Theme one-liners:
 - LinkedIn as instrument: platform to be gamed productively. Posting IS the thinking.
 - Personal projects: ship it or it doesn't exist. The prototype is the argument.
 
-Belief sub-pages (19 Tier-1 beliefs) live at /wiki/beliefs/. Voice doc at /wiki/voice/. Quote library at /wiki/quotes/. Projects DAG at /wiki/projects/. Force-directed graph viz at /wiki/graph/.
+Belief sub-pages (19 Tier-1 beliefs) live at /wiki/beliefs/. Operator aphorisms at /wiki/quotes/. Projects DAG at /wiki/projects/. Force-directed graph viz at /wiki/graph/.
 
 The agent at /enter is grounded in this wiki. It speaks for Agam in third person. It will tell you it's an agent, not Agam, if you ask.
 

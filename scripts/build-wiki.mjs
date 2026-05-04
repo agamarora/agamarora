@@ -1276,7 +1276,7 @@ ${items}
     .join("\n\n");
 
   const articleHtml = `<h1 id="beliefs">Beliefs</h1>
-<p class="page-purpose">${escHtml(`${total} Tier-1 beliefs grouped by their parent theme. Each one has a sub-page with origin, evidence, and current state. The full graph (themes + Tier-2 / Tier-3 beliefs + projects + posts) lives in the knowledge graph.`)}</p>
+<p class="page-purpose">${escHtml(`${total} Tier-1 operating principles grouped by parent theme. Each page is a standalone strategy memo: principle, dependency cascade, bottom line. The full graph (themes plus Tier-2 and Tier-3 layers, projects, and posts) lives in the knowledge graph.`)}</p>
 
 ${groupBlocks}
 `;
@@ -1298,7 +1298,7 @@ ${groupBlocks}
   // Inline the extra CSS into the page-level <style> by post-processing the wrap.
   const html = pageWrap({
     title: "Beliefs",
-    description: `Index of ${total} Tier-1 beliefs grouped by parent theme in agamarora.second-brain.`,
+    description: `Index of ${total} Tier-1 operating principles grouped by parent theme. Each is a standalone strategy memo.`,
     canonical: "https://agamarora.com/wiki/beliefs/",
     schemaType: "WebPage",
     breadcrumbHtml: `<nav class="breadcrumb" aria-label="Breadcrumb">
