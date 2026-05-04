@@ -32,12 +32,43 @@ const args = process.argv.slice(2);
 const STRICT = args.includes("--strict");
 const ONLY = args.find((a) => a.startsWith("--slug="))?.split("=")[1];
 
-// Bulldozer-anchor sources locked 2026-05-04. Only these are graded against
-// the full ruleset until Phase 5 batches rewrite the rest. Anchor + Phase 2
-// migration are the live test set.
+// Bulldozer-anchor sources. Phase 5 batches expanded the gate to all 30
+// rewritten slugs (11 themes + 18 beliefs + 1 meta). Phase 4 anchor was
+// agent-first; Phase 5A-5D landed the rest 2026-05-04.
 const ANCHOR_SLUGS = new Set([
-  "agent-first",            // belief + theme (Phase 4 anchor)
-  "spec-first-taste",       // theme (Phase 2 migration target)
+  // 11 themes
+  "agent-first",
+  "voice-ai-craft",
+  "ai-pm-skillset",
+  "enterprise-ai-reality",
+  "second-brain",
+  "root.substance-over-hype",
+  "pm-taste",
+  "spec-first-taste",
+  "breadth-as-differentiation",
+  "career-reflection",
+  "linkedin-as-instrument",
+  "personal-projects-tinkering",
+  // 18 beliefs (agent-first listed once; build covers theme + belief same slug)
+  "context-over-prompt",
+  "spec-over-sprint",
+  "taste-over-execution",
+  "pm-is-99-should-we-1-can-we",
+  "substance-over-hype",
+  "enterprise-ai-production-reality",
+  "breadth-needs-depth",
+  "ai-pm-skillset-table-stakes",
+  "anti-customization",
+  "second-brain-is-context-layer",
+  "llm-as-primary-daily-tool",
+  "self-instrumentation",
+  "ship-the-prototype",
+  "learn-concepts-not-tools",
+  "ic-path-legitimacy",
+  "help-market-flourish",
+  "linkedin-as-instrumental-platform",
+  // 1 meta
+  "quotes",
 ]);
 
 const BANNED_VOCAB = [
@@ -187,11 +218,13 @@ function lintFile(filePath, slug, kind) {
 }
 
 function listSources() {
+  // Skip underscore-prefixed files (admin notes, not page sources).
+  const isPageSource = (f) => f.endsWith(".md") && !f.startsWith("_");
   const themes = existsSync(THEME_DIR)
-    ? readdirSync(THEME_DIR).filter((f) => f.endsWith(".md")).map((f) => ({ kind: "theme", file: join(THEME_DIR, f), slug: f.replace(/\.md$/, "") }))
+    ? readdirSync(THEME_DIR).filter(isPageSource).map((f) => ({ kind: "theme", file: join(THEME_DIR, f), slug: f.replace(/\.md$/, "") }))
     : [];
   const beliefs = existsSync(BELIEF_DIR)
-    ? readdirSync(BELIEF_DIR).filter((f) => f.endsWith(".md")).map((f) => ({ kind: "belief", file: join(BELIEF_DIR, f), slug: f.replace(/\.md$/, "") }))
+    ? readdirSync(BELIEF_DIR).filter(isPageSource).map((f) => ({ kind: "belief", file: join(BELIEF_DIR, f), slug: f.replace(/\.md$/, "") }))
     : [];
   return [...themes, ...beliefs];
 }

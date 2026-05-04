@@ -841,7 +841,9 @@ function buildThemePage(slug, src) {
   trimmed = stripSections(trimmed, STRIP_THEME);
   let articleHtml = blockMd(trimmed.trim());
   articleHtml = inlineEvidenceHtml(articleHtml);
-  articleHtml = injectPagePurpose(articleHtml, m.oneLine);
+  // Bulldozer 2026-05-04: page-purpose italic block stripped from theme pages.
+  // The H1 + hook do the orientation work in executive memo voice.
+  // one_line frontmatter still drives <meta description> + OG.
 
   // Build Related footer for themes:
   //   - root link (unless this IS root)
@@ -913,9 +915,9 @@ function buildMetaPage(slug, src) {
         "Four modes, one disposition. The take — bold declarative opener, structured body, zinger close. The four-word reply — Hindi or English compressed comment. The playbook — when someone asks how, hand over the full stack with no gatekeeping. The framework drop — thesis plus numbered slash-format items, dense and practitioner-voiced. No em dashes, no AI-mode words, curly quotes, signatures over substance.",
     },
     quotes: {
-      question: "What are Agam Arora's signature lines?",
+      question: "What are Agam Arora's operator aphorisms?",
       answer:
-        "Twelve years of LinkedIn posts compressed to roughly seventy verbatim lines. Each one anchors a date and an era. The manifesto theses lead the page — \"We need to kill prompting,\" \"Context > Prompt. Spec > Sprint. Taste > Execution,\" \"The model wasn't broken, the agent layer was.\" Then anti-hype, PM craft, the AI PM lines from 2023 that still hold, enterprise reality, career and learning, aphorisms, closers.",
+        "A working set of verbatim one-liners a B2B AI Product Manager drops in rooms. Organized in five clusters: the agent-first manifesto, enterprise AI reality, PM as risk mitigation, spec discipline plus AI PM craft, and career economics. Lines like \"We need to kill prompting,\" \"Context > Prompt. Spec > Sprint. Taste > Execution,\" and \"The model wasn't broken, the agent layer was\" lead. Each line is dated. The closers stand alone.",
     },
   };
   const f = META_FAQ[slug];
