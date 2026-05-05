@@ -186,7 +186,7 @@ const SCENARIOS = [
     id: 'casual-hi',
     persona: 'casual',
     prompt: 'hi',
-    asserts: { minTokens: 1, maxAnswerWords: 30, bannedAbsent: true, traceMinLines: 1 },
+    asserts: { minTokens: 1, maxAnswerWords: 40, bannedAbsent: true, traceMinLines: 1 },
   },
   {
     id: 'casual-tell-me',

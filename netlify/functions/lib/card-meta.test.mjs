@@ -229,11 +229,11 @@ test('padCardsToThree: lookup intent → padded like synthesis', () => {
 test('padCardsToThree: dedupes LLM slug against family', () => {
   const llm = [resolveCard('wiki/agent-first', { priority: true })];
   const r = padCardsToThree(llm, { intent: 'synthesis', themes: ['agent'], query: 'agents thesis' });
-  // agent family = ['wiki/graph', 'wiki/agent-first', 'lab']
-  // LLM has wiki/agent-first → padder skips, fills wiki/graph + lab
+  // agent family (2026-05-05): ['wiki/agent-first', 'wiki/graph', 'lab/voice-ai-production']
+  // LLM has wiki/agent-first → padder skips, fills wiki/graph + lab/voice-ai-production
   assert.equal(r.cards.length, 3);
   const slugs = r.cards.map((c) => c.slug);
-  assert.deepEqual(slugs, ['wiki/agent-first', 'wiki/graph', 'lab']);
+  assert.deepEqual(slugs, ['wiki/agent-first', 'wiki/graph', 'lab/voice-ai-production']);
 });
 
 test('padCardsToThree: F1 — no belief slugs in any family in commit 3', () => {

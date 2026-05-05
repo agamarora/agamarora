@@ -525,13 +525,25 @@ export function validateLLMCards(rawCards) {
 // from zero. Order matters: padder tries entries in sequence, skipping
 // already-emitted slugs.
 const FAMILIES = {
-  contact:  ['book-call', 'linkedin', 'github'],
-  headline: ['wiki/agent-first', 'wiki/graph', 'lab'],
-  hiring:   ['linkedin', 'resume', 'github'],
-  projects: ['lab', 'github', 'lab/voice-ai-production'],
-  voice:    ['lab/voice-ai-production', 'lab', 'resume'],
-  agent:    ['wiki/graph', 'wiki/agent-first', 'lab'],
-  default:  ['resume', 'lab', 'wiki/graph'],
+  contact:    ['book-call', 'linkedin', 'github'],
+  headline:   ['wiki/agent-first', 'wiki/graph', 'lab'],
+  hiring:     ['resume', 'linkedin', 'github'],
+  projects:   ['lab', 'github', 'lab/voice-ai-production'],
+  voice:      ['lab/voice-ai-production', 'lab', 'resume'],
+  agent:      ['wiki/agent-first', 'wiki/graph', 'lab/voice-ai-production'],
+  // architecture / scale / production reality questions — surface the
+  // production case study, not the resume. Added 2026-05-05 after card
+  // audit (hm-architecture had ★lab as priority instead of wiki/agent-first).
+  architecture: ['wiki/agent-first', 'lab/voice-ai-production', 'wiki/enterprise-ai-reality'],
+  // technical-opinion / peer questions (RAG vs fine-tune, model selection,
+  // MCP, latency) — surface enterprise-reality + agent-first, not resume.
+  // peer-rag-vs-finetune previously got resume as priority — wrong subject.
+  techopinion:  ['wiki/enterprise-ai-reality', 'wiki/agent-first', 'lab/voice-ai-production'],
+  // second-brain / knowledge-graph questions — surface lab/second-brain or
+  // wiki/second-brain. dev-interesting previously got wiki/agent-first when
+  // the answer was about the second-brain.
+  secondbrain:  ['lab/second-brain', 'wiki/second-brain', 'wiki/graph'],
+  default:    ['resume', 'lab', 'wiki/graph'],
 };
 
 // Pick padder family from routing context. themes_likely[] markers win
@@ -543,13 +555,25 @@ export function pickPadFamily(ctx) {
   if (themes.includes('headline')) return { name: 'headline', slugs: FAMILIES.headline };
 
   const q = String(ctx?.query || '').toLowerCase();
+  // Order matters — most specific first.
+  if (/\b(architecture|architect|scale|scaling|at scale|enterprise scale|system design|production reality|production-grade|infrastructure|stack)\b/.test(q))
+    return { name: 'architecture', slugs: FAMILIES.architecture };
+  if (/\b(rag|fine[\s\-]?tune|fine[\s\-]?tuning|model selection|pick a model|choose a model|mcp|model context protocol|latency|ttft|prompt|prompts|context window|spec[\s\-]?first|iterate)\b/.test(q))
+    return { name: 'techopinion', slugs: FAMILIES.techopinion };
+  if (/\b(second[\s\-]?brain|knowledge[\s\-]?graph|knowledge atlas|constellation|wiki|atlas)\b/.test(q))
+    return { name: 'secondbrain', slugs: FAMILIES.secondbrain };
   if (/\b(hire|hiring|recruit|recruiter|available|availability|opportunit|interview|job|role|position|fit\b)/.test(q))
     return { name: 'hiring', slugs: FAMILIES.hiring };
   if (/\b(github|repo|open[\s\-]?source|portfolio)\b|\bprojects?\b|what.{0,12}(he|hes|has).{0,12}(built|shipped|made)/.test(q))
     return { name: 'projects', slugs: FAMILIES.projects };
   if (/\b(voice|speech|conversational\s*ai|4m\s+calls|million\s+calls)\b/.test(q))
     return { name: 'voice', slugs: FAMILIES.voice };
-  if (/\b(agent|agentic|thesis|thinking|opinion|believe|believes|belief|beliefs|philosophy|stance|position|wiki|graph|knowledge\s+(graph|atlas)|constellation|second[\s\-]?brain|atlas)\b/.test(q))
+  if (/\b(agent|agentic|thesis|thinking|opinion|believe|believes|belief|beliefs|philosophy|stance|position|graph|knowledge\s+(graph|atlas))\b/.test(q))
+    return { name: 'agent', slugs: FAMILIES.agent };
+  // Future predictions / 2030 / what comes next — surface agent-first
+  // (the page where Agam's forward bets live). edge-future previously
+  // got resume as priority, off-subject for an AI-2030 question.
+  if (/\b(2030|future|next decade|coming years|will look like|in 5 years|in ten years|what comes next)\b/.test(q))
     return { name: 'agent', slugs: FAMILIES.agent };
   return { name: 'default', slugs: FAMILIES.default };
 }
