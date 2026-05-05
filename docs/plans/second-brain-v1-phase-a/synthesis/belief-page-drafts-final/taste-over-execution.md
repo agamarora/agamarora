@@ -27,14 +27,16 @@ applies_to:
 confidence: settled
 tier: 1
 length_target: 600-900w
-status: c-bulldozer-r1-2026-05-04
+status: c-rubric-v2-revised-2026-05-05
 voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
 # PM taste as risk mitigation. The irreducible skill AI cannot replace.
 
-Building and measuring products is no longer the binding constraint. Knowing what to build, what to refuse, and what constitutes done is the work that remains after AI handles the execution layer. Writing, coding, designing, drafting PRDs: these are no longer scarce. The scarce thing is the upstream discrimination: scope judgment under ambiguity, the refusal that prevents a six-month detour, the acceptance standard that saves two rounds of remediation. That discrimination is taste. It has not been automated. The proliferation of generation tools makes it more valuable, not less.
+Building and measuring products is no longer the binding constraint. Writing, coding, designing, drafting PRDs: these are no longer scarce. The scarce thing is the upstream discrimination. Scope judgment under ambiguity, the refusal that prevents a six-month detour, the acceptance standard that saves two rounds of remediation. When AI can execute anything, the binding constraint is taste: knowing what to build, what to refuse, and what counts as done. That discrimination has not been automated. The proliferation of generation tools makes it more valuable, not less.
+
+Taste is not aesthetic preference. In the PM context it has three specific forms: knowing which features belong in the product and which are scope debt in disguise, knowing which trade-offs to take versus defer, and knowing which integrations to accept versus refuse before they become the customer's implementation burden. All three are judgment calls. None of them show up in a velocity metric.
 
 ## The 99/1 structure of PM work
 
@@ -50,21 +52,21 @@ Execution is cheap when AI is in the loop. The trap is reaching for the generati
 
 A model produces a plausible output by default. Plausible is not the same as right. Before prompting, the PM names concretely what right looks like: the exact voice register, the exact scope boundary, the specific value proposition, the features that are deliberately excluded and why. Without that standard, no taste is applied to the output. The model averaged across a population; the taste call was not made. The result is an output that requires multiple remediation rounds to close because the acceptance bar was never specified upstream.
 
-This is the same pattern at three altitudes:
+This pattern repeats at three altitudes:
 - At the PRD layer: should we build this at all?
 - At the generative tool layer: what does right look like before I generate?
 - At the demo layer: does this qualify as production-grade or is it still a POC with good lighting?
 
-All three require taste. None of them are answered by a faster iteration cycle. The PM who architected the acceptance standard before reaching for the generation tool and enforced the scope boundary at the PRD layer rather than the sprint retrospective is the one whose team ships correctly at speed.
+All three require taste. None of them are answered by a faster iteration cycle.
 
 ## Scope refusal as a deliverable
 
 Saying no is the work. The PRD that ships without the wrong feature exercised taste; the one that included it did not. Scope refusal is an invisible deliverable: when the PM gets it right, the sprint never debates the question because it was already resolved. The engineering team ships faster. The customer does not hit a hidden implementation tax. The sales team closes without a last-minute scope negotiation.
 
-The visibility problem is real. A PM who says no correctly is invisible because the product simply works. Hiring committees at top-tier enterprise companies evaluate this explicitly: they are looking for evidence that the candidate understood what not to build, not just what shipped. A portfolio built entirely around features shipped signals a feature-factory PM. A portfolio that includes explicit scope refusals, with the reasoning, signals a PM who understands that taste is risk mitigation.
+The visibility problem is real. And worth naming. A PM who says no correctly is invisible because the product simply works. The sprint team does not have a war story about the scope debate that never happened. Hiring committees at top-tier enterprise companies evaluate this explicitly: they look for evidence that the candidate understood what not to build, not just what shipped. A portfolio built entirely around features shipped signals a feature-factory PM. A portfolio that includes explicit scope refusals, with the reasoning, signals a PM who understands that taste is risk mitigation.
 
-Product management was, is, and will continue to be about taste: what to build and what to leave out. AI handles writing, coding, structuring, and analysis. The 99 "should we?" questions remain irreducibly human. A PM who offloads the execution and keeps the taste is applying this correctly. A PM who offloads the taste has misunderstood the architecture of the role.
+## The forward question
 
-## Bottom line
+Product management was, is, and will continue to be about taste: what to build and what to leave out. The AI-era version of that claim is sharpened, not softened. When execution is free, the only thing that differentiates a PM is judgment quality upstream. The PM who offloads the execution and keeps the taste is applying this correctly.
 
-Taste is the PM's irreducible contribution in 2026. It is also the variable that determines product velocity, rework cost, and enterprise deployment success rates. The PM who exercises taste upstream at the PRD layer eliminates sprint-level scope debates, reduces remediation cycles, and ships features that clear customer SLAs without late-stage surprises. The PM who defers taste to iteration ships faster on the first round and slower on every subsequent one. At enterprise scale, where a single scope error commits six months of implementation cost, taste is not a soft skill. It is the primary risk-mitigation mechanism.
+What I find genuinely uncertain is how taste gets transmitted at scale. Individual taste is developed through pattern recognition across dozens of scope calls, dozens of refusals, dozens of post-mortems. But most teams don't have a shared vocabulary for scope refusal decisions. The interesting frontier is not automating taste. That is not coming. But building the institutional substrate that makes a team's aggregate taste explicit and auditable. A PRD that records not just what was approved but what was rejected and why is one version of that substrate. It is underused.
