@@ -2,7 +2,7 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-05 (Rubric v2 locked + all 31 wiki source drafts revised + lint script updated + pushed to dev as 77880d7. Pre-main gate: Real-Groq /enter eval + manual UI smoke per Phase D workflow.).
+Last updated: 2026-05-05 (Rubric v2 + synthesis voice v2 + audience eval set + card relevance v2 ALL shipped to main. agamarora.com live. 28/28 audience eval pass. Multi-turn eval parked. TTFT + AEO dropped per user.).
 
 ---
 
@@ -82,6 +82,19 @@ Per spec section 6 Phase 9: query Perplexity + ChatGPT search for the 5 target p
 ---
 
 ## Parked (revisit later, not committed to ship)
+
+### Multi-turn /enter coherence eval (deferred 2026-05-05)
+**Why:** Current `eval-audience.mjs` is single-shot. Real visitors converse: "tell me about voice ai" → "what failed there?" → "what'd he learn". Single-shot eval cannot catch threading bugs (history loss, context drift, repeat opener, card-set duplication).
+
+**Action when picked up:**
+1. Extend eval harness to send `history` array per scenario (`eval-e2e.mjs` already has the wire shape).
+2. Define 5-8 multi-turn flows: voice-ai cascade, agent thesis cascade, hiring-manager deep dive, recruiter cold-scan with availability follow-up.
+3. Per-turn asserts: no opener repeats, history facts honored, thread coherent, no card-set duplication.
+4. Pass criteria: ≥80% turns coherent.
+
+### Dropped 2026-05-05
+- **TTFT / latency optimization** — current 2-3s acceptable for /enter. Not pursuing.
+- **AEO smoke test (Perplexity + ChatGPT search)** — Phase 9 of original spec. Can't check from this environment. Park indefinitely.
 
 ### CEO C5 — niche cascade to non-/enter surfaces (uncertain)
 Agent-first niche shipped 2026-05-03 inside Netlify function only. Recruiter cold-scan of `/resume` or `/` still leads with "Engineer-PM. Voice AI." Verified 2026-05-03: `index.html` title still "AI Product Manager. Engineer-PM. Builder."; `resume/index.html` meta desc still leads "voice AI at enterprise scale". Triaged 2026-05-03 — keep visible, defer commit.
