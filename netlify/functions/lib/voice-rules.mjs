@@ -55,6 +55,9 @@ export const BANNED_LLM_ISMS = [
 
 // Banned opener phrases (first-sentence checks).
 // From voice-spec §2 Rule 4 + §1 Register 1 opener bans.
+// 2026-05-05 (rubric v2): added "the thesis holds", "the belief says",
+// "Agam advocates", "Agam's view is", "Agam believes" — these patterns
+// strip warmth from v2 wiki extracts and produce third-person memo voice.
 export const BANNED_OPENERS = [
   "in today's fast-paced world",
   "i'm excited to announce",
@@ -67,6 +70,13 @@ export const BANNED_OPENERS = [
   "today i want to",
   "today, i want to",
   "in today's",
+  "the thesis holds",
+  "the belief says",
+  "the belief is",
+  "agam advocates",
+  "agam's view is",
+  "agam believes",
+  "agam thinks",
 ];
 
 // Banned verbs from trace language (must not appear in trace lines).

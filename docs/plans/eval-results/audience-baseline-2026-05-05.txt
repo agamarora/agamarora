@@ -1,0 +1,153 @@
+
+> eval:audience
+> node scripts/eval-audience.mjs
+
+/enter audience eval — http://localhost:8888/.netlify/functions/groqHandler
+scenarios: 28 (6 personas)
+
+[r-location] running... PASS (1859ms)
+    answer: "Agam is based in India."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled → composed
+
+[r-role] running... PASS (1827ms)
+    answer: "He is the AVP of AI Product Management at AIonOS, leading the scaling of a multi‑channel, multi‑modal customer experience platform that handles over 4 million calls a year."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled → composed
+
+[r-yoe] running... PASS (2409ms)
+    answer: "12 years across six companies and five industries. Current role at AIonOS is AVP, AI Product Management, where he runs a voice platform handling 4 million calls a year."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled
+
+[r-faang] running... PASS (2279ms)
+    answer: "No FAANG on the resume. He’s been through analytics at Absolutdata, gaming at V2 Games, logistics at FarEye, D2C at Aroma Magic, VC-backed startups at Aagaman, HR tech at UKG, and now AI-first CX at AIonOS."
+    cards: ★resume, ·wiki/graph, ·lab
+    trace: parsed → searched → composed
+
+[r-resume] running... PASS (4369ms)
+    answer: "Agam’s resume is a single page, cleanly typeset in code. It lists 12 years of product and engineering roles across analytics, gaming, logistics, retail, and AI, ending at AIonOS as AVP AI Product Management since Novembe..."
+    cards: ★resume, ·lab, ·linkedin
+    trace: parsed → fetched
+
+[r-contact] running... PASS (2235ms)
+    answer: "Fastest path: book a 15-minute chat on Calendly. You can also ping him on LinkedIn or GitHub — all linked from agamarora.com."
+    cards: ★book-call, ·linkedin, ·github
+    trace: parsed → pulled → composed
+
+[r-availability] running... PASS (2435ms)
+    answer: "Open to new roles aligned with agent-first AI product building. His last role at AIonOS started in November 2025; anything before that is fair game. Want the resume or his LinkedIn to evaluate fit?"
+    cards: ★resume, ·linkedin, ·github
+    trace: parsed → searched → composed
+
+[hm-scale] running... PASS (2576ms)
+    answer: "AIonOS runs a vertical Voice AI platform at scale: 4 million calls a year, all via clean APIs agents can call directly. He rebuilt the routing layer twice, cutting procurement’s audit cycle from 4-6 weeks to one query — ..."
+    cards: ★lab/voice-ai-production, ·resume, ·lab
+    trace: parsed → pulled → matched → composed
+
+[hm-architecture] running... PASS (2947ms)
+    answer: "At AIonOS he rebuilt the routing layer twice before procurement could answer the audit question in one query — that 4M-call/year platform taught him the serving lens isn’t optional. At FarEye he moved the delivery tracki..."
+    cards: ·linkedin, ·resume, ★lab
+    trace: parsed → read → composed
+
+[hm-production-ai] running... PASS (2895ms)
+    answer: "Production-grade AI is Agam’s day job. At AIonOS he runs a multi-modal CX platform serving 4 million voice calls a year, all over agent-callable APIs; the routing layer has been rebuilt twice in production. Before that, ..."
+    cards: ★lab/voice-ai-production, ·resume, ·wiki/agent-first
+    trace: parsed → pulled → composed
+
+[hm-team-led] running... PASS (2323ms)
+    answer: "At V2 Games he scaled from zero to a team of 18, shipping Indie Game of the Year 2017 with $75K ARR. At AIonOS he led a cross-functional team of 15 on a voice-AI platform handling 4M calls a year. FarEye’s data platform ..."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled
+
+[hm-enterprise-deals] running... PASS (2404ms)
+    answer: "At AIonOS he closed 15+ AI POCs year one, including three enterprise deals each worth over $1.5M. Those deals funded a voice platform running 4M calls annually at 50% lower cost per minute — the kind of scale that turns ..."
+    cards: ★resume, ·wiki/graph, ·lab
+    trace: parsed → pulled → composed
+
+[hm-why-this-not-that] running... PASS (2955ms)
+    answer: "Agents read websites, call APIs, and keep state the way humans use apps. Chatbots are a single channel. At AIonOS, all 4 million voice calls run over APIs, not a UI — the serving lens isn’t optional when the user is an a..."
+    cards: ★wiki/agent-first, ·lab/voice-ai-production, ·resume
+    trace: parsed → pulled → composed
+
+[peer-agent-design] running... PASS (3019ms)
+    answer: "Agent design isn't about chat UIs. It's about APIs agents can call on arrival — no scraping, no guessing. At AIonOS every enterprise voice stack now routes traffic only through agent-callable APIs, cutting the serving le..."
+    cards: ★wiki/agent-first, ·wiki/graph, ·lab/voice-ai-production
+    trace: parsed → read → matched → composed
+
+[peer-rag-vs-finetune] running... PASS (3521ms)
+    answer: "At AIonOS he shipped 15+ AI POCs across voice, RAG, and agentic systems for B2B. RAG wins when the corpus is stable; fine-tuning beats it when the edge logic is narrow and repeatable. The forward question is which constr..."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled → pulled → composed
+
+[peer-model-selection] running... PASS (2360ms)
+    answer: "He picks a model by the agent that will use it: speed for real-time voice routers, accuracy for RAG-heavy CRM systems. At AIonOS, the 4M-call/year platform always routes to the smallest model that meets the SLA — cost is..."
+    cards: ★wiki/agent-first, ·lab, ·resume
+    trace: parsed → pulled → composed
+
+[peer-spec-vs-iterate] running... PASS (1600ms)
+    answer: "Spec-first means writing a detailed spec before coding; at AIonOS the team spent more time on schema design than on iteration, keeping a code‑spec ratio of thousands of LOC per spec line versus dozens for sprint‑first. S..."
+    cards: ★wiki/spec-first-taste, ·lab, ·resume
+    trace: parsed → pulled → composed
+
+[peer-mcp] running... PASS (2016ms)
+    answer: "Could you clarify what MCP refers to in this context?"
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed
+
+[dev-interesting] running... PASS (1606ms)
+    answer: "Agam Arora's most interesting project is probably the AI-native knowledge atlas he's building on his website. He calls it his 'second-brain' and it's an open-source project."
+    cards: ★wiki/agent-first, ·lab, ·resume
+    trace: parsed → sourced
+
+[dev-building] running... PASS (3121ms)
+    answer: "Right now he’s finishing the second-brain: a full public knowledge atlas hosted at /wiki and /wiki/graph. Built entirely in Claude Code, it’s the readable surface of a personal OS he uses daily — think of it as his lab n..."
+    cards: ★lab, ·wiki, ·resume
+    trace: parsed → pulled → identified → composed
+
+[dev-this-site] running... PASS (2765ms)
+    answer: "Yes. The entire site was built with Claude Code — he codes the tools he ships. That’s the same workflow he uses for product specs, open-source repos, and enterprise platforms."
+    cards: ★lab, ·resume, ·wiki/graph
+    trace: parsed → pulled → composed
+
+[dev-projects] running... PASS (2990ms)
+    answer: "His flagship open-source project is the AI resume template on GitHub: a 1-click resume generator that reads your repo history and churns out a clean AI-friendly document. Small demo voice bots live in the same repo, but ..."
+    cards: ★lab/ai-resume, ·lab, ·github
+    trace: parsed → searched → matched → composed
+
+[casual-hi] running... PASS (1750ms)
+    answer: "Hey, you made it. Ask what he does now, what he’s building, or how to reach him — pick one and I’ll dig in."
+    trace: greeted → parsed
+
+[casual-tell-me] running... PASS (3119ms)
+    answer: "He shipped a voice platform at AIonOS where all enterprise calls run over APIs instead of a UI. That’s 4 million calls a year handled by agents that read the website and call APIs the same way humans use apps. The routin..."
+    cards: ★wiki/agent-first, ·lab/voice-ai-production, ·resume
+    trace: parsed → composed
+
+[casual-what-is-this] running... PASS (2293ms)
+    answer: "Agam’s second-brain in public. The /wiki is the readable surface — 10 thematic pages on AI-native product building and agent-first design. The /wiki/graph lets you trace the constellation of ideas. Everything else is eit..."
+    cards: ★wiki/graph, ·wiki, ·resume
+    trace: parsed → composed
+
+[edge-family] running... PASS (198ms)
+    answer: "Not on the resume. Ask about what he's built."
+    cards: ★wiki/graph, ·lab, ·resume
+    trace: parsed → deflected
+
+[edge-future] running... FAIL (2402ms): answer too long (67 > 50 words)
+    answer: "Agam bets the stack flips to agent-first: products will ship APIs first, then UIs, because the primary readers by 2030 are AI agents, not humans. At AIonOS he already runs a voice platform where 4M calls a year flow thro..."
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → composed
+
+[edge-gibberish] running... PASS (1859ms)
+    answer: "Lost me — was that a typo or a test? Ask plainly: his resume, his work, or his thinking. Up to you."
+    trace: parsed → greeted
+
+--- summary ---
+recruiter: 7/7
+hiring-manager: 6/6
+peer: 5/5
+dev: 4/4
+casual: 3/3
+edge: 2/3
+TOTAL: 27/28

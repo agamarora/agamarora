@@ -1,0 +1,149 @@
+
+> eval:e2e
+> node scripts/eval-e2e.mjs
+
+/enter v3.1 eval-e2e — http://localhost:8888/.netlify/functions/groqHandler
+scenarios: 28
+
+[greeting] running... PASS (1141ms)
+    answer: "Hey, you made it. Anything specific or should I start somewhere?"
+    trace: warm → parsed
+
+[lookup] running... PASS (933ms)
+    answer: "Agam Arora is an agent-first AI Product Manager with 12 years of experience shipping products across multiple industries. He's currently AVP at AIonOS, leading a voice CX platform with 4 million annua"
+    cards: ★resume, ·lab, ·wiki/graph
+    trace: parsed → pulled
+
+[contact] running... PASS (1357ms)
+    answer: "The quickest way is to book a 15‑minute chat via Calendly. Otherwise, connect on LinkedIn or visit his GitHub."
+    cards: ★book-call, ·linkedin, ·github
+    trace: parsed → identified → composed
+
+[synthesis] running... PASS (2235ms)
+    answer: "He argues that agents are the substrate, not chatbots with skins. Product design must be agent‑first, evaluating the underlying technology rather than hype. At AIonOS, he applies this to CX platforms,"
+    cards: ★wiki/graph, ·wiki/root.substance-over-hype, ·lab
+    trace: parsed → searched → matched → composed
+
+[deflect] running... PASS (183ms)
+    answer: "Not on the resume. Ask about what he's built."
+    cards: ★wiki/graph, ·lab, ·resume
+    trace: parsed → deflected
+
+[headline-best-work-default] running... PASS (1120ms)
+    answer: "Agam's best work revolves around his agent-first thesis. He built the AI Resume Template, an open-source artefact that showcases the agent-readable format. This template is just one example of how he'"
+    cards: ★wiki/agent-first, ·wiki/graph, ·lab/ai-resume
+    trace: pulled → pulled → pulled → composed
+
+[headline-biggest-project] running... PASS (3299ms)
+    answer: "The second-brain: a 12-theme atlas and constellation graph he wrote entirely with code. It’s a living knowledge system designed for agents to read and humans to navigate. This chat you're in is powere"
+    cards: ★wiki/agent-first, ·wiki/graph, ·lab
+    trace: parsed → pulled → traced → composed
+
+[headline-best-after-voice-history] running... PASS (2544ms)
+    answer: "Agam's best work is the agent-first second-brain. The /wiki/graph is a 21-node constellation he built so AI agents can read how he thinks and what he ships. It's live and agent-readable right now."
+    cards: ★wiki/agent-first, ·wiki/graph, ·lab
+    trace: parsed → traced → composed
+
+[niche-positioning] running... PASS (2287ms)
+    answer: "Agent-first PM: he builds products where AI agents are the primary users. Engineer-PM hybrid — writes code, ships specs, and runs a production voice platform at AIonOS handling 4 million calls a year "
+    cards: ★wiki/agent-first, ·resume, ·lab
+    trace: parsed → read → composed
+
+[belief-agent-first] running... PASS (2439ms)
+    answer: "Agam’s agent-first thesis is simple: if an AI product isn’t designed for an autonomous agent to read and call its APIs as easily as a human uses a UI, it’s already legacy. At AIonOS, enterprise voice "
+    cards: ★wiki/agent-first, ·lab, ·wiki/graph
+    trace: parsed → read → traced → composed
+
+[belief-ai-pm-skillset-table-stakes] running... PASS (2400ms)
+    answer: "By 2026 the floor is not optional: be as comfortable with AI tools as with spreadsheets and PowerPoint, frame the business problem before touching a model, and ship via a personal compounding apparatu"
+    cards: ★wiki/ai-pm-skillset, ·wiki/agent-first, ·resume
+    trace: parsed → read → composed
+
+[belief-anti-customization] running... PASS (2102ms)
+    answer: "Agam’s belief: customization is latent product disagreement. Each config setting adds invisible debt—onboarding docs, training, and support time. Settings panels delay the real work: reconciling use c"
+    cards: ★belief.anti-customization, ·wiki/graph, ·wiki/agent-first
+    trace: parsed → read → composed
+
+[belief-breadth-as-differentiation] running... PASS (2497ms)
+    answer: "He’s shipped products across analytics, gaming, retail, logistics, and voice AI — 5 industries in 12 years. That breadth lets him spot patterns others miss and ship solutions faster than someone siloe"
+    cards: ·wiki/graph, ★resume, ·lab
+    trace: parsed → read → composed
+
+[belief-breadth-needs-depth] running... PASS (2600ms)
+    answer: "He means breadth alone gets you hired like any other PM, but depth is what makes you stand out in enterprise hiring at AWS, Stripe, or Databricks. Depth isn't just technical — it can mean EQ, domain k"
+    cards: ★belief.breadth-needs-depth, ·resume, ·lab
+    trace: parsed → read → reasoned → composed
+
+[belief-context-over-prompt] running... PASS (3739ms)
+    answer: "For him, context over prompt means curating structured knowledge and domain priors upstream so the AI amplifies a clear spec instead of guessing from underspecified prompts. At AIonOS, enterprise voic"
+    cards: ★wiki/spec-first-taste, ·wiki/graph, ·lab
+    trace: parsed → pulled → composed → ranked
+
+[belief-enterprise-ai-production-reality] running... PASS (2555ms)
+    answer: "80% of enterprise AI experiments never ship. They fail on four predictable things: non-functional requirements (security, scale, usability), live data pipelines, governance overhead, and time-to-value"
+    cards: ★wiki/enterprise-ai-reality, ·resume, ·lab
+    trace: parsed → loaded → traced → synthesized → composed
+
+[belief-help-market-flourish] running... PASS (2268ms)
+    answer: "He helps the market flourish because expanding the denominator compounds faster than fighting for share. Open-sourcing tools—like his AI resume template used thousands of times—grows the pie before sl"
+    cards: ★belief.help-market-flourish, ·lab/ai-resume, ·resume
+    trace: parsed → pulled → composed
+
+[belief-ic-path-legitimacy] running... PASS (2865ms)
+    answer: "IC track is a destination, not consolation: five years into PM he published that people management isn’t for everyone, and kept choosing IC roles. At AIonOS his Senior AI Product Manager title is deli"
+    cards: ★wiki/career-reflection, ·resume, ·lab
+    trace: parsed → read → traced → composed
+
+[belief-learn-concepts-not-tools] running... PASS (2252ms)
+    answer: "Agam argues tools come and go, but the underlying concepts stay. Drivers use tools; mechanics repair them; engineers rebuild from first principles. In AI, he bets on concept depth: jobs the user is hi"
+    cards: ★belief.learn-concepts-not-tools, ·resume, ·lab
+    trace: parsed → pulled → composed
+
+[belief-linkedin-as-instrumental-platform] running... PASS (1022ms)
+    answer: "Agam uses LinkedIn as a platform for professional networking, community engagement, and showcasing his work. His LinkedIn profile serves as a digital resume, allowing potential collaborators, clients,"
+    cards: ★linkedin, ·resume, ·lab
+    trace: parsed → pulled → synthesized
+
+[belief-llm-as-primary-daily-tool] running... PASS (3198ms)
+    answer: "Agam uses LLM as his primary daily tool due to its build-partner shift, tolerating a thick context window for code generation and data review, as seen in his 2026 B2B PM hiring bar."
+    cards: ·lab, ★belief.llm-as-primary-daily-tool, ·resume
+    trace: parsed → pulled → composed
+
+[belief-pm-is-99-should-we-1-can-we] running... PASS (1161ms)
+    answer: "Agam operates with a 99/1 ratio, where 99 percent of decisions aim to say no to features that don't fit the strategy, and 1 percent is about saying yes to what's essential. This framework exercises ta"
+    cards: ★belief.pm-is-99-should-we-1-can-we, ·resume, ·lab
+    trace: parsed → pulled → composed
+
+[belief-second-brain-is-context-layer] running... PASS (1367ms)
+    answer: "Agam's second-brain is a persistent context layer for AI sessions, where every session reads from the same brain and writes back to it. This layer enables Context over Prompt, architecturally enforced"
+    cards: ★wiki/second-brain, ·wiki/graph, ·wiki/agent-first
+    trace: parsed → read → composed
+
+[belief-self-instrumentation] running... PASS (2419ms)
+    answer: "Self-instrumentation is the act of running your own experiments and measurements first, not waiting for external dashboards. Domain-specific wrappers beat generic logs: targeted data beats broad noise"
+    cards: ★belief.self-instrumentation, ·lab, ·resume
+    trace: parsed → pulled → verified → composed
+
+[belief-ship-the-prototype] running... PASS (2417ms)
+    answer: "Agam treats the prototype as proof the spec works. Five top-tier open-source projects shipped since 2020 prove it: Shararat, second-brain, ai-resume, luna-monitor, and /buddy. The loop is his operatin"
+    cards: ·lab, ★wiki/personal-projects-tinkering, ·resume
+    trace: classified → traced → composed
+
+[belief-spec-over-sprint] running... PASS (2058ms)
+    answer: "Agam treats the spec as a contract, not a draft. Every hour spent debating scope in sprints should have been settled in the PRD. He enforces scope up-front to protect engineering velocity and team tru"
+    cards: ★belief.spec-over-sprint, ·resume, ·lab
+    trace: parsed → pulled → composed
+
+[belief-substance-over-hype] running... PASS (2521ms)
+    answer: "Agam's root belief is a test: name the actual substrate beneath the label, then refuse to let the label do the work for you. He's applied it to blockchain in 2018, no-code in 2020, GenAI in 2024, and "
+    cards: ·wiki/agent-first, ★wiki/root.substance-over-hype, ·resume
+    trace: parsed → read → composed
+
+[belief-taste-over-execution] running... PASS (2349ms)
+    answer: "At AIonOS, a well-specified AI input yields the right output faster than iterating on execution. Execution without taste is efficient at shipping the wrong thing: 4 million voice calls a year proved t"
+    cards: ★wiki/spec-first-taste, ·book-call, ·resume
+    trace: parsed → read → composed
+
+--- summary ---
+PASS: 28/28
+FAIL: 0
