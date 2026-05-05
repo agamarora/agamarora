@@ -28,14 +28,16 @@ applies_to:
 confidence: settled
 tier: 1
 length_target: 600-900w
-status: c-bulldozer-r1-2026-05-04
+status: c-rubric-v2-revised-2026-05-05
 voice_register: 1 (free-form post-essay)
 shape: principle-card-d6.1
 ---
 
 # The spec is the argument. Pre-code discipline at enterprise scale.
 
-Most organizations that survive the POC phase fail at the spec phase. Not at the model selection phase, not at the sprint velocity phase: at the specification phase. The AI system amplifies what the PM puts in front of it. A vague brief produces a plausible-but-wrong output that requires six more cycles of remediation. A tight spec produces a correct output on the first pass. When iteration costs measured in tokens and hours approach near-zero, the economic argument for "ship fast and fix later" collapses. The binding constraint is now how precisely the team specified what they wanted, not how quickly they shipped a first attempt.
+Most organizations that survive the POC phase fail at the spec phase. Not at the model selection phase, not at the sprint velocity phase: at the specification phase. The AI system amplifies what the PM puts in front of it. A vague brief produces a plausible-but-wrong output that requires six more cycles of remediation. A tight spec produces a correct output on the first pass. When iteration costs approach near-zero, the economic argument for "ship fast and fix later" collapses. The binding constraint is now how precisely the team specified what they wanted. Not how quickly they shipped a first attempt.
+
+The inversion is the spine of the argument here: when iteration is cheap, the binding constraint is clarity of specification, not speed of execution. Spec is the hard constraint; sprint is the velocity tactic inside it. Get the inversion wrong and you have confused the method with the goal.
 
 ## The economics changed. The habits did not.
 
@@ -43,7 +45,7 @@ The case for fast-iteration-over-spec was built on a correct assumption: iterati
 
 Generative tools produce full layouts in thirty seconds. LLMs draft complete PRD sections in minutes. An engineering team with AI-assisted coding ships working prototypes in days, not weeks. When iteration is that cheap, fast prototyping produces noise. The correct investment shifts upstream: the PRD, the acceptance criteria, the non-functional requirements, the scope boundaries. The PM who specs precisely is the one whose AI-assisted team ships correctly on the first meaningful iteration, not the fifth.
 
-At enterprise scale this calculus is enforced structurally. A 4M+ call-per-year production voice system does not survive ambiguous SLA requirements. Latency budgets are specified before the model is selected, not discovered during testing. Compliance gating at procurement is a documentation checklist that the spec either satisfies or does not. These forcing functions constrain fast-iteration tactics at the enterprise layer because the cost of a late-stage spec gap is not a prompt refinement: it is a six-week regression across a production system that customer SLAs depend on.
+At enterprise scale this calculus is enforced structurally. A 4M+ call-per-year production voice system does not survive ambiguous SLA requirements. Latency budgets are specified before the model is selected, not discovered during testing. Compliance gating at procurement is a documentation checklist that the spec either satisfies or does not. These forcing functions constrain fast-iteration tactics at the enterprise layer because the cost of a late-stage spec gap is not a prompt refinement. It is a six-week regression across a production system that customer SLAs depend on.
 
 ## The PRD as scope enforcement mechanism
 
@@ -59,10 +61,12 @@ Three disciplines enforced at the PRD layer:
 
 ## Sprint velocity inside a tight spec is a virtue
 
-This is not an argument that sprints are wrong. Sprints are the correct sequencing, cadence, and unblocking mechanism. The target is the sub-axiom that equates sprint velocity with product quality. Speed inside a well-specified system is a genuine competitive advantage. Speed as a substitute for a spec is not.
+This is not an argument against sprints. Sprints are the correct sequencing, cadence, and unblocking mechanism once the spec is done. The target is the sub-axiom that equates sprint velocity with product quality. Speed inside a well-specified system is a genuine competitive advantage. Speed as a substitute for a spec is not. It is 2019 habits applied to 2026 tooling.
 
-The second-brain v1 shipped as plain markdown, git-tracked, open source, MIT license, free forever. Eight words. That is Spec over Sprint in practice: a scope that was specified tightly, shipped fully, without iteration-as-discovery. The speed was high because the spec resolved the taste questions upstream. The platform tool was evaluated and deprecated in under thirty minutes because the spec had already converged on what the output needed to look like.
+The second-brain v1 shipped as plain markdown, git-tracked, open source, MIT license, free forever. Eight words. That is Spec over Sprint in practice: a scope specified tightly, shipped fully, without iteration-as-discovery. The speed was high because the spec resolved the taste questions upstream. A platform tool evaluated and deprecated in under thirty minutes. Because the spec had already converged on what the output needed to look like. Is not a failure of velocity. It is a success of specification.
 
-## Bottom line
+## The forward question
 
-Spec quality is the binding constraint on AI-assisted product delivery in 2026. At enterprise scale, SLA enforcement, compliance gating, and audit requirements formalize this into procurement criteria. At product-team scale, a tight spec compresses the effective iteration count from five rounds to one. The PM who invests upstream in precise specifications, explicit non-functional requirements, and scope refusals is the PM whose team ships correctly at speed. The PM who defaults to "ship fast and iterate" is running a 2019 playbook against 2026 tooling costs and enterprise deployment standards.
+Spec quality is the binding constraint on AI-assisted product delivery in 2026. At enterprise scale, SLA enforcement, compliance gating, and audit requirements formalize this into procurement criteria. At product-team scale, a tight spec compresses the effective iteration count from five rounds to one.
+
+The interesting edge is what happens when the spec itself becomes AI-assisted. When the PM can generate a PRD draft in minutes and iterate it in thirty-second cycles. Does that make the spec phase cheaper and therefore less important? I do not think so. It makes the taste call upstream more important, because the bottleneck moves to the PM's ability to recognize a correct spec, not to produce one quickly. Which is another way of saying the binding constraint was always judgment, not velocity.
