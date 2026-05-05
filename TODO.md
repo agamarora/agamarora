@@ -23,6 +23,8 @@ Last updated: 2026-05-05 (Rubric v2 locked + all 31 wiki source drafts revised +
 
 **Pass criteria:** ≥26/28 eval pass + manual smoke clean + visual diff acceptable. Then merge `dev` → `main`.
 
+**Eval status (2026-05-05):** `npm run eval:e2e` returned **28/28 PASS** against Real-Groq. Up from Phase 7 baseline 26/28. Synthesis quality carries v2 voice (first-person, named numbers, forward framing). Manual UI smoke + visual diff still pending before main merge.
+
 **Risks to watch:**
 - Em-dash sweep was rule-based. Some replacements may read awkwardly (parenthetical em-dashes mapping to comma-comma). If a section reads broken, edit in-place + recommit.
 - /enter agent answers use synthesis prompt that was tuned against Bulldozer extracts. Voice register shift in extracts may shift synthesis output in unexpected directions.
