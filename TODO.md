@@ -2,25 +2,30 @@
 
 **Single source of truth for open work.** Closed items pruned. Session logs (BASELINE-*.md, etc.) capture history; this file captures backlog.
 
-Last updated: 2026-05-05 (Writing rubric v2 locked at docs/plans/writing-rubric-v2.md, supersedes Bulldozer. Re-grade 5 anchor wiki pages under v2 before deciding on full re-grade.).
+Last updated: 2026-05-05 (Rubric v2 locked + all 31 wiki source drafts revised + lint script updated + pushed to dev as 77880d7. Pre-main gate: Real-Groq /enter eval + manual UI smoke per Phase D workflow.).
 
 ---
 
 ## Active
 
-### Writing rubric v2 — re-grade anchor pages
-**Why:** Rubric v2 locked 2026-05-05 at `docs/plans/writing-rubric-v2.md`. Replaces Bulldozer. Need to see how existing 30 wiki pages grade under v2 before deciding scope of re-revision.
+### Real-Groq /enter eval + UI smoke (gate before main merge)
+**Why:** Rubric v2 revisions changed wiki extracts (`netlify/functions/lib/wiki-extracts.json` regenerated). Per Phase D workflow + `feedback_phase_d_workflow.md`, all `/enter` work needs netlify dev + headed gstack browser smoke. Synthesis quality against v2-revised extracts is unverified.
 
-**Action (next session):**
-1. Pick 5 anchor pages: `/wiki/agent-first/`, `/wiki/beliefs/agent-first/`, `/wiki/voice-ai-craft/`, `/wiki/spec-first-taste/`, plus 1 more (suggest `/wiki/beliefs/spec-first/`).
-2. Self-grade each against the 18-point v2 rubric. Output: A/B/C/D + per-item pass/fail list + revision notes per page.
-3. Cluster the gaps. Three likely buckets:
-   - Pages already strong → A/B+ with light revision (relax fragments, allow earned first-person).
-   - Pages overshot Bulldozer coldness → C, need real revision pass on items 11/13/15.
-   - Pages thin on first-hand evidence or original analysis → C/D, gap Bulldozer didn't catch.
-4. Decide scope: full re-grade of 30 pages, or targeted revision of bottom-quartile only.
+**Pre-conditions:**
+- Working `GROQ_API_KEY` in `.env`
+- `netlify dev` running on 8888
+- gstack browser headed
 
-**Lint script revision (B-priority):** `scripts/lint-bulldozer.mjs` banned-vocab + zero-hedging gates need to relax to advisory. Add positive lints: anchor sentence per major section, named system per article, forward-opening close. Strict mode = positive lints only.
+**Steps:**
+1. `npm run eval:e2e` — pass = ≥26/28 (Phase 7 baseline)
+2. Manual UI drive 6-8 representative scenarios through `/enter` per Phase D workflow. Check synthesis answers carry the v2 voice (calibrated hedging, first-person where source supports, forward-opening). Verify cards/traces/citations still wire.
+3. Visual diff 3-5 representative wiki pages (anchor + 2 themes + 2 beliefs) in headed browser. Check em-dash sweep didn't break readability anywhere severe.
+
+**Pass criteria:** ≥26/28 eval pass + manual smoke clean + visual diff acceptable. Then merge `dev` → `main`.
+
+**Risks to watch:**
+- Em-dash sweep was rule-based. Some replacements may read awkwardly (parenthetical em-dashes mapping to comma-comma). If a section reads broken, edit in-place + recommit.
+- /enter agent answers use synthesis prompt that was tuned against Bulldozer extracts. Voice register shift in extracts may shift synthesis output in unexpected directions.
 
 ### Bulldozer rewrite. Wiki landings second-pass only
 **Why:** Wiki landed 2026-05-04 (`/wiki/*` 30 pages). User scoped down 2026-05-05: **`/`, `/resume`, `/lab/*` ALL OUT.** Only wiki landings (`/wiki/themes/`, `/wiki/beliefs/`) eligible for re-grade against rubric.
