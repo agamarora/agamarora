@@ -40,15 +40,38 @@
 </style>
 <style>
   :root {
-    --bg: #0A0A0A;
-    --surface: #111111;
-    --border: #1E1E1E;
-    --text: #E8E4DF;
-    --text-dim: #7A7A7A;
-    --accent: #E5A54B;
+    /* Page surfaces (warm-neutral scale, see section 02) */
+    --bg: #0B0A09;            /* n-50 */
+    --surface: #12110F;       /* n-100 */
+    --elevated: #191714;      /* n-150 */
+    --border: #201D18;        /* n-200 */
+    --border-heavy: #2D2924;  /* n-300 */
+
+    /* Text hierarchy on dark */
+    --text: #E8E4DF;          /* n-900 primary  (15.6:1 AAA) */
+    --text-strong: #C8C0B8;   /* n-800 strong   (11.0:1 AAA) */
+    --text-secondary: #A59D95;/* n-700 secondary (7.4:1 AAA) */
+    --text-dim: #8A817A;      /* n-600 muted     (5.2:1 AA)  */
+    --text-decorative: #6B6359;/* n-500 decorative only (3.4:1 AA-lg) */
+
+    /* Light-mode bg */
+    --bg-light: #F5F3EF;      /* n-950 */
+
+    /* Accent */
+    --accent: #E5A54B;        /* gold (9.3:1 on dark) */
     --accent-dim: rgba(229, 165, 75, 0.12);
+    --gold-text: #7A5C12;     /* readable gold for light bg (5.6 AA) */
+
+    /* Semantic */
+    --success: #3DA86B;
+    --error:   #D4564E;
+    --warning: #E5A54B;       /* same as accent on dark */
+    --info:    #5B8FC7;
+
+    /* Type families */
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mark: 'Patrick Hand', cursive;
 
     /* Spacing tokens (4px base) */
     --space-1: 2px;
@@ -71,6 +94,7 @@
     --padding-card: var(--space-7);
     --padding-section: var(--space-8);
     --padding-page: var(--space-10);
+    --margin-page-x: var(--space-6); /* mobile default; bumped via @media below */
 
     /* Border radius tokens */
     --radius-sm: 4px;
@@ -82,7 +106,29 @@
     --width-narrow: 720px;
     --width-default: 1080px;
     --width-wide: 1320px;
+
+    /* Breakpoint reference values.
+     * CSS @media can't read custom properties, so these are
+     * documented constants — write the literal value in @media,
+     * comment the token name beside it.
+     * Note: 768px is also referenced by section-04 spacing
+     * compression as the tablet threshold (--bp-tablet). */
+    --bp-small: 640px;
+    --bp-tablet: 768px;
+    --bp-medium: 1024px;
+    --bp-large: 1440px;
+
+    /* Motion (perception-anchored, see section 07) */
+    --motion-instant: 100ms;
+    --motion-fast: 200ms;
+    --motion-moderate: 350ms;
+    --motion-slow: 500ms;
+    --ease-decelerate: cubic-bezier(0.16, 1, 0.3, 1);
   }
+
+  /* --margin-page-x scales with breakpoints (mobile / tablet / desktop) */
+  @media (min-width: 768px)  { :root { --margin-page-x: var(--space-8);  } }
+  @media (min-width: 1024px) { :root { --margin-page-x: var(--space-10); } }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg);
