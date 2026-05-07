@@ -261,11 +261,18 @@
   .project-media.anchor-top img { object-position: center top; }
   .project-media.anchor-center img { object-position: center center; }
 
-  /* deep-research demo: 720x720 looping mp4. Same flex-stretched
-     object-fit:cover behavior as sb-media so the square crops to
-     the row height without letterboxing. */
-  .dr-media { background: #000; }
-  .dr-media > a { display: block; width: 100%; height: 100%; }
+  /* deep-research demo: 720x720 looping mp4. Square poster would
+     otherwise force the media slot to a 1:1 box and stretch the
+     info column to match (taller-than-other-cards). Take the video
+     out of flow so the row height stays driven by info text — same
+     contract as image cards. */
+  .dr-media { background: #000; position: relative; }
+  .dr-media > a {
+    display: block;
+    position: absolute;
+    inset: 0;
+    text-decoration: none;
+  }
   .dr-media video {
     display: block;
     width: 100%;
