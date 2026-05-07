@@ -45,7 +45,7 @@
   "description": "Multi-agent deep research framework for Claude Code. Type /research and get a publication-quality report — parallel subagents, adversarial critic, citation audit. Zero API keys.",
   "author": { "@type": "Person", "name": "Agam Arora", "url": "https://agamarora.com/" },
   "url": "https://agamarora.com/lab/deep-research/",
-  "image": "https://agamarora.com/assets/lab/deep-research-demo.gif",
+  "image": "https://agamarora.com/assets/lab/deep-research-poster.jpg",
   "license": "https://opensource.org/licenses/MIT",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "codeRepository": "https://github.com/agamarora/deep-research",
@@ -244,7 +244,8 @@
     border: 1px solid var(--border);
     background: var(--surface);
   }
-  .hero-image img {
+  .hero-image img,
+  .hero-image video {
     display: block;
     width: 100%;
     height: auto;
@@ -534,7 +535,10 @@
     </p>
 
     <figure class="hero-image">
-      <img src="/assets/lab/deep-research-demo.gif" alt="Animated demo of a /research run on 'budget Linux laptop in India under ₹70k'. Shows parallel subagents fanning out, critic surfacing SKU drift, citation checker auditing every claim against sources." loading="lazy">
+      <video src="/assets/lab/deep-research-anim.mp4"
+        poster="/assets/lab/deep-research-poster.jpg"
+        autoplay muted loop playsinline preload="metadata"
+        aria-label="Animated demo of a /research run on 'budget Linux laptop in India under 70k INR'. Shows parallel subagents fanning out, critic surfacing SKU drift, citation checker auditing every claim against sources."></video>
       <figcaption class="caption">Sample run &middot; 8 subagents &middot; 136 sources &middot; 58 claims &middot; critic-fix &middot; citation audit</figcaption>
     </figure>
 

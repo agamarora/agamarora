@@ -261,15 +261,19 @@
   .project-media.anchor-top img { object-position: center top; }
   .project-media.anchor-center img { object-position: center center; }
 
-  /* deep-research demo: source gif is 720x405 of a GitHub README in
-     a browser window, so the README body sits in the middle ~70%.
-     Scale the img inside the slot to crop out the browser chrome
-     and bring the README content forward. Parent has overflow:hidden
-     so the scale-up doesn't bleed past the card border. */
-  .project-media.dr-media img {
-    transform: scale(1.45);
-    transform-origin: center center;
+  /* deep-research demo: 720x720 looping mp4. Same flex-stretched
+     object-fit:cover behavior as sb-media so the square crops to
+     the row height without letterboxing. */
+  .dr-media { background: #000; }
+  .dr-media > a { display: block; width: 100%; height: 100%; }
+  .dr-media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
   }
+  .dr-media a:hover video { transform: scale(1.02); }
 
   /* Video fills the media slot the same way images do ,
      object-fit: cover so 1080x1080 source crops to the
@@ -512,7 +516,11 @@
     <div class="project-body">
       <div class="project-media dr-media">
         <a href="/lab/deep-research/" aria-label="Open deep-research PRFAQ">
-          <img src="/assets/lab/deep-research-demo.gif" alt="Animated demo of the /research Claude Code skill: parallel subagents fan out, critic audits the synthesis, citation checker verifies every claim against sources." loading="lazy">
+          <video
+            data-src="/assets/lab/deep-research-anim.mp4"
+            poster="/assets/lab/deep-research-poster.jpg"
+            muted loop playsinline preload="none"
+            aria-hidden="true"></video>
         </a>
       </div>
       <div class="project-info">
