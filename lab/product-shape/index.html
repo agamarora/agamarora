@@ -120,6 +120,13 @@
     text-transform: uppercase;
     margin-bottom: var(--space-5);
   }
+  .eyebrow a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .eyebrow a:hover { border-bottom-color: var(--accent); }
   .cs-header h1 {
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
@@ -309,7 +316,7 @@
 <main class="page">
 
   <header class="cs-header">
-    <div class="eyebrow">Lab / Case Study</div>
+    <div class="eyebrow"><a href="/lab/">Lab</a> / Case Study</div>
     <h1>Product shape is <span class="accent">what you refuse.</span></h1>
     <p class="deck">Scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first bet, the pivot I got wrong, the shape that held.</p>
     <div class="cs-meta">

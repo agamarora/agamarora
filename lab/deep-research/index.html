@@ -145,6 +145,13 @@
     text-transform: uppercase;
     margin-bottom: var(--space-5);
   }
+  .eyebrow a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .eyebrow a:hover { border-bottom-color: var(--accent); }
   .header h1 {
     font-size: clamp(2.1rem, 6vw, 3.4rem);
     font-weight: 700;
@@ -506,7 +513,7 @@
 
   <!-- HEADER / HERO -->
   <div class="header">
-    <div class="eyebrow">Lab / deep-research</div>
+    <div class="eyebrow"><a href="/lab/">Lab</a> / deep-research</div>
     <h1>Research that <span class="accent">audits itself.</span></h1>
     <p class="subhead">
       Open source Claude Code skill. Type <code style="font-family:var(--mono);font-size:0.92em;color:var(--accent);background:var(--surface);padding:1px 6px;border-radius:3px;">/research</code> in any project. Get a multi-agent run with adversarial critic gate and citation audit. Zero API keys. Thirty-second install.
