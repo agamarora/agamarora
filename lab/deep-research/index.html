@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<title>deep-research. Multi-agent deep research for Claude Code.</title>
+<meta name="description" content="deep-research: open source Claude Code skill. Type /research, get a multi-agent run with adversarial critic gate and citation audit. Zero API keys, 30-second install.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="deep-research. Multi-agent deep research for Claude Code.">
+<meta property="og:description" content="Open source Claude Code skill. /research runs parallel subagents, an adversarial critic, and a citation auditor. Zero API keys. Native WebSearch + WebFetch only.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://agamarora.com/lab/deep-research/">
+<meta property="og:image" content="https://agamarora.com/assets/og/og-general.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1256">
+<meta property="og:image:alt" content="Agam Arora — AI Product Manager, Engineer-PM, Builder.">
+<meta property="og:site_name" content="Agam Arora">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="deep-research. Multi-agent deep research for Claude Code.">
+<meta name="twitter:description" content="Open source Claude Code skill. /research = parallel subagents + adversarial critic + citation audit. Zero API keys.">
+<meta name="twitter:image" content="https://agamarora.com/assets/og/og-general.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://agamarora.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Lab", "item": "https://agamarora.com/lab/" },
+    { "@type": "ListItem", "position": 3, "name": "deep-research", "item": "https://agamarora.com/lab/deep-research/" }
+  ]
+}
+</script>
+<link rel="canonical" href="https://agamarora.com/lab/deep-research/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "deep-research",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Linux, Windows (WSL)",
+  "description": "Multi-agent deep research framework for Claude Code. Type /research and get a publication-quality report — parallel subagents, adversarial critic, citation audit. Zero API keys.",
+  "author": { "@type": "Person", "name": "Agam Arora", "url": "https://agamarora.com/" },
+  "url": "https://agamarora.com/lab/deep-research/",
+  "image": "https://agamarora.com/assets/lab/deep-research-demo.gif",
+  "license": "https://opensource.org/licenses/MIT",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "codeRepository": "https://github.com/agamarora/deep-research",
+  "softwareVersion": "0.2.2",
+  "inLanguage": "en"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Install deep-research in 30 seconds",
+  "description": "Open source multi-agent deep research framework for Claude Code. Paste one line into Claude Code, then type /research in any project.",
+  "totalTime": "PT30S",
+  "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+  "tool": [
+    { "@type": "HowToTool", "name": "Claude Code (Anthropic CLI)" },
+    { "@type": "HowToTool", "name": "Git" },
+    { "@type": "HowToTool", "name": "Node.js" }
+  ],
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Paste install prompt into Claude Code",
+      "text": "Open Claude Code in any project. Paste the one-line install prompt provided on this page. Claude clones the repo, runs setup.mjs, and registers /research." },
+    { "@type": "HowToStep", "position": 2, "name": "Restart Claude Code",
+      "text": "Restart Claude Code so the worker subagents (dr-subagent-researcher, dr-critic, dr-citation-checker) load natively. The framework also works mid-session via a fallback path." },
+    { "@type": "HowToStep", "position": 3, "name": "Run /research",
+      "text": "Type /research <your query> in any Claude Code project. The main session orchestrates: plan, dispatch parallel subagents, synthesize, critic review, citation audit. Output lands at reports/<date>-<slug>/." }
+  ]
+}
+</script>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+<!-- chrome:preload -->
+<link rel="preload" as="font" href="/fonts/satoshi/Satoshi-Variable.woff2" type="font/woff2" crossorigin>
+<!-- /chrome:preload -->
+
+<style>
+  /* chrome:css */
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#8a8a8a;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+  ::-webkit-scrollbar-corner{background:transparent;}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+  .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
+  .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
+
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
+  /* /chrome:css */
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: calc(clamp(52px, 6vw, 64px) + var(--space-7)) clamp(var(--space-6), 5vw, var(--space-8)) calc(var(--space-9) + var(--space-7));
+  }
+
+  .header { margin-bottom: var(--space-9); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+  }
+  .header h1 {
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: var(--space-5);
+  }
+  .header h1 .accent { color: var(--accent); }
+  .header .subhead {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--text-dim);
+    font-weight: 400;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+  .header .actions {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: #f0b75a; border-color: #f0b75a; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .section { margin-bottom: var(--space-9); }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: var(--space-5);
+  }
+  .section h2 {
+    font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-5);
+    line-height: 1.2;
+  }
+  .section p {
+    font-size: 0.98rem;
+    color: var(--text);
+    opacity: 0.88;
+    margin-bottom: var(--space-4);
+  }
+  .section p:last-child { margin-bottom: 0; }
+  .section p.lead {
+    font-size: 1.05rem;
+    color: var(--text);
+    opacity: 1;
+  }
+  .section strong { color: var(--text); font-weight: 600; }
+  .section a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .section a:hover { border-bottom-color: var(--accent); }
+  .section code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    color: var(--accent);
+    background: var(--surface);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  .hero-image {
+    margin: var(--space-7) 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .hero-image .caption {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .quote {
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
+    background: var(--accent-dim);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .quote p {
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 1;
+    margin-bottom: var(--space-3);
+  }
+  .quote .attrib {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-style: normal;
+  }
+
+  .faq { margin-top: var(--space-5); }
+  .faq-item {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item:last-child { border-bottom: 1px solid var(--border); }
+  .faq-q {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+  }
+  .faq-a {
+    font-size: 0.95rem;
+    color: var(--text);
+    opacity: 0.85;
+    line-height: 1.6;
+  }
+
+  .prompt-box {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+  .prompt-box pre {
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    line-height: 1.6;
+    color: var(--text);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 360px;
+    overflow-y: auto;
+  }
+  .copy-btn {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+  }
+  .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+  .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
+  .copy-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent);
+    color: var(--bg);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 100;
+  }
+  .copy-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .prereqs {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-4) 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .prereqs li {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--text-dim);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .prereqs li::before {
+    content: '→ ';
+    color: var(--accent);
+  }
+
+  .resources {
+    list-style: none;
+    padding: 0;
+  }
+  .resources li {
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .resources li:last-child { border-bottom: 1px solid var(--border); }
+  .resources .r-name {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: none;
+  }
+  .resources .r-name:hover { border-bottom: 1px solid var(--accent); }
+  .resources .r-desc {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    flex: 1;
+    text-align: right;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin: var(--space-6) 0;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .stat {
+    flex: 1 1 120px;
+    min-width: 100px;
+  }
+  .stat .stat-num {
+    font-family: var(--mono);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .stat .stat-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  .back {
+    margin-top: var(--space-9);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .back a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: none;
+  }
+  .back a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .page { padding: calc(52px + var(--space-6)) var(--space-5) var(--space-8); }
+    .header { margin-bottom: var(--space-7); }
+    .section { margin-bottom: var(--space-7); }
+    .header .actions { flex-direction: column; align-items: stretch; }
+    .btn { text-align: center; }
+    .prompt-box pre { font-size: 0.7rem; }
+    .resources li { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .resources .r-desc { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM205.1 73.3c-2.6-5.7-8.3-9.3-14.5-9.3s-11.9 3.6-14.5 9.3L123.3 187.3 9.3 240C3.6 242.6 0 248.3 0 254.5s3.6 11.9 9.3 14.5l114.1 52.7L176 435.7c2.6 5.7 8.3 9.3 14.5 9.3s11.9-3.6 14.5-9.3l52.7-114.1L371.7 269c5.7-2.6 9.3-8.3 9.3-14.5s-3.6-11.9-9.3-14.5L257.7 187.3 205.1 73.3zM384 384l-56.5 21.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 448l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 448l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 384l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L384 384z"/></symbol>
+</svg>
+
+<!-- chrome:header -->
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+    <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>
+  </div>
+</header>
+<!-- /chrome:header -->
+
+<!-- chrome:aamark -->
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+<!-- /chrome:aamark -->
+
+<div class="page">
+
+  <!-- HEADER / HERO -->
+  <div class="header">
+    <div class="eyebrow">Lab / deep-research</div>
+    <h1>Research that <span class="accent">audits itself.</span></h1>
+    <p class="subhead">
+      Open source Claude Code skill. Type <code style="font-family:var(--mono);font-size:0.92em;color:var(--accent);background:var(--surface);padding:1px 6px;border-radius:3px;">/research</code> in any project. Get a multi-agent run with adversarial critic gate and citation audit. Zero API keys. Thirty-second install.
+    </p>
+    <div class="actions">
+      <a href="#get-started" class="btn btn-primary">Install &rarr;</a>
+      <a href="https://github.com/agamarora/deep-research" target="_blank" rel="noopener" class="btn btn-secondary">View on GitHub &nearr;</a>
+    </div>
+  </div>
+
+  <!-- PRESS RELEASE -->
+  <div class="section">
+    <div class="section-title">Press release</div>
+    <h2>deep-research turns <code>/research</code> into a multi-agent run that fact-checks itself.</h2>
+
+    <p class="lead">
+      Most research agents hallucinate confidently and ship a paragraph that looks right. deep-research dispatches parallel subagents, then runs an adversarial critic and a citation auditor before anything reaches the synthesis. Every claim has to trace back to a source. Every source has to actually exist.
+    </p>
+
+    <p>
+      <strong>The problem.</strong> Single-agent research loops tour the same web in a single browser tab and synthesize a confident-sounding answer. There's nothing checking the answer. Hallucinated SKUs, drifted specs, and citations that point to the wrong page all survive because nothing inside the loop is paid to disagree with the synthesis. Add a critic? Now you need API keys, a Python service, a vector store, and a config file. The friction kills the install.
+    </p>
+
+    <p>
+      <strong>The solution.</strong> deep-research is a single-folder Claude Code skill. Paste one line, type <code>/research</code>, and the main session orchestrates: plan, dispatch parallel <code>dr-subagent-researcher</code> workers, draft a synthesis, then hand it to <code>dr-critic</code> for adversarial review and <code>dr-citation-checker</code> for claim&rarr;source verification. All four use Claude Code's native <code>WebSearch</code> and <code>WebFetch</code>. No Tavily, no Firecrawl, no Exa, no Python service. The output is a structured directory you can git-track — synthesis, audit, claims, sources, plan, and per-subagent notes — that compounds into a research asset rather than a one-shot answer.
+    </p>
+
+    <figure class="hero-image">
+      <img src="/assets/lab/deep-research-demo.gif" alt="Animated demo of a /research run on 'budget Linux laptop in India under ₹70k'. Shows parallel subagents fanning out, critic surfacing SKU drift, citation checker auditing every claim against sources." loading="lazy">
+      <figcaption class="caption">Sample run &middot; 8 subagents &middot; 136 sources &middot; 58 claims &middot; critic-fix &middot; citation audit</figcaption>
+    </figure>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">API keys</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">Install time</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Worker subagent types</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Artifacts per run</div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>"The wedge isn't a smarter model. It's accountability inside the loop. A critic that's paid to disagree with the synthesis. A citation auditor that's paid to fail every claim that doesn't trace. The model already does the work — the framework decides whether the work counts."</p>
+      <div class="attrib">Agam Arora &middot; builder</div>
+    </div>
+
+    <p>
+      <strong>Availability.</strong> Public today at <a href="https://github.com/agamarora/deep-research" target="_blank" rel="noopener">github.com/agamarora/deep-research</a> (v0.2.2). MIT licensed. Native to Claude Code — no monthly fee on top of your existing subscription.
+    </p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-title">FAQ</div>
+    <h2>Questions you'd ask before installing.</h2>
+
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">What is this, exactly?</div>
+        <div class="faq-a">A Claude Code skill: one slash command (<code>/research</code>) plus three worker subagent definitions. Plain markdown files. No runtime, no service, no daemon. Install drops a folder under <code>~/.claude/skills/</code>; <code>setup.mjs</code> writes the slash command and agents into <code>~/.claude/commands/</code> and <code>~/.claude/agents/</code>. Restart Claude Code; the agents are now available globally in every project.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why not just ask Claude Code directly?</div>
+        <div class="faq-a">Direct asks give you a single agent pulling sources serially with no internal disagreement. <code>/research</code> dispatches multiple subagents in parallel from a single message — different angles in flight at once — then runs a separate critic that's prompted to find weaknesses, then a separate citation auditor that fails every claim that can't trace. The structure is the value, not the smarter prompt.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Do I need any API keys?</div>
+        <div class="faq-a">No. The framework uses Claude Code's bundled <code>WebSearch</code> and <code>WebFetch</code>. No Tavily, no Firecrawl, no Exa, no SerpAPI, no MCP search server. The constraint is deliberate — the install only stays under thirty seconds if there's nothing to sign up for.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How long does a run take? What's the token cost?</div>
+        <div class="faq-a">Five to ten minutes for a complex run. Token cost is roughly fifteen times a normal chat — multiple subagents in parallel, each making ten-to-fifteen tool calls, plus the critic and citation passes. Don't <code>/research</code> "what's today's date." The complexity tier is auto-selected: simple fact (1 subagent), direct comparison (2-4), complex research (5-10+).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What does the output look like?</div>
+        <div class="faq-a">A directory at <code>reports/&lt;date&gt;-&lt;slug&gt;/</code> with eight files: <code>README.md</code> (cover page GitHub renders), <code>query.md</code>, <code>plan.md</code>, <code>sources.md</code> (T1/T2/T3 credibility tiers), <code>notes/</code> (one per subagent), <code>claims.md</code> (atomic claims with citation refs), <code>synthesis.md</code> (the report), <code>audit.md</code> (critic verdict + citation audit), and <code>meta.json</code>. Every claim in synthesis links to a source in sources.md. Every source has a credibility tier. The audit shows which claims passed, which got flagged, and what the critic forced to revise.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">How is this different from gpt-researcher / langchain open_deep_research?</div>
+        <div class="faq-a">Both are excellent and both are Python services with a runtime to manage and search-API keys to provision. deep-research is markdown-only, runs inside Claude Code, requires zero external accounts, and ships an adversarial critic plus citation audit in the base framework rather than as optional reflection. The trade-off: deep-research only runs where Claude Code runs. The full comparison table is in the <a href="https://github.com/agamarora/deep-research#faq" target="_blank" rel="noopener">README FAQ</a>.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if I install mid-session?</div>
+        <div class="faq-a"><code>/research</code> works immediately — slash commands hot-reload. The worker subagents need a Claude Code restart to register in the <code>subagent_type</code> enum; until then they fall back to <code>general-purpose</code> with their role prompt prepended. Output quality is unaffected; <code>synthesis.md</code> carries a <code>dispatch_mode: fallback</code> note for transparency.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Are reports tracked in my repo?</div>
+        <div class="faq-a">Your call. The framework's own repo gitignores <code>reports/</code>; in your project, you choose. Track them and research compounds — searchable, revisitable, source of truth for future runs. Keep them local and the repo stays small. The directory structure is git-friendly either way.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What if Anthropic ships an official deep-research feature?</div>
+        <div class="faq-a">deep-research adopts whichever path Anthropic publishes. The orchestrator-subagents pattern is portable — agents and the slash command are plain markdown. The framework rides on top of Claude Code's primitives; if those primitives change, the framework follows. Until then, this is the path.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Why not bundle Tavily, Firecrawl, or Exa?</div>
+        <div class="faq-a">Each one is a signup, a key, a billing relationship. Each is great in isolation; none is great as a default. The thirty-second install only works if there's nothing to provision. Forks are welcome to add them — the architecture doesn't care which retrieval tool a subagent uses.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">What's next?</div>
+        <div class="faq-a">v0.3 is on the roadmap: configurable run path, richer eval harness on sample runs, an opt-in second-source confirmation pass on T2 claims. See the <a href="https://github.com/agamarora/deep-research/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG</a> for what shipped and the <a href="https://github.com/agamarora/deep-research/issues" target="_blank" rel="noopener">issues</a> for what's open.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GET STARTED -->
+  <div class="section" id="get-started">
+    <div class="section-title">Get started</div>
+    <h2>One line. Paste into Claude Code.</h2>
+    <p>
+      It clones the repo to <code>~/.claude/skills/deep-research/</code>, runs <code>setup.mjs</code>, and registers <code>/research</code> globally. Restart Claude Code so the worker subagents load natively. Thirty seconds end-to-end.
+    </p>
+
+    <ul class="prereqs">
+      <li>Claude Code</li>
+      <li>Git</li>
+      <li>Node.js</li>
+    </ul>
+
+    <div class="prompt-box">
+      <button class="copy-btn" id="copy-btn" aria-label="Copy install prompt">Copy</button>
+      <pre id="paste-prompt"><code class="language-prompt">Install deep-research: run `git clone --single-branch --depth 1 https://github.com/agamarora/deep-research.git ~/.claude/skills/deep-research &amp;&amp; cd ~/.claude/skills/deep-research &amp;&amp; node setup.mjs` — then I can use `/research &lt;query&gt;` immediately. (Restart Claude Code afterward to load the worker subagents natively; the framework works either way via a fallback path.)</code></pre>
+    </div>
+    <p style="font-size: 0.88rem; color: var(--text-dim);">
+      Prefer to run it yourself? <a href="https://github.com/agamarora/deep-research#install--30-seconds" target="_blank" rel="noopener">Manual install</a> in the README. Same outcome, one extra terminal.
+    </p>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="section">
+    <div class="section-title">Architecture</div>
+    <h2>Main session orchestrates. Workers run in parallel.</h2>
+    <p>
+      The <code>/research</code> slash command body is the orchestrator — it runs on the main thread, plans the decomposition, and dispatches workers. Earlier versions used a separate lead-researcher subagent, but Claude Code blocks subagent&rarr;subagent dispatch, so the lead could never spawn workers. v0.2.2 collapses the lead into the main session; the worker subagents are the only subagents now.
+    </p>
+    <p>
+      Three worker types, each with one job:
+    </p>
+    <ul style="list-style:none;padding:0;margin:var(--space-4) 0;display:flex;flex-direction:column;gap:var(--space-3);">
+      <li style="font-size:0.95rem;color:var(--text);opacity:0.88;line-height:1.55;"><code>dr-subagent-researcher</code> &middot; Sonnet. One per sub-question. Parallel, single-message dispatch. Owns its slice of the question, returns structured notes.</li>
+      <li style="font-size:0.95rem;color:var(--text);opacity:0.88;line-height:1.55;"><code>dr-critic</code> &middot; Sonnet. Adversarial review. Reads the draft synthesis, hunts for weak claims, internal contradictions, and SKU/spec drift. Forces a revision when it finds one.</li>
+      <li style="font-size:0.95rem;color:var(--text);opacity:0.88;line-height:1.55;"><code>dr-citation-checker</code> &middot; Haiku. Claim&rarr;source verification. Fails any claim that can't trace to a source in <code>sources.md</code>. Cheap by design — Haiku is enough for "does this URL contain this fact."</li>
+    </ul>
+    <p>
+      The architecture is <a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">Anthropic's published multi-agent pattern</a> — the same orchestrator-subagents shape that beat single-agent by 90.2% on internal evals.
+    </p>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="section">
+    <div class="section-title">Resources</div>
+    <h2>Everything is public.</h2>
+    <ul class="resources">
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/deep-research" target="_blank" rel="noopener">github.com/agamarora/deep-research &nearr;</a>
+        <span class="r-desc">Source repo (MIT)</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/deep-research/tree/main/examples/sample-run-budget-laptop-india" target="_blank" rel="noopener">sample-run-budget-laptop-india &nearr;</a>
+        <span class="r-desc">Buy-decision shape, native multi-agent happy path</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/deep-research/tree/main/examples/sample-run-claude-code-plugin-spec" target="_blank" rel="noopener">sample-run-claude-code-plugin-spec &nearr;</a>
+        <span class="r-desc">Meta/comp shape, fallback-path eval</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/deep-research/blob/main/CHANGELOG.md" target="_blank" rel="noopener">CHANGELOG.md &nearr;</a>
+        <span class="r-desc">Full version history</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://github.com/agamarora/deep-research/blob/main/SECURITY.md" target="_blank" rel="noopener">SECURITY.md &nearr;</a>
+        <span class="r-desc">No telemetry, no key collection, no outbound calls beyond WebSearch/WebFetch</span>
+      </li>
+      <li>
+        <a class="r-name" href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">Anthropic multi-agent research system &nearr;</a>
+        <span class="r-desc">The architectural prior</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="back">
+    <a href="/lab/">&larr; back to lab</a>
+    <a href="/">agamarora.com</a>
+  </div>
+
+</div>
+
+<div class="copy-toast" id="copy-toast" role="status" aria-live="polite">Copied. Paste into Claude Code.</div>
+
+<!-- chrome:script -->
+<script>(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  });
+})();</script>
+<!-- /chrome:script -->
+
+<script>
+  (function() {
+    const btn = document.getElementById('copy-btn');
+    const pre = document.getElementById('paste-prompt');
+    const toast = document.getElementById('copy-toast');
+    if (!btn || !pre) return;
+
+    btn.addEventListener('click', async function() {
+      const codeEl = pre.querySelector('code');
+      const tmp = document.createElement('textarea');
+      tmp.innerHTML = (codeEl || pre).innerHTML;
+      const text = tmp.value;
+
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(ta);
+      }
+
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      toast.classList.add('show');
+      setTimeout(function() {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+        toast.classList.remove('show');
+      }, 2000);
+    });
+  })();
+</script>
+
+</body>
+</html>

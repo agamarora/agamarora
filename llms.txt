@@ -14,6 +14,7 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 - [Lab](https://agamarora.com/lab/): open source, case studies, and experiments
 - [second-brain](https://agamarora.com/lab/second-brain/): open source template, a git-native second brain your AI can read, write, and compound
 - [AI Resume template](https://agamarora.com/lab/ai-resume/): open source, a resume for the agent-to-agent web. Hiring agents hit a well-known JSON endpoint; humans get a chat with proof cards
+- [deep-research](https://agamarora.com/lab/deep-research/): open source Claude Code skill. /research dispatches parallel subagents, runs an adversarial critic, and audits every citation. Zero API keys, native WebSearch + WebFetch only
 - [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
 - [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
 - [Talk to Agam's AI](https://agamarora.com/enter/): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume

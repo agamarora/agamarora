@@ -68,6 +68,17 @@
   </url>
 
   <url>
+    <loc>https://agamarora.com/lab/deep-research/</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://agamarora.com/assets/lab/deep-research-demo.gif</image:loc>
+      <image:title>deep-research. Multi-agent deep research for Claude Code.</image:title>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://agamarora.com/enter/</loc>
     <lastmod>2026-04-27</lastmod>
     <changefreq>monthly</changefreq>

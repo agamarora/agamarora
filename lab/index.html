@@ -261,6 +261,16 @@
   .project-media.anchor-top img { object-position: center top; }
   .project-media.anchor-center img { object-position: center center; }
 
+  /* deep-research demo: source gif is 720x405 of a GitHub README in
+     a browser window, so the README body sits in the middle ~70%.
+     Scale the img inside the slot to crop out the browser chrome
+     and bring the README content forward. Parent has overflow:hidden
+     so the scale-up doesn't bleed past the card border. */
+  .project-media.dr-media img {
+    transform: scale(1.45);
+    transform-origin: center center;
+  }
+
   /* Video fills the media slot the same way images do ,
      object-fit: cover so 1080x1080 source crops to the
      flex-stretched slot without letterboxing. */
@@ -500,8 +510,8 @@
       <span class="project-badge">Open Source</span>
     </header>
     <div class="project-body">
-      <div class="project-media anchor-center">
-        <a href="https://github.com/agamarora/deep-research" target="_blank" rel="noopener" aria-label="Open deep-research on GitHub">
+      <div class="project-media dr-media">
+        <a href="/lab/deep-research/" aria-label="Open deep-research PRFAQ">
           <img src="/assets/lab/deep-research-demo.gif" alt="Animated demo of the /research Claude Code skill: parallel subagents fan out, critic audits the synthesis, citation checker verifies every claim against sources." loading="lazy">
         </a>
       </div>
@@ -515,7 +525,7 @@
           <p>Most research agents hallucinate. /research dispatches parallel subagents, runs an adversarial critic, and audits every citation. Zero API keys — uses Claude Code's native WebSearch and WebFetch. Each run lands as a publication-quality report in a git-trackable directory.</p>
         </div>
         <div class="project-actions">
-          <a href="https://github.com/agamarora/deep-research#readme" target="_blank" rel="noopener" class="icon-button" title="Read more" aria-label="Read more about deep-research"><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span>Read more</span></a>
+          <a href="/lab/deep-research/" class="icon-button" title="Read the PRFAQ" aria-label="Read the deep-research PRFAQ"><svg class="icon" aria-hidden="true"><use href="#i-book-open"/></svg><span>Read the PRFAQ</span></a>
           <a href="https://github.com/agamarora/deep-research" target="_blank" rel="noopener" class="icon-button" title="View code" aria-label="View deep-research source on GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg><span>Code</span></a>
         </div>
       </div>
