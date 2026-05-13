@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>/enter/log . pipeline trace</title>
+<meta name="description" content="Glassbox observability for /enter. Watch the pipeline land in real time.">
+<link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+
+<!-- chrome:preload -->
+<link rel="preload" as="font" href="/fonts/satoshi/Satoshi-Variable.woff2" type="font/woff2" crossorigin>
+<!-- /chrome:preload -->
+
+<style>
+  /* === Shared chrome (mirrors scripts/lib/chrome.mjs) === */
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --border:#1E1E1E; --border-hover:#2A2A2A;
+    --text:#E8E4DF; --text-dim:#8a8a8a;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --warn:#E5A54B; --warn-bg:rgba(229,165,75,0.08);
+    --cli:#7AB3D6; --svr:#9FD89F; --err:#E48484;
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-3:8px; --space-4:12px; --space-5:16px; --space-6:24px;
+    --space-7:32px; --space-8:48px; --space-9:64px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+
+  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+  .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
+  .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}
+
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
+
+  .icon-bar a:focus-visible,
+  .aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
+
+  /* === Page layout === */
+  main.terminal-page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: calc(clamp(52px,6vw,64px) + var(--space-7))
+             clamp(var(--space-5), 4vw, var(--space-7))
+             calc(var(--space-9) + 80px);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .page-header h1 {
+    font-family: var(--mono);
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .page-header .tagline {
+    color: var(--text-dim);
+    margin-top: var(--space-3);
+    font-size: 0.95rem;
+  }
+  .page-header .tagline a { color: var(--accent); text-decoration: none; }
+  .page-header .tagline a:hover { text-decoration: underline; }
+
+  /* === Toolbar === */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .btn {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 32px;
+  }
+  .btn:hover { border-color: var(--border-hover); color: var(--accent); }
+  .btn.on {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .filter-input {
+    flex: 1;
+    min-width: 180px;
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    min-height: 32px;
+  }
+  .filter-input:focus { outline: none; border-color: var(--accent); }
+  .toolbar .count {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-left: auto;
+  }
+
+  /* === Terminal feed === */
+  .feed {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    line-height: 1.55;
+    max-height: 72vh;
+    overflow-y: auto;
+    padding: var(--space-4);
+  }
+  .feed-empty {
+    color: var(--text-dim);
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .feed-empty a { color: var(--accent); text-decoration: none; }
+  .feed-empty a:hover { text-decoration: underline; }
+
+  .row {
+    padding: 6px 8px 6px 12px;
+    margin-bottom: 2px;
+    border-left: 2px solid transparent;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text);
+  }
+  .row:hover { background: rgba(255,255,255,0.02); }
+  .row .ts { color: var(--text-dim); margin-right: var(--space-3); }
+  .row .side { font-weight: 500; margin-right: var(--space-3); display:inline-block; min-width: 3ch; }
+  .row[data-side="CLI"] .side { color: var(--cli); }
+  .row[data-side="SVR"] .side { color: var(--svr); }
+  .row .tag {
+    color: var(--accent);
+    margin-right: var(--space-3);
+  }
+  .row .payload {
+    color: var(--text);
+    opacity: 0.9;
+  }
+  .row.warn {
+    border-left-color: var(--warn);
+    background: var(--warn-bg);
+  }
+  .row.warn::before {
+    content: "! ";
+    color: var(--warn);
+    font-weight: 600;
+  }
+  .row.deflect { opacity: 0.6; }
+  .row.error { border-left-color: var(--err); }
+  .row.error .side, .row.error .tag { color: var(--err); }
+  .row.turn-sep {
+    border-top: 1px dashed var(--border);
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+  }
+
+  @media (max-width: 600px) {
+    .row { font-size: 0.72rem; }
+    .feed { padding: var(--space-3); }
+    .toolbar .count { width: 100%; margin-left: 0; text-align: right; }
+  }
+</style>
+</head>
+<body>
+
+<!-- chrome:sprite -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 512 512"><path d="M327.5 85.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 128l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 128l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 64 426.8 7.5C425.1 3 420.8 0 416 0s-9.1 3-10.8 7.5L384 64 327.5 85.2zM205.1 73.3c-2.6-5.7-8.3-9.3-14.5-9.3s-11.9 3.6-14.5 9.3L123.3 187.3 9.3 240C3.6 242.6 0 248.3 0 254.5s3.6 11.9 9.3 14.5l114.1 52.7L176 435.7c2.6 5.7 8.3 9.3 14.5 9.3s11.9-3.6 14.5-9.3l52.7-114.1L371.7 269c5.7-2.6 9.3-8.3 9.3-14.5s-3.6-11.9-9.3-14.5L257.7 187.3 205.1 73.3zM384 384l-56.5 21.2c-4.5 1.7-7.5 6-7.5 10.8s3 9.1 7.5 10.8L384 448l21.2 56.5c1.7 4.5 6 7.5 10.8 7.5s9.1-3 10.8-7.5L448 448l56.5-21.2c4.5-1.7 7.5-6 7.5-10.8s-3-9.1-7.5-10.8L448 384l-21.2-56.5c-1.7-4.5-6-7.5-10.8-7.5s-9.1 3-10.8 7.5L384 384z"/></symbol>
+</svg>
+<!-- /chrome:sprite -->
+
+<!-- chrome:header -->
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+    <a href="/enter" class="icon-bar-agent" aria-label="Talk to the agent"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"/></svg></a>
+  </div>
+</header>
+<!-- /chrome:header -->
+
+<main class="terminal-page">
+  <section class="page-header">
+    <h1>/enter/log . pipeline trace</h1>
+    <p class="tagline">
+      Glassbox observability for <a href="/enter">/enter</a>. Open this in one tab,
+      ask a question in another. The pipeline lands here live.
+    </p>
+  </section>
+
+  <section class="toolbar" role="toolbar" aria-label="Log controls">
+    <button id="btn-verbose" class="btn" type="button" aria-pressed="false"
+            title="Adds backend timing internals (timings_map, pill_resolve, retrieval_meta, retry_meta, cache_status). No private data exposed. Applies to the next question.">
+      verbose: OFF
+    </button>
+    <button id="btn-pause" class="btn on" type="button" aria-pressed="true"
+            title="Auto-scroll to newest entry as it arrives. Toggle off to read history without the view yanking down.">
+      autoscroll: ON
+    </button>
+    <button id="btn-clear" class="btn" type="button"
+            title="Clear all entries from this session.">
+      clear
+    </button>
+    <input id="filter" class="filter-input" type="text" placeholder="filter (substring match on tag + payload)" aria-label="Filter">
+    <span class="count" id="count">0 entries</span>
+  </section>
+
+  <section id="feed" class="feed" aria-live="polite" aria-label="Pipeline trace feed">
+    <div class="feed-empty" id="feed-empty">
+      No traffic yet. Open <a href="/enter">/enter</a> in another tab, ask a question, and the pipeline lights up here.
+    </div>
+  </section>
+</main>
+
+<!-- chrome:aa-mark -->
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+<!-- /chrome:aa-mark -->
+
+<script>
+// === aa. mark stroke-draw animation (mirrors chrome.mjs AAMARK_SCRIPT) ===
+(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  document.fonts.ready.then(()=>{
+    const len=s.getComputedTextLength();
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  });
+})();
+</script>
+
+<script>
+// =============================================================
+// /enter/log . glassbox observability viewer
+// =============================================================
+// Reads sessionStorage ring buffer written by /enter (key: enterDebugRing),
+// subscribes to BroadcastChannel('enter-debug') for live updates, renders
+// each entry as a terminal row. No network calls — purely a consumer of
+// what /enter captures.
+//
+// Layout decisions:
+//   - Entries pushed in arrival order. New entry rendered with a small fade-in.
+//   - Autoscroll on by default; user can pause.
+//   - Verbose toggle writes sessionStorage.enterVerbose; /enter reads it on
+//     next POST to enable tier-2 server emission.
+//   - Filter is substring (not regex) for predictable behavior.
+//   - 500-entry ring cap mirrors /enter side.
+// =============================================================
+
+const RING_KEY = 'enterDebugRing';
+const VERBOSE_KEY = 'enterVerbose';
+const RING_MAX = 500;
+
+const feed = document.getElementById('feed');
+const feedEmpty = document.getElementById('feed-empty');
+const filterInput = document.getElementById('filter');
+const btnVerbose = document.getElementById('btn-verbose');
+const btnPause = document.getElementById('btn-pause');
+const btnClear = document.getElementById('btn-clear');
+const countEl = document.getElementById('count');
+
+let entries = [];        // in-memory copy of ring
+let autoscroll = true;
+let filterStr = '';
+
+// ---- Persistence -------------------------------------------------------
+function loadRing() {
+  try {
+    const raw = sessionStorage.getItem(RING_KEY);
+    if (!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  } catch { return []; }
+}
+function saveRing() {
+  try { sessionStorage.setItem(RING_KEY, JSON.stringify(entries)); } catch {}
+}
+
+// ---- Rendering ---------------------------------------------------------
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmtTime(ts) {
+  const d = new Date(ts);
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mm = String(d.getMinutes()).padStart(2,'0');
+  const ss = String(d.getSeconds()).padStart(2,'0');
+  const ms = String(d.getMilliseconds()).padStart(3,'0');
+  return `${hh}:${mm}:${ss}.${ms}`;
+}
+function fmtPayload(obj) {
+  if (obj == null) return '';
+  try { return JSON.stringify(obj); } catch { return '(unserializable)'; }
+}
+// Decide row class based on payload signals — surfaces the bug without devtools.
+function rowClass(entry) {
+  const p = entry.payload || {};
+  const classes = [];
+  if (p.fallbackUsed === true) classes.push('warn');
+  if (entry.tag === 'route_decision' && (p.type === 'deflect' || p.type === 'fallback')) classes.push('deflect');
+  if (entry.tag === 'turn_complete' && p.isError) classes.push('error');
+  return classes.join(' ');
+}
+function rowMatchesFilter(entry) {
+  if (!filterStr) return true;
+  const haystack = (entry.tag + ' ' + fmtPayload(entry.payload)).toLowerCase();
+  return haystack.includes(filterStr);
+}
+function buildRow(entry, idx, isTurnStart) {
+  const div = document.createElement('div');
+  div.className = 'row ' + rowClass(entry) + (isTurnStart && idx > 0 ? ' turn-sep' : '');
+  div.dataset.side = entry.side;
+  div.dataset.idx = idx;
+  div.innerHTML =
+    `<span class="ts">${escHtml(fmtTime(entry.ts))}</span>` +
+    `<span class="side">${escHtml(entry.side)}</span>` +
+    `<span class="tag">${escHtml(entry.tag)}</span>` +
+    `<span class="payload">${escHtml(fmtPayload(entry.payload))}</span>`;
+  return div;
+}
+// New question = new turn separator. We detect it on `question_submitted`.
+function isTurnStart(entry) {
+  return entry.side === 'CLI' && entry.tag === 'question_submitted';
+}
+function renderAll() {
+  feed.innerHTML = '';
+  const visible = entries.filter(rowMatchesFilter);
+  if (visible.length === 0) {
+    feed.appendChild(feedEmpty);
+    countEl.textContent = entries.length === 0 ? '0 entries' : `0 visible (${entries.length} filtered)`;
+    return;
+  }
+  if (feedEmpty.parentNode) feedEmpty.remove();
+  for (let i = 0; i < visible.length; i++) {
+    feed.appendChild(buildRow(visible[i], i, isTurnStart(visible[i])));
+  }
+  countEl.textContent = filterStr
+    ? `${visible.length} visible (${entries.length} total)`
+    : `${entries.length} entries`;
+  if (autoscroll) feed.scrollTop = feed.scrollHeight;
+}
+function appendOne(entry) {
+  entries.push(entry);
+  while (entries.length > RING_MAX) entries.shift();
+  saveRing();
+  if (!rowMatchesFilter(entry)) {
+    countEl.textContent = filterStr
+      ? `${feed.querySelectorAll('.row').length} visible (${entries.length} total)`
+      : `${entries.length} entries`;
+    return;
+  }
+  if (feedEmpty.parentNode) feedEmpty.remove();
+  const idx = feed.querySelectorAll('.row').length;
+  feed.appendChild(buildRow(entry, idx, isTurnStart(entry)));
+  countEl.textContent = filterStr
+    ? `${idx + 1} visible (${entries.length} total)`
+    : `${entries.length} entries`;
+  if (autoscroll) feed.scrollTop = feed.scrollHeight;
+}
+
+// ---- Toolbar handlers --------------------------------------------------
+function syncVerboseUI() {
+  const on = sessionStorage.getItem(VERBOSE_KEY) === '1';
+  btnVerbose.textContent = on ? 'verbose: ON' : 'verbose: OFF';
+  btnVerbose.classList.toggle('on', on);
+  btnVerbose.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+btnVerbose.addEventListener('click', () => {
+  const cur = sessionStorage.getItem(VERBOSE_KEY) === '1';
+  sessionStorage.setItem(VERBOSE_KEY, cur ? '0' : '1');
+  syncVerboseUI();
+});
+btnPause.addEventListener('click', () => {
+  autoscroll = !autoscroll;
+  // Label + highlight both track the same state: autoscroll ON = gold
+  // highlight + "ON" label; autoscroll OFF = no highlight + "OFF" label.
+  // No semantic inversion.
+  btnPause.textContent = autoscroll ? 'autoscroll: ON' : 'autoscroll: OFF';
+  btnPause.classList.toggle('on', autoscroll);
+  btnPause.setAttribute('aria-pressed', autoscroll ? 'true' : 'false');
+  if (autoscroll) feed.scrollTop = feed.scrollHeight;
+});
+btnClear.addEventListener('click', () => {
+  entries = [];
+  try { sessionStorage.removeItem(RING_KEY); } catch {}
+  renderAll();
+});
+filterInput.addEventListener('input', () => {
+  filterStr = filterInput.value.trim().toLowerCase();
+  renderAll();
+});
+
+// ---- Boot --------------------------------------------------------------
+syncVerboseUI();
+entries = loadRing();
+renderAll();
+
+// Live subscription. BroadcastChannel is the primary path; sessionStorage
+// is the same-tab fallback (we also write here to mirror what /enter writes,
+// so reload replays).
+if ('BroadcastChannel' in window) {
+  try {
+    const ch = new BroadcastChannel('enter-debug');
+    ch.addEventListener('message', (ev) => {
+      const entry = ev?.data;
+      if (!entry || typeof entry !== 'object') return;
+      if (!entry.tag || !entry.side || typeof entry.ts !== 'number') return;
+      appendOne(entry);
+    });
+  } catch (err) {
+    console.warn('BroadcastChannel failed', err);
+  }
+}
+</script>
+
+</body>
+</html>

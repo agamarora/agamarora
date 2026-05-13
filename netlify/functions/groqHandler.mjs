@@ -473,8 +473,20 @@ export default async function (request) {
       return json({ result: "Nice try. I don't break that easily." }, 200, origin);
     }
 
+    // Glassbox observability (/enter/log): when client opts in via the verbose
+    // toggle, tier-2 debug events (timings_map, pill_resolve, retrieval_meta,
+    // retry_meta, cache_status) are emitted on the SSE stream alongside the
+    // normal trace/token/card events. Tier-1 events always emit. Allowlist
+    // scrubber lives in lib/debug-emit.mjs — IP-bearing fields never reach
+    // the wire regardless of this flag.
+    const verbose = body.verbose === true;
+
     // Pipeline timing state (Decision 16 — server stamps real ms per step)
     const timings = {};
+    // Glassbox meta accumulator. Each pipeline step writes its summary here;
+    // the stream builder emits these as `debug` SSE events at the head of the
+    // stream. Mutable object passed by reference — additions are no-cost.
+    const meta = {};
 
     // ---- D-5: Duplicate-query cache check ------------------------------------
     //
@@ -491,7 +503,7 @@ export default async function (request) {
         const cachedText = cached.text || '';
         const cachedCards = Array.isArray(cached.cards) ? cached.cards : [];
         return new Response(
-          buildCacheReplayStream({ text: cachedText, cards: cachedCards }),
+          buildCacheReplayStream({ text: cachedText, cards: cachedCards }, { cache: { hit: true } }, verbose),
           {
             status: 200,
             headers: {
@@ -522,6 +534,16 @@ export default async function (request) {
     timings['preroute'] = routeMs;
     timings['classify'] = routeMs; // same step; trace resolves classify → preroute bucket
 
+    // Glassbox: capture route decision for /enter/log. Same fields as
+    // [route] console log — debug-emit.mjs allowlist filters this on the wire.
+    meta.route = {
+      type: routeDecision.type,
+      reason: routeDecision.route_reason,
+      themes: Array.isArray(routeDecision.themes_likely) ? routeDecision.themes_likely : [],
+      confidence: routeDecision.confidence,
+    };
+    meta.cache = { hit: false };
+
     console.log('[route]', JSON.stringify({
       type: routeDecision.type,
       reason: routeDecision.route_reason,
@@ -537,7 +559,7 @@ export default async function (request) {
       // cards array; deflect stream picks its own card pair from a bounded
       // set on replay (see ssestream.pickDeflectCards).
       dupCacheStore(dupKey, JSON.stringify({ text, cards: [] }));
-      return sseResponse(buildDeflectStream(text), origin);
+      return sseResponse(buildDeflectStream(text, meta, verbose), origin);
     }
 
     // ---- D-3: Wiki retrieval (themes + beliefs partitioned) ------------------
@@ -595,6 +617,17 @@ export default async function (request) {
       retrieveEdgesMs = eMs;
       timings['retrieve_edges'] = eMs;
     }
+
+    // Glassbox: retrieval shape only — slug list + char counts, NEVER content.
+    // Slugs are already public via card meta; char counts are numeric, not
+    // text. Allowlist scrubber drops anything else regardless.
+    meta.retrieval = {
+      theme_slugs: wikiExtracts.map((e) => e.slug),
+      belief_slugs: beliefExtracts.map((e) => e.slug),
+      theme_chars: wikiExtracts.reduce((n, e) => n + (e.extract?.length || 0), 0),
+      belief_chars: beliefExtracts.reduce((n, e) => n + (e.extract?.length || 0), 0),
+      edge_count: edges.length,
+    };
 
     // ---- D-2: Build messages (stable prefix + dynamic suffix) ----------------
 
@@ -688,6 +721,14 @@ export default async function (request) {
           },
         ];
 
+        meta.retry = {
+          triggered: true,
+          accepted: true,
+          originalLen: originalAnswerLen,
+          expandedLen: retryResult.json.answer.length,
+          retryMs,
+        };
+
         parsed = {
           trace: expandedTrace,
           answer: expandedJson.answer,
@@ -704,6 +745,13 @@ export default async function (request) {
         // Do NOT append `expanded` verb (the spec reserves it for accepted
         // retries; appending on failure would mislead the trace + risk
         // double-append if this branch were ever invoked twice).
+        meta.retry = {
+          triggered: true,
+          accepted: false,
+          originalLen: originalAnswerLen,
+          expandedLen: retryResult?.json?.answer?.length ?? 0,
+          retryMs,
+        };
         console.warn('[D-9a] retry did not improve answer, using original');
       }
     }
@@ -819,7 +867,7 @@ export default async function (request) {
     // buildEventStream() splices real timings into trace events (Decision 16).
     // Pill animation uses max(realMs, MIN_PILL_DURATION_MS) (Decision 17).
 
-    const sseStream = buildEventStream(parsed, timings, MIN_PILL_DURATION_MS);
+    const sseStream = buildEventStream(parsed, timings, MIN_PILL_DURATION_MS, meta, verbose);
 
     // Log wiki diagnostics for observability
     const diag = wikiDiagnostics();
@@ -858,6 +906,9 @@ export default async function (request) {
 
   } catch (error) {
     console.error('[handler] fatal error:', error?.message || error);
+    // Glassbox: fallback path has no meta context (we're in the outer catch).
+    // Verbose flag is also out of scope here, so default to off — fallback
+    // payload is static and contains no IP-bearing fields anyway.
     return sseResponse(buildFallbackStream(), origin);
   }
 }

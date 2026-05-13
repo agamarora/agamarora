@@ -939,6 +939,56 @@ window.__throttle = { canSubmit, markSubmit, throttleRemaining };
 'use strict';
 
 // =============================================================
+// GLASSBOX DEBUG CAPTURE (/enter/log relay)
+// =============================================================
+// Mirrors every meaningful pipeline event to:
+//   (a) BroadcastChannel('enter-debug') for live /enter/log subscribers
+//   (b) sessionStorage ring buffer so /enter/log reload replays the tail
+//
+// Server-side `debug` SSE events arrive on the same stream as trace/token/
+// card and are forwarded verbatim (side='SVR'). Client-side events are
+// captured at submit, render, and finish (side='CLI').
+//
+// Allowlist of tags lives in netlify/functions/lib/debug-emit.mjs (server)
+// and is enforced again client-side via KNOWN_CLI_TAGS below. Unknown tags
+// drop silently — defense in depth.
+//
+// Verbose flag (sessionStorage.enterVerbose='1') is read on submit and
+// piggybacks into the POST body so the server can decide whether to emit
+// tier-2 events. /enter/log toggles this flag.
+const DEBUG_RING_KEY = 'enterDebugRing';
+const DEBUG_VERBOSE_KEY = 'enterVerbose';
+const DEBUG_RING_MAX = 500;
+const KNOWN_CLI_TAGS = new Set([
+  'question_submitted', 'pill_added', 'pill_settled',
+  'answer_rendered', 'cards_rendered', 'turn_complete',
+]);
+let debugChan = null;
+try {
+  if ('BroadcastChannel' in window) debugChan = new BroadcastChannel('enter-debug');
+} catch {}
+function captureDebug(side, tag, payload) {
+  // Client-side allowlist: drop unknown CLI tags (defense in depth in case
+  // future code accidentally adds a tag with sensitive fields).
+  if (side === 'CLI' && !KNOWN_CLI_TAGS.has(tag)) return;
+  const entry = { side, tag, payload, ts: Date.now() };
+  try {
+    const raw = sessionStorage.getItem(DEBUG_RING_KEY);
+    const ring = raw ? JSON.parse(raw) : [];
+    ring.push(entry);
+    while (ring.length > DEBUG_RING_MAX) ring.shift();
+    sessionStorage.setItem(DEBUG_RING_KEY, JSON.stringify(ring));
+  } catch {}
+  try { debugChan?.postMessage(entry); } catch {}
+}
+function readVerbose() {
+  try { return sessionStorage.getItem(DEBUG_VERBOSE_KEY) === '1'; } catch { return false; }
+}
+// Per-turn submit timestamp so finishTurn can stamp submitToReadyMs without
+// needing extra arg-plumbing through the SSE handler + error paths.
+const turnStartTimes = new Map();
+
+// =============================================================
 // KEYBOARD BACKGROUND (preserved from v2)
 // =============================================================
 const isMobile = () => window.matchMedia?.('(max-width:760px)').matches ?? (window.innerWidth <= 760);
@@ -1234,6 +1284,11 @@ function scheduleTraceLine(lineEl, realLatencyMs, delayMs) {
       if (elapsed >= animDuration) {
         // Done: settle to final value + checkmark
         latencyEl.innerHTML = `${realLatencyMs}ms<span class="check" aria-hidden="true">&#10003;</span>`;
+        captureDebug('CLI', 'pill_settled', {
+          verb: lineEl.getAttribute('data-verb') || '',
+          finalMs: realLatencyMs,
+          animDuration,
+        });
         return;
       }
       const progress = elapsed / animDuration;
@@ -1291,6 +1346,7 @@ function addTraceLine(turnId, verb, arg, realLatencyMs, scheduleDelay) {
   const line = document.createElement('div');
   line.className = 'trace-line';
   line.setAttribute('data-latency', realLatencyMs);
+  line.setAttribute('data-verb', verb);
   line.innerHTML = `
     <span class="verb">
       <span class="arrow">&rarr;</span>${escHtml(verb)}${arg ? ` <span class="arg">${escHtml(arg)}</span>` : ''}
@@ -1298,6 +1354,7 @@ function addTraceLine(turnId, verb, arg, realLatencyMs, scheduleDelay) {
     <span class="latency"></span>
   `;
   traceEl.appendChild(line);
+  captureDebug('CLI', 'pill_added', { turnId, verb, arg, realLatencyMs, scheduleDelay });
   scheduleTraceLine(line, realLatencyMs, scheduleDelay);
   scrollToActiveTail(turnId);
 }
@@ -1351,6 +1408,11 @@ function showAnswer(turnId, text, delayMs) {
       el.innerHTML = `<p>${escHtml(text.trim())}</p>`;
     }
     el.classList.add('show');
+    captureDebug('CLI', 'answer_rendered', {
+      turnId,
+      len: text.length,
+      first80: text.slice(0, 80),
+    });
     scrollToActiveTail(turnId);
   }, delayMs);
 }
@@ -1361,6 +1423,10 @@ function showCards(turnId, cards, delayMs) {
     if (!el || !cards || !cards.length) return;
     el.innerHTML = cards.map(buildCard).join('');
     el.classList.add('show');
+    captureDebug('CLI', 'cards_rendered', {
+      turnId,
+      slugs: cards.map(c => c && c.slug ? c.slug : '?'),
+    });
     scrollToActiveTail(turnId);
   }, delayMs);
 }
@@ -1466,6 +1532,20 @@ async function submitQuery(prompt, history, isRetry) {
   // Create turn in DOM
   const turnId = createTurn(prompt);
 
+  // Glassbox: stamp submit time for the eventual turn_complete elapsed
+  // calculation. Capture the question before fetch so /enter/log shows it
+  // immediately even if the network call is slow.
+  const submitTs = Date.now();
+  turnStartTimes.set(turnId, submitTs);
+  const verbose = readVerbose();
+  captureDebug('CLI', 'question_submitted', {
+    turnId,
+    text: prompt,
+    len: prompt.length,
+    historyLen: Array.isArray(history) ? history.length : 0,
+    verbose,
+  });
+
   // Immediate-feedback placeholder pill so user sees activity in the moment
   // between submit and first SSE trace event. Removed when the first real
   // trace lands. Without this, there's a perceptible 200-600ms gap of
@@ -1482,7 +1562,7 @@ async function submitQuery(prompt, history, isRetry) {
     const res = await fetch('/.netlify/functions/groqHandler', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, history: history.slice(-6) }),
+      body: JSON.stringify({ prompt, history: history.slice(-6), verbose }),
       signal: currentAbortController.signal,
     });
     clearTimeout(timeout);
@@ -1520,6 +1600,17 @@ async function submitQuery(prompt, history, isRetry) {
       try { parsed = JSON.parse(payload); } catch (e) { return; }
 
       const t = parsed.type;
+
+      // ---- Glassbox debug relay ----
+      // Server-emitted debug events ride the same SSE stream. Forward each
+      // one verbatim to /enter/log via captureDebug. Server already scrubbed
+      // the payload via the allowlist (debug-emit.mjs).
+      if (t === 'debug') {
+        if (parsed.tag && parsed.payload && typeof parsed.payload === 'object') {
+          captureDebug('SVR', parsed.tag, parsed.payload);
+        }
+        return;
+      }
 
       // ---- Lane A v3 typed events ----
       if (t === 'trace') {
@@ -1658,6 +1749,17 @@ function finishTurn(turnId, answer, cards, isError) {
   startHintRotation();
   if (isError) {
     setStatus('ready', true);
+  }
+  const startTs = turnStartTimes.get(turnId);
+  if (typeof startTs === 'number') {
+    captureDebug('CLI', 'turn_complete', {
+      turnId,
+      submitToReadyMs: Date.now() - startTs,
+      answerLen: typeof answer === 'string' ? answer.length : 0,
+      cardCount: Array.isArray(cards) ? cards.length : 0,
+      isError: !!isError,
+    });
+    turnStartTimes.delete(turnId);
   }
 }
 
