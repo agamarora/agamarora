@@ -8,21 +8,24 @@ Personal website for Agam Arora. Live at **https://agamarora.com**. Source repo:
 
 ## Active Work
 
-**Bulldozer rewrite (locked 2026-05-04, shipped on `dev`)** — `/wiki/` is the single canonical publication. Every page reads as an L7 internal architecture and product strategy memo. 30 source drafts rewritten + voice meta page retired + 31 anchor lint slugs gated.
+**Status:** Site live + healthy. `TODO.md` Active = none. `dev` branch behind `main` (nothing parked). Last meaningful ships: glassbox `/enter/log` (ff8710b), `/lab/deep-research/` PRFAQ (96722cc), synthesis prompt v2 + audience eval 28/28 (d979156), rubric v2 + 31 wiki revisions (4a043da).
 
-- **Bulldozer spec (BINDING):** `~/.claude/plans/lets-think-this-through-staged-zebra.md` sections 5.1 through 5.10. Voice rules + Kill List + L7 polish + 15-point grading rubric all locked.
-- **Anchor reference (A-grade examples):** `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/agent-first.md` (theme) + `docs/plans/second-brain-v1-phase-a/synthesis/belief-page-drafts-final/agent-first.md` (belief).
-- **Lint gate:** `npm run lint:bulldozer --strict` runs 31 anchor slugs through banned-vocab + hedging + em-dash + H2 + hook + bottom-line + verb-floor checks. Strict = 0 violations to commit.
-- **Single-publication architecture:** no `/writing/`, no `/blog/`, no chronological surface. New writing folds into the right wiki theme/belief as a Bulldozer-voice H2 section. See `~/.claude/projects/D--AA-agamarora/memory/feedback_no_chronological.md`.
-- **Memory references:** `feedback_wiki_proof_of_work.md`, `feedback_no_chronological.md`, `project_second_brain_v1.md`, `project_writing_framework.md` (RETIRED).
+**Writing rubric v2** is the active content standard (supersedes Bulldozer voice spec for grading). Canonical: `docs/plans/writing-rubric-v2.md`. 18-point rubric, calibrated hedging in, banned-vocab gates relaxed, Google E-E-A-T folded in. Memory: `project_writing_rubric_v2.md`.
 
-**Eval baseline:** `docs/plans/eval-results/phase-7-bulldozer-baseline-2026-05-04.md` — 26/28 PASS via `npm run eval:e2e` against local netlify dev. Real-Groq + manual UI smoke gate before main merge.
+- **Lint gate:** `npm run lint:bulldozer --strict` still runs 31 anchor slugs (banned-vocab + hedging + em-dash + H2 + hook + bottom-line + verb-floor). Kept as floor; rubric v2 is the ceiling.
+- **Single-publication architecture:** no `/writing/`, no `/blog/`, no chronological surface. New writing folds into right wiki theme/belief as H2 section. See `feedback_no_chronological.md`.
+- **Bulldozer scope locked to `/wiki/*`:** `/`, `/resume`, `/lab/*` OUT of voice rewrite. See `feedback_bulldozer_scope_locked.md`.
+- **Historical reference (superseded by rubric v2):** Bulldozer spec at `~/.claude/plans/lets-think-this-through-staged-zebra.md` §5.1–5.10. A-grade anchors: `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/agent-first.md` (theme) + `belief-page-drafts-final/agent-first.md` (belief).
 
-**Outstanding (parked on dev):** Bulldozer pass on non-wiki surfaces (`/`, `/resume`, `/lab/*`). See `TODO.md` for the per-surface plan.
+**Eval baseline (current):** `docs/plans/eval-results/audience-after-card-fix-v2-2026-05-05.txt` — audience eval 28/28 PASS via `npm run eval:audience`. Phase 7 Bulldozer baseline at `phase-7-bulldozer-baseline-2026-05-04.md` (26/28) is the prior reference.
+
+**Parked (continuing later, no active code work):**
+- Personal-branding strategy session — resume holistically. Frame: elite B2B PM with AI specialty + agent-first niche. See `project_positioning_locked.md`.
+- Site SEO strategy — B2B + AI thesis-level queries, not generic AI PM or voice AI. Same memory.
 
 ---
 
-**second-brain v1 (original spec, supplanted by Bulldozer for content; structural decisions still hold):**
+**second-brain v1 (original spec, supplanted by rubric v2 for content; structural decisions still hold):**
 - **Spec** (canonical): `docs/plans/second-brain-v1.md` — locked 2026-04-24
 - **CEO review**: `docs/plans/second-brain-v1-ceo-review.md`
 - **Architecture doc** (system stitching, request flow, failure modes, gaps): `~/.claude/plans/rosy-plotting-flame.md` — approved 2026-04-24
@@ -139,13 +142,10 @@ git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.cl
 
 Run `/gstack-upgrade` periodically to stay current.
 
-## Known Issues
+## Notes
 
-Tracked in `TODO.md`. Current:
-
-- `/moodboard` is orphan from main nav — by design (design doc, not user-facing). `robots: noindex` and `robots.txt` entries added 2026-04-22.
-- `/lab` OG image is still the generic site preview. A dedicated OG image for the lab page (and for `/lab/second-brain/` individually) would lift social-share CTR.
-- Icons are inline SVG sprites (FA solid family, sourced from `chrome.mjs` `SVG_SPRITE`). No CDN dependency, no external CSS. Sprite is reused across all v2 pages via `<svg><use href="#i-name"/></svg>`.
+- `/moodboard` orphan from main nav by design (design doc, not user-facing). `robots: noindex` and `robots.txt` entries added 2026-04-22.
+- Icons are inline SVG sprites (FA solid family, sourced from `chrome.mjs` `SVG_SPRITE`). No CDN dependency, no external CSS. Sprite reused across all v2 pages via `<svg><use href="#i-name"/></svg>`.
 
 ## Conventions for video media in lab slots
 
