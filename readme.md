@@ -10,11 +10,11 @@
 
 ---
 
-I build AI products for the moment AI agents become the primary user, not the assistant. Twelve years shipping across analytics, gaming, retail, logistics, and AI. PM by title, engineer by training, builder by habit. I hold the user's problem and the technical constraint in the same head, write the spec, then ship the thing.
+I build AI products. Twelve years across analytics, gaming, retail, logistics, and AI. PM by title, engineer by training. I write the spec, then ship the thing.
 
-Currently AVP, AI Product Management at **[AIonOS](https://aionos.io)** — running a multi-channel customer-experience platform that handles four million voice calls a year at half the cost of the market. Before that I rebuilt the data platform at **[FarEye](https://fareye.com)** (go-live: 60 days → 7, reliability NPS: 3.6 → 4.7, cost down 23%), ran a game studio that won Indie Game of the Year 2017, and advised early-stage startups through $500K+ in raises.
+Currently AVP, AI Product Management at **[AIonOS](https://aionos.io)**, running a customer-experience platform that handles four million voice calls a year at half the cost of the market. Before that I rebuilt the data platform at **[FarEye](https://fareye.com)** (go-live: 60 days → 7, reliability NPS: 3.6 → 4.7, cost down 23%), ran a game studio that won Indie Game of the Year 2017, and advised early-stage startups through $500K+ in raises.
 
-What I care about: taste, craft, and shipping things people actually use. The best products come from people who refuse to choose between the user's problem and how the thing is built.
+I care about taste, craft, and shipping things people actually use.
 
 ---
 
@@ -36,18 +36,14 @@ What I care about: taste, craft, and shipping things people actually use. The be
 
 ---
 
-## About this repository
+## Writing
 
-This repo **is** [agamarora.com](https://agamarora.com) — every page, every word, every interaction the live site renders. Open so anyone curious about how an AI PM ships product solo, with AI in the loop, can read the seams. Not open-source for reuse.
+Twelve themes and nineteen beliefs about AI product management. Hand-authored, browseable as a graph. The site's wiki is the long form of what's on this README.
 
-What's worth a closer look:
-
-- **Agent-first information architecture.** Pages structured so an AI agent gets a clean, factual answer first and a human gets the polished surface around it. Same content, two readers, no compromise on either.
-- **The live agent at `/enter`.** A working answer to "what does an AI PM's portfolio look like when the artefact is the product itself." Server-stamped trace pills, retrieval grounded in a hand-authored wiki, niche locked at the prompt layer.
-- **The wiki + constellation graph.** Twelve themes, nineteen beliefs, hand-authored. The point is not the volume; it's that an authored knowledge atlas reads better than a generated one and stays accurate longer.
-- **Shipping cadence.** Atomic commits, eval gates before merge, real-browser visual smoke for every UI change. The cadence IS the methodology.
-
-If reading mine helps you ship something of your own — take the ideas, not the code.
+- [Wiki index](https://agamarora.com/wiki/) — start here
+- [Wiki graph](https://agamarora.com/wiki/graph) — same content as a constellation
+- [LinkedIn articles](https://www.linkedin.com/in/agamarora/recent-activity/articles/) — long-form essays
+- [Medium](https://medium.com/@agam.arora11) — selected posts
 
 ---
 
