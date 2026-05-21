@@ -30,6 +30,8 @@ What I care about: taste, craft, and shipping things people actually use. The be
 
 **[Shararat Voice AI](https://github.com/agamarora/shararat-ai)** &middot; A two-character voice experience that argues with the user while they decide. Built to find out what conversational AI feels like when each agent has a point of view, not a script. Useful artefact for any team designing voice that doesn't sound like a phone tree. [Demo](https://www.youtube.com/watch?v=ZS2T_5x1on0)
 
+**[minibot](https://agamarora.com/lab/minibot/)** &middot; The spare laptop in the drawer is already a Linux box that doesn't turn off — it just needs a job. Turned an 11-year-old netbook into a home server that blocks ads and malware on every device, hosts the family password manager, and watches the cameras. The lens — most "network security" at home reduces to DNS, and DNS is free when you own the box. [Guide](https://agamarora.com/lab/minibot/)
+
 **[Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor)** &middot; A live dashboard for AI-pair-programming sessions. Shows pace, model in use, and how close you are to the rate limit before the rate limit shows you. The product lens: the real bottleneck on AI-coded productivity isn't speed of the model — it's observability of your own consumption.
 
 ---
