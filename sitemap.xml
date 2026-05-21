@@ -68,6 +68,17 @@
   </url>
 
   <url>
+    <loc>https://agamarora.com/lab/minibot/</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://agamarora.com/assets/lab/minibot-pihole.png</image:loc>
+      <image:title>minibot. An old laptop guarding the home network.</image:title>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://agamarora.com/lab/deep-research/</loc>
     <lastmod>2026-05-07</lastmod>
     <changefreq>monthly</changefreq>
