@@ -30,7 +30,7 @@ I care about taste, craft, and shipping things people actually use.
 
 **[Shararat Voice AI](https://github.com/agamarora/shararat-ai)** &middot; A two-character voice experience. Angel and Devil debate your choices out loud while you decide. Built to see what conversational AI feels like when each agent has a point of view. [Demo](https://www.youtube.com/watch?v=ZS2T_5x1on0)
 
-**[minibot](https://agamarora.com/lab/minibot/)** &middot; A guide to turning an old laptop into a home server. Pi-hole for network-wide ad and malware blocking, Vaultwarden for the family password manager, Tailscale for secure remote access, encrypted backups, and a small Telegram health bot. The walkthrough I wish I had when I started.
+**[minibot](https://agamarora.com/lab/minibot/)** &middot; A guide to turning an old laptop into a home server. Pi-hole for network-wide ad and malware blocking, Vaultwarden for the family password manager, Tailscale for secure remote access, encrypted backups, and a small Telegram health bot. The walkthrough I wish I had when I started. [Medium](https://medium.com/@agam.arora11/how-i-turned-an-old-laptop-into-a-home-server-that-secures-my-home-network-86453c8aa584)
 
 **[Claude Code Resource Monitor](https://github.com/agamarora/utils/tree/main/luna-monitor)** &middot; A terminal dashboard for Claude Code sessions. Live 5-hour and 7-day usage, pace, ETA to your rate limit, plus CPU, GPU, memory, and temps. Data comes straight from Anthropic's rate-limit headers, never scraped.
 
