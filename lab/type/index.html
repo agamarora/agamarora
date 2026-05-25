@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Thought — TTFT.LAB · agamarora.com</title>
+<meta name="description" content="Models output their first token in milliseconds. How long until yours? A 60-second typing experiment that measures Time to First Thought.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://agamarora.com/lab/type/">
+
+<link rel="preload" as="font" href="/fonts/satoshi/Satoshi-Variable.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="/fonts/jetbrains-mono/jetbrains-mono-latin.woff2" type="font/woff2" crossorigin>
+
+<style>
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Satoshi'; src:url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'); font-weight:300 900; font-display:swap; font-style:italic; }
+  @font-face { font-family:'JetBrains Mono'; src:url('/fonts/jetbrains-mono/jetbrains-mono-latin.woff2') format('woff2'); font-weight:400 500; font-display:swap; font-style:normal; }
+  @font-face { font-family:'Patrick Hand'; src:url('/fonts/patrick-hand/patrick-hand-latin.woff2') format('woff2'); font-weight:400; font-display:swap; font-style:normal; }
+
+  /* === Tokens (chrome.mjs + moodboard extensions) === */
+  :root {
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --elevated:#191714;
+    --border:#1E1E1E; --border-hover:#2A2A2A; --border-heavy:#2D2924;
+    --text:#E8E4DF; --text-strong:#C8C0B8;
+    --text-secondary:#A59D95; --text-dim:#8A817A;
+    --text-decorative:#6B6359;
+    --accent:#E5A54B; --accent-dim:rgba(229,165,75,0.12);
+    --mono:'JetBrains Mono',monospace;
+    --sans:'Satoshi',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mark:'Patrick Hand',cursive;
+    --space-2:4px; --space-3:8px; --space-4:12px; --space-5:16px;
+    --space-6:24px; --space-7:32px; --space-8:48px; --space-9:64px;
+    --space-10:96px;
+    --gap-tight:8px; --gap-default:16px; --gap-loose:24px;
+    --padding-element:12px; --padding-card:32px;
+    --padding-section:48px; --padding-page:96px;
+    --radius-sm:4px; --radius-md:8px; --radius-lg:12px;
+    --width-narrow:720px; --width-default:1080px;
+    --motion-instant:100ms; --motion-fast:200ms;
+    --motion-moderate:350ms; --motion-slow:500ms;
+    --ease-decelerate:cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* === Reset === */
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100dvh;}
+  ::selection{background:var(--accent);color:var(--bg);}
+  .icon { width:1em; height:1em; fill:currentColor; display:inline-block; vertical-align:-0.125em; flex-shrink:0; }
+
+  /* === Scrollbar === */
+  html{scrollbar-width:thin;scrollbar-color:rgba(232,228,223,0.18) transparent;}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,223,0.18);border-radius:10px;border:2px solid transparent;background-clip:padding-box;}
+  ::-webkit-scrollbar-thumb:hover{background:rgba(229,165,75,0.45);background-clip:padding-box;}
+
+  /* === Shared v2 header === */
+  header.site-header{position:fixed;top:0;left:0;right:0;height:clamp(52px,6vw,64px);z-index:100;padding:0 clamp(1rem,3vw,1.5rem);background:var(--bg);display:flex;align-items:center;}
+  .icon-bar{display:inline-flex;align-items:center;}
+  .icon-bar a{color:var(--text-dim);display:inline-flex;align-items:center;justify-content:center;width:2em;height:2em;min-width:44px;min-height:44px;font-size:clamp(1.4rem,1.5vw,1.65rem);transition:color 0.2s,filter 0.2s,transform 0.2s;text-decoration:none;}
+  .icon-bar a:hover{color:var(--accent);}
+  .icon-bar a.icon-bar-agent{color:var(--accent);filter:drop-shadow(0 0 6px rgba(229,165,75,0.25));}
+  .icon-bar a.icon-bar-agent:hover{filter:drop-shadow(0 0 10px rgba(229,165,75,0.55));transform:scale(1.05);}
+
+  /* === Shared aa. mark === */
+  .aa-mark{position:fixed;bottom:clamp(16px,3vw,32px);right:clamp(16px,3vw,32px);z-index:50;text-decoration:none;line-height:1;opacity:0.7;transition:opacity 0.2s;font-family:var(--mark);}
+  .aa-mark:hover{opacity:1;}
+  .aa-mark svg{width:clamp(44px,5vw,60px);height:auto;overflow:visible;display:block;}
+  .aa-mark svg text{font-family:var(--mark);}
+
+  .icon-bar a:focus-visible,.aa-mark:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--radius-sm);}
+
+  /* === Keyboard background (reused from /enter, opacity 0.12 + amplified .lit) === */
+  .kb-scene {
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none; z-index:0;
+    perspective:900px; perspective-origin:50% 35%;
+  }
+  .kb-board {
+    display:flex; flex-direction:column; gap:6px;
+    transform:rotateX(55deg) rotateZ(-15deg) scale(var(--kb-scale, 2.2));
+    transform-origin:center center; transform-style:preserve-3d; opacity:0.12;
+    transition:opacity var(--motion-moderate) var(--ease-decelerate);
+  }
+  .kb-row { display:flex; gap:6px; justify-content:center; transform-style:preserve-3d; }
+  .kb-key {
+    width:52px; height:52px;
+    background:#161616; border:1px solid #2a2a2a; border-bottom:3px solid #222;
+    border-radius:5px; display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:0.55rem; font-weight:500;
+    color:transparent; transition:all 250ms ease;
+    box-shadow:0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+  /* Amplified glow . compensates for 0.12 board opacity */
+  .kb-key.lit {
+    background:rgba(229,165,75,0.22); border-color:rgba(229,165,75,0.55);
+    border-bottom-color:rgba(229,165,75,0.4);
+    box-shadow:0 2px 4px rgba(0,0,0,0.4), 0 0 32px rgba(229,165,75,0.22);
+    color:rgba(229,165,75,0.85); font-size:0.55rem;
+  }
+  .kb-key.w2 { width:78px; } .kb-key.w3 { width:108px; }
+  .kb-key.w4 { width:138px; } .kb-key.space { width:320px; }
+  .kb-fade {
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse 70% 65% at 50% 50%, transparent 35%, var(--bg) 90%);
+  }
+
+  /* === Page layout === */
+  main.ttft {
+    position:relative; z-index:2;
+    max-width:var(--width-narrow);
+    margin:0 auto;
+    padding:calc(clamp(52px,6vw,64px) + var(--space-7))
+            clamp(var(--space-5),5vw,var(--space-7))
+            calc(var(--space-9) + 80px);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    gap:var(--space-7);
+  }
+
+  .eyebrow {
+    font-family:var(--mono); font-size:0.72rem; font-weight:500;
+    color:var(--accent); letter-spacing:0.14em; text-transform:uppercase;
+  }
+  h1.headline {
+    font-family:var(--sans); font-weight:700;
+    font-size:clamp(2.1rem, 5.5vw, 3.4rem);
+    line-height:1.05; letter-spacing:-0.03em;
+    color:var(--text);
+  }
+  .subhead {
+    font-family:var(--sans); font-size:clamp(1rem, 1.4vw, 1.15rem);
+    color:var(--text-secondary); line-height:1.55;
+    max-width:620px;
+  }
+  .intro-body {
+    font-family:var(--sans);
+    font-size:clamp(1rem, 1.25vw, 1.1rem);
+    line-height:1.65;
+    color:var(--text-secondary);
+    max-width:680px;
+  }
+  .intro-body strong { color:var(--text); font-weight:600; }
+  .intro-body em { color:var(--accent); font-style:normal; font-weight:500; letter-spacing:-0.005em; }
+
+  /* === Prompt cards: horizontal grid === */
+  .prompt-grid {
+    display:grid; grid-template-columns:repeat(3, 1fr);
+    gap:var(--gap-default);
+  }
+  .prompt-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:var(--padding-card);
+    display:flex; flex-direction:column; gap:var(--space-4);
+    transition:opacity var(--motion-moderate) var(--ease-decelerate),
+               border-color var(--motion-fast) var(--ease-decelerate),
+               background var(--motion-fast) var(--ease-decelerate);
+  }
+  .prompt-card .tag {
+    font-family:var(--mono); font-size:11px;
+    letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  .prompt-card .starter {
+    font-family:var(--sans); font-size:1rem;
+    color:var(--text-strong); line-height:1.4;
+  }
+  .prompt-card.faded { opacity:0.4; }
+  .prompt-card.matched {
+    border-left:3px solid var(--accent);
+    background:var(--accent-dim);
+    opacity:1;
+  }
+
+  /* === Flow textarea === */
+  .flow-textarea {
+    width:100%;
+    min-height:200px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:var(--space-5);
+    font-family:var(--sans);
+    font-size:1.05rem;
+    line-height:1.6;
+    color:var(--text);
+    resize:none;
+    caret-color:var(--accent);
+    transition:border-color var(--motion-fast) var(--ease-decelerate);
+  }
+  .flow-textarea::placeholder { color:var(--text-decorative); }
+  .flow-textarea:focus { outline:none; border-color:var(--border-heavy); }
+  .flow-textarea.shake { animation:shake 200ms var(--ease-decelerate); }
+  .flow-textarea.locked { opacity:0.7; cursor:not-allowed; }
+  @keyframes shake {
+    0%, 100% { transform:translateX(0); }
+    25% { transform:translateX(-2px); border-color:var(--accent); }
+    75% { transform:translateX(2px); border-color:var(--accent); }
+  }
+
+  /* === Indicator row === */
+  .indicator-row {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:var(--gap-default);
+  }
+  .indicator-row .hint {
+    font-family:var(--mono); font-size:0.78rem;
+    color:var(--text-dim); letter-spacing:0.06em;
+  }
+  .done-btn {
+    font-family:var(--sans); font-weight:600; font-size:0.95rem;
+    background:transparent; color:var(--text);
+    border:1px solid var(--border-heavy);
+    border-radius:var(--radius-sm);
+    padding:var(--space-4) var(--space-7);
+    cursor:not-allowed;
+    opacity:0.35;
+    transition:opacity var(--motion-fast) var(--ease-decelerate),
+               border-color var(--motion-fast) var(--ease-decelerate),
+               background var(--motion-fast) var(--ease-decelerate),
+               color var(--motion-fast) var(--ease-decelerate);
+  }
+  .done-btn.active {
+    opacity:1;
+    background:var(--accent);
+    color:var(--bg);
+    border-color:var(--accent);
+    cursor:pointer;
+  }
+  .done-btn.active:hover { filter:brightness(1.05); }
+  .done-btn:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* === Timer: bottom-border progress on textarea === */
+  .flow-wrap { position:relative; }
+  /* Always-visible dim track (so user sees WHERE the timer lives even pre-start) */
+  .flow-wrap::after {
+    content:'';
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:3px;
+    background:rgba(229,165,75,0.14);
+    border-radius:0 0 var(--radius-md) var(--radius-md);
+    pointer-events:none;
+    z-index:1;
+  }
+  .flow-edge {
+    position:absolute;
+    left:0; bottom:0;
+    height:3px; width:0%;
+    background:linear-gradient(90deg, var(--accent) 0%, rgba(229,165,75,0.85) 100%);
+    box-shadow:0 0 12px rgba(229,165,75,0.7);
+    border-radius:0 0 var(--radius-md) var(--radius-md);
+    pointer-events:none;
+    will-change:width;
+    z-index:2;
+  }
+  .flow-edge.active { animation: edge-fill 60s linear forwards; }
+  @keyframes edge-fill {
+    from { width:0%; }
+    to { width:100%; }
+  }
+  /* Last-10s pulse: thicker bar + gold textarea border */
+  .flow-textarea.urgent { border-color:rgba(229,165,75,0.55); }
+  .flow-edge.urgent { height:4px; box-shadow:0 0 18px rgba(229,165,75,0.9); }
+
+  /* === Last-10s counter === */
+  .last-10s-counter {
+    position:fixed;
+    top:var(--space-6); right:var(--space-6);
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--accent);
+    opacity:0;
+    transition:opacity var(--motion-moderate) var(--ease-decelerate);
+    z-index:150;
+    letter-spacing:0.06em;
+  }
+  .last-10s-counter.visible { opacity:1; }
+
+  /* === Submitted loading state === */
+  .loading-line {
+    font-family:var(--sans); font-style:italic;
+    color:var(--text-dim);
+    font-size:0.95rem;
+  }
+
+  /* === Results === */
+  /* When results show, hide the pre-game header/cards and vertically
+     center the results screen so it fits in one viewport. */
+  body.results-active main.ttft {
+    gap:0;
+    padding-top:clamp(52px,6vw,64px);
+    padding-bottom:var(--space-6);
+    min-height:100dvh;
+    justify-content:center;
+    max-width:980px;
+  }
+  body.results-active main.ttft > .eyebrow,
+  body.results-active main.ttft > .headline,
+  body.results-active main.ttft > .intro-body,
+  body.results-active main.ttft > .prompt-grid { display:none; }
+  .results { display:none; flex-direction:column; padding-top:0; }
+  .results.visible { display:flex; }
+
+  .results-eyebrow {
+    font-family:var(--mono); font-size:0.78rem;
+    color:var(--accent); letter-spacing:0.18em;
+    text-transform:uppercase; text-align:center;
+    margin-bottom:var(--space-5);
+  }
+  .results-hero {
+    position:relative;
+    text-align:center;
+    padding:var(--space-5) 0 var(--space-3);
+  }
+  .results-hero::before {
+    content:'';
+    position:absolute;
+    inset:-20% -10%;
+    background:radial-gradient(ellipse, rgba(229,165,75,0.05) 0%, transparent 60%);
+    z-index:-1;
+    pointer-events:none;
+  }
+  .ttft-number {
+    font-family:var(--mono);
+    font-size:clamp(3.6rem, 8vw, 5.5rem);
+    font-weight:500;
+    color:var(--text);
+    letter-spacing:-0.04em;
+    line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  /* === Hero stats bar (gold bookend dashes + mono row) === */
+  .stats-hero {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:var(--space-5);
+    font-family:var(--mono);
+    font-size:0.95rem;
+    color:var(--text);
+    letter-spacing:0.06em;
+    margin-top:var(--space-6);
+    font-variant-numeric:tabular-nums;
+  }
+  .stats-hero::before, .stats-hero::after {
+    content:'';
+    flex:0 0 clamp(40px, 8vw, 96px);
+    height:1px;
+    background:linear-gradient(90deg, transparent 0%, rgba(229,165,75,0.5) 50%, transparent 100%);
+  }
+  .stats-hero .stat-sep {
+    color:var(--text-decorative);
+    font-weight:400;
+  }
+  .stats-hero .stat-num { color:var(--accent); font-weight:600; }
+  .word-position {
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--text-dim);
+    letter-spacing:0.08em;
+    text-transform:lowercase;
+    margin-top:var(--space-4);
+  }
+  .results-quote-block {
+    margin:var(--space-7) auto var(--space-5);
+    max-width:680px;
+    text-align:center;
+  }
+  .crystallized-quote {
+    font-family:var(--sans);
+    font-style:italic;
+    font-size:clamp(1.4rem, 2.6vw, 1.85rem);
+    color:var(--accent);
+    line-height:1.3;
+    letter-spacing:-0.015em;
+    font-weight:500;
+  }
+  .results-reflection {
+    font-family:var(--sans);
+    font-size:clamp(1rem, 1.3vw, 1.1rem);
+    color:var(--text);
+    text-align:center;
+    max-width:600px;
+    margin:0 auto var(--space-4);
+    line-height:1.55;
+    opacity:0.92;
+  }
+  .retroactive-row {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:var(--space-3);
+    font-family:var(--sans);
+    font-size:0.9rem;
+    color:var(--text-dim);
+    margin-bottom:var(--space-3);
+  }
+  .retroactive-row .retroactive-label {
+    font-family:var(--mono);
+    font-size:0.7rem;
+    color:var(--text-decorative);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+  }
+  .retroactive-row .retroactive-prompt {
+    color:var(--text-strong);
+    border-left:2px solid var(--accent);
+    padding-left:var(--space-3);
+    background:none;
+    border-radius:0;
+  }
+  .results-divider {
+    border:none;
+    border-top:1px solid var(--border);
+    margin:var(--space-6) auto;
+    width:100%;
+    max-width:680px;
+  }
+  /* === First-token race section === */
+  .race-section {
+    max-width:520px;
+    margin:0 auto;
+  }
+  .race-eyebrow {
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--text-decorative);
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    text-align:center;
+    margin-bottom:var(--space-4);
+  }
+  .secondary-row {
+    font-family:var(--mono); font-size:0.82rem;
+    color:var(--text-dim); letter-spacing:0.05em;
+    text-align:left;
+    line-height:1.6;
+  }
+  .secondary-row .label {
+    display:block;
+    font-size:0.62rem;
+    color:var(--text-decorative);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin-bottom:var(--space-3);
+  }
+  .retroactive-label {
+    font-family:var(--mono); font-size:0.62rem;
+    color:var(--text-decorative);
+    letter-spacing:0.14em; text-transform:uppercase;
+    margin-bottom:var(--space-3);
+  }
+  .retroactive-prompt {
+    font-family:var(--sans); font-size:0.9rem;
+    color:var(--text-strong);
+    padding:var(--space-3) var(--space-4);
+    background:var(--accent-dim);
+    border-left:3px solid var(--accent);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+    line-height:1.4;
+  }
+  .model-comparison {
+    font-family:var(--sans); font-size:0.85rem;
+    color:var(--text-secondary);
+    text-align:left;
+    line-height:1.5;
+  }
+  .model-comparison .label {
+    display:block;
+    font-family:var(--mono);
+    font-size:0.62rem;
+    color:var(--text-decorative);
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin-bottom:var(--space-3);
+  }
+  .model-comparison strong { color:var(--text); font-weight:600; }
+
+  /* === Model table === */
+  .model-table {
+    width:100%; border-collapse:collapse;
+    font-family:var(--mono);
+    font-size:0.92rem;
+    color:var(--text-secondary);
+    font-variant-numeric:tabular-nums;
+  }
+  .model-table td {
+    padding:var(--space-3) 0;
+    vertical-align:baseline;
+    border-bottom:1px solid rgba(30,29,24,0.6);
+  }
+  .model-table tr:last-child td { border-bottom:none; }
+  .model-table td:first-child { color:var(--text); letter-spacing:0.02em; }
+  .model-table td:last-child { text-align:right; color:var(--accent); letter-spacing:0.02em; }
+  .model-table tr.you td { border-top:1px solid rgba(229,165,75,0.4); padding-top:var(--space-4); }
+  .model-table tr.you td:first-child { color:var(--accent); font-weight:600; }
+  .model-table tr.you td:last-child { color:var(--accent); font-weight:700; font-size:1rem; }
+
+  .results-actions {
+    margin-top:var(--space-6);
+    display:flex;
+    gap:var(--gap-default);
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn-primary, .btn-ghost {
+    font-family:var(--sans); font-weight:600; font-size:0.95rem;
+    padding:var(--space-4) var(--space-7);
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    transition:opacity var(--motion-fast) var(--ease-decelerate),
+               border-color var(--motion-fast) var(--ease-decelerate);
+    text-decoration:none;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .btn-primary {
+    background:var(--accent); color:var(--bg); border:1px solid var(--accent);
+  }
+  .btn-primary:hover { filter:brightness(1.05); }
+  .btn-ghost {
+    background:transparent; color:var(--text);
+    border:1px solid var(--border-heavy);
+  }
+  .btn-ghost:hover { border-color:var(--accent); }
+  .btn-primary:focus-visible, .btn-ghost:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .copied-flash { opacity:0.7; }
+
+  /* === Mobile-block screen === */
+  body.mobile-block .ttft,
+  body.mobile-block .kb-scene,
+  body.mobile-block .kb-fade,
+  body.mobile-block .flow-edge,
+  body.mobile-block .last-10s-counter { display:none !important; }
+  body.mobile-block .mobile-block-screen { display:flex !important; }
+
+  .mobile-block-screen {
+    display:none;
+    position:fixed; inset:0;
+    z-index:5;
+    flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:var(--space-7);
+    background:var(--bg);
+  }
+  .mobile-block-card {
+    max-width:440px;
+    text-align:center;
+    display:flex; flex-direction:column;
+    gap:var(--space-5);
+  }
+  .mobile-block-card .heading {
+    font-family:var(--sans); font-weight:700;
+    font-size:clamp(1.6rem, 5vw, 2rem);
+    line-height:1.1; letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  .mobile-block-card .body {
+    font-family:var(--sans); font-size:1rem;
+    color:var(--text-secondary); line-height:1.55;
+  }
+  .mobile-block-card .cta {
+    align-self:center;
+    margin-top:var(--space-3);
+  }
+
+  /* === Reduced motion === */
+  @media (prefers-reduced-motion:reduce) {
+    .flow-textarea.shake { animation:none; }
+    .kb-key.lit { transition:none; }
+    /* 60s linear width fill is informational, not a vestibular trigger . keep it. */
+    #aa-stroke { transition:none !important; stroke-dashoffset:0 !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- === SVG sprite === -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<symbol id="i-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></symbol>
+<symbol id="i-linkedin" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></symbol>
+<symbol id="i-youtube" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></symbol>
+<symbol id="i-house" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></symbol>
+<symbol id="i-file-lines" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM112 256l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></symbol>
+</svg>
+
+<!-- chrome:header -->
+<header class="site-header">
+  <div class="icon-bar">
+    <a href="https://github.com/agamarora" target="_blank" rel="noopener" aria-label="GitHub"><svg class="icon" aria-hidden="true"><use href="#i-github"/></svg></a>
+    <a href="https://www.linkedin.com/in/agamarora/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+    <a href="https://www.youtube.com/@agam_arora" target="_blank" rel="noopener" aria-label="YouTube"><svg class="icon" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+    <a href="/resume" aria-label="Resume"><svg class="icon" aria-hidden="true"><use href="#i-file-lines"/></svg></a>
+    <a href="/" aria-label="Home"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg></a>
+  </div>
+</header>
+
+<!-- Keyboard background -->
+<div class="kb-scene" aria-hidden="true">
+  <div class="kb-board" id="kb-board">
+    <div class="kb-row"><div class="kb-key" data-k="esc"></div><div class="kb-key" data-k="f1"></div><div class="kb-key" data-k="f2"></div><div class="kb-key" data-k="f3"></div><div class="kb-key" data-k="f4"></div><div class="kb-key" data-k="f5"></div><div class="kb-key" data-k="f6"></div><div class="kb-key" data-k="f7"></div><div class="kb-key" data-k="f8"></div><div class="kb-key" data-k="f9"></div><div class="kb-key" data-k="f10"></div><div class="kb-key" data-k="f11"></div><div class="kb-key" data-k="f12"></div><div class="kb-key" data-k="del"></div></div>
+    <div class="kb-row"><div class="kb-key" data-k="`"></div><div class="kb-key" data-k="1"></div><div class="kb-key" data-k="2"></div><div class="kb-key" data-k="3"></div><div class="kb-key" data-k="4"></div><div class="kb-key" data-k="5"></div><div class="kb-key" data-k="6"></div><div class="kb-key" data-k="7"></div><div class="kb-key" data-k="8"></div><div class="kb-key" data-k="9"></div><div class="kb-key" data-k="0"></div><div class="kb-key" data-k="-"></div><div class="kb-key" data-k="="></div><div class="kb-key w2" data-k="backspace"></div></div>
+    <div class="kb-row"><div class="kb-key w2" data-k="tab"></div><div class="kb-key" data-k="q"></div><div class="kb-key" data-k="w"></div><div class="kb-key" data-k="e"></div><div class="kb-key" data-k="r"></div><div class="kb-key" data-k="t"></div><div class="kb-key" data-k="y"></div><div class="kb-key" data-k="u"></div><div class="kb-key" data-k="i"></div><div class="kb-key" data-k="o"></div><div class="kb-key" data-k="p"></div><div class="kb-key" data-k="["></div><div class="kb-key" data-k="]"></div><div class="kb-key" data-k="\"></div></div>
+    <div class="kb-row"><div class="kb-key w3" data-k="caps"></div><div class="kb-key" data-k="a"></div><div class="kb-key" data-k="s"></div><div class="kb-key" data-k="d"></div><div class="kb-key" data-k="f"></div><div class="kb-key" data-k="g"></div><div class="kb-key" data-k="h"></div><div class="kb-key" data-k="j"></div><div class="kb-key" data-k="k"></div><div class="kb-key" data-k="l"></div><div class="kb-key" data-k=";"></div><div class="kb-key" data-k="'"></div><div class="kb-key w3" data-k="enter"></div></div>
+    <div class="kb-row"><div class="kb-key w4" data-k="shift"></div><div class="kb-key" data-k="z"></div><div class="kb-key" data-k="x"></div><div class="kb-key" data-k="c"></div><div class="kb-key" data-k="v"></div><div class="kb-key" data-k="b"></div><div class="kb-key" data-k="n"></div><div class="kb-key" data-k="m"></div><div class="kb-key" data-k=","></div><div class="kb-key" data-k="."></div><div class="kb-key" data-k="/"></div><div class="kb-key w4" data-k="shift"></div></div>
+    <div class="kb-row"><div class="kb-key w2" data-k="ctrl"></div><div class="kb-key" data-k="alt"></div><div class="kb-key" data-k="cmd"></div><div class="kb-key space" data-k=" "></div><div class="kb-key" data-k="cmd"></div><div class="kb-key" data-k="alt"></div><div class="kb-key w2" data-k="ctrl"></div></div>
+  </div>
+</div>
+<div class="kb-fade" aria-hidden="true"></div>
+
+<!-- Last-10s counter (top-right corner) -->
+<div class="last-10s-counter" id="last-10s-counter" aria-hidden="true"></div>
+
+<!-- === Mobile/tablet block screen === -->
+<div class="mobile-block-screen">
+  <div class="mobile-block-card">
+    <div class="eyebrow">TTFT.LAB</div>
+    <h1 class="heading">Open this on a desktop.</h1>
+    <p class="body">This experiment needs a physical keyboard and no-backspace flow. Mobile soft keyboards intercept too much. Come back from a laptop.</p>
+    <a class="btn-ghost cta" href="/lab/">lab &rarr;</a>
+  </div>
+</div>
+
+<!-- === Main === -->
+<main class="ttft" id="ttft-main">
+  <div class="eyebrow">TTFT.LAB</div>
+  <h1 class="headline">First Thought.</h1>
+  <p class="intro-body">Intelligence keeps getting cheaper. <em>Time to first token</em> drops every quarter. <em>Time to first thought</em> &mdash; your ability to think sharper, faster, clearer &mdash; hasn't moved. Type free-form for 60 seconds. An AI reads what you wrote and finds the moment your thought crystallised. <strong>Same metric. Different rubric. Different game.</strong></p>
+
+  <div class="prompt-grid" id="prompt-grid">
+    <div class="prompt-card" data-prompt="1">
+      <div class="tag">RIGHT NOW</div>
+      <div class="starter">The thing I keep putting off is&hellip;</div>
+    </div>
+    <div class="prompt-card" data-prompt="2">
+      <div class="tag">FEELING</div>
+      <div class="starter">Honestly I&rsquo;m a little&hellip;</div>
+    </div>
+    <div class="prompt-card" data-prompt="3">
+      <div class="tag">OR</div>
+      <div class="starter">Type anything. No prompt needed.</div>
+    </div>
+  </div>
+
+  <div class="flow-wrap">
+    <textarea
+      class="flow-textarea"
+      id="flow-textarea"
+      placeholder="start typing to begin"
+      autocomplete="off"
+      autocapitalize="off"
+      autocorrect="off"
+      spellcheck="false"
+      autofocus
+      aria-label="flow typing input"
+    ></textarea>
+    <div class="flow-edge" id="flow-edge" aria-hidden="true"></div>
+  </div>
+
+  <div class="indicator-row" id="indicator-row">
+    <span class="hint">60s &middot; type freely &middot; we read past typos</span>
+    <button type="button" class="done-btn" id="done-btn" disabled>done &rarr;</button>
+  </div>
+
+  <!-- Results (hidden until submit) -->
+  <section class="results" id="results" aria-live="polite">
+    <div class="results-eyebrow" id="results-eyebrow">TTFT &middot; YOUR THOUGHT</div>
+    <div class="results-hero">
+      <div class="ttft-number" id="ttft-number">&mdash;</div>
+      <div class="stats-hero" id="stats-hero" aria-label="session stats"></div>
+      <div class="word-position" id="ttft-caption"></div>
+    </div>
+    <div class="results-quote-block">
+      <div class="crystallized-quote" id="crystallized-quote"></div>
+    </div>
+    <p class="results-reflection" id="results-reflection"></p>
+    <div class="retroactive-row" id="retroactive-row" style="display:none;">
+      <span class="retroactive-label">responding to</span>
+      <span class="retroactive-prompt" id="retroactive-prompt"></span>
+    </div>
+    <hr class="results-divider">
+    <div class="race-section">
+      <div class="race-eyebrow">FIRST-TOKEN RACE</div>
+      <table class="model-table" id="model-table"></table>
+    </div>
+    <div class="results-actions">
+      <button type="button" class="btn-ghost" id="copy-btn">copy result &rarr;</button>
+      <button type="button" class="btn-primary" id="again-btn">type again</button>
+    </div>
+  </section>
+</main>
+
+<!-- aa. mark -->
+<a href="/" class="aa-mark" aria-label="agamarora.com">
+  <svg id="aa-mark" viewBox="0 0 72 36">
+    <text id="aa-stroke" x="2" y="28" fill="none" stroke="#E8E4DF" stroke-width="0.8" font-family="Patrick Hand" font-size="28">aa</text>
+    <text id="dot-fill" x="0" y="28" fill="#E5A54B" opacity="0" font-family="Patrick Hand" font-size="28">.</text>
+    <text id="aa-fill" x="2" y="28" fill="#E8E4DF" opacity="0" font-family="Patrick Hand" font-size="28">aa</text>
+  </svg>
+</a>
+
+<!-- aa. stroke-draw -->
+<script>(function(){
+  const s=document.getElementById('aa-stroke'),f=document.getElementById('aa-fill'),d=document.getElementById('dot-fill');
+  if(!s||!f||!d)return;
+  let ran=false;
+  function run(){
+    if(ran)return; ran=true;
+    let len=s.getComputedTextLength();
+    if(!len||len<1){
+      // Font not measured yet . skip the draw animation, just show fills.
+      f.style.opacity='1'; d.style.opacity='1'; s.style.opacity='0';
+      return;
+    }
+    d.setAttribute('x',4+len-2);f.setAttribute('x',4);
+    const dl=len*2;s.style.strokeDasharray=dl;s.style.strokeDashoffset=dl;s.style.opacity='1';
+    s.getBoundingClientRect();
+    s.style.transition='stroke-dashoffset 1.2s cubic-bezier(0.25,0.1,0.25,1)';s.style.strokeDashoffset='0';
+    s.addEventListener('transitionend',function h(e){if(e.propertyName!=='stroke-dashoffset')return;
+      s.removeEventListener('transitionend',h);
+      f.style.transition='opacity 0.2s';f.style.opacity='1';
+      d.style.transition='opacity 0.2s';d.style.opacity='1';
+      s.style.transition='opacity 0.25s ease 0.05s';s.style.opacity='0';
+    });
+  }
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(run);
+  }
+  // Fallback: if font.ready never resolves within 900ms, run anyway.
+  setTimeout(run, 900);
+})();</script>
+
+<script>
+(function () {
+  'use strict';
+
+  // ============================================================
+  // Viewport-only gate. < 1024px = mobile-block screen.
+  // No touch detection . phantom touchPoints on Windows desktops
+  // were false-blocking real laptops.
+  // ============================================================
+  const isNarrowViewport = window.matchMedia('(max-width: 1023px)').matches;
+  if (isNarrowViewport) {
+    document.body.classList.add('mobile-block');
+    return;
+  }
+
+  initTTFTGame();
+
+  // Belt-and-suspenders focus (autofocus attribute can be ignored by some
+  // browsers if the textarea is below the fold at load).
+  requestAnimationFrame(() => {
+    const ta = document.getElementById('flow-textarea');
+    if (ta && document.activeElement !== ta) ta.focus();
+  });
+
+  function initTTFTGame() {
+    const textarea = document.getElementById('flow-textarea');
+    const doneBtn = document.getElementById('done-btn');
+    const flowEdge = document.getElementById('flow-edge');
+    const counter = document.getElementById('last-10s-counter');
+    const promptCards = document.querySelectorAll('.prompt-card');
+    const indicatorRow = document.getElementById('indicator-row');
+    const resultsEl = document.getElementById('results');
+    const promptGrid = document.getElementById('prompt-grid');
+
+    const PROMPTS = {
+      1: '“The thing I keep putting off is…”',
+      2: '“Honestly I’m a little…”',
+      3: 'Free-form (no prompt)',
+    };
+
+    const SESSION_MS = 60_000;
+
+    const state = {
+      t0: null,
+      wordTimestamps: [],   // { word, t } — t = ms since t0 minus paused
+      text: '',
+      elapsedMs: 0,
+      pauseStart: null,
+      totalPausedMs: 0,
+      submitted: false,
+      sessionId: 0,
+      abortCtrl: null,
+      backspaceCount: 0,    // silent telemetry; sent to Groq
+      deleteEvents: 0,      // any delete inputType (back/forward/word/line)
+    };
+
+    // ----------------------------------------------------------
+    // First-keystroke + IME composition → t0 + timer start
+    // E8: compositionstart for CJK
+    // ----------------------------------------------------------
+    function startSession() {
+      if (state.t0) return;
+      state.t0 = performance.now();
+      promptCards.forEach(c => c.classList.add('faded'));
+      doneBtn.classList.add('active');
+      doneBtn.disabled = false;
+      // CSS keyframe animation drives the 60s fill via .active class.
+      flowEdge.classList.add('active');
+      startTimer();
+    }
+
+    function onFirstKey(e) {
+      if (state.t0) return;
+      // Skip pure modifiers/arrows/function keys. Accept printable + Enter.
+      if (e.key.length !== 1 && e.key !== 'Enter') return;
+      // Skip Ctrl/Meta combinations as first key (they're commands, not text)
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      startSession();
+      textarea.removeEventListener('keydown', onFirstKey);
+    }
+    textarea.addEventListener('keydown', onFirstKey);
+    textarea.addEventListener('compositionstart', () => {
+      if (!state.t0) startSession();
+    });
+
+    // ----------------------------------------------------------
+    // Word-boundary timestamps (E2 fix: include word #0)
+    // ----------------------------------------------------------
+    textarea.addEventListener('input', () => {
+      if (state.submitted) return;
+      // Fallback session-start: if the keydown handler missed (some IMEs,
+      // composed input, or autofocus edge cases), start the session here.
+      if (!state.t0 && textarea.value.length > 0) startSession();
+      if (!state.t0) return;
+      state.text = textarea.value;
+      const words = state.text.trim().split(/\s+/).filter(Boolean);
+      // Push earliest timestamp for each newly-emerging word slot.
+      while (state.wordTimestamps.length < words.length) {
+        const idx = state.wordTimestamps.length;
+        const t = performance.now() - state.t0 - state.totalPausedMs;
+        state.wordTimestamps.push({ word: words[idx], t });
+      }
+      // Backspace can shrink word count — trim tail, preserve earliest timestamps
+      // for words that still exist. (Final word labels still get updated below.)
+      if (state.wordTimestamps.length > words.length) {
+        state.wordTimestamps.length = words.length;
+      }
+      // The trailing word grows/shrinks as user types; keep its label current
+      // so crystallization-word match works on the final form.
+      if (words.length > 0) {
+        const lastIdx = words.length - 1;
+        state.wordTimestamps[lastIdx].word = words[lastIdx];
+      }
+    });
+
+    function captureTrailingWord() {
+      // Safety net only — input handler already captures + updates trailing.
+      if (!state.t0) return;
+      const words = state.text.trim().split(/\s+/).filter(Boolean);
+      if (words.length > state.wordTimestamps.length) {
+        const lastWord = words[words.length - 1];
+        const t = performance.now() - state.t0 - state.totalPausedMs;
+        state.wordTimestamps.push({ word: lastWord, t });
+      }
+    }
+
+    // ----------------------------------------------------------
+    // Input policy: backspace is ALLOWED (typos are part of natural typing).
+    // Backspace count is tracked silently and sent to Groq for analysis.
+    // Still block paste / drop / undo-redo / select-all-overwrite so the
+    // text reflects keystroke-level effort, not clipboard-injected blocks.
+    // ----------------------------------------------------------
+    textarea.addEventListener('keydown', (e) => {
+      // Telemetry: count backspace presses (silent)
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        state.backspaceCount += 1;
+      }
+      // Block clipboard / undo shortcuts (still cheating, even with backspace allowed)
+      const blockedCtrl = ['z', 'x', 'v'];
+      if ((e.ctrlKey || e.metaKey) && blockedCtrl.includes(e.key.toLowerCase())) {
+        e.preventDefault();
+        shake();
+      }
+    });
+    textarea.addEventListener('beforeinput', (e) => {
+      // Block select-all-then-type-to-replace bypass: if user has a non-collapsed
+      // selection and tries to insert text, treat as cheat path.
+      const hasSelection = textarea.selectionStart !== textarea.selectionEnd;
+      if (hasSelection && (e.inputType === 'insertText' || e.inputType === 'insertReplacementText' || e.inputType === 'insertCompositionText')) {
+        e.preventDefault();
+        shake();
+        return;
+      }
+      // Track delete events (covers backspace, delete-key, word/line deletes)
+      if (e.inputType && e.inputType.startsWith('delete')) {
+        state.deleteEvents += 1;
+      }
+      const blocked = [
+        'insertFromPaste',
+        'insertFromDrop',
+        'insertFromYank',
+        'insertReplacementText',
+        'deleteByCut',
+        'deleteByDrag',
+        'historyUndo',
+        'historyRedo',
+      ];
+      if (blocked.includes(e.inputType)) {
+        e.preventDefault();
+        shake();
+      }
+    });
+    textarea.addEventListener('drop', (e) => { e.preventDefault(); shake(); });
+    textarea.addEventListener('paste', (e) => { e.preventDefault(); shake(); });
+
+    function shake() {
+      textarea.classList.add('shake');
+      setTimeout(() => textarea.classList.remove('shake'), 220);
+    }
+
+    // ----------------------------------------------------------
+    // Timer loop (rAF) + last-10s counter
+    // ----------------------------------------------------------
+    let rafId = null;
+    function startTimer() {
+      function tick() {
+        if (state.submitted) return;
+        // Compute elapsed accounting for any active pause
+        const baseElapsed = performance.now() - state.t0 - state.totalPausedMs;
+        const elapsed = state.pauseStart
+          ? baseElapsed - (performance.now() - state.pauseStart)
+          : baseElapsed;
+        const remaining = SESSION_MS - elapsed;
+        if (remaining <= 0) { submit('timeout'); return; }
+        if (remaining <= 10_000) {
+          counter.classList.add('visible');
+          counter.textContent = String(Math.ceil(remaining / 1000)).padStart(2, '0');
+          flowEdge.classList.add('urgent');
+          textarea.classList.add('urgent');
+        }
+        rafId = requestAnimationFrame(tick);
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    // ----------------------------------------------------------
+    // Pause logic: visibilitychange + window blur/focus
+    // E4 fix: also pause on window.blur (Mac window switch)
+    // ----------------------------------------------------------
+    function onPause() {
+      if (state.submitted || !state.t0 || state.pauseStart) return;
+      state.pauseStart = performance.now();
+      flowEdge.style.animationPlayState = 'paused';
+    }
+    function onResume() {
+      if (state.submitted || !state.pauseStart) return;
+      state.totalPausedMs += performance.now() - state.pauseStart;
+      state.pauseStart = null;
+      flowEdge.style.animationPlayState = 'running';
+    }
+    // Pause only on full tab-hide. Alt-tab to another window does NOT pause —
+    // looking at notes / switching context is part of the warm-up, and
+    // pausing on blur lets users game the metric.
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? onPause() : onResume();
+    });
+
+    // ----------------------------------------------------------
+    // Done button
+    // ----------------------------------------------------------
+    doneBtn.addEventListener('click', () => {
+      if (!state.t0 || state.submitted) return;
+      submit('manual');
+    });
+
+    // ----------------------------------------------------------
+    // Keyboard background key-glow (reused from /enter)
+    // ----------------------------------------------------------
+    const keyMap = {};
+    document.querySelectorAll('.kb-key').forEach(k => {
+      const l = (k.getAttribute('data-k') || '').toLowerCase();
+      k.textContent = l.toUpperCase();
+      if (l) {
+        if (!keyMap[l]) keyMap[l] = [];
+        keyMap[l].push(k);
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (state.submitted) return;
+      const key = (e.key || '').toLowerCase();
+      const targets = keyMap[key] || keyMap[e.code?.replace('Key', '').toLowerCase()];
+      if (!targets) return;
+      targets.forEach(k => {
+        k.classList.add('lit');
+        setTimeout(() => k.classList.remove('lit'), 300);
+      });
+    });
+    // Depth blur on load (cosmetic, copied from /enter)
+    (function applyDepthBlur() {
+      const board = document.getElementById('kb-board');
+      if (!board) return;
+      const rect = board.getBoundingClientRect();
+      const cx = rect.width / 2, cy = rect.height / 2;
+      const maxDist = Math.sqrt(cx*cx + cy*cy) || 1;
+      document.querySelectorAll('.kb-key').forEach(k => {
+        const kr = k.getBoundingClientRect();
+        const kx = kr.left - rect.left + kr.width/2;
+        const ky = kr.top - rect.top + kr.height/2;
+        const dist = Math.sqrt((kx-cx)**2 + (ky-cy)**2) / maxDist;
+        k.style.filter = `blur(${Math.max(0,(dist-0.3)*3)}px)`;
+      });
+    })();
+    (function setKbScale() {
+      const cachedScale = Math.min(Math.max((window.innerWidth / 780) * 1.05, 1.2), 2.0);
+      document.documentElement.style.setProperty('--kb-scale', cachedScale);
+    })();
+
+    // ----------------------------------------------------------
+    // Submit
+    // ----------------------------------------------------------
+    async function submit(reason) {
+      if (state.submitted) return;
+      state.submitted = true;
+      state.sessionId += 1;
+      const mySession = state.sessionId;
+
+      // Leave flow-edge at its current width on submit (visual freeze).
+
+      state.elapsedMs = performance.now() - state.t0 - state.totalPausedMs;
+      captureTrailingWord();
+      const wpm = calculateWpm(state.text, state.elapsedMs);
+
+      textarea.setAttribute('readonly', '');
+      textarea.classList.add('locked');
+      counter.classList.remove('visible');
+      showLoadingState();
+
+      const wordCount = state.text.trim().split(/\s+/).filter(Boolean).length;
+
+      // Edge: 0 words
+      if (wordCount === 0) {
+        renderEmpty();
+        return;
+      }
+      // Edge: too short to measure
+      if (wordCount < 4) {
+        renderShort(wpm);
+        return;
+      }
+
+      // Call Groq (with abort + timeout)
+      state.abortCtrl = new AbortController();
+      const tid = setTimeout(() => state.abortCtrl.abort(), 8000);
+
+      let data = null;
+      let failed = false;
+      try {
+        const res = await fetch('/.netlify/functions/reflectHandler', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: state.text,
+            wpm: wpm,
+            duration_s: Math.round(state.elapsedMs / 1000),
+            backspace_count: state.backspaceCount,
+          }),
+          signal: state.abortCtrl.signal,
+        });
+        clearTimeout(tid);
+        if (res.status !== 200) {
+          failed = true;
+        } else {
+          data = await res.json();
+        }
+      } catch (err) {
+        clearTimeout(tid);
+        failed = true;
+      }
+
+      // Race guard: did the session change while we awaited?
+      if (mySession !== state.sessionId) return;
+
+      if (failed || !data) {
+        renderResults({ wpm, crystallization_word: null, crystallized_thought: null, prompt_match: 'none', reflection: null, failed: true });
+      } else {
+        renderResults({ wpm, ...data, failed: false });
+      }
+    }
+
+    function showLoadingState() {
+      indicatorRow.innerHTML = '<span class="loading-line">reading your words&hellip;</span>';
+    }
+
+    function calculateWpm(text, ms) {
+      const words = text.trim().split(/\s+/).filter(Boolean).length;
+      const minutes = ms / 60_000;
+      return minutes > 0 ? Math.round(words / minutes) : 0;
+    }
+
+    // Strip non-letter for case/punct-insensitive match
+    function normWord(w) {
+      return String(w || '').toLowerCase().replace(/[^a-z]/g, '');
+    }
+
+    function findTtft(wordTimestamps, crystallizationWord) {
+      if (!crystallizationWord) return null;
+      // crystallization_word may be a phrase; use first word of it
+      const firstToken = String(crystallizationWord).trim().split(/\s+/)[0] || '';
+      const target = normWord(firstToken);
+      if (!target) return null;
+      const hit = wordTimestamps.find(({ word }) => normWord(word) === target);
+      return hit ? hit.t / 1000 : null;
+    }
+
+    // ----------------------------------------------------------
+    // Render variants
+    // ----------------------------------------------------------
+    function renderEmpty() {
+      const main = document.getElementById('ttft-main');
+      main.innerHTML = `
+        <div class="eyebrow">TTFT.LAB</div>
+        <h1 class="headline">You didn't type.</h1>
+        <p class="subhead">No keystrokes in the session window. Nothing to measure.</p>
+        <div class="results-actions">
+          <button type="button" class="btn-primary" onclick="window.location.reload()">try again</button>
+        </div>
+      `;
+    }
+
+    function renderShort(wpm) {
+      const main = document.getElementById('ttft-main');
+      main.innerHTML = `
+        <div class="eyebrow">TTFT.LAB</div>
+        <h1 class="headline">Too short to measure.</h1>
+        <p class="subhead">Only a handful of words came through. Crystallization needs a runway.</p>
+        <div class="results-secondary" style="max-width:420px;margin:0 auto;">
+          <div class="secondary-row">${wpm} WPM &middot; ${Math.round(state.elapsedMs/1000)}s</div>
+        </div>
+        <div class="results-actions">
+          <button type="button" class="btn-primary" onclick="window.location.reload()">type again</button>
+        </div>
+      `;
+    }
+
+    function renderResults(data) {
+      // Compact-mode body class hides pre-game header/cards so results
+      // fit in one viewport (no scroll).
+      document.body.classList.add('results-active');
+      indicatorRow.style.display = 'none';
+      textarea.style.display = 'none';
+
+      const ttft = findTtft(state.wordTimestamps, data.crystallization_word);
+      const totalWords = state.text.trim().split(/\s+/).filter(Boolean).length;
+
+      const ttftNum = document.getElementById('ttft-number');
+      const ttftCap = document.getElementById('ttft-caption');
+      const statsHero = document.getElementById('stats-hero');
+      const quoteEl = document.getElementById('crystallized-quote');
+      const reflectEl = document.getElementById('results-reflection');
+      const retroRow = document.getElementById('retroactive-row');
+      const retroPrompt = document.getElementById('retroactive-prompt');
+      const modelTable = document.getElementById('model-table');
+      const eyebrowEl = document.getElementById('results-eyebrow');
+
+      // TTFT block
+      if (data.failed) {
+        eyebrowEl.textContent = 'TTFT · YOUR THOUGHT';
+        ttftNum.textContent = '—';
+        ttftCap.textContent = 'the reflection model didn’t respond. your stats stand.';
+        quoteEl.style.display = 'none';
+      } else if (ttft !== null) {
+        const wordIdx = state.wordTimestamps.findIndex(w => normWord(w.word) === normWord(String(data.crystallization_word).trim().split(/\s+/)[0] || ''));
+        ttftNum.textContent = ttft.toFixed(1) + 's';
+        ttftCap.textContent = wordIdx >= 0
+          ? `your thought crystallized at word ${wordIdx + 1} of ${totalWords}`
+          : `your thought crystallized in this session`;
+      } else if (data.crystallization_word) {
+        // Hallucinated word not in text
+        ttftNum.textContent = '—';
+        ttftCap.textContent = 'crystallization detected, timestamp uncertain';
+      } else {
+        // No crystallization moment — reframe positively (D9)
+        eyebrowEl.textContent = 'STEADY FLOW';
+        ttftNum.textContent = '—';
+        ttftCap.textContent = 'no single crystallization moment — your thought was already formed when you started.';
+      }
+
+      // Quote
+      if (!data.failed && data.crystallized_thought) {
+        quoteEl.textContent = '“' + data.crystallized_thought + '”';
+        quoteEl.style.display = '';
+      } else {
+        quoteEl.style.display = 'none';
+      }
+
+      // Reflection
+      if (data.reflection) {
+        reflectEl.textContent = data.reflection;
+        reflectEl.style.display = '';
+      } else {
+        reflectEl.style.display = 'none';
+      }
+
+      // Hero stats bar (first-fold data, not buried)
+      const elapsedS = Math.round(state.elapsedMs / 1000);
+      const bsLabel = state.backspaceCount === 1 ? 'backspace' : 'backspaces';
+      statsHero.innerHTML =
+        `<span class="stat-num">${elapsedS}</span>s` +
+        `<span class="stat-sep">&middot;</span>` +
+        `<span class="stat-num">${data.wpm}</span>&nbsp;WPM` +
+        `<span class="stat-sep">&middot;</span>` +
+        `<span class="stat-num">${state.backspaceCount}</span>&nbsp;${bsLabel}`;
+
+      // Retroactive prompt (inline row, only if matched)
+      if (!data.failed && [1,2].includes(data.prompt_match)) {
+        retroRow.style.display = '';
+        retroPrompt.textContent = PROMPTS[data.prompt_match];
+        promptCards.forEach(c => {
+          if (Number(c.dataset.prompt) === data.prompt_match) {
+            c.classList.remove('faded');
+            c.classList.add('matched');
+          }
+        });
+      } else {
+        retroRow.style.display = 'none';
+      }
+
+      // Model comparison table
+      const rows = [
+        { name: 'Llama 3.3 70b (Groq)', t: '~0.3s' },
+        { name: 'Claude Sonnet 4', t: '~0.5s' },
+        { name: 'GPT-4o', t: '~0.6s' },
+        { name: 'Claude Opus 4', t: '~1.2s' },
+      ];
+      let tableHtml = '';
+      rows.forEach(r => {
+        tableHtml += `<tr><td>${r.name}</td><td>${r.t}</td></tr>`;
+      });
+      if (ttft !== null) {
+        tableHtml += `<tr class="you"><td>You</td><td>${ttft.toFixed(1)}s</td></tr>`;
+      } else {
+        tableHtml += `<tr class="you"><td>You</td><td>—</td></tr>`;
+      }
+      modelTable.innerHTML = tableHtml;
+
+
+      resultsEl.classList.add('visible');
+      // Stop keyboard glow further
+      // (mousedown / keydown handlers gate on state.submitted)
+
+      // Wire up actions
+      const copyBtn = document.getElementById('copy-btn');
+      const againBtn = document.getElementById('again-btn');
+
+      copyBtn.onclick = async () => {
+        const text = buildCopyText(data, ttft, totalWords);
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = 'copied ✓';
+          copyBtn.classList.add('copied-flash');
+          setTimeout(() => {
+            copyBtn.textContent = 'copy result →';
+            copyBtn.classList.remove('copied-flash');
+          }, 1600);
+        } catch {
+          copyBtn.textContent = 'copy failed';
+          setTimeout(() => { copyBtn.textContent = 'copy result →'; }, 1600);
+        }
+      };
+
+      againBtn.onclick = () => {
+        // Abort any in-flight Groq call from prior submission (race guard)
+        try { state.abortCtrl?.abort(); } catch {}
+        window.location.reload();
+      };
+    }
+
+    function buildCopyText(data, ttft, totalWords) {
+      const lines = ['TTFT — Time to First Thought'];
+      if (ttft !== null) lines.push(`Crystallized at ${ttft.toFixed(1)}s`);
+      if (data.crystallized_thought) lines.push(`"${data.crystallized_thought}"`);
+      lines.push(`${data.wpm} WPM · ${Math.round(state.elapsedMs/1000)}s · no backspace`);
+      if (data.reflection) lines.push(data.reflection);
+      lines.push('https://agamarora.com/lab/type/');
+      return lines.join('\n');
+    }
+  }
+})();
+</script>
+</body>
+</html>
