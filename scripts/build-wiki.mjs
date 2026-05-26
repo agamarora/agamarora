@@ -485,6 +485,37 @@ function safeJsonLd(obj) {
   return JSON.stringify(obj, null, 2).replace(/<\//g, "<\\/");
 }
 
+// Topic map for Schema.org Article "about" field. Per-slug list of Thing
+// names that describe what the page is about. Belief pages inherit their
+// parent theme's topics (via slugFromCanonical).
+const TOPIC_MAP = {
+  "root.substance-over-hype": ["Substance over hype", "AI evaluation", "Technology hype cycle"],
+  "agent-first": ["AI agents", "Agent-first design", "B2B AI products"],
+  "voice-ai-craft": ["Voice AI", "Conversational AI", "Production AI systems"],
+  "breadth-as-differentiation": ["Career strategy", "Technical breadth", "AI Product Management"],
+  "pm-taste": ["Product taste", "Product Management craft", "Decision making"],
+  "ai-pm-skillset": ["AI Product Management", "PM skills", "LLM-native PM"],
+  "enterprise-ai-reality": ["Enterprise AI", "AI production", "AI deployment"],
+  "second-brain": ["Second brain", "Knowledge management", "AI agent memory"],
+  "spec-first-taste": ["Specification-first development", "Product specs", "Spec writing"],
+  "career-reflection": ["Career growth", "IC vs management", "Career strategy"],
+  "linkedin-as-instrument": ["LinkedIn strategy", "Personal branding", "Public writing"],
+  "personal-projects-tinkering": ["Side projects", "Tinkering", "Maker culture"],
+};
+const DEFAULT_TOPICS = ["AI Product Management", "Artificial Intelligence"];
+
+function slugFromCanonical(canonical) {
+  // /wiki/agent-first/ -> agent-first
+  // /wiki/beliefs/agent-first/ -> agent-first (belief uses parent topic)
+  // /wiki/<slug>/ -> <slug>
+  const m = canonical.match(/\/wiki\/(?:beliefs\/)?([^/]+)\/?$/);
+  return m ? m[1] : null;
+}
+
+function topicsForSlug(slug) {
+  return TOPIC_MAP[slug] || DEFAULT_TOPICS;
+}
+
 function pageWrap({ title, description, canonical, breadcrumbHtml, breadcrumbItems, articleHtml, navHtml, schemaType, faqPage }) {
   const ogImage = "https://agamarora.com/assets/og/og-wiki.jpg";
   const faqLd = faqPage
@@ -555,10 +586,28 @@ ${safeJsonLd({
   "@context": "https://schema.org",
   "@type": schemaType,
   "headline": title,
+  "description": description,
   "url": canonical,
+  "mainEntityOfPage": canonical,
   "image": ogImage,
+  "inLanguage": "en",
   "isPartOf": { "@type": "WebSite", "@id": "https://agamarora.com/#website" },
-  "author": { "@type": "Person", "@id": "https://agamarora.com/#person" }
+  "author": {
+    "@type": "Person",
+    "@id": "https://agamarora.com/#person",
+    "name": "Agam Arora",
+    "url": "https://agamarora.com/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://agamarora.com/#person",
+    "name": "Agam Arora",
+    "url": "https://agamarora.com/"
+  },
+  "about": topicsForSlug(slugFromCanonical(canonical)).map((name) => ({
+    "@type": "Thing",
+    "name": name,
+  })),
 })}
 </script>
 <script type="application/ld+json">
