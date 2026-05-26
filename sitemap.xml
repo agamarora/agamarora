@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://agamarora.com/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -15,7 +15,7 @@
 
   <url>
     <loc>https://agamarora.com/resume/</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -91,9 +91,13 @@
 
   <url>
     <loc>https://agamarora.com/lab/type/</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://agamarora.com/assets/og/og-general.jpg</image:loc>
+      <image:title>TTFT. Time to First Thought.</image:title>
+    </image:image>
   </url>
 
   <url>
