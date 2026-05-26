@@ -1,0 +1,135 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://agamarora.com/#person",
+  "name": "Agam Arora",
+  "givenName": "Agam",
+  "familyName": "Arora",
+  "url": "https://agamarora.com/",
+  "image": "https://agamarora.com/assets/agam-headshot.jpg",
+  "email": "reachme.agam@gmail.com",
+  "description": "AI Product Manager. 12+ years shipping product across analytics, gaming, D2C retail, logistics, and AI. Principal Product Manager (AI) at UKG, working on time and labor within workforce management. Previously AVP, AI Products at AIonOS, where he ran a B2B voice AI platform handling 4M+ calls per year at half the market cost-per-minute.",
+  "jobTitle": "Principal Product Manager, AI",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "UKG",
+    "url": "https://www.ukg.com/"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  },
+  "alumniOf": [
+    { "@type": "CollegeOrUniversity", "name": "FORE School of Management", "url": "https://www.fsm.ac.in/" },
+    { "@type": "CollegeOrUniversity", "name": "BM Institute of Engineering & Technology" }
+  ],
+  "knowsLanguage": ["English", "Hindi"],
+  "knowsAbout": [
+    "Artificial Intelligence",
+    "AI Product Management",
+    "B2B Product Management",
+    "Technical Product Management",
+    "Voice AI",
+    "Retrieval-Augmented Generation",
+    "Agentic Systems",
+    "Conversational UX",
+    "Knowledge Graphs",
+    "Data Products",
+    "Enterprise AI delivery",
+    "AI evals",
+    "MCP (Model Context Protocol)",
+    "Second-brain architecture",
+    "Workforce management"
+  ],
+  "hasOccupation": [
+    {
+      "@type": "Role",
+      "roleName": "Principal Product Manager, AI",
+      "startDate": "2026-06",
+      "memberOf": {
+        "@type": "Organization",
+        "name": "UKG",
+        "url": "https://www.ukg.com/"
+      },
+      "description": "Principal PM working on time and labor within workforce management at UKG."
+    },
+    {
+      "@type": "Role",
+      "roleName": "Assistant Vice President, AI Products",
+      "startDate": "2024-06",
+      "endDate": "2026-05",
+      "memberOf": {
+        "@type": "Organization",
+        "name": "AIonOS India Pvt. Ltd.",
+        "url": "https://www.aionos.ai/"
+      },
+      "description": "Led product end-to-end for an enterprise customer experience platform. Two paying enterprise customers in production, multi-million-dollar deal pipeline. Voice AI platform handling 4M+ calls/year at 50% lower cost-per-minute. Three verticals shipped with Fortune 500 engagements. Delivered 15+ AI POCs across RAG, voice, and agentic systems driving $1.5M+ in enterprise deals. MCP-first platform bet."
+    },
+    {
+      "@type": "Role",
+      "roleName": "Lead Product Manager",
+      "startDate": "2020-12",
+      "endDate": "2024-05",
+      "memberOf": {
+        "@type": "Organization",
+        "name": "FarEye Technologies Pvt. Ltd.",
+        "url": "https://www.fareye.com/"
+      },
+      "description": "Led flagship data product ANALYZE. Crossed $1M ARR in 18 months with 35% upsell. Reduced data onboarding from 60 days to 7 via API-first workflows. Improved NPS from 3.6 to 4.7 through platform reliability changes."
+    },
+    {
+      "@type": "Role",
+      "roleName": "Product & Program Consultant",
+      "startDate": "2020-01",
+      "endDate": "2020-12",
+      "description": "Freelance, Canada. Advised startups and VC-backed companies on system design, data analytics, and product marketing. Contributed to $500K+ in funds raised across portfolio."
+    },
+    {
+      "@type": "Role",
+      "roleName": "Co-Founder & Studio Head",
+      "startDate": "2016-01",
+      "endDate": "2018-05",
+      "memberOf": {
+        "@type": "Organization",
+        "name": "V2 Games India Pvt. Ltd."
+      },
+      "description": "Built and scaled a gaming studio from zero to $75K ARR. Led a team of 18. Indie Game of the Year 2017."
+    },
+    {
+      "@type": "Role",
+      "roleName": "Earlier career",
+      "startDate": "2014-04",
+      "endDate": "2019-12",
+      "description": "Manager, New Business Development & Expansion at Aroma Magic / Blossom Kochhar Beauty Products (Jul 2018 to Dec 2019): revamped franchise product, 70% existing-partner conversion plus 4 new partners, +INR 250K contract value per account, 15%+ operational cost reduction via process digitization. Analyst, Analytics & Market Research at Absolutdata Analytics (Apr 2014 to Dec 2015): data analytics and market research supporting multiple successful product launches."
+    }
+  ],
+  "hasCredential": [
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "PGDM, Marketing",
+      "credentialCategory": "degree",
+      "recognizedBy": { "@type": "CollegeOrUniversity", "name": "FORE School of Management" },
+      "dateCreated": "2014"
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      "name": "B.Tech, Computer Science",
+      "credentialCategory": "degree",
+      "recognizedBy": { "@type": "CollegeOrUniversity", "name": "BM Institute of Engineering & Technology" },
+      "dateCreated": "2012"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/agamarora/",
+    "https://github.com/agamarora",
+    "https://www.youtube.com/@agam_arora",
+    "https://medium.com/@agam.arora11",
+    "https://calendly.com/agamarora/chat"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "professional inquiries",
+    "email": "reachme.agam@gmail.com",
+    "url": "https://calendly.com/agamarora/chat"
+  }
+}

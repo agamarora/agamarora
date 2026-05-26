@@ -161,3 +161,14 @@
 # by build:wiki-extracts and build:kg-edges.
 [functions]
   included_files = ["netlify/functions/lib/*.json"]
+
+# /.well-known/ai-resume.json: machine-readable career endpoint for hiring agents.
+# Always-fresh so role changes don't get cached. Explicit Content-Type so
+# agents that sniff by extension still see application/json (.well-known
+# convention varies across hosts).
+[[headers]]
+  for = "/.well-known/ai-resume.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "application/json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"

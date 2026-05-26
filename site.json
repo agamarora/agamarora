@@ -262,7 +262,8 @@
     "kg": "/wiki/kg.json",
     "llms": "/llms.txt",
     "llms_full": "/llms-full.txt",
-    "site": "/site.json"
+    "site": "/site.json",
+    "ai_resume": "/.well-known/ai-resume.json"
   },
   "default_intent_routing": {
     "voice_ai": {

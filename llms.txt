@@ -74,4 +74,5 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 ## Optional
 
 - [llms-full.txt](https://agamarora.com/llms-full.txt): the full resume and site content in one file, for single-paste context ingestion
+- [/.well-known/ai-resume.json](https://agamarora.com/.well-known/ai-resume.json): machine-readable career data as Schema.org Person + Role array. Agents can pull current employment, full work history, education, and contact without scraping.
 - [GitHub profile](https://github.com/agamarora): all open source projects
