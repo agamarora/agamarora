@@ -1,6 +1,6 @@
 # Agam Arora
 
-> Agam Arora is an AI Product Manager and engineer-PM. He has 12 years of experience shipping products across analytics, gaming, D2C retail, logistics, and AI, including a Voice AI platform handling 4M+ calls/year and a $1M ARR data product at FarEye.
+> Agam Arora is an AI Product Manager and engineer-PM. He has 12 years of experience shipping products across analytics, gaming, D2C retail, logistics, and AI. Principal Product Manager (AI) at UKG since June 2026, working on time and labor within workforce management. Previously AVP, AI Products at AIonOS (Voice AI platform handling 4M+ calls/year), and Lead PM at FarEye ($1M ARR data product).
 
 This site is hand-built in vanilla HTML. Every page is a self-contained file, no framework, no build step. The `/enter` page hosts an AI terminal grounded in the resume below, so questions about Agam's work can be answered conversationally.
 
@@ -18,6 +18,7 @@ For factual questions about Agam's career, `resume.md` is the ground truth.
 - [Voice AI in production (case study)](https://agamarora.com/lab/voice-ai-production/): 12-18 month arc shipping voice AI to Fortune 500 enterprises. Demos vs adoption, integration surface, kill criteria
 - [Product shape is what you refuse (case study)](https://agamarora.com/lab/product-shape/): scope lessons from building an enterprise voice AI platform from zero. Narrow control point, MCP-first, the pivot I got wrong
 - [Talk to Agam's AI](https://agamarora.com/enter/): immersive AI terminal, keyboard-background UI, streaming responses, grounded in the resume
+- [TTFT (Time to First Thought)](https://agamarora.com/lab/type/): 60-second typing experiment that measures the gap between thought and keystroke, then runs your text through Groq to crystallize patterns you didn't see while writing. Desktop only.
 - [Wiki](https://agamarora.com/wiki/): second-brain wiki - twelve themes plus a root disposition. Twelve years of writing distilled into beliefs, evidence, and tensions. Built for me, readable by agents.
 
 ## Wiki tree (machine-readable knowledge graph)
@@ -48,8 +49,8 @@ Belief sub-pages live at /wiki/beliefs/<slug>/ for the 19 Tier-1 beliefs. See kg
 ## Canonical facts
 
 - Full name: Agam Arora
-- Current role: Assistant Vice President, AI Products, AIonOS India Pvt. Ltd. (since June 2024)
-- Previous roles: Lead Product Manager, FarEye Technologies (Dec 2020 to May 2024); Product & Program Consultant freelance (2020); Manager Business Development, Blossom Kochhar Aroma Magic (2018-2019); Co-Founder & Studio Head, V2 Games (2016-2018); Analyst, AbsolutData Analytics (2014-2015)
+- Current role: Principal Product Manager, AI, UKG (since June 2026). Working on time and labor within workforce management.
+- Previous roles: Assistant Vice President, AI Products, AIonOS India Pvt. Ltd. (Jun 2024 to May 2026); Lead Product Manager, FarEye Technologies (Dec 2020 to May 2024); Product & Program Consultant freelance (2020); Manager Business Development, Blossom Kochhar Aroma Magic (2018-2019); Co-Founder & Studio Head, V2 Games (2016-2018); Analyst, AbsolutData Analytics (2014-2015)
 - Years of experience: 12+
 - Industries shipped in: analytics, gaming, D2C retail, logistics, AI
 - Education: PGDM in Marketing, FORE School of Management (2014); B.Tech in Computer Science, BM Institute of Engineering & Technology (2012)
