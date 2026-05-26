@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "generated_at": "2026-04-26",
+  "generated_at": "2026-05-26",
   "site": "agamarora.com",
   "owner": "Agam Arora",
   "agent": "agent.agam",
-  "description": "AI Product Manager. Twelve years shipping product across analytics, gaming, logistics, D2C retail, and AI. Currently architecting B2B AI agents at AIonOS at production scale. Substance-over-hype root disposition.",
+  "description": "AI Product Manager. Twelve years shipping product across analytics, gaming, logistics, D2C retail, and AI. Principal Product Manager (AI) at UKG, working on time and labor within workforce management. Previously AVP at AIonOS, shipping B2B voice AI at production scale. Substance-over-hype root disposition.",
   "pages": [
     {
       "slug": "home",
@@ -14,7 +14,7 @@
     },
     {
       "slug": "lab",
-      "path": "/lab",
+      "path": "/lab/",
       "title": "Lab. Projects index",
       "type": "page"
     },
@@ -44,35 +44,46 @@
     },
     {
       "slug": "resume",
-      "path": "/resume",
+      "path": "/resume/",
       "title": "Resume. Dark editorial",
       "type": "page"
     },
     {
+      "slug": "resume-ukg",
+      "path": "/resume/#ukg",
+      "title": "UKG Principal PM role anchor",
+      "type": "page-anchor"
+    },
+    {
       "slug": "resume-avp",
-      "path": "/resume#avp",
-      "title": "AVP role anchor",
+      "path": "/resume/#avp",
+      "title": "AIonOS AVP role anchor",
       "type": "page-anchor"
     },
     {
       "slug": "resume-fareye",
-      "path": "/resume#fareye",
+      "path": "/resume/#fareye",
       "title": "FarEye Lead PM role anchor",
       "type": "page-anchor"
     },
     {
       "slug": "enter",
-      "path": "/enter",
+      "path": "/enter/",
       "title": "Immersive AI terminal. agent.agam",
       "type": "page"
     },
     {
+      "slug": "lab-type",
+      "path": "/lab/type/",
+      "title": "TTFT. Time to First Thought typing experiment",
+      "type": "page"
+    },
+    {
       "slug": "moodboard",
-      "path": "/moodboard",
+      "path": "/moodboard/",
       "title": "Design system reference (orphan from main nav)",
       "type": "page",
       "robots": "noindex"
-    },
     }
   ],
   "wiki": {
@@ -266,6 +277,7 @@
       "priority": "lab",
       "supporting": [
         "lab-second-brain",
+        "lab-type",
         "wiki:personal-projects-tinkering",
         "github"
       ]
@@ -318,6 +330,7 @@
     "specific_role": {
       "priority": "resume",
       "supporting": [
+        "resume-ukg",
         "resume-avp",
         "resume-fareye",
         "wiki:career-reflection"
