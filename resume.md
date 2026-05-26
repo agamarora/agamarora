@@ -4,22 +4,23 @@ LinkedIn: linkedin.com/in/agamarora
 
 ## Summary
 
-AI Product Manager by designation, engineer and marketer by education, builder by passion, tinkerer by choice. 12 years across analytics, gaming, D2C retail, logistics, and AI. Based in India.
+AI Product Manager by designation, engineer and marketer by education, builder by passion, tinkerer by choice. 12+ years across analytics, gaming, D2C retail, logistics, and AI. Based in India.
 
 Top skills: Go-to-Market Strategy, Cross-functional Collaboration, Program Management. Languages: English, Hindi.
 
 ## Work Experience
 
-### Assistant Vice President - AI Product Management at AIonOS (November 2025 - Present)
-- Scaling enterprise CX products: one platform delivering multi-channel, multi-modal, multi-lingual, context-sensitive, unified experience.
+### Principal Product Manager, AI at UKG (June 2026 - Present) | Noida
+- Principal PM working on time and labor within workforce management at UKG.
 
-### Senior Principal Product Manager at UKG (September 2025 - November 2025) | Noida
-- Short stint on Forecasting and Planning products within UKG's PRO WFM. Exited early to return to AIonOS and continue scaling the CX product.
-
-### Lead Product Manager - Data & AI at AIonOS (May 2024 - August 2025)
-- Delivered 3 enterprise deals worth $1.5M+ in year one by defining, building, and shipping 15+ AI product POCs across voice, RAG, and agentic systems.
-- Led a cross-functional team of 15 (AI engineers + researchers) to build a vertical Voice AI platform handling 4M+ annual calls at 50% lower cost-per-minute than industry benchmarks.
+### Assistant Vice President - AI Products at AIonOS (June 2024 - May 2026)
+- Led product end-to-end for an enterprise customer experience platform. Two paying enterprise customers in production, multi-million-dollar deal pipeline, airline deployment live.
+- Vertical Voice AI platform handling 4M+ annual calls at 50% lower cost-per-minute than industry benchmarks. Three verticals shipped with Fortune 500 engagements.
+- Delivered 15+ AI product POCs across voice, RAG, and agentic systems, driving $1.5M+ in enterprise deals in year one.
+- Product portfolio: multi-modal, multi-lingual, multi-agent conversation management, post-call evaluation, and analytics.
+- MCP-first platform bet: every new capability ships as an MCP server, 1-2 week steady state.
 - Ran product discovery with 50+ travel agents across India to validate and secure stakeholder buy-in for a Travel-first AI-native CRM+CDP platform; later greenlit and sponsored by a $5B travel tech enterprise.
+- Led a cross-functional team of 15 (AI engineers + researchers).
 
 ### Lead Product Manager at FarEye (December 2020 - May 2024) | Noida
 - 10x scale transformation of the data platform from architecture to deployment. 23% cost reduction. Data go-live cut from 60 days to 7.
@@ -37,9 +38,6 @@ Top skills: Go-to-Market Strategy, Cross-functional Collaboration, Program Manag
 
 ### Analyst at Absolutdata Analytics (April 2014 - December 2015)
 - Data analytics and market research that led to multiple successful product launches.
-
-### Intern at Michael Page (April 2013 - May 2013) | New Delhi
-- Primary research for Salary & Employment Forecast 2013/14: 420 employers, 1,600 mid- and senior-level job seekers across India.
 
 ## Education
 
