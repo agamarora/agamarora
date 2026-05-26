@@ -3,13 +3,13 @@
 > Agam Arora is an AI Product Manager and engineer-PM. 12 years of experience shipping products across analytics, gaming, D2C retail, logistics, and AI. This file is the full prose content of agamarora.com in one document, for single-paste context ingestion by AI systems.
 
 Home: https://agamarora.com
-Last updated: 2026-04-22
+Last updated: 2026-05-26
 
 ---
 
 ## About
 
-Agam Arora is an AI Product Manager with a decade-plus track record of shipping real products. He currently serves as Assistant Vice President of AI Products at AIonOS India Pvt. Ltd., where he leads an end-to-end customer experience platform for enterprise CX transformation. The product portfolio spans multi-modal and multi-lingual conversation management, post-case quality, and a multi-agent platform.
+Agam Arora is an AI Product Manager with a decade-plus track record of shipping real products. He currently serves as Principal Product Manager (AI) at UKG, working on time and labor within workforce management. Before UKG, he was Assistant Vice President of AI Products at AIonOS India Pvt. Ltd. from June 2024 to May 2026, leading an end-to-end customer experience platform for enterprise CX transformation. The AIonOS portfolio spanned multi-modal and multi-lingual conversation management, post-case quality, and a multi-agent platform.
 
 Before AIonOS, Agam led FarEye Technologies' flagship data product ANALYZE, which crossed $1M ARR in 18 months with 35% upsell, while reducing data onboarding time from 60 days to 7 and improving NPS from 3.6 to 4.7.
 
@@ -25,7 +25,10 @@ LinkedIn: linkedin.com/in/agamarora
 
 ## Relevant Work Experience
 
-### Assistant Vice President - AI Products at AIonOS India Pvt. Ltd. (June 2024 - Present)
+### Principal Product Manager, AI at UKG (June 2026 - Present)
+- Principal PM working on time and labor within workforce management at UKG.
+
+### Assistant Vice President - AI Products at AIonOS India Pvt. Ltd. (June 2024 - May 2026)
 - Leading product end-to-end for an enterprise customer experience platform. Two paying enterprise customers in production, multi-million-dollar deal pipeline, airline deployment live.
 - Voice AI platform handling 4M+ calls/year at 50% lower cost. Three verticals shipped with Fortune 500 engagements.
 - Product portfolio: multi-modal, multi-lingual, multi-agent conversation management, post-call evaluation, and analytics.
