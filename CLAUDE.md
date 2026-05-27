@@ -120,6 +120,23 @@ Dark-only. No light mode. No theme toggle. The moodboard at `/moodboard` is the 
 
 `netlify/functions/groqHandler.mjs` — ESM, Web Standard Request/Response. Groq SDK streaming SSE. 4-model fallback chain (llama-3.1-8b-instant → qwen3-32b → gpt-oss-20b → llama-3.3-70b-versatile). Sandwich prompt defense, injection filter, 6-message conversation history. System prompt grounded in `resume.md` with few-shot examples. Eval harness at `eval-prompt.mjs`. Called only from `/enter`.
 
+## Adding new writing (essays) — the only motion
+
+There are **two classes** of writing on the site. Pick by asking: *is this an identity pillar of the thesis, or a standalone piece?*
+
+1. **Theme / belief (heavy, rare):** an identity pillar (agent-first, pm-taste...). Lives in the `/wiki/` ontology. Source is a `.md` in `docs/plans/second-brain-v1-phase-a/synthesis/wiki-page-drafts-final/` (or `belief-page-drafts-final/`), built by `build-wiki.mjs`. Wiring it touches `NAV_ORDER` + `NAV_TITLES` (build-wiki), `kg.json` (build-kg), and `sitemap.xml`. Rubric v2 voice. A fragment that fits an existing theme folds in as an H2 of that theme's `.md` instead of a new page.
+
+2. **Essay (light, frequent) — DEFAULT for general writing:** a standalone piece you want to publish and push to Medium. **Clone an existing essay page**, no ontology:
+   - Copy `lab/product-shape/index.html` (or `lab/competition-and-scarcity/index.html`) → `lab/<slug>/index.html`.
+   - Update head: `<title>`, description, OG/Twitter, canonical, BreadcrumbList + Article schema to the new slug. Keep all `<!-- chrome:* -->` markers intact.
+   - Write the body in `.section` blocks. Plain voice. **No dates** (timeless — `feedback_timelessness.md` / `feedback_no_chronological.md`).
+   - Add the page path to `PAGES` in `scripts/sync-chrome.mjs` so chrome stays synced.
+   - Add a project card on `lab/index.html` (clone the `Essay`/`Case Study` card) + a `.back` cross-link.
+   - Add a `<url>` to `sitemap.xml`.
+   - Deploy. On Medium: **import-by-URL** from `agamarora.com/lab/<slug>/`.
+
+Essays are NOT run through `build-wiki`, have no `kg.json` node, and need no theme wiring. This honors the single-publication / no-chronological rules (timeless, not a dated feed) while giving each essay its own URL. First example: `lab/competition-and-scarcity/`.
+
 ## Conventions
 
 - **Edit patterns:** when changing the header or aa. mark, update all v2 pages in one commit so the contract stays unified. Look for the `=== Shared v2 header ===` and `=== Shared aa. mark ===` comment blocks.

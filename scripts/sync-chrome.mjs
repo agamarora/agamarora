@@ -57,6 +57,7 @@ const PAGES = [
   'lab/index.html',
   'lab/ai-resume/index.html',
   'lab/product-shape/index.html',
+  'lab/competition-and-scarcity/index.html',
   'lab/second-brain/index.html',
   'lab/voice-ai-production/index.html',
   'wiki/themes/index.html',
